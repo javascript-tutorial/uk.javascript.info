@@ -1,59 +1,59 @@
-# An Introduction to JavaScript
+# Введення в JavaScript
 
-Let's see what's so special about JavaScript, what we can achieve with it, and which other technologies play well with it.
+Давайте розглянемо, що такого особливого в JavaScript, що ми дожемо досягти з його допомогою і які ще технології пов'язані з ним.
 
-## What is JavaScript?
+## Що таке JavaScript?
 
-*JavaScript* was initially created to *"make web pages alive"*.
+*JavaScript* було створено для того, щоб *"зробити веб-сторінки живими"*.
 
-The programs in this language are called *scripts*. They can be written right in a web page's HTML and executed automatically as the page loads.
+Програми на цій мові називаються *скриптами*. Їх можна писати прямо на сторінці в коді HTML і вони автоматично виконуються при завантаженні сторінки.
 
-Scripts are provided and executed as plain text. They don't need special preparation or compilation to run.
+Скрипти виглядають і виконуються як простий текст. Для запуску, їм не потрібно спеціальна підготовка чи компілятор.
 
-In this aspect, JavaScript is very different from another language called [Java](https://en.wikipedia.org/wiki/Java_(programming_language)).
+В цьому плані, JavaScript дуже відрізняється від іншої мови програмування — [Java](https://uk.wikipedia.org/wiki/Java).
 
-```smart header="Why <u>Java</u>Script?"
-When JavaScript was created, it initially had another name: "LiveScript". But Java was very popular at that time, so it was decided that positioning a new language as a "younger brother" of Java would help.
+```smart header="Чому <u>Java</u>Script?"
+Коли мову JavaScript було створено, спочатку вона мала іншу назву: "LiveScript". Але тоді була дуже популярна мова програмування Java, тому було вирішено, що позиціонування нової мови як "молодшого брата" Java допоможе у популяризації.
 
-But as it evolved, JavaScript became a fully independent language with its own specification called [ECMAScript](http://en.wikipedia.org/wiki/ECMAScript), and now it has no relation to Java at all.
+Але з часом JavaScript значно виріс і став повністю незалежною мовою програмування зі своєю специфікацією [ECMAScript](https://uk.wikipedia.org/wiki/ECMAScript), і зараз немає нічого спільного з Java.
 ```
 
-Today, JavaScript can execute not only in the browser, but also on the server, or actually on any device that has a special program called [the JavaScript engine](https://en.wikipedia.org/wiki/JavaScript_engine).
+Сьогодні, JavaScript може виконуватися не тільки в браузері, але й на сервері, або на будь-якому пристрої, який має спеціальну програму — [рушій JavaScript](https://uk.wikipedia.org/wiki/Рушій_JavaScript).
 
-The browser has an embedded engine sometimes called a "JavaScript virtual machine".
+Браузер має вбудований рушій, який деколи називають "віртуальною машиною JavaScript".
 
-Different engines have different "codenames". For example:
+Різні рушії мають різні "кодові назви". Наприклад:
 
-- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome and Opera.
-- [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey) -- in Firefox.
-- ...There are other codenames like "Trident" and "Chakra" for different versions of IE, "ChakraCore" for Microsoft Edge, "Nitro" and "SquirrelFish" for Safari, etc.
+- [V8](https://uk.wikipedia.org/wiki/V8_(рушій_JavaScript)) -- в Chrome і Opera.
+- [SpiderMonkey](https://uk.wikipedia.org/wiki/SpiderMonkey) -- в Firefox.
+- ...Є також інші кодові назви як "Trident" і "Chakra" для різних версій IE, "ChakraCore" для Microsoft Edge, "Nitro" і "SquirrelFish" для Safari, та інші.
 
-The terms above are good to remember because they are used in developer articles on the internet. We'll use them too. For instance, if "a feature X is supported by V8", then it probably works in Chrome and Opera.
+Написані вище терміни добре було б запам'ятати, оскільки вони використовуються в статтях розробників на просторах інтернету. Ми також будемо їх використовувати. Наприклад, якщо "можливість X підтримується в V8", тоді ймовірно це буде працювати в Chrome і Opera.
 
-```smart header="How do engines work?"
+```smart header="Як рушії працюють?"
 
-Engines are complicated. But the basics are easy.
+Рушії складні. Але принцип роботи простий.
 
-1. The engine (embedded if it's a browser) reads ("parses") the script.
-2. Then it converts ("compiles") the script to the machine language.
-3. And then the machine code runs, pretty fast.
+1. Рушій (вбудований, якщо це браузер) читає ("розбирає") скрипт.
+2. Потім він перетворює ("компілює") скрипт в машинний код.
+3. І потім машинний код виконується, причому дуже швидко.
 
-The engine applies optimizations at each step of the process. It even watches the compiled script as it runs, analyzes the data that flows through it, and applies optimizations to the machine code based on that knowledge. When it's done, scripts run quite fast.
+Рушій застосовує оптимізації на кожному етапі процесу. Він навіть слідкує за скомпільованим скриптом під час його виконання, аналізує дані, які проходять через скрипт, і на основі цих знань застосовує оптимізації до машинного коду. Коли це завершиться, скрипти будуть виконуватися дуже швидко.
 ```
 
-## What can in-browser JavaScript do?
+## Що може вбудований в браузер JavaScript?
 
-Modern JavaScript is a "safe" programming language. It does not provide low-level access to memory or CPU, because it was initially created for browsers which do not require it.
+Сучасний JavaScript — це "безпечна" мова програмування. Вона не надає низькорівневого доступу до пам'яті чи процесора, оскільки початково була створена для браузерів, які цього не потребують.
 
-Javascript's capabilities greatly depend on the environment it's running in. For instance, [Node.JS](https://wikipedia.org/wiki/Node.js) supports functions that allow JavaScript to read/write arbitrary files, perform network requests, etc.
+Можливості Javascript значно залежать від оточення, в якому він виконується. Наприклад, [Node.JS](https://uk.wikipedia.org/wiki/Node.js) підтримує функції, які дозволяють JavaScript читати/записувати довільні файли, здійснювати мережеві запити, та інше.
 
-In-browser JavaScript can do everything related to webpage manipulation, interaction with the user, and the webserver.
+Вбудований в браузер JavaScript може робити все, що зв'язано з маніпуляцією веб-сторінки, взаємодією з користувачем та веб-сервером.
 
-For instance, in-browser JavaScript is able to:
+Наприклад, вбудований в браузер JavaScript може:
 
-- Add new HTML to the page, change the existing content, modify styles.
-- React to user actions, run on mouse clicks, pointer movements, key presses.
-- Send requests over the network to remote servers, download and upload files (so-called [AJAX](https://en.wikipedia.org/wiki/Ajax_(programming)) and [COMET](https://en.wikipedia.org/wiki/Comet_(programming)) technologies).
+- Додавати новий HTML-код на сторінку, змінювати існуючий вміст, змінювати стилі.
+- Реагувати на дії користувача, виконуватися при натисканні на кнопки миші, при переміщенні вказівника, при натисканні клавіш клавіатури.
+- Відправляти запити через мережу до віддалених серверів, завантажувати і відвантажувати файли (так звані технології [AJAX](https://uk.wikipedia.org/wiki/AJAX) і [COMET](https://uk.wikipedia.org/wiki/Comet_(програмування))).
 - Get and set cookies, ask questions to the visitor, show messages.
 - Remember the data on the client-side ("local storage").
 
