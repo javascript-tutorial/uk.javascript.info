@@ -1,12 +1,12 @@
-﻿# The JavaScript Tutorial
+﻿# Посібник по JavaScript
 
-This repository hosts the content of the Modern JavaScript Tutorial, published at [https://javascript.info](https://javascript.info).
+В цьому репозиторії проводиться переклад [сучасного посібника по JavaScript](https://github.com/iliakan/javascript-tutorial-en) на українську мову. Усі переклади українською мовою вітаються у вигляді пул реквестів до цього репозиторію.
 
-## Translations
+## Переклади на інші мови
 
-(In alphabetical order):
+(в алфавітному порядку):
 
-| Language | Github | Translation leads | Translated (%) | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Last&nbsp;Commit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Published |
+| Мова | Github | Головний перекладач | Перекладено (%) | Останній коміт | Сайт |
 |----------|--------|-------------------|----------------|-------------|-----------|
 | Azerbaijani | [orkhan-huseyn/javascript-tutorial-az](https://github.com/orkhan-huseyn/javascript-tutorial-az) | @orkhan-huseyn | ![](http://translate-hook.javascript.info/stats/az.svg) | ![](https://img.shields.io/github/last-commit/orkhan-huseyn/javascript-tutorial-az.svg?maxAge=900&label=) |  |
 | Chinese | [xitu/javascript-tutorial-zh](https://github.com/xitu/javascript-tutorial-zh) | @leviding | ![](http://translate-hook.javascript.info/stats/zh.svg) | ![](https://img.shields.io/github/last-commit/xitu/javascript-tutorial-zh.svg?maxAge=900&label=) | [zh.javascript.info](https://zh.javascript.info) |
@@ -19,24 +19,20 @@ This repository hosts the content of the Modern JavaScript Tutorial, published a
 | Russian | [iliakan/javascript-tutorial-ru](https://github.com/iliakan/javascript-tutorial-ru) | @iliakan | * . | ![](https://img.shields.io/github/last-commit/iliakan/javascript-tutorial-ru.svg?maxAge=900&label=) | [learn.javascript.ru](https://learn.javascript.ru) |
 | Turkish | [sahinyanlik/javascript-tutorial-tr](https://github.com/sahinyanlik/javascript-tutorial-tr) | @sahinyanlik | ![](http://translate-hook.javascript.info/stats/tr.svg) | ![](https://img.shields.io/github/last-commit/sahinyanlik/javascript-tutorial-tr.svg?maxAge=900&label=) | |
 
-`*` – the previous version is published in Russian, need to backport/translate the new one from English.
-
-If you'd like to translate it into your language, please clone the repository, change its name to `javascript-tutorial-...` (by the language) and [create an issue](https://github.com/iliakan/javascript-tutorial-en/issues/new) for me to add you to the list.
-
-You can edit the text in any editor (markdown-like syntax). The server to run the tutorial locally and see how it looks is at <https://github.com/iliakan/javascript-tutorial-server>.  
+Ви можете редагувати текст у будь-якому текстовому редакторі, чи IDE (у вигляді markdown). Щоб запустити локальний сервер, і переглянути як виглядає переклад, використовуйте [спеціальний сервер](https://github.com/iliakan/javascript-tutorial-server).  
 
 
 
-## Structure
+## Структура
 
-Every chapter, article or a task has its folder.
+Кожен розділ, стаття і завдання має свою теку.
 
-The folder is named like `N-url`, where `N` is a number for the sorting purposes and `url` is the URL part with title of the material.
+Тека іменується в форматі `N-url`, де `N` це порядковий номер з метою сортування і `url` це частина URL з назвою матеріалу.
 
-The type of the material is defined by the file inside the folder:
+Тип матеріалу визначається файлом всередині теки:
 
-  - `index.md` stands for a chapter
-  - `article.md` stands for an article
-  - `task.md` stands for a task (solution must be provided in `solution.md` file aswell)
+  - `index.md` відповідає за роділ
+  - `article.md` відповідає за статтю
+  - `task.md` відповідає за завдання (вирішення повенне бути в файлі `solution.md`)
 
-Each of these files starts from the `# Main header`.
+Кожен з цих файлів починається з `# Головного заголовка`.
