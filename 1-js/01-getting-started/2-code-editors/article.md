@@ -1,23 +1,23 @@
-# Code editors
+# Редактори коду
 
-A code editor is the place where programmers spend most of their time.
+Редактор коду — це місце, де програмісти проводять найбільше часу.
 
-There are two main types of code editors: IDEs and lightweight editors. Many people use one tool of each type.
+Є два основні види редакторів коду: IDE або простенькі редактори. Багато людей використовують декілька інструментів для різних потреб.
 
 ## IDE
 
-The term [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) (Integrated Development Environment) refers to a powerful editor with many features that usually operates on a "whole project." As the name suggests, it's not just an editor, but a full-scale "development environment."
+Термін [IDE](https://uk.wikipedia.org/wiki/Інтегроване_середовище_розробки) (Інтегроване середовище розробки) означає потужний редактор з багатьма можливостями, що зазвичай працює з "цілим проектом". Як зрозуміло з назви, це не тільки редактор коду, а повноцінне "середовище розробки".
 
-An IDE loads the project (which can be many files), allows navigation between files, provides autocompletion based on the whole project (not just the open file), and integrates with a version management system (like [git](https://git-scm.com/)), a testing environment, and other "project-level" stuff.
+IDE завантажує проект (який може мати багато файлів), дозволяє переключатися між файлами, надає можливість автозаповнення, яке базується на цілому проекті (не лише на відкритому файлі), інтегрується із системою контролю версій (наприклад, [git](https://git-scm.com/)), надає можливість розгортання вашого проекту на тестове середовище та багато інших функцій "на рівні проекту".
 
-If you haven't selected an IDE yet, consider the following options:
+Якщо Ви досі не вибрали IDE, розгляньте наступні варіанти:
 
-- [WebStorm](http://www.jetbrains.com/webstorm/) for frontend development. The same company offers other editors for other languages (paid).
-- [Netbeans](http://netbeans.org/) (free).
+- [WebStorm](http://www.jetbrains.com/webstorm/) для фронтент розробників. Ця ж компанія пропонує інші редактори для інших мов (платно).
+- [Netbeans](http://netbeans.org/) (безкоштовно).
 
-All of these IDEs are cross-platform.
+Всі ці IDE є кросплатформними (працюють на всіх основних ОС: Linux, Windows, macOS).
 
-For Windows, there's also "Visual Studio", not to be confused with "Visual Studio Code." "Visual Studio" is a paid and mighty Windows-only editor, well-suited for the .NET platform. A free version of it is called [Visual Studio Community](https://www.visualstudio.com/vs/community/).
+Для Windows, також може бути "Visual Studio", не плутайте з "Visual Studio Code". "Visual Studio" платний редактор, який працює лише на Windows, добре підходить для програмування на платформі .NET. Безкоштовна версія називається [Visual Studio Community](https://www.visualstudio.com/vs/community/).
 
 Many IDEs are paid but have a trial period. Their cost is usually negligible compared to a qualified developer's salary, so just choose the best one for you.
 
@@ -31,15 +31,15 @@ The main difference between a "lightweight editor" and an "IDE" is that an IDE w
 
 In practice, lightweight editors may have a lot of plugins including directory-level syntax analyzers and autocompleters, so there's no strict border between a lightweight editor and an IDE.
 
-The following options deserve your attention:
+Наступні варіанти заслуговують вашої уваги:
 
-- [Visual Studio Code](https://code.visualstudio.com/) (cross-platform, free) also has many IDE-like features.
-- [Atom](https://atom.io/) (cross-platform, free).
-- [Sublime Text](http://www.sublimetext.com) (cross-platform, shareware).
-- [Notepad++](https://notepad-plus-plus.org/) (Windows, free).
-- [Vim](http://www.vim.org/) and [Emacs](https://www.gnu.org/software/emacs/) are also cool if you know how to use them.
+- [Visual Studio Code](https://code.visualstudio.com/) (кросплатформний, безкоштовний) також має безліч функцій IDE.
+- [Atom](https://atom.io/) (cross-кросплатформний, безкоштовний).
+- [Sublime Text](http://www.sublimetext.com) (кросплатформний, випробувальний термін).
+- [Notepad++](https://notepad-plus-plus.org/) (Windows, безкоштовний).
+- [Vim](http://www.vim.org/) та [Emacs](https://www.gnu.org/software/emacs/) також хороші, якщо знати, як ними користуватися.
 
-## My favorites
+## Мої улюблені
 
 The personal preference of the author is to have both an IDE for projects and a lightweight editor for quick and easy file editing.
 
