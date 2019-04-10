@@ -52,69 +52,69 @@
 Наприклад, вбудований в браузер JavaScript може:
 
 - Додавати новий HTML-код на сторінку, змінювати існуючий вміст, змінювати стилі.
-- Реагувати на дії користувача, виконуватися при натисканні на кнопки миші, при переміщенні вказівника, при натисканні клавіш клавіатури.
+- Реагувати на дії користувача, опрацьовувати натискання миші, переміщення вказівника, натискання на клавіші клавіатури.
 - Відправляти запити через мережу до віддалених серверів, завантажувати і відвантажувати файли (так звані технології [AJAX](https://uk.wikipedia.org/wiki/AJAX) і [COMET](https://uk.wikipedia.org/wiki/Comet_(програмування))).
-- Get and set cookies, ask questions to the visitor, show messages.
-- Remember the data on the client-side ("local storage").
+- Отримувати і надсилати [куки](https://uk.wikipedia.org/wiki/Куки), задавати питання відвідувачам, показувати повідомлення.
+- Запам'ятовувати дані на стороні клієнта ("[local storage](https://developer.mozilla.org/uk/docs/Web/API/Window/localStorage)").
 
-## What CAN'T in-browser JavaScript do?
+## Що НЕ може вбудований в браузер JavaScript?
 
-JavaScript's abilities in the browser are limited for the sake of the user's safety. The aim is to prevent an evil webpage from accessing private information or harming the user's data.
+Можливості JavaScript в браузері обмежені з метою безпеки користувача. Мета полягає в тому, щоб заборонити небезпечним веб-сторінкам доступ до приватної інформації, яка знаходиться на комп'ютері користувача.
 
-Examples of such restrictions include:
+Приклади таких обмежень:
 
-- JavaScript on a webpage may not read/write arbitrary files on the hard disk, copy them or execute programs. It has no direct access to OS system functions.
+- JavaScript на веб-сторінці не може читати/записувати довільні файли на жорсткому диску, копіювати їх чи виконувати програми. Він не має прямого доступу до системних функцій ОС.
 
-    Modern browsers allow it to work with files, but the access is limited and only provided if the user does certain actions, like "dropping" a file into a browser window or selecting it via an `<input>` tag.
+    Сучасні браузери дозволяють працювати з файлами, але доступ до них обмежений і надається тільки тоді, коли користувач виконав відповідні дії, наприклад, перетягнув файл у вікно браузера чи вибрав його через теґ `<input>`.
 
-    There are ways to interact with camera/microphone and other devices, but they require a user's explicit permission. So a JavaScript-enabled page may not sneakily enable a web-camera, observe the surroundings and send the information to the [NSA](https://en.wikipedia.org/wiki/National_Security_Agency).
-- Different tabs/windows generally do not know about each other. Sometimes they do, for example when one window uses JavaScript to open the other one. But even in this case, JavaScript from one page may not access the other if they come from different sites (from a different domain, protocol or port).
+    Є можливість взаємодії з камерою/мікрофоном або іншими пристроями, але для цього потрібен явний дозвіл користувача. Тому сторінка, на якій увімкнений JavaScript, не може нишком увімкнути веб-камеру, спостерігати за оточенням і відсилати інформацію до [СБУ](https://uk.wikipedia.org/wiki/Служба_безпеки_України).
+- Різні вкладки/вікна зазвичай не знають один про одного. Іноді це можливо, наприклад, коли одне вікно використовує JavaScript, щоб відкрити інше. Але навіть в цьому випадку JavaScript з однієї сторінки не має доступу до іншої, якщо вони з різних сайтів (мають різні домени, протоколи чи порти).
 
-    This is called the "Same Origin Policy". To work around that, *both pages* must contain a special JavaScript code that handles data exchange.
+    Це називається "[Політикою того ж походження (Same Origin Policy)](https://uk.wikipedia.org/wiki/Політика_того_ж_походження)". Щоб обійти це, *обидві сторінки* повинні містити спеціальний JavaScript код, що обробляє обмін даними.
 
-    This limitation is, again, for the user's safety. A page from `http://anysite.com` which a user has opened must not be able to access another browser tab with the URL `http://gmail.com` and steal information from there.
-- JavaScript can easily communicate over the net to the server where the current page came from. But its ability to receive data from other sites/domains is crippled. Though possible, it requires explicit agreement (expressed in HTTP headers) from the remote side. Once again, that's a safety limitation.
+    Знову-таки, це обмеження для безпеки користувача. Сторінка за адресою `http://anysite.com`, яку відкрив користувач, не повинна мати доступ до іншої вкладки браузера з URL-адресою `http://gmail.com` і звідти викрадати інформацію.
+- JavaScript може легко спілкуватися через мережу з сервером, від якого отримана поточна сторінка. Але його здатність отримувати дані з інших сайтів/доменів обмежена. Запит на інший домен також можливий, проте це потребує спеціального заголовку в HTTP від віддаленого сервера. Це зроблено з метою безпеки.
 
 ![](limitations.png)
 
-Such limits do not exist if JavaScript is used outside of the browser, for example on a server. Modern browsers also allow plugin/extensions which may ask for extended permissions.
+Таких обмежень немає, якщо JavaScript використовується за межами браузера, наприклад, на сервері. Сучасні браузери дозволяють встановлювати плаґіни/розширення, які мають розширені можливості, проте потребують розширених прав.
 
-## What makes JavaScript unique?
+## Що робить JavaScript унікальним?
 
-There are at least *three* great things about JavaScript:
+Є як мінімум *три* чудові особливості в JavaScript:
 
 ```compare
-+ Full integration with HTML/CSS.
-+ Simple things are done simply.
-+ Support by all major browsers and enabled by default.
++ Цілковита інтеграція з HTML/CSS.
++ Прості речі робляться просто.
++ Підтримується всіма сучасними браузерами і увімкнений усталено.
 ```
-Javascript is the only browser technology that combines these three things.
+Javascript – це єдина браузерна технологія, яка суміщає ці три речі.
 
-That's what makes JavaScript unique. That's why it's the most widespread tool for creating browser interfaces.
+Це і робить його унікальним. Ось чому JavaScript найбільш поширений засіб створення браузерних інтерфейсів.
 
-While planning to learn a new technology, it's beneficial to check its perspectives. So let's move on to the modern trends affecting it,  including new languages and browser abilities.
+Плануючи вивчити нову технологію, доцільно дізнатися про її перспективи. Тому, давайте розглянемо сучасні тенденції, що впливають на неї, включаючи нові мови та можливості браузера.
 
 
-## Languages "over" JavaScript
+## Мови "над" JavaScript
 
-The syntax of JavaScript does not suit everyone's needs. Different people want different features.
+Синтаксис JavaScript не задовольняє потреби кожного. Різні люди хочуть різних функцій.
 
-That's to be expected, because projects and requirements are different for everyone.
+Цього слід очікувати, тому що проекти і вимоги різні для кожного.
 
-So recently a plethora of new languages appeared, which are *transpiled* (converted) to JavaScript before they run in the browser.
+Останнім часом з'явилося безліч нових мов, які *транспілюються* (конвертуються) в JavaScript до того, як виконаються в браузері.
 
-Modern tools make the transpilation very fast and transparent, actually allowing developers to code in another language and auto-converting it "under the hood".
+Сучасні інструменти роблять транспіляцію дуже швидкою і прозорою, дозволяючи розробникам писати код іншою мовою і автоматично конвертувати його "під капотом".
 
-Examples of such languages:
+Приклади таких мов:
 
-- [CoffeeScript](http://coffeescript.org/) is a "syntactic sugar" for JavaScript. It introduces shorter syntax, allowing us to write clearer and more precise code. Usually, Ruby devs like it.
-- [TypeScript](http://www.typescriptlang.org/) is concentrated on adding "strict data typing" to simplify the development and support of complex systems. It is developed by Microsoft.
-- [Dart](https://www.dartlang.org/) is a standalone language that has its own engine that runs in non-browser environments (like mobile apps). It was initially offered by Google as a replacement for JavaScript, but as of now, browsers require it to be transpiled to JavaScript just like the ones above.
+- [CoffeeScript](http://coffeescript.org/) це "синтаксичний цукор" поверх JavaScript. Вона вводить більш короткий синтаксис, дозволяючи нам писати більш чіткий і точний код. Зазвичай, програмісти на Ruby люблять її.
+- [TypeScript](http://www.typescriptlang.org/) зосереджена на додаванні "строгої типізації даних", щоб спростити розробку і підтримку складних систем. ЇЇ розробляє Microsoft.
+- [Dart](https://www.dartlang.org/) це автономна мова, яка має власний рушій, який виконується в не-браузерних середовищах (таких як, мобільні застосунки). Спочатку компанія Google запропонувала її як заміну JavaScript, але на даний момент, браузери використовують її для транспіляції в JavaScript так само, як інструменти вище.
 
-There are more. Of course, even if we use one of these languages, we should also know JavaScript to really understand what we're doing.
+Їх є ще більше. Звичайно, навіть якщо ми використовуємо одну з цих мов, ми також повинні знати JavaScript, щоб дійсно розуміти, що робимо.
 
-## Summary
+## Підсумки
 
-- JavaScript was initially created as a browser-only language, but is now used in many other environments as well.
-- Today, JavaScript has a unique position as the most widely-adopted browser language with full integration with HTML/CSS.
-- There are many languages that get "transpiled" to JavaScript and provide certain features. It is recommended to take a look at them, at least briefly, after mastering JavaScript.
+- JavaScript спочатку був створений лише як мова для браузера, але зараз його також використовують в інших середовищах.
+- Сьогодні, JavaScript позиціонується як найбільш пристосована мова для браузера з повною інтеграцією із HTML/CSS.
+- Є багато мов які "транспілюються" в JavaScript і надають певні функції. Рекомендується переглянути їх, принаймні мигцем, після освоєння JavaScript.
