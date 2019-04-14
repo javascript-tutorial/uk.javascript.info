@@ -1,64 +1,65 @@
-# Developer console
+# Інструменти розробника
 
-Code is prone to errors. You will quite likely make errors... Oh, what am I talking about? You are *absolutely* going to make errors, at least if you're a human, not a [robot](https://en.wikipedia.org/wiki/Bender_(Futurama)).
+Будь-який код так і тяжіє до помилок. Швидше за все, ви будете робити помилки... Хоча, про що я говорю? Ви *точно* будете робити помилки, принаймні, якщо ви людина, а не робот [robot](https://uk.wikipedia.org/wiki/Бендер_(Футурама)).
 
-But in the browser, users don't see errors by default. So, if something goes wrong in the script, we won't see what's broken and can't fix it.
+Зазвичай, користувачі не бачать помилок в браузері. Тому, якщо в скрипті щось трапиться на так, ми не побачимо помилки, і не зможемо її виправити.
 
-To see errors and get a lot of other useful information about scripts, "developer tools" have been embedded in browsers.
+Щоб побачити помилки і отримати багато інформації про скрипти, було розроблено і вбудовано в браузери "інструменти розробника".
 
-Most developers lean towards Chrome or Firefox for development because those browsers have the best developer tools. Other browsers also provide developer tools, sometimes with special features, but are usually playing "catch-up" to Chrome or Firefox. So most developers have a "favorite" browser and switch to others if a problem is browser-specific.
+Більшість розробників для розробки надають перевагу Chrome чи Firefox, тому що ці браузери мають найкращі інструменти розробника. Інші браузери теж мають інструменти розробника, деколи навіть зі спеціальними функціями, проте, вони не настільки функціональні і зручні, як в Chrome чи Firefox. Тому більшість розробників мають "улюблений" браузер і переключаються на інші браузери, якщо проблема специфічна для браузера.
 
-Developer tools are potent; they have many features. To start, we'll learn how to open them, look at errors, and run JavaScript commands.
+Інструменти розробника потужні; вони мають багато функцій. Для початку, ми вивчемо, як їх відкрити, як дивитися на помилки і як виконувати JavaScript команди.
 
 ## Google Chrome
 
-Open the page [bug.html](bug.html).
+Відкрийте сторінку [bug.html](bug.html).
 
-There's an error in the JavaScript code on it. It's hidden from a regular visitor's eyes, so let's open developer tools to see it.
+На цій сторінці є помилка в JavaScript коді. Вона прихована для звичайних користувачів, тому потрібно відкрити інструменти розробника, щоб її побачити.
 
-Press `key:F12` or, if you're on Mac, then `key:Cmd+Opt+J`.
+Натисніть клавішу `key:F12` або, якщо у вас Mac, комбінацію клавіш `key:Cmd+Opt+J`.
 
-The developer tools will open on the Console tab by default.
+Інструменти розробника усталено відкриваються на вкладі "Console".
 
-It looks somewhat like this:
+Ось так відображається помилка в консолі:
 
 ![chrome](chrome.png)
 
-The exact look of developer tools depends on your version of Chrome. It changes from time to time but should be similar.
+Точний вигляд інструментів розробника може відрізнятися в залежності від вашої версії Chrome. Вони міняються час від часу, але в основному це вікно пивинно бути схожим.
+Ці інструменти показуються лише англійською мовою, незалежно від мови браузера.
 
-- Here we can see the red-colored error message. In this case, the script contains an unknown "lalala" command.
-- On the right, there is a clickable link to the source `bug.html:12` with the line number where the error has occurred.
+- Тут ми можемо побачити червоне повідомлення. У нашому випадку, скрипт має невизначену команду "lalala".
+- З правого боку є посилання на джерело `bug.html:12` з номером рядка, де ця помилка виникла. При натисканні на це посилання, інструмент перейде на вкладку "Source", де відкриє файл і перейде на рядок, в якому трапилася помилка.
 
-Below the error message, there is a blue `>` symbol. It marks a "command line" where we can type JavaScript commands. Press `key:Enter` to run them (`key:Shift+Enter` to input multi-line commands).
+Нижче повідомлення про помилку є синій символ `>`. Цей символ позначає "командний рядок", де ми можемо вводити JavaScript команди. Натисніть `key:Enter`, щоб виконати їх (`key:Shift+Enter` щоб вводити команди на декілька рядків).
 
-Now we can see errors, and that's enough for a start. We'll come back to developer tools later and cover debugging more in-depth in the chapter <info:debugging-chrome>.
+Тепер ми бачимо помилки, цього достатньо, щоб почати. Ми пізніше повернемося до інструментів розробника, щоб розглянути відлагодження в розділі <info:debugging-chrome>.
 
 
-## Firefox, Edge, and others
+## Firefox, Edge, та інші
 
-Most other browsers use `key:F12` to open developer tools.
+Більшість браузерів використовують клавішу `key:F12`, щоб відкрити консоль розробника.
 
-The look & feel of them is quite similar. Once you know how to use one of these tools (you can start with Chrome), you can easily switch to another.
+Їх вигляд зазвичай схожий. Якщо ви навчитеся використовувати однин з них (можете почати з Chrome), ви зможете легко переключитися на інший інструмент.
 
 ## Safari
 
-Safari (Mac browser, not supported by Windows/Linux) is a little bit special here. We need to enable the "Develop menu" first.
+Safari (браузер в Mac, не підтримується Windows/Linux) дещо особливий. Спочатку нам потрібно увімкнути меню "Розробка".
 
-Open Preferences and go to the "Advanced" pane. There's a checkbox at the bottom:
+Відкрийте Параметри і перейдіть на панель "Експертні". Знизу буде галочка, яку необхідно вибрати:
 
 ![safari](safari.png)
 
-Now `key:Cmd+Opt+C` can toggle the console. Also, note that the new top menu item named "Develop" has appeared. It has many commands and options.
+Тепер комбінація клавіш `key:Cmd+Opt+C` може переключати консоль. Також, зауважте, що з'явився новий пункт "Розробка" в верхньому меню. Це меню має багато команд та опцій.
 
-## Multi-line input
+## Багаторядкове введення
 
-Usually, when we put a line of code into the console, and then press `key:Enter`, it executes.
+Зазвичай, коли ми вводимо один рядок коду в консоль і натискаємо `key:Enter`, він виконується.
 
-To insert multiple line, press `key:Shift+Enter`.
+Щоб вставити декілька рядків, натисніть `key:Shift+Enter`.
 
-## Summary
+## Підсумки
 
-- Developer tools allow us to see errors, run commands, examine variables, and much more.
-- They can be opened with `key:F12` for most browsers on Windows. Chrome for Mac needs `key:Cmd+Opt+J`, Safari: `key:Cmd+Opt+C` (need to enable first).
+- Інструменти розробника дозволяють нам переглядати помилки, виконувати команди, досліджувати змінні та багато іншого.
+- Їх можна відкрити клавішою `key:F12` для більшості браузерів в Windows. В Chrome для Mac потрібно натиснути комбінацію клавіш `key:Cmd+Opt+J`, в Safari: `key:Cmd+Opt+C` (але спочатку потрібно увімкнути).
 
-Now we have the environment ready. In the next section, we'll get down to JavaScript.
+Тепер в нас є готове середовище. В наступному розділі ми приступимо до самого JavaScript.
