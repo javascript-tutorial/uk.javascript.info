@@ -24,7 +24,7 @@ async function f() {
 f().then(alert); // 1
 ```
 
-...We could explicitly return a promise, that would be the same:
+...We could explicitly return a promise, that would be the same as:
 
 ```js run
 async function f() {
@@ -72,7 +72,7 @@ Let's emphasize: `await` literally makes JavaScript wait until the promise settl
 It's just a more elegant syntax of getting the promise result than `promise.then`, easier to read and write.
 
 ````warn header="Can't use `await` in regular functions"
-If we try to use `await` in non-async function, that would be a syntax error:
+If we try to use `await` in non-async function, there would be a syntax error:
 
 ```js run
 function f() {
@@ -263,7 +263,7 @@ f().catch(alert); // TypeError: failed to fetch // (*)
 */!*
 ```
 
-If we forget to add `.catch` there, then we get an unhandled promise error (and can see it in the console). We can catch such errors using a global event handler as described in the chapter <info:promise-error-handling>.
+If we forget to add `.catch` there, then we get an unhandled promise error (viewable in the console). We can catch such errors using a global event handler as described in the chapter <info:promise-error-handling>.
 
 
 ```smart header="`async/await` and `promise.then/catch`"
@@ -298,7 +298,7 @@ As we've seen in the chapter <info:microtask-queue>, promise handlers are execut
 
 For instance, we have:
 - `setTimeout(handler, 0)`, that should run `handler` with zero delay.
-- `let x = await f()`, function `f()` is async, but returns immediateley.
+- `let x = await f()`, function `f()` is async, but returns immediately.
 
 Which one runs first if `await` is *below* `setTimeout` in the code?
 

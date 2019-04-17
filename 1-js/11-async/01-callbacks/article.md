@@ -98,7 +98,7 @@ Here we did it in `loadScript`, but of course, it's a general approach.
 
 ## Callback in callback
 
-How to load two scripts sequentially: the first one, and then the second one after it?
+How can we load two scripts sequentially: the first one, and then the second one after it?
 
 The natural solution would be to put the second `loadScript` call inside the callback, like this:
 
@@ -140,7 +140,7 @@ So, every new action is inside a callback. That's fine for few actions, but not 
 
 ## Handling errors
 
-In examples above we didn't consider errors. What if the script loading fails? Our callback should be able to react on that.
+In the above examples we didn't consider errors. What if the script loading fails? Our callback should be able to react on that.
 
 Here's an improved version of `loadScript` that tracks loading errors:
 
@@ -262,7 +262,7 @@ function step3(error, script) {
 
 See? It does the same, and there's no deep nesting now because we made every action a separate top-level function.
 
-It works, but the code looks like a torn apart spreadsheet. It's difficult to read, and you probably noticed that. One needs to eye-jump between pieces while reading it. That's inconvenient, especially if the reader is not familiar with the code and doesn't know where to eye-jump.
+It works, but the code looks like a torn apart spreadsheet. It's difficult to read, and you probably noticed that one needs to eye-jump between pieces while reading it. That's inconvenient, especially if the reader is not familiar with the code and doesn't know where to eye-jump.
 
 Also, the functions named `step*` are all of single use, they are created only to avoid the "pyramid of doom." No one is going to reuse them outside of the action chain. So there's a bit of a namespace cluttering here.
 

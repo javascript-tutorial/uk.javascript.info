@@ -13,9 +13,9 @@ The usage is pretty simple:
     let controller = new AbortController();
     ```
 
-    The controller is an extremely simple object. It has a single method `abort()`, and a single property `signal`, that generates an event when `abort()` is called:
+    A controller is an extremely simple object. It has a single method `abort()`, and a single property `signal`. When `abort()` is called, the `abort` event triggers on `controller.signal`:
 
-    We can even use it without `fetch` for our own purposes, like this:
+    Like this:
 
     ```js run
     let controller = new AbortController();
@@ -87,7 +87,7 @@ let results = await Promise.all(fetchJobs);
 // controller.abort() stops all fetches
 ```
 
-If wee have our own jobs, different from `fetch`, we can use a single `AbortController` to stop those, together with fetches.
+If we have our own jobs, different from `fetch`, we can use a single `AbortController` to stop those, together with fetches.
 
 
 ```js
