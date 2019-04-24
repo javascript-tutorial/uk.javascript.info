@@ -1,17 +1,17 @@
-# Hello, world!
+# Привіт, світ!
 
-The tutorial that you're reading is about core JavaScript, which is platform-independent. Later on, you'll learn about Node.JS and other platforms that use it.
+Підручник, який ви читаєте є про основи JavaScript, який є платформонезалежний. Згодом, ви будете вивчати про Node.JS та інші платформи, які його використовують.
 
-But we need a working environment to run our scripts and, since this book is online, the browser is a good choice. We'll keep the amount of browser-specific commands (like `alert`) to a minimum so that you don't spend time on them if you plan to concentrate on another environment (like Node.JS). We'll focus on JavaScript in the browser in the [next part](/ui) of the tutorial.
+Але нам необхідне робоче середовище для запуску наших скриптів, оскільки ця книга є онлайн, браузер є гарним вибором для цього. Ми зведемо до мінімуму кількість специфічних команд для браузера(наприклад `alert`), щоб ви не витрачали час на них, якщо ви плануєте зосередитися на іншому середовищі (як Node.JS). Ми зосередимось на JavaScript в браузері у [наступній частині](/ui) підручника
 
-So first, let's see how we attach a script to a webpage. For server-side environments (like Node.JS), you can execute the script with a command like `"node my.js"`.
+По-перше, давайте подивимось, як ми додаємо сценарій до сторінки. Для серверних середовищ (як Node.js) ви можете виконати сценарій за допомогою команди `"node my.js"`
 
 
-## The "script" tag
+## Тег "script"
 
-JavaScript programs can be inserted into any part of an HTML document with the help of the `<script>` tag.
+Програми JavaScript можуть бути вставлені в будь-яку частину HTML документа за допомогою тега `<script>`
 
-For instance:
+Наприклад:
 
 ```html run height=100
 <!DOCTYPE HTML>
@@ -19,15 +19,15 @@ For instance:
 
 <body>
 
-  <p>Before the script...</p>
+  <p>Перед сценарієм ...</p>
 
 *!*
   <script>
-    alert( 'Hello, world!' );
+    alert( 'Привіт, світ!' );
   </script>
 */!*
 
-  <p>...After the script.</p>
+  <p>...Після сценарію.</p>
 
 </body>
 
@@ -35,18 +35,19 @@ For instance:
 ```
 
 ```online
-You can run the example by clicking the "Play" button in the right-top corner of the box above.
+Ви можете запустити зразок на кнопку "Відтворення" у правому верхньому куті поля вище.
 ```
 
-The `<script>` tag contains JavaScript code which is automatically executed when the browser processes the tag.
+Тег `<script>` містить JavaScript код, який автоматично виконується, коли браузер обробляє тег.
 
 
-## Modern markup
+## Сучасна розмітка
 
-The `<script>` tag has a few attributes that are rarely used nowadays but can still be found in old code:
+Тег `<script>` має декілька атрибутів, які рідко використовуються сьогодні, але можуть ще бути знайдені в старому коді.
 
-The `type` attribute: <code>&lt;script <u>type</u>=...&gt;</code>
-: The old HTML standard, HTML4, required a script to have a `type`. Usually it was `type="text/javascript"`. It's not required anymore. Also, the modern HTML standard, HTML5, totally changed the meaning of this attribute. Now, it can be used for JavaScript modules. But that's an advanced topic; we'll talk about modules in another part of the tutorial. 
+Атрибут `type`: <code>&lt;script <u>type</u>=...&gt;</code>
+:Старий HTML стандарт, HTML4, вимагає щоб у `<script>` був `type`. Зазвичай це був `type="text/javascript"`. Це більше не потрібно. Також, сучасний HTML стандарт, HTML5, повністю змінив зміст цього атрибута. Тепер його можна використовувати для JavaScript модулів. Але це є просунута тема; ми поговоримо про модулі в іншій частині підручника.
+
 
 The `language` attribute: <code>&lt;script <u>language</u>=...&gt;</code>
 : This attribute was meant to show the language of the script. This attribute no longer makes sense because JavaScript is the default language. There is no need to use it.
