@@ -55,7 +55,11 @@ Safari (браузер в Mac, не підтримується Windows/Linux) д
 
 Зазвичай, коли ми вводимо один рядок коду в консоль і натискаємо `key:Enter`, він виконується.
 
+<<<<<<< HEAD
 Щоб вставити декілька рядків, натисніть `key:Shift+Enter`.
+=======
+To insert multiple lines, press `key:Shift+Enter`.
+>>>>>>> 19223ae762f03cdff4e83f6f963f4f427af93847
 
 ## Підсумки
 

@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # The Modern JavaScript Tutorial in Ukrainian
 
 This repository hosts the translation of <https://javascript.info> in Ukrainian.
+=======
+# The Modern JavaScript Tutorial
+
+This repository hosts the English content of the Modern JavaScript Tutorial, published at [https://javascript.info](https://javascript.info).
+>>>>>>> 19223ae762f03cdff4e83f6f963f4f427af93847
 
 Please help us to make the translation better.
 
@@ -9,6 +15,7 @@ Please help us to make the translation better.
 - Create an issue to inform the maintainer that you're translating it.
 - Fork the repository, translate and send a PR when done.
 
+<<<<<<< HEAD
 🎉 Thank you!
 
 Your name and the contribution size will appear in the "About project" page when the translation gets published.
@@ -20,6 +27,19 @@ P.S. The full list of languages can be found at <https://github.com/javascript-t
 Every chapter, an article or a task resides in its own folder.
 
 The folder is named `N-url`, where `N` – is the number for sorting (articles are ordered), and `url` is the URL-slug on the site.
+=======
+See <https://github.com/javascript-tutorial/translate> for the details.
+
+## Contributions
+
+We'd also like to collaborate on the tutorial with other people.
+
+Something's wrong? A topic is missing? Explain it to people, add as PR 👏
+
+**You can edit the text in any editor.** The tutorial uses enhanced "markdown" format, easy to grasp. And if you want to see how it looks on-site, there's a server to run the tutorial locally at <https://github.com/javascript-tutorial/server>.  
+
+The list of contributors is available at <https://javascript.info/about#contributors>.
+>>>>>>> 19223ae762f03cdff4e83f6f963f4f427af93847
 
 The folder has one of files:
 
@@ -95,4 +115,14 @@ If a linked article has no translated version, leave the link "as is".
 
 You can run the tutorial locally, to immediately see the changes on-site.
 
+<<<<<<< HEAD
 The server is at <https://github.com/javascript-tutorial/server>. 
+=======
+Each of these files starts from the `# Main header`.
+
+It's very easy to add something new.
+
+---
+💓  
+Ilya Kantor @iliakan
+>>>>>>> 19223ae762f03cdff4e83f6f963f4f427af93847

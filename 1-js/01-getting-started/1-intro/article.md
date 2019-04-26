@@ -45,7 +45,11 @@
 
 Сучасний JavaScript — це "безпечна" мова програмування. Вона не надає низькорівневого доступу до пам'яті чи процесора, оскільки початково була створена для браузерів, які цього не потребують.
 
+<<<<<<< HEAD
 Можливості Javascript значно залежать від оточення, в якому він виконується. Наприклад, [Node.JS](https://uk.wikipedia.org/wiki/Node.js) підтримує функції, які дозволяють JavaScript читати/записувати довільні файли, здійснювати мережеві запити, та інше.
+=======
+JavaScript's capabilities greatly depend on the environment it's running in. For instance, [Node.js](https://wikipedia.org/wiki/Node.js) supports functions that allow JavaScript to read/write arbitrary files, perform network requests, etc.
+>>>>>>> 19223ae762f03cdff4e83f6f963f4f427af93847
 
 Вбудований в браузер JavaScript може робити все, що зв'язано з маніпуляцією веб-сторінки, взаємодією з користувачем та веб-сервером.
 
@@ -88,7 +92,11 @@
 + Прості речі робляться просто.
 + Підтримується всіма сучасними браузерами і увімкнений усталено.
 ```
+<<<<<<< HEAD
 Javascript – це єдина браузерна технологія, яка суміщає ці три речі.
+=======
+JavaScript is the only browser technology that combines these three things.
+>>>>>>> 19223ae762f03cdff4e83f6f963f4f427af93847
 
 Це і робить його унікальним. Ось чому JavaScript найбільш поширений засіб створення браузерних інтерфейсів.
 
