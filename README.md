@@ -9,7 +9,7 @@ This repository hosts the translation of <https://javascript.info> in Ukrainian.
 - Add a comment to that issue to inform the maintainer that you're translating it.
 - Fork the repository, translate and send a PR when done.
 
-Also let others know what you're translating, in message boards or chats in your language. Invite them to join!
+**Let others know what you're translating, in message boards or chats in your language. Invite them to join!**
 
 🎉 Thank you!
 
