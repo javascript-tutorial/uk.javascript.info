@@ -15,6 +15,8 @@ This repository hosts the translation of <https://javascript.info> in Ukrainian.
 
 Your name and the contribution size will appear in the "About project" page when the translation gets published.
 
+If you'd like to become a maintainer, have full access to the repository and review translations of others, write us at <https://github.com/javascript-tutorial/translate/issues/new>.
+
 P.S. The full list of languages can be found at <https://github.com/javascript-tutorial/translate>.
 
 ## Structure
