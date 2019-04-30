@@ -2,12 +2,14 @@
 
 This repository hosts the translation of <https://javascript.info> in Ukrainian.
 
-Please help us to make the translation better.
+**That's how you can contribute:**
 
-- See the [issue](https://github.com/javascript-tutorial/uk.javascript.info/issues) named "Translate Progress".
+- See the [Ukrainian Translate Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1) issue.
 - Choose an unchecked article you'd like to translate.
-- Create an issue to inform the maintainer that you're translating it.
+- Add a comment to that issue to inform the maintainer that you're translating it.
 - Fork the repository, translate and send a PR when done.
+
+Also let others know what you're translating, in message boards or chats in your language. Invite them to join!
 
 🎉 Thank you!
 
@@ -33,9 +35,15 @@ Additional resources and examples for the article or the task, are also in the s
 
 ## Translation Tips
 
-The translation doesn't have to be word-by-word precise. It should be technically correct and explain well.
+- The translation doesn't have to be word-by-word precise. It should be technically correct and explain well.
+- If you see that the English version can be improved – great, please send a PR to it.
 
-If you see that the English version can be improved – great, please send a PR to it.
+**Please keep line breaks and paragraphs "as is": don't add newlines and don't remove existing ones.** Makes it easy to merge future changes from the English version into the translation. 
+
+### Glossary
+
+Agree on translations of terms like `resolved promise`, `slash`, `regexp`, etc. Look a good glossary, maybe there's one for your language already?
+Or create it, for all translators to use the same terms. 
 
 ### Text in Code Blocks
 
@@ -90,6 +98,18 @@ For links to MDN, that are only partially translated, also use the language-spec
 
 If a linked article has no translated version, leave the link "as is".
 
+### Metadata
+
+Some files, usually tasks, have YAML metadata at the top, delimited by `---`:
+
+```md
+importance: 5
+
+---
+...
+```
+
+Please don't translate "importance" (and other top metadata).
 
 ## Running locally
 
