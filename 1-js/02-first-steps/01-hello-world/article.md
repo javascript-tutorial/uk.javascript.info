@@ -48,43 +48,40 @@
 Атрибут `type`: <code>&lt;script <u>type</u>=...&gt;</code>
 :Старий HTML стандарт, HTML4, вимагає щоб у `<script>` був `type`. Зазвичай це був `type="text/javascript"`. Це більше не потрібно. Також, сучасний HTML стандарт, HTML5, повністю змінив зміст цього атрибута. Тепер його можна використовувати для JavaScript модулів. Але це є просунута тема; ми поговоримо про модулі в іншій частині підручника.
 
+Атрибут `language`: <code>&lt;script <u>language</u>=...&gt;</code>
+: Цей атрибут вказував, що це є мова сценарію. Цей атрибут більше немає сенсу, оскільки JavaScript є мовою за замовчуванням. Цей атрибут більше не потрібно використовувати.
 
-The `language` attribute: <code>&lt;script <u>language</u>=...&gt;</code>
-: This attribute was meant to show the language of the script. This attribute no longer makes sense because JavaScript is the default language. There is no need to use it.
-
-Comments before and after scripts.
-: In really ancient books and guides, you may find comments inside `<script>` tags, like this:
+Коментарі до та після сценаріїв.
+:У дійсно давніх посібниках і книгах ви можете знайти коментарі всередині тега `<script>`, наприклад:
 
     ```html no-beautify
     <script type="text/javascript"><!--
         ...
     //--></script>
     ```
+    Такий спосіб не використовується у сучасному JavaScript. Ці коментарі ховали JavaScript для старих браузерів, які не знали, як обробляти тег `<script>`.  Починаючи з браузерів, які були випущені за останні 15 років, не мають цієї проблеми. Такий вид коментарів може допомогти вам визначити дійсно старий код. 
 
-    This trick isn't used in modern JavaScript. These comments hid JavaScript code from old browsers that didn't know how to process the `<script>` tag. Since browsers released in the last 15 years don't have this issue, this kind of comment can help you identify really old code.
 
+## Зовнішні сценарії
+Якщо ми маємо багато JavaScript коду, ми можемо їх розділити на окремі файли.
 
-## External scripts
-
-If we have a lot of JavaScript code, we can put it into a separate file.
-
-Script files are attached to HTML with the `src` attribute:
+Файл сценарію може бути доданий до HTML за допомогою атрибута `src`:
 
 ```html
 <script src="/path/to/script.js"></script>
 ```
 
-Here, `/path/to/script.js` is an absolute path to the script file (from the site root).
+Тут, `/path/to/script.js` - абсолютний шлях до файлу сценарію (з кореня сайту).
 
-You can also provide a relative path from the current page. For instance, `src="script.js"` would mean a file `"script.js"` in the current folder.
+Також можна вказати відносний шлях з поточної сторінки. Наприклад, `src="script.js"` означатиме файл `"script.js"` у поточній директорії.
 
-We can give a full URL as well. For instance:
+Ми також можемо вказати повну URL-адресу. Наприклад:
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js"></script>
 ```
 
-To attach several scripts, use multiple tags:
+Щоб додати кілька сценаріїв, використовуйте кілька тегів:
 
 ```html
 <script src="/js/script1.js"></script>
@@ -92,30 +89,29 @@ To attach several scripts, use multiple tags:
 …
 ```
 
-```smart
-As a rule, only the simplest scripts are put into HTML. More complex ones reside in separate files.
+```Порада
+Як правило, тільки найпростіші сценарії містяться в HTML. Більш складні знаходяться в окремих файлах.
 
-The benefit of a separate file is that the browser will download it and store it in its [cache](https://en.wikipedia.org/wiki/Web_cache).
+Перевага окремого файлу полягає в тому, що браузер завантажує його та зберігає у своєму [кеші](https://uk.wikipedia.org/wiki/%D0%92%D0%B5%D0%B1-%D0%BA%D0%B5%D1%88%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F).
 
-Other pages that reference the same script will take it from the cache instead of downloading it, so the file is actually downloaded only once.
+Інші сторінки, які посилаються на один і той же сценарій, замість того, щоб завантажувати його, будуть брати його з кешу, тому файл буде завантажено лише один раз.
 
-That reduces traffic and makes pages faster.
+Це зменшує трафік і робить сторінки швидшою.
 ```
 
-````warn header="If `src` is set, the script content is ignored."
-A single `<script>` tag can't have both the `src` attribute and code inside.
+````warn header="Якщо вказаний `src`, вміст сценарію ігнорується."
+Один тег `<script>` не може мати атрибут `src` і код всередині.
 
-This won't work:
+Це не працює:
 
 ```html
 <script *!*src*/!*="file.js">
-  alert(1); // the content is ignored, because src is set
+  alert(1); // вміст ігнорується, оскільки задано src
 </script>
 ```
 
-We must choose either an external `<script src="…">` or a regular `<script>` with code.
-
-The example above can be split into two scripts to work:
+Ми повинні вибрати або зовнішній `<script src="…">` або звичайний `<script>` з кодом.
+Наведений вище приклад можна розділити на два сценарії:
 
 ```html
 <script src="file.js"></script>
@@ -125,11 +121,11 @@ The example above can be split into two scripts to work:
 ```
 ````
 
-## Summary
+## Підсумок
 
-- We can use a `<script>` tag to add JavaScript code to a page.
-- The `type` and `language` attributes are not required.
-- A script in an external file can be inserted with `<script src="path/to/script.js"></script>`.
+- Ми можемо використовувати тег `<script>` для додавання JavaScript коду на сторінку.
+- Атрибути `type` і `language` не потрібні.
+- Сценарій у зовнішньому файлі може бути вставлений за допомогою `<script src="path/to/script.js"></script>`.
 
 
-There is much more to learn about browser scripts and their interaction with the webpage. But let's keep in mind that this part of the tutorial is devoted to the JavaScript language, so we shouldn't distract ourselves with browser-specific implementations of it. We'll be using the browser as a way to run JavaScript, which is very convenient for online reading, but only one of many.
+Існує набагато більше інформації про браузерні сценарії та їхню взаємодію з веб-сторінкою. Але майте на увазі, що ця частина підручника присвячена мові JavaScript, тому ми не повинні відволікати себе від конкретних реалізацій браузера. Ми будемо використовувати браузер як спосіб запуску JavaScript, що є дуже зручним для читання в Інтернеті, але це лише один із багатьох можливих варіантів.
