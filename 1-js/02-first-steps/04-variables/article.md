@@ -1,61 +1,61 @@
-# Variables
+# Змінні
 
-Most of the time, a JavaScript application needs to work with information. Here are two examples:
-1. An online shop -- the information might include goods being sold and a shopping cart.
-2. A chat application -- the information might include users, messages, and much more.
+Найчастіше, застосункам на JavaScript потрібно працювати з інформацією. Ось два приклади:
+1. Онлайн магазин -- інформацією можуть бути товари, які продаються і вміст кошика.
+2. Застосунок для чату -- інформація може включати користувачів, повідомлення та багато іншого.
 
-Variables are used to store this information.
+Змінні використовуються для зберігання цієї інформації.
 
-## A variable
+## Змінна
 
-A [variable](https://en.wikipedia.org/wiki/Variable_(computer_science)) is a "named storage" for data. We can use variables to store goodies, visitors, and other data.
+[Змінна](https://uk.wikipedia.org/wiki/Змінна_(програмування)) це "іменована частинка сховища", в якій зберігаються дані. Ми можемо використовувати змінні, щоб зберігати товари, відвідувачів та інші дані.
 
-To create a variable in JavaScript, use the `let` keyword.
+Щоб створити змінну, використовуйте ключове слово `let`.
 
-The statement below creates (in other words: *declares* or *defines*) a variable with the name "message":
+Цей рядок нижче створить (іншими словами *оголосить* чи *визначить*) змінну з ім'ям "message":
 
 ```js
 let message;
 ```
 
-Now, we can put some data into it by using the assignment operator `=`:
+Тепер, ми можемо покласти деякі дані в цю змінну, використовуючи оператор присвоєння `=`:
 
 ```js
 let message;
 
 *!*
-message = 'Hello'; // store the string
+message = 'Hello'; // збереження рядка
 */!*
 ```
 
-The string is now saved into the memory area associated with the variable. We can access it using the variable name:
+Тепер рядок збережено в частину пам'яті, яка зв'язана з цією змінною. Ми можемо отримати доступ до даних, використовуючи ім'я змінної:
 
 ```js run
 let message;
 message = 'Hello!';
 
 *!*
-alert(message); // shows the variable content
+alert(message); // показує вміст змінної
 */!*
 ```
 
-To be concise, we can combine the variable declaration and assignment into a single line:
+Щоб бути коротким, ми можемо зуміщати оголошення змінної та її присвоєння в одному рядку:
 
 ```js run
-let message = 'Hello!'; // define the variable and assign the value
+let message = 'Hello!'; // оголошення і присвоєння значення
 
 alert(message); // Hello!
 ```
 
-We can also declare multiple variables in one line:
+Ми також можемо оголосити декілька змінних в одному рядку:
 
 ```js no-beautify
 let user = 'John', age = 25, message = 'Hello';
 ```
 
-That might seem shorter, but we don't recommend it. For the sake of better readability, please use a single line per variable.
+Таке оголошення може виглядати коротшим, проте ми не рекомендуємо так писати. Заради кращої читабельності, будь ласка, використовуйте один рядок для кожної змінної.
 
-The multiline variant is a bit longer, but easier to read:
+Багаторядковий спосіб трохи довший, проте його легше читати:
 
 ```js
 let user = 'John';
@@ -63,14 +63,14 @@ let age = 25;
 let message = 'Hello';
 ```
 
-Some people also define multiple variables in this multiline style:
+Деякі люди також оголошують змінні в такому багаторядковому стилі:
 ```js no-beautify
 let user = 'John',
   age = 25,
   message = 'Hello';
 ```
 
-...Or even in the "comma-first" style:
+...або навіть в стилі "кома спочатку":
 
 ```js no-beautify
 let user = 'John'
@@ -78,19 +78,19 @@ let user = 'John'
   , message = 'Hello';
 ```
 
-Technically, all these variants do the same thing. So, it's a matter of personal taste and aesthetics.
+Технічно, всі ці способи роблять одне і теж. Тому, це питання особистого смаку та естетики.
 
 
-````smart header="`var` instead of `let`"
-In older scripts, you may also find another keyword: `var` instead of `let`:
+````smart header="`var` замість `let`"
+В старих скриптах, ви можете знайти інше ключове слово: `var` замість `let`:
 
 ```js
 *!*var*/!* message = 'Hello';
 ```
 
-The `var` keyword is *almost* the same as `let`. It also declares a variable, but in a slightly different, "old-school" way.
+Слово `var` *майже* таке саме як `let`. Воно теж оголошує змінну, але дещо іншим, "старим" способом.
 
-There are subtle differences between `let` and `var`, but they do not matter for us yet. We'll cover them in detail in the chapter <info:var>.
+Існують тонкі відмінності між ними `let` і `var`, але вони поки що не мають для нас значення. Ми дізнаємося більше про їхню різницю в розділі <info:var>.
 ````
 
 ## A real-life analogy
@@ -304,6 +304,7 @@ Some good-to-follow rules are:
 - Stay away from abbreviations or short names like `a`, `b`, `c`, unless you really know what you're doing.
 - Make names maximally descriptive and concise. Examples of bad names are `data` and `value`. Such names say nothing. It's only okay to use them if the context of the code makes it exceptionally obvious which data or value the variable is referencing.
 - Agree on terms within your team and in your own mind. If a site visitor is called a "user" then we should name related variables `currentUser` or `newUser` instead of `currentVisitor` or `newManInTown`.
+- Використовуйте імені лише англійською мовою. Оголошення `let message` і `let повідомлення` будуть працювати, проте перший варіант є хорошим тоном для написання коду.
 
 Sounds simple? Indeed it is, but creating descriptive and concise variable names in practice is not. Go for it.
 
