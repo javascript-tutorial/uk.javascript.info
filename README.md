@@ -1,13 +1,13 @@
-# The Modern JavaScript Tutorial in Ukrainian
+# Сучасний посібник по JavaScript українською мовою
 
-This repository hosts the translation of <https://javascript.info> in Ukrainian.
+В цьому репозиторію зберігається переклад <https://javascript.info> на українську мову.
 
-**That's how you can contribute:**
+**Ось як ви можете допомогти:**
 
-- See the [Ukrainian Translate Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1) issue.
-- Choose an unchecked article you'd like to translate.
-- Add a comment to that issue to inform the maintainer that you're translating it.
-- Fork the repository, translate and send a PR when done.
+- Перегляньте перше завдання: [Ukrainian Translate Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).
+- Виберіть розділ, який ви хочете перекласти. Вибирайте з тих розділів, які ще не відмічені.
+- Додайте коментар до завдання, щоб проінформувати інших, що ви перекладаєте цей розділ.
+- Створіть форк репозиторію, перекладіть один розділ і надішліть запит на злиття (PR), коли завершите.
 
 **Let others know what you're translating, in message boards or chats in your language. Invite them to join!**
 
@@ -19,11 +19,23 @@ If you'd like to become a maintainer, have full access to the repository and rev
 
 P.S. The full list of languages can be found at <https://github.com/javascript-tutorial/translate>.
 
+## Contributions
+
+We'd also like to collaborate on the tutorial with other people.
+
+Something's wrong? A topic is missing? Explain it to people, add as PR 👏
+
+**You can edit the text in any editor.** The tutorial uses enhanced "markdown" format, easy to grasp. And if you want to see how it looks on-site, there's a server to run the tutorial locally at <https://github.com/javascript-tutorial/server>.  
+
+The list of contributors is available at <https://javascript.info/about#contributors>.
+
 ## Structure
 
 Every chapter, an article or a task resides in its own folder.
 
 The folder is named `N-url`, where `N` – is the number for sorting (articles are ordered), and `url` is the URL-slug on the site.
+
+See <https://github.com/javascript-tutorial/translate> for the details.
 
 The folder has one of files:
 
@@ -116,5 +128,12 @@ Please don't translate "importance" (and other top metadata).
 ## Running locally
 
 You can run the tutorial locally, to immediately see the changes on-site.
+The server is at <https://github.com/javascript-tutorial/server>.
 
-The server is at <https://github.com/javascript-tutorial/server>. 
+Each of these files starts from the `# Main header`.
+
+It's very easy to add something new.
+
+---
+💓  
+Ilya Kantor @iliakan
