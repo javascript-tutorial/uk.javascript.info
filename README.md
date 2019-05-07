@@ -4,20 +4,22 @@
 
 **Ось як ви можете допомогти:**
 
-- Перегляньте перше завдання: [Ukrainian Translate Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).
-- Виберіть розділ, який ви хочете перекласти. Вибирайте з тих розділів, які ще не відмічені.
-- Додайте коментар до завдання, щоб проінформувати інших, що ви перекладаєте цей розділ.
+- Перегляньте першу issue: [Ukrainian Translate Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).
+- Виберіть розділ, який ви хочете перекласти. Вибирайте з тих розділів, які ще не відмічені і не перекладаються.
+- Додайте коментар до issue, щоб проінформувати інших, що ви перекладаєте цей розділ.
 - Створіть форк репозиторію, перекладіть один розділ і надішліть запит на злиття (PR), коли завершите.
 
-**Let others know what you're translating, in message boards or chats in your language. Invite them to join!**
+За бажанням можете [створити issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/new) із назвою перекладу, наприклад: "Translation: Code quality > Debugging in Chrome".
 
-🎉 Thank you!
+**Дайте іншим зрозуміти, що ви перекладаєте. Найкращим способом буде написання коментаря до [цього issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/1)**
 
-Your name and the contribution size will appear in the "About project" page when the translation gets published.
+🎉 Дякуємо!
 
-If you'd like to become a maintainer, have full access to the repository and review translations of others, write us at <https://github.com/javascript-tutorial/translate/issues/new>.
+Ваше ім'я та ваш вклад в переклад з'являться на сторінці "Про проект", коли переклад буде опубліковано.
 
-P.S. The full list of languages can be found at <https://github.com/javascript-tutorial/translate>.
+Якщо ви хочете стати супроводжуючим (maintainer), мати повний доступ до репозиторію і переглядати переклади інших, [створіть нову issue](https://github.com/javascript-tutorial/translate/issues/new) в головному репозиторію, із заголовком "Become maintainer (Ukrainian)".
+
+P.S. Весь перелік мов можна знайти на сторінці <https://github.com/javascript-tutorial/translate>.
 
 ## Contributions
 
