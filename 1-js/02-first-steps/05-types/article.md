@@ -1,134 +1,136 @@
-# Data types
+# Типи даних
 
-A variable in JavaScript can contain any data. A variable can at one moment be a string and at another be a number:
+Змінна в JavaScript може містити будь-які дані. Змінна може в один момент бути рядком, а в інший - числом:
 
 ```js
-// no error
-let message = "hello";
+// тут не буде помилки
+let message = "привіт";
 message = 123456;
 ```
 
-Programming languages that allow such things are called "dynamically typed", meaning that there are data types, but variables are not bound to any of them.
+Мова програмування, яка дозволяє таке робити називається "динамічно типізованою", маючи на увазі, що є типи даних, але змінні не прив'язанні до жодного типу.
 
-There are seven basic data types in JavaScript. Here, we'll cover them in general and in the next chapters we'll talk about each of them in detail.
+Існує сім базових типів в JavaScript. У цьому розділі ми розглянемо їх поверхнево, але в наступних розлянемо кожен більш детально.
 
-## A number
+## Число (number)
 
 ```js
 let n = 123;
 n = 12.345;
 ```
 
-The *number* type represents both integer and floating point numbers.
+Тип _number_ представляє і цілі числа і числа з плаваючою точкою.
 
-There are many operations for numbers, e.g. multiplication `*`, division `/`, addition `+`, subtraction `-`, and so on.
+Існує багато операцію, що можна робити с числами, наприклад, множення `*`, ділення `/`, додавання `+`, віднімання `-`, тощо.
 
-Besides regular numbers, there are so-called "special numeric values" which also belong to this data type: `Infinity`, `-Infinity` and `NaN`.
+Окрім звичайних чисел, також існують так звані "спеціальні числові значення", що також мають відношення до цього типу даних: `Infinity`, `-Infinity` and `NaN`.
 
-- `Infinity` represents the mathematical [Infinity](https://en.wikipedia.org/wiki/Infinity) ∞. It is a special value that's greater than any number.
+- `Infinity` являє собою математічну [наскінченність](https://uk.wikipedia.org/wiki/%D0%9D%D0%B5%D1%81%D0%BA%D1%96%D0%BD%D1%87%D0%B5%D0%BD%D0%BD%D1%96%D1%81%D1%82%D1%8C) ∞. Це спеціальний тип, що є більшим за будь-яке число.
 
-    We can get it as a result of division by zero:
+  Ми можемо отримати його як результат ділення на нуль:
 
-    ```js run
-    alert( 1 / 0 ); // Infinity
-    ```
+  ```js run
+  alert(1 / 0); // Infinity
+  ```
 
-    Or just reference it directly:
+  Або просто безпосередньо посилатися на нього:
 
-    ```js run
-    alert( Infinity ); // Infinity
-    ```
-- `NaN` represents a computational error. It is a result of an incorrect or an undefined mathematical operation, for instance:
+  ```js run
+  alert(Infinity); // Infinity
+  ```
 
-    ```js run
-    alert( "not a number" / 2 ); // NaN, such division is erroneous
-    ```
+- `NaN` являє собою помилку обчислення. Це є результат неправильної або невизначеної математичної операції, наприклад:
 
-    `NaN` is sticky. Any further operation on `NaN` returns `NaN`:
+  ```js run
+  alert("not a number" / 2); // NaN, таке ділення є помилковим
+  ```
 
-    ```js run
-    alert( "not a number" / 2 + 5 ); // NaN
-    ```
+  `NaN` є "стійким" (постійним). Будь-які наступні операції з `NaN` будуть повертати `NaN`:
 
-    So, if there's a `NaN` somewhere in a mathematical expression, it propagates to the whole result.
+  ```js run
+  alert("not a number" / 2 + 5); // NaN
+  ```
 
-```smart header="Mathematical operations are safe"
-Doing maths is "safe" in JavaScript. We can do anything: divide by zero, treat non-numeric strings as numbers, etc.
+  Таким чином, якщо є `NaN` десь у математичному виразі, він пошірюватиметься на весь результат.
 
-The script will never stop with a fatal error ("die"). At worst, we'll get `NaN` as the result.
+```smart header="Математичні операції є безпечними"
+Обчислювання є "безпечним" в JavaScript. Ми можемо робити будь-що: діління на нуль, звертатися до нечислової строки як до числа, тощо.
+
+Виконання скрипта ніколи не зупиниться з фатальною помилкою ("die"). У гіршому випадку ми отримаємо у результаті `NaN`.
 ```
 
-Special numeric values formally belong to the "number" type. Of course they are not numbers in the common sense of this word.
+Спеціальні числові значення формально належать до типу "number". Хоча, звісно, вони не є числами у загальноприйнятому розумінні.
 
-We'll see more about working with numbers in the chapter <info:number>.
+Докладніше роботу с числами ми розглянемо у розділі <info:number>.
 
-## A string
+## Строка (string)
 
-A string in JavaScript must be surrounded by quotes.
+Строка у JavaScript повинна бути оточенна лапками.
 
 ```js
-let str = "Hello";
-let str2 = 'Single quotes are ok too';
-let phrase = `can embed ${str}`;
+let str = "Привіт";
+let str2 = "Одинарні лапки також дозволяються";
+let phrase = `так можна вставляти ${str}`;
 ```
 
-In JavaScript, there are 3 types of quotes.
+В JavaScript існує три типу лапок.
 
-1. Double quotes: `"Hello"`.
-2. Single quotes: `'Hello'`.
-3. Backticks: <code>&#96;Hello&#96;</code>.
+1. Подвійні лапки: `"Привіт"`.
+2. Одинарні липки: `'Привіт'`.
+3. Зворотні лапки: <code>&#96;Привіт&#96;</code>.
 
-Double and single quotes are "simple" quotes. There's no difference between them in JavaScript.
+Подвійні та одинарні лапки є "звичайними". Тобто немає ніякої різниці, які саме використовувати.
 
-Backticks are "extended functionality" quotes. They allow us to embed variables and expressions into a string by wrapping them in `${…}`, for example:
+Зворотні лапки є "розширеною функціональністю". Вони дозволяють вбудовувати змінні та вирази в строку, обрамляючи їх `${…}`, наприклад:
 
 ```js run
-let name = "John";
+let name = "Джон";
 
-// embed a variable
-alert( `Hello, *!*${name}*/!*!` ); // Hello, John!
+// вбудована змінна
+alert(`Привіт, *!*${name}*/!*!`); // Привіт, Джон!
 
-// embed an expression
-alert( `the result is *!*${1 + 2}*/!*` ); // the result is 3
+// вбудований вираз
+alert(`результат *!*${1 + 2}*/!*`); // результат 3
 ```
 
-The expression inside `${…}` is evaluated and the result becomes a part of the string. We can put anything in there: a variable like `name` or an arithmetical expression like `1 + 2` or something more complex.
+Вираз всередені `${…}` обчислюється, а результат обчислення стає частиною строки. Ми можемо вбудовувати будь-що: змінну `name`, або арифметичний вираз `1 + 2`, або щось набагато складніше.
 
-Please note that this can only be done in backticks. Other quotes don't have this embedding functionality!
+Будь ласка, зауважте, що вбудовування можно робити тільки зі зворотніми лапками. Інші типи лапків не мають функціональності вбудовування!
+
 ```js run
-alert( "the result is ${1 + 2}" ); // the result is ${1 + 2} (double quotes do nothing)
+alert("результат ${1 + 2}"); // результат ${1 + 2} (подвійні лапки не мають ніякого впливу)
 ```
 
-We'll cover strings more thoroughly in the chapter <info:string>.
+Більш ретельно ми будемо висвітлювати рядки у главі <info:string>.
 
-```smart header="There is no *character* type."
-In some languages, there is a special "character" type for a single character. For example, in the C language and in Java it is `char`.
+```smart header="Не існує типу *символ* (*character*)."
+У деяких мовах існує спеціальний тип "character" для позначення єдіного символу. Наприклад, в мовах C та Java це `char`.
 
-In JavaScript, there is no such type. There's only one type: `string`. A string may consist of only one character or many of them.
+В JavaScript не існує такого типу. Є єдиний тип: `string`. В свою чергу строка може містити лише один символ або багато.
 ```
 
-## A boolean (logical type)
+## Логічний тип (boolean)
 
-The boolean type has only two values: `true` and `false`.
+Логічний тип може приймати лише два значення: `true` та `false`.
 
-This type is commonly used to store yes/no values: `true` means "yes, correct", and `false` means "no, incorrect".
+Цей тип зазвичай використовується для зберігання значень так/ні: `true` означає "так, вірно", а `false` означає "ні, не вірно".
 
-For instance:
+Наприклад:
 
 ```js
-let nameFieldChecked = true; // yes, name field is checked
-let ageFieldChecked = false; // no, age field is not checked
+let nameFieldChecked = true; // так, ім'я було перевірене
+let ageFieldChecked = false; // ні, вік не був перевірен
 ```
 
-Boolean values also come as a result of comparisons:
+Логічне значення також можна отримати як результат порівняння:
 
 ```js run
 let isGreater = 4 > 1;
 
-alert( isGreater ); // true (the comparison result is "yes")
+alert(isGreater); // true (результат порівняння "так")
 ```
 
-We'll cover booleans more deeply in the chapter <info:logical-operators>.
+Більш глибоко ми охопимо булеві типи у главі <info:logical-operators>.
 
 ## The "null" value
 
@@ -222,7 +224,6 @@ The last three lines may need additional explanation:
 1. `Math` is a built-in object that provides mathematical operations. We will learn it in the chapter <info:number>. Here, it serves just as an example of an object.
 2. The result of `typeof null` is `"object"`. That's wrong. It is an officially recognized error in `typeof`, kept for compatibility. Of course, `null` is not an object. It is a special value with a separate type of its own. So, again, this is an error in the language.
 3. The result of `typeof alert` is `"function"`, because `alert` is a function of the language. We'll study functions in the next chapters where we'll see that there's no special "function" type in JavaScript. Functions belong to the object type. But `typeof` treats them differently. Formally, it's incorrect, but very convenient in practice.
-
 
 ## Summary
 
