@@ -2,10 +2,10 @@ importance: 5
 
 ---
 
-# Can I add a string property?
+# Чи можна додати властивість рядка?
 
 
-Consider the following code:
+Розглянемо наступний код:
 
 ```js
 let str = "Hello";
@@ -15,4 +15,5 @@ str.test = 5;
 alert(str.test);
 ```
 
-How do you think, will it work? What will be shown?
+
+Як ви думаєте, чи буде це працювати? Що буде показано?

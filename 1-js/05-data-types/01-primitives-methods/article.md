@@ -2,8 +2,7 @@
 
 JavaScript дозволяє працювати з прімітивамі (рядок, чісла, і т.д. ) так саме як з об'єктами.
 
-Вони також пропонують методи для работи. 
-They also provide methods to call as such. We will study those soon, but first we'll see how it works because, of course, primitives are not objects (and here we will make it even clearer).
+Вони також надають методи для роботи. Ми вивчимо їх найближчим часом, але спочатку ми подивимось як воно працює, тому що примітиви не є об'єктами (і тут ми зробимо це ще більш зрозумілим).
 
 Давайте розглянемо різніцю між прімітивамі та об'єктами.
 
@@ -42,11 +41,8 @@ john.sayHi(); // Hi buddy!
 
 Маємо парадокс, з яким стикається автор JavaScript:
 
-- Є багато речей, які можна було б зробити з примітивом, як рядок або число. Було б здорово отримати доступ до них як до методів.
+- Є багато речей, які можна було б зробити з примітивом-рядоком або число. Було б здорово отримати доступ до цих методів.
 - Примітиви повинні бути максимально швидкими та легкими.
-
-- There are many things one would want to do with a primitive like a string or a number. It would be great to access them as methods.
-- Primitives must be as fast and lightweight as possible.
 
 Рішення виглядає трошкі дивно, але так і є:
 
