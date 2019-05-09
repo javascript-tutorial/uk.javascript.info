@@ -2,12 +2,12 @@ importance: 5
 
 ---
 
-# String quotes
+# Лапки у рядках
 
-What is the output of the script?
+Який буде результат виконання скріпта?
 
 ```js
-let name = "Ilya";
+let name = "Ілля";
 
 alert( `hello ${1}` ); // ?
 
