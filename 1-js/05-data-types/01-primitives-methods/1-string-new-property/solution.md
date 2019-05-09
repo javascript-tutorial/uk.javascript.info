@@ -1,31 +1,31 @@
 
-Try running it:
+Спробуйте запустити:
 
 ```js run
-let str = "Hello";
+let str = "Привіт";
 
 str.test = 5; // (*)
 
 alert(str.test); 
 ```
 
-There may be two kinds of result:
+Ви можете отримати два результати:
 1. `undefined`
-2. An error.
+2. помилку.
 
-Why? Let's replay what's happening at line `(*)`:
+Чому? Давайте повторимо те, що відбувається в рядку `(*)`:
 
-1. When a property of `str` is accessed, a "wrapper object" is created.
-2. The operation with the property is carried out on it. So, the object gets the `test` property.
-3. The operation finishes and the "wrapper object" disappears.
+1. Коли ми намагаємося отримати доступ до `str`, створюється "об'єкт обгортка".
+2. Операція з властивістю здійснюється в ній. Отже, об'єкт отримує властивість `test`.
+3. Операція закінчується, і "об'єкт обгортка" зникає.
 
-So, on the last line, `str` has no trace of the property. A new wrapper object for every object operation on a string.
+Отже, на останньому рядку `str` не має властивості. Для кожної операції створюється новий об'єкт обгортка.
 
-Some browsers though may decide to further limit the programmer and disallow to assign properties to primitives at all. That's why in practice we can also see errors at line `(*)`. It's a little bit farther from the specification though.
+Деякі браузери можуть вирішити додатково обмежити програміста і взагалі заборонити присвоювати властивості примітивам. Тому на практиці ми можемо бачити помилки в рядку `(*)`. Але це трохи відрізняється від специфікації.
 
-**This example clearly shows that primitives are not objects.**
 
-They just can not store data. 
+**Цей приклад чітко показує, що примітиви не є об'єктами.**
 
-All property/method operations are performed with the help of temporary objects.
+Вони просто не можуть зберігати дані.
 
+Всі операції з властивостями/методами виконуються за допомогою тимчасових об'єктів.
