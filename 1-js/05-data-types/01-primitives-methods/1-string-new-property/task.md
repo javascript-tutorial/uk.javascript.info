@@ -8,7 +8,7 @@ importance: 5
 Розглянемо наступний код:
 
 ```js
-let str = "Hello";
+let str = "Привіт";
 
 str.test = 5;
 
