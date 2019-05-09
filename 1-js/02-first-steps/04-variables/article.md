@@ -24,7 +24,7 @@ let message;
 let message;
 
 *!*
-message = 'Hello'; // збереження рядка
+message = 'Привіт'; // збереження рядка
 */!*
 ```
 
@@ -32,50 +32,50 @@ message = 'Hello'; // збереження рядка
 
 ```js run
 let message;
-message = 'Hello!';
+message = 'Привіт!';
 
 *!*
 alert(message); // показує вміст змінної
 */!*
 ```
 
-Щоб бути коротким, ми можемо зуміщати оголошення змінної та її присвоєння в одному рядку:
+Щоб писати менше коду, ми можемо суміщати оголошення змінної та її присвоєння в одному рядку:
 
 ```js run
-let message = 'Hello!'; // оголошення і присвоєння значення
+let message = 'Привіт!'; // оголошення і присвоєння значення
 
-alert(message); // Hello!
+alert(message); // Привіт!
 ```
 
 Ми також можемо оголосити декілька змінних в одному рядку:
 
 ```js no-beautify
-let user = 'John', age = 25, message = 'Hello';
+let user = 'Іван', age = 25, message = 'Привіт';
 ```
 
-Таке оголошення може виглядати коротшим, проте ми не рекомендуємо так писати. Заради кращої читабельності, будь ласка, використовуйте один рядок для кожної змінної.
+Таке оголошення може виглядати коротшим, проте ми не рекомендуємо так писати. Заради кращої читабельності, будь ласка, оголошуйте змінні з нового рядка.
 
 Багаторядковий спосіб трохи довший, проте його легше читати:
 
 ```js
-let user = 'John';
+let user = 'Іван';
 let age = 25;
-let message = 'Hello';
+let message = 'Привіт';
 ```
 
 Деякі люди також оголошують змінні в такому багаторядковому стилі:
 ```js no-beautify
-let user = 'John',
+let user = 'Іван',
   age = 25,
-  message = 'Hello';
+  message = 'Привіт';
 ```
 
 ...або навіть в стилі "кома спочатку":
 
 ```js no-beautify
-let user = 'John'
+let user = 'Іван'
   , age = 25
-  , message = 'Hello';
+  , message = 'Привіт';
 ```
 
 Технічно, всі ці способи роблять одне і теж. Тому, це питання особистого смаку та естетики.
@@ -85,62 +85,62 @@ let user = 'John'
 В старих скриптах, ви можете знайти інше ключове слово: `var` замість `let`:
 
 ```js
-*!*var*/!* message = 'Hello';
+*!*var*/!* message = 'Привіт';
 ```
 
-Слово `var` *майже* таке саме як `let`. Воно теж оголошує змінну, але дещо іншим, "старим" способом.
+Ключове слово `var` *майже* таке як `let`. Воно теж оголошує змінну, але дещо іншим, "застарілим" способом.
 
-Існують тонкі відмінності між ними `let` і `var`, але вони поки що не мають для нас значення. Ми дізнаємося більше про їхню різницю в розділі <info:var>.
+Існують деякі відмінності між `let` і `var`, але вони поки що не мають для нас значення. Ми дізнаємося більше про їхню різницю в розділі <info:var>.
 ````
 
-## A real-life analogy
+## Аналогія з життя
 
-We can easily grasp the concept of a "variable" if we imagine it as a "box" for data, with a uniquely-named sticker on it.
+Ми легко зрозуміємо концепцію "змінної", якщо уявимо її у вигляді "коробки" для даних з унікальною наклейкою з назвою на ній.
 
-For instance, the variable `message` can be imagined as a box labeled `"message"` with the value `"Hello!"` in it:
+Наприклад, змінну `message` можна уявити як коробку з підписом `"Повідомлення"` із значенням `"Привіт!"` всередині:
 
 ![](variable.png)
 
-We can put any value in the box.
+Ми можемо покласти будь-яке значення в цю коробку.
 
-We can also change it as many times as we want:
+Ми також можемо змінювати її скільки разів, скільки захочемо:
 ```js run
 let message;
 
-message = 'Hello!';
+message = 'Привіт!';
 
-message = 'World!'; // value changed
+message = 'Світ!'; // значення змінено
 
 alert(message);
 ```
 
-When the value is changed, the old data is removed from the variable:
+Коли значення змінюється, старі дані видаляються зі змінної:
 
 ![](variable-change.png)
 
-We can also declare two variables and copy data from one into the other.
+ми також можемо оголосити дві змінні і скопіювати дані з однієї в іншу.
 
 ```js run
-let hello = 'Hello world!';
+let hello = 'Привіт світ!';
 
 let message;
 
 *!*
-// copy 'Hello world' from hello into message
+// копіюємо 'Привіт світ' з hello в message
 message = hello;
 */!*
 
-// now two variables hold the same data
-alert(hello); // Hello world!
-alert(message); // Hello world!
+// тепер дві змінні мають одинакові дані
+alert(hello); // Привіт світ!
+alert(message); // Привіт світ!
 ```
 
-```smart header="Functional languages"
-It's interesting to note that [functional](https://en.wikipedia.org/wiki/Functional_programming) programming languages, like [Scala](http://www.scala-lang.org/) or [Erlang](http://www.erlang.org/), forbid changing variable values.
+```smart header="Функціональне програмування"
+Цікаво відзначити, що [функціональні](https://uk.wikipedia.org/wiki/Функційне_програмування) мови програмування, такі як [Scala](http://www.scala-lang.org/) або [Erlang](http://www.erlang.org/), забороняють змінювати значення змінних.
 
-In such languages, once the value is stored "in the box", it's there forever. If we need to store something else, the language forces us to create a new box (declare a new variable). We can't reuse the old one.
+В таких мовах, збережені в "коробку" значення залишаються там назавджи. Якщо нам потрібно зберегти щось інше, мова змусить нас створити нову коробку (оголосити нову змінну). Ми не можемо використати стару змінну.
 
-Though it may seem a little odd at first sight, these languages are quite capable of serious development. More than that, there are areas like parallel computations where this limitation confers certain benefits. Studying such a language (even if you're not planning to use it soon) is recommended to broaden the mind.
+Хоча на перший погляд це може здатися дивним, проте ці мови цілком підходять для серйозної розробки. Більше того, є така область, як паралельні обчислення, де це обмеження дає певні переваги. Вивчення такої мови (навіть якщо ви не плануєте користуватися нею найближчим часом) рекомендується для розширення кругозору.
 ```
 
 ## Variable naming [#variable-naming]
