@@ -143,118 +143,118 @@ alert(message); // Привіт світ!
 Хоча на перший погляд це може здатися дивним, проте ці мови цілком підходять для серйозної розробки. Більше того, є така область, як паралельні обчислення, де це обмеження дає певні переваги. Вивчення такої мови (навіть якщо ви не плануєте користуватися нею найближчим часом) рекомендується для розширення кругозору.
 ```
 
-## Variable naming [#variable-naming]
+## Іменування змінних [#variable-naming]
 
-There are two limitations on variable names in JavaScript:
+В JavaScript є два обмеження, які стосуються імен змінних:
 
-1. The name must contain only letters, digits, or the symbols `$` and `_`.
-2. The first character must not be a digit.
+1. Ім'я повинне містити лише букви, цифри або символи `$` і `_`.
+2. Перша буква не повинна бути числом.
 
-Examples of valid names:
+Ось приклади допустимих імен:
 
 ```js
 let userName;
 let test123;
 ```
 
-When the name contains multiple words, [camelCase](https://en.wikipedia.org/wiki/CamelCase) is commonly used. That is: words go one after another, each word except first starting with a capital letter: `myVeryLongName`.
+Для написання ім'я, яке містить декілька слів, зазвичай використовують "[верблюжий регістр](https://uk.wikipedia.org/wiki/Верблюжий_регістр)" (camelCase). Тобто, слова йдуть одне за одним, де кожне слово пишуть з великої букви і без пробілів: `myVeryLongName`. Зауважте, що перше слово пишеться з маленької букви.
 
-What's interesting -- the dollar sign `'$'` and the underscore `'_'` can also be used in names. They are regular symbols, just like letters, without any special meaning.
+Що цікаво -- знак долара `'$'` і знак підкреслення `'_'`, також можна використовувати в іменах. Це звичайні символи, такі ж як і букви, без будь-якого особливого значення.
 
-These names are valid:
+Ці імена також допустимі:
 
 ```js run untrusted
-let $ = 1; // declared a variable with the name "$"
-let _ = 2; // and now a variable with the name "_"
+let $ = 1; // оголошено змінну з ім'ям "$"
+let _ = 2; // а тепер змінна з ім'ям "_"
 
 alert($ + _); // 3
 ```
 
-Examples of incorrect variable names:
+Приклади недопустимих імен змінних:
 
 ```js no-beautify
-let 1a; // cannot start with a digit
+let 1a; // не може починатися з цифри
 
-let my-name; // hyphens '-' aren't allowed in the name
+let my-name; // дефіс '-' недопустимий в імені
 ```
 
-```smart header="Case matters"
-Variables named `apple` and `AppLE` are two different variables.
+```smart header="Регістр має значення"
+Змінні з іменами `apple` і `AppLE` -- це дві різні змінні.
 ```
 
-````smart header="Non-English letters are allowed, but not recommended"
-It is possible to use any language, including cyrillic letters or even hieroglyphs, like this:
+````smart header="Не-латинські букви дозволені, але не рекомендуються"
+Можна використовувати будь-яку мову, включно з кирилицею або навіть ієрогліфи, наприклад:
 
 ```js
-let имя = '...';
+let імя = '...';
 let 我 = '...';
 ```
 
-Technically, there is no error here, such names are allowed, but there is an international tradition to use English in variable names. Even if we're writing a small script, it may have a long life ahead. People from other countries may need to read it some time.
+Технічно тут немає помилки, такі імена дозволені, проте існує міжнародна традиція використовувати англійську мову в іменах змінних. Слова теж бажано писати англійські (`yaLyublyuUkrainu` => `iLoveUkraine`). Навіть якщо ми пишемо маленький скрипт, в нього може бути тривале життя попереду. Людям з інших країн, можливо, доведеться прочитати його не один раз.
 ````
 
-````warn header="Reserved names"
-There is a [list of reserved words](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords), which cannot be used as variable names because they are used by the language itself.
+````warn header="Зарезервовані слова"
+Існує [список зарезервованих слів](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#Keywords), які не можна використовувати в якості імен змінних, тому що ці слова використовує сама мова.
 
-For example: `let`, `class`, `return`, and `function` are reserved.
+Наприклад: `let`, `class`, `return`, і `function` зарезервовані.
 
-The code below gives a syntax error:
+Такий код видатиме синтаксичну помилку:
 
 ```js run no-beautify
-let let = 5; // can't name a variable "let", error!
-let return = 5; // also can't name it "return", error!
+let let = 5; // неможна назвати змінну "let", помилка!
+let return = 5; // також неможна називати змінну "return", помилка!
 ```
 ````
 
-````warn header="An assignment without `use strict`"
+````warn header="Створення змінної без використання `use strict`"
 
-Normally, we need to define a variable before using it. But in the old times, it was technically possible to create a variable by a mere assignment of the value without using `let`. This still works now if we don't put `use strict` in our scripts to maintain compatibility with old scripts.
+Зазвичай нам потрібно оголосити змінну перед її використанням. Але в старі часи можна було технічно створити змінну простим присвоєнням значення, без використання `let`. Це все ще працює, якщо не вмикати `строгий режим` в наших скриптах для підтримки сумісності зі старими сценаріями.
 
 ```js run no-strict
-// note: no "use strict" in this example
+// "use strict" в цьому прикладі не використовується
 
-num = 5; // the variable "num" is created if it didn't exist
+num = 5; // якщо змінна "num" не існувала, її буде створено
 
 alert(num); // 5
 ```
 
-This is a bad practice and would cause an error in strict mode:
+Це погана практика, яка призведе до помилки в строгому режимі:
 
 ```js
 "use strict";
 
 *!*
-num = 5; // error: num is not defined
+num = 5; // помилка: num не оголошено
 */!*
 ```
 ````
 
-## Constants
+## Константи
 
-To declare a constant (unchanging) variable, use `const` instead of `let`:
+Щоб оголосити константу (незмінювану) змінну, використовуйте ключове слово `const` замість `let`:
 
 ```js
 const myBirthday = '18.04.1982';
 ```
 
-Variables declared using `const` are called "constants". They cannot be changed. An attempt to do so would cause an error:
+Змінні, оголошені за допомогою `const`, називаються "константами". Їх неможна змінити. Спроба це зробити призведе до помилки:
 
 ```js run
 const myBirthday = '18.04.1982';
 
-myBirthday = '01.01.2001'; // error, can't reassign the constant!
+myBirthday = '01.01.2001'; // помилка, не можна перевизначати константу!
 ```
 
-When a programmer is sure that a variable will never change, they can declare it with `const` to guarantee and clearly communicate that fact to everyone.
+Коли програміст впевнений, що змінна ніколи не буде змінюватися, він може оголосити її через `const`, що буде гарантовано зрозуміло для кожного.
 
 
-### Uppercase constants
+### Константи в верхньому регістрі
 
-There is a widespread practice to use constants as aliases for difficult-to-remember values that are known prior to execution.
+Широко поширена практика використання констант в якості псевдонімів для значень, які важко запам'ятати і які відомі до початку виконання скрипта.
 
-Such constants are named using capital letters and underscores.
+Такі константи пишуться в верхньому регістрі з використанням підкреслень.
 
-Like this:
+Ось так:
 
 ```js run
 const COLOR_RED = "#F00";
@@ -262,29 +262,29 @@ const COLOR_GREEN = "#0F0";
 const COLOR_BLUE = "#00F";
 const COLOR_ORANGE = "#FF7F00";
 
-// ...when we need to pick a color
+// ...коли потрібно вибрати колір
 let color = COLOR_ORANGE;
 alert(color); // #FF7F00
 ```
 
-Benefits:
+Переваги:
 
-- `COLOR_ORANGE` is much easier to remember than `"#FF7F00"`.
-- It is much easier to mistype `"#FF7F00"` than `COLOR_ORANGE`.
-- When reading the code, `COLOR_ORANGE` is much more meaningful than `#FF7F00`.
+- `COLOR_ORANGE` набагато легше запам'ятати, ніж `"#FF7F00"`.
+- Набагато легше допустити помилку в `"#FF7F00"`, ніж при введені `COLOR_ORANGE`.
+- Під час читання коду, `COLOR_ORANGE` набагато зрозуміліше, ніж `#FF7F00`.
 
-When should we use capitals for a constant and when should we name it normally? Let's make that clear.
+Коли ми повинні використовувати для констант великі букви, а коли звичайні? Давайте це вияснимо.
 
-Being a "constant" just means that a variable's value never changes. But there are constants that are known prior to execution (like a hexadecimal value for red) and there are constants that are *calculated* in run-time, during the execution, but do not change after their initial assignment.
+Назва "константа" лише означає, що змінна ніколи не зміниться. Але є константи, які відомі нам до виконання скрипта (наприклад, шістнадцяткове значення для червоного кольору), а є константи, які *вираховуються* в процесі виконання скрипта, але не змінюються після їхнього початкового присвоєння.
 
-For instance:
+Наприклад:
 ```js
-const pageLoadTime = /* time taken by a webpage to load */;
+const pageLoadTime = /* час, потрачений на завантаження веб-сторінки */;
 ```
 
-The value of `pageLoadTime` is not known prior to the page load, so it's named normally. But it's still a constant because it doesn't change after assignment.
+Значення `pageLoadTime` невідоме до завантаження сторінки, тому її ім'я записано звичайними, а не великими буквами. Але це все ще константа, тому що вона не змінює значення після призначення.
 
-In other words, capital-named constants are only used as aliases for "hard-coded" values.  
+Іншими словами, константи з великими буквами, використовуються як псевдоніми для "жорстко закодованих" значень.
 
 ## Name things right
 
