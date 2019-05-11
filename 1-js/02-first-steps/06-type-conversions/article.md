@@ -1,160 +1,160 @@
-# Type Conversions
+# Перетворення типу
 
-Most of the time, operators and functions automatically convert the values given to them to the right type. 
+У більшості випадків оператори та функції автоматично перетворюють значення, які їм надаються, на потрібний тип. 
 
-For example, `alert` automatically converts any value to a string to show it. Mathematical operations convert values to numbers.
+Наприклад, `alert` автоматично перетворює будь-яке значення в рядок, щоб показати його. Математичні операції перетворюють значення в числа.
 
-There are also cases when we need to explicitly convert a value to the expected type.
+Є також випадки, коли нам необхідно явно перетворювати значення на очікуваний тип.
 
-```smart header="Not talking about objects yet"
-In this chapter, we won't cover objects. Instead, we'll study primitives first. Later, after we learn about objects, we'll see how object conversion works in the chapter <info:object-toprimitive>.
+```smart header="Поки що не говоримо про об'єкти"
+У цій главі ми не будемо охоплювати об'єкти. Замість цього спочатку ми вивчемо примітиви. Пізніше, після того, як ми дізнаємося про об'єкти, ми побачимо, як перетворення об'єктів працює в цьому розділі <info:object-toprimitive>.
 ```
 
 ## ToString
 
-String conversion happens when we need the string form of a value.
+Перетворення на рядок, коли нам потрібне значення у формі рядка.
 
-For example, `alert(value)` does it to show the value.
+Наприклад, `alert(value)` робить це, щоб показати значення.
 
-We can also call the `String(value)` function to convert a value to a string:
+Також ми можемо викликати функцію `String(value)` для перетворення значення в рядок:
 
 ```js run
 let value = true;
 alert(typeof value); // boolean
 
 *!*
-value = String(value); // now value is a string "true"
+value = String(value); // тепер значення - це рядок "true"
 alert(typeof value); // string
 */!*
 ```
 
-String conversion is mostly obvious. A `false` becomes `"false"`, `null` becomes `"null"`, etc.
+Перетворення рядків у більшості випадків очевидне. `false` стає `"false"`, `null` стає `"null"`, і т.д.
 
 ## ToNumber
 
-Numeric conversion happens in mathematical functions and expressions automatically.
+Перетворення на числа відбувається в математичних функціях і виразах автоматично.
 
-For example, when division `/` is applied to non-numbers:
+Наприклад, коли ділення `/` застосовується до не-чисел:
 
 ```js run
-alert( "6" / "2" ); // 3, strings are converted to numbers
+alert( "6" / "2" ); // 3, рядки перетворюються на числа
 ```
 
-We can use the `Number(value)` function to explicitly convert a `value` to a number:
+Ми можемо використовувати функцію `Number(value)` для явного перетворення `value` у число:
 
 ```js run
 let str = "123";
 alert(typeof str); // string
 
-let num = Number(str); // becomes a number 123
+let num = Number(str); // стає числом 123
 
 alert(typeof num); // number
 ```
 
-Explicit conversion is usually required when we read a value from a string-based source like a text form but expect a number to be entered.
+Явне перетворення зазвичай потрібно, коли ми читаємо значення з джерела на основі рядка, подібно текстовій формі, але очікуємо, що буде введено число.
 
-If the string is not a valid number, the result of such a conversion is `NaN`. For instance:
+Якщо рядок не є дійсним числом, результатом такого перетворення є `NaN`. Наприклад:
 
 ```js run
-let age = Number("an arbitrary string instead of a number");
+let age = Number("довільний рядок замість числа");
 
-alert(age); // NaN, conversion failed
+alert(age); // NaN, помилка перетворення
 ```
 
-Numeric conversion rules:
+Правила перетворення на числа:
 
-| Value |  Becomes... |
+| Значення |  Результат... |
 |-------|-------------|
 |`undefined`|`NaN`|
 |`null`|`0`|
 |<code>true&nbsp;and&nbsp;false</code> | `1` and `0` |
-| `string` | Whitespaces from the start and end are removed. If the remaining string is empty, the result is `0`. Otherwise, the number is "read" from the string. An error gives `NaN`. |
+| `string` | Пробіли на початку та з кінця видаляються. Якщо рядок, що залившися у результаті, порожній, то результатом є `0`. В іншому випадку число "читається" з рядка. Помилка дає `NaN`. |
 
-Examples:
+Приклади:
 
 ```js run
 alert( Number("   123   ") ); // 123
-alert( Number("123z") );      // NaN (error reading a number at "z")
+alert( Number("123z") );      // NaN (помилка читання числа на "z")
 alert( Number(true) );        // 1
 alert( Number(false) );       // 0
 ```
 
-Please note that `null` and `undefined` behave differently here: `null` becomes zero while `undefined` becomes `NaN`.
+Зверніть увагу, що `null` та `undefined` тут поводяться по-різному: `null` стає нулем, а `undefined` стає `NaN`.
 
-````smart header="Addition '+' concatenates strings"
-Almost all mathematical operations convert values to numbers. A notable exception is addition `+`. If one of the added values is a string, the other one is also converted to a string.
+````smart header="Додавання '+' об'єднує рядки"
+Майже всі математичні операції перетворюють значення на числа. Примітним винятком є додавання `+`. Якщо одне з доданих значень є рядком, то інше також перетворюється на рядок.
 
-Then, it concatenates (joins) them:
+Потім воно обо'єднує їх:
 
 ```js run
-alert( 1 + '2' ); // '12' (string to the right)
-alert( '1' + 2 ); // '12' (string to the left)
+alert( 1 + '2' ); // '12' (рядок праворуч)
+alert( '1' + 2 ); // '12' (рядок ліворуч)
 ```
 
-This only happens when at least one of the arguments is a string. Otherwise, values are converted to numbers.
+Це відбувається лише тоді, коли принаймні один з аргументів є рядком. В іншому випадку значення перетворюються в числа.
 ````
 
 ## ToBoolean
 
-Boolean conversion is the simplest one.
+Булеве перетворення є найпростішим.
 
-It happens in logical operations (later we'll meet condition tests and other similar things) but can also be performed explicitly with a call to `Boolean(value)`.
+Воно відбувається в логічних операціях (пізніше ми познайомимося з умовними перевірками та іншими подібними речами) але також може бути виконано явно за допомогою виклику `Boolean(value)`.
 
-The conversion rule:
+Правило перетворення:
 
-- Values that are intuitively "empty", like `0`, an empty string, `null`, `undefined`, and `NaN`, become `false`.
-- Other values become `true`.
+- Значення, які інтуїтивно "порожні", такі як `0`, порожній рядок, `null`, `undefined`, та `NaN`, стають `false`.
+- Інші значення стають `true`.
 
-For instance:
+Наприклад:
 
 ```js run
 alert( Boolean(1) ); // true
 alert( Boolean(0) ); // false
 
-alert( Boolean("hello") ); // true
+alert( Boolean("вітаю") ); // true
 alert( Boolean("") ); // false
 ```
 
-````warn header="Please note: the string with zero `\"0\"` is `true`"
-Some languages (namely PHP) treat `"0"` as `false`. But in JavaScript, a non-empty string is always `true`.
+````warn header="Зверніть увагу: рядок з нулем `\"0\"` є `true`"
+Деякі мови (а саме PHP) розглядають `"0"` як `false`. Але у JavaScript, непустий рядок завжди `true`.
 
 ```js run
 alert( Boolean("0") ); // true
-alert( Boolean(" ") ); // spaces, also true (any non-empty string is true)
+alert( Boolean(" ") ); // пробіли, також true (будь-які непусті рядки є true)
 ```
 ````
 
 
-## Summary
+## Підсумки
 
-The three most widely used type conversions are to string, to number, and to boolean.
+Три найпоширеніші перетворення типу - це перетворення на рядок, на число та на булевий тип.
 
-**`ToString`** -- Occurs when we output something. Can be performed with `String(value)`. The conversion to string is usually obvious for primitive values.
+**`ToString`** -- Відбувається, коли ми виводимо щось. Може бути виконано за допомогою `String(value)`. Перетворення на рядок звичайно очевидне для примітивних значень.
 
-**`ToNumber`** -- Occurs in math operations. Can be performed with `Number(value)`.
+**`ToNumber`** -- Відбувається в математичних операціях. Може бути виконано з `Number(value)`.
 
-The conversion follows the rules:
+Перетворення дотримується правил:
 
-| Value |  Becomes... |
+| Значення |  Результат... |
 |-------|-------------|
 |`undefined`|`NaN`|
 |`null`|`0`|
 |<code>true&nbsp;/&nbsp;false</code> | `1 / 0` |
-| `string` | The string is read "as is", whitespaces from both sides are ignored. An empty string becomes `0`. An error gives `NaN`. |
+| `string` | Рядок читається "як є", пробіли з обох сторін ігноруються. Пустий рядок стає `0`. Помилка дає `NaN`. |
 
-**`ToBoolean`** -- Occurs in logical operations. Can be performed with `Boolean(value)`.
+**`ToBoolean`** -- Відбувається в логічних операціях. Може виконуватися за допомогою `Boolean(value)`.
 
-Follows the rules:
+Дотримується правил:
 
-| Value |  Becomes... |
+| Значення |  Результат... |
 |-------|-------------|
 |`0`, `null`, `undefined`, `NaN`, `""` |`false`|
 |any other value| `true` |
 
 
-Most of these rules are easy to understand and memorize. The notable exceptions where people usually make mistakes are:
+Більшість з цих правил легко зрозуміти і запам'ятати. Примітним винятками, де люди зазвичай роблять помилки, є:
 
-- `undefined` is `NaN` as a number, not `0`.
-- `"0"` and space-only strings like `"   "` are true as a boolean.
+- `undefined` є `NaN` як число, а не `0`.
+- `"0"` і рядки, що мають тільки пробіл, такі як `"   "` є true як булеві.
 
-Objects aren't covered here. We'll return to them later in the chapter <info:object-toprimitive> that is devoted exclusively to objects after we learn more basic things about JavaScript.
+Об'єкти тут не охоплені. Ми повернемося до них пізніше в розділі <info:object-toprimitive>, який присвячений виключно об'єктам, після того, як ми дізнаємося про більш базові речі про JavaScript.
