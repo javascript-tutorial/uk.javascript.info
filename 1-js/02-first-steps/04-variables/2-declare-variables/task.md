@@ -2,7 +2,7 @@ importance: 3
 
 ---
 
-# Giving the right name
+# Придумайте правильні імена
 
-1. Create a variable with the name of our planet. How would you name such a variable?
-2. Create a variable to store the name of a current visitor to a website. How would you name that variable?
+1. Створіть змінну із назвою нашої планети. Як би ви назвали таку змінну?
+2. Створіть змінну для зберігання імені поточного відвідувача сайту. Як би ви назвали таку змінну?
