@@ -2,9 +2,9 @@ importance: 2
 
 ---
 
-# Working with variables
+# Робота зі змінними
 
-1. Declare two variables: `admin` and `name`.
-2. Assign the value `"John"` to `name`.
-3. Copy the value from `name` to `admin`.
-4. Show the value of `admin` using `alert` (must output "John").
+1. Оголосіть дві змінні: `admin` та `name`.
+2. Присвойте значення `"Іван"` змінній `name`.
+3. Скопіюйте значення зі змінної `name` в `admin`.
+4. Виведіть значення змінної `admin`, використовуючи функцію `alert` (яка повинна показати "Іван").

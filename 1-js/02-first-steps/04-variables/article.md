@@ -286,46 +286,45 @@ const pageLoadTime = /* час, потрачений на завантаженн
 
 Іншими словами, константи з великими буквами, використовуються як псевдоніми для "жорстко закодованих" значень.
 
-## Name things right
+## Придумуйте правильні імена
 
-Talking about variables, there's one more extremely important thing.
+В розмові про змінні необхідно згадати, що є ще одна дуже важлива річ -- правильні імена змінних.
 
-Please name your variables sensibly. Take time to think about this.
+Такі імена повинні мати ясний і зрозумілий сенс, говорити про те, які дані в них зберігаються.
 
-Variable naming is one of the most important and complex skills in programming. A quick glance at variable names can reveal which code was written by a beginner versus an experienced developer.
+Іменування змінних -- одна з найважливіших і найскладніших навичок в програмуванні. Швидкий перегляд змінних може показати, чи код був написаний новачком чи досвідченим розробником.
 
-In a real project, most of the time is spent modifying and extending an existing code base rather than writing something completely separate from scratch. When we return to some code after doing something else for a while, it's much easier to find information that is well-labeled. Or, in other words, when the variables have good names.
+В реальному проекті, більшість часу тратиться на змінення і розширення існуючої кодової бази, а не на написання чогось цілком нового. Коли ми повертаємося до якогось коду, після виконання чогось іншого впродовж тривалого часу, набагато легше знайти інформацію, яку добре позначено. Або, іншими словами, коли змінні мають хороші імена.
 
-Please spend time thinking about the right name for a variable before declaring it. Doing so will repay you handsomely.
+Будь ласка, приділіть час на обдумування правильного імені для змінної перед її оголошенням. Робіть так, і будете винагороджені.
 
-Some good-to-follow rules are:
+Декілька хороших правил:
 
-- Use human-readable names like `userName` or `shoppingCart`.
-- Stay away from abbreviations or short names like `a`, `b`, `c`, unless you really know what you're doing.
-- Make names maximally descriptive and concise. Examples of bad names are `data` and `value`. Such names say nothing. It's only okay to use them if the context of the code makes it exceptionally obvious which data or value the variable is referencing.
-- Agree on terms within your team and in your own mind. If a site visitor is called a "user" then we should name related variables `currentUser` or `newUser` instead of `currentVisitor` or `newManInTown`.
-- Використовуйте імені лише англійською мовою. Оголошення `let message` і `let повідомлення` будуть працювати, проте перший варіант є хорошим тоном для написання коду.
+- Використовуйте імена, які легко прочитати, наприклад, `userName` або `shoppingCart`.
+- Уникайте використання абревіатур або коротких імен, таких як `a`, `b`, `c`, за винятками тих випадків, коли ви точно знаєте, що так потрібно.
+- Робіть імена максимально описовими і лаконічними. Наприклад, такі імена погані: `data` і `value`. Такі імена нічого не говорять. Їх можна використовувати лише тоді, коли з контексту очевидно, на які дані або значення посилається змінна.
+- Узгодьте з вашою командою, які терміни будуть використовуватися. Якщо відвідувач сайту називається "user", тоді ми повинні давати відповідні імена іншим пов'язаним змінним: `currentUser` або `newUser`, замість `currentVisitor` або `newManInTown`.
 
-Sounds simple? Indeed it is, but creating descriptive and concise variable names in practice is not. Go for it.
+Звучить легко? Це дійсно так, проте на практиці створення зрозумілих і коротких імен -- рідкість. Дійте.
 
-```smart header="Reuse or create?"
-And the last note. There are some lazy programmers who, instead of declaring new variables, tend to reuse existing ones.
+```smart header="Перевикористовувати чи створювати?"
+І остання примітка. Є ліниві програмісти, які замість оголошення нових змінних, повторно використовують існуючі.
 
-As a result, their variables are like boxes into which people throw different things without changing their stickers. What's inside the box now? Who knows? We need to come closer and check.
+В результаті їхні змінні схожі на коробки, в які люди кидають різні речі, не змінюючи на них наклейки. Що зараз знаходиться всередині коробки? Хто знає? Нам необхідно підійти поближче і перевірити.
 
-Such programmers save a little bit on variable declaration but lose ten times more on debugging.
+Такі програмісти економлять трішки часу на оголошенні змінних, але втрачають вдесятеро більше при відлагодженні.
 
-An extra variable is good, not evil.
+Додаткова змінна -- це добро, а не зло.
 
-Modern JavaScript minifiers and browsers optimize code well enough, so it won't create performance issues. Using different variables for different values can even help the engine optimize your code.
+Сучасні JavaScript мініфікатори і браузери оптимізують код досить добре, тому додаткові змінні не погіршують продуктивність. Використання різних змінних для різних значень може навіть допомогти рушію оптимізувати ваш код.
 ```
 
-## Summary
+## Підсумки
 
-We can declare variables to store data by using the `var`, `let`, or `const` keywords.
+Ми можемо оголосити змінні для збереження даних за допомогою ключових слів `var`, `let`, чи `const`.
 
-- `let` -- is a modern variable declaration. The code must be in strict mode to use `let` in Chrome (V8).
-- `var` -- is an old-school variable declaration. Normally we don't use it at all, but we'll cover subtle differences from `let` in the chapter <info:var>, just in case you need them.
-- `const` -- is like `let`, but the value of the variable can't be changed.
+- `let` -- це сучасний спосіб оголошення. При використанні `let` в Chrome (V8) повинен бути включений строгий режим.
+- `var` -- це застарілий спосіб оголошення змінної. Зазвичай ми не використовуємо його взагалі, але ми розглянемо тонкі відмінності від `let` в розділі <info:var>, на випадок, якщо це все-таки знадобиться.
+- `const` -- це як `let`, але значення змінної не може змінюватися.
 
-Variables should be named in a way that allows us to easily understand what's inside them.
+Змінні повинні називатися таким чином, щоб ми могли легко зрозуміти, що в середині них.
