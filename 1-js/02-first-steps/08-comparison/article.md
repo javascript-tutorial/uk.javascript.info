@@ -1,55 +1,55 @@
-# Comparisons
+# Оператори порівняння
 
-We know many comparison operators from maths:
+Багато з операторів порівняння нам відомі з математики:
 
-- Greater/less than: <code>a &gt; b</code>, <code>a &lt; b</code>.
-- Greater/less than or equals: <code>a &gt;= b</code>, <code>a &lt;= b</code>.
-- Equals: `a == b` (please note the double equals sign `=`. A single symbol `a = b` would mean an assignment).
-- Not equals. In maths the notation is <code>&ne;</code>, but in JavaScript it's written as an assignment with an exclamation sign before it: <code>a != b</code>.
+- Більше/менше: <code>a &gt; b</code>, <code>a &lt; b</code>.
+- Більше/менше або рівне: <code>a &gt;= b</code>, <code>a &lt;= b</code>.
+- Рівне: `a == b` (зверніть увагу, для порівняння потрібно використовувати два знаки рівності `=`. Один знак рівності `a = b` означало б присвоєння).
+- Не рівне. В математиці позначається символом <code>&ne;</code>. В JavaScript записується як знак оклику разом із знаком рівності: <code>a != b</code>.
 
-## Boolean is the result
+## Результат порівняння має логічний тип
 
-Like all other operators, a comparison returns a value. In this case, the value is a boolean.
+Так само як й інші оператори, оператори порівняння повертають значення. У цьому випадку, порівняння повертає логічний тип.
 
-- `true` -- means "yes", "correct" or "the truth".
-- `false` -- means "no", "wrong" or "not the truth".
+- `true` -- означає "так", "правильно" або "правда".
+- `false` -- означає "ні", "неправильно" або "не правда".
 
-For example:
+Наприклад:
 
 ```js run
-alert( 2 > 1 );  // true (correct)
-alert( 2 == 1 ); // false (wrong)
-alert( 2 != 1 ); // true (correct)
+alert( 2 > 1 );  // true (правильно)
+alert( 2 == 1 ); // false (неправильно)
+alert( 2 != 1 ); // true (правильно)
 ```
 
-A comparison result can be assigned to a variable, just like any value:
+Результат порівняння можна присвоїти змінній, як і будь-яке інше значення:
 
 ```js run
-let result = 5 > 4; // assign the result of the comparison
+let result = 5 > 4; // присвоїти результат порівняння змінній result
 alert( result ); // true
 ```
 
-## String comparison
+## Порівняння рядків
 
-To see whether a string is greater than another, JavaScript uses the so-called "dictionary" or "lexicographical" order.
+Щоб визначити, чи один рядок більший за інший, JavaScript використовує так званий "алфавітний" або "лексикографічний" порядок.
 
-In other words, strings are compared letter-by-letter.
+Іншими словами, рядки порівнюються посимвольно.
 
-For example:
+Наприклад:
 
 ```js run
-alert( 'Z' > 'A' ); // true
-alert( 'Glow' > 'Glee' ); // true
-alert( 'Bee' > 'Be' ); // true
+alert( 'Я' > 'А' ); // true
+alert( 'Кіт' > 'Код' ); // true
+alert( 'Слоненя' > 'Слон' ); // true
 ```
 
-The algorithm to compare two strings is simple:
+Алгоритм порівняння рядків досить простий:
 
-1. Compare the first character of both strings.
-2. If the first character from the first string is greater (or less) than the other string's, then the first string is greater (or less) than the second. We're done.
-3. Otherwise, if both strings' first characters are the same, compare the second characters the same way.
-4. Repeat until the end of either string.
-5. If both strings end at the same length, then they are equal. Otherwise, the longer string is greater.
+1. Порівнюються перші символи обох рядків.
+2. Якщо перший символ першого рядка більший (менший) за перший символ другого рядка, то перший рядок більший (менший) за другий. Порівняння закінчено.
+3. В іншому випадку, якщо перші символи обох рядків рівні, то таким самим чином порівнюються вже другі символи рядків.
+4. Порівняння продовжується до того часу, доки не закінчиться один з рядків.
+5. Якщо два рядки закінчуються одночасно, то вони рівні. Інакше, довший рядок вважатиметься більшим.
 
 In the examples above, the comparison `'Z' > 'A'` gets to a result at the first step while the strings `"Glow"` and `"Glee"` are compared character-by-character:
 
