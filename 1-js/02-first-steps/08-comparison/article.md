@@ -40,7 +40,7 @@ alert( result ); // true
 ```js run
 alert( 'Я' > 'А' ); // true
 alert( 'Кіт' > 'Код' ); // true
-alert( 'Слоненя' > 'Слон' ); // true
+alert( 'Кома' > 'Комар' ); // false
 ```
 
 Алгоритм порівняння рядків досить простий:
@@ -51,45 +51,44 @@ alert( 'Слоненя' > 'Слон' ); // true
 4. Порівняння продовжується до того часу, доки не закінчиться один з рядків.
 5. Якщо два рядки закінчуються одночасно, то вони рівні. Інакше, довший рядок вважатиметься більшим.
 
-In the examples above, the comparison `'Z' > 'A'` gets to a result at the first step while the strings `"Glow"` and `"Glee"` are compared character-by-character:
+В прикладах вище, порівняння `'Я' > 'А'` завершиться на першому кроці, тоді як `"Кіт"` і `"Код"` будуть порівнюватися посимвольно:
 
-1. `G` is the same as `G`.
-2. `l` is the same as `l`.
-3. `o` is greater than `e`. Stop here. The first string is greater.
+1. `К` рівне `К`.
+2. `і` більше за `о`. На цьому кроці порівнювання закінчується. Перший рядок більший.
 
-```smart header="Not a real dictionary, but Unicode order"
-The comparison algorithm given above is roughly equivalent to the one used in dictionaries or phone books, but it's not exactly the same.
+```smart header="Використовується кодування Unicode, а не справжній алфавіт"
+Такий алгоритм порівняння схожий на алгоритм сортування, який використовується в словниках і телефонних довідниках, проте вони не зовсім однакові.
 
-For instance, case matters. A capital letter `"A"` is not equal to the lowercase `"a"`. Which one is greater? The lowercase `"a"`. Why? Because the lowercase character has a greater index in the internal encoding table JavaScript uses (Unicode). We'll get back to specific details and consequences of this in the chapter <info:string>.
+Наприклад, в JavaScript має значення регістр символів. Велика буква `"А"` не рівна маленькій `"а"`. Але яка з них більше? Маленька буква `"а"`. Чому? Тому що маленькі букви мають більший код у внутрішній таблиці кодування, яку використовує JavaScript (Unicode). Ми розглянемо це детальніше в розділі <info:string>.
 ```
 
-## Comparison of different types
+## Порівняння різних типів
 
-When comparing values of different types, JavaScript converts the values to numbers.
+Коли порівнюються значення різних типів, JavaScript конвертує ці значення в числа.
 
-For example:
+Наприклад:
 
 ```js run
-alert( '2' > 1 ); // true, string '2' becomes a number 2
-alert( '01' == 1 ); // true, string '01' becomes a number 1
+alert( '2' > 1 ); // true, рядок '2' стає числом 2
+alert( '01' == 1 ); // true, рядок '01' стає числом 1
 ```
 
-For boolean values, `true` becomes `1` and `false` becomes `0`. 
+Логічне значення `true` стає `1`, а `false` — `0`.
 
-For example:
+Наприклад:
 
 ```js run
 alert( true == 1 ); // true
 alert( false == 0 ); // true
 ```
 
-````smart header="A funny consequence"
-It is possible that at the same time:
+````smart header="Кумедний наслідок"
+Можлива наступна ситуація:
 
-- Two values are equal.
-- One of them is `true` as a boolean and the other one is `false` as a boolean.
+- Два значення рівні.
+- Одне з них `true` як логічне значення, а інше — `false`.
 
-For example:
+Наприклад:
 
 ```js run
 let a = 0;
@@ -101,40 +100,40 @@ alert( Boolean(b) ); // true
 alert(a == b); // true!
 ```
 
-From JavaScript's standpoint, this result is quite normal. An equality check converts values using the numeric conversion (hence `"0"` becomes `0`), while the explicit `Boolean` conversion uses another set of rules.
+З точки зору JavaScript, результат очікуваний. Порівняння перетворює значення на числа (тому `"0"` стає `0`), тоді як явне перетворення `Boolean` використовує інший набір правил.
 ````
 
-## Strict equality
+## Строге порівняння
 
-A regular equality check `==` has a problem. It cannot differentiate `0` from `false`:
+Використання звичайного оператора порівняння `==` може викликати проблеми. Наприклад, він не відрізняє `0` від `false`:
 
 ```js run
 alert( 0 == false ); // true
 ```
 
-The same thing happens with an empty string:
+Така ж проблема станеться з пустим рядком:
 
 ```js run
 alert( '' == false ); // true
 ```
 
-This happens because operands of different types are converted to numbers by the equality operator `==`. An empty string, just like `false`, becomes a zero.
+Це відбувається тому, що операнди різних типів перетворюються оператором порівняння `==` на числа. Пустий рядок, так само як `false`, стане нулем.
 
-What to do if we'd like to differentiate `0` from `false`?
+Як тоді відрізнити `0` від `false`?
 
-**A strict equality operator `===` checks the equality without type conversion.**
+**Оператор строгої рівності `===` перевіряє рівність без перетворення типів.**
 
-In other words, if `a` and `b` are of different types, then `a === b` immediately returns `false` without an attempt to convert them.
+Іншими словами, якщо `a` і `b` мають різні типи, то перевірка `a === b` негайно поверне результат `false` без спроби їхнього перетворення.
 
-Let's try it:
+Давайте перевіримо:
 
 ```js run
-alert( 0 === false ); // false, because the types are different
+alert( 0 === false ); // false, тому що порівнюються різні типи
 ```
 
-There is also a "strict non-equality" operator `!==` analogous to `!=`.
+Є також оператор строгої нерівності `!==`, аналогічний до `!=`.
 
-The strict equality operator is a bit longer to write, but makes it obvious what's going on and leaves less room for errors.
+Оператор строгої рівності довше писати, проте він робить код більш зрозумілим і залишає менше місця для помилок.
 
 ## Comparison with null and undefined
 
