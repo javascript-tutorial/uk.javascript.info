@@ -1,15 +1,15 @@
-# Operators
+# Оператори
 
-We know many operators from school. They are things like addition `+`, multiplication `*`, subtraction `-`, and so on.
+Ми знаємо багато операторів зі школи. Це такі речі, як додавання `+`, множення `*`, віднімання `-`, тощо.
 
-In this chapter, we'll concentrate on aspects of operators that are not covered by school arithmetic.
+У цьому розділі ми зупинимося на аспектах операторів, які не охоплені шкільною арифметикою.
 
-## Terms: "unary", "binary", "operand"
+## Тарміни: "унарний", "бінарний", "операнд"
 
-Before we move on, let's grasp some common terminology.
+Перш ніж ми почнемо, давайте розберемо певну загальну термінологію.
 
-- *An operand* -- is what operators are applied to. For instance, in the multiplication of `5 * 2` there are two operands: the left operand is `5` and the right operand is `2`. Sometimes, people call these "arguments" instead of "operands".
-- An operator is *unary* if it has a single operand. For example, the unary negation `-` reverses the sign of a number:
+- *Операнд* -- це те, до чого затосовуються оператори. Наприклад, у множенні `5 * 2` є два операнди: лівий операнд `5` і правий операнд `2`. Іноді, люди називають їх "аргументами", а не "операндами".
+- Опреатор є *унарним*, якщо він має один операнд. Наприклад, унарне заперечення `-` змінює знак числа:
 
     ```js run
     let x = 1;
@@ -17,16 +17,16 @@ Before we move on, let's grasp some common terminology.
     *!*
     x = -x;
     */!*
-    alert( x ); // -1, unary negation was applied
+    alert( x ); // -1, було застосоване унарне заперечення
     ```
-- An operator is *binary* if it has two operands. The same minus exists in binary form as well:
+- Оператор є *бінарним*, якщо він має два операнди. Цей мінус існує також в бінарній формі:
 
     ```js run no-beautify
     let x = 1, y = 3;
-    alert( y - x ); // 2, binary minus subtracts values
+    alert( y - x ); // 2, бінарний мінус віднімає значення
     ```
 
-    Formally, we're talking about two different operators here: the unary negation (single operand: reverses the sign) and the binary subtraction (two operands: subtracts).
+    Формально, ми говоримо про двох різних операторів: унарне заперечення (єдиний операнд: змінює знак) та бінарне віднімання (два опернди: віднімає).
 
 ## String concatenation, binary +
 
