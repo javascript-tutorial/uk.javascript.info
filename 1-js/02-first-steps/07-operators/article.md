@@ -28,56 +28,56 @@
 
     Формально, ми говоримо про двох різних операторів: унарне заперечення (єдиний операнд: змінює знак) та бінарне віднімання (два опернди: віднімає).
 
-## String concatenation, binary +
+## Об'єднаяння рядків, бінарний +
 
-Now, let's see special features of JavaScript operators that are beyond school arithmetics.
+Тепер розглянемо особливості JavaScript операторів, які виходять за межі шкільної арифметики.
 
-Usually, the plus operator `+` sums numbers.
+Зазвичай оператор плюс `+` підсумовує числа.
 
-But, if the binary `+` is applied to strings, it merges (concatenates) them:
+Але, якщо бінарний `+` застосовується до рядків, він об'єднує їх:
 
 ```js
-let s = "my" + "string";
-alert(s); // mystring
+let s = "мій" + "рядок";
+alert(s); // мійрядок
 ```
 
-Note that if one of the operands is a string, the other one is converted to a string too.
+Зверніть увагу, якщо один з операндів є рядком, то інший також перетворюється на рядок.
 
-For example:
+Наприклад:
 
 ```js run
 alert( '1' + 2 ); // "12"
 alert( 2 + '1' ); // "21"
 ```
 
-See, it doesn't matter whether the first operand is a string or the second one. The rule is simple: if either operand is a string, the other one is converted into a string as well.
+Бачите, на має значення, чи перший операнд є рядком або другий. Правило просте: якщо будь-який операнд є радком, інший також перетворюється на рядок.
 
-However, note that operations run from left to right. If there are two numbers followed by a string, the numbers will be added before being converted to a string:
+Однак зверніть увагу, що операції виконуються зліва направо. Якщо є два числа, за якими йде рядок, числа будуть додані перед перетворенням на рядок:
 
 
 ```js run
-alert(2 + 2 + '1' ); // "41" and not "221"
+alert(2 + 2 + '1' ); // "41" а не "221"
 ```
 
-String concatenation and conversion is a special feature of the binary plus `+`. Other arithmetic operators work only with numbers and always convert their operands to numbers.
+Об'єднання рядків і перетворення є особливою ознакою бінарного плюса `+`. Інші арифметичні оператори працюють тільки з числами і завжди перетворюють свої операнди в числа.
 
-For instance, subtraction and division:
+Наприклад, віднімання і ділення:
 
 ```js run
 alert( 2 - '1' ); // 1
 alert( '6' / '2' ); // 3
 ```
 
-## Numeric conversion, unary +
+## Числове перетворення, унарний +
 
-The plus `+` exists in two forms: the binary form that we used above and the unary form.
+Плюс `+` існує у двох формах: бінарна форма, яку ми використовували вище та унарна форма.
 
-The unary plus or, in other words, the plus operator `+` applied to a single value, doesn't do anything to numbers. But if the operand is not a number, the unary plus converts it into a number.
+Унарний плюс або, іншими словами, оператор плюс `+`, застосований до єдиного операнда, нічого не зробить, якщо операнд є числом. Але якщо операнд не є числом, унарний плюс перетворить його в число.
 
-For example:
+Наприклад:
 
 ```js run
-// No effect on numbers
+// Нема ніякого впилу на числа
 let x = 1;
 alert( +x ); // 1
 
@@ -85,47 +85,47 @@ let y = -2;
 alert( +y ); // -2
 
 *!*
-// Converts non-numbers
+// Перетворює не числові значення
 alert( +true ); // 1
 alert( +"" );   // 0
 */!*
 ```
 
-It actually does the same thing as `Number(...)`, but is shorter.
+Він насправді працює як і `Number(...)`, але виглядає коротше.
 
-The need to convert strings to numbers arises very often. For example, if we are getting values from HTML form fields, they are usually strings.
+Необхідність перетворення рядків на числа виникає дуже часто. Наприклад, якщо ми отримуємо значення з полів HTML форми, вони зазвичай є рядками.
 
-What if we want to sum them?
+Що робити, якщо ми хочемо їх підсумувати?
 
-The binary plus would add them as strings:
+Бінарний плюс додав би їх як рядки:
 
 ```js run
 let apples = "2";
 let oranges = "3";
 
-alert( apples + oranges ); // "23", the binary plus concatenates strings
+alert( apples + oranges ); // "23", бінарний плюс об'єднує рядки
 ```
 
-If we want to treat them as numbers, we need to convert and then sum them:
+Якщо ми хочемо розглядати їх як числа, нам потрібно конвертувати, а потім підсумувати їх:
 
 ```js run
 let apples = "2";
 let oranges = "3";
 
 *!*
-// both values converted to numbers before the binary plus
+// обидва значення перетворюються на числа перед застосування бінарного плюса
 alert( +apples + +oranges ); // 5
 */!*
 
-// the longer variant
+// довший варіант
 // alert( Number(apples) + Number(oranges) ); // 5
 ```
 
-From a mathematician's standpoint, the abundance of pluses may seem strange. But from a programmer's standpoint, there's nothing special: unary pluses are applied first, they convert strings to numbers, and then the binary plus sums them up.
+З точки зору математика, надмір плюсів може здатися дивним. Але з точки зору програміста, немає нічого особливого: спочатку застосовується унарні плюси, вони перетворюють рядки на числа, а потім бінарний плюс підсумовує їх.
 
-Why are unary pluses applied to values before the binary ones? As we're going to see, that's because of their *higher precedence*.
+Чому унарні плюси застосовуються до значень перед бінарними плюсами? Як ми побичмо далі, це пов'язано з їх *більш високим пріоритетом*.
 
-## Operator precedence
+## Пріоритет оператора
 
 If an expression has more than one operator, the execution order is defined by their *precedence*, or, in other words, the implicit priority order of operators.
 
