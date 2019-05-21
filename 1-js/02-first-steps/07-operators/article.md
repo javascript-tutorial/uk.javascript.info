@@ -127,32 +127,32 @@ alert( +apples + +oranges ); // 5
 
 ## Пріоритет оператора
 
-If an expression has more than one operator, the execution order is defined by their *precedence*, or, in other words, the implicit priority order of operators.
+Ящо вираз має більше одного оператора, порядок виконання визначається їх *пріоритетом*, або, іншими словами, неявним порядком пріоритетів операторів.
 
-From school, we all know that the multiplication in the expression `1 + 2 * 2` should be calculated before the addition. That's exactly the precedence thing. The multiplication is said to have *a higher precedence* than the addition.
+Зі школи ми всі знаємо, що множення у виразі `1 + 2 * 2` повинно бути вираховано перед додаванням. Саме це і є пріоритетом. Кажуть, що множення має *більш високий пріоритет*, ніж додавання.
 
-Parentheses override any precedence, so if we're not satisfied with the implicit order, we can use them to change it. For example: `(1 + 2) * 2`.
+Дужки перевизначають будь-який пріоритет, тому, якщо ми не задоволенні неявним приорітетом, ми можемо використовувати дужки, щоб змінити його. Наприклад: `(1 + 2) * 2`.
 
-There are many operators in JavaScript. Every operator has a corresponding precedence number. The one with the larger number executes first. If the precedence is the same, the execution order is from left to right.
+У JavaScript є багато операторів. Кожен оператор має відповідний номер пріоритету. Першим виконується той оператор, який має найбільший номер. Якщо пріоритет є одниковим, порядок виконання — зліва направо.
 
-Here's an extract from the [precedence table](https://developer.mozilla.org/en/JavaScript/Reference/operators/operator_precedence) (you don't need to remember this, but note that unary operators are higher than corresponding binary ones):
+Ось витяг із [таблиці пріоритетів](https://developer.mozilla.org/en/JavaScript/Reference/operators/operator_precedence) (вам не потрібно запам'ятовувати це, але зверніть увагу, що унарні оператори вище за відповідні бінарні):
 
-| Precedence | Name | Sign |
+| Приорітет | Ім'я | Знак |
 |------------|------|------|
 | ... | ... | ... |
-| 16 | unary plus | `+` |
-| 16 | unary negation | `-` |
-| 14 | multiplication | `*` |
-| 14 | division | `/` |
-| 13 | addition | `+` |
-| 13 | subtraction | `-` |
+| 16 | унарний плюс | `+` |
+| 16 | унарне заперечення | `-` |
+| 14 | множення | `*` |
+| 14 | ділення | `/` |
+| 13 | додавання | `+` |
+| 13 | віднімання | `-` |
 | ... | ... | ... |
-| 3 | assignment | `=` |
+| 3 | призначення | `=` |
 | ... | ... | ... |
 
-As we can see, the "unary plus" has a priority of `16` which is higher than the `13` of "addition" (binary plus). That's why, in the expression `"+apples + +oranges"`, unary pluses work before the addition.
+Як ми бачемо, "унарний плюс" має пріоритет `16`, який вище за `13` — пріоритет "додавання" (бінарний плюс). Саме тому, у виразі `"+apples + +oranges"`, унарні плюси виконуються до додавання (бінарного плюса).
 
-## Assignment
+## Призначення
 
 Let's note that an assignment `=` is also an operator. It is listed in the precedence table with the very low priority of `3`.
 
