@@ -152,11 +152,11 @@ alert( +apples + +oranges ); // 5
 
 Як ми бачемо, "унарний плюс" має пріоритет `16`, який вище за `13` — пріоритет "додавання" (бінарний плюс). Саме тому, у виразі `"+apples + +oranges"`, унарні плюси виконуються до додавання (бінарного плюса).
 
-## Призначення
+## Присвоювання
 
-Let's note that an assignment `=` is also an operator. It is listed in the precedence table with the very low priority of `3`.
+Зазначемо, що присвоювання `=` також є оператором. Воно є в таблиці з пріоритетами і має дуже низький пріоритет `3`.
 
-That's why, when we assign a variable, like `x = 2 * 2 + 1`, the calculations are done first and then the `=` is evaluated, storing the result in `x`.
+Тому, коли ми присвоюємо значення змінній, наприклад, `x = 2 * 2 + 1`, спочатку виконуються обчислення, а потім виконується присвоювання `=`, зберігаючи результат у `x`.
 
 ```js
 let x = 2 * 2 + 1;
@@ -164,7 +164,7 @@ let x = 2 * 2 + 1;
 alert( x ); // 5
 ```
 
-It is possible to chain assignments:
+Можливе лангюгове присвоювання:
 
 ```js run
 let a, b, c;
@@ -178,14 +178,14 @@ alert( b ); // 4
 alert( c ); // 4
 ```
 
-Chained assignments evaluate from right to left. First, the rightmost expression `2 + 2` is evaluated and then assigned to the variables on the left: `c`, `b` and `a`. At the end, all the variables share a single value.
+Лангюгове присвоювання виконується справа наліво. Спочатку обчислюється самий правий вираз `2 + 2`, а потім присвоюється зінним ліворуч   : `c`, `b` and `a`. Наприкінці всі змінні мають спільне значення.
 
-````smart header="The assignment operator `\"=\"` returns a value"
-An operator always returns a value. That's obvious for most of them like addition `+` or multiplication `*`. But the assignment operator follows this rule too.
+````smart header="Оператор присвоювання `\"=\"` повертає значення"
+Оператор завжди повертає значення. Це очевидно для більшості з них, як додавання `+` або множення `*`. Але оператор присвоювання також додтримується цього правила.
 
-The call `x = value` writes the `value` into `x` *and then returns it*.
+Виклик `x = значення` записує `значення` у `x`, *а потім повертає його*.
 
-Here's a demo that uses an assignment as part of a more complex expression:
+Ось демонстрація, яка використовує присвоювання як частину більш складного виразу:
 
 ```js run
 let a = 1;
@@ -199,14 +199,14 @@ alert( a ); // 3
 alert( c ); // 0
 ```
 
-In the example above, the result of `(a = b + 1)` is the value which is assigned to `a` (that is `3`). It is then used to subtract from `3`.
+У наведенному вище прикладі результат `(a = b + 1)` є значенням, яке присвоюється змінній `a` (тобто `3`). Потім вона використовується для віднімання від `3`.
 
-Funny code, isn't it? We should understand how it works, because sometimes we see it in 3rd-party libraries, but shouldn't write anything like that ourselves. Such tricks definitely don't make code clearer or readable.
+Смішний код, чи не так? Ми повинні зрозуміти, як це працює, бо іноді ми бачимо подібне у бібліотеках третьої сторони, але самі не повинні писати нічого подібного. Такі трюки, безумовно, не роблять код більш ясним або читабельним.
 ````
 
-## Remainder %
+## Залишок %
 
-The remainder operator `%`, despite its appearance, is not related to percents.
+Оператор залишку `%`, despite its appearance, is not related to percents.
 
 The result of `a % b` is the remainder of the integer division of `a` by `b`.
 
