@@ -206,25 +206,25 @@ alert( c ); // 0
 
 ## Залишок %
 
-Оператор залишку `%`, despite its appearance, is not related to percents.
+Оператор залишку `%`, незважаючи на свій зовнішній вигляд, не пов'язаний з відсотками.
 
-The result of `a % b` is the remainder of the integer division of `a` by `b`.
+Результатом `a % b` є залишок цілочисельного ділення `a` на `b`.
 
-For instance:
+Наприклад:
 
 ```js run
-alert( 5 % 2 ); // 1 is a remainder of 5 divided by 2
-alert( 8 % 3 ); // 2 is a remainder of 8 divided by 3
-alert( 6 % 3 ); // 0 is a remainder of 6 divided by 3
+alert( 5 % 2 ); // 1 — залишок від 5 розділеного на 2
+alert( 8 % 3 ); // 2 — залишок від 8 розділеного на 3
+alert( 6 % 3 ); // 0 — залишок від 6 розділеного на 3
 ```
 
-## Exponentiation **
+## Піднесення до степеня **
 
-The exponentiation operator `**` is a recent addition to the language.
+Оператор піднесення до степеня `**` був доданий у мову нещодавно.
 
-For a natural number `b`, the result of `a ** b` is `a` multiplied by itself `b` times.
+Для натурального числа `b`, результатом `a ** b` є `a` помножене на себе `b` разів.
 
-For instance:
+Наприклад:
 
 ```js run
 alert( 2 ** 2 ); // 4  (2 * 2)
@@ -232,54 +232,54 @@ alert( 2 ** 3 ); // 8  (2 * 2 * 2)
 alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2)
 ```
 
-The operator works for non-integer numbers as well.
+Оператор працює і для нецілих чисел.
 
-For instance:
+Наприклад:
 
 ```js run
-alert( 4 ** (1/2) ); // 2 (power of 1/2 is the same as a square root, that's maths)
-alert( 8 ** (1/3) ); // 2 (power of 1/3 is the same as a cubic root)
+alert( 4 ** (1/2) ); // 2 (степінь 1/2 — це теж саме, що і квадратний корінь, це математика)
+alert( 8 ** (1/3) ); // 2 (степінь 1/3 — це теж саме, що і кубічний корінь)
 ```
 
-## Increment/decrement
+## Інкремент/декремент
 
 <!-- Can't use -- in title, because built-in parse turns it into – -->
 
-Increasing or decreasing a number by one is among the most common numerical operations.
+Збільшення або зменшення числа на одиницю є однією з найпоширеніших операцій.
 
-So, there are special operators for it:
+Тому для цього існують спеціальні оператори:
 
-- **Increment** `++` increases a variable by 1:
+- **Інкремент** `++` збільшує змінну на 1:
 
     ```js run no-beautify
     let counter = 2;
-    counter++;      // works the same as counter = counter + 1, but is shorter
+    counter++;      // працює так само, як counter = counter + 1, але коротше
     alert( counter ); // 3
     ```
-- **Decrement** `--` decreases a variable by 1:
+- **Декремент** `--` зменьшує змінну на 1:
 
     ```js run no-beautify
     let counter = 2;
-    counter--;      // works the same as counter = counter - 1, but is shorter
+    counter--;      // працює так само, як counter = counter - 1, але коротше
     alert( counter ); // 1
     ```
 
 ```warn
-Increment/decrement can only be applied to variables. Trying to use it on a value like `5++` will give an error.
+Інкремент/декремент можуть застосовуватись лише до змінних. Спроба використовувати їх на значенні як `5++` дасть помилку.
 ```
 
-The operators `++` and `--` can be placed either before or after a variable.
+Оператори `++` та `--` можуть розташовуватись до або після змінної.
 
-- When the operator goes after the variable, it is in "postfix form": `counter++`.
-- The "prefix form" is when the operator goes before the variable: `++counter`.
+- Коли оператор йде за змінною, він знаходиться у "постфіксній формі": `counter++`.
+- "Префіксна форма" – це коли оператор йде попереду змінної: `++counter`.
 
-Both of these statements do the same thing: increase `counter` by `1`.
+Обидві конструкції роблять те ж саме: збільшують `counter` на `1`.
 
-Is there any difference? Yes, but we can only see it if we use the returned value of `++/--`.
+Чи є різниця? Так, але ми можемо побачити її якщо будемо використовувати повернене значення `++/--`.
 
-Let's clarify. As we know, all operators return a value. Increment/decrement is no exception. The prefix form returns the new value while the postfix form returns the old value (prior to increment/decrement).
+Давайте розберемось. Як відомо, усі оператори повертають значення. Інкремент/декремент не є винятком. Префіксна форма повертає нове значення, тоді як постфіксна форма повертає повертає старе значення (до збільшення/зменшення).
 
-To see the difference, here's an example:
+Щоб побачитит різницю, наведемо приклад:
 
 ```js run
 let counter = 1;
@@ -288,64 +288,64 @@ let a = ++counter; // (*)
 alert(a); // *!*2*/!*
 ```
 
-In the line `(*)`, the *prefix* form `++counter` increments `counter` and returns the new value, `2`. So, the `alert` shows `2`.
+У рядку `(*)`, *префіксна* форма `++counter` збільшує `counter` та повертає нове значення, `2`. Отже, `alert` показує `2`.
 
-Now, let's use the postfix form:
+Тепер скористаємося постфіксною формою:
 
 ```js run
 let counter = 1;
-let a = counter++; // (*) changed ++counter to counter++
+let a = counter++; // (*) змінили ++counter на counter++
 
 alert(a); // *!*1*/!*
 ```
 
-In the line `(*)`, the *postfix* form `counter++` also increments `counter` but returns the *old* value (prior to increment). So, the `alert` shows `1`.
+У рядку `(*)`, *постфіксна* форма `counter++` також збільшує `counter`, але повертає *старе* значення (до інкременту). Отже, `alert` показує `1`.
 
-To summarize:
+Підсумки:
 
-- If the result of increment/decrement is not used, there is no difference in which form to use:
+- Якщо результат збільшення/зменшення не використовується, немає ніякої різниці яку форму використовувати:
 
     ```js run
     let counter = 0;
     counter++;
     ++counter;
-    alert( counter ); // 2, the lines above did the same
+    alert( counter ); // 2, у рядках вище робиться одне і те ж саме
     ```
-- If we'd like to increase a value *and* immediately use the result of the operator, we need the prefix form:
+- Якщо ми хочемо збільшити значення *та* негайно використати результат оператора, нам потрібна префіксна форма:
 
     ```js run
     let counter = 0;
     alert( ++counter ); // 1
     ```
-- If we'd like to increment a value but use its previous value, we need the postfix form:
+- Якщо ми хочемо збільшити значення, але використати його попереднє значення, нам потрібна постфіксна форма:
 
     ```js run
     let counter = 0;
     alert( counter++ ); // 0
     ```
 
-````smart header="Increment/decrement among other operators"
-The operators `++/--` can be used inside expressions as well. Their precedence is higher than most other arithmetical operations.
+````smart header="Інкремент/декремент серед інших операторів"
+Оператори `++/--` також можуть використовуватись всередені виразів. Їх пріоритет віще за більшість інщих арифметичних операцій.
 
-For instance:
+Наприклад:
 
 ```js run
 let counter = 1;
 alert( 2 * ++counter ); // 4
 ```
 
-Compare with:
+Порівняйте із:
 
 ```js run
 let counter = 1;
-alert( 2 * counter++ ); // 2, because counter++ returns the "old" value
+alert( 2 * counter++ ); // 2, тому що counter++ повертається "старе" значення
 ```
 
-Though technically okay, such notation usually makes code less readable. One line does multiple things -- not good.
+Не дивлячісь на те, що з технічної точки зору це допустимо, таке використання робить код меньш читабельним. Один рядок робить кілька речей -- не є добре.
 
-While reading code, a fast "vertical" eye-scan can easily miss something like `counter++` and it won't be obvious that the variable increased.
+При читанні коду швидке "вертикальне" сканування оком може легко пропустити щось подібне до `counter++` і не буде очевидним, що змінна була збільшена.
 
-We advise a style of "one line -- one action":
+Ми рекомендуємо стиль "одна лінія -- одна дія":
 
 ```js run
 let counter = 1;
@@ -354,13 +354,13 @@ counter++;
 ```
 ````
 
-## Bitwise operators
+## Побітові оператори
 
-Bitwise operators treat arguments as 32-bit integer numbers and work on the level of their binary representation.
+Побітові оператори розглядають аргументи як 32-бітні цілі числа та працюють на рівні їх двійкового представлення.
 
-These operators are not JavaScript-specific. They are supported in most programming languages.
+Ці оператори не є специфічними для JavaScript. Вони підтримуються у більшості мов програмування.
 
-The list of operators:
+Список операторів:
 
 - AND ( `&` )
 - OR ( `|` )
@@ -370,13 +370,13 @@ The list of operators:
 - RIGHT SHIFT ( `>>` )
 - ZERO-FILL RIGHT SHIFT ( `>>>` )
 
-These operators are used very rarely. To understand them, we need to delve into low-level number representation and it would not be optimal to do that right now, especially since we won't need them any time soon. If you're curious, you can read the [Bitwise Operators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators) article on MDN. It would be more practical to do that when a real need arises.
+Ці оператори використовуються дуже рідко. Цоб їх зрозуміти, нам потрібно заглибитись у представлення числа на низькому рівні і зараз не самий оптимальний час для цього, тим більше, що нам вони не будуть потрібні найближчим часом. Якщо вам цікаво, ви можете прочитати статтю [Bitwise Operators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators) на MDN. Це було би більш практично зробити, коли виникне реальна потреба.
 
-## Modify-in-place
+## Змінити-на-місці
 
-We often need to apply an operator to a variable and store the new result in that same variable.
+Часто нам потрібно застосувати оператор до змінної та зберегти новий результат у ту ж саму змінну.
 
-For example:
+Наприклад:
 
 ```js
 let n = 2;
@@ -384,63 +384,63 @@ n = n + 5;
 n = n * 2;
 ```
 
-This notation can be shortened using the operators `+=` and `*=`:
+Це запис скоротити за допомогою операторів `+=` та `*=`:
 
 ```js run
 let n = 2;
-n += 5; // now n = 7 (same as n = n + 5)
-n *= 2; // now n = 14 (same as n = n * 2)
+n += 5; // тепер n = 7 (теж саме, що і n = n + 5)
+n *= 2; // now n = 14 (теж саме, що і n = n * 2)
 
 alert( n ); // 14
 ```
 
-Short "modify-and-assign" operators exist for all arithmetical and bitwise operators: `/=`, `-=`, etc.
+Короткий "модифікуй-та-присвоюй" оператор існує для всіх арифметичних та побітових операторів: `/=`, `-=`, тощо.
 
-Such operators have the same precedence as a normal assignment, so they run after most other calculations:
+Такі оператори мають такуж перевагу, як і звичайне присвоювання, тому вони виконуються після більшості інших обчисленнь:
 
 ```js run
 let n = 2;
 
 n *= 3 + 5;
 
-alert( n ); // 16  (right part evaluated first, same as n *= 8)
+alert( n ); // 16  (права частина обчислюється першою, так само, як і n *= 8)
 ```
 
-## Comma
+## Кома
 
-The comma operator `,` is one of the rarest and most unusual operators. Sometimes, it's used to write shorter code, so we need to know it in order to understand what's going on.
+Оператор кома `,` є одним за найрідкіших та незвичайних операторів. Іноді використовується для написання бальш короткого коду, тому нам потрібно знати його, щоб зрозуміти, що відбувається.
 
-The comma operator allows us to evaluate several expressions, dividing them with a comma `,`. Each of them is evaluated but only the result of the last one is returned.
+Оператор кома дозволяє обчислити кілька виразів, розділивши їх комою `,`. Кожен з них обчислюється, але повертається тільки результат останнього.
 
-For example:
+Наприклад:
 
 ```js run
 *!*
 let a = (1 + 2, 3 + 4);
 */!*
 
-alert( a ); // 7 (the result of 3 + 4)
+alert( a ); // 7 (результат обчислення 3 + 4)
 ```
 
-Here, the first expression `1 + 2` is evaluated and its result is thrown away. Then, `3 + 4` is evaluated and returned as the result.
+Тут обчислюється перший вираз `1 + 2` і його результат викидається. Потім обчислюється `3 + 4` і повертається як результат.
 
-```smart header="Comma has a very low precedence"
-Please note that the comma operator has very low precedence, lower than `=`, so parentheses are important in the example above.
+```smart header="Кома має дуже низький пріоритет"
+Зверніть увагу, що оператор кома має дуже низький пріоритет, нижчий за `=`, тому дужки є важливими в наведеному вище прикладі.
 
-Without them: `a = 1 + 2, 3 + 4` evaluates `+` first, summing the numbers into `a = 3, 7`, then the assignment operator `=` assigns    `a = 3`, and finally the number after the comma, `7`, is not processed so it's ignored.
+Без них: `a = 1 + 2, 3 + 4` обчислює спочатку `+`, підсумовуючи числа у `a = 3, 7`, потім оператор присвоювання `=` присвоює    `a = 3`, і нарешті число після коми, `7`, не обробляється, тому його ігнорують.
 ```
 
-Why do we need an operator that throws away everything except the last part?
+Чому нам потрібен оператор, що викидає все, окрім останньої частини?
 
-Sometimes, people use it in more complex constructs to put several actions in one line.
+Іноді люди використовують його в більш складних конструкціях, щоб помістити кілька дій в один рядок.
 
-For example:
+Наприклад:
 
 ```js
-// three operations in one line
+// три операціх в одному рядку
 for (*!*a = 1, b = 3, c = a * b*/!*; a < 10; a++) {
  ...
 }
 ```
 
-Such tricks are used in many JavaScript frameworks. That's why we're mentioning them. But, usually, they don't improve code readability so we should think well before using them.
+Такі трюки використовуються в багатьох фреймворках JavaScript. Саме тому ми їх згадуємо. Але, як правило, вони не покращують читабельність коду, тому ми повинні добре подумати перед їх використанням.
