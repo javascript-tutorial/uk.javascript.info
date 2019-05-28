@@ -1,42 +1,42 @@
-# Interaction: alert, prompt, confirm
+# Взаємодія: alert, prompt, confirm
 
-This part of the tutorial aims to cover JavaScript "as is", without environment-specific tweaks.
+Ця частина підручника спрямована на розглядання JavaScript "як є", без спеціальних налаштувань середовища.
 
-But we'll still be using the browser as our demo environment, so we should know at least a few of its user-interface functions. In this chapter, we'll get familiar with the browser functions `alert`, `prompt` and `confirm`.
+Але ми як і раніше будемо використовувати браузер як середовище для демонстрацій, тому ми повинні знати принаймні деякі з його функцій інтерфейсу користувача. У цьому розділі ми ознайомимося з функціями браузера `alert`, `prompt` та `confirm`.
 
 ## alert
 
-Syntax:
+Синтаксис:
 
 ```js
 alert(message);
 ```
 
-This shows a message and pauses script execution until the user presses "OK".
+Ця функція показує повідомлення та призупиняє виконання скрипта поки користувач не натисне кнопку "OK".
 
-For example:
+Наприклад:
 
 ```js run
-alert("Hello");
+alert("Привіт");
 ```
 
-The mini-window with the message is called a *modal window*. The word "modal" means that the visitor can't interact with the rest of the page, press other buttons, etc. until they have dealt with the window. In this case -- until they press "OK".
+Міні-вікно з повідомленням називається *модальним вікном*. Слово "модальний" означає, що відвідувач не може взаємодіяти з іншою частиною сторінки, натискати інші кнопки, тощо, поки він не завершить операціх з вікном. У цьому випадку -- поки він не натисне "OK".
 
 ## prompt
 
-The function `prompt` accepts two arguments:
+Функція `prompt` приймає два аргументи:
 
 ```js no-beautify
 result = prompt(title, [default]);
 ```
 
-It shows a modal window with a text message, an input field for the visitor, and the buttons OK/CANCEL.
+Вона показує модальне вікно з текстовим повідомленням, полем введення для відвідувача, та кнопками OK/CANCEL.
 
 `title`
-: The text to show the visitor.
+: Текст, який буде видображатися для відвідувача.
 
 `default`
-: An optional second parameter, the initial value for the input field.
+: Необов'язковий другий параметр, початкове значення для поля введення.
 
 The visitor may type something in the prompt input field and press OK. Or they can cancel the input by pressing CANCEL or hitting the `key:Esc` key.
 
