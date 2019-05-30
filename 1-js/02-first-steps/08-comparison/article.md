@@ -191,8 +191,13 @@ alert( undefined == 0 ); // false (3)
 
 Ми отримуємо такі результати, тому що:
 
+<<<<<<< HEAD
 - Порівняння `(1)` і `(2)` повертає `false`, тому що `undefined` під час порівняння з "не null" значеннями завжди конвертується в `NaN`, а `NaN` — це спеціальне числове значення, яке завжди повертає `false` під час будь-яких порівнянь.
 - Не строге порівняння `(3)` повертає `false`, тому що `undefined` рівне тільки `null` і ніяким іншим значенням.
+=======
+- Comparisons `(1)` and `(2)` return `false` because `undefined` gets converted to `NaN` and `NaN` is a special numeric value which returns `false` for all comparisons.
+- The equality check `(3)` returns `false` because `undefined` only equals `null`, `undefined`, and no other value.
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 ### Як уникнути проблем
 

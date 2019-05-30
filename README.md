@@ -9,7 +9,11 @@
 - Додайте коментар до issue, щоб проінформувати інших, що ви перекладаєте цей розділ.
 - Створіть форк репозиторію, перекладіть один розділ і коли завершите, надішліть запит на злиття (PR).
 
+<<<<<<< HEAD
 За бажанням можете [створити issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/new) із назвою перекладу, наприклад: "Translation: Code quality > Debugging in Chrome".
+=======
+See <https://javascript.info/translate> for the details.
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 **Дайте іншим зрозуміти, що ви перекладаєте. Найкращим способом буде написання коментаря до [цього issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).**
 

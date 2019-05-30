@@ -135,8 +135,13 @@ alert(hello); // Привіт світ!
 alert(message); // Привіт світ!
 ```
 
+<<<<<<< HEAD
 ```smart header="Функціональне програмування"
 Цікаво відзначити, що [функціональні](https://uk.wikipedia.org/wiki/Функційне_програмування) мови програмування, такі як [Scala](http://www.scala-lang.org/) або [Erlang](http://www.erlang.org/), забороняють змінювати значення змінних.
+=======
+```smart header="Functional languages"
+It's interesting to note that there exist [functional](https://en.wikipedia.org/wiki/Functional_programming) programming languages, like [Scala](http://www.scala-lang.org/) or [Erlang](http://www.erlang.org/) that forbid changing variable values.
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 В таких мовах, збережені в "коробку" значення залишаються там назавджи. Якщо нам потрібно зберегти щось інше, мова змусить нас створити нову коробку (оголосити нову змінну). Ми не можемо використати стару змінну.
 
@@ -182,8 +187,13 @@ let my-name; // дефіс '-' недопустимий в імені
 Змінні з іменами `apple` і `AppLE` -- це дві різні змінні.
 ```
 
+<<<<<<< HEAD
 ````smart header="Не-латинські букви дозволені, але не рекомендуються"
 Можна використовувати будь-яку мову, включно з кирилицею або навіть ієрогліфи, наприклад:
+=======
+````smart header="Non-Latin letters are allowed, but not recommended"
+It is possible to use any language, including cyrillic letters or even hieroglyphs, like this:
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 ```js
 let імя = '...';
@@ -254,7 +264,11 @@ myBirthday = '01.01.2001'; // помилка, не можна перевизна
 
 Такі константи пишуться в верхньому регістрі з використанням підкреслень.
 
+<<<<<<< HEAD
 Ось так:
+=======
+For instance, let's make constants for colors in so-called "web" (hexadecimal) format:
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 ```js run
 const COLOR_RED = "#F00";
@@ -290,7 +304,11 @@ const pageLoadTime = /* час, потрачений на завантаженн
 
 В розмові про змінні необхідно згадати, що є ще одна дуже важлива річ -- правильні імена змінних.
 
+<<<<<<< HEAD
 Такі імена повинні мати ясний і зрозумілий сенс, говорити про те, які дані в них зберігаються.
+=======
+A variable name should have a clean, obvious meaning, describe the data that it stores.
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 Іменування змінних -- одна з найважливіших і найскладніших навичок в програмуванні. Швидкий перегляд змінних може показати, чи код був написаний новачком чи досвідченим розробником.
 

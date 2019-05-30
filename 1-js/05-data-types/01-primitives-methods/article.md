@@ -16,7 +16,14 @@ JavaScript дозволяє працювати з примітивами (ряд
 - можна зберігати декілька значень як властивості.
 - може бути створений за допомогою `{}`, наприклад: `{name: "John", age: 30}`. В JavaScript існують й інші об'єкти: функції - це теж об'єкти.
 
+<<<<<<< HEAD
 Одна з цікавих речей щодо об'єктів полягає в тому, що ми можемо зберігати функцію як одну з його властивостей.
+=======
+- Is capable of storing multiple values as properties.
+- Can be created with `{}`, for instance: `{name: "John", age: 30}`. There are other kinds of objects in JavaScript: functions, for example, are objects.
+
+One of the best things about objects is that we can store a function as one of its properties.
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 ```js run
 let john = {
@@ -46,9 +53,15 @@ john.sayHi(); // Привіт друже!
 
 Рішення виглядає трошки дивно, але так і є:
 
+<<<<<<< HEAD
 1. Примітиви залишаються примітивами. Лише значення, як хотіли.
 2. JavaScript дозволяє отримати доступ до методів та властивостей рядків, чисел, булеанів та символів.
 3. Для цього створюється спеціальний "об'єкт обгортка" з додатковою функціональністю, та потім він знищується.
+=======
+1. Primitives are still primitive. A single value, as desired.
+2. The language allows access to methods and properties of strings, numbers, booleans and symbols.
+3. In order for that to work, a special "object wrapper" that provides the extra functionality is created, and then is destroyed.
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 Для кожного примітиву створюється своя "обгортка": `String`, `Number`, `Boolean` та `Symbol`. Отже, вони містять різні набори методів.
 
@@ -96,13 +109,22 @@ alert( typeof 0 ); // "number"
 alert( typeof new Number(0) ); // "object"!
 ```
 
+<<<<<<< HEAD
 Об'єкти завжди повертають `true` в `if`, отже ми побачимо алерт:
+=======
+Objects are always truthy in `if`, so here the alert will show up:
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 
 ```js run
 let zero = new Number(0);
 
+<<<<<<< HEAD
 if (zero) { // zero є true, тому що це об'єкт
   alert( "zero є true!?!" );
+=======
+if (zero) { // zero is true, because it's an object
+  alert( "zero is truthy!?!" );
+>>>>>>> 08734734021aa128c13da2382fe8fa062677bb9f
 }
 ```
 
