@@ -1,11 +1,11 @@
-JavaScript-code:
+JavaScript код:
 
 ```js demo run
 let name = prompt("Як вас звати?", "");
 alert(name);
 ```
 
-The full page:
+Вся сторінка:
 
 ```html
 <!DOCTYPE html>
