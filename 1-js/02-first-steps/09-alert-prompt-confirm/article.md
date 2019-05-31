@@ -1,6 +1,6 @@
 # Взаємодія: alert, prompt, confirm
 
-Ця частина підручника спрямована на розглядання JavaScript "як є", без спеціальних налаштувань середовища.
+Ця частина підручника спрямована на розгляд JavaScript "як є", без спеціальних налаштувань середовища.
 
 Але ми як і раніше будемо використовувати браузер як середовище для демонстрацій, тому ми повинні знати принаймні деякі з його функцій інтерфейсу користувача. У цьому розділі ми ознайомимося з функціями браузера `alert`, `prompt` та `confirm`.
 
@@ -20,7 +20,7 @@ alert(message);
 alert("Привіт");
 ```
 
-Міні-вікно з повідомленням називається *модальним вікном*. Слово "модальний" означає, що відвідувач не може взаємодіяти з іншою частиною сторінки, натискати інші кнопки, тощо, поки він не завершить операціх з вікном. У цьому випадку -- поки він не натисне "OK".
+Міні-вікно з повідомленням називається *модальним вікном*. Слово "модальний" означає, що відвідувач не може взаємодіяти з іншою частиною сторінки, натискати інші кнопки, тощо, поки він не завершить операції з вікном. У цьому випадку -- поки він не натисне "OK".
 
 ## prompt
 
@@ -38,72 +38,72 @@ result = prompt(title, [default]);
 `default`
 : Необов'язковий другий параметр, початкове значення для поля введення.
 
-The visitor may type something in the prompt input field and press OK. Or they can cancel the input by pressing CANCEL or hitting the `key:Esc` key.
+Відвідувач може ввести щось у поле введення запиту і натиснути OK. Або він може скасувати введення, натиснувши CANCEL або натиснувши клавішу `key:Esc`.
 
-The call to `prompt` returns the text from the input field or `null` if the input was canceled.
+Виклик`prompt` повертає текст з поля введення або `null`, якщо введення було скасоване.
 
-For instance:
+Наприклад:
 
 ```js run
-let age = prompt('How old are you?', 100);
+let age = prompt('Скільки вам років?', 100);
 
-alert(`You are ${age} years old!`); // You are 100 years old!
+alert(`Вам ${age} років!`); // Вам 100 років!
 ```
 
-````warn header="In IE: always supply a `default`"
-The second parameter is optional, but if we don't supply it, Internet Explorer will insert the text `"undefined"` into the prompt.
+````warn header="В IE: завжди вказуйте початкове значення `default`"
+Другий параметр є необов'язковим, але якщо ми не надамо його, Internet Explorer вставить у рядок текст `"undefined"`.
 
-Run this code in Internet Explorer to see:
+Запустіть цей код в Internet Explorer, щоб побачити:
 
 ```js run
 let test = prompt("Test");
 ```
 
-So, for prompts to look good in IE, we recommend always providing the second argument:
+Отже, щоб модальні вікна prompts добре виглядали у IE, ми рекомендуємо завжди надавати другий аргумент:
 
 ```js run
-let test = prompt("Test", ''); // <-- for IE
+let test = prompt("Test", ''); // <-- для IE
 ```
 ````
 
 ## confirm
 
-The syntax:
+Синтаксис:
 
 ```js
 result = confirm(question);
 ```
 
-The function `confirm` shows a modal window with a `question` and two buttons: OK and CANCEL.
+Функція `confirm` показує модальне вікно з `питанням` та двома кнопками: OK та CANCEL.
 
-The result is `true` if OK is pressed and `false` otherwise.
+Результат `true` якщо натиснути кнопку OK, інакше `false`.
 
-For example:
+Наприклад:
 
 ```js run
-let isBoss = confirm("Are you the boss?");
+let isBoss = confirm("Ви бос?");
 
-alert( isBoss ); // true if OK is pressed
+alert( isBoss ); // true якщо натуснута OK
 ```
 
-## Summary
+## Підсумки
 
-We covered 3 browser-specific functions to interact with visitors:
+Ми вивчили 3 специфічні для браузера функції, для взаємодії з відвідувачами:
 
 `alert`
-: shows a message.
+: показує повідомлення.
 
 `prompt`
-: shows a message asking the user to input text. It returns the text or, if CANCEL or `key:Esc` is clicked, `null`.
+: показує повідомлення з проханням ввести текст. Вона повертає текст або `null`, якщо натиснуті CANCEL або `key:Esc`.
 
 `confirm`
-: shows a message and waits for the user to press "OK" or "CANCEL". It returns `true` for OK and `false` for CANCEL/`key:Esc`.
+: показує повідомлення і чекає, коли користувач натисне "OK" або "CANCEL". Вона повертає `true` для OK та `false` для CANCEL/`key:Esc`.
 
-All these methods are modal: they pause script execution and don't allow the visitor to interact with the rest of the page until the window has been dismissed.
+Всі ці методи є модальними: вони призупиняють виконання скриптів та не дозволяють відвідувачам взаємодіяти з рештою сторінки, поки вікно не буде відхилено.
 
-There are two limitations shared by all the methods above:
+Існують два обмеження, пов'язані з усіма методами вище:
 
-1. The exact location of the modal window is determined by the browser. Usually, it's in the center.
-2. The exact look of the window also depends on the browser. We can't modify it.
+1. Точне розташування модального вікна визначається браузером. Зазвичай це в центрі.
+2. Точний вигляд вікна також залежить від браузера. Ми не можемо його змінити.
 
-That is the price for simplicity. There are other ways to show nicer windows and richer interaction with the visitor, but if "bells and whistles" do not matter much, these methods work just fine.
+Це ціна за простоту. Є й інші способи показувати приємніші вікна та богатшу взаємодію з відвідувачем, але якщо "навороти" не мають значення, то ці методи працюють дуже добре.
