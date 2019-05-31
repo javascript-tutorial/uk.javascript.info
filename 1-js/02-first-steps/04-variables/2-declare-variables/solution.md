@@ -1,21 +1,21 @@
-First, the variable for the name of our planet.
+1. Змінна для назви нашої планети.
 
-That's simple:
-
-```js
-let ourPlanetName = "Earth";
-```
-
-Note, we could use a shorter name `planet`, but it might be not obvious what planet it refers to. It's nice to be more verbose. At least until the variable isNotTooLong.
-
-Second, the name of the current visitor:
+Ось приклад:
 
 ```js
-let currentUserName = "John";
+let ourPlanetName = "Земля";
 ```
 
-Again, we could shorten that to `userName` if we know for sure that the user is current.
+Зверніть увагу, ми могли використати коротше ім'я `planet`, але тоді буде не зрозуміло, яку планету ми маємо на увазі. Краще описати вміст змінної детальніше. Принаймні до тих пір, поки ім'я змінної неСтанеЗанадтоДовгим.
 
-Modern editors and autocomplete make long variable names easy to write. Don't save on them. A name with 3 words in it is fine.
+2. Ім'я поточного відвідувача:
 
-And if your editor does not have proper autocompletion, get [a new one](/code-editors).
+```js
+let currentUserName = "Іван";
+```
+
+Знову ж таки, ми можемо скоротити ім'я до `userName`, якщо ми точно знатимемо що це поточний відвідувач.
+
+Сучасні редактори і автодоповнювачі дозволяють легко писати довгі імена змінних. Не економте букв. Імена з трьох слів цілком нормальні.
+
+Якщо в вашому редакторі немає автодоповнювача, скористайтеся [іншим](/code-editors).

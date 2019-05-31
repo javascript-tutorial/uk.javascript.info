@@ -7,11 +7,11 @@
 - Перегляньте першу issue: [Ukrainian Translate Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).
 - Виберіть розділ, який ви хочете перекласти. Вибирайте з тих розділів, які ще не відмічені і не перекладаються.
 - Додайте коментар до issue, щоб проінформувати інших, що ви перекладаєте цей розділ.
-- Створіть форк репозиторію, перекладіть один розділ і надішліть запит на злиття (PR), коли завершите.
+- Створіть форк репозиторію, перекладіть один розділ і коли завершите, надішліть запит на злиття (PR).
 
 За бажанням можете [створити issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/new) із назвою перекладу, наприклад: "Translation: Code quality > Debugging in Chrome".
 
-**Дайте іншим зрозуміти, що ви перекладаєте. Найкращим способом буде написання коментаря до [цього issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/1)**
+**Дайте іншим зрозуміти, що ви перекладаєте. Найкращим способом буде написання коментаря до [цього issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).**
 
 🎉 Дякуємо!
 
@@ -19,56 +19,60 @@
 
 Якщо ви хочете стати супроводжуючим (maintainer), мати повний доступ до репозиторію і переглядати переклади інших, [створіть нову issue](https://github.com/javascript-tutorial/translate/issues/new) в головному репозиторію, із заголовком "Become maintainer (Ukrainian)".
 
-P.S. Весь перелік мов можна знайти на сторінці <https://github.com/javascript-tutorial/translate>.
+P.S. Весь перелік мов можна знайти на сторінці <https://javascript.info/translate>.
 
-## Contributions
+## Внески
 
-We'd also like to collaborate on the tutorial with other people.
+Ми також хочемо, щоб інші люди робили свій вклад в цей посібник.
 
-Something's wrong? A topic is missing? Explain it to people, add as PR 👏
+Якщо ви замітили неточності в перекладі, або ви знаєте нову інформацію, тоді, будь ласка, поділіться цим з іншими людьми (у вигляді запиту на злиття - PR) 👏
 
-**You can edit the text in any editor.** The tutorial uses enhanced "markdown" format, easy to grasp. And if you want to see how it looks on-site, there's a server to run the tutorial locally at <https://github.com/javascript-tutorial/server>.  
+**Ви можете редагувати текст в будь-якому редакторі.** Цей посібник використовує формат "markdown", який легко зрозуміти. Якщо ви хочете переглянути, як переклад буде виглядати на сайті, для цього є веб-сервер, який ви можете запустити локально: <https://github.com/javascript-tutorial/server>.
 
-The list of contributors is available at <https://javascript.info/about#contributors>.
+Ось тут перелік людей, які вклали свій час у розвиток цього посібника: <https://javascript.info/about#contributors>.
 
-## Structure
+## Структура
 
-Every chapter, an article or a task resides in its own folder.
+Кожен розділ, стаття або завдання знаходяться у власних папках.
 
-The folder is named `N-url`, where `N` – is the number for sorting (articles are ordered), and `url` is the URL-slug on the site.
+Папка називається в форматі `N-code-editors`, де `N` – це номер для сортування (статті впорядковані), і `code-editors` це частина URL на сайті.
 
-See <https://github.com/javascript-tutorial/translate> for the details.
+Перегляньте <https://javascript.info/translate> для подробиць.
 
-The folder has one of files:
+Папка має один з цих файлів:
 
-- `index.md` for a section,
-- `article.md` for an article,
-- `task.md` for a task formulation (+`solution.md` with the solution text if any).
+- `index.md` якщо це розділ,
+- `article.md` якщо стаття,
+- `task.md` для формулювання завдання (+`solution.md` з текстом вирішення завдання).
 
-A file starts with the `# Title Header`, and then the text in Markdown-like format, editable in a simple text editor. 
+Файл починається із `# Заголовка`; потім йде текст в форматі Markdown, який легко редагується в звичайному текстовому редакторі.
 
-Additional resources and examples for the article or the task, are also in the same folder.
+Додаткові ресурси та приклади до статтей або завдань також розміщуються в одній папці.
 
-## Translation Tips
+## Підказки щодо перекладу
 
-- The translation doesn't have to be word-by-word precise. It should be technically correct and explain well.
-- If you see that the English version can be improved – great, please send a PR to it.
+- Переклад не обов'яково повинен бути дослівним. Він повинен бути технічно корректним і повинен бути добре зрозумілим.
+- Якщо ви бачите, що англійську версію можна вдосконалити - чудово, будь ласка, надішліть PR із правками.
 
-**Please keep line breaks and paragraphs "as is": don't add newlines and don't remove existing ones.** Makes it easy to merge future changes from the English version into the translation. 
+**Будь ласка, зберігайте перенесення рядків і абзаци "як є": не додавайте нові рядки і не видаляйте існуючі.** Це полегшує об'єднання майбутніх змін в англійській версії з цим перекладом.
 
-### Glossary
+### Глосарій (словник)
 
-Agree on translations of terms like `resolved promise`, `slash`, `regexp`, etc. Look a good glossary, maybe there's one for your language already?
-Or create it, for all translators to use the same terms. 
+Є деякі слова, які викликають сумніви щодо перекладу. Наприклад, слово "application" - це "програма", "додаток" чи "застосунок"?
 
-### Text in Code Blocks
+Щоб зберегти цілісніть перекладу поміж усіма статтями необхідно вживати однаковий переклад таких слів.
 
-- Translate comments.
-- Translate user-messages and example strings.
-- Don't translate variables, classes, identifiers.
-- Ensure that the code works after the translation :)
+Тому перед перекладом слід ознайомитися із [глосарієм](https://github.com/javascript-tutorial/uk.javascript.info/issues/8).
+В процесі перекладу вам можуть зустрітися й інші такі слова. У випадку сумнівів щодо перекладу таких слів – сміливо додавайте їх в глосарій.
 
-Example:
+### Текст в блоках коду
+
+- Перекладайте коментарі до коду.
+- Перекладайте повідомлення користувачів і тестові рядки.
+- Не перекладайте змінні, класи, ідентифікатори.
+- Переконайтеся, що код працює після перекладу :)
+
+Наприклад:
 
 ```js
 // Example
@@ -76,47 +80,49 @@ const text = "Hello, world";
 document.querySelector('.hello').innerHTML = text;
 ```
 
-✅ DO (translate comment):
+✅ Перекладіть коментар і рядок:
 
 ```js
-// Ejemplo
-const text = 'Hola mundo';
+// Приклад
+const text = 'Привіт, світ';
 document.querySelector('.hello').innerHTML = text;
 ```
 
-❌ DON'T (translate class):
+❌ Не перекладайте назву класу:
 
 ```js
-// Ejemplo
-const text = 'Hola mundo';
-// ".hello" is a class
-// DO NOT TRANSLATE
-document.querySelector('.hola').innerHTML = text;
+// Приклад
+const text = 'Привіт, світ';
+// ".hello" це клас
+// НЕ ПЕРЕКЛАДАЙТЕ ТАК
+document.querySelector('.привіт').innerHTML = text;
 ```
 
-### External Links
+### Зовнішні посилання
 
-If an external link is to Wikipedia, e.g. `https://en.wikipedia.org/wiki/JavaScript`, and a version of that article exists in your language that is of decent quality, link to that version instead.
+Якщо зовнішнє посилання на Вікіпедію має відповідну українську версію, і ця версія містить досить повну інформацію, в такому випадку варто вказати посилання на українську версію.
 
-Example:
+Наприклад:
 
 ```md
 [JavaScript](https://en.wikipedia.org/wiki/JavaScript) is a programming language.
 ```
 
-✅ OK (en -> es):
+✅ Можна замінити на (en -> uk):
 
 ```md
-[JavaScript](https://es.wikipedia.org/wiki/JavaScript) es un lenguaje de programación.
+[JavaScript](https://uk.wikipedia.org/wiki/JavaScript) це прототипна мова програмування.
 ```
 
-For links to MDN, that are only partially translated, also use the language-specific version.
+Якщо посилання на українську версію містить кодовані букви (`https://uk.wikipedia.org/wiki/V8_(%D1%80%D1%83%D1%88%D1%96%D0%B9_JavaScript`), їх слід замінити на українські букви (`https://uk.wikipedia.org/wiki/V8_(рушій_JavaScript)`).
 
-If a linked article has no translated version, leave the link "as is".
+Для статтей на MDN, які частково перекладені на українську мову, також можна вказати посилання на українську версію.
 
-### Metadata
+Якщо така стаття немає перекладеної версії, залишайте посилання "як є".
 
-Some files, usually tasks, have YAML metadata at the top, delimited by `---`:
+### Метадані
+
+Деякі файли, особливо завдання, мають зверху метадані в форматі YAML, які розділені `---`:
 
 ```md
 importance: 5
@@ -125,17 +131,15 @@ importance: 5
 ...
 ```
 
-Please don't translate "importance" (and other top metadata).
+Будь ласка, не перекладайте "importance" (та інші метадані).
 
-## Running locally
+## Запуск локально
 
-You can run the tutorial locally, to immediately see the changes on-site.
-The server is at <https://github.com/javascript-tutorial/server>.
-
-Each of these files starts from the `# Main header`.
-
-It's very easy to add something new.
+Ви можете запустити посібник локально, щоб відразу бачити зміни на сайті.
+Сервер знаходиться тут: <https://github.com/javascript-tutorial/server>.
 
 ---
+Будемо дуже вдячні за ваш переклад, або додавання чогось нового!
+
 💓  
 Ilya Kantor @iliakan

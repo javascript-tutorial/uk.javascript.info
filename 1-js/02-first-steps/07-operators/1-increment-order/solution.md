@@ -1,5 +1,5 @@
 
-The answer is:
+Відповідь:
 
 - `a = 2`
 - `b = 2`
@@ -9,10 +9,10 @@ The answer is:
 ```js run no-beautify
 let a = 1, b = 1;
 
-alert( ++a ); // 2, prefix form returns the new value
-alert( b++ ); // 1, postfix form returns the old value
+alert( ++a ); // 2, префіксна форма повертає нове значення
+alert( b++ ); // 1, постфіксна форма повертає старе значення
 
-alert( a ); // 2, incremented once
-alert( b ); // 2, incremented once
+alert( a ); // 2, збільшується один раз
+alert( b ); // 2, збільшується один раз
 ```
 

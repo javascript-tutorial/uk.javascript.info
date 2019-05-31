@@ -1,15 +1,15 @@
 
-Backticks embed the expression inside `${...}` into the string.
+Зворотні лапки вбудовують вираз, що знаходиться всередині `${...}`, у рядок.
 
 ```js run
-let name = "Ilya";
+let name = "Ілля";
 
-// the expression is a number 1
-alert( `hello ${1}` ); // hello 1
+// вираз — число 1
+alert( `привіт ${1}` ); // привіт 1
 
-// the expression is a string "name"
-alert( `hello ${"name"}` ); // hello name
+// вираз є рядком "ім'я"
+alert( `привіт ${"ім'я"}` ); // привіт ім'я
 
-// the expression is a variable, embed it
-alert( `hello ${name}` ); // hello Ilya
+// вираз є змінною, яка вбудовується
+alert( `привіт ${name}` ); // привіт Ілля
 ```

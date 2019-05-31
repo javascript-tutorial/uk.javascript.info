@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# Type conversions
+# Перетворення типу
 
-What are results of these expressions?
+Які результати цих виразів?
 
 ```js no-beautify
 "" + 1 + 0
@@ -23,4 +23,4 @@ null + 1
 undefined + 1
 ```
 
-Think well, write down and then compare with the answer.
+Добре подумайте, запишіть, а потім порівняйте з відповіддю.

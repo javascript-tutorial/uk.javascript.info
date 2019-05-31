@@ -2,9 +2,9 @@ importance: 4
 
 ---
 
-# Uppercase const?
+# Використовувати великі чи маленькі букви для імен констант?
 
-Examine the following code:
+Переглянемо наступний код:
 
 ```js
 const birthday = '18.04.1982';
@@ -12,13 +12,13 @@ const birthday = '18.04.1982';
 const age = someCode(birthday);
 ```
 
-Here we have a constant `birthday` date and the `age` is calculated from `birthday` with the help of some code (it is not provided for shortness, and because details don't matter here).
+В нас є константа `birthday`, а також `age`, яка вираховується за допомогою функції, використовуючи значення із `birthday` (в даному випадку деталі не мають значення, тому код функції не розглядається).
 
-Would it be right to use upper case for `birthday`? For `age`? Or even for both?
+Чи можна використовувати великі букви для імені `birthday`? А для `age`? Чи для обох змінних?
 
 ```js
-const BIRTHDAY = '18.04.1982'; // make uppercase?
+const BIRTHDAY = '18.04.1982'; // використовувати великі букви?
 
-const AGE = someCode(BIRTHDAY); // make uppercase?
+const AGE = someCode(BIRTHDAY); // а тут?
 ```
 

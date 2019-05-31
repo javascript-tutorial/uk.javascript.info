@@ -1,12 +1,12 @@
-In the code below, each line corresponds to the item in the task list.
+В коді нижче, кожен рядок рішення відповідає одному елементу в списку задачі.
 
 ```js run
-let admin, name; // can declare two variables at once
+let admin, name; // можна оголошувати дві змінні через кому
 
-name = "John";
+name = "Іван";
 
 admin = name;
 
-alert( admin ); // "John"
+alert( admin ); // "Іван"
 ```
 
