@@ -1,14 +1,14 @@
-# Conditional operators: if, '?'
+# Умовні оператори: if, '?'
 
-Sometimes, we need to perform different actions based on different conditions.
+Іноді нам потрібно виконувати різні дії на основі різних умов.
 
-To do that, we can use the `if` statement and the conditional operator `?`, that's also called a "question mark" operator.
+Для цього ми можемо використовувати вираз `if` та умовний опертор `?`, що також називається оператором "знак питання".
 
-## The "if" statement
+## Вираз "if"
 
-The `if` statement evaluates a condition and, if the condition's result is `true`, executes a block of code.
+Вираз `if` оцінює умову і, якщо результат умови `true`, виконує блок коду.
 
-For example:
+Наприклад:
 
 ```js run
 let year = prompt('In which year was ECMAScript-2015 specification published?', '');
