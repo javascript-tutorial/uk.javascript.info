@@ -11,25 +11,25 @@
 Наприклад:
 
 ```js run
-let year = prompt('In which year was ECMAScript-2015 specification published?', '');
+let year = prompt('У якому році була опублікована специфікація ECMAScript-2015?', '');
 
 *!*
-if (year == 2015) alert( 'You are right!' );
+if (year == 2015) alert( 'Ви маєте рацію!' );
 */!*
 ```
 
-In the example above, the condition is a simple equality check (`year == 2015`), but it can be much more complex.
+У наведеному вище прикладі умовою є проста перевірка рівності (`year == 2015`), але вона може бути набагато складнішою.
 
-If we want to execute more than one statement, we have to wrap our code block inside curly braces:
+Якщо ми хочемо виконати більше однієї операції, ми повинні загорнути блок коду у фігурні дужки:
 
 ```js
 if (year == 2015) {
-  alert( "That's correct!" );
-  alert( "You're so smart!" );
+  alert( "Це правильно!" );
+  alert( "Ви такий розумний!" );
 }
 ```
 
-We recommend wrapping your code block with curly braces `{}` every time you use an `if` statement, even if there is only one statement to execute. Doing so improves readability.
+Ми рекомендуємо огортати блок коду фігурними дужками `{}` кожного разу, коли ви використовуєте оператор `if`, навіть якщо для виконання виконується одна операція. Це покращує читабельність.
 
 ## Boolean conversion
 
