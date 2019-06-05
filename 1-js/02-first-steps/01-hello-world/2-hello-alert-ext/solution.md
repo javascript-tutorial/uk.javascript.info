@@ -1,8 +1,8 @@
-The HTML code:
+HTML код:
 
 [html src="index.html"]
 
-For the file `alert.js` in the same folder:
+Для файлу `alert.js` в тій самій папці:
 
 [js src="alert.js"]
 

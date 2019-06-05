@@ -1,17 +1,17 @@
-# Hello, world!
+# Привіт, світ!
 
-This part of the tutorial is about core JavaScript, the language itself. Later on, you'll learn about Node.js and other platforms that use it.
+Ця частина посібника розповідає про основи JavaScript, про саму мову. Згодом, ви будете вивчати Node.js та інші платформи, які його використовують.
 
-But we need a working environment to run our scripts and, since this book is online, the browser is a good choice. We'll keep the amount of browser-specific commands (like `alert`) to a minimum so that you don't spend time on them if you plan to concentrate on another environment (like Node.js). We'll focus on JavaScript in the browser in the [next part](/ui) of the tutorial.
+Але нам необхідне робоче середовище для запуску наших скриптів і, оскільки ця книга є онлайн, браузер є гарним вибором для цього. Ми зведемо до мінімуму кількість специфічних команд для браузера (наприклад `alert`), щоб ви не витрачали час на них, якщо плануєте зосередитися на іншому середовищі (як Node.js). Ми зосередимось на JavaScript в браузері у [наступній частині](/ui) посібника.
 
-So first, let's see how we attach a script to a webpage. For server-side environments (like Node.js), you can execute the script with a command like `"node my.js"`.
+Насамперед, давайте подивимось, як додавати скрипти до сторінки. Для серверних середовищ (як Node.js) ви можете виконати скрипти за допомогою команди `"node my.js"`.
 
 
-## The "script" tag
+## Тег "script"
 
-JavaScript programs can be inserted into any part of an HTML document with the help of the `<script>` tag.
+Програми JavaScript можна вставити у будь-яку частину HTML документа за допомогою тега `<script>`.
 
-For instance:
+Наприклад:
 
 ```html run height=100
 <!DOCTYPE HTML>
@@ -19,15 +19,15 @@ For instance:
 
 <body>
 
-  <p>Before the script...</p>
+  <p>Текст перед скриптом...</p>
 
 *!*
   <script>
-    alert( 'Hello, world!' );
+    alert( 'Привіт, світ!' );
   </script>
 */!*
 
-  <p>...After the script.</p>
+  <p>...Після скрипта.</p>
 
 </body>
 
@@ -35,24 +35,24 @@ For instance:
 ```
 
 ```online
-You can run the example by clicking the "Play" button in the right-top corner of the box above.
+Ви можете запустити приклад, натиснувши на кнопку "Відтворити" у правому верхньому куті поля вище.
 ```
 
-The `<script>` tag contains JavaScript code which is automatically executed when the browser processes the tag.
+Тег `<script>` містить JavaScript код, який автоматично виконується, коли браузер обробляє тег.
 
 
-## Modern markup
+## Сучасна розмітка
 
-The `<script>` tag has a few attributes that are rarely used nowadays but can still be found in old code:
+Тег `<script>` має декілька атрибутів, які рідко використовуються сьогодні, але їх ще можна знайти в старому коді.
 
-The `type` attribute: <code>&lt;script <u>type</u>=...&gt;</code>
-: The old HTML standard, HTML4, required a script to have a `type`. Usually it was `type="text/javascript"`. It's not required anymore. Also, the modern HTML standard, HTML5, totally changed the meaning of this attribute. Now, it can be used for JavaScript modules. But that's an advanced topic; we'll talk about modules in another part of the tutorial.
+Атрибут `type`: <code>&lt;script <u>type</u>=...&gt;</code>
+: Старий стандарт HTML, HTML4, вимагає щоб у `<script>` був `type`. Зазвичай це був `type="text/javascript"`. Це більше не потрібно. Також, сучасний стандарт HTML, HTML5, повністю змінив зміст цього атрибута. Тепер його можна використовувати для JavaScript модулів. Але це є просунута тема; ми поговоримо про модулі в іншій частині посібника.
 
-The `language` attribute: <code>&lt;script <u>language</u>=...&gt;</code>
-: This attribute was meant to show the language of the script. This attribute no longer makes sense because JavaScript is the default language. There is no need to use it.
+Атрибут `language`: <code>&lt;script <u>language</u>=...&gt;</code>
+: Цей атрибут вказував на мову скрипта. Цей атрибут більше немає сенсу, оскільки JavaScript є усталеною мовою. Його більше не потрібно використовувати.
 
-Comments before and after scripts.
-: In really ancient books and guides, you may find comments inside `<script>` tags, like this:
+Коментарі до та після скриптів.
+: У дійсно старих посібниках і книгах ви можете знайти коментарі всередині тега `<script>`, наприклад:
 
     ```html no-beautify
     <script type="text/javascript"><!--
@@ -60,30 +60,30 @@ Comments before and after scripts.
     //--></script>
     ```
 
-    This trick isn't used in modern JavaScript. These comments hid JavaScript code from old browsers that didn't know how to process the `<script>` tag. Since browsers released in the last 15 years don't have this issue, this kind of comment can help you identify really old code.
+    Такий спосіб не використовується у сучасному JavaScript. Ці коментарі ховали JavaScript для старих браузерів, які не знали, як обробляти тег `<script>`. Ті браузери, які були випущені за останні 15 років, не мають цієї проблеми. Такий вид коментарів означає що це дійсно старий код.
 
 
-## External scripts
+## Зовнішні скрипти
 
-If we have a lot of JavaScript code, we can put it into a separate file.
+Якщо ми маємо багато JavaScript коду, ми можемо їх розділити на окремі файли.
 
-Script files are attached to HTML with the `src` attribute:
+Файл скрипта можна додати до HTML за допомогою атрибута `src`:
 
 ```html
 <script src="/path/to/script.js"></script>
 ```
 
-Here, `/path/to/script.js` is an absolute path to the script file (from the site root).
+Тут, `/path/to/script.js` - абсолютний шлях до файлу скрипта (з кореня сайту).
 
-You can also provide a relative path from the current page. For instance, `src="script.js"` would mean a file `"script.js"` in the current folder.
+Також можна вказати відносний шлях з поточної сторінки. Наприклад, `src="script.js"` означатиме, що файл `"script.js"` у поточній директорії.
 
-We can give a full URL as well. For instance:
+Ми також можемо вказати повну URL-адресу. Наприклад:
 
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js"></script>
 ```
 
-To attach several scripts, use multiple tags:
+Щоб додати кілька скриптів, використовуйте кілька тегів:
 
 ```html
 <script src="/js/script1.js"></script>
@@ -92,29 +92,29 @@ To attach several scripts, use multiple tags:
 ```
 
 ```smart
-As a rule, only the simplest scripts are put into HTML. More complex ones reside in separate files.
+Як правило, тільки найпростіші скрипти поміщаються безпосередньо в HTML. Більш складніші знаходяться в окремих файлах.
 
-The benefit of a separate file is that the browser will download it and store it in its [cache](https://en.wikipedia.org/wiki/Web_cache).
+Перевага окремого файлу полягає в тому, що браузер завантажує його та зберігає у своєму [кеші](https://uk.wikipedia.org/wiki/Веб-кешування).
 
-Other pages that reference the same script will take it from the cache instead of downloading it, so the file is actually downloaded only once.
+Інші сторінки, які посилаються на один і той самий скрипт, замість того, щоб завантажувати повторно, будуть брати його з кешу, тому файл буде завантажено лише один раз.
 
-That reduces traffic and makes pages faster.
+Це зменшує трафік і робить сторінки швидшими.
 ```
 
-````warn header="If `src` is set, the script content is ignored."
-A single `<script>` tag can't have both the `src` attribute and code inside.
+````warn header="Якщо вказаний `src`, вміст скрипта ігнорується."
+Один тег `<script>` не може мати атрибут `src` і код всередині.
 
-This won't work:
+Це не спрацює:
 
 ```html
 <script *!*src*/!*="file.js">
-  alert(1); // the content is ignored, because src is set
+  alert(1); // вміст ігнорується, оскільки задано src
 </script>
 ```
 
-We must choose either an external `<script src="…">` or a regular `<script>` with code.
+Ми повинні вибрати або зовнішній `<script src="…">` або звичайний `<script>` з кодом.
 
-The example above can be split into two scripts to work:
+Наведений вище приклад можна розділити на два скрипти:
 
 ```html
 <script src="file.js"></script>
@@ -124,11 +124,11 @@ The example above can be split into two scripts to work:
 ```
 ````
 
-## Summary
+## Підсумки
 
-- We can use a `<script>` tag to add JavaScript code to a page.
-- The `type` and `language` attributes are not required.
-- A script in an external file can be inserted with `<script src="path/to/script.js"></script>`.
+- Ми можемо використовувати тег `<script>` для додавання JavaScript коду на сторінку.
+- Атрибути `type` і `language` не потрібні.
+- Скрипти у зовнішньому файлі можна вставити за допомогою `<script src="path/to/script.js"></script>`.
 
 
-There is much more to learn about browser scripts and their interaction with the webpage. But let's keep in mind that this part of the tutorial is devoted to the JavaScript language, so we shouldn't distract ourselves with browser-specific implementations of it. We'll be using the browser as a way to run JavaScript, which is very convenient for online reading, but only one of many.
+Існує набагато більше інформації про браузерні скрипти та їхню взаємодію з веб-сторінкою. Але майте на увазі, що ця частина посібника присвячена мові JavaScript, тому ми не повинні відволікати себе від конкретних реалізацій браузера. Ми будемо використовувати браузер як спосіб запуску JavaScript, що є дуже зручним для читання в Інтернеті, але це лише один із багатьох можливих варіантів.
