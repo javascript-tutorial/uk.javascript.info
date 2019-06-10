@@ -53,9 +53,23 @@ alert("деякий код");
 
 В такому випадку, коли `use strict` робитиме різницю, ви можете отримати інші результати.
 
+<<<<<<< HEAD
 Навіть якщо ви натиснете `key:Shift+Enter`, щоб ввести декілька рядків, і напишете `use strict` на початку, це не спрацює. Все тому, що консоль виконує код внутрішньо.
 
 Надійним способом використовувати `use strict` в консолі, буде такий код:
+=======
+You can try to press `key:Shift+Enter` to input multiple lines, and put `use strict` on top, like this:
+
+```js
+'use strict'; <Shift+Enter for a newline>
+//  ...your code
+<Enter to run>
+```
+
+It works in most browsers, namely Firefox and Chrome.
+
+If it doesn't, the most reliable way to ensure `use strict` would be to input the code into console like this:
+>>>>>>> 9cb33f4039e5751bfd0e2bca565a37aa463fb477
 
 ```js
 (function() {
