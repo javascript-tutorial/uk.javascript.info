@@ -31,35 +31,35 @@ if (year == 2015) {
 
 Ми рекомендуємо огортати блок коду фігурними дужками `{}` кожного разу, коли ви використовуєте оператор `if`, навіть якщо для виконання виконується одна операція. Це покращує читабельність.
 
-## Boolean conversion
+## Булеве перетворення
 
-The `if (…)` statement evaluates the expression in its parentheses and converts the result to a boolean.
+Оператор `if (…)` оцінює вираз у його дужках і перетворює результат у логічне значення.
 
-Let's recall the conversion rules from the chapter <info:type-conversions>:
+Нагадаємо правила перетворення з розділу <info:type-conversions>:
 
-- A number `0`, an empty string `""`, `null`, `undefined`, and `NaN` all become `false`. Because of that they are called "falsy" values.
-- Other values become `true`, so they are called "truthy".
+- Число `0`, порожній рядок `""`, `null`, `undefined`, та `NaN` всі перетворюються на `false`. Через це їх називають "фальсивними" значення.
+- Інші значення перетворюються на `true`, тому їх називають "правдивими".
 
-So, the code under this condition would never execute:
+Отже, код ніколи не виконається за такої умови:
 
 ```js
-if (0) { // 0 is falsy
+if (0) { // 0 є фальсивним
   ...
 }
 ```
 
-...and inside this condition -- it always will:
+...а в середені цієї умови -- завжди буде виконуватися:
 
 ```js
-if (1) { // 1 is truthy
+if (1) { // 1 є правдивим
   ...
 }
 ```
 
-We can also pass a pre-evaluated boolean value to `if`, like this:
+Ми також можемо передавати попередньо обчисленне значення до `if`, наприклад:
 
 ```js
-let cond = (year == 2015); // equality evaluates to true or false
+let cond = (year == 2015); // рівність обчислюється як true або false
 
 if (cond) {
   ...
