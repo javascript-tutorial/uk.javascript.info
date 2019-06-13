@@ -1,12 +1,12 @@
-**Yes, it will.**
+**Так, буде.**
 
-Any string except an empty one (and `"0"` is not empty) becomes `true` in the logical context.
+Будь-який рядок, за вийнятком порожнього (і `"0"` не є порожнім) перетворюються на `true` у логічному контексті.
 
-We can run and check:
+Ми можемо запустити і перевірити:
 
 ```js run
 if ("0") {
-  alert( 'Hello' );
+  alert( 'Привіт' );
 }
 ```
 

@@ -1,117 +1,117 @@
-# Conditional operators: if, '?'
+# Умовні оператори: if, '?'
 
-Sometimes, we need to perform different actions based on different conditions.
+Іноді нам потрібно виконувати різні дії на основі різних умов.
 
-To do that, we can use the `if` statement and the conditional operator `?`, that's also called a "question mark" operator.
+Для цього ми можемо використовувати вираз `if` та умовний опертор `?`, що також називається оператором "знак питання".
 
-## The "if" statement
+## Вираз "if"
 
-The `if` statement evaluates a condition and, if the condition's result is `true`, executes a block of code.
+Вираз `if` оцінює умову і, якщо результат умови `true`, виконує блок коду.
 
-For example:
+Наприклад:
 
 ```js run
-let year = prompt('In which year was ECMAScript-2015 specification published?', '');
+let year = prompt('У якому році була опублікована специфікація ECMAScript-2015?', '');
 
 *!*
-if (year == 2015) alert( 'You are right!' );
+if (year == 2015) alert( 'Ви маєте рацію!' );
 */!*
 ```
 
-In the example above, the condition is a simple equality check (`year == 2015`), but it can be much more complex.
+У наведеному вище прикладі умовою є проста перевірка рівності (`year == 2015`), але вона може бути набагато складнішою.
 
-If we want to execute more than one statement, we have to wrap our code block inside curly braces:
+Якщо ми хочемо виконати більше однієї операції, ми повинні загорнути блок коду у фігурні дужки:
 
 ```js
 if (year == 2015) {
-  alert( "That's correct!" );
-  alert( "You're so smart!" );
+  alert( "Це правильно!" );
+  alert( "Ви такий розумний!" );
 }
 ```
 
-We recommend wrapping your code block with curly braces `{}` every time you use an `if` statement, even if there is only one statement to execute. Doing so improves readability.
+Ми рекомендуємо огортати блок коду фігурними дужками `{}` кожного разу, коли ви використовуєте оператор `if`, навіть якщо для виконання використовується одна операція. Це покращує читабельність.
 
-## Boolean conversion
+## Булеве перетворення
 
-The `if (…)` statement evaluates the expression in its parentheses and converts the result to a boolean.
+Оператор `if (…)` оцінює вираз у його дужках і перетворює результат у логічне значення.
 
-Let's recall the conversion rules from the chapter <info:type-conversions>:
+Нагадаємо правила перетворення з розділу <info:type-conversions>:
 
-- A number `0`, an empty string `""`, `null`, `undefined`, and `NaN` all become `false`. Because of that they are called "falsy" values.
-- Other values become `true`, so they are called "truthy".
+- Число `0`, порожній рядок `""`, `null`, `undefined`, та `NaN` всі перетворюються на `false`. Через це їх називають "неправдивими" значеннями.
+- Інші значення перетворюються на `true`, тому їх називають "правдивими".
 
-So, the code under this condition would never execute:
+Отже, код ніколи не виконається за такої умови:
 
 ```js
-if (0) { // 0 is falsy
+if (0) { // 0 є неправдивим
   ...
 }
 ```
 
-...and inside this condition -- it always will:
+...а в середені цієї умови -- завжди буде виконуватися:
 
 ```js
-if (1) { // 1 is truthy
+if (1) { // 1 є правдивим
   ...
 }
 ```
 
-We can also pass a pre-evaluated boolean value to `if`, like this:
+Ми також можемо передавати попередньо обчисленне значення до `if`, наприклад:
 
 ```js
-let cond = (year == 2015); // equality evaluates to true or false
+let cond = (year == 2015); // рівність обчислюється як true або false
 
 if (cond) {
   ...
 }
 ```
 
-## The "else" clause
+## Вираз "else"
 
-The `if` statement may contain an optional "else" block. It executes when the condition is false.
+Вираз `if` може містити не обов'язковий блок "else". Він виконується коли умова є неправдивою.
 
-For example:
+Наприклад:
 ```js run
-let year = prompt('In which year was the ECMAScript-2015 specification published?', '');
+let year = prompt('У якому році була опублікована специфікація ECMAScript-2015?', '');
 
 if (year == 2015) {
-  alert( 'You guessed it right!' );
+  alert( 'Ви здогадалися правильно!' );
 } else {
-  alert( 'How can you be so wrong?' ); // any value except 2015
+  alert( 'Як ви можете так помилятися?' ); // будь-яке значення окрім 2015
 }
 ```
 
-## Several conditions: "else if"
+## Декілька умов: "else if"
 
-Sometimes, we'd like to test several variants of a condition. The `else if` clause lets us do that.
+Іноді ми хотіли б перевірити кілька варіантів умов. Вираз `else if` дозволяє нам це зробити.
 
-For example:
+Наприклад:
 
 ```js run
-let year = prompt('In which year was the ECMAScript-2015 specification published?', '');
+let year = prompt('У якому році була опублікована специфікація ECMAScript-2015?', '');
 
 if (year < 2015) {
-  alert( 'Too early...' );
+  alert( 'Зарано...' );
 } else if (year > 2015) {
-  alert( 'Too late' );
+  alert( 'Запізно' );
 } else {
-  alert( 'Exactly!' );
+  alert( 'Саме так!' );
 }
 ```
 
-In the code above, JavaScript first checks `year < 2015`. If that is falsy, it goes to the next condition `year > 2015`. If that is also falsy, it shows the last `alert`.
+У наведеному вище коді JavaScript спочатку перевіряє `year < 2015`. Якщо це не вірно вона переходить до наступної умови `year > 2015`. Якщо це також не правда вона показує останній `alert`.
 
-There can be more `else if` blocks. The final `else` is optional.
+Може бути більше `else if` блоків. Останній `else` є необов'язковим.
 
-## Conditional operator '?'
+## Умовний оператор '?'
 
-Sometimes, we need to assign a variable depending on a condition.
+Іноді нам необхідно присвоїти значення змінній в залежності від умови.
 
-For instance:
+Наприклад:
 
 ```js run no-beautify
 let accessAllowed;
-let age = prompt('How old are you?', '');
+let age = prompt('Скільки вам років?', '');
 
 *!*
 if (age > 18) {
@@ -124,116 +124,116 @@ if (age > 18) {
 alert(accessAllowed);
 ```
 
-The so-called "conditional" or "question mark" operator lets us do that in a shorter and simpler way.
+Так званий "умовний" оператор або оператор "знак питання" дає нам зробити це в більш короткій і простій формі.
 
-The operator is represented by a question mark `?`. Sometimes it's called "ternary", because the operator has three operands. It is actually the one and only operator in JavaScript which has that many.
+Оператор представлений знаком питання `?`. Іноді його називають "тернарним", оскільки оператор має три операнди. Насправді це єдиний оператор у JavaScript, який має так багато операндів.
 
-The syntax is:
+Синтаксис:
 ```js
-let result = condition ? value1 : value2;
+let result = умова ? значення1 : значення2;
 ```
 
-The `condition` is evaluated: if it's truthy then `value1` is returned, otherwise -- `value2`.
+Обчислюється `умова`: якщо умова є правдивою, тоді повертається `значення1`, інакше -- `значення2`.
 
-For example:
+Наприклад:
 
 ```js
 let accessAllowed = (age > 18) ? true : false;
 ```
 
-Technically, we can omit the parentheses around `age > 18`. The question mark operator has a low precedence, so it executes after the comparison `>`.
+Технічно ми можемо опускати дужки навколо `age > 18`. Оператор "знак питання" має низький пріоритет, тому він виконується після порівняння `>`.
 
-This example will do the same thing as the previous one:
+Цей приклад робить теж саме, що і попередній:
 
 ```js
-// the comparison operator "age > 18" executes first anyway
-// (no need to wrap it into parentheses)
+// оператор порівняння "age > 18" виконується першим
+// (не потрібно обертати його у дужки)
 let accessAllowed = age > 18 ? true : false;
 ```
 
-But parentheses make the code more readable, so we recommend using them.
+Але дужки роблять код більш читабельним, тому ми рекомендуємо їх використовувати.
 
 ````smart
-In the example above, you can avoid using the question mark operator because the comparison itself returns `true/false`:
+У наведеному вище прикладі можно уникнути використання оператора "знака питання", оскільки само порівняння повертає `true/false`:
 
 ```js
-// the same
+// теж саме
 let accessAllowed = age > 18;
 ```
 ````
 
-## Multiple '?'
+## Декілька '?'
 
-A sequence of question mark operators `?` can return a value that depends on more than one condition.
+Послідовність операторів знака питання `?` може повернути значення, яке залежить від більш ніж однієї умови.
 
-For instance:
+Наприклад:
 ```js run
 let age = prompt('age?', 18);
 
-let message = (age < 3) ? 'Hi, baby!' :
-  (age < 18) ? 'Hello!' :
-  (age < 100) ? 'Greetings!' :
-  'What an unusual age!';
+let message = (age < 3) ? 'Привіт, крихітко!' :
+  (age < 18) ? 'Вітаю!' :
+  (age < 100) ? 'Привітання!' :
+  'Який незвичайний вік!';
 
 alert( message );
 ```
 
-It may be difficult at first to grasp what's going on. But after a closer look, we can see that it's just an ordinary sequence of tests:
+Спочатку може бути важко зрозуміти, що відбувається. Але придивившись ближче ми можемо побачити, що це звичайна послідовність тестів:
 
-1. The first question mark checks whether `age < 3`.
-2. If true -- it returns `'Hi, baby!'`. Otherwise, it continues to the expression after the colon '":"', checking `age < 18`.
-3. If that's true -- it returns `'Hello!'`. Otherwise, it continues to the expression after the next colon '":"', checking `age < 100`.
-4. If that's true -- it returns `'Greetings!'`. Otherwise, it continues to the expression after the last colon '":"', returning `'What an unusual age!'`.
+1. Перший "знак питання" перевіряє чи `age < 3`.
+2. Якщо правда -- то повертає `'Привіт, крихітко!'`. У іншому випадку переходить до виразу після двокрапки '":"', перевіряючи `age < 18`.
+3. Якщо це правда -- то повертає `'Вітаю!'`. У іншому випадку переходить до виразу після наступної двокрапки '":"', перевіряючи `age < 100`.
+4. Якщо це правда -- то повертає `'Привітання!'`. У іншому випадку переходить до виразу після останньої двокрапки '":"', повертаючи `'Який незвичайний вік!'`.
 
-Here's how this looks using `if..else`:
+Ось як це буде виглядати у випадку з використанням `if..else`:
 
 ```js
 if (age < 3) {
-  message = 'Hi, baby!';
+  message = 'Привіт, крихітко!';
 } else if (age < 18) {
-  message = 'Hello!';
+  message = 'Вітаю!';
 } else if (age < 100) {
-  message = 'Greetings!';
+  message = 'Привітання!';
 } else {
-  message = 'What an unusual age!';
+  message = 'Який незвичайний вік!';
 }
 ```
 
-## Non-traditional use of '?'
+## Нетрадиційне використання '?'
 
-Sometimes the question mark `?` is used as a replacement for `if`:
+Іноді оператор знак питання `?` використовується як заміна `if`:
 
 ```js run no-beautify
-let company = prompt('Which company created JavaScript?', '');
+let company = prompt('Яка компанія створила JavaScript?', '');
 
 *!*
 (company == 'Netscape') ?
-   alert('Right!') : alert('Wrong.');
+   alert('Правильно!') : alert('Неправильно.');
 */!*
 ```
 
-Depending on the condition `company == 'Netscape'`, either the first or the second expression after the `?` gets executed and shows an alert.
+Залежно від умови `company == 'Netscape'`, буде виконано або перший або другий вираз після `?` і показано повідомлення.
 
-We don't assign a result to a variable here. Instead, we execute different code depending on the condition.
+Тут ми не присвоюємо результат змінній. Замість цього виконуємо інший код залежно від умови.
 
-**We don't recommend using the question mark operator in this way.**
+**Ми не рекомендуємо використовувати оператор "знака питання" таким чином.**
 
-The notation is shorter than the equivalent `if` statement, which appeals to some programmers. But it is less readable.
+Запис коротше, ніж еквівалентний вираз `if`, що приваблює деяких програмістів. Але він менш читабельний.
 
-Here is the same code using `if` for comparison:
+Ось такий самий код, використовуючи `if` для порівняння:
 
 ```js run no-beautify
-let company = prompt('Which company created JavaScript?', '');
+let company = prompt('Яка компанія створила JavaScript?', '');
 
 *!*
 if (company == 'Netscape') {
-  alert('Right!');
+  alert('Правильно!');
 } else {
-  alert('Wrong.');
+  alert('Неправильно.');
 }
 */!*
 ```
 
-Our eyes scan the code vertically. Code blocks which span several lines are easier to understand than a long, horizontal instruction set.
+Наші очі сканують код по вертикалі. Блоки коду, що охоплюють кілька рядків, легше зрозуміти, ніж довгий горизонтальний набір інструкцій.
 
-The purpose of the question mark operator `?` is to return one value or another depending on its condition. Please use it for exactly that. Use `if` when you need to execute different branches of code.
+Мета оператора знака питання `?` полягає в поверненні одного або іншого значення в залежності від його умови. Будь ласка, використовуйте його саме для цього. Використовуйте `if`, коли вам потрібно виконати різні гілки коду.
