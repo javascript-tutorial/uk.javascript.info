@@ -12,6 +12,7 @@ IDE завантажує проект (який може мати багато �
 
 Якщо Ви досі не вибрали IDE, розгляньте наступні варіанти:
 
+<<<<<<< HEAD
 - [WebStorm](http://www.jetbrains.com/webstorm/) для фронтент розробників. Ця ж компанія пропонує інші редактори для інших мов (платно).
 - [Netbeans](http://netbeans.org/) (безкоштовно).
 
@@ -22,6 +23,14 @@ IDE завантажує проект (який може мати багато �
 Багато IDE платні, проте мають пробний період. Їхня вартість зазвичай незначна в порівнянні із зарплатою кваліфікованого розробника.
 Правильний вибір редактора дозволить зберегти найцінніший ресурс — ваш час.
 Тому просто виберіть найкращий варіант, який задовольнятиме усім вашим потребам.
+=======
+- [Visual Studio Code](https://code.visualstudio.com/) (cross-platform, free).
+- [WebStorm](http://www.jetbrains.com/webstorm/) (cross-platform, paid).
+
+For Windows, there's also "Visual Studio", not to be confused with "Visual Studio Code". "Visual Studio" is a paid and mighty Windows-only editor, well-suited for the .NET platform. It's also good at JavaScript. There's also a free version [Visual Studio Community](https://www.visualstudio.com/vs/community/).
+
+Many IDEs are paid, but have a trial period. Their cost is usually negligible compared to a qualified developer's salary, so just choose the best one for you.
+>>>>>>> 027933531e121650120f7e8385f691de99af12d2
 
 ## Легкі редактори
 
@@ -35,6 +44,7 @@ IDE завантажує проект (який може мати багато �
 
 Ось ці варіанти заслуговують вашої уваги:
 
+<<<<<<< HEAD
 - [Visual Studio Code](https://code.visualstudio.com/) (кросплатформний, безкоштовний) також має безліч функцій IDE.
 - [Atom](https://atom.io/) (cross-кросплатформний, безкоштовний).
 - [Sublime Text](http://www.sublimetext.com) (кросплатформний, випробувальний термін).
@@ -51,6 +61,14 @@ IDE завантажує проект (який може мати багато �
 - Як легкий редактор -- [Vim](https://www.vim.org/) або [Notepad++](https://notepad-plus-plus.org/).
 
 ## Не будемо сперечатися
+=======
+- [Atom](https://atom.io/) (cross-platform, free).
+- [Sublime Text](http://www.sublimetext.com) (cross-platform, shareware).
+- [Notepad++](https://notepad-plus-plus.org/) (Windows, free).
+- [Vim](http://www.vim.org/) and [Emacs](https://www.gnu.org/software/emacs/) are also cool if you know how to use them.
+
+## Let's not argue
+>>>>>>> 027933531e121650120f7e8385f691de99af12d2
 
 Я, та мої хороші друзі-розробники, вже давно користуємося цими редактори, і вони цілком задовольняють усім нашим потребам.
 
