@@ -1,43 +1,43 @@
 
-# Manuals and specifications
+# Посібники й специфікації
 
-This book is a *tutorial*. It aims to help you gradually learn the language. But once you're familiar with the basics, you'll need other sources.
-
-
-## Specification
-
-**The ECMA-262 specification** contains the most in-depth, detailed and formalized information about JavaScript. It defines the language.
-
-But being that formalized, it's difficult to understand at first. So if you need the most trustworthy source of information about the language details, it's the right place. But it's not for everyday use.
-
-The latest draft is at <https://tc39.es/ecma262/>.
-
-To read about bleeding-edge features, that are not yet widely supported, see proposals at <https://github.com/tc39/proposals>.
-
-Also, if you're in developing for the browser, then there are other specs covered in the [second part](info:browser-environment) of the tutorial.
-
-## Manuals
-
-- **MDN (Mozilla) JavaScript Reference** is a manual with examples and other information. It's great to get in-depth information about individual language functions, methods etc.
-
-    One can find it at <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference>.
-
-    Although, it's often best to use an internet search instead. Just use "MDN [term]" in the query, e.g. <https://google.com/search?q=MDN+parseInt> to search for `parseInt` function.
+Ця книга — це *посібник*. Вона спрямована на те, щоб допомогти вам поступово вивчити мову. Проте, як тільки ви познайомитеся з основами, вам знадобляться й інші джерела.
 
 
-- **MSDN** – Microsoft manual with a lot of information, including JavaScript (often referrerd to as JScript). If one needs something specific to Internet Explorer, better go there: <http://msdn.microsoft.com/>.
+## Специфікація
 
-    Also, we can use an internet search with phrases such as "RegExp MSDN" or "RegExp MSDN jscript".
+**Специфікація ECMA-262** містить найглибшу, найдетальнішу й найбільш сформулювану інформацію про JavaScript. Фактично, ця специфікація визначає мову.
 
-## Feature support
+Але через те, що ця специфікація чітко сформулювана, її важко зрозуміти з першого разу. Тому, якщо вам потрібне найнадійніше джерело інформації про деталі мови, це правильне місце. Однак, цей посібник не для повсякденного використання.
 
-JavaScript is a developing language, new features get added regularly.
+Останні зміни до специфікації описано на сайті <https://tc39.es/ecma262/>.
 
-To see their support among browser-based and other engines, see:
+Щоб прочитати про найновіші функції, які покищо широко не підтримуються браузерами, перегляньте пропозиції на <https://github.com/tc39/proposals>.
 
-- <http://caniuse.com> - per-feature tables of support, e.g. to see which engines support modern cryptography functions: <http://caniuse.com/#feat=cryptography>.
-- <https://kangax.github.io/compat-table> - a table with language features and engines that support those or don't support.
+Також, якщо ви розробляєте для браузерів, вам буде цікаво прочитати про інші специфікації, які описано в [другій частині](info:browser-environment) цього посібника.
 
-All these resources are useful in real-life development, as they contain valuable information about language details, their support etc.
+## Посібники
 
-Please remember them (or this page) for the cases when you need in-depth information about a particular feature.
+- **MDN (Mozilla) JavaScript Reference** — це посібник з прикладами та іншою інформацією. Він чудово підходить для детального вивчення окремих функцій, методів тощо.
+
+    Його можна знайти за цим посиланням <https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference>.
+
+    Хоча, замість пошуку на сайті, краще використовувати пошукові системи. Просто напишіть "MDN [термін]" в пошуковому запиті. Наприклад, запит "[MDN parseInt](https://www.google.com.ua/search?q=MDN+parseInt)" знайде інформацію про функцію `parseInt`.
+
+
+- **MSDN** – посібник від Microsoft, де зібрано багато інформацію, включаючи JavaScript (часто згадується як JScript). Якщо комусь потрібно дізнатися щось зв'язане з Internet Explorer/Microsoft Edge, краще шукати інформацію на сайті <http://msdn.microsoft.com/>.
+
+    Також, можна використовувати внутрішній пошук з фразами, такими як "RegExp MSDN" або "RegExp MSDN jscript".
+
+## Підтримка функцій
+
+Мова JavaScript активно розвивається — до неї регулярно додаються нові функції.
+
+Щоб дізнатися, чи підтримує браузер або інший рушій певну можливість JavaScript, дивіться на сайтах:
+
+- <https://caniuse.com/> - для кожної веб-технології приведено таблицю сумісності з усіма браузерами; тобто, щоб побачити, які браузери підтримують сучасні криптографічні функції, слід ввести в пошуку "[Cryptography](http://caniuse.com/#feat=cryptography)".
+- <https://kangax.github.io/compat-table> - таблиця з усіма можливостями мови та рушії, які підтримують, або не підтримують відповідні технології.
+
+Всі ці ресурси корисні в повсякденній розробці, тому що вони містять корисну інформацію про деталі мови, їхню підтримку тощо.
+
+Будь ласка, збережіть собі ці сайти (або цю сторінку); вони вам знадобляться, якщо буде потреба детальніше розібратися в конкретному функціоналі мови.
