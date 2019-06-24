@@ -16,7 +16,7 @@ alert("Hello");
 window.alert("Hello");
 ```
 
-In a browser, global variables declared with `var` become the property of the global object:
+In a browser, global functions and variables declared with `var` become the property of the global object:
 
 ```js run untrusted refresh
 var gVar = 5;
@@ -47,7 +47,7 @@ window.currentUser = {
 // somewhere else in code
 alert(currentUser.name);  // John
 
-// or, if we have a local variable with the name "value"
+// or, if we have a local variable with the name "currentUser"
 // get it from window explicitly (safe!)
 alert(window.currentUser.name); // John
 ```
@@ -56,7 +56,7 @@ That said, using global variables is generally discouraged. There should be as f
 
 ## Using for polyfills
 
-We can test the global object for support of modern language features.
+We use the global object to test for support of modern language features.
 
 For instance, test if a built-in `Promise` object exists (it doesn't in really old browsers):
 ```js run
@@ -82,6 +82,5 @@ if (!window.Promise) {
 
     ...But more often is referred by "old-school" environment-specific names, such as `window` (browser) and `global` (Node.js). As `globalThis` is a recent proposal, it's not supported in non-Chromium Edge (but can be polyfilled).
 - We should store values in the global object only if they're truly global for our project. And keep their number at minimum.
-- In-browser, unless we're using [modules](info:modules), a global variable declared with `var` becomes a property of the global object.
-
-    To make the code easier to understand and more future-proof, we should operate directly on the properties of the global object: `window.x = ...` instead of `var x = ...`.
+- In-browser, unless we're using [modules](info:modules), global functions and variables declared with `var` become a property of the global object.
+- To make our code future-proof and easier to understand, we should access properties of the global object directly, as `window.x`.

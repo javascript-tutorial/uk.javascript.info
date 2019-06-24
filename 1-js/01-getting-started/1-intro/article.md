@@ -105,6 +105,7 @@ Javascript – це єдина браузерна технологія, яка �
 
 Сучасні інструменти роблять транспіляцію дуже швидкою і прозорою, дозволяючи розробникам писати код іншою мовою і автоматично конвертувати його "під капотом".
 
+<<<<<<< HEAD
 Приклади таких мов:
 
 - [CoffeeScript](http://coffeescript.org/) це "синтаксичний цукор" поверх JavaScript. Вона вводить більш короткий синтаксис, дозволяючи нам писати більш чіткий і точний код. Зазвичай, програмісти на Ruby люблять її.
@@ -112,6 +113,17 @@ Javascript – це єдина браузерна технологія, яка �
 - [Dart](https://www.dartlang.org/) це автономна мова, яка має власний рушій, який виконується в не-браузерних середовищах (таких як, мобільні застосунки). Спочатку компанія Google запропонувала її як заміну JavaScript, але на даний момент, браузери використовують її для транспіляції в JavaScript так само, як інструменти вище.
 
 Їх є ще більше. Звичайно, навіть якщо ми використовуємо одну з цих мов, ми також повинні знати JavaScript, щоб дійсно розуміти, що робимо.
+=======
+The most used are
+Examples of such languages:
+
+- [CoffeeScript](http://coffeescript.org/) is a "syntactic sugar" for JavaScript. It introduces shorter syntax, allowing us to write clearer and more precise code. Usually, Ruby devs like it.
+- [TypeScript](http://www.typescriptlang.org/) is concentrated on adding "strict data typing" to simplify the development and support of complex systems. It is developed by Microsoft.
+- [Flow](http://flow.org/) also adds data typing, but in a different way. Developed by Facebook.
+- [Dart](https://www.dartlang.org/) is a standalone language that has its own engine that runs in non-browser environments (like mobile apps), but also can be transpiled to JavaScript. Developed by Google.
+
+There are more. Of course, even if we use one of transpiled languages, we should also know JavaScript to really understand what we're doing.
+>>>>>>> 9b5c1c95ec8a466150e519b0e94748717c747b09
 
 ## Підсумки
 
