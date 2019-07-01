@@ -1,20 +1,20 @@
-# Logical operators
+# Логічні оператори
 
-There are three logical operators in JavaScript: `||` (OR), `&&` (AND), `!` (NOT).
+У JavaScript існує три логічних опратори: `||` (OR), `&&` (AND), `!` (NOT).
 
-Although they are called "logical", they can be applied to values of any type, not only boolean. Their result can also be of any type.
+Хоча вони називаються "логічними", вони можуть бути застосовані до значень будь-якого типу, те тільки булевих. Їх результати також може бути будь-якого типу.
 
-Let's see the details.
+Подивимось більш детально.
 
 ## || (OR)
 
-The "OR" operator is represented with two vertical line symbols:
+Оператор "OR" представлений двома символами вертикальної лінії:
 
 ```js
 result = a || b;
 ```
 
-In classical programming, the logical OR is meant to manipulate boolean values only. If any of its arguments are `true`, it returns `true`, otherwise it returns `false`.
+У класичному програмуванні логічний OR призначений для маніпулювання лише булевими значеннями. Якщо будь-який з його аргументів `true`, він повертає `true`, інакше повертає `false`.
 
 In JavaScript, the operator is a little bit trickier and more powerful. But first, let's see what happens with boolean values.
 
