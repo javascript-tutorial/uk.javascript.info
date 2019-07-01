@@ -127,11 +127,19 @@ alert( +apples + +oranges ); // 5
 
 ## Пріоритет оператора
 
+<<<<<<< HEAD
 Якщо вираз має більше одного оператора, порядок виконання визначається їх *пріоритетом*, або, іншими словами, неявним порядком пріоритетів операторів.
+=======
+If an expression has more than one operator, the execution order is defined by their *precedence*, or, in other words, the default priority order of operators.
+>>>>>>> 6bbe0b4313a7845303be835d632ef8e5bc7715cd
 
 Зі школи ми всі знаємо, що множення у виразі `1 + 2 * 2` повинно бути обчислене перед додаванням. Саме це і є пріоритетом. Кажуть, що множення має *вищий пріоритет*, ніж додавання.
 
+<<<<<<< HEAD
 Дужки перевизначають будь-який пріоритет, тому, якщо ми не задоволенні неявним приорітетом, ми можемо використовувати дужки, щоб змінити його. Наприклад: `(1 + 2) * 2`.
+=======
+Parentheses override any precedence, so if we're not satisfied with the default order, we can use them to change it. For example, write `(1 + 2) * 2`.
+>>>>>>> 6bbe0b4313a7845303be835d632ef8e5bc7715cd
 
 У JavaScript є багато операторів. Кожен оператор має відповідний номер пріоритету. Першим виконується той оператор, який має найбільший номер пріоритету. Якщо пріоритет є однаковим, порядок виконання — зліва направо.
 
@@ -199,9 +207,15 @@ alert( a ); // 3
 alert( c ); // 0
 ```
 
+<<<<<<< HEAD
 У наведенному вище прикладі результат `(a = b + 1)` є значенням, яке присвоюється змінній `a` (тобто `3`). Потім воно використовується для віднімання від `3`.
 
 Смішний код, чи не так? Ми повинні зрозуміти, як це працює, бо іноді ми бачимо подібне у сторонніх бібліотеках, але самі не повинні писати нічого подібного. Такі трюки, безумовно, не роблять код більш ясним або читабельним.
+=======
+In the example above, the result of expression `(a = b + 1)` is the value which was assigned to `a` (that is `3`). It is then used for further evaluations.
+
+Funny code, isn't it? We should understand how it works, because sometimes we see it in JavaScript libraries, but shouldn't write anything like that ourselves. Such tricks definitely don't make code clearer or readable.
+>>>>>>> 6bbe0b4313a7845303be835d632ef8e5bc7715cd
 ````
 
 ## Залишок %
@@ -427,10 +441,17 @@ alert( a ); // 7 (результат обчислення 3 + 4)
 ```smart header="Кома має дуже низький пріоритет"
 Зверніть увагу, що оператор кома має дуже низький пріоритет, нижчий за `=`, тому дужки є важливими в наведеному вище прикладі.
 
+<<<<<<< HEAD
 Без них: `a = 1 + 2, 3 + 4` обчислює спочатку `+`, підсумовуючи числа у `a = 3, 7`, потім оператор присвоєння `=` присвоює    `a = 3`, і нарешті число після коми, `7`, не обробляється та ігнорується.
 ```
 
 Чому нам потрібен оператор, що викидає все, окрім останньої частини?
+=======
+Without them: `a = 1 + 2, 3 + 4` evaluates `+` first, summing the numbers into `a = 3, 7`, then the assignment operator `=` assigns `a = 3`, and the rest is ignored. It's like `(a = 1 + 2), 3 + 4`.
+```
+
+Why do we need an operator that throws away everything except the last expression?
+>>>>>>> 6bbe0b4313a7845303be835d632ef8e5bc7715cd
 
 Іноді люди використовують його в більш складних конструкціях, щоб помістити кілька дій в один рядок.
 
@@ -443,4 +464,8 @@ for (*!*a = 1, b = 3, c = a * b*/!*; a < 10; a++) {
 }
 ```
 
+<<<<<<< HEAD
 Такі трюки використовуються в багатьох фреймворках JavaScript. Саме тому ми їх згадуємо. Але, як правило, вони не покращують читабельність коду, тому ми повинні добре подумати перед їх використанням.
+=======
+Such tricks are used in many JavaScript frameworks. That's why we're mentioning them. But usually they don't improve code readability so we should think well before using them.
+>>>>>>> 6bbe0b4313a7845303be835d632ef8e5bc7715cd
