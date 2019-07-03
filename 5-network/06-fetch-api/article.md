@@ -30,7 +30,7 @@ let promise = fetch(url, {
 
 An impressive list, right?
 
-We fully covered `method`, `headers` and `body` in the chapter <info:fetch-basics>.
+We fully covered `method`, `headers` and `body` in the chapter <info:fetch>.
 
 The `signal` option is covered in <info:fetch-abort>.
 

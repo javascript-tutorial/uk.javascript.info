@@ -1,9 +1,22 @@
 
-# Fetch: Basics
+# Fetch
 
-Method `fetch()` is the modern way of sending requests over HTTP.
+JavaScript can send network requests to the server and load new information whenever is needed.
 
-It evolved for several years and continues to improve, right now the support is pretty solid among browsers.
+For example, we can:
+
+- Submit an order,
+- Load user information,
+- Receive latest updates from the server,
+- ...etc.
+
+...And all of that without reloading the page!
+
+There's an umbrella term "AJAX" (abbreviated <b>A</b>synchronous <b>J</b>avascript <b>A</b>nd <b>X</b>ml) for that. We don't have to use XML though: the term comes from old times, that's why it's here.
+
+There are multiple ways to send a network request and get information from the server.
+
+The `fetch()` method is modern and versatile, so we'll start with it. It evolved for several years and continues to improve, right now the support is pretty solid among browsers.
 
 The basic syntax is:
 
@@ -18,7 +31,7 @@ The browser starts the request right away and returns a `promise`.
 
 Getting a response is usually a two-stage process.
 
-**The `promise` resolves with an object of the built-in [Response](https://fetch.spec.whatwg.org/#response-class) class as soon as the server responds with headers.**
+**First, the `promise` resolves with an object of the built-in [Response](https://fetch.spec.whatwg.org/#response-class) class as soon as the server responds with headers.**
 
 
 So we can check HTTP status, to see whether it is successful or not, check headers, but don't have the body yet.
@@ -43,13 +56,13 @@ if (response.ok) { // if HTTP-status is 200-299
 }
 ```
 
-To get the response body, we need to use an additional method call.
+**Second, to get the response body, we need to use an additional method call.**
 
 `Response` provides multiple promise-based methods to access the body in various formats:
 
 - **`response.json()`** -- parse the response as JSON object,
 - **`response.text()`** -- return the response as text,
-- **`response.formData()`** -- return the response as FormData object (form/multipart encoding),
+- **`response.formData()`** -- return the response as `FormData` object (form/multipart encoding, explained in the [next chapter](info:formdata)),
 - **`response.blob()`** -- return the response as [Blob](info:blob) (binary data with type),
 - **`response.arrayBuffer()`** -- return the response as [ArrayBuffer](info:arraybuffer-binary-arrays) (pure binary data),
 - additionally, `response.body` is a [ReadableStream](https://streams.spec.whatwg.org/#rs-class) object, it allows to read the body chunk-by-chunk, we'll see an example later.
@@ -74,12 +87,16 @@ fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commi
   .then(commits => alert(commits[0].author.login));
 ```
 
-To get the text:
-```js
-let text = await response.text();
+To get the text, `await response.text()` instead of `.json()`:
+```js run async
+let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
+
+let text = await response.text(); // read response body as text
+
+alert(text.slice(0, 80) + '...');
 ```
 
-And for the binary example, let's fetch and show an image (see chapter [Blob](info:blob) for details about operations on blobs):
+As a show-case for reading in binary format, let's fetch and show an image (see chapter [Blob](info:blob) for details about operations on blobs):
 
 ```js async run
 let response = await fetch('/article/fetch/logo-fetch.svg');
@@ -96,10 +113,10 @@ document.body.append(img);
 // show it
 img.src = URL.createObjectURL(blob);
 
-setTimeout(() => { // hide after two seconds
+setTimeout(() => { // hide after three seconds
   img.remove();
   URL.revokeObjectURL(img.src);
-}, 2000);
+}, 3000);
 ```
 
 ````warn
@@ -178,9 +195,7 @@ To make a `POST` request, or a request with another method, we need to use `fetc
 
 Let's see examples.
 
-## Submit JSON
-
-This code submits a `user` object as JSON:
+For example, this code submits `user` object as JSON:
 
 ```js run async
 let user = {
@@ -189,7 +204,7 @@ let user = {
 };
 
 *!*
-let response = await fetch('/article/fetch-basics/post/user', {
+let response = await fetch('/article/fetch/post/user', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
@@ -202,38 +217,9 @@ let result = await response.json();
 alert(result.message);
 ```
 
-Please note, if the body is a string, then `Content-Type` is set to `text/plain;charset=UTF-8` by default. So we use `headers` option to send `application/json` instead.
+Please note, if the body is a string, then `Content-Type` is set to `text/plain;charset=UTF-8` by default. So we use `headers` option to send `application/json` instead, that's the correct content type for JSON-encoded data.
 
-## Submit a form
-
-Let's do the same with an HTML `<form>`.
-
-
-```html run
-<form id="formElem">
-  <input type="text" name="name" value="John">
-  <input type="text" name="surname" value="Smith">
-</form>
-
-<script>
-(async () => {
-  let response = await fetch('/article/fetch-basics/post/user', {
-    method: 'POST',
-*!*
-    body: new FormData(formElem)
-*/!*
-  });
-
-  let result = await response.json();
-
-  alert(result.message);
-})();
-</script>
-```
-
-Here [FormData](https://xhr.spec.whatwg.org/#formdata) automatically encodes the form, `<input type="file">` fields are handled also, and sends it using `Content-Type: form/multipart`.
-
-## Submit an image
+## Sending an image
 
 We can also submit binary data directly using `Blob` or `BufferSource`.
 
@@ -254,7 +240,7 @@ For example, here's a `<canvas>` where we can draw by moving a mouse. A click on
 
     async function submit() {
       let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'));
-      let response = await fetch('/article/fetch-basics/post/image', {
+      let response = await fetch('/article/fetch/post/image', {
         method: 'POST',
         body: blob
       });
@@ -273,7 +259,7 @@ The `submit()` function can be rewritten without `async/await` like this:
 ```js
 function submit() {
   canvasElem.toBlob(function(blob) {        
-    fetch('/article/fetch-basics/post/image', {
+    fetch('/article/fetch/post/image', {
       method: 'POST',
       body: blob
     })
@@ -282,48 +268,6 @@ function submit() {
   }, 'image/png');
 }
 ```
-
-## Custom FormData with image
-
-In practice though, it's often more convenient to send an image as a part of the form, with additional fields, such as "name" and other metadata.
-
-Also, servers are usually more suited to accept multipart-encoded forms, rather than raw binary data.
-
-```html run autorun height="90"
-<body style="margin:0">
-  <canvas id="canvasElem" width="100" height="80" style="border:1px solid"></canvas>
-
-  <input type="button" value="Submit" onclick="submit()">
-
-  <script>
-    canvasElem.onmousemove = function(e) {
-      let ctx = canvasElem.getContext('2d');
-      ctx.lineTo(e.clientX, e.clientY);
-      ctx.stroke();
-    };
-
-    async function submit() {
-      let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'));
-
-*!*
-      let formData = new FormData();
-      formData.append("name", "myImage");
-      formData.append("image", blob);
-*/!*    
-
-      let response = await fetch('/article/fetch-basics/post/image-form', {
-        method: 'POST',
-        body: formData
-      });
-      let result = await response.json();
-      alert(result.message);
-    }
-
-  </script>
-</body>
-```
-
-Now, from the server standpoint, the image is a "file" in the form.
 
 ## Summary
 
@@ -349,13 +293,13 @@ Response properties:
 Methods to get response body:
 - **`response.json()`** -- parse the response as JSON object,
 - **`response.text()`** -- return the response as text,
-- **`response.formData()`** -- return the response as FormData object (form/multipart encoding),
+- **`response.formData()`** -- return the response as `FormData` object (form/multipart encoding, see the next chapter),
 - **`response.blob()`** -- return the response as [Blob](info:blob) (binary data with type),
 - **`response.arrayBuffer()`** -- return the response as [ArrayBuffer](info:arraybuffer-binary-arrays) (pure binary data),
 
 Fetch options so far:
 - `method` -- HTTP-method,
 - `headers` -- an object with request headers (not any header is allowed),
-- `body` -- string/FormData/BufferSource/Blob/UrlSearchParams data to submit.
+- `body` -- `string`, `FormData`, `BufferSource`, `Blob` or `UrlSearchParams` object to send.
 
 In the next chapters we'll see more options and use cases.

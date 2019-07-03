@@ -1,13 +1,15 @@
 
 # Fetch: Download progress
 
-The `fetch` method allows to track download progress.
+The `fetch` method allows to track *download* progress.
 
-Please note: there's currently no way for `fetch` to track upload progress. For that purpose, please use [XMLHttpRequest](info:xmlhttprequest).
+Please note: there's currently no way for `fetch` to track *upload* progress. For that purpose, please use [XMLHttpRequest](info:xmlhttprequest), we'll cover it later.
 
-To track download progress, we can use `response.body` property. It's a "readable stream" -- a special object that provides body chunk-by-chunk, as it comes, so we can see how much is available at the moment.
+To track download progress, we can use `response.body` property. It's a "readable stream" -- a special object that provides body chunk-by-chunk, as it comes.
 
-Here's the sketch of code that uses it to read response:
+Unlike `response.text()`, `response.json()` and other methods, `response.body` gives full control over the reading process, and we can see how much is consumed at the moment.
+
+Here's the sketch of code that reads the reponse from `response.body`:
 
 ```js
 // instead of response.json() and other methods
@@ -27,13 +29,13 @@ while(true) {
 }
 ```
 
-So, we loop, while `await reader.read()` returns response chunks.
+So, we read response chunks in the loop, while `await reader.read()` returns them. When it's done, no more data, so we're done.
 
-A chunk has two properties:
+The result of `await reader.read()` call is an object with two properties:
 - **`done`** -- true when the reading is complete.
 - **`value`** -- a typed array of bytes: `Uint8Array`.
 
-To log the progress, we just need to count chunks.
+To log progress, we just need for every `value` add its length to the counter.
 
 Here's the full code to get response and log the progress, more explanations follow:
 
@@ -96,9 +98,11 @@ Let's explain that step-by-step:
 
     To create a string, we need to interpret these bytes. The built-in [TextDecoder](info:text-decoder) does exactly that. Then we can `JSON.parse` it.
 
-What if we need binary content instead of JSON? That's even simpler. Instead of steps 4 and 5, we could make a blob of all chunks:
-```js
-let blob = new Blob(chunks);
-```
+    What if we need binary content instead of JSON? That's even simpler. Replace steps 4 and 5 with a single call to a blob from all chunks:
+    ```js
+    let blob = new Blob(chunks);
+    ```
 
-Once again, please note, that's not for upload progress (no way now), only for download progress.
+At we end we have the result (as a string or a blob, whatever is convenient), and progress-tracking in the process.
+
+Once again, please note, that's not for *upload* progress (no way now with `fetch`), only for *download* progress.

@@ -12,7 +12,7 @@ In modern web-development `XMLHttpRequest` may be used for three reasons:
 2. We need to support old browsers, and don't want polyfills (e.g. to keep scripts tiny).
 3. We need something that `fetch` can't do yet, e.g. to track upload progress.
 
-Does that sound familiar? If yes, then all right, go on with `XMLHttpRequest`. Otherwise, please head on to <info:fetch-basics>.
+Does that sound familiar? If yes, then all right, go on with `XMLHttpRequest`. Otherwise, please head on to <info:fetch>.
 
 ## The basics
 
@@ -27,7 +27,7 @@ To do the request, we need 3 steps:
     let xhr = new XMLHttpRequest(); // the constructor has no arguments
     ```
 
-2. Initialize it:s
+2. Initialize it:
     ```js
     xhr.open(method, URL, [async, user, password])
     ```
@@ -35,7 +35,7 @@ To do the request, we need 3 steps:
     This method is usually called right after `new XMLHttpRequest`. It specifies the main parameters of the request:
 
     - `method` -- HTTP-method. Usually `"GET"` or `"POST"`.
-    - `URL` -- the URL to request.
+    - `URL` -- the URL to request, a string, can be [URL](info:url) object.
     - `async` -- if explicitly set to `false`, then the request is synchronous, we'll cover that a bit later.
     - `user`, `password` -- login and password for basic HTTP auth (if required).
 
@@ -121,14 +121,6 @@ Once the server has responded, we can receive the result in the following proper
 `response` (old scripts may use `responseText`)
 : The server response.
 
-If we changed our mind, we can terminate the request at any time. The call to `xhr.abort()` does that:
-
-```js
-xhr.abort(); // terminate the request
-```
-
-That triggers `abort` event.
-
 We can also specify a timeout using the corresponding property:
 
 ```js
@@ -136,6 +128,19 @@ xhr.timeout = 10000; // timeout in ms, 10 seconds
 ```
 
 If the request does not succeed within the given time, it gets canceled and `timeout` event triggers.
+
+````smart header="URL search parameters"
+To pass URL parameters, like `?name=value`, and ensure the proper encoding, we can use [URL](info:url) object:
+
+```js
+let url = new URL('https://google.com/search');
+url.searchParams.set('q', 'test me!');
+
+// the parameter 'q' is encoded
+xhr.open('GET', url); // https://google.com/search?q=test+me%21
+```
+
+````
 
 ## Response Type
 
@@ -206,6 +211,20 @@ xhr.onreadystatechange = function() {
 You can find `readystatechange` listeners in really old code, it's there for historical reasons, as there was a time when there were no `load` and other events.
 
 Nowadays, `load/error/progress` handlers deprecate it.
+
+## Aborting request
+
+We can terminate the request at any time. The call to `xhr.abort()` does that:
+
+```js
+xhr.abort(); // terminate the request
+```
+
+That triggers `abort` event.
+
+That
+Also, `x and `xhr.status` become `0` in that case.
+
 
 ## Synchronous requests
 
@@ -500,9 +519,11 @@ There are actually more events, the [modern specification](http://www.w3.org/TR/
 - `error` -- connection error has occurred, e.g. wrong domain name. Doesn't happen for HTTP-errors like 404.
 - `load` -- the request has finished successfully.
 - `timeout` -- the request was canceled due to timeout (only happens if it was set).
-- `loadend` -- the request has finished (succeffully or not).
+- `loadend` -- triggers after `load`, `error`, `timeout` or `abort`.
 
-The most used events are load completion (`load`), load failure (`error`), and also `progress` to track the progress.
+The `error`, `abort`, `timeout`, and `load` events are mutually exclusive.
+
+The most used events are load completion (`load`), load failure (`error`), or we can use a single `loadend` handler and check event and response to see what happened.
 
 We've already seen another event: `readystatechange`. Historically, it appeared long ago, before the specification settled. Nowadays, there's no need to use it, we can replace it with newer events, but it can often be found in older scripts.
 
