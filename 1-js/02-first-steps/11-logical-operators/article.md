@@ -16,9 +16,9 @@ result = a || b;
 
 У класичному програмуванні логічний OR призначений для маніпулювання лише булевими значеннями. Якщо будь-який з його аргументів `true`, він повертає `true`, інакше повертає `false`.
 
-In JavaScript, the operator is a little bit trickier and more powerful. But first, let's see what happens with boolean values.
+У JavaScript оператор більш складніший і потужніший. Але спочатку подивимося, що відбувається з булевими значеннями.
 
-There are four possible logical combinations:
+Є чотири можливі логічні комбінації:
 
 ```js run
 alert( true || true );   // true
@@ -27,21 +27,21 @@ alert( true || false );  // true
 alert( false || false ); // false
 ```
 
-As we can see, the result is always `true` except for the case when both operands are `false`.
+Як бачимо, результат завжди `true`, за винятком випадку, коли обидва операнда `false`.
 
-If an operand is not a boolean, it's converted to a boolean for the evaluation.
+Якщо операнд не є булевим, він перетворюється на логічний для обчислення.
 
-For instance, the number `1` is treated as `true`, the number `0` as `false`:
+Наприклад, число `1` розглядається як `true`, число `0` — як `false`:
 
 ```js run
-if (1 || 0) { // works just like if( true || false )
-  alert( 'truthy!' );
+if (1 || 0) { // працює так само, як ( true || false )
+  alert( 'правдиво!' );
 }
 ```
 
-Most of the time, OR `||` is used in an `if` statement to test if *any* of the given conditions is `true`.
+У бильшості випадків OR `||` використовується в операторі `if`, щоб перевірити, чи є *будь-яка* з заданих умов `true`.
 
-For example:
+Наприклад:
 
 ```js run
 let hour = 9;
@@ -49,18 +49,18 @@ let hour = 9;
 *!*
 if (hour < 10 || hour > 18) {
 */!*
-  alert( 'The office is closed.' );
+  alert( 'Офіс зачинений.' );
 }
 ```
 
-We can pass more conditions:
+Ми можемо передавати більше умов:
 
 ```js run
 let hour = 12;
 let isWeekend = true;
 
 if (hour < 10 || hour > 18 || isWeekend) {
-  alert( 'The office is closed.' ); // it is the weekend
+  alert( 'Офіс зачинений.' ); // цу вихідні
 }
 ```
 
