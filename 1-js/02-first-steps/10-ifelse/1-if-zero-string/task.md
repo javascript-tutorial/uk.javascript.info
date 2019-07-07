@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# if (a string with zero)
+# if (рядок з нулем)
 
-Will `alert` be shown?
+Чи буде показано `alert`?
 
 ```js
 if ("0") {
-  alert( 'Hello' );
+  alert( 'Привіт' );
 }
 ```
 

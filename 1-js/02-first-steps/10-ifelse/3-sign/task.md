@@ -2,14 +2,14 @@ importance: 2
 
 ---
 
-# Show the sign
+# Покажіть знак
 
-Using `if..else`, write the code which gets a number via `prompt` and then shows in `alert`:
+Використовуючи `if..else`, напишіть код, що отримує число за допомогою `prompt` і потім виводить повідомлення `alert`:
 
-- `1`, if the value is greater than zero,
-- `-1`, if less than zero,
-- `0`, if equals zero.
+- `1`, якщо значення більше нуля,
+- `-1`, якщо меньше нуля,
+- `0`, якщо дорівнює нулю.
 
-In this task we assume that the input is always a number.
+У цьому завданні ми припускаємо, що введенне значення завжди є числом.
 
 [demo src="if_sign"]

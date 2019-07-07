@@ -1,44 +1,44 @@
-# Code structure
+# Структура коду
 
-The first thing we'll study is the building blocks of code.
+Спочатку розглянемо "будівельні блоки" коду.
 
-## Statements
+## Інструкції
 
-Statements are syntax constructs and commands that perform actions.
+Інструкції – це синтаксичні конструкції та команди, які виконують дії.
 
-We've already seen a statement, `alert('Hello, world!')`, which shows the message "Hello, world!".
+Ми вже бачили інструкцію `alert('Привіт, світ!')`, яка показує повідомлення "Привіт, світ!".
 
-We can have as many statements in our code as we want. Statements can be separated with a semicolon.
+Можна писати стільки інструкцій, скільки завгодно. Інструкції можна розділяти крапкою з комою.
 
-For example, here we split "Hello World" into two alerts:
-
-```js run no-beautify
-alert('Hello'); alert('World');
-```
-
-Usually, statements are written on separate lines to make the code more readable:
+Наприклад, тут ми розділити "Привіт, світ" на два виклики alert:
 
 ```js run no-beautify
-alert('Hello');
-alert('World');
+alert('Привіт'); alert('Світ');
 ```
 
-## Semicolons [#semicolon]
-
-A semicolon may be omitted in most cases when a line break exists.
-
-This would also work:
+Зазвичай, кожну інструкцію пишуть з нового рядка, щоб код було легше читати:
 
 ```js run no-beautify
-alert('Hello')
-alert('World')
+alert('Привіт');
+alert('Світ');
 ```
 
-Here, JavaScript interprets the line break as an "implicit" semicolon. This is called an [automatic semicolon insertion](https://tc39.github.io/ecma262/#sec-automatic-semicolon-insertion).
+## Крапка з комою [#semicolon]
 
-**In most cases, a newline implies a semicolon. But "in most cases" does not mean "always"!**
+В більшості випадків крапку з комою можна опустити, якщо є перенесення на новий рядок.
 
-There are cases when a newline does not mean a semicolon. For example:
+Такий код буде працювати:
+
+```js run no-beautify
+alert('Привіт')
+alert('Світ')
+```
+
+В цьому випадку, JavaScript інтерпретує перенесення рядка як "неявну" крапку з комою. Це називається [автоматичне вставлення крапки з комою](https://tc39.github.io/ecma262/#sec-automatic-semicolon-insertion).
+
+**В більшості випадків, новий рядок означає крапку з комою. Але "в більшості випадків" не означає "завжди"!**
+
+В деяких випадках новий рядок не означає крапку з комою. Наприклад:
 
 ```js run no-beautify
 alert(3 +
@@ -46,114 +46,114 @@ alert(3 +
 + 2);
 ```
 
-The code outputs `6` because JavaScript does not insert semicolons here. It is intuitively obvious that if the line ends with a plus `"+"`, then it is an "incomplete expression", so the semicolon is not required. And in this case that works as intended.
+Код виведе `6` тому що JavaScript не вставить тут крапку з комою. Інтуїтивно зрозуміло, що якщо рядок закінчується плюсом `"+"`, то це "незакінчений вираз", тому крапка з комою не потрібна. І в цьому випадку все працює як задумано.
 
-**But there are situations where JavaScript "fails" to assume a semicolon where it is really needed.**
+**Але є ситуації, коли JavaScript "забуває" вставити крапку з комою там, де це дійсно потрібно.**
 
-Errors which occur in such cases are quite hard to find and fix.
+Помилки, які виникають в таких ситуаціях, досить важко виявити і виправити.
 
-````smart header="An example of an error"
-If you're curious to see a concrete example of such an error, check this code out:
+````smart header="Приклад такої помилки"
+Якщо хочете побачити конкретний приклад такої помилки, зверніть увагу на цей код:
 
 ```js run
 [1, 2].forEach(alert)
 ```
 
-No need to think about the meaning of the brackets `[]` and `forEach` yet. We'll study them later. For now, just remember the result of the code: it shows `1` then `2`.
+Поки що не задумуйтеся, що означають квадратні дужки `[]` і `forEach`. Ми вивчемо їх пізніше. Зараз просто запам'ятайте результат виконання коду: спочатку виведеться `1`, а потім `2`.
 
-Now, let's add an `alert` before the code and *not* finish it with a semicolon:
+А тепер додамо `alert` перед кодом і *не* поставимо крапку з комою в кінці рядка:
 
 ```js run no-beautify
-alert("There will be an error")
+alert("Тут буде помилка")
 
 [1, 2].forEach(alert)
 ```
 
-Now if we run the code, only the first `alert` is shown and then we have an error!
+Тепер, якщо ми запустимо код, виведеться тільки перший `alert`, а потім ми отримаємо помилку!
 
-But everything is fine again if we add a semicolon after `alert`:
+Помилка виправиться, якщо ми додамо крапку з комою після `alert`:
 ```js run
-alert("All fine now");
+alert("Тепер все гаразд");
 
 [1, 2].forEach(alert)  
 ```
 
-Now we have the "All fine now" message followed by `1` and `2`.
+Тепер ми отримаємо повідомлення "Тепер все гаразд", а потім `1` та `2`.
 
 
-The error in the no-semicolon variant occurs because JavaScript does not assume a semicolon before square brackets `[...]`.
+В першому варіанті без крапки з комою виникає помилка, тому що JavaScript не вставляє крапку з комою перед квадратними дужками `[...]`.
 
-So, because the semicolon is not auto-inserted, the code in the first example is treated as a single statement. Here's how the engine sees it:
+Тому, оскільки крапка з комою автоматично не вставиться, код в першому прикладі виконається як одна інструкція. Ось як рушій побачить її:
 
 ```js run no-beautify
-alert("There will be an error")[1, 2].forEach(alert)
+alert("Тут буде помилка")[1, 2].forEach(alert)
 ```
 
-But it should be two separate statements, not one. Such a merging in this case is just wrong, hence the error. This can happen in other situations.
+Але це повинні бути дві окремі інструкції, а не одна. В даному випадку, таке об'єднання невірне, тому і виникає помилка. Це може статися в інших випадках.
 ````
 
-We recommend putting semicolons between statements even if they are separated by newlines. This rule is widely adopted by the community. Let's note once again -- *it is possible* to leave out semicolons most of the time. But it's safer -- especially for a beginner -- to use them.
+Ми рекомендуємо ставити крапку з комою між інструкціями, навіть якщо вони розділені новими рядками. Це правило широко використовується в спільноті розробників. Варто повторити ще раз -- в більшості випадків *можна* опускати крапку з комою. Але безпечніше -- особливо для новичка -- використовувати їх.
 
-## Comments
+## Коментарі
 
-As time goes on, programs become more and more complex. It becomes necessary to add *comments* which describe what the code does and why.
+З часом програми стають все складнішими і складнішими. Виникає потреба додавати *коментарі*, які будуть описувати що робить код і чому.
 
-Comments can be put into any place of a script. They don't affect its execution because the engine simply ignores them.
+Коментарі можна писати в будь-якому місці скрипта. Вони не впливають на його виконання, тому що рушій просто ігнорує коментарі.
 
-**One-line comments start with two forward slash characters `//`.**
+**Однорядкові коментарі починаються з подвійної косої риски `//`.**
 
-The rest of the line is a comment. It may occupy a full line of its own or follow a statement.
+Частина рядка після `//` вважається коментарем. Такий коментар може займати весь рядок, або знаходитися після інструкції.
 
-Like here:
+Ось так:
 ```js run
-// This comment occupies a line of its own
-alert('Hello');
+// Цей коментар займає весь рядок
+alert('Привіт');
 
-alert('World'); // This comment follows the statement
+alert('Світ'); // Цей коментар знаходиться після інструкції
 ```
 
-**Multiline comments start with a forward slash and an asterisk <code>/&#42;</code> and end with an asterisk and a forward slash <code>&#42;/</code>.**
+**Багаторядкові коментарі починаються з косої риски з зірочкою <code>/&#42;</code> і закінчується зірочкою з косою рискою <code>&#42;/</code>.**
 
-Like this:
+Ось так:
 
 ```js run
-/* An example with two messages.
-This is a multiline comment.
+/* Приклад з двома повідомленнями.
+Це багаторядковий коментар.
 */
-alert('Hello');
-alert('World');
+alert('Привіт');
+alert('Світ');
 ```
 
-The content of comments is ignored, so if we put code inside <code>/&#42; ... &#42;/</code>, it won't execute.
+Вміст коментаря ігнорується, тому, якщо ми напишемо всередині <code>/&#42; ... &#42;/</code> код, він не виконається.
 
-Sometimes it can be handy to temporarily disable a part of code:
+Деколи виникає необхідність тимчасово вимкнути частину коду:
 
 ```js run
-/* Commenting out the code
-alert('Hello');
+/* Закоментований код
+alert('Привіт');
 */
-alert('World');
+alert('Світ');
 ```
 
-```smart header="Use hotkeys!"
-In most editors, a line of code can be commented out by pressing the `key:Ctrl+/` hotkey for a single-line comment and something like `key:Ctrl+Shift+/` -- for multiline comments (select a piece of code and press the hotkey). For Mac, try `key:Cmd` instead of `key:Ctrl`.
+```smart header="Використовуйте комбінації клавіш!"
+В більшості редакторів, рядок коду можна закоментувати, натиснувши комбінацію клавіш `key:Ctrl+/`, а щоб закоментувати декілька рядків – виділіть потрібні рядки і натисніть комбінацію клавіш `key:Ctrl+Shift+/`. Для Mac, потрібно натискати клавішу `key:Cmd` замість `key:Ctrl`.
 ```
 
-````warn header="Nested comments are not supported!"
-There may not be `/*...*/` inside another `/*...*/`.
+````warn header="Вкладені коментарі не підтримуються!"
+Не може бути `/*...*/` всередині `/*...*/`.
 
-Such code will die with an error:
+Такий код "вмре" з помилкою:
 
 ```js run no-beautify
 /*
-  /* nested comment ?!? */
+  /* вкладений коментар ?!? */
 */
-alert( 'World' );
+alert( 'Світ' );
 ```
 ````
 
-Please, don't hesitate to comment your code.
+Будь ласка, не соромтеся коментувати ваш код.
 
-Comments increase the overall code footprint, but that's not a problem at all. There are many tools which minify code before publishing to a production server. They remove comments, so they don't appear in the working scripts. Therefore, comments do not have negative effects on production at all.
+Коментарі збільшують розмір коду, але це не проблема. Є багато інструментів, які мініфікують код перед публікацією на робочий сервер. Вони видалять коментарі, тому їх не буде в робочих скриптах. Таким чином, коментарі жодним чином не впливають на робочий код.
 
-Later in the tutorial there will be a chapter <info:code-quality> that also explains how to write better comments.
+Пізніше, в посібнику буде розділ <info:code-quality>, який пояснить, як краще писати коментарі.

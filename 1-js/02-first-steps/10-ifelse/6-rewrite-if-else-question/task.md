@@ -2,21 +2,21 @@ importance: 5
 
 ---
 
-# Rewrite 'if..else' into '?'
+# Перепишіть 'if..else' на '?'
 
-Rewrite `if..else` using multiple ternary operators `'?'`.
+Перепишіть `if..else`, використовуючи декілька тернарних операторів `'?'`.
 
-For readability, it's recommended to split the code into multiple lines.
+Для зручності читання рекомендується розділити код на кілька рядків.
 
 ```js
 let message;
 
-if (login == 'Employee') {
-  message = 'Hello';
-} else if (login == 'Director') {
-  message = 'Greetings';
+if (login == 'Працівник') {
+  message = 'Привіт';
+} else if (login == 'Директор') {
+  message = 'Вітаю';
 } else if (login == '') {
-  message = 'No login';
+  message = 'Немає логіну';
 } else {
   message = '';
 }
