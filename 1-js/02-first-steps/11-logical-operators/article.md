@@ -60,46 +60,46 @@ let hour = 12;
 let isWeekend = true;
 
 if (hour < 10 || hour > 18 || isWeekend) {
-  alert( 'Офіс зачинений.' ); // цу вихідні
+  alert( 'Офіс зачинений.' ); // це вихідні
 }
 ```
 
-## OR finds the first truthy value
+## OR знаходить перше правдиве значенн
 
-The logic described above is somewhat classical. Now, let's bring in the "extra" features of JavaScript.
+Описана вище логіка дещо класична. Тепер давайте введемо "додаткові" особливості JavaScript.
 
-The extended algorithm works as follows.
+Розширений алгоритм працює наступним чином.
 
-Given multiple OR'ed values:
+Дано кілька значень, розділених опертором OR:
 
 ```js
 result = value1 || value2 || value3;
 ```
 
-The OR `||` operator does the following:
+Оператор OR `||` робить наступне:
 
-- Evaluates operands from left to right.
-- For each operand, converts it to boolean. If the result is `true`, stops and returns the original value of that operand.
-- If all operands have been evaluated (i.e. all were `false`), returns the last operand.
+- Обчислює операнди зліва направо.
+- Перетворює значення кожного операнда на булеве. Якщо результат `true`, зупиняється і повертає початкове значення цього операнда.
+- Якщо всі операнди були обчисленні (тобто усі були `false`), повертає останній операнд.
 
-A value is returned in its original form, without the conversion.
+Значення повертається у первісному вигляді без конвертації.
 
-In other words, a chain of OR `"||"` returns the first truthy value or the last one if no truthy value is found.
+Іншими словами, ланцюжок с OR `"||"` повертає перше правдиве значення або останнє, якщо не знайдено правдивого значення.
 
-For instance:
+Наприклад:
 
 ```js run
-alert( 1 || 0 ); // 1 (1 is truthy)
-alert( true || 'no matter what' ); // (true is truthy)
+alert( 1 || 0 ); // 1 (1 є правдивим)
+alert( true || 'no matter what' ); // (true є правдивим)
 
-alert( null || 1 ); // 1 (1 is the first truthy value)
-alert( null || 0 || 1 ); // 1 (the first truthy value)
-alert( undefined || null || 0 ); // 0 (all falsy, returns the last value)
+alert( null || 1 ); // 1 (1 є першим правдивим значенням)
+alert( null || 0 || 1 ); // 1 (перше правдиве значення)
+alert( undefined || null || 0 ); // 0 (усі не правдиві, повертає останнє значення)
 ```
 
-This leads to some interesting usage compared to a "pure, classical, boolean-only OR".
+Це призводить до цікавого використання у порівнянни з "чистим, класичним, виключно-булевим OR".
 
-1. **Getting the first truthy value from a list of variables or expressions.**
+1. **Отримання першого правдивого значення зі списку змінних або виразів.**
 
     Imagine we have a list of variables which can either contain data or be `null/undefined`. How can we find the first one with data?
 
