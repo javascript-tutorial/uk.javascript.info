@@ -101,39 +101,39 @@ alert( undefined || null || 0 ); // 0 (усі не правдиві, повер�
 
 1. **Отримання першого правдивого значення зі списку змінних або виразів.**
 
-    Imagine we have a list of variables which can either contain data or be `null/undefined`. How can we find the first one with data?
+    Уявіть, що у нас є список змінних, які можуть містити дані убо бути `null/undefined`. Як знайти першу змінну за даними?
 
-    We can use OR `||`:
+    Ми можемо використати OR `||`:
 
     ```js run
     let currentUser = null;
-    let defaultUser = "John";
+    let defaultUser = "Іван";
 
     *!*
     let name = currentUser || defaultUser || "unnamed";
     */!*
 
-    alert( name ); // selects "John" – the first truthy value
+    alert( name ); // обере "Іван" – перше правдиве значення
     ```
 
-    If both `currentUser` and `defaultUser` were falsy, `"unnamed"` would be the result.
-2. **Short-circuit evaluation.**
+    Якщо і `currentUser`, і `defaultUser` були б не правдивими, `"unnamed"` було б результатом.
+2. **Обчислення короткого змичання.**
 
-    Operands can be not only values, but arbitrary expressions. OR evaluates and tests them from left to right. The evaluation stops when a truthy value is reached, and the value is returned. This process is called "a short-circuit evaluation" because it goes as short as possible from left to right.
+    Операндами можуть бути не тільки значення, але й довільні вирази. OR обчислює Цей процес називається "обчисленням короткого замикання", оскільки він іде якомога коротше зліва направо.
 
-    This is clearly seen when the expression given as the second argument has a side effect like a variable assignment.
+    Це чітко видно, коли вираз, заданий як другий аргумент, має побічний ефект, як присвоєння змінної.
 
-    In the example below, `x` does not get assigned:
+    У наведеному нижче прикладі `x` не присвоюється значення:
 
     ```js run no-beautify
     let x;
 
     *!*true*/!* || (x = 1);
 
-    alert(x); // undefined, because (x = 1) not evaluated
+    alert(x); // undefined, оскільки (x = 1) не був обчислений
     ```
 
-    If, instead, the first argument is `false`, `||` evaluates the second one, thus running the assignment:
+    Якщо замість цього перший аргумент є `false`, `||` обчислює другий, таким чином виконуючи присвоєння:
 
     ```js run no-beautify
     let x;
@@ -143,7 +143,7 @@ alert( undefined || null || 0 ); // 0 (усі не правдиві, повер�
     alert(x); // 1
     ```
 
-    An assignment is a simple case. There may be side effects, that won't show up if the evaluation doesn't reach them.
+    Присвоєння — це простий випадок. Можливі побічні ефекти, які не з'являтимуться, якщо обчислення не досяген їх.
 
     As we can see, such a use case is a "shorter way of doing `if`". The first operand is converted to boolean. If it's false, the second one is evaluated.
 
