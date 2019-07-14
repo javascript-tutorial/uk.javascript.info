@@ -145,19 +145,19 @@ alert( undefined || null || 0 ); // 0 (усі не правдиві, повер�
 
     Присвоєння — це простий випадок. Можливі побічні ефекти, які не з'являтимуться, якщо обчислення не досяген їх.
 
-    As we can see, such a use case is a "shorter way of doing `if`". The first operand is converted to boolean. If it's false, the second one is evaluated.
+    Як ми бачимо, таке використання є "більш коротким способом виконання `if`". Перший операнд перетворюється на булевий. Якщо він false, то обчислюється другий.
 
-    Most of time, it's better to use a "regular" `if` to keep the code easy to understand, but sometimes this can be handy.
+    У більшості випадків краще використовувати "звичайний" `if`, щоб код буле легше зрозуміти, але іноді це може бути зручно.
 
 ## && (AND)
 
-The AND operator is represented with two ampersands `&&`:
+Оператор AND представлений двома амперсандами `&&`:
 
 ```js
 result = a && b;
 ```
 
-In classical programming, AND returns `true` if both operands are truthy and `false` otherwise:
+У класичному програмуванні AND повертає `true`, якщо обидва оператора є правдивими і `false` у іншому випадку:
 
 ```js run
 alert( true && true );   // true
@@ -166,138 +166,138 @@ alert( true && false );  // false
 alert( false && false ); // false
 ```
 
-An example with `if`:
+Приклад з `if`:
 
 ```js run
 let hour = 12;
 let minute = 30;
 
 if (hour == 12 && minute == 30) {
-  alert( 'The time is 12:30' );
+  alert( 'Час: 12:30' );
 }
 ```
 
-Just as with OR, any value is allowed as an operand of AND:
+Так само, як з OR, будь-яке значення дозволено як операнд AND:
 
 ```js run
-if (1 && 0) { // evaluated as true && false
-  alert( "won't work, because the result is falsy" );
+if (1 && 0) { // оцінюється як true && false
+  alert( "не буде працювати, тому що результат не правдивий" );
 }
 ```
 
 
-## AND finds the first falsy value
+## AND шукає перше не правдиве значення
 
-Given multiple AND'ed values:
+Дано декілька значень, об'єднаних AND:
 
 ```js
 result = value1 && value2 && value3;
 ```
 
-The AND `&&` operator does the following:
+Оператор AND `&&` робить наступне:
 
-- Evaluates operands from left to right.
-- For each operand, converts it to a boolean. If the result is `false`, stops and returns the original value of that operand.
-- If all operands have been evaluated (i.e. all were truthy), returns the last operand.
+- Обчислює операнди зліва направо.
+- Перетворює кожен операнд на булевий. Якщо результат `false`, зупиняється і повертає оригінальне значення того операнда.
+- Якщо всі операнди були обчисленні (тобто усі були правдиві), повертає останній операнд.
 
-In other words, AND returns the first falsy value or the last value if none were found.
+Іншими словами, AND повертає перше не правдиве значення, або останнє значення, якщо жодного не правдивого не було знайдено.
 
-The rules above are similar to OR. The difference is that AND returns the first *falsy* value while OR returns the first *truthy* one.
+Правила, наведені вище, подібні до OR. Різниця полягає в тому, що AND повертає перше *не правдиве* значення, тоді як OR повертає перше *правдиве*.
 
-Examples:
+Приклади:
 
 ```js run
-// if the first operand is truthy,
-// AND returns the second operand:
+// якщо перший операнд правдивий,
+// AND повертає другий операнд:
 alert( 1 && 0 ); // 0
 alert( 1 && 5 ); // 5
 
-// if the first operand is falsy,
-// AND returns it. The second operand is ignored
+// якщо перший операнд не правдивий,
+// AND повертає саме його. Другий операнд ігнорується
 alert( null && 5 ); // null
-alert( 0 && "no matter what" ); // 0
+alert( 0 && "не важливо" ); // 0
 ```
 
-We can also pass several values in a row. See how the first falsy one is returned:
+Ми також можемо передавати декілька значень поспіль. Подивіться, як повертається перший не правдивий:
 
 ```js run
 alert( 1 && 2 && null && 3 ); // null
 ```
 
-When all values are truthy, the last value is returned:
+Коли всі значення є правдивими, повертається останнє значення:
 
 ```js run
-alert( 1 && 2 && 3 ); // 3, the last one
+alert( 1 && 2 && 3 ); // 3, останнє
 ```
 
-````smart header="Precedence of AND `&&` is higher than OR `||`"
-The precedence of AND `&&` operator is higher than OR `||`.
+````smart header="Приорітет AND `&&` є більш високим за OR `||`"
+Приорітет оператора AND `&&` є більш високим за OR `||`.
 
-So the code `a && b || c && d` is essentially the same as if the `&&` expressions were in parentheses: `(a && b) || (c && d)`.
+Отже, код `a && b || c && d` по суті є таким самим, як би вираз `&&` був у дужках: `(a && b) || (c && d)`.
 ````
 
-Just like OR, the AND `&&` operator can sometimes replace `if`.
+Так само, як OR, оператор AND `&&` може іноді заміняти `if`.
 
-For instance:
+Наприклад:
 
 ```js run
 let x = 1;
 
-(x > 0) && alert( 'Greater than zero!' );
+(x > 0) && alert( 'Більше за нуль!' );
 ```
 
-The action in the right part of `&&` would execute only if the evaluation reaches it. That is, only if `(x > 0)` is true.
+Дія у правій частині `&&` буде виконуватися, тільки якщо обчислення дійде до неї. Тобто, тільки якщо `(x > 0)` є ічтинним.
 
-So we basically have an analogue for:
+Тому, власне, ми маємо аналог для:
 
 ```js run
 let x = 1;
 
 if (x > 0) {
-  alert( 'Greater than zero!' );
+  alert( 'Більше за нуль!' );
 }
 ```
 
-The variant with `&&` appears shorter. But `if` is more obvious and tends to be a little bit more readable.
+Варіант з `&&` є коротшим. Але `if` є більш очевидним і зазвичай є більш чтабельним.
 
-So we recommend using every construct for its purpose: use `if` if we want if and use `&&` if we want AND.
+Тому ми рекомендуємо використовувати кожну конструкцію за своїм призначенням: використовуємо `if` нам потрібен if і використовуємо `&&`, якщо нам потрібен AND.
 
 ## ! (NOT)
 
-The boolean NOT operator is represented with an exclamation sign `!`.
+Булевий оператор NOT представлений знаком оклику `!`.
 
-The syntax is pretty simple:
+Синтаксис дуже простий:
 
 ```js
 result = !value;
 ```
 
-The operator accepts a single argument and does the following:
+Оператор приймає один аргумент і виконує наступне:
 
-1. Converts the operand to boolean type: `true/false`.
-2. Returns the inverse value.
+1. Перетворює операнд на булевий тип: `true/false`.
+2. Повертає зворотне значення.
 
-For instance:
+Наприклад:
 
 ```js run
 alert( !true ); // false
 alert( !0 ); // true
 ```
 
-A double NOT `!!` is sometimes used for converting a value to boolean type:
+Подвійний NOT `!!` іноді використовується для перетворення значення у булевий тип:
 
 ```js run
-alert( !!"non-empty string" ); // true
+alert( !!"не пустий рядок" ); // true
 alert( !!null ); // false
 ```
 
-That is, the first NOT converts the value to boolean and returns the inverse, and the second NOT inverses it again. In the end, we have a plain value-to-boolean conversion.
+Тобто, перший NOT перетворює значення на булево і повертає зворотне, а другий NOT інвертує його знову. Зрештою, ми маємо просте перетворення значення на булевий тип.
 
-There's a little more verbose way to do the same thing -- a built-in `Boolean` function:
+Є трохи більш детальний спосіб зробити те ж саме -- вбудована функція `Boolean`:
 
 ```js run
-alert( Boolean("non-empty string") ); // true
+alert( Boolean("не пустий рядок") ); // true
 alert( Boolean(null) ); // false
 ```
 
-The precedence of NOT `!` is the highest of all logical operators, so it always executes first, before `&&` or `||`.
+Пріоритет NOT `!` є навищим з усіх логічних операторів, тому він завжди виконується першим, перед `&&` або `||`.
