@@ -94,7 +94,7 @@ For example:
 let url = new URL('https://google.com/search');
 url.searchParams.set('q', 'test me!'); // added parameter with a space and !
 
-alert(url); // https://google.com/search?query=test+me%21
+alert(url); // https://google.com/search?q=test+me%21
 
 url.searchParams.set('tbs', 'qdr:y'); // this parameter specifies for date range for Google Search
 
@@ -185,7 +185,7 @@ So we should use only `encodeURIComponent` for each search parameter, to correct
 
 ### Why URL?
 
-Lots of old code uses these functions, these are sometimes convenient, and by noo means not dead.
+Lots of old code uses these functions, these are sometimes convenient, and by no means not dead.
 
 But in modern code, it's recommended to use classes [URL](https://url.spec.whatwg.org/#url-class) and [URLSearchParams](https://url.spec.whatwg.org/#interface-urlsearchparams).
 
