@@ -30,11 +30,7 @@ alert("Привіт");
 result = prompt(title, [default]);
 ```
 
-<<<<<<< HEAD
-Вона показує модальне вікно з текстовим повідомленням, полем введення для відвідувача, та кнопками OK/CANCEL.
-=======
-It shows a modal window with a text message, an input field for the visitor, and the buttons OK/Cancel.
->>>>>>> be342e50e3a3140014b508437afd940cd0439ab7
+Вона показує модальне вікно з текстовим повідомленням, полем введення для відвідувача, та кнопками ОК/Скасувати.
 
 `title`
 : Текст, який буде видображатися для відвідувача.
@@ -42,13 +38,9 @@ It shows a modal window with a text message, an input field for the visitor, and
 `default`
 : Необов'язковий другий параметр, початкове значення для поля введення.
 
-<<<<<<< HEAD
-Відвідувач може ввести щось у поле введення запиту і натиснути OK. Або він може скасувати введення, натиснувши CANCEL або натиснувши клавішу `key:Esc`.
-=======
-The visitor may type something in the prompt input field and press OK. Or they can cancel the input by pressing Cancel or hitting the `key:Esc` key.
->>>>>>> be342e50e3a3140014b508437afd940cd0439ab7
+Відвідувач може ввести щось у поле введення запиту і натиснути ОК. Або він може скасувати введення, натиснувши Скасувати або натиснувши клавішу `key:Esc`.
 
-Виклик `prompt` повертає текст з поля введення або `null`, якщо введення було скасоване.
+Виклик `prompt` повертає текст з поля введення або `null`, якщо введення було скасовано.
 
 Наприклад:
 
@@ -82,11 +74,7 @@ let test = prompt("Test", ''); // <-- для IE
 result = confirm(question);
 ```
 
-<<<<<<< HEAD
-Функція `confirm` показує модальне вікно з `питанням` та двома кнопками: OK та CANCEL.
-=======
-The function `confirm` shows a modal window with a `question` and two buttons: OK and Cancel.
->>>>>>> be342e50e3a3140014b508437afd940cd0439ab7
+Функція `confirm` показує модальне вікно з `питанням` та двома кнопками: ОК та Скасувати.
 
 Результат `true` якщо натиснути кнопку OK, інакше `false`.
 
@@ -106,17 +94,10 @@ alert( isBoss ); // true якщо натуснута OK
 : показує повідомлення.
 
 `prompt`
-<<<<<<< HEAD
-: показує повідомлення з проханням ввести текст. Вона повертає текст або `null`, якщо натиснуті CANCEL або `key:Esc`.
+: показує повідомлення з проханням ввести текст. Вона повертає текст або `null`, якщо натиснута кнопка Скасувати або клавіша `key:Esc`.
 
 `confirm`
-: показує повідомлення і чекає, коли користувач натисне "OK" або "CANCEL". Вона повертає `true` для OK та `false` для CANCEL/`key:Esc`.
-=======
-: shows a message asking the user to input text. It returns the text or, if Cancel button or `key:Esc` is clicked, `null`.
-
-`confirm`
-: shows a message and waits for the user to press "OK" or "Cancel". It returns `true` for OK and `false` for Cancel/`key:Esc`.
->>>>>>> be342e50e3a3140014b508437afd940cd0439ab7
+: показує повідомлення і чекає, коли користувач натисне "OK" або "CANCEL". Вона повертає `true` для ОК та `false` для Скасувати/`key:Esc`.
 
 Всі ці методи є модальними: вони призупиняють виконання скриптів та не дозволяють відвідувачам взаємодіяти з рештою сторінки, поки вікно не буде відхилено.
 
