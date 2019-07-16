@@ -1,16 +1,16 @@
-The answer: `3`.
+Відповідь: `3`.
 
 ```js run
 alert( null || 2 && 3 || 4 );
 ```
 
-The precedence of AND `&&` is higher than `||`, so it executes first.
+Пріоритет AND `&&` вище за `||`, тому він виконується першим.
 
-The result of `2 && 3 = 3`, so the expression becomes:
+Результат `2 && 3 = 3`, тому вираз стає:
 
 ```
 null || 3 || 4
 ```
 
-Now the result is the first truthy value: `3`.
+Тепер результат — перше правдиве значення: `3`.
 

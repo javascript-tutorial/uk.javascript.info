@@ -2,15 +2,15 @@ importance: 5
 
 ---
 
-# A question about "if"
+# Питання про "if"
 
-Which of these `alert`s are going to execute?
+Який з цих `alert` буде виконано?
 
-What will the results of the expressions be inside `if(...)`?
+Які рузельтати виразів будуть у `if(...)`?
 
 ```js
-if (-1 || 0) alert( 'first' );
-if (-1 && 0) alert( 'second' );
-if (null || -1 && 1) alert( 'third' );
+if (-1 || 0) alert( 'перший' );
+if (-1 && 0) alert( 'другий' );
+if (null || -1 && 1) alert( 'третій' );
 ```
 

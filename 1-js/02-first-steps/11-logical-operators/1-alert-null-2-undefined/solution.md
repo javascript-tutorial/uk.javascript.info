@@ -1,4 +1,4 @@
-The answer is `2`, that's the first truthy value.
+Відповідь `2`, це перше правдиве значення.
 
 ```js run
 alert( null || 2 || undefined );

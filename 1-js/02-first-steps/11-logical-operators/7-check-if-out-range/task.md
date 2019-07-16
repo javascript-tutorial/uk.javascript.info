@@ -2,8 +2,8 @@ importance: 3
 
 ---
 
-# Check the range outside
+# Перевірте зовнішній діапазон
 
-Write an `if` condition to check that `age` is NOT between 14 and 90 inclusively.
+Напишіть умову `if`: щоб перевірити, що вік `age` НЕ знаходиться між 14 та 90 включно.
 
-Create two variants: the first one using NOT `!`, the second one -- without it.
+Створіть два варіанти: перший використовує NOT `!`, другий -- без нього.
