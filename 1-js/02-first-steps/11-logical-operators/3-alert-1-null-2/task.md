@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# What is the result of AND?
+# Який результат І?
 
-What is this code going to show?
+Що виведе код нижче?
 
 ```js
 alert( 1 && null && 2 );

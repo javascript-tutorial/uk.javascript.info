@@ -2,8 +2,8 @@ importance: 3
 
 ---
 
-# Check the range between
+# Перевірте діапазон
 
-Write an "if" condition to check that `age` is between `14` and `90` inclusively.
+Напишіть умову "if", щоб перевірити, що `age` знаходиться між `14` та `90` включно.
 
-"Inclusively" means that `age` can reach the edges `14` or `90`.
+"Включно" означає, що `age` може досягати країв `14` або `90`.

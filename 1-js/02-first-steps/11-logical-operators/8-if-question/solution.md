@@ -1,20 +1,20 @@
-The answer: the first and the third will execute.
+Відповідь: перший і третій виконаються.
 
-Details:
+Деталі:
 
 ```js run
-// Runs.
-// The result of -1 || 0 = -1, truthy
-if (-1 || 0) alert( 'first' );
+// Виконається.
+// Результат -1 || 0 = -1, правдивий
+if (-1 || 0) alert( 'перший' );
 
-// Doesn't run
-// -1 && 0 = 0, falsy
-if (-1 && 0) alert( 'second' );
+// Не виконається
+// -1 && 0 = 0, не правдивий
+if (-1 && 0) alert( 'другий' );
 
-// Executes
-// Operator && has a higher precedence than ||
-// so -1 && 1 executes first, giving us the chain:
+// Виконається
+// Оператор && має більший приорітет, ніж ||
+// тому -1 && 1 виконається першим, даючи нам послідовність:
 // null || -1 && 1  ->  null || 1  ->  1
-if (null || -1 && 1) alert( 'third' );
+if (null || -1 && 1) alert( 'третій' );
 ```
 

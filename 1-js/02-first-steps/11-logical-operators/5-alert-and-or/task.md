@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# The result of OR AND OR
+# Результат АБО І АБО
 
-What will the result be?
+Який буде результат?
 
 ```js
 alert( null || 2 && 3 || 4 );
