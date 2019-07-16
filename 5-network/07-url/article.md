@@ -73,7 +73,7 @@ We can provide them in the URL string:
 new URL('https://google.com/search?query=JavaScript')
 ```
 
-...But that's not good due to encoding issues. Parameters need to be encoded if they contain spaces, non-latin letterrs, etc (more about that below).
+...But parameters need to be encoded if they contain spaces, non-latin letters, etc (more about that below).
 
 So there's URL property for that: `url.searchParams`, an object of type [URLSearchParams](https://url.spec.whatwg.org/#urlsearchparams).
 
@@ -94,9 +94,9 @@ For example:
 let url = new URL('https://google.com/search');
 url.searchParams.set('q', 'test me!'); // added parameter with a space and !
 
-alert(url); // https://google.com/search?query=test+me%21
+alert(url); // https://google.com/search?q=test+me%21
 
-url.searchParams.set('tbs', 'qdr:y'); // add param for date range: past year
+url.searchParams.set('tbs', 'qdr:y'); // this parameter specifies for date range for Google Search
 
 alert(url); // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
 
@@ -185,7 +185,7 @@ So we should use only `encodeURIComponent` for each search parameter, to correct
 
 ### Why URL?
 
-Lots of old code uses these functions, these are sometimes convenient, and by noo means not dead.
+Lots of old code uses these functions, these are sometimes convenient, and by no means not dead.
 
 But in modern code, it's recommended to use classes [URL](https://url.spec.whatwg.org/#url-class) and [URLSearchParams](https://url.spec.whatwg.org/#interface-urlsearchparams).
 
