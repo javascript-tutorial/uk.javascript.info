@@ -1,46 +1,46 @@
-# Loops: while and for
+# Цикли: while і for
 
-We often need to repeat actions.
+При написанні скриптів часто постає завдання зробити однотипні дії багато разів.
 
-For example, outputting goods from a list one after another or just running the same code for each number from 1 to 10.
+Наприклад, втвести товари зі списку одни за одним чи просто запустити той же код для кожного числа від 1 до 10.
 
-*Loops* are a way to repeat the same code multiple times.
+*Цикл* - це спосіб повторити один і той же код кілька разів.
 
-## The "while" loop
+## Цикл "while"
 
-The `while` loop has the following syntax:
+Цикл `while` має такий синтаксис:
 
 ```js
-while (condition) {
-  // code
-  // so-called "loop body"
+while (умова) {
+  // код
+  // так зване "тіло циклу"
 }
 ```
 
-While the `condition` is `true`, the `code` from the loop body is executed.
+Коли умова є вірною - виконується код із тіла циклу
 
-For instance, the loop below outputs `i` while `i < 3`:
+Наприклад, цикл нижче виводить `i` поки `i < 3`:
 
 ```js run
 let i = 0;
-while (i < 3) { // shows 0, then 1, then 2
+while (i < 3) { // показується 0, далі 1, потім 2
   alert( i );
   i++;
 }
 ```
 
-A single execution of the loop body is called *an iteration*. The loop in the example above makes three iterations.
+Одне виконання циклу називається *ітерацією*. Цикл в зразку вище робить три ітерації.
 
-If `i++` was missing from the example above, the loop would repeat (in theory) forever. In practice, the browser provides ways to stop such loops, and in server-side JavaScript, we can kill the process.
+Якщо `i++` пропустити в коді вище, то цикл виконувався б (в теорії) вічно. На практикі, браузери надають способи зупинити такі цикли, і на серверному JavaScript(Node.js), ми можемо знищити цей процес
 
-Any expression or variable can be a loop condition, not just comparisons: the condition is evaluated and converted to a boolean by `while`.
+Будь-який вираз або змінна може бути умовою циклу, а не тільки порівняння (`a < 5` чи `b !== 10`). Умова виконується і конвертується у логічне значення.
 
-For instance, a shorter way to write `while (i != 0)` is `while (i)`:
+Наприклад, коротший спосіб написання `while (i != 0)` відповідає `while (i)`:
 
 ```js run
 let i = 3;
 *!*
-while (i) { // when i becomes 0, the condition becomes falsy, and the loop stops
+while (i) { // коли i буде 0, умова стане невірною, і цикл зупиниться
 */!*
   alert( i );
   i--;
@@ -48,7 +48,7 @@ while (i) { // when i becomes 0, the condition becomes falsy, and the loop stops
 ```
 
 ````smart header="Curly braces are not required for a single-line body"
-If the loop body has a single statement, we can omit the curly braces `{…}`:
+Якщо тіло цикла має один операцію, ми можемо опустити фігурні дужки `{…}`:
 
 ```js run
 let i = 3;
@@ -58,19 +58,19 @@ while (i) alert(i--);
 ```
 ````
 
-## The "do..while" loop
+## Цикл "do..while"
 
-The condition check can be moved *below* the loop body using the `do..while` syntax:
+Перевірка умови може бути переміщена *нижче* тіла циклу використовуючи `do..while` синтаксис:
 
 ```js
 do {
-  // loop body
-} while (condition);
+  // тіло циклу
+} while (умова);
 ```
 
-The loop will first execute the body, then check the condition, and, while it's truthy, execute it again and again.
+Цикл спочатку виконує тіло, а потім перевіряє умову, і поки умова є `true`, цикл виконується знову і знову.
 
-For example:
+Наприклад:
 
 ```js run
 let i = 0;
@@ -80,63 +80,63 @@ do {
 } while (i < 3);
 ```
 
-This form of syntax should only be used when you want the body of the loop to execute **at least once** regardless of the condition being truthy. Usually, the other form is preferred: `while(…) {…}`.
+Цю форму синтаксису слід використовувати лише тоді, коли ви хочете, щоб тіло циклу виконалось **хоча б один раз**, незалежно від умови. Зазвичай, інша форма є більш бажаною `while(…) {…}`
 
-## The "for" loop
+## Цикл "for"
 
-The `for` loop is the most commonly used loop.
+Цикл `for` є найбільш використовуваним.
 
-It looks like this:
+Виглядає він так:
 
 ```js
-for (begin; condition; step) {
-  // ... loop body ...
+for (початок; умова; крок) {
+  // ... тіло циклу ...
 }
 ```
 
-Let's learn the meaning of these parts by example. The loop below runs `alert(i)` for `i` from `0` up to (but not including) `3`:
+Давайте дізнаємовь про значення цих трьох частин за зразком. Цикл нижче виконує `alert(i)` для `i` від `0` до `3` (але не включаючи це число `3`)
 
 ```js run
-for (let i = 0; i < 3; i++) { // shows 0, then 1, then 2
+for (let i = 0; i < 3; i++) { // показується 0, далі 1, потім 2
   alert(i);
 }
 ```
 
-Let's examine the `for` statement part-by-part:
+Давайте розглянемо цикл `for` по частинах:
 
-| part  |          |                                                                            |
+| Назва частини  |          |                                                                            |
 |-------|----------|----------------------------------------------------------------------------|
-| begin | `i = 0`    | Executes once upon entering the loop.                                      |
-| condition | `i < 3`| Checked before every loop iteration. If false, the loop stops.              |
-| step| `i++`      | Executes after the body on each iteration but before the condition check. |
-| body | `alert(i)`| Runs again and again while the condition is truthy.                         |
+| початок | `i = 0`    | Виконується один раз, при вході в цикл.                                      |
+| умова | `i < 3`| Перевіряється перед кожною ітерацією циклу. Якщо умова невірна, цикл зупиняєтья.              |
+| крок| `i++`      | Виконується після тіла на кожній ітерації, але перед перевіркою умови. |
+| тіло | `alert(i)`| Виконується знову і знову, поки умова є правдивою (`true`).                         |
 
 
-The general loop algorithm works like this:
+Загальний алгоритм циклу працює так:
 ```
-Run begin
-→ (if condition → run body and run step)
-→ (if condition → run body and run step)
-→ (if condition → run body and run step)
+Початок виконання
+→ (if умова → виконати тіло і виконати крок)
+→ (if умова → виконати тіло і виконати крок)
+→ (if умова → виконати тіло і виконати крок)
 → ...
 ```
 
-If you are new to loops, it could help to go back to the example and reproduce how it runs step-by-step on a piece of paper.
+Якщо ви новачок у циклах, це може допомогти, поверніться до прикладу і відтворіть, як виконується цикл крок за кроком на аркуші паперу.
 
-Here's exactly what happens in our case:
+Ось що відбувається у нашому випадку:
 
 ```js
 // for (let i = 0; i < 3; i++) alert(i)
 
-// run begin
+// Початок виконання
 let i = 0
-// if condition → run body and run step
+// if умова → виконати тіло і виконати крок
 if (i < 3) { alert(i); i++ }
-// if condition → run body and run step
+// if умова → виконати тіло і виконати крок
 if (i < 3) { alert(i); i++ }
-// if condition → run body and run step
+// if умова → виконати тіло і виконати крок
 if (i < 3) { alert(i); i++ }
-// ...finish, because now i == 3
+// ...кінець, тому що зараз i == 3
 ```
 
 ````smart header="Inline variable declaration"
