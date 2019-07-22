@@ -11,7 +11,11 @@
 
 Останні зміни до специфікації описано на сайті <https://tc39.es/ecma262/>.
 
+<<<<<<< HEAD
 Щоб прочитати про найновіші функції, які "майже входять в стандарт", перегляньте пропозиції на <https://github.com/tc39/proposals>.
+=======
+To read about new bleeding-edge features, including those that are "almost standard" (so-called "stage 3"), see proposals at <https://github.com/tc39/proposals>.
+>>>>>>> 4a8d8987dfc3256045e6b4a3bd8810ad3b25d1b3
 
 Також, якщо ви розробляєте для браузерів, вам буде цікаво прочитати про інші специфікації, які описано в [другій частині](info:browser-environment) цього посібника.
 
@@ -28,7 +32,11 @@
 
     Також, можна використовувати внутрішній пошук з фразами, такими як "RegExp MSDN" або "RegExp MSDN jscript".
 
+<<<<<<< HEAD
 ## Підтримка функцій
+=======
+## Compatibility tables
+>>>>>>> 4a8d8987dfc3256045e6b4a3bd8810ad3b25d1b3
 
 Мова JavaScript активно розвивається — до неї регулярно додаються нові функції.
 
