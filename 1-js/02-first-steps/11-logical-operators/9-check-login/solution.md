@@ -10,7 +10,11 @@ if (userName == 'Admin') {
   if (pass == 'TheMaster') {
     alert( 'Ласкаво просимо!' );
   } else if (pass == '' || pass == null) {
+<<<<<<< HEAD
     alert( 'Скасовано.' );
+=======
+    alert( 'Canceled' );
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
   } else {
     alert( 'Неправильний пароль' );
   }

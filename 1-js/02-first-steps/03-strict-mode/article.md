@@ -4,7 +4,11 @@
 
 Перевагою цього було те, що існуючий код не ламався. Проте, будь-яка помилка або неідеальне рішення назавжди ставали частиною JavaScript, тому що цей код не змінювався.
 
+<<<<<<< HEAD
 Так було до того, як у 2009 році з'явився стандарт ECMAScript 5 (ES5). Він додав нові функції до мови і змінив деякі існуючі. Щоб старий код лишався робочим, більшість модифікацій усталено було вимкнено. Щоб увімкнути цей функціонал, потрібно прописати спеціальну директиву: `"use strict"`.
+=======
+This was the case until 2009 when ECMAScript 5 (ES5) appeared. It added new features to the language and modified some of the existing ones. To keep the old code working, most such modifications are off by default. You need to explicitly enable them with a special directive: `"use strict"`.
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 ## "use strict"
 
@@ -19,9 +23,13 @@
 ...
 ```
 
+<<<<<<< HEAD
 Незабаром ми вивчемо функції (такий собі спосіб групування команд).
 
 Забігаючи наперед, майте на увазі, що `"use strict"` можна також писати на початку функцій, замість цілого скрипта. Таким чином, строгий режим буде використовуватися лише в межах цієї функції. Проте, зазвичай люди використовують цей режим для всього скрипта.
+=======
+We will learn functions (a way to group commands) soon. Looking ahead, let's note that `"use strict"` can be put at the start of most kinds of functions instead of the whole script. Doing that enables strict mode in that function only. But usually, people use it for the whole script.
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 
 ````warn header="Переконайтеся, що \"use strict\" написано зверху"

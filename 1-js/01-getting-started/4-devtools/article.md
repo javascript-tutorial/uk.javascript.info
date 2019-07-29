@@ -51,11 +51,19 @@ Safari (браузер в Mac, не підтримується Windows/Linux) д
 
 Тепер комбінація клавіш `key:Cmd+Opt+C` може переключати консоль. Також, зауважте, що з'явився новий пункт "Розробка" в верхньому меню. Це меню має багато команд та опцій.
 
+<<<<<<< HEAD
 ## Багаторядкове введення
 
 Зазвичай, коли ми вводимо один рядок коду в консоль і натискаємо `key:Enter`, він виконується.
 
 Щоб вставити декілька рядків, натисніть `key:Shift+Enter`.
+=======
+```smart header="Multi-line input"
+Usually, when we put a line of code into the console, and then press `key:Enter`, it executes.
+
+To insert multiple lines, press `key:Shift+Enter`. This way one can enter long fragments of JavaScript code.
+```
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 ## Підсумки
 

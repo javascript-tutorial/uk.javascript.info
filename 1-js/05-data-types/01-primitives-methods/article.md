@@ -2,9 +2,13 @@
  
 JavaScript дозволяє працювати з примітивами (рядок, число, і т.д.) так само як з об'єктами.
 
+<<<<<<< HEAD
 Вони також надають методи для роботи. Ми вивчимо їх найближчим часом, але спочатку подивимось як воно працює, тому що примітиви не є об'єктами (і тут ми зробимо це ще більш зрозумілим).
 
 Давайте розглянемо різницю між примітивами та об'єктами.
+=======
+JavaScript allows us to work with primitives (strings, numbers, etc.) as if they were objects. They also provide methods to call as such. We will study those soon, but first we'll see how it works because, of course, primitives are not objects (and here we will make it even clearer).
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 Примітив
 
@@ -35,7 +39,11 @@ john.sayHi(); // Привіт друже!
 
 Але за все потрібно платити!
 
+<<<<<<< HEAD
 Об'єкти "важчі", ніж примітиви. Вони вимагають додаткових ресурсів для підтримки внутрішньої обробки. Але, оскільки властивості і методи дуже корисні в програмуванні, двигун JavaScript намагається оптимізувати їх для зменшення додаткового навантаження.
+=======
+Objects are "heavier" than primitives. They require additional resources to support the internal machinery.
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 ## Примітив як об'єкт
 
@@ -83,8 +91,13 @@ alert( n.toFixed(2) ); // 1.23
 Ми переглянемо більш конкретні методи у розділах <info:number> та <info:string>.
 
 
+<<<<<<< HEAD
 ````warn header="Конструктори `String/Number/Boolean` лише для внутрішнього використання"
 Деякі мови як Java дозволяють створювати "об'єкт обгортку" для примітивів явно використовуючи синтаксис як  `new Number(1)` або `new Boolean(false)`.
+=======
+````warn header="Constructors `String/Number/Boolean` are for internal use only"
+Some languages like Java allow us to explicitly create "wrapper objects" for primitives using a syntax like `new Number(1)` or `new Boolean(false)`.
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 У JavaScript це також можливо з історичних причин, але надзвичайно **не рекомендується**. Це призведе до непередбачуваних речей.
 

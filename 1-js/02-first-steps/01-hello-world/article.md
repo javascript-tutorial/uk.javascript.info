@@ -1,6 +1,10 @@
 # Привіт, світ!
 
+<<<<<<< HEAD
 Ця частина посібника розповідає про основи JavaScript, про саму мову. Згодом, ви будете вивчати Node.js та інші платформи, які його використовують.
+=======
+This part of the tutorial is about core JavaScript, the language itself.
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 Але нам необхідне робоче середовище для запуску наших скриптів і, оскільки ця книга є онлайн, браузер є гарним вибором для цього. Ми зведемо до мінімуму кількість специфічних команд для браузера (наприклад `alert`), щоб ви не витрачали час на них, якщо плануєте зосередитися на іншому середовищі (як Node.js). Ми зосередимось на JavaScript в браузері у [наступній частині](/ui) посібника.
 
@@ -45,8 +49,13 @@
 
 Тег `<script>` має декілька атрибутів, які рідко використовуються сьогодні, але їх ще можна знайти в старому коді.
 
+<<<<<<< HEAD
 Атрибут `type`: <code>&lt;script <u>type</u>=...&gt;</code>
 : Старий стандарт HTML, HTML4, вимагає щоб у `<script>` був `type`. Зазвичай це був `type="text/javascript"`. Це більше не потрібно. Також, сучасний стандарт HTML, HTML5, повністю змінив зміст цього атрибута. Тепер його можна використовувати для JavaScript модулів. Але це є просунута тема; ми поговоримо про модулі в іншій частині посібника.
+=======
+The `type` attribute: <code>&lt;script <u>type</u>=...&gt;</code>
+: The old HTML standard, HTML4, required a script to have a `type`. Usually it was `type="text/javascript"`. It's not required anymore. Also, the modern HTML standard totally changed the meaning of this attribute. Now, it can be used for JavaScript modules. But that's an advanced topic; we'll talk about modules in another part of the tutorial.
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 Атрибут `language`: <code>&lt;script <u>language</u>=...&gt;</code>
 : Цей атрибут вказував на мову скрипта. Цей атрибут більше немає сенсу, оскільки JavaScript є усталеною мовою. Його більше не потрібно використовувати.
@@ -73,9 +82,13 @@
 <script src="/path/to/script.js"></script>
 ```
 
+<<<<<<< HEAD
 Тут, `/path/to/script.js` - абсолютний шлях до файлу скрипта (з кореня сайту).
 
 Також можна вказати відносний шлях з поточної сторінки. Наприклад, `src="script.js"` означатиме, що файл `"script.js"` у поточній директорії.
+=======
+Here, `/path/to/script.js` is an absolute path to the script from the site root. One can also provide a relative path from the current page. For instance, `src="script.js"` would mean a file `"script.js"` in the current folder.
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 Ми також можемо вказати повну URL-адресу. Наприклад:
 

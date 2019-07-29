@@ -189,7 +189,7 @@ Here's an example of using these methods to add more items to a list and the tex
 
 Here's a small picture what methods do:
 
-![](before-prepend-append-after.png)
+![](before-prepend-append-after.svg)
 
 So the final list will be:
 
@@ -269,7 +269,7 @@ That's how we can append an arbitrary HTML to our page.
 
 Here's the picture of insertion variants:
 
-![](insert-adjacent.png)
+![](insert-adjacent.svg)
 
 We can easily notice similarities between this and the previous picture. The insertion points are actually the same, but this method inserts HTML.
 
@@ -504,7 +504,7 @@ So it's kind of unusable at "after loaded" stage, unlike other DOM methods we co
 
 That was the downside.
 
-Technically, when `document.write` is called while the browser is reading ("parsing") incoming HTML, and it writes something, the browser consumes it just as it were initially there, in the   HTML text.
+Technically, when `document.write` is called while the browser is reading ("parsing") incoming HTML, and it writes something, the browser consumes it just as if it were initially there, in the HTML text.
 
 That gives us the upside -- it works blazingly fast, because there's *no DOM modification*. It writes directly into the page text, while the DOM is not yet built, and the browser puts it into DOM at generation-time.
 

@@ -93,9 +93,13 @@ alert( +"" );   // 0
 
 Він насправді працює як і `Number(...)`, але виглядає коротше.
 
+<<<<<<< HEAD
 Необхідність перетворення рядків на числа виникає дуже часто. Наприклад, якщо ми отримуємо значення з полів HTML форми, вони зазвичай є рядками.
 
 Що робити, якщо ми хочемо їх підсумувати?
+=======
+The need to convert strings to numbers arises very often. For example, if we are getting values from HTML form fields, they are usually strings. What if we want to sum them?
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
 
 Бінарний плюс додав би їх як рядки:
 
@@ -253,14 +257,22 @@ alert( 8 ** (1/3) ); // 2 (степінь 1/3 — це теж саме, що і 
 
     ```js run no-beautify
     let counter = 2;
+<<<<<<< HEAD
     counter++;      // працює так само, як counter = counter + 1, але коротше
+=======
+    counter++;        // works the same as counter = counter + 1, but is shorter
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
     alert( counter ); // 3
     ```
 - **Декремент** `--` зменшує змінну на 1:
 
     ```js run no-beautify
     let counter = 2;
+<<<<<<< HEAD
     counter--;      // працює так само, як counter = counter - 1, але коротше
+=======
+    counter--;        // works the same as counter = counter - 1, but is shorter
+>>>>>>> 34e9cdca3642882bd36c6733433a503a40c6da74
     alert( counter ); // 1
     ```
 
