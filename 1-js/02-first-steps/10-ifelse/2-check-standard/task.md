@@ -8,7 +8,7 @@ importance: 2
 
 Якщо відвідувач вводить "ECMAScript", виведіть "Правильно!", у іншому випадку -- виведіть: "Не знаєте? ECMAScript!"
 
-![](ifelse_task2.png)
+![](ifelse_task2.svg)
 
 [demo src="ifelse_task2"]
 
