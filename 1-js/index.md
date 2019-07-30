@@ -1,6 +1,6 @@
-# The JavaScript language
+# Мова програмування JavaScript
 
-Here we learn JavaScript, starting from scratch and go on to advanced concepts like OOP.
+Тут ви можете вивчити JavaScript, починаючи з нуля і закінчуючи просунутими концепціями, як ООП.
 
-We concentrate on the language itself here, with the minimum of environment-specific notes.
+Ми будемо використовувати браузер в якості оточення, і зосередимося на самій мові JavaScript.
 

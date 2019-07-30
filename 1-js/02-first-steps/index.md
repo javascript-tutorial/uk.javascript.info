@@ -1,3 +1,3 @@
-# JavaScript Fundamentals
+# Основи JavaScript
 
-Let's learn the fundamentals of script building.
+В цьому розділі розглядаються основні поняття в JavaScript.
