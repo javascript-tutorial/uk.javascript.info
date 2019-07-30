@@ -1,3 +1,14 @@
+# 1-js/02-first-steps/04-variables/variable.svg
+variable.svg:
+  '"Hello!"': '"Привіт!"'
+  message: 'Повідомлення'
+
+# 1-js/02-first-steps/04-variables/variable-change.svg
+variable-change.svg:
+  '"Hello!"': '"Привіт!"'
+  '"World!"': '"Світ!"'
+  message: 'Повідомлення'
+
 ifelse_task2.svg:
   Begin: ''
   You don't know?: ''
