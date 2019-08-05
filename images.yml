@@ -1,13 +1,23 @@
 # 1-js/02-first-steps/04-variables/variable.svg
 variable.svg:
-  '"Hello!"': '"Привіт!"'
-  message: 'Повідомлення'
+  '"Hello!"':
+    text: '"Привіт!"'
+    position: "center"
+  message:
+    text: "Повідомлення"
+    position: "center"
 
 # 1-js/02-first-steps/04-variables/variable-change.svg
 variable-change.svg:
-  '"Hello!"': '"Привіт!"'
-  '"World!"': '"Світ!"'
-  message: 'Повідомлення'
+  '"Hello!"':
+    text: '"Привіт!"'
+    position: "center"
+  '"World!"':
+    text: '"Світ!"'
+    position: "center"
+  message:
+    text: "Повідомлення"
+    position: "center"
 
 ifelse_task2.svg:
   Begin: ''
