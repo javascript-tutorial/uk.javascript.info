@@ -24,7 +24,11 @@
     Хоча, замість пошуку на сайті, краще використовувати пошукові системи. Просто напишіть "MDN [термін]" в пошуковому запиті. Наприклад, запит "[MDN parseInt](https://www.google.com.ua/search?q=MDN+parseInt)" знайде інформацію про функцію `parseInt`.
 
 
+<<<<<<< HEAD
 - **MSDN** – посібник від Microsoft, де зібрано багато інформацію, включаючи JavaScript (часто згадується як JScript). Якщо комусь потрібно дізнатися щось зв'язане з Internet Explorer/Microsoft Edge, краще шукати інформацію на сайті <http://msdn.microsoft.com/>.
+=======
+- **MSDN** – Microsoft manual with a lot of information, including JavaScript (often referred to as JScript). If one needs something specific to Internet Explorer, better go there: <http://msdn.microsoft.com/>.
+>>>>>>> fb38a13978f6e8397005243bc13bc1a20a988e6a
 
     Також, можна використовувати внутрішній пошук з фразами, такими як "RegExp MSDN" або "RegExp MSDN jscript".
 

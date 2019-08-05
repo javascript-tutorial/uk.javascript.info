@@ -37,7 +37,7 @@ data: Message 3
 data: of two lines
 ```
 
-- A message text goes after `data:`, the space after the semicolon is optional.
+- A message text goes after `data:`, the space after the colon is optional.
 - Messages are delimited with double line breaks `\n\n`.
 - To send a line break `\n`, we can immediately one more `data:` (3rd message above).
 
@@ -266,6 +266,6 @@ A message may have following fields:
 - `data:` -- message body, a sequence of multiple `data` is interpreted as a single message, with `\n` between the parts.
 - `id:` -- renews `lastEventId`, sent in `Last-Event-ID` on reconnect.
 - `retry:` -- recommends a retry delay for reconnections in ms. There's no way to set it from JavaScript.
-- `event:` -- even name, must precede `data:`.
+- `event:` -- event name, must precede `data:`.
 
 A message may include one or more fields in any order, but `id:` usually goes the last.

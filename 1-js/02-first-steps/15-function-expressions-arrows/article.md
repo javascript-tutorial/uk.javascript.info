@@ -91,7 +91,7 @@ let sayHi = function() {
 
 The answer is simple:
 - There's no need for `;` at the end of code blocks and syntax structures that use them like `if { ... }`, `for {  }`, `function f { }` etc.
-- A Function Expression is used inside the statement: `let sayHi = ...;`, as a value. It's not a code block, but rather an assignment. The semicolon `;` is recommended at the end of statements, no matter what is the value. So the semicolon here is not related to the Function Expression itself, it just terminates the statement.
+- A Function Expression is used inside the statement: `let sayHi = ...;`, as a value. It's not a code block, but rather an assignment. The semicolon `;` is recommended at the end of statements, no matter what the value is. So the semicolon here is not related to the Function Expression itself, it just terminates the statement.
 ````
 
 ## Callback functions
@@ -133,7 +133,7 @@ ask("Do you agree?", showOk, showCancel);
 
 Before we explore how we can write it in a much shorter way, let's note that in the browser (and on the server-side in some cases) such functions are quite popular. The major difference between a real-life implementation and the example above is that real-life functions use more complex ways to interact with the user than a simple `confirm`. In the browser, such a function usually draws a nice-looking question window. But that's another story.
 
-**The arguments of `ask` are called *callback functions* or just *callbacks*.**
+**The arguments `showOk` and `showCancel` of `ask` are called *callback functions* or just *callbacks*.**
 
 The idea is that we pass a function and expect it to be "called back" later if necessary. In our case, `showOk` becomes the callback for the "yes" answer, and `showCancel` for the "no" answer.
 
