@@ -1,47 +1,47 @@
-# JavaScript specials
+# Особливості JavaScript
 
-This chapter briefly recaps the features of JavaScript that we've learned by now, paying special attention to subtle moments.
+Давайте коротко повторимо вивчений матеріал і пригадаємо ключові моменти.
 
-## Code structure
+## Структура коду
 
-Statements are delimited with a semicolon:
-
-```js run no-beautify
-alert('Hello'); alert('World');
-```
-
-Usually, a line-break is also treated as a delimiter, so that would also work:
+Інструкції розділяються крапкою з комою:
 
 ```js run no-beautify
-alert('Hello')
-alert('World')
+alert('Привіт'); alert('Світ');
 ```
 
-That's called "automatic semicolon insertion". Sometimes it doesn't work, for instance:
+Зазвичай, перенесення рядка також вважається за розділювач, тому такий варіант теж працюватиме:
+
+```js run no-beautify
+alert('Привіт')
+alert('Світ')
+```
+
+Це називається "автоматичне вставлення крапки з комою". Іноді такий варіант може не спрацювати, наприклад:
 
 ```js run
-alert("There will be an error after this message")
+alert("Після цього повідомлення буде помилка")
 
 [1, 2].forEach(alert)
 ```
 
-Most codestyle guides agree that we should put a semicolon after each statement.
+Більшість посібників по стилю коду рекомендують ставити крапку з комою після кожної інструкції.
 
-Semicolons are not required after code blocks `{...}` and syntax constructs with them like loops:
+Крапку з комою не потрібно ставити після блоків коду `{...}` та синтаксичних конструкцій з ними, наприклад, після циклів:
 
 ```js
 function f() {
-  // no semicolon needed after function declaration
+  // після оголошення функції не обов'язково ставити крапку з комою
 }
 
 for(;;) {
-  // no semicolon needed after the loop
+  // після циклу також немає потреби ставити крапку з комою
 }
 ```
 
-...But even if we can put an "extra" semicolon somewhere, that's not an error. It will be ignored.
+...Але навіть якщо ми поставимо "зайву" крапку з комою, помилки не буде. Її просто буде проігноровано.
 
-More in: <info:structure>.
+Детальніше: <info:structure>.
 
 ## Strict mode
 
