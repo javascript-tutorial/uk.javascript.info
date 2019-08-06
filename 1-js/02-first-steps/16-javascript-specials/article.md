@@ -43,87 +43,87 @@ for(;;) {
 
 Детальніше: <info:structure>.
 
-## Strict mode
+## Суворий режим (Strict mode)
 
-To fully enable all features of modern JavaScript, we should start scripts with `"use strict"`.
+Щоб задіяти усі можливості сучасної мови JavaScript, нам потрібно починати скрипти із конструкції `"use strict"`.
 
 ```js
 'use strict';
 
-...
+...// ваш код
 ```
 
-The directive must be at the top of a script or at the beginning of a function.
+Ця директива повинна бути зверху скрипта або на початку функції.
 
-Without `"use strict"`, everything still works, but some features behave in the old-fashion, "compatible" way. We'd generally prefer the modern behavior.
+Без `"use strict"`, код все ще буде працювати, однак деякі можливості працюватимуть в старому режимі, так званому "режимі сумісності". Ми рекомендуємо використовувати суворий ("сучасний") режим.
 
-Some modern features of the language (like classes that we'll study in the future) enable strict mode implicitly.
+Деякі сучасні функції мови (наприклад, класи, які ми будемо вивчати в майбутньому) неявно вмикають суворий режим.
 
-More in: <info:strict-mode>.
+Детальніше: <info:strict-mode>.
 
-## Variables
+## Змінні
 
-Can be declared using:
+Можна оголошувати наступним чином:
 
 - `let`
-- `const` (constant, can't be changed)
-- `var` (old-style, will see later)
+- `const` (константа, не можна змінювати)
+- `var` (старий спосіб, ми переглянемо його пізніше)
 
-A variable name can include:
-- Letters and digits, but the first character may not be a digit.
-- Characters `$` and `_` are normal, on par with letters.
-- Non-Latin alphabets and hieroglyphs are also allowed, but commonly not used.
+Ім'я змінної може включати:
+- Літери і цифри; першим символом має бути лише літера, не цифра.
+- Допускаються символи `$` та `_`, в парі з літерами.
+- Не латинські символи, як кирилиця та ієрогліфи також допускаються, але вони не мають широкого вжитку.
 
-Variables are dynamically typed. They can store any value:
+Змінні динамічно типізовані, тобто вони змінюють свій тип в залежності від значення. Можуть зберігати будь-які значення:
 
 ```js
 let x = 5;
-x = "John";
+x = "Іван";
 ```
 
-There are 7 data types:
+Існує 7 типів даних:
 
-- `number` for both floating-point and integer numbers,
-- `string` for strings,
-- `boolean` for logical values: `true/false`,
-- `null` -- a type with a single value `null`, meaning "empty" or "does not exist",
-- `undefined` -- a type with a single value `undefined`, meaning "not assigned",
-- `object` and `symbol` -- for complex data structures and unique identifiers, we haven't learnt them yet.
+- число (`number`) для цілих та десяткових чисел,
+- рядок (`string`) для тексту,
+- булевий тип (`boolean`) для логічних значень: `true/false`,
+- `null` -- тип з єдиним значенням `null`, який означає "пусто" або "не існує",
+- `undefined` -- тип з єдиним значенням `undefined`, який означає "не присвоєно",
+- об'єкт (`object`) та символ (`symbol`) -- для складних структур даних та унікальних ідентифікаторів, ми їх ще не вивчили.
 
-The `typeof` operator returns the type for a value, with two exceptions:
+Оператор `typeof` повертає тип змінної, за винятком двох випадків:
 ```js
-typeof null == "object" // error in the language
-typeof function(){} == "function" // functions are treated specially
+typeof null == "object" // помилка в мові
+typeof function(){} == "function" // спеціально для функцій
 ```
 
-More in: <info:variables> and <info:types>.
+Детальніше: <info:variables> та <info:types>.
 
-## Interaction
+## Взаємодія
 
-We're using a browser as a working environment, so basic UI functions will be:
+Ми використовуємо браузер у ролі робочого середовища, тому для взаємодії з користувачами ми використовуємо функції:
 
 [`prompt(question, [default])`](mdn:api/Window/prompt)
-: Ask a `question`, and return either what the visitor entered or `null` if they clicked "cancel".
+: Задає питання (`question`), а потім повертає те, що ввів відвідувач, або `null`, якщо відвідувач натиснув кнопку "Скасувати".
 
 [`confirm(question)`](mdn:api/Window/confirm)
-: Ask a `question` and suggest to choose between Ok and Cancel. The choice is returned as `true/false`.
+: Задає питання (`question`) і пропонує відвідувачу вибрати "ОК" або "Скасувати". Вибір повертається як `true/false`.
 
 [`alert(message)`](mdn:api/Window/alert)
-: Output a `message`.
+: Виводить повідомлення (`message`).
 
-All these functions are *modal*, they pause the code execution and prevent the visitor from interacting with the page until they answer.
+Всі ці функції показують *модальне вікно*; вони зупиняють виконання скрипта і не дають користувачеві взаємодіяти зі сторінкою доки не буде надана відповідь.
 
-For instance:
+Наприклад:
 
 ```js run
-let userName = prompt("Your name?", "Alice");
-let isTeaWanted = confirm("Do you want some tea?");
+let userName = prompt("Ваше ім'я?", "Настя");
+let isTeaWanted = confirm("Хочете чаю?");
 
-alert( "Visitor: " + userName ); // Alice
-alert( "Tea wanted: " + isTeaWanted ); // true
+alert( "Відвідувач: " + userName ); // Настя
+alert( "Хоче чаю: " + isTeaWanted ); // true
 ```
 
-More in: <info:alert-prompt-confirm>.
+Детальніше: <info:alert-prompt-confirm>.
 
 ## Operators
 
