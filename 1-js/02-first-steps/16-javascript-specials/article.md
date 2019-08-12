@@ -43,7 +43,7 @@ for(;;) {
 
 Детальніше: <info:structure>.
 
-## Суворий режим (Strict mode)
+## Суворий режим (strict mode)
 
 Щоб задіяти усі можливості сучасної мови JavaScript, нам потрібно починати скрипти із конструкції `"use strict"`.
 
@@ -53,7 +53,7 @@ for(;;) {
 ...// ваш код
 ```
 
-Ця директива повинна бути зверху скрипта або на початку функції.
+Цю директиву потрібно розміщувати в першому рядку скрипта або на початку тіла функції.
 
 Без `"use strict"`, код все ще буде працювати, однак деякі можливості працюватимуть в старому режимі, так званому "режимі сумісності". Ми рекомендуємо використовувати суворий ("сучасний") режим.
 
@@ -125,52 +125,52 @@ alert( "Хоче булочку: " + isBunWanted ); // true
 
 Детальніше: <info:alert-prompt-confirm>.
 
-## Operators
+## Оператори
 
-JavaScript supports the following operators:
+JavaScript підтримує такі оператори:
 
-Arithmetical
-: Regular: `* + - /`, also `%` for the remainder and `**` for power of a number.
+Арифметичні
+: Звичайні: `* + - /`, а також оператори `%`, для визначення остачі від ділення та `**` для піднесення до степеня.
 
-    The binary plus `+` concatenates strings. And if any of the operands is a string, the other one is converted to string too:
+    Бінарний плюс `+` об'єднує (конкатинує) рядки. А якщо одним із операндів буде рядок, то інший операнд також буде конвертовано в рядок:
 
     ```js run
-    alert( '1' + 2 ); // '12', string
-    alert( 1 + '2' ); // '12', string
+    alert( '1' + 2 ); // '12', рядок
+    alert( typeof ( 1 + '2' ) ); // string
     ```
 
-Assignments
-: There is a simple assignment: `a = b` and combined ones like `a *= 2`.
+Оператори присвоєння
+: Звичайне присвоєння: `a = b` і складені `a *= 2`.
 
-Bitwise
-: Bitwise operators work with 32-bit integers at the lowest, bit-level: see the [docs](mdn:/JavaScript/Reference/Operators/Bitwise_Operators) when they are needed.
+Бітові операції
+: Бітові оператори працюють з 32-бітними цілими числами на найнижчому, побітовому, рівні. Детальніше про їхнє використання можна прочитати на ресурсі [MDN](mdn:/JavaScript/Reference/Operators/Bitwise_Operators).
 
-Conditional
-: The only operator with three parameters: `cond ? resultA : resultB`. If `cond` is truthy, returns `resultA`, otherwise `resultB`.
+Умовний оператор
+: Єдиний оператор з трьома параметрами: `cond ? resultA : resultB`. Якщо `cond` вірно, повертається `resultA`, інакше – `resultB`.
 
-Logical operators
-: Logical AND `&&` and OR `||` perform short-circuit evaluation and then return the value where it stopped. Logical NOT `!` converts the operand to boolean type and returns the inverse value.
+Логічні оператори
+: Логічні І `&&` та АБО `||` використовують так звані "ледачі обчислення" і насамкінець повертають `true` або `false`. Логічне НЕ `!` конвертує операнд в логічний тип і повертає інвертоване значення.
 
-Comparisons
-: Equality check `==` for values of different types converts them to a number (except `null` and `undefined` that equal each other and nothing else), so these are equal:
+Порівнювання
+: Перевірка на рівність `==` для значень різних типів, конвертує їх в число (за винятком `null` і `undefined`, які рівні тільки один одному і нічому іншому), тому приклади нижче рівні:
 
     ```js run
     alert( 0 == false ); // true
     alert( 0 == '' ); // true
     ```
 
-    Other comparisons convert to a number as well.
+    Інші оператори порівнювання також конвертують значення в числовий тип.
 
-    The strict equality operator `===` doesn't do the conversion: different types always mean different values for it.
+    Оператор строгої рівності `===` не виконує конвертацію: різні типи для нього завжди означають різні значення.
 
-    Values `null` and `undefined` are special: they equal `==` each other and don't equal anything else.
+    Значення `null` та `undefined` особливі: вони рівні `==` лише самим собі і не рівні нічому іншому.
 
-    Greater/less comparisons compare strings character-by-character, other types are converted to a number.
+    Оператори порівнювання більше/менше порівнюють рядки посимвольно, інші типи конвертуються в число.
 
-Other operators
-: There are few others, like a comma operator.
+Інші оператори
+: Існують й інші оператори, такі як кома.
 
-More in: <info:operators>, <info:comparison>, <info:logical-operators>.
+Детальніше: <info:operators>, <info:comparison>, <info:logical-operators>.
 
 ## Loops
 
@@ -248,8 +248,6 @@ We covered three ways to create a function in JavaScript:
     };
     ```
 
-    Function expressions can have a name, like `sum = function name(a, b)`, but that `name` is only visible inside that function.
-
 3. Arrow functions:
 
     ```js
@@ -274,13 +272,7 @@ We covered three ways to create a function in JavaScript:
 - Parameters can have default values: `function sum(a = 1, b = 2) {...}`.
 - Functions always return something. If there's no `return` statement, then the result is `undefined`.
 
-
-| Function Declaration | Function Expression |
-|----------------------|---------------------|
-| visible in the whole code block/script | created when the execution reaches it |
-|    | can have a name, visible only inside the function |
-
-More: see <info:function-basics>, <info:function-expressions-arrows>.
+Details: see <info:function-basics>, <info:function-expressions-arrows>.
 
 ## More to come
 
