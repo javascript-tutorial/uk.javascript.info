@@ -172,9 +172,9 @@ JavaScript підтримує такі оператори:
 
 Детальніше: <info:operators>, <info:comparison>, <info:logical-operators>.
 
-## Loops
+## Цикли
 
-- We covered 3 types of loops:
+- Ми вивчили 3 типи циклів:
 
     ```js
     // 1
@@ -193,42 +193,42 @@ JavaScript підтримує такі оператори:
     }
     ```
 
-- The variable declared in `for(let...)` loop is visible only inside the loop. But we can also omit `let` and reuse an existing variable.
-- Directives `break/continue` allow to exit the whole loop/current iteration. Use labels to break nested loops.
+- Змінна, оголошена в циклі `for(let...)`, видима лише в циклі. Але ми також можемо опустити `let` і перевикористовувати існуючу змінну.
+- Директиви `break/continue` дозволяють вийти з циклу/поточної ітерації. Використовуйте мітки для виходу із вкладених циклів.
 
-Details in: <info:while-for>.
+Детальніше: <info:while-for>.
 
-Later we'll study more types of loops to deal with objects.
+Пізніше ми вивчимо більше видів циклів, які працюють з об'єктами.
 
-## The "switch" construct
+## Конструкція "switch"
 
-The "switch" construct can replace multiple `if` checks. It uses `===` (strict equality) for comparisons.
+Конструкція "switch" може замінити декілька перевірок `if`. Для порівняння, ця конструкція використовує оператор строгого порівняння `===`.
 
-For instance:
+Наприклад:
 
 ```js run
-let age = prompt('Your age?', 18);
+let age = prompt('Скільки вам років?', 18);
 
 switch (age) {
   case 18:
-    alert("Won't work"); // the result of prompt is a string, not a number
+    alert("Не запрацює"); // результатом prompt є рядок, а не число
 
   case "18":
-    alert("This works!");
+    alert("А так запрацює!");
     break;
 
   default:
-    alert("Any value not equal to one above");
+    alert("Будь-яке значення, нерівне значенням вище");
 }
 ```
 
-Details in: <info:switch>.
+Детальніше: <info:switch>.
 
-## Functions
+## Функції
 
-We covered three ways to create a function in JavaScript:
+Ми розглянули три способи створення функції в JavaScript:
 
-1. Function Declaration: the function in the main code flow
+1. Function Declaration: функція в основному потоці коду
 
     ```js
     function sum(a, b) {
@@ -238,7 +238,7 @@ We covered three ways to create a function in JavaScript:
     }
     ```
 
-2. Function Expression: the function in the context of an expression
+2. Function Expression: функція як частина виразу
 
     ```js
     let sum = function(a, b) {
@@ -248,32 +248,32 @@ We covered three ways to create a function in JavaScript:
     };
     ```
 
-3. Arrow functions:
+3. Стрілкові функції:
 
     ```js
-    // expression at the right side
+    // вираз в правій частині
     let sum = (a, b) => a + b;
 
-    // or multi-line syntax with { ... }, need return here:
+    // багаторядковий код в фігурних дужках { ... }, тут потрібен return:
     let sum = (a, b) => {
       // ...
       return a + b;
     }
 
-    // without arguments
-    let sayHi = () => alert("Hello");
+    // без аргументів
+    let sayHi = () => alert("Привіт");
 
-    // with a single argument
+    // з одним аргументом
     let double = n => n * 2;
     ```
 
 
-- Functions may have local variables: those declared inside its body. Such variables are only visible inside the function.
-- Parameters can have default values: `function sum(a = 1, b = 2) {...}`.
-- Functions always return something. If there's no `return` statement, then the result is `undefined`.
+- У функцій можуть бути локальні змінні: тобто ті, які оголошені в тілі функції. Такі змінні видимі лише всередині функції.
+- Параметри можуть мати усталені значення: `function sum(a = 1, b = 2) {...}`.
+- Функції завжди щось повертають. Якщо всередині функції немає оператора `return`, тоді вона поверне `undefined`.
 
-Details: see <info:function-basics>, <info:function-expressions-arrows>.
+Детальніше: дивіться <info:function-basics>, <info:function-expressions-arrows>.
 
-## More to come
+## Ми вивчемо більше
 
-That was a brief list of JavaScript features. As of now we've studied only basics. Further in the tutorial you'll find more specials and advanced features of JavaScript.
+Це був короткий перелік можливостей JavaScript. Цієї миті ми вивчили лише основи. Далі в посібнику ви знайдете більше особливостей і просунутих можливостей JavaScript.
