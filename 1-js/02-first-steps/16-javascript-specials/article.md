@@ -53,7 +53,7 @@ To fully enable all features of modern JavaScript, we should start scripts with 
 ...
 ```
 
-The directive must be at the top of a script or at the beginning of a function.
+The directive must be at the top of a script or at the beginning of a function body.
 
 Without `"use strict"`, everything still works, but some features behave in the old-fashion, "compatible" way. We'd generally prefer the modern behavior.
 
@@ -248,8 +248,6 @@ We covered three ways to create a function in JavaScript:
     };
     ```
 
-    Function expressions can have a name, like `sum = function name(a, b)`, but that `name` is only visible inside that function.
-
 3. Arrow functions:
 
     ```js
@@ -274,13 +272,7 @@ We covered three ways to create a function in JavaScript:
 - Parameters can have default values: `function sum(a = 1, b = 2) {...}`.
 - Functions always return something. If there's no `return` statement, then the result is `undefined`.
 
-
-| Function Declaration | Function Expression |
-|----------------------|---------------------|
-| visible in the whole code block/script | created when the execution reaches it |
-|    | can have a name, visible only inside the function |
-
-More: see <info:function-basics>, <info:function-expressions-arrows>.
+Details: see <info:function-basics>, <info:function-expressions-arrows>.
 
 ## More to come
 

@@ -19,7 +19,11 @@
 ...
 ```
 
+<<<<<<< HEAD
 Незабаром ми вивчемо функції (такий собі спосіб групування команд). Забігаючи наперед, майте на увазі, що `"use strict"` можна також писати на початку функцій, замість цілого скрипта. Таким чином, строгий режим буде використовуватися лише в межах цієї функції. Проте, зазвичай люди використовують цей режим для всього скрипта.
+=======
+We will learn functions (a way to group commands) soon. Looking ahead, let's note that `"use strict"` can be put at the beginning of the function body instead of the whole script. Doing that enables strict mode in that function only. But usually, people use it for the whole script.
+>>>>>>> 5cb9760abb8499bf1e99042d866c3c1db8cd61ca
 
 
 ````warn header="Переконайтеся, що \"use strict\" написано зверху"
