@@ -9,7 +9,7 @@ importance: 5
 ```js
 switch (browser) {
   case 'Edge':
-    alert( "У вас браузер Edge!" );
+    alert( "You've got the Edge!" );
     break;
 
   case 'Chrome':
@@ -23,3 +23,4 @@ switch (browser) {
     alert( 'Маємо надію, що ця сторінка виглядає добре!' );
 }
 ```
+

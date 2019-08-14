@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="392px" height="192px" viewBox="0 0 392 192" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: sketchtool 55.2 (78181) - https://sketchapp.com -->
-    <title>variable-change.svg</title>
-    <desc>Created with sketchtool.</desc>
+    <defs>
+        <style>
+            @import url(https://fonts.googleapis.com/css?family=Open+Sans:bold,italic,bolditalic%7CPT+Mono);@font-face{font-family:&apos;PT Mono&apos;;font-weight:700;font-style:normal;src:local(&apos;PT MonoBold&apos;),url(/font/PTMonoBold.woff2) format(&apos;woff2&apos;),url(/font/PTMonoBold.woff) format(&apos;woff&apos;),url(/font/PTMonoBold.ttf) format(&apos;truetype&apos;)}
+        </style>
+    </defs>
     <g id="combined" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="variable-change.svg">
             <g id="noun_1211_cc" transform="translate(52.000000, -5.000000)">
@@ -11,13 +13,13 @@
                 <g id="Rectangle-5-+-&quot;World!&quot;" transform="translate(0.000000, 57.000000)">
                     <path d="M18.8613371,1.80856046 L1.99871056,17.5332141 L55.1386629,74.5188362 L72.0012894,58.7941826 L18.8613371,1.80856046 Z" id="Rectangle-5" stroke="#8A704D" stroke-width="2" fill="#FFF9EB"></path>
                     <text id="&quot;World!&quot;" transform="translate(40.081064, 39.767828) rotate(47.000000) translate(-40.081064, -39.767828) " font-family="OpenSans-SemiBold, Open Sans" font-size="14" font-weight="500" line-spacing="17" fill="#8A704D">
-                        <tspan x="15" y="46">"Світ!"</tspan>
+                        <tspan x="9" y="46">"Світ!"</tspan>
                     </text>
                 </g>
-                <g id="Rectangle-5-+-&quot;World!&quot;-2" transform="translate(139.643781, 49.254803) rotate(293.000000) translate(-139.643781, -49.254803) translate(102.643781, 11.254803)">
-                    <path d="M18.8613371,1.80856046 L1.99871056,17.5332141 L55.1386629,74.5188362 L72.0012894,58.7941826 L18.8613371,1.80856046 Z" id="Rectangle-5" stroke="#8A704D" stroke-width="2" fill="#FFF9EB"></path>
+                <g id="Rectangle-5-+-&quot;World!&quot;-2" transform="translate(139, 49.254803) rotate(293.000000) translate(-139.643781, -49.254803) translate(102.643781, 11.254803)">
+                    <path d="M18.8613371,1.80856046 L1.99871056,17.5332141 L57,77 L74.0012894,62 L19,1.80856046 Z" id="Rectangle-5" stroke="#8A704D" stroke-width="2" fill="#FFF9EB"></path>
                     <text id="&quot;Hello!&quot;" transform="translate(40.081064, 39.767828) rotate(47.000000) translate(-40.081064, -39.767828) " font-family="OpenSans-SemiBold, Open Sans" font-size="14" font-weight="500" line-spacing="17" fill="#8A704D">
-                        <tspan x="8" y="46.2678284">"Привіт!"</tspan>
+                        <tspan x="1" y="46.2678284">"Привіт!"</tspan>
                     </text>
                 </g>
                 <path d="M8,125 L8,179.729971 C8,183.150501 9.4836395,185 12.387122,185 L112.473443,185 C115.59502,185 118,182.4521 118,181.524372 L118,125 L8,125 L8,125 Z" id="Shape" fill="#E8C48F"></path>

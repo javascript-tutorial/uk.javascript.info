@@ -1,180 +1,180 @@
-# JavaScript specials
+# Особливості JavaScript
 
-This chapter briefly recaps the features of JavaScript that we've learned by now, paying special attention to subtle moments.
+Давайте коротко повторимо вивчений матеріал і пригадаємо ключові моменти.
 
-## Code structure
+## Структура коду
 
-Statements are delimited with a semicolon:
-
-```js run no-beautify
-alert('Hello'); alert('World');
-```
-
-Usually, a line-break is also treated as a delimiter, so that would also work:
+Інструкції розділяються крапкою з комою:
 
 ```js run no-beautify
-alert('Hello')
-alert('World')
+alert('Привіт'); alert('Світ');
 ```
 
-That's called "automatic semicolon insertion". Sometimes it doesn't work, for instance:
+Зазвичай, перенесення рядка також вважається за розділювач, тому такий варіант теж працюватиме:
+
+```js run no-beautify
+alert('Привіт')
+alert('Світ')
+```
+
+Це називається "автоматичне вставлення крапки з комою". Іноді такий варіант може не спрацювати, наприклад:
 
 ```js run
-alert("There will be an error after this message")
+alert("Після цього повідомлення буде помилка")
 
 [1, 2].forEach(alert)
 ```
 
-Most codestyle guides agree that we should put a semicolon after each statement.
+Більшість посібників по стилю коду рекомендують ставити крапку з комою після кожної інструкції.
 
-Semicolons are not required after code blocks `{...}` and syntax constructs with them like loops:
+Крапку з комою не потрібно ставити після блоків коду `{...}` та синтаксичних конструкцій з ними, наприклад, після циклів:
 
 ```js
 function f() {
-  // no semicolon needed after function declaration
+  // після оголошення функції не обов'язково ставити крапку з комою
 }
 
 for(;;) {
-  // no semicolon needed after the loop
+  // після циклу також немає потреби ставити крапку з комою
 }
 ```
 
-...But even if we can put an "extra" semicolon somewhere, that's not an error. It will be ignored.
+...Але навіть якщо ми поставимо "зайву" крапку з комою, помилки не буде. Її просто буде проігноровано.
 
-More in: <info:structure>.
+Детальніше: <info:structure>.
 
-## Strict mode
+## Суворий режим (strict mode)
 
-To fully enable all features of modern JavaScript, we should start scripts with `"use strict"`.
+Щоб задіяти усі можливості сучасної мови JavaScript, нам потрібно починати скрипти із конструкції `"use strict"`.
 
 ```js
 'use strict';
 
-...
+...// ваш код
 ```
 
-The directive must be at the top of a script or at the beginning of a function.
+Цю директиву потрібно розміщувати в першому рядку скрипта або на початку тіла функції.
 
-Without `"use strict"`, everything still works, but some features behave in the old-fashion, "compatible" way. We'd generally prefer the modern behavior.
+Без `"use strict"`, код все ще буде працювати, однак деякі можливості працюватимуть в старому режимі, так званому "режимі сумісності". Ми рекомендуємо використовувати суворий ("сучасний") режим.
 
-Some modern features of the language (like classes that we'll study in the future) enable strict mode implicitly.
+Деякі сучасні функції мови (наприклад, класи, які ми будемо вивчати в майбутньому) неявно вмикають суворий режим.
 
-More in: <info:strict-mode>.
+Детальніше: <info:strict-mode>.
 
-## Variables
+## Змінні
 
-Can be declared using:
+Можна оголошувати наступним чином:
 
 - `let`
-- `const` (constant, can't be changed)
-- `var` (old-style, will see later)
+- `const` (константа, не можна змінювати)
+- `var` (старий спосіб, ми переглянемо його пізніше)
 
-A variable name can include:
-- Letters and digits, but the first character may not be a digit.
-- Characters `$` and `_` are normal, on par with letters.
-- Non-Latin alphabets and hieroglyphs are also allowed, but commonly not used.
+Ім'я змінної може включати:
+- Літери і цифри; першим символом має бути лише літера, не цифра.
+- Допускаються символи `$` та `_`, в парі з літерами.
+- Не латинські символи, як кирилиця та ієрогліфи також допускаються, але вони не мають широкого вжитку.
 
-Variables are dynamically typed. They can store any value:
+Змінні динамічно типізовані, тобто вони змінюють свій тип в залежності від присвоєного значення. Можуть зберігати будь-які значення:
 
 ```js
-let x = 5;
-x = "John";
+let x = 5; // присвоєно тип "число"
+x = "Іван"; // тип змінився на "рядок"
 ```
 
-There are 7 data types:
+Існує 7 типів даних:
 
-- `number` for both floating-point and integer numbers,
-- `string` for strings,
-- `boolean` for logical values: `true/false`,
-- `null` -- a type with a single value `null`, meaning "empty" or "does not exist",
-- `undefined` -- a type with a single value `undefined`, meaning "not assigned",
-- `object` and `symbol` -- for complex data structures and unique identifiers, we haven't learnt them yet.
+- число (`number`) для цілих та десяткових чисел,
+- рядок (`string`) для тексту/слів,
+- булевий тип (`boolean`) для логічних значень: `true/false`,
+- `null` -- тип з єдиним значенням `null`, який означає "пусто" або "не існує",
+- `undefined` -- тип з єдиним значенням `undefined`, який означає "не присвоєно",
+- об'єкт (`object`) та символ (`symbol`) -- для складних структур даних та унікальних ідентифікаторів, ми їх ще не вивчили.
 
-The `typeof` operator returns the type for a value, with two exceptions:
+Оператор `typeof` повертає тип змінної, за винятком двох випадків:
 ```js
-typeof null == "object" // error in the language
-typeof function(){} == "function" // functions are treated specially
+typeof null == "object" // помилка в мові
+typeof function(){} == "function" // спеціально для функцій
 ```
 
-More in: <info:variables> and <info:types>.
+Детальніше: <info:variables> та <info:types>.
 
-## Interaction
+## Взаємодія
 
-We're using a browser as a working environment, so basic UI functions will be:
+Ми використовуємо браузер у ролі робочого середовища, тому для взаємодії з відвідувачами ми використовуємо функції:
 
 [`prompt(question, [default])`](mdn:api/Window/prompt)
-: Ask a `question`, and return either what the visitor entered or `null` if they clicked "cancel".
+: Задає питання (`question`), а потім повертає те, що ввів відвідувач, або `null`, якщо відвідувач натиснув кнопку "Скасувати".
 
 [`confirm(question)`](mdn:api/Window/confirm)
-: Ask a `question` and suggest to choose between Ok and Cancel. The choice is returned as `true/false`.
+: Задає питання (`question`) і пропонує відвідувачу вибрати "ОК" або "Скасувати". Вибір повертається як `true/false`.
 
 [`alert(message)`](mdn:api/Window/alert)
-: Output a `message`.
+: Виводить повідомлення (`message`).
 
-All these functions are *modal*, they pause the code execution and prevent the visitor from interacting with the page until they answer.
+Всі ці функції показують *модальне вікно*; вони зупиняють виконання скрипта і не дають користувачеві взаємодіяти зі сторінкою доки не буде надана відповідь.
 
-For instance:
+Наприклад:
 
 ```js run
-let userName = prompt("Your name?", "Alice");
-let isTeaWanted = confirm("Do you want some tea?");
+let userName = prompt("Ваше ім'я?", "Настя");
+let isBunWanted = confirm("Хочете булочку?");
 
-alert( "Visitor: " + userName ); // Alice
-alert( "Tea wanted: " + isTeaWanted ); // true
+alert( "Відвідувач: " + userName ); // Настя
+alert( "Хоче булочку: " + isBunWanted ); // true
 ```
 
-More in: <info:alert-prompt-confirm>.
+Детальніше: <info:alert-prompt-confirm>.
 
-## Operators
+## Оператори
 
-JavaScript supports the following operators:
+JavaScript підтримує такі оператори:
 
-Arithmetical
-: Regular: `* + - /`, also `%` for the remainder and `**` for power of a number.
+Арифметичні
+: Звичайні: `* + - /`, а також оператори `%`, для визначення остачі від ділення та `**` для піднесення до степеня.
 
-    The binary plus `+` concatenates strings. And if any of the operands is a string, the other one is converted to string too:
+    Бінарний плюс `+` об'єднує (конкатинує) рядки. А якщо одним із операндів буде рядок, то інший операнд також буде конвертовано в рядок:
 
     ```js run
-    alert( '1' + 2 ); // '12', string
-    alert( 1 + '2' ); // '12', string
+    alert( '1' + 2 ); // '12', рядок
+    alert( typeof ( 1 + '2' ) ); // string
     ```
 
-Assignments
-: There is a simple assignment: `a = b` and combined ones like `a *= 2`.
+Оператори присвоєння
+: Звичайне присвоєння: `a = b` і складені `a *= 2`.
 
-Bitwise
-: Bitwise operators work with 32-bit integers at the lowest, bit-level: see the [docs](mdn:/JavaScript/Reference/Operators/Bitwise_Operators) when they are needed.
+Бітові операції
+: Бітові оператори працюють з 32-бітними цілими числами на найнижчому, побітовому, рівні. Детальніше про їхнє використання можна прочитати на ресурсі [MDN](mdn:/JavaScript/Reference/Operators/Bitwise_Operators).
 
-Conditional
-: The only operator with three parameters: `cond ? resultA : resultB`. If `cond` is truthy, returns `resultA`, otherwise `resultB`.
+Умовний оператор
+: Єдиний оператор з трьома параметрами: `cond ? resultA : resultB`. Якщо `cond` вірно, повертається `resultA`, інакше – `resultB`.
 
-Logical operators
-: Logical AND `&&` and OR `||` perform short-circuit evaluation and then return the value where it stopped. Logical NOT `!` converts the operand to boolean type and returns the inverse value.
+Логічні оператори
+: Логічні І `&&` та АБО `||` використовують так звані "ледачі обчислення" і насамкінець повертають `true` або `false`. Логічне НЕ `!` конвертує операнд в логічний тип і повертає інвертоване значення.
 
-Comparisons
-: Equality check `==` for values of different types converts them to a number (except `null` and `undefined` that equal each other and nothing else), so these are equal:
+Порівнювання
+: Перевірка на рівність `==` для значень різних типів, конвертує їх в число (за винятком `null` і `undefined`, які рівні тільки один одному і нічому іншому), тому приклади нижче рівні:
 
     ```js run
     alert( 0 == false ); // true
     alert( 0 == '' ); // true
     ```
 
-    Other comparisons convert to a number as well.
+    Інші оператори порівнювання також конвертують значення в числовий тип.
 
-    The strict equality operator `===` doesn't do the conversion: different types always mean different values for it.
+    Оператор строгої рівності `===` не виконує конвертацію: різні типи для нього завжди означають різні значення.
 
-    Values `null` and `undefined` are special: they equal `==` each other and don't equal anything else.
+    Значення `null` та `undefined` особливі: вони рівні `==` лише самим собі і не рівні нічому іншому.
 
-    Greater/less comparisons compare strings character-by-character, other types are converted to a number.
+    Оператори порівнювання більше/менше порівнюють рядки посимвольно, інші типи конвертуються в число.
 
-Other operators
-: There are few others, like a comma operator.
+Інші оператори
+: Існують й інші оператори, такі як кома.
 
-More in: <info:operators>, <info:comparison>, <info:logical-operators>.
+Детальніше: <info:operators>, <info:comparison>, <info:logical-operators>.
 
-## Loops
+## Цикли
 
-- We covered 3 types of loops:
+- Ми вивчили 3 типи циклів:
 
     ```js
     // 1
@@ -193,42 +193,42 @@ More in: <info:operators>, <info:comparison>, <info:logical-operators>.
     }
     ```
 
-- The variable declared in `for(let...)` loop is visible only inside the loop. But we can also omit `let` and reuse an existing variable.
-- Directives `break/continue` allow to exit the whole loop/current iteration. Use labels to break nested loops.
+- Змінна, оголошена в циклі `for(let...)`, видима лише в циклі. Але ми також можемо опустити `let` і перевикористовувати існуючу змінну.
+- Директиви `break/continue` дозволяють вийти з циклу/поточної ітерації. Використовуйте мітки для виходу із вкладених циклів.
 
-Details in: <info:while-for>.
+Детальніше: <info:while-for>.
 
-Later we'll study more types of loops to deal with objects.
+Пізніше ми вивчимо більше видів циклів, які працюють з об'єктами.
 
-## The "switch" construct
+## Конструкція "switch"
 
-The "switch" construct can replace multiple `if` checks. It uses `===` (strict equality) for comparisons.
+Конструкція "switch" може замінити декілька перевірок `if`. Для порівняння, ця конструкція використовує оператор строгого порівняння `===`.
 
-For instance:
+Наприклад:
 
 ```js run
-let age = prompt('Your age?', 18);
+let age = prompt('Скільки вам років?', 18);
 
 switch (age) {
   case 18:
-    alert("Won't work"); // the result of prompt is a string, not a number
+    alert("Не запрацює"); // результатом prompt є рядок, а не число
 
   case "18":
-    alert("This works!");
+    alert("А так запрацює!");
     break;
 
   default:
-    alert("Any value not equal to one above");
+    alert("Будь-яке значення, нерівне значенням вище");
 }
 ```
 
-Details in: <info:switch>.
+Детальніше: <info:switch>.
 
-## Functions
+## Функції
 
-We covered three ways to create a function in JavaScript:
+Ми розглянули три способи створення функції в JavaScript:
 
-1. Function Declaration: the function in the main code flow
+1. Function Declaration: функція в основному потоці коду
 
     ```js
     function sum(a, b) {
@@ -238,7 +238,7 @@ We covered three ways to create a function in JavaScript:
     }
     ```
 
-2. Function Expression: the function in the context of an expression
+2. Function Expression: функція як частина виразу
 
     ```js
     let sum = function(a, b) {
@@ -248,40 +248,32 @@ We covered three ways to create a function in JavaScript:
     };
     ```
 
-    Function expressions can have a name, like `sum = function name(a, b)`, but that `name` is only visible inside that function.
-
-3. Arrow functions:
+3. Стрілкові функції:
 
     ```js
-    // expression at the right side
+    // вираз в правій частині
     let sum = (a, b) => a + b;
 
-    // or multi-line syntax with { ... }, need return here:
+    // багаторядковий код в фігурних дужках { ... }, тут потрібен return:
     let sum = (a, b) => {
       // ...
       return a + b;
     }
 
-    // without arguments
-    let sayHi = () => alert("Hello");
+    // без аргументів
+    let sayHi = () => alert("Привіт");
 
-    // with a single argument
+    // з одним аргументом
     let double = n => n * 2;
     ```
 
 
-- Functions may have local variables: those declared inside its body. Such variables are only visible inside the function.
-- Parameters can have default values: `function sum(a = 1, b = 2) {...}`.
-- Functions always return something. If there's no `return` statement, then the result is `undefined`.
+- У функцій можуть бути локальні змінні: тобто ті, які оголошені в тілі функції. Такі змінні видимі лише всередині функції.
+- Параметри можуть мати усталені значення: `function sum(a = 1, b = 2) {...}`.
+- Функції завжди щось повертають. Якщо всередині функції немає оператора `return`, тоді вона поверне `undefined`.
 
+Детальніше: дивіться <info:function-basics>, <info:function-expressions-arrows>.
 
-| Function Declaration | Function Expression |
-|----------------------|---------------------|
-| visible in the whole code block/script | created when the execution reaches it |
-|    | can have a name, visible only inside the function |
+## Ми вивчемо більше
 
-More: see <info:function-basics>, <info:function-expressions-arrows>.
-
-## More to come
-
-That was a brief list of JavaScript features. As of now we've studied only basics. Further in the tutorial you'll find more specials and advanced features of JavaScript.
+Це був короткий перелік можливостей JavaScript. Цієї миті ми вивчили лише основи. Далі в посібнику ви знайдете більше особливостей і просунутих можливостей JavaScript.

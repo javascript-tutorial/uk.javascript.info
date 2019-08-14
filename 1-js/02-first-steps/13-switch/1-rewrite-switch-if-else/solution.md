@@ -4,7 +4,7 @@
 
 ```js no-beautify
 if(browser == 'Edge') {
-  alert("У вас браузер Edge!");
+  alert("You've got the Edge!");
 } else if (browser == 'Chrome'
  || browser == 'Firefox'
  || browser == 'Safari'
