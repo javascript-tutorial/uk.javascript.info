@@ -1,14 +1,14 @@
-# The "switch" statement
+# Конструкція "switch"
 
-A `switch` statement can replace multiple `if` checks.
+Конструкція `switch` може замінити кілька `if`.
 
-It gives a more descriptive way to compare a value with multiple variants.
+Вона дає можливість більш наочного способу порівняння значення відразу з кількома варіантами.
 
-## The syntax
+## Синтаксис
 
-The `switch` has one or more `case` blocks and an optional default.
+Конструкція `switch` має один або більше `case` блоків та необов'язковий блок `default`.
 
-It looks like this:
+Вона виглядає так:
 
 ```js no-beautify
 switch(x) {
@@ -26,71 +26,71 @@ switch(x) {
 }
 ```
 
-- The value of `x` is checked for a strict equality to the value from the first `case` (that is, `value1`) then to the second (`value2`) and so on.
-- If the equality is found, `switch` starts to execute the code starting from the corresponding `case`, until the nearest `break` (or until the end of `switch`).
-- If no case is matched then the `default` code is executed (if it exists).
+- Значення змінної `x` перевіряється на строгу рівність (===) значенню із першого блоку `case` (яке дорівнює `value1`), потім значенню із другого блоку (`value2`) і так далі.
+- Якщо строго рівне значення знайдено, то `switch` починає виконання коду із відповідного `case` до найближчого `break` або до кінця всієї конструкції `switch`.
+- Якщо жодне `case`-значення не збігається - виконується код із блоку `default` (якщо він присутній).
 
-## An example
+## Приклад роботи
 
-An example of `switch` (the executed code is highlighted):
-
-```js run
-let a = 2 + 2;
-
-switch (a) {
-  case 3:
-    alert( 'Too small' );
-    break;
-*!*
-  case 4:
-    alert( 'Exactly!' );
-    break;
-*/!*
-  case 5:
-    alert( 'Too large' );
-    break;
-  default:
-    alert( "I don't know such values" );
-}
-```
-
-Here the `switch` starts to compare `a` from the first `case` variant that is `3`. The match fails.
-
-Then `4`. That's a match, so the execution starts from `case 4` until the nearest `break`.
-
-**If there is no `break` then the execution continues with the next `case` without any checks.**
-
-An example without `break`:
+Приклад використання `switch` (код який буде виконаний виділено):
 
 ```js run
 let a = 2 + 2;
 
 switch (a) {
   case 3:
-    alert( 'Too small' );
+    alert( 'Замало' );
+    break;
 *!*
   case 4:
-    alert( 'Exactly!' );
+    alert( 'Точнісінько!' );
+    break;
+*/!*
   case 5:
-    alert( 'Too big' );
+    alert( 'Забагато' );
+    break;
   default:
-    alert( "I don't know such values" );
+    alert( 'Я не знаю таких значень' );
+}
+```
+
+Тут `switch` починає порівнювати `a` з першим варіантом із `case`, який дорівнює `3`. Це не відповідає `a`.
+
+Потім з другим, який дорівнює `4`. Цей варіант відповідає `a`, таким чином буде виконано код з `case 4` до найближчого `break`.
+
+**Якщо `break` відсутній, то буде продовжено виконання коду по наступним блокам `case` без перевірок.**
+
+Приклад без `break`:
+
+```js run
+let a = 2 + 2;
+
+switch (a) {
+  case 3:
+    alert( 'Замало' );
+*!*
+  case 4:
+    alert( 'Точнісінько!' );
+  case 5:
+    alert( 'Забагато' );
+  default:
+    alert( 'Я не знаю таких значень' );
 */!*
 }
 ```
 
-In the example above we'll see sequential execution of three `alert`s:
+В прикладі вище ми бачимо послідовне виконання трьох `alert`:
 
 ```js
-alert( 'Exactly!' );
-alert( 'Too big' );
-alert( "I don't know such values" );
+alert( 'Точнісінько!' );
+alert( 'Забагато' );
+alert( 'Я не знаю таких значень' );
 ```
 
 ````smart header="Any expression can be a `switch/case` argument"
-Both `switch` and `case` allow arbitrary expressions.
+Обидва `switch` та `case` допускають будь-який вираз в якості аргументу.
 
-For example:
+Наприклад:
 
 ```js run
 let a = "1";
@@ -99,74 +99,74 @@ let b = 0;
 switch (+a) {
 *!*
   case b + 1:
-    alert("this runs, because +a is 1, exactly equals b+1");
+    alert("виконано це, бо +a це 1, що строго дорівнює b + 1");
     break;
 */!*
 
   default:
-    alert("this doesn't run");
+    alert("це не буде виконано");
 }
 ```
-Here `+a` gives `1`, that's compared with `b + 1` in `case`, and the corresponding code is executed.
+Тут значення виразу `+a` буде `1`, що збігається з значенням виразу `b + 1` із блоку `case`, таким чином код із цього блоку буде виконано.
 ````
 
-## Grouping of "case"
+## Групування "case"
 
-Several variants of `case` which share the same code can be grouped.
+Кілька варіантів блоку `case`, які використовують однаковий код, можуть бути згруповані.
 
-For example, if we want the same code to run for `case 3` and `case 5`:
+Наприклад, якщо ми бажаємо виконати один і той самий код для `case 3` та `case 5`:
 
 ```js run no-beautify
 let a = 2 + 2;
 
 switch (a) {
   case 4:
-    alert('Right!');
+    alert('Вірно!');
     break;
 
 *!*
-  case 3: // (*) grouped two cases
+  case 3: // (*) групуємо два блоки `case`
   case 5:
-    alert('Wrong!');
-    alert("Why don't you take a math class?");
+    alert('Невірно!');
+    alert("Можливо вам варто відвідати урок математики?");
     break;
 */!*
 
   default:
-    alert('The result is strange. Really.');
+    alert('Результат виглядає дивно. Дійсно.');
 }
 ```
 
-Now both `3` and `5` show the same message.
+Тепер обидва варіанти `3` та `5` виводять однакове повідомлення.
 
-The ability to "group" cases is a side-effect of how `switch/case` works without `break`. Here the execution of `case 3` starts from the line `(*)` and goes through `case 5`, because there's no `break`.
+Можливість групування блоків `case` - це побічний ефект того, як `switch/case` працює без `break`. Тут виконання коду `case 3` починається з рядка `(*)` та проходить через `case 5`, бо немає `break`.
 
-## Type matters
+## Тип має значення
 
-Let's emphasize that the equality check is always strict. The values must be of the same type to match.
+Необхідно наголосити, що перевірка відповідності є завжди строгою. Значення повинні бути однакового типу аби вони збігалися.
 
-For example, let's consider the code:
+Наприклад, розглянемо наступний код:
 
 ```js run
-let arg = prompt("Enter a value?");
+let arg = prompt("Введіть значення?");
 switch (arg) {
   case '0':
   case '1':
-    alert( 'One or zero' );
+    alert( 'Один або нуль' );
     break;
 
   case '2':
-    alert( 'Two' );
+    alert( 'Два' );
     break;
 
   case 3:
-    alert( 'Never executes!' );
+    alert( 'Ніколи не буде виконано!' );
     break;
   default:
-    alert( 'An unknown value' );
+    alert( 'Невідоме значення' );
 }
 ```
 
-1. For `0`, `1`, the first `alert` runs.
-2. For `2` the second `alert` runs.
-3. But for `3`, the result of the `prompt` is a string `"3"`, which is not strictly equal `===` to the number `3`. So we've got a dead code in `case 3`! The `default` variant will execute.
+1. Для `0` та `1` буде виконано перший `alert`.
+2. Для `2` - другий `alert`.
+3. Але для `3`: результат виконання `prompt` є строкове значення `"3"`, яке строго не дорівнює `===` числу `3`. Таким чином ми маємо "мертвий код" в блоці `case 3`! Буде виконано код блоку `default`.
