@@ -2,9 +2,9 @@ importance: 4
 
 ---
 
-# Rewrite "if" into "switch"
+# Перепишіть умови "if" в конструкцію "switch"
 
-Rewrite the code below using a single `switch` statement:
+Перепишіть код нижче використовуючи одну конструкцію `switch`:
 
 ```js run
 let a = +prompt('a?', '');
