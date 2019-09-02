@@ -148,8 +148,13 @@ JavaScript підтримує такі оператори:
 Умовний оператор
 : Єдиний оператор з трьома параметрами: `cond ? resultA : resultB`. Якщо `cond` вірно, повертається `resultA`, інакше – `resultB`.
 
+<<<<<<< HEAD
 Логічні оператори
 : Логічні І `&&` та АБО `||` використовують так звані "ледачі обчислення" і насамкінець повертають `true` або `false`. Логічне НЕ `!` конвертує операнд в логічний тип і повертає інвертоване значення.
+=======
+Logical operators
+: Logical AND `&&` and OR `||` perform short-circuit evaluation and then return the value where it stopped (not necessary `true`/`false`). Logical NOT `!` converts the operand to boolean type and returns the inverse value.
+>>>>>>> c4d1987ebc470b30c234dbde6fac6e77b7509927
 
 Порівнювання
 : Перевірка на рівність `==` для значень різних типів, конвертує їх в число (за винятком `null` і `undefined`, які рівні тільки один одному і нічому іншому), тому приклади нижче рівні:
