@@ -119,7 +119,7 @@ The method [arr.slice](mdn:js/Array/slice) is much simpler than similar-looking 
 The syntax is:
 
 ```js
-arr.slice(start, end)
+arr.slice([start], [end])
 ```
 
 It returns a new array copying to it all items from index `start` to `end` (not including `end`). Both `start` and `end` can be negative, in that case position from array end is assumed.
@@ -135,6 +135,8 @@ alert( arr.slice(1, 3) ); // e,s (copy from 1 to 3)
 
 alert( arr.slice(-2) ); // s,t (copy from -2 till the end)
 ```
+
+We can also call it without arguments: `arr.slice()` creates a copy of `arr`. That's often used to obtain a copy for further transformations that should not affect the original array.
 
 ### concat
 
@@ -653,31 +655,37 @@ arr.map(func, thisArg);
 
 The value of `thisArg` parameter becomes `this` for `func`.
 
-For instance, here we use an object method as a filter and `thisArg` helps with that:
+For example, here we use a method of `army` object as a filter, and `thisArg` passes the context:
 
 ```js run
-let user = {
-  age: 18,
-  younger(otherUser) {
-    return otherUser.age < this.age;
+let army = {
+  minAge: 18,
+  maxAge: 27,
+  canJoin(user) {
+    return user.age >= this.minAge && user.age < this.maxAge;
   }
 };
 
 let users = [
-  {age: 12},
   {age: 16},
-  {age: 32}
+  {age: 20},
+  {age: 23},
+  {age: 30}
 ];
 
 *!*
-// find all users younger than user
-let youngerUsers = users.filter(user.younger, user);
+// find users, for who army.canJoin returns true
+let soldiers = users.filter(army.canJoin, army);
 */!*
 
-alert(youngerUsers.length); // 2
+alert(soldiers.length); // 2
+alert(soldiers[0].age); // 20
+alert(soldiers[1].age); // 23
 ```
 
-In the call above, we use `user.younger` as a filter and also provide `user` as the context for it. If we didn't provide the context, `users.filter(user.younger)` would call `user.younger` as a standalone function, with `this=undefined`. That would mean an instant error.
+If in the example above we used `users.filter(army.canJoin)`, then `army.canJoin` would be called as a standalone function, with `this=undefined`, thus leading to an instant error.
+
+A call to `users.filter(army.canJoin, army)` can be replaced with `users.filter(user => army.canJoin(user))`, that does the same. The former is used more often, as it's a bit easier to understand for most people.
 
 ## Summary
 

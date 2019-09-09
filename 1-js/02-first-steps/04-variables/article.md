@@ -12,7 +12,11 @@
 
 Щоб створити змінну, використовуйте ключове слово `let`.
 
+<<<<<<< HEAD
 Цей рядок нижче створить (іншими словами *оголосить* чи *визначить*) змінну з ім'ям "message":
+=======
+The statement below creates (in other words: *declares*) a variable with the name "message":
+>>>>>>> 3dd8ca09c1a7ed7a7b04eefc69898559902478e1
 
 ```js
 let message;

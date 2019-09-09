@@ -2,13 +2,13 @@
 
 Imagine that you're a top singer, and fans ask day and night for your upcoming single.
 
-To get some relief, you promise to send it to them when it's published. You give your fans a list. They can fill in their email addresses, so that when the song becomes available, all subscribed parties instantly receive it. And even if something goes very wrong, say, fire in the studio, so that you can't publish the song, they will still be notified.
+To get some relief, you promise to send it to them when it's published. You give your fans a list. They can fill in their email addresses, so that when the song becomes available, all subscribed parties instantly receive it. And even if something goes very wrong, say, a fire in the studio, so that you can't publish the song, they will still be notified.
 
-Everyone is happy, because the people don't crowd you anymore, and fans, because they won't miss the single.
+Everyone is happy: you, because the people don't crowd you anymore, and fans, because they won't miss the single.
 
 This is a real-life analogy for things we often have in programming:
 
-1. A "producing code" that does something and takes time. For instance, the code loads data over a network. That's a "singer".
+1. A "producing code" that does something and takes time. For instance, a code that loads the data over a network. That's a "singer".
 2. A "consuming code" that wants the result of the "producing code" once it's ready. Many functions  may need that result. These are the "fans".
 3. A *promise* is a special JavaScript object that links the "producing code" and the "consuming code" together. In terms of our analogy: this is the "subscription list". The "producing code" takes whatever time it needs to produce the promised result, and the "promise" makes that result available to all of the subscribed code when it's ready.
 
@@ -22,9 +22,9 @@ let promise = new Promise(function(resolve, reject) {
 });
 ```
 
-The function passed to `new Promise` is called the *executor*. When the promise is created, it runs automatically. It contains the producing code, that should eventually produce a result. In terms of the analogy above: the executor is the "singer".
+The function passed to `new Promise` is called the *executor*. When `new Promise` is created, it runs automatically. It contains the producing code, that should eventually produce a result. In terms of the analogy above: the executor is the "singer".
 
-Its arguments `resolve` and `reject` are callbacks provided by JavaScript itself. Our code is only inside executor.
+Its arguments `resolve` and `reject` are callbacks provided by JavaScript itself. Our code is only inside the executor.
 
 When the executor obtains the result, be it soon or late - doesn't matter, it should call one of these callbacks:
 
@@ -38,13 +38,13 @@ The `promise` object returned by `new Promise` constructor has internal properti
 - `state` — initially `"pending"`, then changes to either `"fulfilled"` when `resolve` is called or `"rejected"` when `reject` is called.
 - `result` — initially `undefined`, then changes to `value` when `resolve(value)` called or `error` when `reject(error)` is called.
 
-So the executor moves `promise` to one of these states:
+So the executor eventually moves `promise` to one of these states:
 
 ![](promise-resolve-reject.svg)
 
 Later we'll see how "fans" can subscribe to these changes.
 
-Here's an example of a Promise constructor and a simple executor function with delayed "producing code" (via `setTimeout`):
+Here's an example of a promise constructor and a simple executor function with  "producing code" that takes time (via `setTimeout`):
 
 ```js run
 let promise = new Promise(function(resolve, reject) {
@@ -57,12 +57,12 @@ let promise = new Promise(function(resolve, reject) {
 
 We can see two things by running the code above:
 
-1. The executor is called automatically and immediately (by the `new Promise`).
+1. The executor is called automatically and immediately (by `new Promise`).
 2. The executor receives two arguments: `resolve` and `reject` — these functions are pre-defined by the JavaScript engine. So we don't need to create them. We only should call one of them when ready.
 
-After one second of "processing" the executor calls `resolve("done")` to produce the result:
+    After one second of "processing" the executor calls `resolve("done")` to produce the result. This changes the state of the `promise` object:
 
-![](promise-resolve-1.svg)
+    ![](promise-resolve-1.svg)
 
 That was an example of a successful job completion, a "fulfilled promise".
 
@@ -75,14 +75,16 @@ let promise = new Promise(function(resolve, reject) {
 });
 ```
 
+The call to `reject(...)` moves the promise object to `"rejected"` state:
+
 ![](promise-reject-1.svg)
 
-To summarize, the executor should do a job (something that takes time usually) and then call `resolve` or `reject` to change the state of the corresponding Promise object.
+To summarize, the executor should do a job (something that takes time usually) and then call `resolve` or `reject` to change the state of the corresponding promise object.
 
-The Promise that is either resolved or rejected is called "settled", as opposed to a initially "pending" Promise.
+A promise that is either resolved or rejected is called "settled", as opposed to a initially "pending" promise.
 
 ````smart header="There can be only a single result or an error"
-The executor should call only one `resolve` or one `reject`. The promise's state change is final.
+The executor should call only one `resolve` or one `reject`. Any state change is final.
 
 All further calls of `resolve` and `reject` are ignored:
 
@@ -103,7 +105,7 @@ Also, `resolve`/`reject` expect only one argument (or none) and will ignore addi
 ````
 
 ```smart header="Reject with `Error` objects"
-In case something goes wrong, we must call `reject`. That can be done with any type of argument (just like `resolve`). But it is recommended to use `Error` objects (or objects that inherit from `Error`). The reasoning for that will soon become apparent.
+In case something goes wrong, the executor should call `reject`. That can be done with any type of argument (just like `resolve`). But it is recommended to use `Error` objects (or objects that inherit from `Error`). The reasoning for that will soon become apparent.
 ```
 
 ````smart header="Immediately calling `resolve`/`reject`"

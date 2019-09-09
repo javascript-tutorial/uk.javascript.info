@@ -147,7 +147,7 @@ countUser(john);
 john = null;
 ```
 
-Now `john` object should be garbage collected, but remains is memory, as it's a key in `visitsCountMap`.
+Now `john` object should be garbage collected, but remains in memory, as it's a key in `visitsCountMap`.
 
 We need to clean `visitsCountMap` when we remove users, otherwise it will grow in memory indefinitely. Such cleaning can become a tedious task in complex architectures.
 
@@ -155,7 +155,7 @@ We can avoid it by switching to `WeakMap` instead:
 
 ```js
 // 📁 visitsCount.js
-let visitsCountMap = new WeakMap(); // map: user => visits count
+let visitsCountMap = new WeakMap(); // weakmap: user => visits count
 
 // increase the visits count
 function countUser(user) {
@@ -164,7 +164,7 @@ function countUser(user) {
 }
 ```
 
-Now we don't have to clean `visitsCountMap`. After `john` object becomes unreachable by all means except as a key of `WeakMap`, it gets removed from memory, along with the   information by that key from `WeakMap`.
+Now we don't have to clean `visitsCountMap`. After `john` object becomes unreachable by all means except as a key of `WeakMap`, it gets removed from memory, along with the information by that key from `WeakMap`.
 
 ## Use case: caching
 
@@ -284,6 +284,6 @@ The most notable limitation of `WeakMap` and `WeakSet` is the absence of iterati
 
 `WeakSet` is `Set`-like collection that stores only objects and removes them once they become inaccessible by other means.
 
-Both of them do not support methods and properties that refer to all keys or their count. Only individial operations are allowed.
+Both of them do not support methods and properties that refer to all keys or their count. Only individual operations are allowed.
 
 `WeakMap` and `WeakSet` are used as "secondary" data structures in addition to the "main" object storage. Once the object is removed from the main storage, if it is only found as the key of `WeakMap` or in a `WeakSet`, it will be cleaned up automatically.

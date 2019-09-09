@@ -356,7 +356,7 @@ The problem is that JavaScript treats `{...}` in the main code flow (not inside 
 }
 ```
 
-So here JavaScript assumes that we have a code block, but why there's an error. We have destructuring instead.
+So here JavaScript assumes that we have a code block, that's why there's an error. We have destructuring instead.
 
 To show JavaScript that it's not a code block, we can wrap the expression in parentheses `(...)`:
 
@@ -403,7 +403,7 @@ alert(item1);  // Cake
 alert(item2);  // Donut
 ```
 
-The whole `options` object except `extra` that was not mentioned, is assigned to corresponding variables:
+All properties of `options` object except `extra` that is absent in the left part, are assigned to corresponding variables:
 
 ![](destructuring-complex.svg)
 

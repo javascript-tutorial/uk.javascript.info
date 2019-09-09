@@ -26,7 +26,11 @@
     alert( y - x ); // 2, бінарний мінус віднімає значення
     ```
 
+<<<<<<< HEAD
     Формально, ми говоримо про два різні оператори: унарне заперечення (єдиний операнд: змінює знак) та бінарне віднімання (два операнди: віднімає).
+=======
+    Formally, in the examples above we have two different operators that share the same symbol: the negation operator, a unary operator that reverses the sign, and the subtraction operator, a binary operator that subtracts one number from another.
+>>>>>>> 3dd8ca09c1a7ed7a7b04eefc69898559902478e1
 
 ## Об'єднання рядків, бінарний +
 

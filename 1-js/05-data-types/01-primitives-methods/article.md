@@ -50,7 +50,11 @@ john.sayHi(); // Привіт друже!
 
 Для кожного примітиву створюється своя "обгортка": `String`, `Number`, `Boolean` та `Symbol`. Отже, вони містять різні набори методів.
 
+<<<<<<< HEAD
 Наприклад: існує метод [str.toUpperCase()](https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) якій повертає рядок з великими літерами. 
+=======
+For instance, there exists a string method [str.toUpperCase()](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) that returns a capitalized `str`.
+>>>>>>> 3dd8ca09c1a7ed7a7b04eefc69898559902478e1
 
 Ось як він працює:
 
