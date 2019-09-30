@@ -60,7 +60,11 @@
     //--></script>
     ```
 
+<<<<<<< HEAD
     Такий спосіб не використовується у сучасному JavaScript. Ці коментарі ховали JavaScript для старих браузерів, які не знали, як обробляти тег `<script>`. Ті браузери, які були випущені за останні 15 років, не мають цієї проблеми. Такий вид коментарів означає що це дійсно старий код.
+=======
+    This trick isn't used in modern JavaScript. These comments hide JavaScript code from old browsers that didn't know how to process the `<script>` tag. Since browsers released in the last 15 years don't have this issue, this kind of comment can help you identify really old code.
+>>>>>>> 0e4f5e425aff4a9767546f75b378ad4a2a2493ea
 
 
 ## Зовнішні скрипти

@@ -237,7 +237,11 @@ num = 5; // помилка: num не оголошено
 const myBirthday = '18.04.1982';
 ```
 
+<<<<<<< HEAD
 Змінні, оголошені за допомогою `const`, називаються "константами". Їх неможна змінити. Спроба це зробити призведе до помилки:
+=======
+Variables declared using `const` are called "constants". They cannot be reassigned. An attempt to do so would cause an error:
+>>>>>>> 0e4f5e425aff4a9767546f75b378ad4a2a2493ea
 
 ```js run
 const myBirthday = '18.04.1982';
