@@ -1,84 +1,85 @@
-# Function expressions and arrows
+# Функціональні вирази та стрілкові функції
 
-In JavaScript, a function is not a "magical language structure", but a special kind of value.
+Для JavaScript функція -- це не "магічна мовна структура", a значення особливого гатунку.
 
-The syntax that we used before is called a *Function Declaration*:
+Синтаксис, що ми раніще використовували, називається [*Оголошення Функції*](https://developer.mozilla.org/uk/docs/Web/JavaScript/Guide/Functions#Оголошення_функції) (Function Declaration):
 
 ```js
 function sayHi() {
-  alert( "Hello" );
+  alert( "Привіт" );
 }
 ```
 
-There is another syntax for creating a function that is called a *Function Expression*.
+Існує й інший синтаксис для створення фукції, що називають
+ [*Функціональним Виразом*](https://developer.mozilla.org/uk/docs/Web/JavaScript/Guide/Functions#Функціональні_вирази) (Function Expression).
 
-It looks like this:
+Він виглядає так:
 
 ```js
 let sayHi = function() {
-  alert( "Hello" );
+  alert( "Привіт" );
 };
 ```
 
-Here, the function is created and assigned to the variable explicitly, like any other value. No matter how the function is defined, it's just a value stored in the variable `sayHi`.
+У коді вище функція створюється і явно присвоюється змінній, як і будь-яке інше значення. Не важливо яким чином була визначена функція, це лише значення, що збережене в змінній `sayHi`.
 
-The meaning of these code samples is the same: "create a function and put it into the variable `sayHi`".
+Зміст обох прикладів коду однаковий: "створити функцію і покласти її значення в змінну `sayHi`".
 
-We can even print out that value using `alert`:
+Ми навіть можемо вивести це значення використовуючи `alert`:
 
 ```js run
 function sayHi() {
-  alert( "Hello" );
+  alert( "Привіт" );
 }
 
 *!*
-alert( sayHi ); // shows the function code
+alert( sayHi ); // показує код функції
 */!*
 ```
 
-Please note that the last line does not run the function, because there are no parentheses after `sayHi`. There are programming languages where any mention of a function name causes its execution, but JavaScript is not like that.
+Зауважте, що останній рядок не викликає функцію тому, що після `sayHi` немає дужок. Існують мови програмування, в яких будь-яке звертання до імені функції спричиняє її виконання, але JavaScript -- не одна з них.
 
-In JavaScript, a function is a value, so we can deal with it as a value. The code above shows its string representation, which is the source code.
+У JavaScript функція -- це значення, тому ми можемо поводитись з нею, як і з іншими значеннями. Код вище показує її рядкове представлення -- вихідний код.
 
-Surely, a function is a special value, in the sense that we can call it like `sayHi()`.
+Звичайно, функція -- особливе значення, у тому сенсі, що ми можемо здійснити її виклик за допомогою дужок: `sayHi()`.
 
-But it's still a value. So we can work with it like with other kinds of values.
+Але це все-таки значення. Тому ми можемо працювати з нею, як і з іншими значеннями.
 
-We can copy a function to another variable:
+Скажімо, ми можемо скопіювати функцію в іншу змінну:
 
 ```js run no-beautify
-function sayHi() {   // (1) create
-  alert( "Hello" );
+function sayHi() {   // (1) створюємо
+  alert( "Привіт" );
 }
 
-let func = sayHi;    // (2) copy
+let func = sayHi;    // (2) копіюємо
 
-func(); // Hello     // (3) run the copy (it works)!
-sayHi(); // Hello    //     this still works too (why wouldn't it)
+func(); // Привіт     // (3) викликаємо копію (працює!)
+sayHi(); // Привіт    //     ось так теж спрацює (а чому ні?)
 ```
 
-Here's what happens above in detail:
+Розглянемо детально, що тут відбулось:
 
-1. The Function Declaration `(1)` creates the function and puts it into the variable named `sayHi`.
-2. Line `(2)` copies it into the variable `func`. Please note again: there are no parentheses after `sayHi`. If there were, then `func = sayHi()` would write  *the result of the call* `sayHi()` into `func`, not *the function* `sayHi` itself.
-3. Now the function can be called as both `sayHi()` and `func()`.
+1. Оголошення Функції `(1)` створює саму функцію і кладе її значення у змінну `sayHi`.
+2. Рядок `(2)` копіює це значення в змінну `func`. Ще раз зауважте: після `sayHi` немає дужок. Якби вони там були, тоді `func = sayHi()` записав би *результат виклику* `sayHi()` у `func`,а не *саму функцію* `sayHi`.
+3. Тепер ми можемо викликати функцію двома шляхами: `sayHi()` або `func()`.
 
-Note that we could also have used a Function Expression to declare `sayHi`, in the first line:
+Зауважте, що ми могли також використати Функціональний Вираз у першому рядку, щоб визначити `sayHi`:
 
 ```js
 let sayHi = function() {
-  alert( "Hello" );
+  alert( "Привіт" );
 };
 
 let func = sayHi;
 // ...
 ```
 
-Everything would work the same.
+Результат був би таким самим.
 
 
-````smart header="Why is there a semicolon at the end?"
-You might wonder, why does Function Expression have a semicolon `;` at the end, but Function Declaration does not:
+````smart header="Для чого потрібна крапка з комою в кінці?"
+Ви можете запитати, чому Функціональний Вираз містить крапку з комою `;` в кінці, а Оголошення Функції -- ні:
 
 ```js
 function sayHi() {
@@ -90,9 +91,9 @@ let sayHi = function() {
 }*!*;*/!*
 ```
 
-The answer is simple:
-- There's no need for `;` at the end of code blocks and syntax structures that use them like `if { ... }`, `for {  }`, `function f { }` etc.
-- A Function Expression is used inside the statement: `let sayHi = ...;`, as a value. It's not a code block, but rather an assignment. The semicolon `;` is recommended at the end of statements, no matter what the value is. So the semicolon here is not related to the Function Expression itself, it just terminates the statement.
+Відповідь проста:
+- Нема потреби в `;` в кінці блоків коду та синтаксичних структур, що їх використовують, таких як: `if { ... }`, `for {  }`, `function f { }` тощо.
+- Функціональний Вираз використаний всередині інструкції: `let sayHi = ...;` як значення. Це не окремий блок коду, а скоріше частина присвоєння. Рекомендується завжди ставити крапку з комою `;` в кінці інструкції, не зважаючи чим є значення. Отже, вживання крапки з комою не пов'язано саме з Функціональним Виразом, а лише завершує інструкцію.
 ````
 
 ## Callback functions
