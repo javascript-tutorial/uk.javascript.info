@@ -170,191 +170,191 @@ ask(
 ```
 
 
-## Function Expression vs Function Declaration
+## Функціональний Вираз проти Оголошення Функції
 
-Let's formulate the key differences between Function Declarations and Expressions.
+Сформулюймо ключові відмінності між Оголошенням Функції та Функціональним Виразом.
 
-First, the syntax: how to differentiate between them in the code.
+По-перше, синтаксис: як розрізняти їх в коді.
 
-- *Function Declaration:* a function, declared as a separate statement, in the main code flow.
+- *Оголошення Функції:* функція оголошується окремою конструкцією "function..." в основному потоці коду.
 
     ```js
-    // Function Declaration
+    // Оголошення Функції
     function sum(a, b) {
       return a + b;
     }
     ```
-- *Function Expression:* a function, created inside an expression or inside another syntax construct. Here, the function is created at the right side of the "assignment expression" `=`:
+- *Функціональний Вираз:* функція створюється всередині іншого виразу чи синтаксичної конструкції. Нижче, створення функції відбувається в правій частині "виразу присвоєння" `=`:
 
     ```js
-    // Function Expression
+    // Функціональний Вираз
     let sum = function(a, b) {
       return a + b;
     };
     ```
 
-The more subtle difference is *when* a function is created by the JavaScript engine.
+Більш тонка відмінність в тому, *коли* функція буде створена рушієм Javascript.
 
-**A Function Expression is created when the execution reaches it and is usable only from that moment.**
+**Функціональний Вираз буде створено тільки тоді, коли до нього дійде виконання і тільки після цього він може бути використаний.**
 
-Once the execution flow passes to the right side of the assignment `let sum = function…` -- here we go, the function is created and can be used (assigned, called, etc. ) from now on.
+Щойно потік виконання досягне правої частини у присвоєнні `let sum = function…`, функцію буде створено і з цього моменту її можна буде використати (присвоїти змінній, викликати тощо ).
 
-Function Declarations are different.
+У випадку з Оголошенням Функції все інакше.
 
-**A Function Declaration can be called earlier than it is defined.**
+**Синтаксис Оголошення Функції дозволяє викликати функцію раніше ніж вона були визначена в коді**
 
-For example, a global Function Declaration is visible in the whole script, no matter where it is.
+Наприклад, глобальне Оголошення Функції буде доступним з будь-якого місця в скрипті.
 
-That's due to internal algorithms. When JavaScript prepares to run the script, it first looks for global Function Declarations in it and creates the functions. We can think of it as an "initialization stage".
+Така поведінка спричинена особливостями внутрішніх алгоритмів. Коли JavaScript готується до виконання скрипта, він спочатку шукає всі глобальні Оголошення Функцій і на їх основі створює функції. Цей процес можна вважати "фазою ініціалізації".
 
-And after all Function Declarations are processed, the code is executed. So it has access to these functions.
+Після того, як всі Оголошення Функцій були оброблені, рушій починає виконання коду.
 
-For example, this works:
+Це, наприклад, буде працювати:
 
 ```js run refresh untrusted
 *!*
-sayHi("John"); // Hello, John
+sayHi("Микола"); // Привіт, Микола
 */!*
 
 function sayHi(name) {
-  alert( `Hello, ${name}` );
+  alert( `Привіт, ${name}` );
 }
 ```
 
-The Function Declaration `sayHi` is created when JavaScript is preparing to start the script and is visible everywhere in it.
+Функцію `sayHi` було створено, коли JavaScript готувався до виконання скрипта і вона буде доступною з будь-якого місця.
 
-...If it were a Function Expression, then it wouldn't work:
+...З Функціональним Виразом це не спрацювало б:
 
 ```js run refresh untrusted
 *!*
-sayHi("John"); // error!
+sayHi("Микола"); // помилка!
 */!*
 
-let sayHi = function(name) {  // (*) no magic any more
-  alert( `Hello, ${name}` );
+let sayHi = function(name) {  // (*) більше ніякої магії
+  alert( `Привіт, ${name}` );
 };
 ```
 
-Function Expressions are created when the execution reaches them. That would happen only in the line `(*)`. Too late.
+Створення функцій, визначених Функціональними Виразами, відбувається тоді, коли до них доходить потік виконання. Це станеться тільки при досягненні рядку з зірочкою `(*)`. Занадто пізно.
 
-Another special feature of Function Declarations is their block scope.
+Ще однією особливістю Оголошення Функції є її блокова область видимості.
 
-**In strict mode, when a Function Declaration is within a code block, it's visible everywhere inside that block. But not outside of it.**
+**У суворому режимі, якщо Оголошення Функції знаходиться в блоці `{...}`, то функція доступна усюди всередині блоку. Але не зовні.**
 
-For instance, let's imagine that we need to declare a function `welcome()` depending on the `age` variable that we get during runtime. And then we plan to use it some time later.
+Уявімо, що нам потрібно визначити функцію `welcome()` залежно від змінної `age`, яку ми отримаємо під час виконання коду. Далі в скрипті нам буде потрібно викликати цю функцію.
 
-If we use Function Declaration, it won't work as intended:
+Якщо ми використаємо Оголошення Функції, то це не буде працювати:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
-// conditionally declare a function
+// оголошуємо функцію відповідно до умови
 if (age < 18) {
 
   function welcome() {
-    alert("Hello!");
+    alert("Привіт!");
   }
 
 } else {
 
   function welcome() {
-    alert("Greetings!");
+    alert("Моє вітання!");
   }
 
 }
 
-// ...use it later
+// ...спробуємо викликати функцію
 *!*
-welcome(); // Error: welcome is not defined
+welcome(); // помилка в суворому режимі (ReferenceError: welcome is not defined)
 */!*
 ```
 
-That's because a Function Declaration is only visible inside the code block in which it resides.
+Це тому, що Оголошення Функції доступне тільки всередині блоку, що його містить.
 
-Here's another example:
+Інший приклад:
 
 ```js run
-let age = 16; // take 16 as an example
+let age = 16; // для прикладу присвоїмо 16
 
 if (age < 18) {
 *!*
-  welcome();               // \   (runs)
+  welcome();               // \   (виконується)
 */!*
                            //  |
   function welcome() {     //  |  
-    alert("Hello!");       //  |  Function Declaration is available
-  }                        //  |  everywhere in the block where it's declared
+    alert("Привіт!");      //  |  Оголошення Функції доступне
+  }                        //  |  усюди в блоці, що його містить
                            //  |
 *!*
-  welcome();               // /   (runs)
+  welcome();               // /   (виконується)
 */!*
 
 } else {
 
   function welcome() {    
-    alert("Greetings!");
+    alert("Моє вітання!");
   }
 }
 
-// Here we're out of curly braces,
-// so we can not see Function Declarations made inside of them.
+// Тут фігурні дужки закриваються,
+// тому Оголошення Функції всередині них нам не доступне
 
 *!*
-welcome(); // Error: welcome is not defined
+welcome(); // помилка в суворому режимі (ReferenceError: welcome is not defined)
 */!*
 ```
 
-What can we do to make `welcome` visible outside of `if`?
+Що можна зробити, щоб функція `welcome` стала видимою поза `if`?
 
-The correct approach would be to use a Function Expression and assign `welcome` to the variable that is declared outside of `if` and has the proper visibility.
+Правильніше було б використати Функціональний Вираз і присвоїти `welcome` змінній, що оголошена поза блоком `if` і доступна для нас.
 
-This code works as intended:
+Цей код працює як нам і потрібно:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
 let welcome;
 
 if (age < 18) {
 
   welcome = function() {
-    alert("Hello!");
+    alert("Привіт!");
   };
 
 } else {
 
   welcome = function() {
-    alert("Greetings!");
+    alert("Моє вітання!");
   };
 
 }
 
 *!*
-welcome(); // ok now
+welcome(); // тепер все гаразд
 */!*
 ```
 
-Or we could simplify it even further using a question mark operator `?`:
+Можна спростити цей код, використавши умовний оператор `?`:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
 let welcome = (age < 18) ?
-  function() { alert("Hello!"); } :
-  function() { alert("Greetings!"); };
+  function() { alert("Привіт!"); } :
+  function() { alert("Моє вітання!"); };
 
 *!*
-welcome(); // ok now
+welcome(); // спрацює
 */!*
 ```
 
 
-```smart header="When to choose Function Declaration versus Function Expression?"
-As a rule of thumb, when we need to declare a function, the first to consider is Function Declaration syntax. It gives more freedom in how to organize our code, because we can call such functions before they are declared.
+```smart header="Коли використовувати Оголошення Функції, а коли Функціональний Вираз?"
+Зазвичай, коли нам потрібна функція, то найперше потрібно розглянути синтаксис Оголошення Функції. Він дає нам більше свободи у тому, як організовувати код, оскільки дозволяє викликати функції ще до їх визначення.
 
-That's also better for readability, as it's easier to look up `function f(…) {…}` in the code than `let f = function(…) {…}`. Function Declarations are more "eye-catching".
+Також функції `function f(…) {…}` простіше помітити в коді, ніж `let f = function(…) {…}`. Оголошення Функції більш легко "ловляться очима".
 
-...But if a Function Declaration does not suit us for some reason, or we need a conditional declaration (we've just seen an example), then Function Expression should be used.
+...Але якщо з якоїсь причини Оголошення Функції нам не підходить або нам потрібно визначити функцію згідно умови (як це було в прикладі), то слід використати Функціональний Вираз.
 ```
 
 
