@@ -12,13 +12,8 @@
 
 В цьому плані, JavaScript дуже відрізняється від іншої мови програмування — [Java](https://uk.wikipedia.org/wiki/Java).
 
-<<<<<<< HEAD
-```smart header="Чому <u>Java</u>Script?"
-Коли мову JavaScript було створено, спочатку вона мала іншу назву: "LiveScript". Але тоді була дуже популярна мова програмування Java, тому було вирішено, що позиціонування нової мови як "молодшого брата" Java допоможе у популяризації.
-=======
-```smart header="Why is it called <u>Java</u>Script?"
-When JavaScript was created, it initially had another name: "LiveScript". But Java was very popular at that time, so it was decided that positioning a new language as a "younger brother" of Java would help.
->>>>>>> a0bfa924a17cad8e7fee213904b27dbf57c2dbac
+```smart header="Чому цю мову називають <u>Java</u>Script?"
+Коли мову JavaScript було створено, спочатку вона мала іншу назву: "LiveScript". Але тоді була дуже популярна мова програмування Java, тому було вирішено, що позиціонування нової мови як "молодшого брата" Java допоможе у її популяризації.
 
 Але з часом JavaScript значно виріс і став повністю незалежною мовою програмування зі своєю специфікацією [ECMAScript](https://uk.wikipedia.org/wiki/ECMAScript), і зараз немає нічого спільного з Java.
 ```
