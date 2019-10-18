@@ -358,18 +358,18 @@ welcome(); // спрацює
 ```
 
 
-## Arrow functions [#arrow-functions]
+## Стрілкові функції [#arrow-functions]
 
-There's one more very simple and concise syntax for creating functions, that's often better than Function Expressions. It's called "arrow functions", because it looks like this:
+Також існує ще один простіший та коротший синтаксис для створення функцій,який часто доцільніше використовувати замість Функціонального Виразу. Це так звані "стрілкові функції", а виглядають вони ось так:
 
 
 ```js
 let func = (arg1, arg2, ...argN) => expression
 ```
 
-...This creates a function `func` that has arguments `arg1..argN`, evaluates the `expression` on the right side with their use and returns its result.
+...Цей код створить функцію `func` з аргументами `arg1..argN`, що обчислює `expression` з правого боку (використовуючи ці аргументи) та повертає його результат.
 
-In other words, it's roughly the same as:
+Іншими словами, це приблизно те ж саме, що і:
 
 ```js
 let func = function(arg1, arg2, ...argN) {
@@ -377,14 +377,14 @@ let func = function(arg1, arg2, ...argN) {
 };
 ```
 
-...But much more concise.
+...але більш лаконічно.
 
-Let's see an example:
+Розглянемо інший приклад:
 
 ```js run
 let sum = (a, b) => a + b;
 
-/* The arrow function is a shorter form of:
+/* Ця стрілкова функція - це коротша форма для:
 
 let sum = function(a, b) {
   return a + b;
@@ -395,10 +395,10 @@ alert( sum(1, 2) ); // 3
 
 ```
 
-If we have only one argument, then parentheses around parameters can be omitted, making that even shorter:
+Якщо функція має лише один аргумент, тоді дужки навколо параметрів можна опускати, що дозволить записати її ще коротше:
 
 ```js run
-// same as
+// те ж саме, що і
 // let double = function(n) { return n * 2 }
 *!*
 let double = n => n * 2;
@@ -407,55 +407,55 @@ let double = n => n * 2;
 alert( double(3) ); // 6
 ```
 
-If there are no arguments, parentheses should be empty (but they should be present):
+Якщо аргументів немає, то дужки повинні бути порожніми (але вони повинну бути):
 
 ```js run
-let sayHi = () => alert("Hello!");
+let sayHi = () => alert("Привіт!");
 
 sayHi();
 ```
 
-Arrow functions can be used in the same way as Function Expressions.
+Стрілкові функції можуть бути використані в той же спосіб, що й Функціональні Вирази.
 
-For instance, here's the rewritten example with `welcome()`:
+Наприклад, ось переписана функція `welcome()` з попередніх прикладів:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
 let welcome = (age < 18) ?
-  () => alert('Hello') :
-  () => alert("Greetings!");
+  () => alert('Привіт!') :
+  () => alert("Моє вітання!");
 
-welcome(); // ok now
+welcome(); // працює
 ```
 
-Arrow functions may appear unfamiliar and not very readable at first, but that quickly changes as the eyes get used to the structure.
+Стрілкові функції можуть спершу здатись незвичними та незручними для читання, але це швидко мине, щойно очі звикнуть до таких конструкцій.
 
-They are very convenient for simple one-line actions, when we're just too lazy to write many words.
+Вони дуже зручні для простих однорядкових дій, коли нам лінь писати багато букв.
 
-```smart header="Multiline arrow functions"
+```smart header="Багаторядкові стрілкові функції"
 
-The examples above took arguments from the left of `=>` and evaluated the right-side expression with them.
+У попередніх прикладах зліва від `=>` були аргументи, а справа - окремий вираз, що певним чином їх використовував.
 
-Sometimes we need something a little bit more complex, like multiple expressions or statements. It is also possible, but we should enclose them in curly braces. Then use a normal `return` within them.
+Проте іноді, нам потрібно дещо складніше, наприклад, декілька виразів чи інструкцій. Це також можливо, але ми повинні записати їх в фігурних дужках і використати `return`, як у звичайних функціях.
 
-Like this:
+Ось так:
 
 ```js run
-let sum = (a, b) => {  // the curly brace opens a multiline function
+let sum = (a, b) => {  // фігурна дужка починає блок багаторядкової функції
   let result = a + b;
 *!*
-  return result; // if we use curly braces, use return to get results
+  return result; // якщо ми використовуємо фігурні дужки, то return дозволить повернути результат
 */!*
 };
 
 alert( sum(1, 2) ); // 3
 ```
 
-```smart header="More to come"
-Here we praised arrow functions for brevity. But that's not all! Arrow functions have other interesting features. We'll return to them later in the chapter <info:arrow-functions>.
+```smart header="І ще дещо..."
+Тут ми розглянули стрілкові функції як спосіб писати менше коду. Але це ще не все! Стрілкові функції мають і інші цікаві особливості. Ми повернемось до них пізніше у розділі <info:arrow-functions>.
 
-For now, we can already use arrow functions for one-line actions and callbacks.
+А поки-що, ми можемо використовувати стрілкові функції для однорядкових дій та колбеків.
 ```
 
 ## Summary
