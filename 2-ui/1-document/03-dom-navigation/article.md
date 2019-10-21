@@ -149,7 +149,7 @@ There are two important consequences:
 The first thing is nice. The second is tolerable, because we can use `Array.from` to create a "real" array from the collection, if we want array methods:
 
   ```js run
-  alert( Array.from(document.body.childNodes).filter ); // now it's there
+  alert( Array.from(document.body.childNodes).filter ); // function
   ```
 
 ```warn header="DOM collections are read-only"
@@ -280,7 +280,7 @@ Till now we described the basic navigation properties.
 
 Certain types of DOM elements may provide additional properties, specific to their type, for convenience.
 
-Tables are a great example and a particularly important case for that.
+Tables are a great example of that, and a particularly important case.
 
 **The `<table>`** element supports (in addition to the given above) these properties:
 - `table.rows` -- the collection of `<tr>` elements of the table.
@@ -311,8 +311,9 @@ An example of usage:
 </table>
 
 <script>
-  // get the content of the first row, second cell
-  alert( table.*!*rows[0].cells[1]*/!*.innerHTML ) // "two"
+  // get td with "two" (first row, second column)
+  let td = table.*!*rows[0].cells[1]*/!*;
+  td.style.backgroundColor = "red"; // highlight it
 </script>
 ```
 
