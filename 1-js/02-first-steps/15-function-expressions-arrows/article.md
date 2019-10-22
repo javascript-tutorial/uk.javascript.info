@@ -184,7 +184,7 @@ ask(
       return a + b;
     }
     ```
-- *Функціональний Вираз:* функція створюється всередині іншого виразу чи синтаксичної конструкції. Нижче, створення функції відбувається в правій частині "виразу присвоєння" `=`:
+- *Функціональний Вираз:* функція створюється як частина іншого виразу чи синтаксичної конструкції. Нижче, створення функції відбувається в правій частині "виразу присвоєння" `=`:
 
     ```js
     // Функціональний Вираз
@@ -458,19 +458,19 @@ alert( sum(1, 2) ); // 3
 А поки-що, ми можемо використовувати стрілкові функції для однорядкових дій та колбеків.
 ```
 
-## Summary
+## Підсумки
 
-- Functions are values. They can be assigned, copied or declared in any place of the code.
-- If the function is declared as a separate statement in the main code flow, that's called a "Function Declaration".
-- If the function is created as a part of an expression, it's called a "Function Expression".
-- Function Declarations are processed before the code block is executed. They are visible everywhere in the block.
-- Function Expressions are created when the execution flow reaches them.
+- Функції - це значення. Ми можемо присвоїти їх змінній, копіювати чи визначити у будь-якій частині коду.
+- Якщо функція визначена як окрема інструкція в основному потоці коду, то це називають "Оголошенням Функції".
+- Якщо функція була створена як частина іншого виразу, тоді це - "Функціональний Вираз".
+- Обробка Оголошень Функцій виконується перед виконанням блоку коду. Такі функції є видимими у всьому блоці.
+- Функції, що були визначені за допомогою Функціонального Виразу, будуть створені тільки тоді, коли до них дійде потік виконання.
 
-In most cases when we need to declare a function, a Function Declaration is preferable, because it is visible prior to the declaration itself. That gives us more flexibility in code organization, and is usually more readable.
+Зазвичай, коли нам потрібно визначити функцію, то краще віддати перевагу синтаксису Оголошення Функції, бо така функція є видимою навіть перед її визначенням в коді. Це дає нам більшу гнучкість в організації коду та й сам синтаксис є більш читабельним.
 
-So we should use a Function Expression only when a Function Declaration is not fit for the task. We've seen a couple of examples of that in this chapter, and will see more in the future.
+Таким чином, використовувати Функціональний Вираз потрібно тільки тоді, коли Оголошенням Функції не підходить для вирішення нашої задачі. Ми розглянули декілька таких прикладів у цьому розділі і побачимо ще в майбутньому.
 
-Arrow functions are handy for one-liners. They come in two flavors:
+Стрілкові функції зручні для однорядкових дій. Вони бувають двох видів:
 
-1. Without curly braces: `(...args) => expression` -- the right side is an expression: the function evaluates it and returns the result.
-2. With curly braces: `(...args) => { body }` -- brackets allow us to write multiple statements inside the function, but we need an explicit `return` to return something.
+1. Без фігурних дужок: `(...args) => expression` -- права частина є виразом: функція виконує його і повертає результат.
+2. З фігурними дужками: `(...args) => { body }` -- дужки дозволяють включити в функцію більше однієї інструкції, але при цьому потрібно явно вказати `return`, щоб що-небудь повернути.
