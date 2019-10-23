@@ -1,84 +1,84 @@
-# Function expressions and arrows
+# Функціональні вирази та стрілкові функції
 
-In JavaScript, a function is not a "magical language structure", but a special kind of value.
+Для JavaScript функція -- це не "магічна мовна структура", a значення особливого ґатунку.
 
-The syntax that we used before is called a *Function Declaration*:
+Синтаксис, що ми раніше використовували, називається [*Оголошення Функції*](https://developer.mozilla.org/uk/docs/Web/JavaScript/Guide/Functions#Оголошення_функції) (Function Declaration):
 
 ```js
 function sayHi() {
-  alert( "Hello" );
+  alert( "Привіт" );
 }
 ```
 
-There is another syntax for creating a function that is called a *Function Expression*.
+Існує й інший синтаксис для створення функції, що називають [*Функціональним Виразом*](https://developer.mozilla.org/uk/docs/Web/JavaScript/Guide/Functions#Функціональні_вирази) (Function Expression).
 
-It looks like this:
+Він виглядає так:
 
 ```js
 let sayHi = function() {
-  alert( "Hello" );
+  alert( "Привіт" );
 };
 ```
 
-Here, the function is created and assigned to the variable explicitly, like any other value. No matter how the function is defined, it's just a value stored in the variable `sayHi`.
+У коді вище функція створюється і явно присвоюється змінній, як і будь-яке інше значення. Не важливо яким чином була визначена функція, це лише значення, що збережене в змінній `sayHi`.
 
-The meaning of these code samples is the same: "create a function and put it into the variable `sayHi`".
+Зміст обох прикладів коду однаковий: "створити функцію і покласти її значення в змінну `sayHi`".
 
-We can even print out that value using `alert`:
+Ми навіть можемо вивести це значення використовуючи `alert`:
 
 ```js run
 function sayHi() {
-  alert( "Hello" );
+  alert( "Привіт" );
 }
 
 *!*
-alert( sayHi ); // shows the function code
+alert( sayHi ); // показує код функції
 */!*
 ```
 
-Please note that the last line does not run the function, because there are no parentheses after `sayHi`. There are programming languages where any mention of a function name causes its execution, but JavaScript is not like that.
+Зауважте, що останній рядок не викликає функцію тому, що після `sayHi` немає дужок. Існують мови програмування, в яких будь-яке звертання до імені функції спричиняє її виконання, але JavaScript -- не одна з них.
 
-In JavaScript, a function is a value, so we can deal with it as a value. The code above shows its string representation, which is the source code.
+У JavaScript функція -- це значення, тому ми можемо поводитись з нею, як і з іншими значеннями. Код вище показує її рядкове представлення -- вихідний код.
 
-Surely, a function is a special value, in the sense that we can call it like `sayHi()`.
+Звичайно, функція -- особливе значення, у тому сенсі, що ми можемо здійснити її виклик за допомогою дужок: `sayHi()`.
 
-But it's still a value. So we can work with it like with other kinds of values.
+Але це все-таки значення. Тому ми можемо працювати з нею, як і з іншими значеннями.
 
-We can copy a function to another variable:
+Скажімо, ми можемо скопіювати функцію в іншу змінну:
 
 ```js run no-beautify
-function sayHi() {   // (1) create
-  alert( "Hello" );
+function sayHi() {   // (1) створюємо
+  alert( "Привіт" );
 }
 
-let func = sayHi;    // (2) copy
+let func = sayHi;    // (2) копіюємо
 
-func(); // Hello     // (3) run the copy (it works)!
-sayHi(); // Hello    //     this still works too (why wouldn't it)
+func(); // Привіт     // (3) викликаємо копію (працює!)
+sayHi(); // Привіт    //     ось так теж спрацює (а чому ні?)
 ```
 
-Here's what happens above in detail:
+Розглянемо детально, що тут відбулось:
 
-1. The Function Declaration `(1)` creates the function and puts it into the variable named `sayHi`.
-2. Line `(2)` copies it into the variable `func`. Please note again: there are no parentheses after `sayHi`. If there were, then `func = sayHi()` would write  *the result of the call* `sayHi()` into `func`, not *the function* `sayHi` itself.
-3. Now the function can be called as both `sayHi()` and `func()`.
+1. Оголошення Функції `(1)` створює саму функцію і кладе її значення у змінну `sayHi`.
+2. Рядок `(2)` копіює це значення в змінну `func`. Ще раз зауважте: після `sayHi` немає дужок. Якби вони там були, тоді `func = sayHi()` записав би *результат виклику* `sayHi()` у `func`,а не *саму функцію* `sayHi`.
+3. Тепер ми можемо викликати функцію двома шляхами: `sayHi()` або `func()`.
 
-Note that we could also have used a Function Expression to declare `sayHi`, in the first line:
+Зауважте, що ми могли також використати Функціональний Вираз у першому рядку, щоб визначити `sayHi`:
 
 ```js
 let sayHi = function() {
-  alert( "Hello" );
+  alert( "Привіт" );
 };
 
 let func = sayHi;
 // ...
 ```
 
-Everything would work the same.
+Результат був би таким самим.
 
 
-````smart header="Why is there a semicolon at the end?"
-You might wonder, why does Function Expression have a semicolon `;` at the end, but Function Declaration does not:
+````smart header="Для чого потрібна крапка з комою в кінці?"
+Ви можете запитати, чому Функціональний Вираз містить крапку з комою `;` в кінці, а Оголошення Функції -- ні:
 
 ```js
 function sayHi() {
@@ -90,27 +90,27 @@ let sayHi = function() {
 }*!*;*/!*
 ```
 
-The answer is simple:
-- There's no need for `;` at the end of code blocks and syntax structures that use them like `if { ... }`, `for {  }`, `function f { }` etc.
-- A Function Expression is used inside the statement: `let sayHi = ...;`, as a value. It's not a code block, but rather an assignment. The semicolon `;` is recommended at the end of statements, no matter what the value is. So the semicolon here is not related to the Function Expression itself, it just terminates the statement.
+Відповідь проста:
+- Нема потреби в `;` в кінці блоків коду та синтаксичних структур, що їх використовують, таких як: `if { ... }`, `for {  }`, `function f { }` тощо.
+- Функціональний Вираз використаний всередині інструкції: `let sayHi = ...;` як значення. Це не окремий блок коду, а скоріше частина присвоєння. Рекомендується завжди ставити крапку з комою `;` в кінці інструкції, не зважаючи чим є значення. Отже, вживання крапки з комою не пов'язано саме з Функціональним Виразом, а лише завершує інструкцію.
 ````
 
-## Callback functions
+## Колбеки (функції зворотного виклику)
 
-Let's look at more examples of passing functions as values and using function expressions.
+Розглянемо інші приклади передачі функції як значення та використання Функціональних Виразів.
 
-We'll write a function `ask(question, yes, no)` with three parameters:
+Для цього напишемо функцію `ask(question, yes, no)` з трьома параметрами:
 
 `question`
-: Text of the question
+: Текст запитання
 
 `yes`
-: Function to run if the answer is "Yes"
+: Функція, що буде викликатись, якщо відповідь "Так"
 
 `no`
-: Function to run if the answer is "No"
+: Функція, що буде викликатись, якщо відповідь "Ні"
 
-The function should ask the `question` and, depending on the user's answer, call `yes()` or `no()`:
+Функція повинна поставити запитання `question` і, залежно від відповіді користувача, викликати `yes()` або `no()`:
 
 ```js run
 *!*
@@ -121,24 +121,24 @@ function ask(question, yes, no) {
 */!*
 
 function showOk() {
-  alert( "You agreed." );
+  alert( "Ви погодились." );
 }
 
 function showCancel() {
-  alert( "You canceled the execution." );
+  alert( "Ви скасували виконання." );
 }
 
-// usage: functions showOk, showCancel are passed as arguments to ask
-ask("Do you agree?", showOk, showCancel);
+// використання: функції showOk, showCancel передаються як аргументи для ask
+ask("Ви згодні?", showOk, showCancel);
 ```
 
-In practice, such functions are quite useful. The major difference between a real-life `ask` and the example above is that real-life functions use more complex ways to interact with the user than a simple `confirm`. In the browser, such function usually draws a nice-looking question window. But that's another story.
+Такі функції є досить практичними. Головна відмінність між функцією `ask` у реальних програмах та прикладі вище, полягає в тому, що перша може використовувати більш складні способи взаємодії з користувачем, ніж звичайний `confirm`. У браузерах така функція зазвичай показує гарненьке модальне вікно з запитанням. Але це вже інша історія.
 
-**The arguments `showOk` and `showCancel` of `ask` are called *callback functions* or just *callbacks*.**
+**Аргументи `showOk` та `showCancel` функції `ask` називаються *функціями зворотного виклику* або просто *колбеками*.**
 
-The idea is that we pass a function and expect it to be "called back" later if necessary. In our case, `showOk` becomes the callback for "yes" answer, and `showCancel` for "no" answer.
+Суть полягає в тому, що ми передаємо функцію і очікуємо, що вона буде викликана (англ. "called back") пізніше, якщо це буде потрібно. У нашому випадку, `showOk` стає колбеком, якщо відповідь -- "yes", а `showCancel`, якщо відповідь -- "no".
 
-We can use Function Expressions to write the same function much shorter:
+Ми можемо використати Функціональний Вираз, щоб записати ту саму функцію коротше:
 
 ```js run no-beautify
 function ask(question, yes, no) {
@@ -148,226 +148,226 @@ function ask(question, yes, no) {
 
 *!*
 ask(
-  "Do you agree?",
-  function() { alert("You agreed."); },
-  function() { alert("You canceled the execution."); }
+  "Ви згодні?",
+  function() { alert("Ви погодились."); },
+  function() { alert("Ви скасували виконання."); }
 );
 */!*
 ```
 
-Here, functions are declared right inside the `ask(...)` call. They have no name, and so are called *anonymous*. Such functions are not accessible outside of `ask` (because they are not assigned to variables), but that's just what we want here.
+У цьому прикладі функції оголошені всередині виклику `ask(...)`. Вони не мають власного ім'я, тому називаються *анонімними*. До таких функцій не можна доступитись поза `ask` (бо вони не присвоєні змінним), але це саме те, що нам потрібно.
 
-Such code appears in our scripts very naturally, it's in the spirit of JavaScript.
+Подібний код, що з'явився в нашому скрипті є природним, в дусі JavaScript.
 
-```smart header="A function is a value representing an \"action\""
-Regular values like strings or numbers represent the *data*.
+```smart header="Функція -- це значення, що відображає \"дію\""
+Звичайні значення, як-от: рядки чи числа, відображають *дані*
 
-A function can be perceived as an *action*.
+Функцію, з іншого боку, можна сприймати як *дію*.
 
-We can pass it between variables and run when we want.
+Ми можемо передавати її від змінної до змінної і викликати коли заманеться.
 ```
 
 
-## Function Expression vs Function Declaration
+## Функціональний Вираз проти Оголошення Функції
 
-Let's formulate the key differences between Function Declarations and Expressions.
+Сформулюймо ключові відмінності між Оголошенням Функції та Функціональним Виразом.
 
-First, the syntax: how to differentiate between them in the code.
+По-перше, синтаксис: як розрізняти їх в коді.
 
-- *Function Declaration:* a function, declared as a separate statement, in the main code flow.
+- *Оголошення Функції:* функція оголошується окремою конструкцією "function..." в основному потоці коду.
 
     ```js
-    // Function Declaration
+    // Оголошення Функції
     function sum(a, b) {
       return a + b;
     }
     ```
-- *Function Expression:* a function, created inside an expression or inside another syntax construct. Here, the function is created at the right side of the "assignment expression" `=`:
+- *Функціональний Вираз:* функція створюється як частина іншого виразу чи синтаксичної конструкції. Нижче, створення функції відбувається в правій частині "виразу присвоєння" `=`:
 
     ```js
-    // Function Expression
+    // Функціональний Вираз
     let sum = function(a, b) {
       return a + b;
     };
     ```
 
-The more subtle difference is *when* a function is created by the JavaScript engine.
+Більш тонка відмінність в тому, *коли* функція буде створена рушієм Javascript.
 
-**A Function Expression is created when the execution reaches it and is usable only from that moment.**
+**Функціональний Вираз буде створено тільки тоді, коли до нього дійде виконання і тільки після цього він може бути використаний.**
 
-Once the execution flow passes to the right side of the assignment `let sum = function…` -- here we go, the function is created and can be used (assigned, called, etc. ) from now on.
+Щойно потік виконання досягне правої частини у присвоєнні `let sum = function…`, функцію буде створено і з цього моменту її можна буде використати (присвоїти змінній, викликати тощо ).
 
-Function Declarations are different.
+У випадку з Оголошенням Функції все інакше.
 
-**A Function Declaration can be called earlier than it is defined.**
+**Синтаксис Оголошення Функції дозволяє викликати функцію раніше ніж вона були визначена в коді**
 
-For example, a global Function Declaration is visible in the whole script, no matter where it is.
+Наприклад, глобальне Оголошення Функції буде доступним з будь-якого місця в скрипті.
 
-That's due to internal algorithms. When JavaScript prepares to run the script, it first looks for global Function Declarations in it and creates the functions. We can think of it as an "initialization stage".
+Така поведінка спричинена особливостями внутрішніх алгоритмів. Коли JavaScript готується до виконання скрипта, він спочатку шукає всі глобальні Оголошення Функцій і на їх основі створює функції. Цей процес можна вважати "фазою ініціалізації".
 
-And after all Function Declarations are processed, the code is executed. So it has access to these functions.
+Після того, як всі Оголошення Функцій були оброблені, рушій починає виконання коду.
 
-For example, this works:
+Це, наприклад, буде працювати:
 
 ```js run refresh untrusted
 *!*
-sayHi("John"); // Hello, John
+sayHi("Іван"); // Привіт, Іван
 */!*
 
 function sayHi(name) {
-  alert( `Hello, ${name}` );
+  alert( `Привіт, ${name}` );
 }
 ```
 
-The Function Declaration `sayHi` is created when JavaScript is preparing to start the script and is visible everywhere in it.
+Функцію `sayHi` було створено, коли JavaScript готувався до виконання скрипта і вона буде доступною з будь-якого місця.
 
-...If it were a Function Expression, then it wouldn't work:
+...З Функціональним Виразом це не спрацювало б:
 
 ```js run refresh untrusted
 *!*
-sayHi("John"); // error!
+sayHi("Іван"); // помилка!
 */!*
 
-let sayHi = function(name) {  // (*) no magic any more
-  alert( `Hello, ${name}` );
+let sayHi = function(name) {  // (*) більше ніякої магії
+  alert( `Привіт, ${name}` );
 };
 ```
 
-Function Expressions are created when the execution reaches them. That would happen only in the line `(*)`. Too late.
+Створення функцій, визначених Функціональними Виразами, відбувається тоді, коли до них доходить потік виконання. Це станеться тільки при досягненні рядку з зірочкою `(*)`. Занадто пізно.
 
-Another special feature of Function Declarations is their block scope.
+Ще однією особливістю Оголошення Функції є її блокова область видимості.
 
-**In strict mode, when a Function Declaration is within a code block, it's visible everywhere inside that block. But not outside of it.**
+**У суворому режимі, якщо Оголошення Функції знаходиться в блоці `{...}`, то функція доступна усюди всередині блоку. Але не зовні.**
 
-For instance, let's imagine that we need to declare a function `welcome()` depending on the `age` variable that we get during runtime. And then we plan to use it some time later.
+Уявімо, що нам потрібно визначити функцію `welcome()` залежно від змінної `age`, яку ми отримаємо під час виконання коду. Далі в скрипті нам буде потрібно викликати цю функцію.
 
-If we use Function Declaration, it won't work as intended:
+Якщо ми використаємо Оголошення Функції, то це не буде працювати:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
-// conditionally declare a function
+// оголошуємо функцію відповідно до умови
 if (age < 18) {
 
   function welcome() {
-    alert("Hello!");
+    alert("Привіт!");
   }
 
 } else {
 
   function welcome() {
-    alert("Greetings!");
+    alert("Моє вітання!");
   }
 
 }
 
-// ...use it later
+// ...спробуємо викликати функцію
 *!*
-welcome(); // Error: welcome is not defined
+welcome(); // помилка в суворому режимі (ReferenceError: welcome is not defined)
 */!*
 ```
 
-That's because a Function Declaration is only visible inside the code block in which it resides.
+Це тому, що Оголошення Функції доступне тільки всередині блоку, що його містить.
 
-Here's another example:
+Інший приклад:
 
 ```js run
-let age = 16; // take 16 as an example
+let age = 16; // для прикладу присвоїмо 16
 
 if (age < 18) {
 *!*
-  welcome();               // \   (runs)
+  welcome();               // \   (виконується)
 */!*
                            //  |
   function welcome() {     //  |  
-    alert("Hello!");       //  |  Function Declaration is available
-  }                        //  |  everywhere in the block where it's declared
+    alert("Привіт!");      //  |  Оголошення Функції доступне
+  }                        //  |  усюди в блоці, що його містить
                            //  |
 *!*
-  welcome();               // /   (runs)
+  welcome();               // /   (виконується)
 */!*
 
 } else {
 
   function welcome() {    
-    alert("Greetings!");
+    alert("Моє вітання!");
   }
 }
 
-// Here we're out of curly braces,
-// so we can not see Function Declarations made inside of them.
+// Тут фігурні дужки закриваються,
+// тому Оголошення Функції всередині них нам не доступне
 
 *!*
-welcome(); // Error: welcome is not defined
+welcome(); // помилка в суворому режимі (ReferenceError: welcome is not defined)
 */!*
 ```
 
-What can we do to make `welcome` visible outside of `if`?
+Що можна зробити, щоб функція `welcome` стала видимою поза `if`?
 
-The correct approach would be to use a Function Expression and assign `welcome` to the variable that is declared outside of `if` and has the proper visibility.
+Правильніше було б використати Функціональний Вираз і присвоїти `welcome` змінній, що оголошена поза блоком `if` і доступна для нас.
 
-This code works as intended:
+Цей код працює як нам і потрібно:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
 let welcome;
 
 if (age < 18) {
 
   welcome = function() {
-    alert("Hello!");
+    alert("Привіт!");
   };
 
 } else {
 
   welcome = function() {
-    alert("Greetings!");
+    alert("Моє вітання!");
   };
 
 }
 
 *!*
-welcome(); // ok now
+welcome(); // тепер все гаразд
 */!*
 ```
 
-Or we could simplify it even further using a question mark operator `?`:
+Можна спростити цей код, використавши умовний оператор `?`:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
 let welcome = (age < 18) ?
-  function() { alert("Hello!"); } :
-  function() { alert("Greetings!"); };
+  function() { alert("Привіт!"); } :
+  function() { alert("Моє вітання!"); };
 
 *!*
-welcome(); // ok now
+welcome(); // спрацює
 */!*
 ```
 
 
-```smart header="When to choose Function Declaration versus Function Expression?"
-As a rule of thumb, when we need to declare a function, the first to consider is Function Declaration syntax. It gives more freedom in how to organize our code, because we can call such functions before they are declared.
+```smart header="Коли використовувати Оголошення Функції, а коли Функціональний Вираз?"
+Зазвичай, коли нам потрібна функція, то найперше потрібно розглянути синтаксис Оголошення Функції. Він дає нам більше свободи у тому, як організовувати код, оскільки дозволяє викликати функції ще до їх визначення.
 
-That's also better for readability, as it's easier to look up `function f(…) {…}` in the code than `let f = function(…) {…}`. Function Declarations are more "eye-catching".
+Також функції `function f(…) {…}` простіше помітити в коді, ніж `let f = function(…) {…}`. Оголошення Функції більш легко "ловляться очима".
 
-...But if a Function Declaration does not suit us for some reason, or we need a conditional declaration (we've just seen an example), then Function Expression should be used.
+...Але якщо з якоїсь причини Оголошення Функції нам не підходить або нам потрібно визначити функцію згідно умови (як це було в прикладі), то слід використати Функціональний Вираз.
 ```
 
 
-## Arrow functions [#arrow-functions]
+## Стрілкові функції [#arrow-functions]
 
-There's one more very simple and concise syntax for creating functions, that's often better than Function Expressions. It's called "arrow functions", because it looks like this:
+Також існує ще один простіший та коротший синтаксис для створення функцій,який часто доцільніше використовувати замість Функціонального Виразу. Це так звані "стрілкові функції", а виглядають вони ось так:
 
 
 ```js
 let func = (arg1, arg2, ...argN) => expression
 ```
 
-...This creates a function `func` that has arguments `arg1..argN`, evaluates the `expression` on the right side with their use and returns its result.
+...Цей код створить функцію `func` з аргументами `arg1..argN`, що обчислює `expression` з правого боку (використовуючи ці аргументи) та повертає його результат.
 
-In other words, it's roughly the same as:
+Іншими словами, це приблизно те ж саме, що і:
 
 ```js
 let func = function(arg1, arg2, ...argN) {
@@ -375,14 +375,14 @@ let func = function(arg1, arg2, ...argN) {
 };
 ```
 
-...But much more concise.
+...але більш лаконічно.
 
-Let's see an example:
+Розглянемо інший приклад:
 
 ```js run
 let sum = (a, b) => a + b;
 
-/* The arrow function is a shorter form of:
+/* Ця стрілкова функція -- це коротша форма для:
 
 let sum = function(a, b) {
   return a + b;
@@ -393,10 +393,10 @@ alert( sum(1, 2) ); // 3
 
 ```
 
-If we have only one argument, then parentheses around parameters can be omitted, making that even shorter:
+Якщо функція має лише один аргумент, тоді дужки навколо параметрів можна опускати, що дозволить записати її ще коротше:
 
 ```js run
-// same as
+// те ж саме, що і
 // let double = function(n) { return n * 2 }
 *!*
 let double = n => n * 2;
@@ -405,70 +405,70 @@ let double = n => n * 2;
 alert( double(3) ); // 6
 ```
 
-If there are no arguments, parentheses should be empty (but they should be present):
+Якщо аргументів немає, то дужки повинні бути порожніми (але вони повинну бути):
 
 ```js run
-let sayHi = () => alert("Hello!");
+let sayHi = () => alert("Привіт!");
 
 sayHi();
 ```
 
-Arrow functions can be used in the same way as Function Expressions.
+Стрілкові функції можуть бути використані в той же спосіб, що й Функціональні Вирази.
 
-For instance, here's the rewritten example with `welcome()`:
+Наприклад, ось переписана функція `welcome()` з попередніх прикладів:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
 let welcome = (age < 18) ?
-  () => alert('Hello') :
-  () => alert("Greetings!");
+  () => alert('Привіт!') :
+  () => alert("Моє вітання!");
 
-welcome(); // ok now
+welcome(); // працює
 ```
 
-Arrow functions may appear unfamiliar and not very readable at first, but that quickly changes as the eyes get used to the structure.
+Стрілкові функції можуть спершу здатись незвичними та незручними для читання, але це швидко мине, щойно очі звикнуть до таких конструкцій.
 
-They are very convenient for simple one-line actions, when we're just too lazy to write many words.
+Вони дуже зручні для простих однорядкових дій, коли нам лінь писати багато букв.
 
-```smart header="Multiline arrow functions"
+```smart header="Багаторядкові стрілкові функції"
 
-The examples above took arguments from the left of `=>` and evaluated the right-side expression with them.
+У попередніх прикладах зліва від `=>` були аргументи, а справа -- окремий вираз, що певним чином їх використовував.
 
-Sometimes we need something a little bit more complex, like multiple expressions or statements. It is also possible, but we should enclose them in curly braces. Then use a normal `return` within them.
+Проте іноді, нам потрібно дещо складніше, наприклад, декілька виразів чи інструкцій. Це також можливо, але ми повинні записати їх в фігурних дужках і використати `return`, як у звичайних функціях.
 
-Like this:
+Ось так:
 
 ```js run
-let sum = (a, b) => {  // the curly brace opens a multiline function
+let sum = (a, b) => {  // фігурна дужка починає блок багаторядкової функції
   let result = a + b;
 *!*
-  return result; // if we use curly braces, use return to get results
+  return result; // якщо ми використовуємо фігурні дужки, то return дозволить повернути результат
 */!*
 };
 
 alert( sum(1, 2) ); // 3
 ```
 
-```smart header="More to come"
-Here we praised arrow functions for brevity. But that's not all! Arrow functions have other interesting features. We'll return to them later in the chapter <info:arrow-functions>.
+```smart header="І ще дещо..."
+Тут ми розглянули стрілкові функції як спосіб писати менше коду. Але це ще не все! Стрілкові функції мають і інші цікаві особливості. Ми повернемось до них пізніше у розділі <info:arrow-functions>.
 
-For now, we can already use arrow functions for one-line actions and callbacks.
+А поки-що, ми можемо використовувати стрілкові функції для однорядкових дій та колбеків.
 ```
 
-## Summary
+## Підсумки
 
-- Functions are values. They can be assigned, copied or declared in any place of the code.
-- If the function is declared as a separate statement in the main code flow, that's called a "Function Declaration".
-- If the function is created as a part of an expression, it's called a "Function Expression".
-- Function Declarations are processed before the code block is executed. They are visible everywhere in the block.
-- Function Expressions are created when the execution flow reaches them.
+- Функції -- це значення. Ми можемо присвоїти їх змінній, копіювати чи визначити у будь-якій частині коду.
+- Якщо функція визначена як окрема інструкція в основному потоці коду, то це називають "Оголошенням Функції".
+- Якщо функція була створена як частина іншого виразу, тоді це -- "Функціональний Вираз".
+- Обробка Оголошень Функцій виконується перед виконанням блоку коду. Такі функції є видимими у всьому блоці.
+- Функції, що були визначені за допомогою Функціонального Виразу, будуть створені тільки тоді, коли до них дійде потік виконання.
 
-In most cases when we need to declare a function, a Function Declaration is preferable, because it is visible prior to the declaration itself. That gives us more flexibility in code organization, and is usually more readable.
+Зазвичай, коли нам потрібно визначити функцію, то краще віддати перевагу синтаксису Оголошення Функції, бо така функція є видимою навіть перед її визначенням в коді. Це дає нам більшу гнучкість в організації коду та й сам синтаксис є більш читабельним.
 
-So we should use a Function Expression only when a Function Declaration is not fit for the task. We've seen a couple of examples of that in this chapter, and will see more in the future.
+Таким чином, використовувати Функціональний Вираз потрібно тільки тоді, коли Оголошенням Функції не підходить для вирішення нашої задачі. Ми розглянули декілька таких прикладів у цьому розділі і побачимо ще в майбутньому.
 
-Arrow functions are handy for one-liners. They come in two flavors:
+Стрілкові функції зручні для однорядкових дій. Вони бувають двох видів:
 
-1. Without curly braces: `(...args) => expression` -- the right side is an expression: the function evaluates it and returns the result.
-2. With curly braces: `(...args) => { body }` -- brackets allow us to write multiple statements inside the function, but we need an explicit `return` to return something.
+1. Без фігурних дужок: `(...args) => expression` -- права частина є виразом: функція виконує його і повертає результат.
+2. З фігурними дужками: `(...args) => { body }` -- дужки дозволяють включити в функцію більше однієї інструкції, але при цьому потрібно явно вказати `return`, щоб що-небудь повернути.
