@@ -211,7 +211,7 @@ ask(
 
 ```js run refresh untrusted
 *!*
-sayHi("Микола"); // Привіт, Микола
+sayHi("Іван"); // Привіт, Іван
 */!*
 
 function sayHi(name) {
@@ -225,7 +225,7 @@ function sayHi(name) {
 
 ```js run refresh untrusted
 *!*
-sayHi("Микола"); // помилка!
+sayHi("Іван"); // помилка!
 */!*
 
 let sayHi = function(name) {  // (*) більше ніякої магії
