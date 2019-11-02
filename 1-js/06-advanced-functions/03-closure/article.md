@@ -351,7 +351,7 @@ Please note the additional `[[Environment]]` property is covered here. We didn't
 
     ![](lexenv-nested-makecounter-3.svg)
 
-    Please note that on this step the inner function was created, but not yet called. The code inside `function() { return count++; }` is not running.
+    Please note that on this step the inner function was created, but not yet called. The code inside `return count++;` is not running.
 
 4. As the execution goes on, the call to `makeCounter()` finishes, and the result (the tiny nested function) is assigned to the global variable `counter`:
 
@@ -565,7 +565,8 @@ function f() {
 */!*
 }
 
-let g = f(); // g is reachable, and keeps the outer lexical environment in memory
+let func = f(); // func gets a reference to g
+// so it stays and memory and its outer lexical environment stays as well
 ```
 
 Please note that if `f()` is called many times, and resulting functions are saved, then all corresponding Lexical Environment objects will also be retained in memory. All 3 of them in the code below:
@@ -595,10 +596,9 @@ function f() {
   return g;
 }
 
-let g = f(); // while g is alive
-// their corresponding Lexical Environment lives
+let func = f(); // while func has a reference to g, it stays in memory
 
-g = null; // ...and now the memory is cleaned up
+func = null; // ...and now the memory is cleaned up
 ```
 
 ### Real-life optimizations

@@ -61,7 +61,7 @@ So, this will also work:
 setTimeout("alert('Hello')", 1000);
 ```
 
-But using strings is not recommended, use functions instead of them, like this:
+But using strings is not recommended, use arrow functions instead of them, like this:
 
 ```js run no-beautify
 setTimeout(() => alert('Hello'), 1000);
@@ -184,7 +184,7 @@ Let's compare two code fragments. The first one uses `setInterval`:
 ```js
 let i = 1;
 setInterval(function() {
-  func(i);
+  func(i++);
 }, 100);
 ```
 
@@ -193,12 +193,12 @@ The second one uses nested `setTimeout`:
 ```js
 let i = 1;
 setTimeout(function run() {
-  func(i);
+  func(i++);
   setTimeout(run, 100);
 }, 100);
 ```
 
-For `setInterval` the internal scheduler will run `func(i)` every 100ms:
+For `setInterval` the internal scheduler will run `func(i++)` every 100ms:
 
 ![](setinterval-interval.svg)
 

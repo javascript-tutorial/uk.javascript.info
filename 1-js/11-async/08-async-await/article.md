@@ -56,7 +56,7 @@ async function f() {
   });
 
 *!*
-  let result = await promise; // wait till the promise resolves (*)
+  let result = await promise; // wait until the promise resolves (*)
 */!*
 
   alert(result); // "done!"
@@ -132,7 +132,7 @@ let user = await response.json();
 
 We can wrap it into an anonymous async function, like this:
 
-```js run
+```js
 (async () => {
   let response = await fetch('/article/promise-chaining/user.json');
   let user = await response.json();
@@ -168,7 +168,7 @@ async function f() {
 f();
 ```
 
-If `await` gets a non-promise object with `.then`, it calls that method providing native functions `resolve`, `reject` as arguments. Then `await` waits until one of them is called (in the example above it happens in the line `(*)`) and then proceeds with the result.
+If `await` gets a non-promise object with `.then`, it calls that method providing built-in functions `resolve`, `reject` as arguments (just as it does for a regular `Promise` executor). Then `await` waits until one of them is called (in the example above it happens in the line `(*)`) and then proceeds with the result.
 ````
 
 ````smart header="Async class methods"
