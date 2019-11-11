@@ -38,7 +38,11 @@
 2. Потім він перетворює ("компілює") скрипт в машинний код.
 3. І потім машинний код виконується, причому дуже швидко.
 
+<<<<<<< HEAD
 Рушій застосовує оптимізації на кожному етапі процесу. Він навіть слідкує за скомпільованим скриптом під час його виконання, аналізує дані, які проходять через скрипт, і на основі цих знань застосовує оптимізації до машинного коду. Коли це завершиться, скрипти будуть виконуватися дуже швидко.
+=======
+The engine applies optimizations at each step of the process. It even watches the compiled script as it runs, analyzes the data that flows through it, and further optimizes the machine code based on that knowledge.
+>>>>>>> 2b5ac971c1bd8abe7b17cdcf724afd84799b6cbd
 ```
 
 ## Що може вбудований в браузер JavaScript?

@@ -123,7 +123,7 @@ These methods must return a primitive value. If `toString` or `valueOf` returns 
 By default, a plain object has following `toString` and `valueOf` methods:
 
 - The `toString` method returns a string `"[object Object]"`.
-- The `valueOf` method returns an object itself.
+- The `valueOf` method returns the object itself.
 
 Here's the demo:
 
@@ -199,7 +199,7 @@ In contrast, `Symbol.toPrimitive` *must* return a primitive, otherwise there wil
 
 ## Further conversions
 
-As we know already, many operators and functions perform type conversions, e.g. multiplication `*` converts operatnds to numbers.
+As we know already, many operators and functions perform type conversions, e.g. multiplication `*` converts operands to numbers.
 
 If we pass an object as an argument, then there are two stages:
 1. The object is converted to a primitive (using the rules described above).

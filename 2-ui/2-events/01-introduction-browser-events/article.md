@@ -148,7 +148,7 @@ In the code below `button` shows its contents using `this.innerHTML`:
 
 ## Possible mistakes
 
-If you're starting to work with event -- please note some subtleties.
+If you're starting to work with events -- please note some subtleties.
 
 **The function should be assigned as `sayThanks`, not `sayThanks()`.**
 
@@ -181,7 +181,7 @@ button.onclick = function() {
 
 **Use functions, not strings.**
 
-The assignment `elem.onclick = "alert(1)"` would work too. It works for compatibility reasons, but strongly not recommended.
+The assignment `elem.onclick = "alert(1)"` would work too. It works for compatibility reasons, but is strongly not recommended.
 
 **Don't use `setAttribute` for handlers.**
 

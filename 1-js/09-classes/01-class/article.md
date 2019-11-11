@@ -116,9 +116,9 @@ alert(User.prototype.sayHi); // alert(this.name);
 alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 ```
 
-## Not just a syntax sugar
+## Not just a syntactic sugar
 
-Sometimes people say that `class` is a "syntax sugar" (syntax that is designed to make things easier to read, but doesn't introduce anything new), because we could actually declare the same without `class` keyword at all:
+Sometimes people say that `class` is a "syntactic sugar" (syntax that is designed to make things easier to read, but doesn't introduce anything new), because we could actually declare the same without `class` keyword at all:
 
 ```js run
 // rewriting class User in pure functions
@@ -140,7 +140,7 @@ let user = new User("John");
 user.sayHi();
 ```
 
-The result of this definition is about the same. So, there are indeed reasons why `class` can be considered a syntax sugar to define a constructor together with its prototype methods.
+The result of this definition is about the same. So, there are indeed reasons why `class` can be considered a syntactic sugar to define a constructor together with its prototype methods.
 
 Still, there are important differences.
 
@@ -282,7 +282,7 @@ Object.defineProperties(User.prototype, {
 });
 ```
 
-Here's an example with a computed property in brackets `[...]`:
+Here's an example with a computed property name in brackets `[...]`:
 
 ```js run
 class User {
@@ -318,6 +318,9 @@ class User {
 }
 
 new User().sayHi();
+
+alert(User.prototype.sayHi); // placed in User.prototype
+alert(User.prototype.name); // undefined, not placed in User.prototype
 ```
 
 The property `name` is not placed into `User.prototype`. Instead, it is created by `new` before calling the constructor, it's a property of the object itself.
