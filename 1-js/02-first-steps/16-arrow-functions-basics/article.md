@@ -1,16 +1,16 @@
-# Arrow functions, the basics
+# Стрілкові функції, основи
 
-There's another very simple and concise syntax for creating functions, that's often better than Function Expressions.
+Існує ще один простий та короткий синтаксис для створення функцій, який часто доцільніше використовувати замість Функціонального Виразу.
 
-It's called "arrow functions", because it looks like this:
+Це так звані "стрілкові функції", а виглядають вони ось так:
 
 ```js
 let func = (arg1, arg2, ...argN) => expression
 ```
 
-...This creates a function `func` that accepts arguments `arg1..argN`, then evaluates the `expression` on the right side with their use and returns its result.
+...Цей код створить функцію `func` з аргументами `arg1..argN`, що обчислює `expression` з правого боку (використовуючи ці аргументи) та повертає його результат.
 
-In other words, it's the shorter version of:
+Іншими словами, це приблизно те ж саме, що і:
 
 ```js
 let func = function(arg1, arg2, ...argN) {
@@ -18,12 +18,12 @@ let func = function(arg1, arg2, ...argN) {
 };
 ```
 
-Let's see a concrete example:
+Розглянемо інший приклад:
 
 ```js run
 let sum = (a, b) => a + b;
 
-/* This arrow function is a shorter form of:
+/* Ця стрілкова функція — це коротша форма для:
 
 let sum = function(a, b) {
   return a + b;
@@ -33,79 +33,75 @@ let sum = function(a, b) {
 alert( sum(1, 2) ); // 3
 ```
 
-As you can, see `(a, b) => a + b` means a function that accepts two arguments named `a` and `b`. Upon the execution, it evaluates the expression `a + b` and returns the result.
+Як ви бачите, `(a, b) => a + b` означає функцію, яка приймає два аргументи `a` і `b`. Після запуску, вона виконає вираз `a + b` і поверне результат.
 
-- If we have only one argument, then parentheses around parameters can be omitted, making that even shorter.
+- Якщо функція має лише один аргумент, тоді дужки навколо параметрів можна опускати, що дозволить записати її ще коротше.
 
-    For example:
+    Наприклад:
 
     ```js run
     *!*
     let double = n => n * 2;
-    // roughly the same as: let double = function(n) { return n * 2 }
+    // те ж саме, що і: let double = function(n) { return n * 2 }
     */!*
 
     alert( double(3) ); // 6
     ```
 
-- If there are no arguments, parentheses will be empty (but they should be present):
+- Якщо аргументів немає, то дужки повинні бути порожніми (але вони повинні бути):
 
     ```js run
-    let sayHi = () => alert("Hello!");
+    let sayHi = () => alert("Привіт!");
 
     sayHi();
     ```
 
-Arrow functions can be used in the same way as Function Expressions.
+Стрілкові функції можна використовувати тим самим способом, що й Функціональні Вирази.
 
-For instance, to dynamically create a function:
+Наприклад, щоб динамічно створити функцію:
 
 ```js run
-let age = prompt("What is your age?", 18);
+let age = prompt("Скільки вам років?", 18);
 
 let welcome = (age < 18) ?
-  () => alert('Hello') :
-  () => alert("Greetings!");
+  () => alert('Привіт') :
+  () => alert("Вітання!");
 
-welcome(); // ok now
+welcome(); // працює
 ```
 
-Arrow functions may appear unfamiliar and not very readable at first, but that quickly changes as the eyes get used to the structure.
+Стрілкові функції можуть спершу здатись незвичними та незручними для читання, але це швидко мине, щойно очі звикнуть до таких конструкцій.
 
-They are very convenient for simple one-line actions, when we're just too lazy to write many words.
+Вони дуже зручні для простих однорядкових дій, коли нам лінь писати багато слів.
 
-## Multiline arrow functions
+## Багаторядкові стрілкові функції
 
-The examples above took arguments from the left of `=>` and evaluated the right-side expression with them.
+У попередніх прикладах зліва від `=>` були аргументи, а справа — окремий вираз, що певним чином їх використовував.
 
-Sometimes we need something a little bit more complex, like multiple expressions or statements. It is also possible, but we should enclose them in curly braces. Then use a normal `return` within them.
+Проте іноді, нам потрібно дещо складніше, наприклад, декілька виразів чи інструкцій. Це також можливо, але ми повинні записати їх в фігурних дужках і використати `return`, як у звичайних функціях.
 
-Like this:
+Ось так:
 
 ```js run
-let sum = (a, b) => {  // the curly brace opens a multiline function
+let sum = (a, b) => {  // фігурна дужка починає блок багаторядкової функції
   let result = a + b;
 *!*
-  return result; // if we use curly braces, then we need an explicit "return" 
+  return result; // якщо ми використовуємо фігурні дужки, то "return" дозволить повернути результат
 */!*
 };
 
 alert( sum(1, 2) ); // 3
 ```
 
-```smart header="More to come"
-Here we praised arrow functions for brevity. But that's not all!
+```smart header="І ще дещо..."
+Тут ми розглянули лише основи стрілкових функцій. Це ще не все! Стрілкові функції мають й інші цікаві особливості. Щоб вивчити їх детальніше, нам потрібно дізнатися ще деякі аспекти JavaScript. Тому ми повернемось до стрілкових функцій пізніше у розділі <info:arrow-functions>.
 
-Arrow functions have other interesting features.
-
-To study them in-depth, we first need to get to know some other aspects of JavaScript, so we'll return to arrow functions later in the chapter <info:arrow-functions>.
-
-For now, we can already use arrow functions for one-line actions and callbacks.
+А поки-що, ми можемо використовувати стрілкові функції для однорядкових дій та колбеків.
 ```
 
-## Summary
+## Підсумки
 
-Arrow functions are handy for one-liners. They come in two flavors:
+Стрілкові функції зручні для однорядкових дій. Вони бувають двох видів:
 
-1. Without curly braces: `(...args) => expression` -- the right side is an expression: the function evaluates it and returns the result.
-2. With curly braces: `(...args) => { body }` -- brackets allow us to write multiple statements inside the function, but we need an explicit `return` to return something.
+1. Без фігурних дужок: `(...args) => expression` — права частина є виразом: функція виконує його і повертає результат.
+2. З фігурними дужками: `(...args) => { body }` — дужки дозволяють включити в функцію більше однієї інструкції, але при цьому потрібно явно вказати `return`, щоб що-небудь повернути.
