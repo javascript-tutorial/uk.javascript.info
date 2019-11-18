@@ -68,7 +68,7 @@ For instance, if we have a single handler `form.onclick`, then it can "catch" al
 
 In `form.onclick` handler:
 
-- `this` (`=event.currentTarget`) is the `<form>` element, because the handler runs on it.
+- `this` (=`event.currentTarget`) is the `<form>` element, because the handler runs on it.
 - `event.target` is the actual element inside the form that was clicked.
 
 Check it out:
@@ -102,7 +102,7 @@ To stop the bubbling and prevent handlers on the current element from running, t
 ```
 
 ```warn header="Don't stop bubbling without a need!"
-Bubbling is convenient. Don't stop it without a real need: obvious and architecturally well-thought.
+Bubbling is convenient. Don't stop it without a real need: obvious and architecturally well thought out.
 
 Sometimes `event.stopPropagation()` creates hidden pitfalls that later may become problems.
 
