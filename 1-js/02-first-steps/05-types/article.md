@@ -10,9 +10,15 @@ message = 123456;
 
 Мова програмування, яка дозволяє таке робити, називається "динамічно типізованою". Мається на увазі, що є різні типи даних, але змінні не прив'язанні до жодного типу.
 
+<<<<<<< HEAD
 Існує сім базових типів в JavaScript. У цьому розділі ми розглянемо їх поверхнево, але в наступних розлянемо кожен більш детально.
 
 ## Число (number)
+=======
+There are eight basic data types in JavaScript. Here, we'll cover them in general and in the next chapters we'll talk about each of them in detail.
+
+## Number
+>>>>>>> 47d186598add3a0ea759615596a12e277ce8fb5a
 
 ```js
 let n = 123;
@@ -62,14 +68,43 @@ n = 12.345;
 
 Докладніше роботу с числами ми розглянемо у розділі <info:number>.
 
+<<<<<<< HEAD
 ## Рядок (string)
+=======
+## BigInt
+
+In JavaScript, the "number" type cannot represent integer values larger than <code>2<sup>53</sup></code> (or less than <code>-2<sup>53</sup></code> for negatives), that's a technical limitation caused by their internal representation. That's about 16 decimal digits, so for most purposes the limitation isn't a problem, but sometimes we need really big numbers, e.g. for cryptography or microsecond-precision timestamps.
+
+`BigInt` type was recently added to the language to represent integers of arbitrary length.
+
+A `BigInt` is created by appending `n` to the end of an integer literal:
+
+```js
+// the "n" at the end means it's a BigInt
+const bigInt = 1234567890123456789012345678901234567890n;
+```
+
+As `BigInt` numbers are rarely needed, we devoted them a separate chapter <info:bigint>.
+
+```smart header="Compatability issues"
+Right now `BigInt` is supported in Firefox and Chrome, but not in Safari/IE/Edge.
+```
+
+## String
+>>>>>>> 47d186598add3a0ea759615596a12e277ce8fb5a
 
 Рядок у JavaScript повинен бути оточенним лапками.
 
 ```js
+<<<<<<< HEAD
 let str = "Привіт";
 let str2 = 'Одинарні лапки також дозволяються';
 let phrase = `так можна вставляти ${str}`;
+=======
+let str = "Hello";
+let str2 = 'Single quotes are ok too';
+let phrase = `can embed another ${str}`;
+>>>>>>> 47d186598add3a0ea759615596a12e277ce8fb5a
 ```
 
 В JavaScript існує три типи лапок.
@@ -78,7 +113,11 @@ let phrase = `так можна вставляти ${str}`;
 2. Одинарні липки: `'Привіт'`.
 3. Зворотні лапки: <code>&#96;Привіт&#96;</code>.
 
+<<<<<<< HEAD
 Подвійні та одинарні лапки є "звичайними". Тобто немає ніякої різниці, які саме використовувати.
+=======
+Double and single quotes are "simple" quotes. There's practically no difference between them in JavaScript.
+>>>>>>> 47d186598add3a0ea759615596a12e277ce8fb5a
 
 Зворотні лапки є "розширеною функціональністю". Вони дозволяють вбудовувати змінні та вирази в рядок, обрамляючи їх `${…}`, наприклад:
 
@@ -101,13 +140,22 @@ alert("результат ${1 + 2}"); // результат ${1 + 2} (подві
 
 Більш детально ми будемо висвітлювати рядки у розділі <info:string>.
 
+<<<<<<< HEAD
 ```smart header="Не існує типу *символ* (*character*)."
 У деяких мовах існує спеціальний тип "character" для позначення єдиного символу. Наприклад, в мовах C та Java це `char`.
+=======
+```smart header="There is no *character* type."
+In some languages, there is a special "character" type for a single character. For example, in the C language and in Java it is called "char".
+>>>>>>> 47d186598add3a0ea759615596a12e277ce8fb5a
 
 В JavaScript не існує такого типу. Є єдиний тип: `string`. В свою чергу рядок може містити або один символ, або багато.
 ```
 
+<<<<<<< HEAD
 ## Логічний тип (boolean)
+=======
+## Boolean (logical type)
+>>>>>>> 47d186598add3a0ea759615596a12e277ce8fb5a
 
 Логічний тип може приймати лише два значення: `true` та `false`.
 
@@ -198,6 +246,8 @@ typeof undefined // "undefined"
 
 typeof 0 // "number"
 
+typeof 10n // "bigint"
+
 typeof true // "boolean"
 
 typeof "foo" // "string"
@@ -223,6 +273,7 @@ typeof alert // "function"  (3)
 2. Результатом `typeof null` є `"object"`. Це неправильно. Це офіційно визнана помилка в `typeof`, що зберігається для сумісності. Звичайно, `null` не є об'єктом. Це особливе значення з власним типом. Отже, знову ж таки, це помилка в мові.
 3. Результатом `typeof alert` є `"function"`, тому що `alert` — це функція. Ми будемо вивчати функції в наступних розділах, де ми також побачимо, що в JavaScript немає спеціального типу "function". Функції належать до типу об'єкт. Але `typeof` трактує їх по-різному, повертаючи `"function"`. Це не зовсім правильно, але дуже зручно на практиці.
 
+<<<<<<< HEAD
 
 ## Підсумки
 
@@ -235,6 +286,20 @@ typeof alert // "function"  (3)
 - `undefined` для непризначених значень — автономний тип, який має єдине значення `undefined`.
 - `object` для більш складних структур даних.
 - `symbol` для унікальних ідентифікаторів.
+=======
+## Summary
+
+There are 8 basic data types in JavaScript.
+
+- `number` for numbers of any kind: integer or floating-point, integers are limited by ±2<sup>53</sup>.
+- `bigint` is for integer numbers of arbitrary length.
+- `string` for strings. A string may have one or more characters, there's no separate single-character type.
+- `boolean` for `true`/`false`.
+- `null` for unknown values -- a standalone type that has a single value `null`.
+- `undefined` for unassigned values -- a standalone type that has a single value `undefined`.
+- `object` for more complex data structures.
+- `symbol` for unique identifiers.
+>>>>>>> 47d186598add3a0ea759615596a12e277ce8fb5a
 
 Оператор `typeof` дозволяє нам бачити, який тип зберігається в змінній.
 
