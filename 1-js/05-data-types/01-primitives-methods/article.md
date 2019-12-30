@@ -7,7 +7,7 @@ JavaScript дозволяє працювати з примітивами (ряд
 Примітив
 
 - є значенням примітивного типу
-- існує 6 типів примітивів: `string`, `number`, `boolean`, `symbol`, `null` та `undefined`.
+- існує 7 типів примітивів: `string`, `number`, `bigint`, `boolean`, `symbol`, `null` та `undefined`.
 
 Об'єкт
 
