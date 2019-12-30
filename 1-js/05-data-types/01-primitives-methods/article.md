@@ -9,7 +9,12 @@ JavaScript дозволяє працювати з примітивами (ряд
 - є значенням примітивного типу
 - існує 6 типів примітивів: `string`, `number`, `boolean`, `symbol`, `null` та `undefined`.
 
+<<<<<<< HEAD
 Об'єкт
+=======
+- Is a value of a primitive type.
+- There are 7 primitive types: `string`, `number`, `bigint`, `boolean`, `symbol`, `null` and `undefined`.
+>>>>>>> 28ed5a3f7df9e015cf81c126423c76c9408d7117
 
 - можна зберігати декілька значень як властивості.
 - може бути створений за допомогою `{}`, наприклад: `{name: "Іван", age: 30}`. В JavaScript існують й інші об'єкти: функції - це теж об'єкти.
