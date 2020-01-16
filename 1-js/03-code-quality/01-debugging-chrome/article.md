@@ -1,36 +1,36 @@
-# Debugging in Chrome
+# Налагодження в браузері Chrome
 
-Before writing more complex code, let's talk about debugging.
+Перед тим, як приступити до написання складнішого коду, давайте поговоримо про його налагодження.
 
-[Debugging](https://en.wikipedia.org/wiki/Debugging) is the process of finding and fixing errors within a script. All modern browsers and most other environments support debugging tools -- a special UI in developer tools that makes debugging much easier. It also allows to trace the code step by step to see what exactly is going on.
+[Налагодження](https://uk.wikipedia.org/wiki/Налагодження_програм) — це процес пошуку і виправлення помилок в скрипті. Усі сучасні браузери і більшість інших середовищ розробки підтримують інструменти налагодження — спеціальний графічний інтерфейс, який значно спрощує налагодження. Він також дозволяє покроково відслідковувати, що саме відбувається в нашому коді.
 
-We'll be using Chrome here, because it has enough features, most other browsers have a similar process`.
+Ми будемо використовувати браузер Chrome, тому що в нього достатньо можливостей для налагодження. В більшості інших браузерів процес буде схожим.
 
-## The "Sources" panel
+## Вкладка "Sources" ("вихідний код")
 
-Your Chrome version may look a little bit different, but it still should be obvious what's there.
+Ваш браузер Chrome може бути іншої версії – він може виглядати інакше, але різниця буде не суттєвою.
 
-- Open the [example page](debugging/index.html) in Chrome.
-- Turn on developer tools with `key:F12` (Mac: `key:Cmd+Opt+I`).
-- Select the `Sources` panel.
+- В браузері Chrome, відкрийте [тестову сторінку](debugging/index.html).
+- Відкрийте інструменти розробника, натиснувши клавішу `key:F12` (або `key:Cmd+Opt+I` на Mac).
+- Виберіть вкладку `Sources`.
 
-Here's what you should see if you are doing it for the first time:
+У вас буде схоже вікно:
 
 ![](chrome-open-sources.svg)
 
-The toggler button <span class="devtools" style="background-position:-172px -98px"></span> opens the tab with files.
+Кнопка-перемикач <span class="devtools" style="background-position:-172px -98px"></span> ліворуч відкриває панель з файлами.
 
-Let's click it and select `hello.js` in the tree view. Here's what should show up:
+Натисніть на неї і виберіть файл `hello.js`. Ось що з'явиться:
 
 ![](chrome-tabs.svg)
 
-Here we can see three zones:
+Цей інтерфейс складається з трьох панелей:
 
-1. The **Resources zone** lists HTML, JavaScript, CSS and other files, including images that are attached to the page. Chrome extensions may appear here too.
-2. The **Source zone** shows the source code.
-3. The **Information and control zone** is for debugging, we'll explore it soon.
+1. В панелі **File Navigator** (Навігатор файлів) показані файли HTML, JavaScript, CSS та інші файли, включно із зображеннями, які використовуються на сторінці. Також тут можуть бути файли від розширень Chrome.
+2. Панель **Code Editor** (Редагування коду) показує вихідний код.
+3. Панель **JavaScript Debugging** (Налагодження JavaScript) для налагодження, ми вернемося до цього пізніше.
 
-Now you could click the same toggler <span class="devtools" style="background-position:-172px -122px"></span> again to hide the resources list and give the code some space.
+Можете знову натиснути на ту саму кнопку <span class="devtools" style="background-position:-172px -122px"></span>, щоб закрити панель і звільнити місце для коду.
 
 ## Console
 

@@ -1,3 +1,3 @@
-# Code quality
+# Якість коду
 
-This chapter explains coding practices that we'll use further in the development. 
+В цьому розділі пояснюються підходи до написання коду, які будемо використовувати в подальшій розробці.

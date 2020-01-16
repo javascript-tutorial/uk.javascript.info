@@ -43,9 +43,13 @@ ifelse_task.svg:
   TheMaster: ''
   Other: ''
 
+# 1-js/03-code-quality/01-debugging-chrome/chrome-open-sources.svg
+chrome-open-sources.svg:
+  open sources: 'показати вихідні файли'
+
 chrome-sources-breakpoint.svg:
-  here's the list: ''
-  breakpoints: ''
+  here's the list: 'ось список'
+  breakpoints: 'точки зупинки'
 
 chrome-sources-debugger-pause.svg:
   '1': ''
@@ -53,7 +57,9 @@ chrome-sources-debugger-pause.svg:
   '3': ''
   jump to the outer function: ''
   watch expressions: ''
-  current variables: ''
+  "current variables":
+    text: "поточні змінні"
+    position: "right"
 
 chrome-sources-debugger-trace-1.svg:
   nested calls: ''
