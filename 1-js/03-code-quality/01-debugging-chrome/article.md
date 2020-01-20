@@ -24,21 +24,21 @@
 
 ![](chrome-tabs.svg)
 
-Цей інтерфейс складається з трьох панелей:
+Цей інтерфейс складається з трьох частин:
 
-1. В панелі **File Navigator** (Навігатор файлів) показані файли HTML, JavaScript, CSS та інші файли, включно із зображеннями, які використовуються на сторінці. Також тут можуть бути файли від розширень Chrome.
+1. На панелі **File Navigator** (Навігатор файлів) показані файли HTML, JavaScript, CSS та інші файли, включно із зображеннями, які використовуються на сторінці. Також тут можуть бути файли від розширень Chrome.
 2. Панель **Code Editor** (Редагування коду) показує вихідний код.
 3. Панель **JavaScript Debugging** (Налагодження JavaScript) для налагодження, ми вернемося до цього пізніше.
 
 Можете знову натиснути на ту саму кнопку <span class="devtools" style="background-position:-172px -122px"></span>, щоб закрити панель і звільнити місце для коду.
 
-## Console
+## Консоль
 
-If we press `key:Esc`, then a console opens below. We can type commands there and press `key:Enter` to execute.
+Якщо натиснути клавішу `key:Esc`, в нижній частині екрану відкриється консоль. Туди можна вводити команди і виконувати їх, натиснувши клавішу `key:Enter`.
 
-After a statement is executed, its result is shown below.
+Нижче показується результат виконання команд.
 
-For example, here `1+2` results in `3`, and `hello("debugger")` returns nothing, so the result is `undefined`:
+Наприклад, результатом `1+2` буде `3`, а ось інструкція `hello("debugger")` нічого не повертає, тому результат буде `undefined`:
 
 ![](chrome-sources-console.svg)
 
