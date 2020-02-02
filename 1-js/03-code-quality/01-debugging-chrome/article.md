@@ -2,7 +2,7 @@
 
 Перед тим, як приступити до написання складнішого коду, давайте поговоримо про його налагодження.
 
-[Налагодження](https://uk.wikipedia.org/wiki/Налагодження_програм) — це процес пошуку і виправлення помилок в скрипті. Усі сучасні браузери і більшість інших середовищ розробки підтримують інструменти налагодження — спеціальний графічний інтерфейс, який значно спрощує налагодження. Він також дозволяє покроково відслідковувати, що саме відбувається в нашому коді.
+[Налагодження](https://uk.wikipedia.org/wiki/Налагодження_програм) — це процес пошуку і виправлення помилок в скрипті. Усі сучасні браузери і більшість інших середовищ розробки підтримують інструменти налагодження — спеціальний графічний інтерфейс, який значно спрощує налагодження. Він також дозволяє покроково відслідковувати, що саме відбувається в коді.
 
 Ми будемо використовувати браузер Chrome, тому що в нього достатньо можливостей для налагодження. В більшості інших браузерів процес буде схожим.
 
@@ -20,15 +20,15 @@
 
 Кнопка-перемикач <span class="devtools" style="background-position:-172px -98px"></span> ліворуч відкриває панель з файлами.
 
-Натисніть на неї і виберіть файл `hello.js`. Ось що з'явиться:
+Натисніть на неї і виберіть файл `hello.js`. Ось як буде виглядати вкладка Sources:
 
 ![](chrome-tabs.svg)
 
 Цей інтерфейс складається з трьох частин:
 
-1. На панелі **File Navigator** (Навігатор файлів) показані файли HTML, JavaScript, CSS та інші файли, включно із зображеннями, які використовуються на сторінці. Також тут можуть бути файли від розширень Chrome.
-2. Панель **Code Editor** (Редагування коду) показує вихідний код.
-3. Панель **JavaScript Debugging** (Налагодження JavaScript) для налагодження, ми вернемося до цього пізніше.
+1. На панелі **Навігатор файлів** (File Navigator) показані файли HTML, JavaScript, CSS та інші файли, включно із зображеннями, які використовуються на сторінці. Також тут можуть бути файли від розширень Chrome.
+2. Панель **Редагування коду** (Code Editor) показує вихідний код.
+3. Панель **Налагодження JavaScript** (JavaScript Debugging) використовується для налагодження, ми повернемося до цього пізніше.
 
 Можете знову натиснути на ту саму кнопку <span class="devtools" style="background-position:-172px -122px"></span>, щоб закрити панель і звільнити місце для коду.
 
@@ -38,53 +38,53 @@
 
 Нижче показується результат виконання команд.
 
-Наприклад, результатом `1+2` буде `3`, а ось інструкція `hello("debugger")` нічого не повертає, тому результат буде `undefined`:
+Наприклад, результатом `1 + 2` буде `3`, а ось інструкція `hello("debugger")` нічого не повертає, тому результат буде `undefined`:
 
 ![](chrome-sources-console.svg)
 
-## Breakpoints
+## Точки зупинки (breakpoints)
 
-Let's examine what's going on within the code of the [example page](debugging/index.html). In `hello.js`, click at line number `4`. Yes, right on the `4` digit, not on the code.
+Давайте розберемося, як працює код на [тестовій сторінці](debugging/index.html). В файлі `hello.js`, натисніть на рядок номер `4`. Так, на саму цифру, не по коді.
 
-Congratulations! You've set a breakpoint. Please also click on the number for line `8`.
+Вітаємо! Ви поставили точку зупинки. Поставте також точку зупинки на `8` рядку.
 
-It should look like this (blue is where you should click):
+Номери рядків мають стати синього кольору. Ось що в результаті повинно вийти:
 
 ![](chrome-sources-breakpoint.svg)
 
-A *breakpoint* is a point of code where the debugger will automatically pause the JavaScript execution.
+*Точка зупинки* — це місце в коді, де налагоджувач автоматично призупинить виконання JavaScript.
 
-While the code is paused, we can examine current variables, execute commands in the console etc. In other words, we can debug it.
+Поки виконання призупинене, ми можемо переглядати поточні значення змінних, виконувати команди в консолі тощо. Інакше кажучи, можемо налагоджувати.
 
-We can always find a list of breakpoints in the right panel. That's useful when we have many breakpoints in various files. It allows us to:
-- Quickly jump to the breakpoint in the code (by clicking on it in the right panel).
-- Temporarily disable the breakpoint by unchecking it.
-- Remove the breakpoint by right-clicking and selecting Remove.
-- ...And so on.
+В правій частині панелі видно всі точки зупинки. Коли виставлено багато таких точок, та ще й в різних файлах, цей список дозволяє ефективно ними керувати:
+- Швидко переміщатися до будь-якої точки зупинки в коді – потрібно клікнути по ній в правій частині панелі.
+- Тимчасово вимкнути точку зупинки, знявши виділення.
+- Видалити точку – потрібно клікнувши по ній правою кнопкою миші і вибрати «Remove breakpoint» (Видалити точку зупинки).
+- ...тощо.
 
-```smart header="Conditional breakpoints"
-*Right click* on the line number allows to create a *conditional* breakpoint. It only triggers when the given expression is truthy.
+```smart header="Умовні точки зупинки"
+Можна задати так звану *умовну* точку зупинки – клікніть правою кнопкою миші по номеру рядка в коді, виберіть пункт «Edit breakpoint...» і пропишіть умову. Коли ця умова буде справджуватися, то виконання коду призупиниться в цій точці зупинки.
 
-That's handy when we need to stop only for a certain variable value or for certain function parameters.
+Цей метод використовується, коли потрібно призупинити виконання коду під час специфічних значень змінних або параметрів функції.
 ```
 
-## Debugger command
+## Команда Debugger
 
-We can also pause the code by using the `debugger` command in it, like this:
+Виконання коду також можна призупиняти командою `debugger` прямо всередині коду, ось так:
 
 ```js
 function hello(name) {
-  let phrase = `Hello, ${name}!`;
+  let phrase = `Привіт, ${name}!`;
 
 *!*
-  debugger;  // <-- the debugger stops here
+  debugger;  // <-- тут зупиниться налагоджувач
 */!*
 
   say(phrase);
 }
 ```
 
-That's very convenient when we are in a code editor and don't want to switch to the browser and look up the script in developer tools to set the breakpoint.
+Цей спосіб зручний тим, що коли ми працюємо в редакторі коду, нам не потрібно ще додатково переключатися в браузер, і шукати файл, щоб поставити точку зупинки.
 
 
 ## Pause and look around

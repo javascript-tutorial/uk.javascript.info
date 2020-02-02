@@ -47,8 +47,9 @@ ifelse_task.svg:
 chrome-open-sources.svg:
   open sources: 'показати вихідні файли'
 
+# 1-js/03-code-quality/01-debugging-chrome/chrome-sources-breakpoint.svg
 chrome-sources-breakpoint.svg:
-  here's the list: 'ось список'
+  here's the list: 'список всіх точок в цьому файлі'
   breakpoints: 'точки зупинки'
 
 chrome-sources-debugger-pause.svg:
