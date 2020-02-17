@@ -52,6 +52,7 @@ chrome-sources-breakpoint.svg:
   here's the list: 'список всіх точок в цьому файлі'
   breakpoints: 'точки зупинки'
 
+# 1-js/03-code-quality/01-debugging-chrome/chrome-sources-debugger-pause.svg
 chrome-sources-debugger-pause.svg:
   '1': ''
   '2': ''

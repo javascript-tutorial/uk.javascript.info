@@ -87,11 +87,11 @@ function hello(name) {
 Цей спосіб зручний тим, що коли ми працюємо в редакторі коду, нам не потрібно ще додатково переключатися в браузер, і шукати файл, щоб поставити точку зупинки.
 
 
-## Pause and look around
+## Зупиніться і озирніться
 
-In our example, `hello()` is called during the page load, so the easiest way to activate the debugger (after we've set the breakpoints) is to reload the page. So let's press `key:F5` (Windows, Linux) or `key:Cmd+R` (Mac).
+В нашому прикладі, функція `hello()` викликається під час завантаження сторінки, отже, найшвидшим способом активувати налагоджувач (після того як ми поставили точку зупинки) — це перезавантажити сторінку. Тому просто натисніть `key:F5` (Windows, Linux) чи `key:Cmd+R` (на Mac).
 
-As the breakpoint is set, the execution pauses at the 4th line:
+Оскільки ми поставили точку зупинки, виконання коду призупиниться на 4-му рядку:
 
 ![](chrome-sources-debugger-pause.svg)
 
