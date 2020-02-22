@@ -1,12 +1,12 @@
-# Coding Style
+# Стандарт оформлення коду
 
-Our code must be as clean and easy to read as possible.
+Наш код повинен бути настільки чистим та зрозумілим наскільки це можливо.
 
-That is actually the art of programming -- to take a complex task and code it in a way that is both correct and human-readable. A good code style greatly assists in that.  
+Насправді, це є мистецтвом програмування -- брати складну задачу і писати код, який одночасно і вирішує задачу, і залишається зрозумілим людині. Саме тут хороший стиль коду стає у нагоді.
 
-## Syntax
+## Синтаксис
 
-Here is a cheat sheet with some suggested rules (see below for more details):
+Деякі запропоновані правила наведені у наступній шпаргалці (дивитись нижче більш детально):
 
 ![](code-style.svg)
 <!--
@@ -34,15 +34,15 @@ if (n < 0) {
 
 -->
 
-Now let's discuss the rules and reasons for them in detail.
+Давайте розберемо ці правила і причини їх з'явлення більш детально.
 
-```warn header="There are no \"you must\" rules"
-Nothing is set in stone here. These are style preferences, not religious dogmas.
+```warn header="Немає загальнообов'язкових правил"
+Немає тут залізних правил. Це стильові уподобання, а не релігійні догми.
 ```
 
-### Curly Braces
+### Фігурні дужки
 
-In most JavaScript projects curly braces are written in "Egyptian" style with the opening brace on the same line as the corresponding keyword -- not on a new line. There should also be a space before the opening bracket, like this:
+У більшості JavaScript проектів фігурні дужки написані у так званому "Єгипетському" стилі з відкриваючою дужкою на тому ж рядку, що й відповідне ключове слово -- не на новому рядку. Також потрібно додавати пробіл перед відкриваючою дужкою, наприклад:
 
 ```js
 if (condition) {
