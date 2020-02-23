@@ -52,47 +52,48 @@ if (condition) {
 }
 ```
 
-A single-line construct, such as `if (condition) doSomething()`, is an important edge case. Should we use braces at all?
+Чи потрібно ставити дужки, коли конструкція складається з одного рядка, наприклад `if (condition) doSomething()`?
 
-Here are the annotated variants so you can judge their readability for yourself:
+Нижче наведені різні варіанти розташування дужок з коментарями, щоб ви змогли самостійно вирішити який варіант є найбільш читабельним.
 
-1. 😠 Beginners sometimes do that. Bad! Curly braces are not needed:
+1. 😠 Початківці іноді викорустовують таку конструкцію. Це поганий приклад, фігурні дужки не потрібні:
     ```js
     if (n < 0) *!*{*/!*alert(`Power ${n} is not supported`);*!*}*/!*
     ```
-2. 😠 Split to a separate line without braces. Never do that, easy to make an error when adding new lines:
+2. 😠 Ніколи не розподіляйте конструкцію на декілька рядків без фігурних дужок - дуже легко зробити помилку при додаванні нового рядка:
     ```js
     if (n < 0)
       alert(`Power ${n} is not supported`);
     ```
-3. 😏 One line without braces - acceptable, if it's short:
+3. 😏 Писати в один рядок без дужок є приянятним варіантом, якщо рядок короткий:
     ```js
     if (n < 0) alert(`Power ${n} is not supported`);
     ```
-4. 😃 The best variant:
+4. 😃 Найкращий варіант:
     ```js
     if (n < 0) {
       alert(`Power ${n} is not supported`);
     }
     ```
 
-For a very brief code, one line is allowed, e.g. `if (cond) return null`. But a code block (the last variant) is usually more readable.
+Для дуже короткого коду один рядок є прийнятним, напприклад `if (cond) return null`. Але блок коду (останній варінт) зазвчай є більш читабельним.
 
-### Line Length
+### Довжина ряду
 
-No one likes to read a long horizontal line of code. It's best practice to split them.
+Ніхто не любить читати довгий горизонтальний ряд коду. Хорошую практикою є розподіляти його на декілька рядків.
 
-For example:
+Наприклад:
 ```js
-// backtick quotes ` allow to split the string into multiple lines
+// Зворотні апострофи ` дозволяють розподіляти рядок на декілька
 let str = `
-  ECMA International's TC39 is a group of JavaScript developers,
-  implementers, academics, and more, collaborating with the community
-  to maintain and evolve the definition of JavaScript.
+  Робоча група TC39 організації ECMA International -
+  це група JavaScript-розробників, спеціалістів з інтеграції, 
+  науковців, і т.д., які працюють разом зі спільнотою 
+  над підтримкою та розвитком мови JavaScript.
 `;
 ```
 
-And, for `if` statements:
+Або для `if`:
 
 ```js
 if (
@@ -104,13 +105,13 @@ if (
 }
 ```
 
-The maximum line length should be agreed upon at the team-level. It's usually 80 or 120 characters.
+Максимальну довжину ряду визначажться командою. Зазвичай це `80` або `120` символів.
 
-### Indents
+### Відступи
 
-There are two types of indents:
+Є два вида відступів
 
-- **Horizontal indents: 2 or 4 spaces.**
+- **Горизонтальні відступи: 2 або 4 пробіли.**
 
     A horizontal indentation is made using either 2 or 4 spaces or the horizontal tab symbol (key `key:Tab`). Which one to choose is an old holy war. Spaces are more common nowadays.
 
