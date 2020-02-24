@@ -148,11 +148,7 @@ alert( +apples + +oranges ); // 5
 | 3 | присвоєння | `=` |
 | ... | ... | ... |
 
-<<<<<<< HEAD
-Як ми бачемо, "унарний плюс" має пріоритет `16`, що вище за `13` — пріоритет "додавання" (бінарний плюс). Саме тому, у виразі `"+apples + +oranges"`, унарні плюси виконуються до додавання (бінарного плюса).
-=======
-As we can see, the "unary plus" has a priority of `17` which is higher than the `13` of "addition" (binary plus). That's why, in the expression `"+apples + +oranges"`, unary pluses work before the addition.
->>>>>>> 405150f1f286db19a3c1ed913fa3e905fcefbe46
+Як ми бачемо, "унарний плюс" має пріоритет `17`, що вище за `13` — пріоритет "додавання" (бінарний плюс). Саме тому, у виразі `"+apples + +oranges"`, унарні плюси виконуються перед додаванням (бінарним плюсом).
 
 ## Присвоєння
 
