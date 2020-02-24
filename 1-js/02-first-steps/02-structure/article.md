@@ -135,8 +135,13 @@ alert('Привіт');
 alert('Світ');
 ```
 
+<<<<<<< HEAD
 ```smart header="Використовуйте комбінації клавіш!"
 В більшості редакторів, рядок коду можна закоментувати, натиснувши комбінацію клавіш `key:Ctrl+/`, а щоб закоментувати декілька рядків – виділіть потрібні рядки і натисніть комбінацію клавіш `key:Ctrl+Shift+/`. Для Mac, потрібно натискати клавішу `key:Cmd` замість `key:Ctrl`.
+=======
+```smart header="Use hotkeys!"
+In most editors, a line of code can be commented out by pressing the `key:Ctrl+/` hotkey for a single-line comment and something like `key:Ctrl+Shift+/` -- for multiline comments (select a piece of code and press the hotkey). For Mac, try `key:Cmd` instead of `key:Ctrl` and `key:Option` instead of `key:Shift`.
+>>>>>>> 405150f1f286db19a3c1ed913fa3e905fcefbe46
 ```
 
 ````warn header="Вкладені коментарі не підтримуються!"
