@@ -312,8 +312,8 @@ Most linters are integrated with many popular editors: just enable the plugin in
 
 For instance, for ESLint you should do the following:
 
-1. Install [Node.js](https://nodejs.org/).
-2. Install ESLint with the command `npm install -g eslint` (npm is a JavaScript package installer).
+1. Встановіть [Node.js](https://nodejs.org/).
+2. Встановіть ESLint використовуючи команду `npm install -g eslint` (npm це менеджер JavaScript пакетів).
 3. Create a config file named `.eslintrc` in the root of your JavaScript project (in the folder that contains all your files).
 4. Install/enable the plugin for your editor that integrates with ESLint. The majority of editors have one.
 
