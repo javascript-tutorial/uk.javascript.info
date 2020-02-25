@@ -113,15 +113,15 @@ if (
 
 - **Горизонтальні відступи: 2 або 4 пробіли.**
 
-    A horizontal indentation is made using either 2 or 4 spaces or the horizontal tab symbol (key `key:Tab`). Which one to choose is an old holy war. Spaces are more common nowadays.
+    Горизонтальний відступ робиться за допогою двох або чотирьох пробілів, або за допомогою табуляції (клавіша `key:Tab`). Який відступ вибирати - вирішувати вам. Відступ з пробілам більш поширений на сьогодні.
 
-    One advantage of spaces over tabs is that spaces allow more flexible configurations of indents than the tab symbol.
+    Однією з переваг пробілів є те, що пробіли дозволяють більш гнучку конфігурацію відступів, ніж табуляція.
 
-    For instance, we can align the arguments with the opening bracket, like this:
+    Наприклад, ми можемо вирівняти аругменти відносно відкритої дужки:
 
     ```js no-beautify
     show(parameters,
-         aligned, // 5 spaces padding at the left  
+         aligned, // 5 пробілів зліва
          one,
          after,
          another
@@ -130,9 +130,9 @@ if (
     }
     ```
 
-- **Vertical indents: empty lines for splitting code into logical blocks.**
+- **Вертикальні відступи: пусті рядки для розподілу коду на "логічні блоки" .**
 
-    Even a single function can often be divided into logical blocks. In the example below, the initialization of variables, the main loop and returning the result are split vertically:
+     Навіть окрема фунція може бути зазвичай розподілена на логічні блоки. У наведенному нижче прикладі, ініціалізація змінних, основний цикл та повернення результату розподілені вертикально:
 
     ```js
     function pow(x, n) {
