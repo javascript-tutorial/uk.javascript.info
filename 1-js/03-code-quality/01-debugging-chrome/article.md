@@ -95,24 +95,24 @@ function hello(name) {
 
 ![](chrome-sources-debugger-pause.svg)
 
-Please open the informational dropdowns to the right (labeled with arrows). They allow you to examine the current code state:
+Щоб зрозуміти, що відбувається в коді, натисніть на стрілки справа. Можна виділити три основні блоки:
 
-1. **`Watch` -- shows current values for any expressions.**
+1. **`Watch` показує поточні значення виразів.**
 
-    You can click the plus `+` and input an expression. The debugger will show its value at any moment, automatically recalculating it in the process of execution.
+    Можете натиснути на `+` і ввести свій вираз, наприклад, `name === 'Іван'`. В процесі виконання, налагоджувач автоматично перераховуватиме і показуватиме його значення.
 
-2. **`Call Stack` -- shows the nested calls chain.**
+2. **`Call Stack` показує послідовність викликів функцій.**
 
-    At the current moment the debugger is inside `hello()` call, called by a script in `index.html` (no function there, so it's called "anonymous").
+    В нашому прикладі налагоджувач призупинив виконання коду всередині функції `hello()`, яка була викликана з файлу `index.html` (там немає функції, тому виклик "anonymous" – анонімний).
 
-    If you click on a stack item (e.g. "anonymous"), the debugger jumps to the corresponding code, and all its variables can be examined as well.
-3. **`Scope` -- current variables.**
+    Натиснувши на елемент списку (наприклад, на "anonymous"), налагоджувач перейде до відповідного коду, де було здійснено виклик.
+3. **`Scope` показує поточні змінні.**
 
-    `Local` shows local function variables. You can also see their values highlighted right over the source.
+    В `Local` показуються локальні змінні функції, а їх значення підсвічуються в вихідному коді.
 
-    `Global` has global variables (out of any functions).
+    В `Global` показуються глобальні змінні (тобто ті, які оголошені поза функціями).
 
-    There's also `this` keyword there that we didn't study yet, but we'll do that soon.
+    Зверніть увагу, що під час зміни викликів функцій (з блоку "Call Stack"), поточні змінні теж міняються. Тут ще є ключове слово `this`, поки що не звертайте на нього уваги — ми вивчемо його пізніше.
 
 ## Tracing the execution
 
