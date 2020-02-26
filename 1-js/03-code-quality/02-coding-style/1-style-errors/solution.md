@@ -1,6 +1,5 @@
 
-Ви можете 
-You could note the following:
+Ви можете зробити наступні відмітки:
 
 ```js no-beautify
 function pow(x,n)  // <- немає пробілу між аргументами
