@@ -146,51 +146,51 @@ if (
     }
     ```
 
-    Insert an extra newline where it helps to make the code more readable. There should not be more than nine lines of code without a vertical indentation.
+    Вставляйте додаткову строку в тому випадку, коли це допомагає зробити код більш зрозумілим. Не повинно бути більше дев'яти строк коду підряд без вертикального розподілу.
 
-### Semicolons
+### Крапка з комою
 
-A semicolon should be present after each statement, even if it could possibly be skipped.
+Крапку з комою треба ставити після кожного виразу, навіть тоді, коли є можливість їх пропустити.
 
-There are languages where a semicolon is truly optional and it is rarely used. In JavaScript, though, there are cases where a line break is not interpreted as a semicolon, leaving the code vulnerable to errors. See more about that in the chapter <info:structure#semicolon>.
+Є мови програмування, у яких крапка з комою є дійсно необов'язковими і рідко використовуються. Проте у JavaScript є ситуації коли перенос строки не інтерпретується як крапка з комою, залишаючи код вразливим до помилок. Більше детально про це знайдете у розділі <info:structure#semicolon>.
 
-If you're an experienced JavaScript programmer, you may choose a no-semicolon code style like [StandardJS](https://standardjs.com/). Otherwise, it's best to use semicolons to avoid possible pitfalls. The majority of developers put semicolons.
+Якщо ви досвідчений JavaScript програміст, ви можете обрати стиль коду без крапки з комою, наприклад [StandardJS](https://standardjs.com/). Інакше, краще використовувати крапку з комою для того, щоб уникнути підводних каменів. Більшість розробників використовують крапку з комою.
 
-### Nesting Levels
+### Рівні вкладеності
 
-Try to avoid nesting code too many levels deep.
+Намагайтесь уникати велику кількість рівнів вкладеності.
 
-For example, in the loop, it's sometimes a good idea to use the [`continue`](info:while-for#continue) directive to avoid extra nesting.
+Наприклад, у циклі, іноді хорошим варіантом є використання директиви [`continue`](info:while-for#continue) для уникнення вкладенності.
 
-For example, instead of adding a nested `if` conditional like this:
+Наприклад, замість додавання умови `if`:
 
 ```js
 for (let i = 0; i < 10; i++) {
   if (cond) {
-    ... // <- one more nesting level
+    ... // <- ще один рівень вкладенності
   }
 }
 ```
 
-We can write:
+ми можемо написати:
 
 ```js
 for (let i = 0; i < 10; i++) {
   if (!cond) *!*continue*/!*;
-  ...  // <- no extra nesting level
+  ...  // <- немає вкладенності
 }
 ```
 
-A similar thing can be done with `if/else` and `return`.
+Схожим чином ми можемо змінити `if/else` та `return`.
 
-For example, two constructs below are identical.
+Наприклад, дві конструкції нижче є ідентичними.
 
-Option 1:
+Перша:
 
 ```js
 function pow(x, n) {
   if (n < 0) {
-    alert("Negative 'n' not supported");
+    alert("Від'ємні значення 'n' не підтримуються");
   } else {
     let result = 1;
 
@@ -203,12 +203,12 @@ function pow(x, n) {
 }
 ```
 
-Option 2:
+Друга:
 
 ```js
 function pow(x, n) {
   if (n < 0) {
-    alert("Negative 'n' not supported");
+    alert("Від'ємні значення 'n' не підтримуються");
     return;
   }
 
@@ -222,16 +222,16 @@ function pow(x, n) {
 }
 ```
 
-The second one is more readable because the "special case" of `n < 0` is handled early on. Once the check is done we can move on to the "main" code flow without the need for additional nesting.
+Друга конструкція є більш зрозумілою, тому що умова `n < 0` обробляється з самого початку. Коли перевірка закінчена ми можемо переходити до "говоного" коду без потреби у додатковому рівні вкладеності.
 
-## Function Placement
+## Розташування Функцій
 
-If you are writing several "helper" functions and the code that uses them, there are three ways to organize the functions.
+Якщо ви пишете декілька допоміжних функцій і код, що їх виростуває, є три способи організувати функції.
 
-1. Declare the functions *above* the code that uses them:
+1. Оголосити функції *перед* кодом, що їх використовує:
 
     ```js
-    // *!*function declarations*/!*
+    // *!*оголошення функій*/!*
     function createElement() {
       ...
     }
@@ -244,20 +244,20 @@ If you are writing several "helper" functions and the code that uses them, there
       ...
     }
 
-    // *!*the code which uses them*/!*
+    // *!*код, що їх використовує*/!*
     let elem = createElement();
     setHandler(elem);
     walkAround();
     ```
-2. Code first, then functions
+2. Спочатку код, потім функції
 
     ```js
-    // *!*the code which uses the functions*/!*
+    // *!*код, що використовує функції*/!*
     let elem = createElement();
     setHandler(elem);
     walkAround();
 
-    // --- *!*helper functions*/!* ---
+    // --- *!*допоміжні функції*/!* ---
     function createElement() {
       ...
     }
@@ -270,54 +270,55 @@ If you are writing several "helper" functions and the code that uses them, there
       ...
     }
     ```
-3. Mixed: a function is declared where it's first used.
+3. Зміжаний варінт: функція оголошена там, де вона вперше використовується.
 
-Most of time, the second variant is preferred.
+Зазвичай, віддають перевагу другому варіанту.
 
-That's because when reading code, we first want to know *what it does*. If the code goes first, then it becomes clear from the start. Then, maybe we won't need to read the functions at all, especially if their names are descriptive of what they actually do.
+Причиною цього є те, що коли ми читаємо код, перш за все ми хочемо зрозуміти *що він робить*. Якщо головний код іде першим - це стає зрозумілим з самого початку. Тоді, можливо ми навіть не будемо читати функції взагалі, особливо якщо їх імена відповідають тому, що вони роблять.
 
-## Style Guides
+## Посібники зі Стилю Коду
 
-A style guide contains general rules about "how to write" code, e.g. which quotes to use, how many spaces to indent, the maximal line length, etc. A lot of minor things.
+Посібник зі стилю коду містить загальні правила "як писати" код, наприклад, які лапки використовувати, скількі пробілів ставити для відступу, максимальну довжину рядка, і таке інше. Тобто, багато дрібниць.
 
-When all members of a team use the same style guide, the code looks uniform, regardless of which team member wrote it.
+Коли всі члени команди використовують посібник зі стилю, код виглядає однаковим, незалежно від того, хто з команди його написав.
 
-Of course, a team can always write their own style guide, but usually there's no need to. There are many existing guides to choose from.
+Звичайно, кожна команда може завжди створити свій посібник зі стилю, але зазвичай в тому не має потреби. Є багато існуючих посібників серед який можна вибрати.
 
-Some popular choices:
+Деякі популярні посібники:
 
 - [Google JavaScript Style Guide](https://google.github.io/styleguide/javascriptguide.xml)
 - [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 - [Idiomatic.JS](https://github.com/rwaldron/idiomatic.js)
 - [StandardJS](https://standardjs.com/)
-- (plus many more)
+- (і ще багато інших)
 
-If you're a novice developer, start with the cheat sheet at the beginning of this chapter. Then you can browse other style guides to pick up more ideas and decide which one you like best.
+Якщо ви початківець, почніть зі шпаргалки наведеної в початку цього розділу. Потім ви зможете обрати один з існуючих посібників, щоб визначити ті правила, які вам більше підходять.
 
-## Automated Linters
+## Автоматичні засоби перевірки (лінтери)
 
-Linters are tools that can automatically check the style of your code and make improving suggestions.
+Автоматичні засоби перевірки, так звані "лінтери" - це інструменти, що автоматично перевіряють стиль коду та вносять пропозиції щодо його вдосконалення.
 
-The great thing about them is that style-checking can also find some bugs, like typos in variable or function names. Because of this feature, using a linter is recommended even if you don't want to stick to one particular "code style".
+Саме чудове в них є те, зо вони можуть також знайти деякі програмні помилки, наприклад друкарську помилку у назві змінної чи функції. Завдяки цій особливості, рекомендують використовувати лінтер навіть тоді, коли ви не збираєтесь дотримуватись якогось конкретного "стилю коду".
 
-Here are some well-known linting tools:
+Ось декілька 
+Here are some добре відомих засобів для перевірки:
 
-- [JSLint](http://www.jslint.com/) -- one of the first linters.
-- [JSHint](http://www.jshint.com/) -- more settings than JSLint.
-- [ESLint](http://eslint.org/) -- probably the newest one.
+- [JSLint](http://www.jslint.com/) -- один з перших лінтерів.
+- [JSHint](http://www.jshint.com/) -- має більше налаштувань ніж JSLint.
+- [ESLint](http://eslint.org/) -- напевно, найсучасніший лінтер.
 
-All of them can do the job. The author uses [ESLint](http://eslint.org/).
+Всі вони роблять свою справу. Автор використовує [ESLint](http://eslint.org/).
 
-Most linters are integrated with many popular editors: just enable the plugin in the editor and configure the style.
+Більшість лінтерів інтегровані у популярні редактори: просто ввімкнуть відповідний плагін у редакторі і налаштуйте стиль.
 
-For instance, for ESLint you should do the following:
+Наприклад, для ESLint вам потрібно зробити наступне:
 
 1. Встановіть [Node.js](https://nodejs.org/).
-2. Встановіть ESLint використовуючи команду `npm install -g eslint` (npm це менеджер JavaScript пакетів).
-3. Create a config file named `.eslintrc` in the root of your JavaScript project (in the folder that contains all your files).
-4. Install/enable the plugin for your editor that integrates with ESLint. The majority of editors have one.
+2. Встановіть ESLint використовуючи команду `npm install -g eslint` (npm це менеджер JavaScript пакетів(модулів)).
+3. Створіть файл конфігурації `.eslintrc` у корні вашого JavaScript проекту (у директорії, що містить всі ваші файли).
+4. Встановіть/ввімкніть плагін для вашого редактору, який інтегрується з ESLint. Більшість редакторів мають такий плагін.
 
-Here's an example of an `.eslintrc` file:
+Ось приклад файлу `.eslintrc`:
 
 ```js
 {
@@ -334,16 +335,16 @@ Here's an example of an `.eslintrc` file:
 }
 ```
 
-Here the directive `"extends"` denotes that the configuration is based on the "eslint:recommended" set of settings. After that, we specify our own.
+Директива `"extends"` означає, що конфігурація базується на наборі налаштувань "eslint:recommended". Після цього, ви вказуєте ваші власні.
 
-It is also possible to download style rule sets from the web and extend them instead. See <http://eslint.org/docs/user-guide/getting-started> for more details about installation.
+Крім того, можна завантажити набори правил з мережі та розширити їх. Дивіться <http://eslint.org/docs/user-guide/getting-started> для отримання більш детальної інструкції зі встановлення.
 
-Also certain IDEs have built-in linting, which is convenient but not as customizable as ESLint.
+Також, деякі середовища розробки (IDE) мають вбудовані засоби первірки коду, що є зручним, але не таким гнучким в налаштуванні рішенням, як ESLint. 
 
-## Summary
+## Висновки
 
-All syntax rules described in this chapter (and in the style guides referenced) aim to increase the readability of your code. All of them are debatable.
+Всі правила синтаксису, які описані у даному розділі (і в посиланнях на посібники зі стилю коду) мають на меті поліпшити читабельність вашого коду. Всі вони є дискусійними.
 
-When we think about writing "better" code, the questions we should ask ourselves are: "What makes the code more readable and easier to understand?" and "What can help us avoid errors?" These are the main things to keep in mind when choosing and debating code styles.
+Коли ми прагнемо писати код "краще", ми повинні задати собі наступні питання: "Що робить код більш читабельним та зрозумілим?" і "Що нам допоможе уникнути помилок?". Це головні  моменти, що треба брати до уваги, коли ви вибираєте та дискутуєте з приводу стилю коду.
 
-Reading popular style guides will allow you to keep up to date with the latest ideas about code style trends and best practices.
+Читання популярних посібників зі стилю коду дозволить вам бути в курсі найкращих практик та останніх ідей щодо стилю коду.
