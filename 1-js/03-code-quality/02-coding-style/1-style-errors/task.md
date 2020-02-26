@@ -2,9 +2,9 @@ importance: 4
 
 ---
 
-# Bad style
+# Поганий стиль
 
-What's wrong with the code style below?
+Що не так у стилі коду наведеному нижче?
 
 ```js no-beautify
 function pow(x,n)
@@ -25,4 +25,4 @@ else
 }
 ```
 
-Fix it.
+Виправте його.
