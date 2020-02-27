@@ -1,26 +1,26 @@
-# Comments
+# Коментарі
 
-As we know from the chapter <info:structure>, comments can be single-line: starting with `//` and multiline: `/* ... */`.
+Як нам відомо з розідлу <info:structure>, коментарі можна писати як на одному рядку: починаючи його з `//` так і на декількох рядках відокрлюючи їх за допомогою `/* ... */`.
 
-We normally use them to describe how and why the code works.
+Зазвичай ми використовуємо коментарі для опису опису того як і чому наш код працює.
 
-At first sight, commenting might be obvious, but novices in programming often use them wrongly.
+На перший погляд, коментування може здаватись очевидним, проте початківці часто використовують їх неправильно.
 
-## Bad comments
+## Погані кометарі
 
 Novices tend to use comments to explain "what is going on in the code". Like this:
 
 ```js
-// This code will do this thing (...) and that thing (...)
-// ...and who knows what else...
-very;
-complex;
-code;
+// Цей код зробить це (...) а потім ось це (...)
+// ...і хто знає що ще...
+дуже;
+складний;
+код;
 ```
 
-But in good code, the amount of such "explanatory" comments should be minimal. Seriously, the code should be easy to understand without them.
+Проте в якісному коді, кількість таких "пояснювальних" коментарів повинна бути мінімальною. Серйозно, код повинен бути зрозумілим без них.
 
-There's a great rule about that: "if the code is so unclear that it requires a comment, then maybe it should be rewritten instead".
+Є хороше правило з приводу цього: "якщо код настільки не зрозумілий, що потребує коментарів, можливо його краще переписати".
 
 ### Recipe: factor out functions
 
@@ -160,7 +160,7 @@ Why is the task solved this way?
 Any subtle features of the code? Where they are used?
 : If the code has anything subtle and counter-intuitive, it's definitely worth commenting.
 
-## Summary
+## Підсумки
 
 An important sign of a good developer is comments: their presence and even their absence.
 
