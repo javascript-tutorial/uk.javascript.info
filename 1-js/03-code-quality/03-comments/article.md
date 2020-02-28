@@ -125,35 +125,36 @@ function addJuice(container) {
 Документуйте параметри функції та її використання
 : Існує спеціальний синтаксис [JSDoc](https://uk.wikipedia.org/wiki/JSDoc) для документації функції: її використання, параметри, значення, що повертає.
 
-    Наприклад:
-    ```js
-    /**
-     * повертає x у n-й степені.
-     *
-     * @param {number} x число, що треба піднести до степеня.
-     * @param {number} n Степінь, повинно бути натуральним числом.
-     * @return {number} x пыднесене у n-у степінь.
-     */
-    function pow(x, n) {
-      ...
-    }
-    ```
+Наприклад:
+    
+```js
+/**
+ * повертає x у n-й степені.
+ *
+ * @param {number} x число, що треба піднести до степеня.
+ * @param {number} n Степінь, повинно бути натуральним числом.
+ * @return {number} x пыднесене у n-у степінь.
+ */
+function pow(x, n) {
+  ...
+}
+```
 
-    Такі коментарі дозволяють нам зрозуміти мету функції та використовувати її правильно без потреби зазирати у її код.
+Такі коментарі дозволяють нам зрозуміти мету функції та використовувати її правильно без потреби зазирати у її код.
 
-    До речі, багато редакторів, наприклад [WebStorm](https://www.jetbrains.com/webstorm/) можуть їх розуміти та використовувати для автодоповнення і деякої автоматичної перевірки кода.
+До речі, багато редакторів, наприклад [WebStorm](https://www.jetbrains.com/webstorm/) можуть їх розуміти та використовувати для автодоповнення і деякої автоматичної перевірки кода.
 
-    Також є інструменти, наприклад [JSDoc 3](https://github.com/jsdoc3/jsdoc), які можуть генерувати HTML-документацію з коментарів. Ви можете почитати більше про JSDoc тут: <http://usejsdoc.org/>.
+Також є інструменти, наприклад [JSDoc 3](https://github.com/jsdoc3/jsdoc), які можуть генерувати HTML-документацію з коментарів. Ви можете почитати більше про JSDoc тут: <http://usejsdoc.org/>.
 
 Why is the task solved this way?
 : What's written is important. But what's *not* written may be even more important to understand what's going on. Why is the task solved exactly this way? The code gives no answer.
 
-    If there are many ways to solve the task, why this one? Especially when it's not the most obvious one.
+If there are many ways to solve the task, why this one? Especially when it's not the most obvious one.
 
-    Without such comments the following situation is possible:
-    1. You (or your colleague) open the code written some time ago, and see that it's "suboptimal".
-    2. You think: "How stupid I was then, and how much smarter I'm now", and rewrite using the "more obvious and correct" variant.
-    3. ...The urge to rewrite was good. But in the process you see that the "more obvious" solution is actually lacking. You even dimly remember why, because you already tried it long ago. You revert to the correct variant, but the time was wasted.
+Without such comments the following situation is possible:
+1. You (or your colleague) open the code written some time ago, and see that it's "suboptimal".
+2. You think: "How stupid I was then, and how much smarter I'm now", and rewrite using the "more obvious and correct" variant.
+3. ...The urge to rewrite was good. But in the process you see that the "more obvious" solution is actually lacking. You even dimly remember why, because you already tried it long ago. You revert to the correct variant, but the time was wasted.
 
     Comments that explain the solution are very important. They help to continue development the right way.
 
