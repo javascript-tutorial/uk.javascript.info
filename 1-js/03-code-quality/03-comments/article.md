@@ -8,7 +8,7 @@
 
 ## Погані кометарі
 
-Novices tend to use comments to explain "what is going on in the code". Like this:
+Початківці намагаються використовувати коментарі, щоб пояснити "що саме відбувається у коді". Наприклад:
 
 ```js
 // Цей код зробить це (...) а потім ось це (...)
@@ -22,9 +22,9 @@ Novices tend to use comments to explain "what is going on in the code". Like thi
 
 Є хороше правило з приводу цього: "якщо код настільки не зрозумілий, що потребує коментарів, можливо його краще переписати".
 
-### Recipe: factor out functions
+### Рецепт: виносьте код у функції
 
-Sometimes it's beneficial to replace a code piece with a function, like here:
+Іноді має сенс замінити частину кода на функцію, наприклад:
 
 ```js
 function showPrimes(n) {
@@ -32,7 +32,7 @@ function showPrimes(n) {
   for (let i = 2; i < n; i++) {
 
 *!*
-    // check if i is a prime number
+    // перевірка чи є i простим числом
     for (let j = 2; j < i; j++) {
       if (i % j == 0) continue nextPrime;
     }
@@ -43,7 +43,7 @@ function showPrimes(n) {
 }
 ```
 
-The better variant, with a factored out function `isPrime`:
+Кращим варінтом було б помістити код в окрему функцію `isPrime`:
 
 
 ```js
@@ -65,21 +65,21 @@ function isPrime(n) {
 }
 ```
 
-Now we can understand the code easily. The function itself becomes the comment. Such code is called *self-descriptive*.
+Тепер ми можемо зрозуміти код легко. Сама функція замінила нам коментар. Такий код називається *самоописним*.
 
-### Recipe: create functions
+### Рецепт: створюйте функції
 
-And if we have a long "code sheet" like this:
+І якщо ми маємо такий довгий фрагмент кода:
 
 ```js
-// here we add whiskey
+// тут ми додаємо віскі
 for(let i = 0; i < 10; i++) {
   let drop = getWhiskey();
   smell(drop);
   add(drop, glass);
 }
 
-// here we add juice
+// тут ми додаємо сок
 for(let t = 0; t < 3; t++) {
   let tomato = getTomato();
   examine(tomato);
@@ -90,7 +90,7 @@ for(let t = 0; t < 3; t++) {
 // ...
 ```
 
-Then it might be a better variant to refactor it into functions like:
+Тоді кращим варінтом буде замінити його на окремі функції:
 
 ```js
 addWhiskey(glass);
@@ -111,39 +111,39 @@ function addJuice(container) {
 }
 ```
 
-Once again, functions themselves tell what's going on. There's nothing to comment. And also the code structure is better when split. It's clear what every function does, what it takes and what it returns.
+Знову ж таки, ім'я функцій самі описують, що в них відбувається. Немає потреби коментувати такий код. Також кращою є структура кода, коли він розподілений. Стає зрозумілим, що функція робить, що вона приймає і що повертає.
 
-In reality, we can't totally avoid "explanatory" comments. There are complex algorithms. And there are smart "tweaks" for purposes of optimization. But generally we should try to keep the code simple and self-descriptive.
+Насправді, ми не можемо уникнути повністю "пояснювальних" коментарів. Є складні алгоритми. Також існують деякі "прийоми" для оптимізації. Проте, як правило, ми повинні намагатись залишати код простим та самоописним.
 
-## Good comments
+## Хороші коментарі
 
-So, explanatory comments are usually bad. Which comments are good?
+Тож, пояснювальні коментарі зазвичай погані. Які ж тоді хороші?
 
-Describe the architecture
-: Provide a high-level overview of components, how they interact, what's the control flow in various situations... In short -- the bird's eye view of the code. There's a special language [UML](http://wikipedia.org/wiki/Unified_Modeling_Language) to build high-level architecture diagrams explaining the code. Definitely worth studying.
+Описуйте архітектуру
+: Додавайте опис компонентів висого рівня, як вони взаємодіють, який потік управління мають у різних обставинах... Якщо коротко - огляд коду з висоту пташиного польоту. Є спеціальна мова [UML](https://uk.wikipedia.org/wiki/Unified_Modeling_Language) для побудови діаграм високорівневої архітектури кода. Її однозначно варто вчити.
 
-Document function parameters and usage
-: There's a special syntax [JSDoc](http://en.wikipedia.org/wiki/JSDoc) to document a function: usage, parameters, returned value.
+Документуйте параметри функції та її використання
+: Існує спеціальний синтаксис [JSDoc](https://uk.wikipedia.org/wiki/JSDoc) для документації функції: її використання, параметри, значення, що повертає.
 
-    For instance:
+    Наприклад:
     ```js
     /**
-     * Returns x raised to the n-th power.
+     * повертає x у n-й степені.
      *
-     * @param {number} x The number to raise.
-     * @param {number} n The power, must be a natural number.
-     * @return {number} x raised to the n-th power.
+     * @param {number} x число, що треба піднести до степеня.
+     * @param {number} n Степінь, повинно бути натуральним числом.
+     * @return {number} x пыднесене у n-у степінь.
      */
     function pow(x, n) {
       ...
     }
     ```
 
-    Such comments allow us to understand the purpose of the function and use it the right way without looking in its code.
+    Такі коментарі дозволяють нам зрозуміти мету функції та використовувати її правильно без потреби зазирати у її код.
 
-    By the way, many editors like [WebStorm](https://www.jetbrains.com/webstorm/) can understand them as well and use them to provide autocomplete and some automatic code-checking.
+    До речі, багато редакторів, наприклад [WebStorm](https://www.jetbrains.com/webstorm/) можуть їх розуміти та використовувати для автодоповнення і деякої автоматичної перевірки кода.
 
-    Also, there are tools like [JSDoc 3](https://github.com/jsdoc3/jsdoc) that can generate HTML-documentation from the comments. You can read more information about JSDoc at <http://usejsdoc.org/>.
+    Також є інструменти, наприклад [JSDoc 3](https://github.com/jsdoc3/jsdoc), які можуть генерувати HTML-документацію з коментарів. Ви можете почитати більше про JSDoc тут: <http://usejsdoc.org/>.
 
 Why is the task solved this way?
 : What's written is important. But what's *not* written may be even more important to understand what's going on. Why is the task solved exactly this way? The code gives no answer.
