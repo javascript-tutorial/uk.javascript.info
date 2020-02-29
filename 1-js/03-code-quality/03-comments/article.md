@@ -32,7 +32,7 @@ function showPrimes(n) {
   for (let i = 2; i < n; i++) {
 
 *!*
-    // перевірка чи є i простим числом
+    // перевірка чи є `i` простим числом
     for (let j = 2; j < i; j++) {
       if (i % j == 0) continue nextPrime;
     }
