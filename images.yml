@@ -68,8 +68,10 @@ chrome-sources-debugger-pause.svg:
     text: "поточні змінні"
     position: "right"
 
+# 1-js/03-code-quality/01-debugging-chrome/chrome-sources-debugger-trace-1.svg
 chrome-sources-debugger-trace-1.svg:
-  nested calls: ''
+  "nested calls":
+    text: "вкладені виклики"
 
 toolbarButtonGlyphs.svg: {}
 

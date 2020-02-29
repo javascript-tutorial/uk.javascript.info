@@ -34,7 +34,7 @@
 
 ## Консоль
 
-Якщо натиснути клавішу `key:Esc`, в нижній частині екрану відкриється консоль. Туди можна вводити команди і виконувати їх, натиснувши клавішу `key:Enter`.
+Якщо натиснути клавішу `key:Esc`, в нижній частині екрану відкриється консоль. Туди можна вводити команди і їх виконувати, натиснувши клавішу `key:Enter`.
 
 Нижче показується результат виконання команд.
 
@@ -54,7 +54,7 @@
 
 *Точка зупинки* — це місце в коді, де налагоджувач автоматично призупинить виконання JavaScript.
 
-Поки виконання призупинене, ми можемо переглядати поточні значення змінних, виконувати команди в консолі тощо. Інакше кажучи, можемо налагоджувати.
+Поки виконання призупинене, ми можемо переглядати поточні значення змінних, виконувати команди в консолі тощо. Інакше кажучи, можемо налагоджувати (розробники інколи кажуть «дебажити», від слова «debug»).
 
 В правій частині панелі видно всі точки зупинки. Коли виставлено багато таких точок, та ще й в різних файлах, цей список дозволяє ефективно ними керувати:
 - Швидко переміщатися до будь-якої точки зупинки в коді – потрібно клікнути по ній в правій частині панелі.
@@ -114,83 +114,83 @@ function hello(name) {
 
     Зверніть увагу, що під час зміни викликів функцій (з блоку "Call Stack"), поточні змінні теж міняються. Тут ще є ключове слово `this`, поки що не звертайте на нього уваги — ми вивчемо його пізніше.
 
-## Tracing the execution
+## Відслідковування виконання коду
 
-Now it's time to *trace* the script.
+Настав час *відслідкувати* (trace) скрипт.
 
-There are buttons for it at the top of the right panel. Let's engage them.
+Для цього є декілька кнопок, які знаходяться на панелі зверху праворуч. Давайте їх розглянемо.
 <!-- https://github.com/ChromeDevTools/devtools-frontend/blob/master/front_end/Images/src/largeIcons.svg -->
-<span class="devtools" style="background-position:-146px -168px"></span> -- "Resume": continue the execution, hotkey `key:F8`.
-: Resumes the execution. If there are no additional breakpoints, then the execution just continues and the debugger loses control.
+<span class="devtools" style="background-position:-146px -168px"></span>&ensp;—&ensp;"Resume": продовжити виконання. Швидка клавіша: `key:F8`.
+: Відновлює виконання коду. Якщо більше немає точок зупинок, налагоджувач завершить свою роботу, а код буде виконуватися далі.
 
-    Here's what we can see after a click on it:
+    Ось що ми побачимо, коли натиснемо на цю кнопку:
 
     ![](chrome-sources-debugger-trace-1.svg)
 
-    The execution has resumed, reached another breakpoint inside `say()` and paused there. Take a look at the "Call Stack" at the right. It has increased by one more call. We're inside `say()` now.
+    Виконання коду відновилося, дійшло до іншої точки зупинки, всередині `say()` і налагоджувач знову призупинив виконання. Зверніть увагу на вкладку "Call Stack" праворуч: в списку з'явився ще один виклик. Ми тепер всередині функції `say()`.
 
-<span class="devtools" style="background-position:-200px -190px"></span> -- "Step": run the next command, hotkey `key:F9`.
-: Run the next statement. If we click it now, `alert` will be shown.
+<span class="devtools" style="background-position:-200px -190px"></span>&ensp;—&ensp;"Step": виконати наступну команду. Швидка клавіша: `key:F9`.
+: Якщо ми натиснемо на неї – виконається функція `alert`.
 
-    Clicking this again and again will step through all script statements one by one.
+    Натискаючи цю кнопку раз за разом, всі вирази будуть виконуватися покроково.
 
-<span class="devtools" style="background-position:-62px -192px"></span> -- "Step over": run the next command, but *don't go into a function*, hotkey `key:F10`.
-: Similar to the previous the "Step" command, but behaves differently if the next statement is a function call. That is: not a built-in, like `alert`, but a function of our own.
+<span class="devtools" style="background-position:-62px -192px"></span>&ensp;—&ensp;виконати наступну команду, *не заходячи в функцію*. Швидка клавіша: `key:F10`.
+: Подібна до попередньої команди "Step", проте працює дещо по-іншому, якщо наступний вираз – виклик функції. Ось наприклад, маємо власноруч написану функцію `say()`, яка показує повідомлення.
 
-    The "Step" command goes into it and pauses the execution at its first line, while "Step over" executes the nested function call invisibly, skipping the function internals.
+    Команда "Step" зайде в неї і зупиниться на її першому рядку, тоді як "Step over" виконає всі вирази, які є в цій функції (включно з викликами вкладених функцій, такі як `alert()`).
 
-    The execution is then paused immediately after that function.
+    Виконання призупиниться на наступному рядку, коли завершиться функція.
 
-    That's good if we're not interested to see what happens inside the function call.
+    Це зручно, коли ми не хочемо досліджувати, що відбувається всередині функції.
 
-<span class="devtools" style="background-position:-4px -194px"></span> -- "Step into", hotkey `key:F11`.
-: That's similar to "Step", but behaves differently in case of asynchronous function calls. If you're only starting to learn JavaScript, then you can ignore the difference, as we don't have asynchronous calls yet.
+<span class="devtools" style="background-position:-4px -194px"></span>&ensp;—&ensp;"Step into": зробити крок. Швидка клавіша: `key:F11`.
+: Подібна до "Step", але працює інакше у випадку викликів асинхронних функцій. Якщо ви тільки почали вчити JavaScript, тоді можете проігнорувати цю різницю, тому що ми покищо не вчили асинхронних викликів.
 
-    For the future, just note that "Step" command ignores async actions, such as `setTimeout` (scheduled function call), that execute later. The "Step into" goes into their code, waiting for them if necessary. See [DevTools manual](https://developers.google.com/web/updates/2018/01/devtools#async) for more details.
+    На майбутнє просто майте на увазі, що команда "Step" ігнорує асинхронні дії, такі як `setTimeout` (відкладений виклик функції), які виконуються пізніше. Команда "Step into" заходить в їхній код, і очікує на них якщо потрібно. Можете поглянути в [документацію DevTools](https://developers.google.com/web/updates/2018/01/devtools#async), щоб побачити як це відбувається.
 
-<span class="devtools" style="background-position:-32px -194px"></span> -- "Step out": continue the execution till the end of the current function, hotkey `key:Shift+F11`.
-: Continue the execution and stop it at the very last line of the current function. That's handy when we accidentally entered a nested call using <span class="devtools" style="background-position:-200px -190px"></span>, but it does not interest us, and we want to continue to its end as soon as possible.
+<span class="devtools" style="background-position:-32px -194px"></span>&ensp;—&ensp;"Step out": продовжити виконання до завершення поточної функції. Швидка клавіша: `key:Shift+F11`.
+: Виконання коду відновиться і призупиниться на останньому рядку поточної функції. Це зручно, коли ми випадково натиснули кнопку <span class="devtools" style="background-position:-200px -190px"></span>, зайшовши у вкладений виклик, і хочемо якнайшвидше завершити його.
 
-<span class="devtools" style="background-position:-61px -74px"></span> -- enable/disable all breakpoints.
-: That button does not move the execution. Just a mass on/off for breakpoints.
+<span class="devtools" style="background-position:-61px -74px"></span>&ensp;—&ensp;активувати/деактивувати всі точки зупинки.
+: Ця кнопка не впливає на виконання коду, вона лише дозволяє масово увімкнути/вимкнути точки зупинки.
 
-<span class="devtools" style="background-position:-90px -146px"></span> -- enable/disable automatic pause in case of an error.
-: When enabled, and the developer tools is open, a script error automatically pauses the execution. Then we can analyze variables to see what went wrong. So if our script dies with an error, we can open debugger, enable this option and reload the page to see where it dies and what's the context at that moment.
+<span class="devtools" style="background-position:-90px -146px"></span>&ensp;—&ensp;дозволити/заборонити автоматичне призупинення виконання у випадку помилки.
+: Коли ця кнопка активна і відкрито інструменти розробника, тоді скрипт автоматично призупинить виконання, якщо трапиться якась помилка. Ми зможемо проаналізувати змінні і дослідити, що пішло не так. Отже, якщо наш скрипт аварійно завершує роботу, ми можемо відкрити інструменти розробника, активувати цю опцію і перезавантажити сторінку, щоб побачити де і за яких умов скрипт "вмирає".
 
 ```smart header="Continue to here"
-Right click on a line of code opens the context menu with a great option called "Continue to here".
+Коли налагоджувач працює, ми можемо натиснути праву кнопку миші по рядку коду і вибрати опцію «Continue to here» («продовжити звідси»).
 
-That's handy when we want to move multiple steps forward to the line, but we're too lazy to set a breakpoint.
+Цей метод сильно стає у нагоді, коли нам потрібно просунутися на кілька кроків вперед до потрібного рядка, але нам лінь ставити точку зупинки.
 ```
 
-## Logging
+## Логування
 
-To output something to console from our code, there's `console.log` function.
+Щоб вивести щось в консоль з нашого коду, існує спеціальна функція `console.log`.
 
-For instance, this outputs values from `0` to `4` to console:
+Наприклад, така інструкція виведе в консоль числа від `0` до `4`:
 
 ```js run
-// open console to see
+// відкрийте консоль, щоб побачити
 for (let i = 0; i < 5; i++) {
-  console.log("value,", i);
+  console.log("число,", i);
 }
 ```
 
-Regular users don't see that output, it is in the console. To see it, either open the Console panel of developer tools or press `key:Esc` while in another panel: that opens the console at the bottom.
+Звичайні користувачі не бачитимуть цієї інформації — вона в консолі. Щоб побачити її, відкрийте інструменти розробника і перейдіть на вкладку «Console», або натисніть клавішу `key:Esc`, якщо ви на іншій вкладці: це відкриє консоль знизу.
 
-If we have enough logging in our code, then we can see what's going on from the records, without the debugger.
+Якщо в нас достатньо логів в нашому коді, ми зможемо побачити що відбувається з нашими записами, без допомоги налагоджувача.
 
-## Summary
+## Підсумки
 
-As we can see, there are three main ways to pause a script:
-1. A breakpoint.
-2. The `debugger` statements.
-3. An error (if dev tools are open and the button <span class="devtools" style="background-position:-90px -146px"></span> is "on").
+Як бачимо, є три способи призупинити виконання скрипта:
+1. Точка зупинки.
+2. Інструкція `debugger`.
+3. Помилка (якщо активовано кнопку <span class="devtools" style="background-position:-90px -146px"></span> в інструментах розробника).
 
-When paused, we can debug - examine variables and trace the code to see where the execution goes wrong.
+Коли виконання призупинене, ми можемо налагоджувати (інколи кажуть «дебажити») – досліджувати змінні і відслідковувати виконання коду, щоб побачити, що пішло не так.
 
-There are many more options in developer tools than covered here. The full manual is at <https://developers.google.com/web/tools/chrome-devtools>.
+В інструментах розробника набагато більше опцій, ніж ми розглянули тут. Всю інформацію про інструменти розробника браузера Chrome можна прочитати в [їхній офіційній документації](https://developers.google.com/web/tools/chrome-devtools) (англійською).
 
-The information from this chapter is enough to begin debugging, but later, especially if you do a lot of browser stuff, please go there and look through more advanced capabilities of developer tools.
+Інформації з цього розділу достатньо, щоб почати налагодження, проте пізніше, особливо якщо ви тісно працюватимете з браузером, не полінуйтеся прочитати про розширені можливості інструментів розробника.
 
-Oh, and also you can click at various places of dev tools and just see what's showing up. That's probably the fastest route to learn dev tools. Don't forget about the right click and context menus!
+О, і ще ви можете натискати на різні місця в інструментах розробника, і побачити що відбувається. Це, напевно, найшвидший спосіб ознайомитися з функціоналом інструментів розробника. Не забувайте про кліки правою кнопкою миші і контекстні меню!
