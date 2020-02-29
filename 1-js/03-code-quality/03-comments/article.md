@@ -79,7 +79,7 @@ for(let i = 0; i < 10; i++) {
   add(drop, glass);
 }
 
-// тут ми додаємо сок
+// тут ми додаємо сік
 for(let t = 0; t < 3; t++) {
   let tomato = getTomato();
   examine(tomato);
