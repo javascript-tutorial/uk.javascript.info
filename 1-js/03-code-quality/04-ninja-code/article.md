@@ -113,7 +113,7 @@ i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
 
 Тобто натякніть, що є деяка тонка різниця між цими функціями, хоча насправді її немає.
 
-Домовьтесь зі своїми ніндзя-колегами, що якшо Іван починає називати функції, що показують використовуючи `display...`, тоді Петро може використовувати `render..`, а Ганна -- `paint...`. Зауважте, наскільки цікавим та різноманітним став наш код.
+Домовьтесь зі своїми ніндзя-колегами, що якшо Іван починає називати функції, що показують щось, використовуючи `display...`, тоді Петро може використовувати `render..`, а Ганна -- `paint...`. Зауважте, наскільки цікавим та різноманітним став наш код.
 
 ...А тепер коронний прийом!
 
@@ -132,53 +132,53 @@ i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
 
 Додавайте нову змінну тільки тоді коли це вкрай необхідно.
 
-Замість цього, використовуйте повторно існуюючі змнні. Просто записуйте у них нові значення.
+Замість цього, використовуйте повторно існуючі змінні. Просто записуйте у них нові значення.
 
 У функції намагайтесь використовувати лише змінні, що були передані у якості параметрів.
 
-That would make it really hard to identify what's exactly in the variable *now*. And also where it comes from. The purpose is to develop the intuition and memory of a person reading the code. A person with weak intuition would have to analyze the code line-by-line and track the changes through every code branch.
+Це суттєво ускладнить розуміння того, що саме знаходиться у змінній *зараз*, і звідки воно там. Метою цих дій є розвиток інтуіції та пам'яті людини, котра прочитає цей код. Людина зі слабкою інтуіцією аналізуватиме такий код рядок за рядком і слідкуватиме за змінами у кожному блоці коду.
 
-**An advanced variant of the approach is to covertly (!) replace the value with something alike in the middle of a loop or a function.**
+**Продвинутим варіантом такого підходу є непомітно (!) замінти значення змінної на щось дуже схоже всередині циклу або функції.**
 
-For instance:
+Наприклад:
 
 ```js
 function ninjaFunction(elem) {
-  // 20 lines of code working with elem
+  // 20 рядків коду, що використовують elem
 
   elem = clone(elem);
 
-  // 20 more lines, now working with the clone of the elem!
+  // ще 20 рядків, які тепер використовують клон elem!
 }
 ```
 
-A fellow programmer who wants to work with `elem` in the second half of the function will be surprised... Only during the debugging, after examining the code they will find out that they're working with a clone!
+Програміст, в якого буде бажання використати `elem` у другій частині коду буде здивований... Тільки під час налагодження, після розбору коду він зрозуміє, зо працює з клоном!
 
-Seen in code regularly. Deadly effective even against an experienced ninja.
+Таке трапляється доволі часто. Ефективний прийом навіть проти досвічених ніндзя.
 
-## Underscores for fun
+## Підкреслення задля розваги
 
-Put underscores `_` and `__` before variable names. Like `_name` or `__value`. It would be great if only you knew their meaning. Or, better, add them just for fun, without particular meaning at all. Or different meanings in different places.
+Ставьте підкреслення `_` та `__` перед іменами змінних. Наприклад, `_name` або `__value`. Краще буде, якщо тільки ви будете знати їх значення. А ще краще, щоб значення не було зовсім, додавайте їх задля розваги. Або використовуйте різні значення у різних місцях.
 
-You kill two rabbits with one shot. First, the code becomes longer and less readable, and the second, a fellow developer may spend a long time trying to figure out what the underscores mean.
+Ви влучаєте у двох зайців одним пострілом. По-перше, код стає довшим і менш зрозумілим, і по-друге, колега-розробник зможе витратити час з'ясовуєчи сакральне значення вашого підкреслення.
 
-A smart ninja puts underscores at one spot of code and evades them at other places. That makes the code even more fragile and increases the probability of future errors.
+Проворний ніндзя використовує підкреслення в одній частині коду і уникає їх в іншій. Це робить код ще більш вразливим і підвищує можливість виникнення помилок у майбутньому.
 
-## Show your love
+## Покажіть свою любов
 
-Let everyone see how magnificent your entities are! Names like `superElement`, `megaFrame` and `niceItem` will definitely enlighten a reader.
+Нехай усі бачать, наскільки величні ваші сутності! Читач обов'язково зрадіє таким іменам, як `superElement`, `megaFrame` та `niceItem`.
 
-Indeed, from one hand, something is written: `super..`, `mega..`, `nice..` But from the other hand -- that brings no details. A reader may decide to look for a hidden meaning and meditate for an hour or two of their paid working time.
+Справді, з одного боку, дещо все ж таки написано: `super..`, `mega..`, `nice..`. Але з іншого боку -- це не роз'яснює нічого. Той, хто читатиме ваш код, витратить не одну годину свого оплаченого робочого часу на медитацію і пошук прихованого значення цих слів.
 
 
-## Overlap outer variables
+## Перекриття зовнішніх змінних
 
-```quote author="Guan Yin Zi"
-When in the light, can't see anything in the darkness.<br>
-When in the darkness, can see everything in the light.
+```quote author="Ґуань Їнь-цзи"
+Перебуваючи на світлі, не можна нічого побачити в темряві.<br>
+Перебуваючи ж у темряві, побачиш все, що знаходиться на світлі.
 ```
 
-Use same names for variables inside and outside a function. As simple. No efforts to invent new names.
+Використовуй ті ж самі імена змінних всередені функцій, що й за її межами. Це просто. Ніяких зусиль для винаходу нових імен.
 
 ```js
 let *!*user*/!* = authenticateUser();
@@ -186,19 +186,20 @@ let *!*user*/!* = authenticateUser();
 function render() {
   let *!*user*/!* = anotherValue();
   ...
-  ...many lines...
+  ...багато рядків...
   ...
-  ... // <-- a programmer wants to work with user here and...
+  ... // <-- програміст захоче використати тут 'user' і...
   ...
 }
 ```
 
-A programmer who jumps inside the `render` will probably fail to notice that there's a local `user` shadowing the outer one.
+Програмісти, що читатимуть код функції `render` ймовірно не помітить, що локальна змінна `user` перекриває глобальну.
 
-Then they'll try to work with `user` assuming that it's the external variable, the result of `authenticateUser()`... The trap is sprung! Hello, debugger...
+Тоді вони спробують працювати з `user`, як з зовнішньою змінною, що має вернути результат `authenticateUser()`...
+Then they'll try to work with `user` assuming that it's the external variable, the result of `authenticateUser()`... Пастка закрилася! Привіт, налагоджувач...
 
 
-## Side-effects everywhere!
+## Несподіванки всюди!
 
 There are functions that look like they don't change anything. Like `isReady()`, `checkPermission()`, `findTags()`... They are assumed to carry out calculations, find and return the data, without changing anything outside of them. In other words, without "side-effects".
 
@@ -230,7 +231,7 @@ Additional actions should not be obvious from the function name. A true ninja co
 
 Imagine, another developer wants only to check the email, and not output any message. Your function  `validateEmail(email)` that does both will not suit them. So they won't break your meditation by asking anything about it.
 
-## Summary
+## Підсумки
 
 All "pieces of advice" above are from the real code... Sometimes, written by experienced developers. Maybe even more experienced than you are ;)
 
