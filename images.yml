@@ -1,21 +1,21 @@
 # 1-js/02-first-steps/04-variables/variable.svg
 variable.svg:
-  '"Hello!"':
-    text: '"Привіт!"'
+  "Hello!":
+    text: "Привіт!"
     position: "center"
-  message:
+  "message":
     text: "Повідомлення"
     position: "center"
 
 # 1-js/02-first-steps/04-variables/variable-change.svg
 variable-change.svg:
-  '"Hello!"':
-    text: '"Привіт!"'
+  "Hello!":
+    text: "Привіт!"
     position: "center"
-  '"World!"':
-    text: '"Світ!"'
+  "World!":
+    text: "Світ!"
     position: "center"
-  message:
+  "message":
     text: "Повідомлення"
     position: "center"
 
@@ -43,20 +43,35 @@ ifelse_task.svg:
   TheMaster: ''
   Other: ''
 
+# 1-js/03-code-quality/01-debugging-chrome/chrome-open-sources.svg
+chrome-open-sources.svg:
+  "open sources":
+    text: "показати вихідні файли"
+
+# 1-js/03-code-quality/01-debugging-chrome/chrome-sources-breakpoint.svg
 chrome-sources-breakpoint.svg:
-  here's the list: ''
-  breakpoints: ''
+  "here's the list":
+    text: "список всіх точок в цьому файлі"
+    position: "right"
+  "breakpoints":
+    text: "точки зупинки"
 
+# 1-js/03-code-quality/01-debugging-chrome/chrome-sources-debugger-pause.svg
 chrome-sources-debugger-pause.svg:
-  '1': ''
-  '2': ''
-  '3': ''
-  jump to the outer function: ''
-  watch expressions: ''
-  current variables: ''
+  "see the outer call details":
+    text: "перегляд деталей зовнішнього виклику"
+    position: "right"
+  "watch expressions":
+    text: "перегляд виразів"
+    position: "right"
+  "current variables":
+    text: "поточні змінні"
+    position: "right"
 
+# 1-js/03-code-quality/01-debugging-chrome/chrome-sources-debugger-trace-1.svg
 chrome-sources-debugger-trace-1.svg:
-  nested calls: ''
+  "nested calls":
+    text: "вкладені виклики"
 
 toolbarButtonGlyphs.svg: {}
 
