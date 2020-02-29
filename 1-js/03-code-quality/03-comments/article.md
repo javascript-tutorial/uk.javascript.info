@@ -132,7 +132,7 @@ function addJuice(container) {
  * повертає x у n-й степені.
  *
  * @param {number} x число, що треба піднести до степеня.
- * @param {number} n Степінь, повинно бути натуральним числом.
+ * @param {number} n cтепінь, повинно бути натуральним числом.
  * @return {number} x піднесене у n-нну степінь.
  */
 function pow(x, n) {
