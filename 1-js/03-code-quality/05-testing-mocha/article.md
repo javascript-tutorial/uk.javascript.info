@@ -1,54 +1,55 @@
-# Automated testing with Mocha
+# Автоматичне тестування за допомогою Mocha
 
-Automated testing will be used in further tasks, and it's also widely used in real projects.
+Автоматичне тестування буде використовуватися у настпуних завданнях, і воно широко використовується у реальних проектах.
 
-## Why we need tests?
+## Навіщо нам потрібні тести?
 
-When we write a function, we can usually imagine what it should do: which parameters give which results.
+Коли ми пишемо функцію, ми можемо уявити, як її будуть використовувати - які параметри дають який результат.
 
-During development, we can check the function by running it and comparing the outcome with the expected one. For instance, we can do it in the console.
+Під час розробки ми можемо перевірити функцію, запускаючи її та перевіряючи фактичний результат з очікуваним. Наприклад, ми можемо робити це у консолі.
 
-If something is wrong -- then we fix the code, run again, check the result -- and so on till it works.
+Якщо результат не вірний -- ми можемо підправити код, запустити її знову, перевірити результат знову, і так до тих пір, поки вона не працюватиме вірно.
 
-But such manual "re-runs" are imperfect.
+Але такі ручні "перезапуски" недосконалі.
 
-**When testing a code by manual re-runs, it's easy to miss something.**
+**Тестуючи код вручну, можна легко щось упустити.**
 
-For instance, we're creating a function `f`. Wrote some code, testing: `f(1)` works, but `f(2)` doesn't work. We fix the code and now `f(2)` works. Looks complete? But we forgot to re-test `f(1)`. That may lead to an error.
+Наприклад, ми створили функцію `f`. Перевірили деякий код, тестуємо: `f(1)` працює, але `f(2)` не працює. Ми підправляємо код і тепер `f(2)` працює. Здається, що справу зроблено? Але ми забули перевірити чи `f(1)` досі працює. Це може призвести до помилки.
 
-That's very typical. When we develop something, we keep a lot of possible use cases in mind. But it's hard to expect a programmer to check all of them manually after every change. So it becomes easy to fix one thing and break another one.
+Це дуже типово. Коли ми щось розробляємо, ми пам’ятаємо про багато можливих випадків використання. Але не треба очікувати, що програміст перевірятиме їх усі вручну після кожної зміни. Так стає легко виправити одне і зламати інше.
 
-**Automated testing means that tests are written separately, in addition to the code. They run our functions in various ways and compare results with the expected.**
+**Автоматизоване тестування означає, що тести пишуться окремо від основного коду, доповнюючи його. Вони запускають наші функції різними способами і порівнюють результати з очікуваними.**
 
-## Behavior Driven Development (BDD)
+## Керована поведінкою розробка (BDD)
 
-Let's start with a technique named [Behavior Driven Development](http://en.wikipedia.org/wiki/Behavior-driven_development) or, in short, BDD.
+Давайте розпочнемо з техніки під назвою [Керована поведінкою розробка](https://uk.wikipedia.org/wiki/%D0%9A%D0%B5%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B0_%D0%BF%D0%BE%D0%B2%D0%B5%D0%B4%D1%96%D0%BD%D0%BA%D0%BE%D1%8E_%D1%80%D0%BE%D0%B7%D1%80%D0%BE%D0%B1%D0%BA%D0%B0) або коротко, BDD (від англ. behavior-driven development).
 
-**BDD is three things in one: tests AND documentation AND examples.**
+**BDD це три в одному: і тести, і документація, і приклади використання.**
 
-To understand BDD, we'll examine a practical case of development.
+Щоб зрозуміти BDD, ми розглянемо реальний приклад розробки.
 
-## Development of "pow": the spec
+## Розробка функції піднесення до степеня - "pow": специфікація
 
-Let's say we want to make a function `pow(x, n)` that raises `x` to an integer power `n`. We assume that `n≥0`.
+Припустимо, ми хочемо зробити функцію `pow(x, n)`, яка піднесе `x` до степеня `n`.
+Let's say we want to make a function `pow(x, n)` that raises `x` to an integer power `n` (`n` - ціле число). Ми припускаємо, що `n≥0`.
 
-That task is just an example: there's the `**` operator in JavaScript that can do that, but here we concentrate on the development flow that can be applied to more complex tasks as well.
+Це завдання є просто прикладом - в JavaScript є оператор `**`, що зводить до степеня, але в цьому прикладі ми зосередимось на процесі розробки, який потім можна також застосовувати і для більш складних завдань.
 
-Before creating the code of `pow`, we can imagine what the function should do and describe it.
+Перш ніж створити код для функції `pow ', ми можемо уявити, що вона повинна виконувати, і описати її.
 
-Such description is called a *specification* or, in short, a spec, and contains descriptions of use cases together with tests for them, like this:
+Такий опис називається *специфікацією*, і він описує приклади використання функції разом з тестами, наприклад:
 
 ```js
 describe("pow", function() {
 
-  it("raises to n-th power", function() {
+  it("підносить до n-нного степеня", function() {
     assert.equal(pow(2, 3), 8);
   });
 
 });
 ```
 
-A spec has three main building blocks that you can see above:
+Як ви помітили, специфікація має три основні блоки:
 
 `describe("title", function() { ... })`
 : What functionality we're describing. In our case we're describing the function `pow`. Used to group "workers" -- the `it` blocks.
@@ -269,11 +270,11 @@ For instance:
 ```js no-beautify
 describe("test", function() {
 
-  before(() => alert("Testing started – before all tests"));
-  after(() => alert("Testing finished – after all tests"));
+  before(() => alert("Тестування розпочато – до всіх тестів"));
+  after(() => alert("Тестування завершено – після всіх тестів"));
 
-  beforeEach(() => alert("Before a test – enter a test"));
-  afterEach(() => alert("After a test – exit a test"));
+  beforeEach(() => alert("До тесту – початок тесту"));
+  afterEach(() => alert("Після тесту – вихід з тесту"));
 
   it('test 1', () => alert(1));
   it('test 2', () => alert(2));
