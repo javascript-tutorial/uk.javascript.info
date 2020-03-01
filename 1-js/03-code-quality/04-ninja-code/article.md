@@ -1,185 +1,184 @@
-# Ninja code
+# Ніндзя код
 
 
-```quote author="Confucius"
-Learning without thought is labor lost; thought without learning is perilous.
+```quote author="Конфуцій"
+Навчання без міркування – даремне, міркування без навчання – небезпечне
 ```
 
-Programmer ninjas of the past used these tricks to sharpen the mind of code maintainers.
+Ніндзя-програмісти минулого використовували деякі хитрощі, щоб загострити розум тих, хто буде підтримувати їх код.
 
-Code review gurus look for them in test tasks.
+Гуру, що перевіряють код, шукають їх у тестових завданнях.
 
-Novice developers sometimes use them even better than programmer ninjas.
+Початківці іноді викорустовують їх краще за ніндзя-програмістів.
 
-Read them carefully and find out who you are -- a ninja, a novice, or maybe a code reviewer?
+Уважно перечитайте ці хитрощі і вирішіть хто ви є — ніндзя, початківець, чи може гуру перевірки коду?
 
 
-```warn header="Irony detected"
-Many try to follow ninja paths. Few succeed.
+```warn header="Обережно, іронія!"
+Багато тих, хто намагався піти шляхом ніндзя. Мало тих, кому це вдалося.
 ```
 
 
-## Brevity is the soul of wit
+## Стислість - сестра таланту
 
-Make the code as short as possible. Show how smart you are.
+Пишіть якомога коротший код. Покажіть, наскільки ви розумні.
 
-Let subtle language features guide you.
+Нехай стислі та неочевидні можливості мови стануть вам посібником.
 
-For instance, take a look at this ternary operator `'?'`:
+Наприклад, розглянемо таке застосування тернарного оператора `'?'`:
 
 ```js
-// taken from a well-known javascript library
+// взято з добре відомої javascript бібліотеки
 i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
 ```
 
-Cool, right? If you write like that, a developer who comes across this line and tries to understand what is the value of `i` is going to have a merry time. Then come to you, seeking for an answer.
+Круто, правда? Якщо ви напишете подібне, розробник, який натрапить на цей рядок і намагатиметься зрозуміти, яке ж значення має `i`, пізнає неабияку радість. І врешті-решт, прийде до вас за відповідю.
 
-Tell them that shorter is always better. Initiate them into the paths of ninja.
+Скажіть йому, що коротше - це завжди краще. Допоможіть і йому стати на шлях ніндзя.
 
-## One-letter variables
+## Однолітерні змінні
 
-```quote author="Laozi (Tao Te Ching)"
-The Dao hides in wordlessness. Only the Dao is well begun and well
-completed.
+```quote author="Лао-цзи (Дао де цзін)"
+Так, Дао приховане від їхніх поглядів. Воно веде до Досконалості тільки достойників!
 ```
 
-Another way to code faster is to use single-letter variable names everywhere. Like `a`, `b` or `c`.
+Ще один спосіб писати код швидше - використовувати однолітерні змінні. Наприклад: `a`, `b` або `c`.
 
-A short variable disappears in the code like a real ninja in the forest. No one will be able to find it using "search" of the editor. And even if someone does, they won't be able to "decipher" what the name `a` or `b` means.
+Коротка змінна зникає у коді наче ніндзя у лісі. Ніхто не зможе знайти її використовуючи "пошук" редактора. І навіть, якщо її знайдуть, вони не зможуть "розшифрувати" за що саме змінні `a` чи `b` відповідають.
 
-...But there's an exception. A real ninja will never use `i` as the counter in a `"for"` loop. Anywhere, but not here. Look around, there are many more exotic letters. For instance, `x` or `y`.
+...Але є одне виключення з правил. Справжній ніндзя ніколи не використовуватиме `i` у якості лічильника в циклі `"for"`. Де завгодно, тільки не тут! Озерніться - є багато інших екзотичних літер. Наприклад, `x` або `y`.
 
-An exotic variable as a loop counter is especially cool if the loop body takes 1-2 pages (make it longer if you can). Then if someone looks deep inside the loop, they won't be able to quickly figure out that the variable named `x` is the loop counter.
+Екзотична змінна у якості лічильника особоливо доречна, коли тіло циклу займає одну-дві сторінки (чим більше, тим краще). У такому випадку, ті, хто зануриться глибоко у код циклу, не зможуть швидко здогадатись, що змінна `x` насправді є лічильником.
 
-## Use abbreviations
+## Використовуйте абревіатури
 
-If the team rules forbid the use of one-letter and vague names -- shorten them, make abbreviations.
+Якщо правила, встановлені командою, не дозволяють вам використовувати однолітерні змінні або абстрактні імена, тоді скоротшуйте їх.
 
-Like this:
+Наприклад:
 
 - `list` -> `lst`.
 - `userAgent` -> `ua`.
 - `browser` -> `brsr`.
-- ...etc
+- ...і т.д.
 
-Only the one with truly good intuition will be able to understand such names. Try to shorten everything. Only a worthy person should be able to uphold the development of your code.
+Тільки обрані, що мають розвинену інтуіцію, зможуть зрозуміти такі імена. Намагайтесь скоротшувати все. Тільки достойні повинні мати змогу підтримувати ваш код.
 
-## Soar high. Be abstract.
+## Будьте абстрактними
 
-```quote author="Laozi (Tao Te Ching)"
-The great square is cornerless<br>
-The great vessel is last complete,<br>
-The great note is rarified sound,<br>
-The great image has no form.
+```quote author="Лао-цзи (Дао де цзін)"
+Великий квадрат не має кутів,<br>
+Великий глек  довго  ліпиться,<br>
+Великий звук не можна почути,<br>
+Великий образ неозорий.
 ```
 
-While choosing a name try to use the most abstract word. Like `obj`, `data`, `value`, `item`, `elem` and so on.
+Обираючи ім'я, намагайтесь використовувати найбільш абстрактне слово. Прикладом може бути `obj`, `data`, `value`, `item`, `elem`, тощо.
 
-- **The ideal name for a variable is `data`.** Use it everywhere you can. Indeed, every variable holds *data*, right?
+- **`data` є ідеальним варіантом для назви змінної.** Використовуйте його всюди, де зможете. І справді, кожна змінна має *дані*, правильно?
 
-    ...But what to do if `data` is already taken? Try `value`, it's also universal. After all, a variable eventually gets a *value*.
+    ...Що робити, якщо назва `data` вже зайнята? Спробуйте `value` - вона також універсальна. Врешті-решт, змінна отримує якесь *значення*.
 
-- **Name a variable by its type: `str`, `num`...**
+- **Підбирайте і'мя змінним згідно з їх типом: `str`, `num`...**
 
-    Give them a try. A young initiate may wonder -- are such names really useful for a ninja? Indeed, they are!
+    Спробуйте. Щойно ставший на шлях ніндзя може засумніватись, чи вони дійсно такі корисні? Авжеж!
 
-    Sure, the variable name still means something. It says what's inside the variable: a string, a number or something else. But when an outsider tries to understand the code, they'll be surprised to see that there's actually no information at all! And will ultimately fail to alter your well-thought code.
+    Так, ім'я змінної дещо означає. Це дає зрозуміти, що ми використовуємо: рядок, число чи щось ще. Проте коли сторонні люди намагатимуться зрозуміти код, вони будуть здивовані, що інформація про те, що саме містить змінна, відсутня. У результаті вони не зможуть змінити ваш добре обміркований код.
 
-    The value type is easy to find out by debugging. But what's the meaning of the variable? Which string/number does it store?
+    Тип змінної досить легко знайти під час налаштування. Але що означає назва змінної? Яку саме строку/число вона зберігає?
 
-    There's just no way to figure out without a good meditation!
+    Жодного шансу дізнатись про це без тривалої медитації!
 
-- **...But what if there are no more such names?** Just add a number: `data1, item2, elem5`...
+- **...Але що робити коли і такі імена закінчились?** Просто додайте число: `data1, item2, elem5`...
 
-## Attention test
+## Перевірка уваги
 
-Only a truly attentive programmer should be able to understand your code. But how to check that?
+Тільки дуже уважний програміст повинен мати змогу зрозуміти ваш код. Проте як це перевірити? 
 
-**One of the ways -- use similar variable names, like `date` and `data`.**
+**Один із способів -- використання схожих імен змінних, наприклад `date` і `data`.**
 
-Mix them where you can.
+Змішуйте їх всюди, де це можливо.
 
-A quick read of such code becomes impossible. And when there's a typo... Ummm... We're stuck for long, time to drink tea.
+Швидко прочитати такий код неможливо. А якщо виникла друкарська помилка... Мммм... Це надовго, час випити чаю.
 
 
-## Smart synonyms
+## Хитрі синоніми
 
-```quote author="Confucius"
-The hardest thing of all is to find a black cat in a dark room, especially if there is no cat.
+```quote author="Конфуцій"
+Дуже важко шукати чорну кішку у темній кімнаті, особливо, коли її там немає.
 ```
 
-Using *similar* names for *same* things makes life more interesting and shows your creativity to the public.
+Використання *схожих* імен для *однакових* речей зробить ваше життя цікавішим і покаже рівень вашої креативності публіці.
 
-For instance, consider function prefixes. If a function shows a message on the screen -- start it with `display…`, like `displayMessage`. And then if another function shows on the screen something else, like a user name, start it with `show…` (like `showName`).
+Наприклад, роглянемо префікси функцій. Якщо функція показує повідомлення на екрані -- почніть назву з `display…`, наприклад, `displayMessage`. І коли інша фукція показуватиме щось ще на екрані (скажімо, ім'я користувача), почніть її назву з `show…` (наприклад, `showName`).
 
-Insinuate that there's a subtle difference between such functions, while there is none.
+Тобто натякніть, що є деяка тонка різниця між цими функціями, хоча насправді її немає.
 
-Make a pact with fellow ninjas of the team: if John starts "showing" functions with `display...` in his code, then Peter could use `render..`, and Ann -- `paint...`. Note how much more interesting and diverse the code became.
+Домовьтесь зі своїми ніндзя-колегами, що якшо Іван починає називати функції, що показують щось, використовуючи `display...`, тоді Петро може використовувати `render..`, а Ганна -- `paint...`. Зауважте, наскільки цікавим та різноманітним став наш код.
 
-...And now the hat trick!
+...А тепер коронний прийом!
 
-For two functions with important differences -- use the same prefix!
+Для функцій, у яких дійсно є важлива різниця, використовуйте однаковий префікс!
 
-For instance, the function `printPage(page)` will use a printer. And the function `printText(text)` will put the text on-screen. Let an unfamiliar reader think well over similarly named function `printMessage`: "Where does it put the message? To a printer or on the screen?". To make it really shine, `printMessage(message)` should output it in the new window!
+Наприклад, функція `printPage(page)` використовуватиме принтер. А `printText(text)` виводитеме текст на екран. Нехай люди неосвічені у вашому коді здогадуються з приводу схожої функції `printMessage`: "Куди буде виведено повідомлення? На принтер чи на екран?". Для збільшення ефекту неочікуваності, функція `printMessage(message)` повинна вивести повідомлення в нове вікно!
 
-## Reuse names
+## Використовуйте імена повторно
 
-```quote author="Laozi (Tao Te Ching)"
-Once the whole is divided, the parts<br>
-need names.<br>
-There are already enough names.<br>
-One must know when to stop.
+```quote author="Лао-цзи (Дао де цзін)"
+При встановленні порядку<br>
+з'явилися імена.<br>
+Оскільки виникли імена,<br>
+потрібно знати межу їх використання.
 ```
 
-Add a new variable only when absolutely necessary.
+Додавайте нову змінну тільки тоді коли це вкрай необхідно.
 
-Instead, reuse existing names. Just write new values into them.
+Замість цього, використовуйте повторно існуючі змінні. Просто записуйте у них нові значення.
 
-In a function try to use only variables passed as parameters.
+У функції намагайтесь використовувати лише змінні, що були передані у якості параметрів.
 
-That would make it really hard to identify what's exactly in the variable *now*. And also where it comes from. The purpose is to develop the intuition and memory of a person reading the code. A person with weak intuition would have to analyze the code line-by-line and track the changes through every code branch.
+Це суттєво ускладнить розуміння того, що саме знаходиться у змінній *зараз*, і звідки воно там. Метою цих дій є розвиток інтуіції та пам'яті людини, котра прочитає цей код. Людина зі слабкою інтуіцією аналізуватиме такий код рядок за рядком і слідкуватиме за змінами у кожному блоці коду.
 
-**An advanced variant of the approach is to covertly (!) replace the value with something alike in the middle of a loop or a function.**
+**Продвинутим варіантом такого підходу є непомітна (!) заміна значення змінної на щось дуже схоже всередині циклу або функції.**
 
-For instance:
+Наприклад:
 
 ```js
 function ninjaFunction(elem) {
-  // 20 lines of code working with elem
+  // 20 рядків коду, що використовують elem
 
   elem = clone(elem);
 
-  // 20 more lines, now working with the clone of the elem!
+  // ще 20 рядків, які тепер використовують клон elem!
 }
 ```
 
-A fellow programmer who wants to work with `elem` in the second half of the function will be surprised... Only during the debugging, after examining the code they will find out that they're working with a clone!
+Програміст, в якого буде бажання використати `elem` у другій частині коду буде здивований... Тільки під час налагодження, після розбору коду він зрозуміє, що працює з клоном!
 
-Seen in code regularly. Deadly effective even against an experienced ninja.
+Таке трапляється доволі часто. Ефективний прийом навіть проти досвічених ніндзя.
 
-## Underscores for fun
+## Підкреслення задля розваги
 
-Put underscores `_` and `__` before variable names. Like `_name` or `__value`. It would be great if only you knew their meaning. Or, better, add them just for fun, without particular meaning at all. Or different meanings in different places.
+Ставьте підкреслення `_` та `__` перед іменами змінних. Наприклад, `_name` або `__value`. Краще буде, якщо тільки ви будете знати їх значення. А ще краще, щоб значення не було зовсім, додавайте їх задля розваги. Або використовуйте різні значення у різних місцях.
 
-You kill two rabbits with one shot. First, the code becomes longer and less readable, and the second, a fellow developer may spend a long time trying to figure out what the underscores mean.
+Ви вбиваєте двох зайців одним пострілом. По-перше, код стає довшим і менш зрозумілим, і по-друге, колега-розробник зможе витратити час з'ясовуючи сакральне значення вашого підкреслення.
 
-A smart ninja puts underscores at one spot of code and evades them at other places. That makes the code even more fragile and increases the probability of future errors.
+Проворний ніндзя використовує підкреслення в одній частині коду і уникає їх в іншій. Це робить код ще більш вразливим і підвищує можливість виникнення помилок у майбутньому.
 
-## Show your love
+## Покажіть свою любов
 
-Let everyone see how magnificent your entities are! Names like `superElement`, `megaFrame` and `niceItem` will definitely enlighten a reader.
+Нехай усі бачать, наскільки величні ваші сутності! Читач обов'язково зрадіє таким іменам, як `superElement`, `megaFrame` та `niceItem`.
 
-Indeed, from one hand, something is written: `super..`, `mega..`, `nice..` But from the other hand -- that brings no details. A reader may decide to look for a hidden meaning and meditate for an hour or two of their paid working time.
+Справді, з одного боку, дещо все ж таки написано: `super..`, `mega..`, `nice..`. Але з іншого боку -- це не роз'яснює нічого. Той, хто читатиме ваш код, витратить не одну годину свого оплаченого робочого часу на медитацію і пошук прихованого значення цих слів.
 
 
-## Overlap outer variables
+## Перекриття зовнішніх змінних
 
-```quote author="Guan Yin Zi"
-When in the light, can't see anything in the darkness.<br>
-When in the darkness, can see everything in the light.
+```quote author="Ґуань Їнь-цзи"
+Перебуваючи на світлі, не можна нічого побачити в темряві.<br>
+Перебуваючи ж у темряві, побачиш все, що знаходиться на світлі.
 ```
 
-Use same names for variables inside and outside a function. As simple. No efforts to invent new names.
+Використовуйте ті ж самі імена змінних всередені функцій, що й за її межами. Це просто. Ніяких зусиль для винаходу нових імен.
 
 ```js
 let *!*user*/!* = authenticateUser();
@@ -187,54 +186,54 @@ let *!*user*/!* = authenticateUser();
 function render() {
   let *!*user*/!* = anotherValue();
   ...
-  ...many lines...
+  ...багато рядків...
   ...
-  ... // <-- a programmer wants to work with user here and...
+  ... // <-- програміст захоче використати тут 'user' і...
   ...
 }
 ```
 
-A programmer who jumps inside the `render` will probably fail to notice that there's a local `user` shadowing the outer one.
+Програмісти, що читатимуть код функції `render` ймовірно не помітить, що локальна змінна `user` перекриває глобальну.
 
-Then they'll try to work with `user` assuming that it's the external variable, the result of `authenticateUser()`... The trap is sprung! Hello, debugger...
-
-
-## Side-effects everywhere!
-
-There are functions that look like they don't change anything. Like `isReady()`, `checkPermission()`, `findTags()`... They are assumed to carry out calculations, find and return the data, without changing anything outside of them. In other words, without "side-effects".
-
-**A really beautiful trick is to add a "useful" action to them, besides the main task.**
-
-An expression of dazed surprise on the face of your colleague when they see a function named `is..`, `check..` or `find...` changing something -- will definitely broaden your boundaries of reason.
-
-**Another way to surprise is to return a non-standard result.**
-
-Show your original thinking! Let the call of `checkPermission` return not `true/false`, but a complex object with the results of the check.
-
-Those developers who try to write `if (checkPermission(..))`, will wonder why it doesn't work. Tell them: "Read the docs!". And give this article.
+Тоді вони спробують працювати з `user`, як з зовнішньою змінною, що має вернути результат `authenticateUser()`... Пастка закрилася! Привіт, налагоджувач...
 
 
-## Powerful functions!
+## Побічні ефекти всюди!
 
-```quote author="Laozi (Tao Te Ching)"
-The great Tao flows everywhere,<br>
-both to the left and to the right.
+Є функції, які начебто нічого не змінюють. Наприклад, `isReady()`, `checkPermission()`, `findTags()`... Припускається, що такі функції виконують обчислення та повертають результат без впливу на те, що знаходиться за межами функції. Іншими словами, без "побічних ефектів".
+
+**Дійсно гарним прийомом є додавати "корисну" дію до них, окрім їх основної задачі.**
+
+Вираз приголомшеного подиву на обличчі вашого колеги, коли він побачить, що функція з ім'ям `is..`, `check..` чи `find...` щось змінює, неодмінно розширить межі його розуму.
+
+**Іншим способом здивувати є повернення нестандартного реультату.**
+
+Покажіть своє оригінальне мислення! Нехає виклик функції `checkPermission` поверне не `true/false`, а складний об'єкт з результатом перевірки.
+
+Розробники, що намагатимуться написати `if (checkPermission(..))`, будуть цікавитись, чому воно не працює. Скажіть їм: "Читайте документацію!". І дайте їм почитату цю статтю.
+
+
+## Могутні функції!
+
+```quote author="Лао-цзи (Дао де цзін)"
+Вічне Дао пронизує Собою все.<br>
+Воно є і праворуч, і ліворуч.
 ```
 
-Don't limit the function by what's written in its name. Be broader.
+Не треба обмежувати алгоритм функції лише тим, що пов'язано з її ім'ям. Мисліть ширше.
 
-For instance, a function `validateEmail(email)` could (besides checking the email for correctness) show an error message and ask to re-enter the email.
+Наприклад, функція `validateEmail(email)` може (окрім, перевірки адреси електронної пошти на відповідність правилам) показувати повідомлення про помилку та пропонувати ввести нову адресу.
 
-Additional actions should not be obvious from the function name. A true ninja coder will make them not obvious from the code as well.
+Додаткові дії не повинні бути зрозумілими з імені функції. Справжній ніндзя розробник зробить їх також неочевидними і в самому коді.
 
-**Joining several actions into one protects your code from reuse.**
+**Поєднання декількох дій в одну захищає ваш код від повторного використовування.**
 
-Imagine, another developer wants only to check the email, and not output any message. Your function  `validateEmail(email)` that does both will not suit them. So they won't break your meditation by asking anything about it.
+Уявіть собі, що інший розробник захоче тільки перевірити адресу електроної пошти без виводу жодних повідомлень. Ваша функція `validateEmail(email)` робить обидві ці дії, а значить не підійде йому. Тому вони не потурбують вас під час медитації питаннями з приводу цієї функції.
 
-## Summary
+## Підсумки
 
-All "pieces of advice" above are from the real code... Sometimes, written by experienced developers. Maybe even more experienced than you are ;)
+Всі "поради", зазначені вище, взяті з реального коду... Який іноді писали навіть досвідчені розробники. Можливо навіть досвідченіші за вас ;)
 
-- Follow some of them, and your code will become full of surprises.
-- Follow many of them, and your code will become truly yours, no one would want to change it.
-- Follow all, and your code will become a valuable lesson for young developers looking for enlightenment.
+- Дотримуйтесь їх - і ваш код буде мати повно несподіванок.
+- Дотримуйтесь їх усіх, і ваш код буде дійсно вашим — ніхто не захоче його читати, і тим паче —  змінювати.
+- Дотримуйтесь їх усіх - і ваш код стане цінним уроком для молодих розробників, які шукають просвітлення.
