@@ -227,14 +227,14 @@ Then they'll try to work with `user` assuming that it's the external variable, t
 
 Додаткові дії не повинні бути зрозумілими з імені функції. Справжній ніндзя розробник зробить їх також неочевидними і в самому коді.
 
-**Joining several actions into one protects your code from reuse.**
+**Поєднання декількох дій в одну захищає ваш код від повторного використування.**
 
-Imagine, another developer wants only to check the email, and not output any message. Your function  `validateEmail(email)` that does both will not suit them. So they won't break your meditation by asking anything about it.
+Уявіть собі, що інший розробник захоче тільки перевірки адресу електроної пошти без виводу жодних повідомлень. Ваша функція `validateEmail(email)` робить обидві ці дії, а значить не підійде йому. Тому вони не потурбують вас під час медитації питаннями з приводу цієї функції.
 
 ## Підсумки
 
-All "pieces of advice" above are from the real code... Sometimes, written by experienced developers. Maybe even more experienced than you are ;)
+Всі "поради", зазначені вище є з реального коду... Який іноді писали навіть досвічені розробники. Можливо навіть більш досвічені за вас ;)
 
-- Follow some of them, and your code will become full of surprises.
-- Follow many of them, and your code will become truly yours, no one would want to change it.
-- Follow all, and your code will become a valuable lesson for young developers looking for enlightenment.
+- Дотримуйтесь їх - і ваш код буде мати повно несподіванок.
+- Дотримуйтесь їх усіх - і ваш код буде дійсно вашим, ніхто не захоче чипати та змінювати його.
+- Дотримуйтесь їх усіх - і ваш код стане цінним уроком для молодих розробників, які шукають просвітлення.
