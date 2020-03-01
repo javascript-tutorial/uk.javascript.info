@@ -1,5 +1,5 @@
 function hello(name) {
-  let phrase = `Hello, ${name}!`;
+  let phrase = `Привіт, ${name}!`;
 
   say(phrase);
 }
