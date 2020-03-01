@@ -52,35 +52,35 @@ describe("pow", function() {
 Як ви помітили, специфікація має три основні блоки:
 
 `describe("title", function() { ... })`
-: What functionality we're describing. In our case we're describing the function `pow`. Used to group "workers" -- the `it` blocks.
+: Яку функціональність ми описуємо. В нашому випадку, ми описуємо функцію `pow`. Використовується для групування блоків `it`, які "виконують роботу".
 
-`it("use case description", function() { ... })`
-: In the title of `it` we *in a human-readable way* describe the particular use case, and the second argument is a function that tests it.
+`it("підносить до n-нного степеня", function() { ... })`
+: У першому аргументі (назві) `it` ми *людською мовою* описуємо конкретний спосіб використання функції, а другому аргументі пишемо функцію, яка тестуватиме цей спосіб.
 
 `assert.equal(value1, value2)`
-: The code inside `it` block, if the implementation is correct, should execute without errors.
+: Код, всереді блоку `it`, якщо реалізація правильна, повинен виконуватись без помилок.
 
-    Functions `assert.*` are used to check whether `pow` works as expected. Right here we're using one of them -- `assert.equal`, it compares arguments and yields an error if they are not equal. Here it checks that the result of `pow(2, 3)` equals `8`. There are other types of comparisons and checks, that we'll add later.
+    Функції `assert.*` використовуються для перевірки того, що функція `pow` працює, як ми очікуємо. В нашому випадку, ми використовуємо одну з них -- `assert.equal`, вона порівнює аргументи і сповіщає про помилку, якщо вони відрізняються. Тут вона перевіряє, що результат `pow(2, 3)` дорівнює `8`. Є також інші способи порівняння та перевірки, які ми розглянемо пізніше.
 
-The specification can be executed, and it will run the test specified in `it` block. We'll see that later.
+Специфікацію можна виконати, і вона запустить тести вказані у блоках `it`. Ми розглянемо це далі.
 
-## The development flow
+## Процес розробки
 
-The flow of development usually looks like this:
+Зазвичай, процес розробки має настпуний вигляд:
 
-1. An initial spec is written, with tests for the most basic functionality.
-2. An initial implementation is created.
-3. To check whether it works, we run the testing framework [Mocha](http://mochajs.org/) (more details soon) that runs the spec. While the functionality is not complete, errors are displayed. We make corrections until everything works.
-4. Now we have a working initial implementation with tests.
-5. We add more use cases to the spec, probably not yet supported by the implementations. Tests start to fail.
-6. Go to 3, update the implementation till tests give no errors.
-7. Repeat steps 3-6 till the functionality is ready.
+1. Пишуть первинну специфікацію з тестами основного функціонала.
+2. Створюється початкова реалізація.
+3. Щоб перевірити, чи вона працює, ми запускаємо тестовий фреймворк [Mocha](http://mochajs.org/) (більш детально нижче), який виконує специфікацію. Якщо функціонал не завершено - виводяться повідомлення про помилки. Ми робимо виправлення до тих пір, поки не матимемо повністю робочий код.
+4. Тепер ми маємо початкову реалізацію з тестами.
+5. Ми додаємо більше способів використання до специфікації, навіть таких, що поки що не підтримуються реалізацією. Запуск тестів знову завершиться невдачою.
+6. Переходимо на 3-й пункт, змінюємо реалізацію, щоб вона відповідала тестам і вони не повертали повідомлення про помилку.
+7. Повторюємо процес описаний у пунктах з 3-го по 6-ий поки функціонал не буде повністю готовий.
 
-So, the development is *iterative*. We write the spec, implement it, make sure tests pass, then write more tests, make sure they work etc. At the end we have both a working implementation and tests for it.
+Тобто, процес розробки є *ітеративним*. Ми пишемо специфікацію, реалізуємо її, переконуємось, що тести проходять, потім пишемо ще тести, переконуємось, що вони також проходять і т.д. Завершивши цей процес, ми маємо реалізований робочий функціонал і тести до нього.
 
-Let's see this development flow in our practical case.
+Давайте розглянемо цей процес розробки на нашому прикладі.
 
-The first step is already complete: we have an initial spec for `pow`. Now, before making the implementation, let's use few JavaScript libraries to run the tests, just to see that they are working (they will all fail).
+Перший пункт вже виконано - ми маємо первинну специфікацію для функції `pow`. Now, before making the implementation, let's use few JavaScript libraries to run the tests, just to see that they are working (they will all fail).
 
 ## The spec in action
 
