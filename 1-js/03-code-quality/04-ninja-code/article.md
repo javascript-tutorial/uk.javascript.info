@@ -199,33 +199,33 @@ function render() {
 Then they'll try to work with `user` assuming that it's the external variable, the result of `authenticateUser()`... Пастка закрилася! Привіт, налагоджувач...
 
 
-## Несподіванки всюди!
+## Побічні ефекти всюди!
 
-There are functions that look like they don't change anything. Like `isReady()`, `checkPermission()`, `findTags()`... They are assumed to carry out calculations, find and return the data, without changing anything outside of them. In other words, without "side-effects".
+Є функції, які начебто нічого не змінюють. Наприклад, `isReady()`, `checkPermission()`, `findTags()`... Припускається, що такі функції виконують обчислення та повертають результат без впливу на те, що знаходиться за межами функції. Іншими словами, без "побічних ефектів".
 
-**A really beautiful trick is to add a "useful" action to them, besides the main task.**
+**Дійсно гарним прийомом є додавати "корисну" дію до них, окрім їх основної задачі.**
 
-An expression of dazed surprise on the face of your colleague when they see a function named `is..`, `check..` or `find...` changing something -- will definitely broaden your boundaries of reason.
+Вираз приголомшеного подиву на обличчі вашого колеги, коли він побачить, що функція з ім'ям `is..`, `check..` or `find...` щось змінює, неодмінно розширить межі його розуму.
 
-**Another way to surprise is to return a non-standard result.**
+**Іншим способом здивувати є повернення нестандартного реультату.**
 
-Show your original thinking! Let the call of `checkPermission` return not `true/false`, but a complex object with the results of the check.
+Покажіть своє оригінальне мислення! Нехає виклик функції `checkPermission` поверне не `true/false`, а складний об'єкт з результатом перевірки.
 
-Those developers who try to write `if (checkPermission(..))`, will wonder why it doesn't work. Tell them: "Read the docs!". And give this article.
+Розробники, що нагатимуться напсати `if (checkPermission(..))`, будуть цікавитися, чому воно не працює. Чкажіть їм: "Читайте документацію!". І дайте їм почитату цю статтю.
 
 
-## Powerful functions!
+## Могутні функції!
 
-```quote author="Laozi (Tao Te Ching)"
-The great Tao flows everywhere,<br>
-both to the left and to the right.
+```quote author="Лао-цзи (Дао де цзін)"
+Вічне Дао пронизує Собою все.<br>
+Воно є і праворуч, і ліворуч.
 ```
 
-Don't limit the function by what's written in its name. Be broader.
+Не треба обмежувати алгоритм функції лише тим, що пов'язано з її ім'ям. Мисліть ширше.
 
-For instance, a function `validateEmail(email)` could (besides checking the email for correctness) show an error message and ask to re-enter the email.
+Наприклад, функція `validateEmail(email)` може (окрім, перевірки адреси елетроної пошти на відповідність правилам) показувати повідомлення про помилку та пропонувати ввести нову адресу.
 
-Additional actions should not be obvious from the function name. A true ninja coder will make them not obvious from the code as well.
+Додаткові дії не повинні бути зрозумілими з імені функції. Справжній ніндзя розробник зробить їх також неочевидними і в самому коді.
 
 **Joining several actions into one protects your code from reuse.**
 
