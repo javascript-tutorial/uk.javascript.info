@@ -80,14 +80,14 @@ describe("pow", function() {
 
 Давайте розглянемо цей процес розробки на нашому прикладі.
 
-Перший пункт вже виконано - ми маємо первинну специфікацію для функції `pow`. Now, before making the implementation, let's use few JavaScript libraries to run the tests, just to see that they are working (they will all fail).
+Перший пункт вже виконано - ми маємо первинну специфікацію для функції `pow`. Теперр, перед початком реалізації, давайте використаємо декілька бібліотек JavaScript для виконання тестів, щоб перевірити, що вони працюютть (вони всі завершаться невдачою).
 
-## The spec in action
+## Специфікація в дії
 
-Here in the tutorial we'll be using the following JavaScript libraries for tests:
+Тут у посібнику ми будемо використовувати такі бібліотеки JavaScript для тестів:
 
-- [Mocha](http://mochajs.org/) -- the core framework: it provides common testing functions including `describe` and `it` and the main function that runs tests.
-- [Chai](http://chaijs.com) -- the library with many assertions. It allows to use a lot of different assertions, for now we need only `assert.equal`.
+- [Mocha](http://mochajs.org/) -- базовий фреймворк: він забезпечує нас загальними функціями для тестування, в тому числі `describe` та `it`, а також головною функцією, що виконує тести.
+- [Chai](http://chaijs.com) -- бібліотека з багатьма припущеннями. Вона дозволяє використовувати безліч різних припущень, але поки що на потрібне лише припущення `assert.equal`.
 - [Sinon](http://sinonjs.org/) -- a library to spy over functions, emulate built-in functions and more, we'll need it much later.
 
 These libraries are suitable for both in-browser and server-side testing. Here we'll consider the browser variant.
