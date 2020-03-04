@@ -1,10 +1,10 @@
 describe("test", function() {
 
-  before(() => alert("Testing started – before all tests"));
-  after(() => alert("Testing finished – after all tests"));
+  before(() => alert("Тестування розпочато – перед усіма тестами"));
+  after(() => alert("Тестування завершено – після всіх тестів"));
 
-  beforeEach(() => alert("Before a test – enter a test"));
-  afterEach(() => alert("After a test – exit a test"));
+  beforeEach(() => alert("Перед тестом – початок тесту"));
+  afterEach(() => alert("Після тесту – вихід з тесту"));
 
   it('test 1', () => alert(1));
   it('test 2', () => alert(2));
