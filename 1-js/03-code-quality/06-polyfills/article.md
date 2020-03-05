@@ -1,9 +1,9 @@
 
-# Polyfills
+# Поліфіли
 
-The JavaScript language steadily evolves. New proposals to the language appear regularly, they are analyzed and, if considered worthy, are appended to the list at <https://tc39.github.io/ecma262/> and then progress to the [specification](http://www.ecma-international.org/publications/standards/Ecma-262.htm).
+Мова JavaScript постійно розвивається. Нові пропозиції до мови з'являються регулярно, вони аналізуються і, якщо вважаються гідними, додаються до списку <https://tc39.github.io/ecma262/> а потім переходять до [специфікації](http://www.ecma-international.org/publications/standards/Ecma-262.htm).
 
-Teams behind JavaScript engines have their own ideas about what to implement first. They may decide to implement proposals that are in draft and postpone things that are already in the spec, because they are less interesting or just harder to do.
+Команди, які розробляють рушії JavaScript, мають власні уявлення про те, що потрібно реалізувати спочатку. Вони можуть вирішити реалізувати пропозиції, що знаходяться у чернетці, і відкласти речі, які вже є у специфікації, оскільки вони менш цікаві або їх важче розробити.
 
 So it's quite common for an engine to implement only the part of the standard.
 
