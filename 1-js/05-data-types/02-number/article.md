@@ -1,90 +1,90 @@
-# Numbers
+# Числа
 
-In modern JavaScript, there are two types of numbers:
+У сучасному JavaScript існує два типи чисел:
 
-1. Regular numbers in JavaScript are stored in 64-bit format [IEEE-754](https://en.wikipedia.org/wiki/IEEE_754-2008_revision), also known as "double precision floating point numbers". These are numbers that we're using most of the time, and we'll talk about them in this chapter.
+1. Звичайні числа в JavaScript, що зберігаються у 64-бітному форматі [IEEE-754](https://en.wikipedia.org/wiki/IEEE_754-2008_revision), також відомі як "подвійні точні числа з плаваючою комою". Це числа, які ми використовуємо більшість часу, і про них ми поговоримо в цьому розділі.
 
-2. BigInt numbers, to represent integers of arbitrary length. They are sometimes needed, because a regular number can't exceed <code>2<sup>53</sup></code> or be less than <code>-2<sup>53</sup></code>. As bigints are used in few special areas, we devote them a special chapter <info:bigint>.
+2. Числа BigInt, для відображення цілих чисел довільної довжини. Іноді вони потрібні, оскільки звичайне число не може перевищувати <code>2<sup>53</sup></code> або бути менше <code>-2<sup>53</sup></code>. Оскільки біґінти використовуються в декількох спеціальних областях, їм присвячено окремий розділ <info:bigint>.
 
-So here we'll talk about regular numbers. Let's expand our knowledge of them.
+Тож тут ми поговоримо про регулярні числа. Збільшимо наші знання про них.
 
-## More ways to write a number
+## Більше способів написання числа
 
-Imagine we need to write 1 billion. The obvious way is:
+Уявіть, нам потрібно написати 1 мільярд. Прямий спосіб це:
 
 ```js
 let billion = 1000000000;
 ```
 
-But in real life, we usually avoid writing a long string of zeroes as it's easy to mistype. Also, we are lazy. We will usually write something like `"1bn"` for a billion or `"7.3bn"` for 7 billion 300 million. The same is true for most large numbers.
+Але в реальному житті ми зазвичай уникаємо написання довгих рядків з нулями, оскільки це додає потенційних помилок. А також ми ліниві. Зазвичай ми напишемо щось на кшталт `"1 млрд"` для мільярду або `"7,3 млрд"` для 7 мільярдів 300 мільйонів. Те саме стосується більшості великих чисел.
 
-In JavaScript, we shorten a number by appending the letter `"e"` to the number and specifying the zeroes count:
+У JavaScript ми скорочуємо число, додаючи до числа букву `"е"` та кількість нулів після:
 
 ```js run
-let billion = 1e9;  // 1 billion, literally: 1 and 9 zeroes
+let billion = 1e9;  // 1 млрд, буквально: 1 та 9 нулів
 
-alert( 7.3e9 );  // 7.3 billions (7,300,000,000)
+alert( 7.3e9 );  // 7.3 млрд (7,300,000,000)
 ```
 
-In other words, `"e"` multiplies the number by `1` with the given zeroes count.
+Іншими словами, `"e"` помножує число на `1` із заданим числом нулів.
 
 ```js
 1e3 = 1 * 1000
 1.23e6 = 1.23 * 1000000
 ```
 
-Now let's write something very small. Say, 1 microsecond (one millionth of a second):
+Тепер напишемо щось дуже маленьке. Наприклад, 1 мікросекунда (одна мільйонна частина секунди):
 
 ```js
 let ms = 0.000001;
 ```
 
-Just like before, using `"e"` can help. If we'd like to avoid writing the zeroes explicitly, we could say the same as:
+Як і раніше, нам допоможе використання `"e"`. Якщо ми хочемо уникати явного запису нулів, ми можемо сказати те саме, що:
 
 ```js
-let ms = 1e-6; // six zeroes to the left from 1
+let ms = 1e-6; // шість нулів зліва від 1
 ```
 
-If we count the zeroes in `0.000001`, there are 6 of them. So naturally it's `1e-6`.  
+Якщо порахувати нулі в `0,000001`, їх буде 6. Так що, цілком очікувано, що це `1e-6`.
 
-In other words, a negative number after `"e"` means a division by 1 with the given number of zeroes:
+Іншими словами, від'ємне число після `"е"` означає ділення на 1 з заданою кількістю нулів:
 
 ```js
-// -3 divides by 1 with 3 zeroes
+// -3 ділиться на 1 з 3 нулями
 1e-3 = 1 / 1000 (=0.001)
 
-// -6 divides by 1 with 6 zeroes
+// -6 ділиться на 1 з 6 нулями
 1.23e-6 = 1.23 / 1000000 (=0.00000123)
 ```
 
-### Hex, binary and octal numbers
+### Двійкові, вісімкові та шістнадцяткові числа
 
-[Hexadecimal](https://en.wikipedia.org/wiki/Hexadecimal) numbers are widely used in JavaScript to represent colors, encode characters, and for many other things. So naturally, there exists a shorter way to write them: `0x` and then the number.
+[Шістнадцяткові](https://uk.wikipedia.org/wiki/Hexadecimal) числа широко використовуються в JavaScript для представлення кольорів, кодування символів та багатьох інших речей. Тому, цілком очікувано, що існує коротший спосіб їх написання: `0x`, а потім саме число.
 
-For instance:
+Наприклад:
 
 ```js run
 alert( 0xff ); // 255
-alert( 0xFF ); // 255 (the same, case doesn't matter)
+alert( 0xFF ); // 255 (те саме, регістр не має значення)
 ```
 
-Binary and octal numeral systems are rarely used, but also supported using the `0b` and `0o` prefixes:
+Двійкові та вісімкові системи числення рідко використовуються, але також підтримуються за допомогою префіксів "0b" і "0o":
 
 
 ```js run
-let a = 0b11111111; // binary form of 255
-let b = 0o377; // octal form of 255
+let a = 0b11111111; // двійкова форма 255
+let b = 0o377; // вісімкова форма 255
 
-alert( a == b ); // true, the same number 255 at both sides
+alert( a == b ); // true, те саме число 255 з обох сторін
 ```
 
-There are only 3 numeral systems with such support. For other numeral systems, we should use the function `parseInt` (which we will see later in this chapter).
+Є лише 3 системи числення з такою підтримкою. Для інших систем числення ми повинні використовувати функцію `parseInt` (яку ми побачимо далі в цьому розділі).
 
 ## toString(base)
 
-The method `num.toString(base)` returns a string representation of `num` in the numeral system with the given `base`.
+Метод `num.toString (base)` повертає рядкове представлення `num` в системі числення із заданим `base`.
 
-For example:
+Наприклад:
 ```js run
 let num = 255;
 
@@ -92,45 +92,45 @@ alert( num.toString(16) );  // ff
 alert( num.toString(2) );   // 11111111
 ```
 
-The `base` can vary from `2` to `36`. By default it's `10`.
+`base` може бути від `2` до `36`. За замовчуванням це `10`.
 
-Common use cases for this are:
+Загальні випадки використання для цього є:
 
-- **base=16** is used for hex colors, character encodings etc, digits can be `0..9` or `A..F`.
-- **base=2** is mostly for debugging bitwise operations, digits can be `0` or `1`.
-- **base=36** is the maximum, digits can be `0..9` or `A..Z`. The whole latin alphabet is used to represent a number. A funny, but useful case for `36` is when we need to turn a long numeric identifier into something shorter, for example to make a short url. Can simply represent it in the numeral system with base `36`:
+- **base=16** використовується для шістнадцяткових кольорів, кодування символів тощо, цифри можуть бути `0..9` або `A..F`.
+- **base=2** в основному для налагодження бітових операцій, цифри можуть бути `0` або `1`.
+- **base=36** є максимальним, цифри можуть бути `0..9` або `A..Z`. Весь латинський алфавіт використовується для позначення числа. Комічно, але користь від системи для найбільших чисел, полягає в тому, щоб перетворити довгий числовий ідентифікатор у щось коротше, наприклад генерація короткого URL. Можна просто представити його в системі числення з базою `36`:
 
     ```js run
     alert( 123456..toString(36) ); // 2n9c
     ```
 
-```warn header="Two dots to call a method"
-Please note that two dots in `123456..toString(36)` is not a typo. If we want to call a method directly on a number, like `toString` in the example above, then we need to place two dots `..` after it.
+```warn header="Дві крапки для виклику методу"
+Зверніть увагу, що дві крапки в `123456..toString(36)` - це не помилка. Якщо ми хочемо викликати метод безпосередньо на число, наприклад `toString` у наведеному вище прикладі, тоді нам потрібно поставити дві крапки `..` після нього.
 
-If we placed a single dot: `123456.toString(36)`, then there would be an error, because JavaScript syntax implies the decimal part after the first dot. And if we place one more dot, then JavaScript knows that the decimal part is empty and now goes the method.
+Якби ми помістили одну крапку: `123456.toString(36)`, тоді виникла б помилка, оскільки синтаксис JavaScript передбачає десяткову частину після першої точки. І якщо ми розмістимо ще одну крапку, то JavaScript розпізнає, що десяткова частина порожня, і далі йде метод.
 
-Also could write `(123456).toString(36)`.
+Також можна написати `(123456).toString(36)`.
 ```
 
-## Rounding
+## Округлення
 
-One of the most used operations when working with numbers is rounding.
+Однією з найбільш використовуваних операцій при роботі з числами є округлення.
 
-There are several built-in functions for rounding:
+Існує кілька вбудованих функцій для округлення:
 
 `Math.floor`
-: Rounds down: `3.1` becomes `3`, and `-1.1` becomes `-2`.
+: Округляє вниз: `3.1` стає `3`, та `-1.1` стає `-2`.
 
 `Math.ceil`
-: Rounds up: `3.1` becomes `4`, and `-1.1` becomes `-1`.
+: Округляє вверх: `3.1` стає `4`, та `-1.1` стає `-1`.
 
 `Math.round`
-: Rounds to the nearest integer: `3.1` becomes `3`, `3.6` becomes `4` and `-1.1` becomes `-1`.
+: Округляє до найближчого цілого числа: `3.1` стає `3`, `3.6` стає `4` та `-1.1` стає `-1`.
 
-`Math.trunc` (not supported by Internet Explorer)
-: Removes anything after the decimal point without rounding: `3.1` becomes `3`, `-1.1` becomes `-1`.
+`Math.trunc` (не підтримується в Internet Explorer)
+: Видаляє все після десяткової крапки без округлення: `3.1` стає `3`, `-1.1` стає `-1`.
 
-Here's the table to summarize the differences between them:
+Ось таблиця для узагальнення відмінностей між ними:
 
 |   | `Math.floor` | `Math.ceil` | `Math.round` | `Math.trunc` |
 |---|---------|--------|---------|---------|
@@ -140,45 +140,45 @@ Here's the table to summarize the differences between them:
 |`-1.6`|  `-2`    |   `-1`  |    `-2`  |   `-1`   |
 
 
-These functions cover all of the possible ways to deal with the decimal part of a number. But what if we'd like to round the number to `n-th` digit after the decimal?
+Ці функції охоплюють усі можливі способи поводження з десятковою частиною числа. Але що робити, якщо ми хотіли би округлити число до `n-ної` цифри після десяткової крапки?
 
-For instance, we have `1.2345` and want to round it to 2 digits, getting only `1.23`.
+Наприклад, ми маємо `1.2345` і хочете округлити його до двох цифр, щоб отримати `1.23`.
 
-There are two ways to do so:
+Є два способи зробити це:
 
-1. Multiply-and-divide.
+1. Помножити та розділити.
 
-    For example, to round the number to the 2nd digit after the decimal, we can multiply the number by `100`, call the rounding function and then divide it back.
+    Наприклад, щоб округлити число до другої цифри після десяткової крапки, ми можемо помножити число на `100`, викликати функцію округлення і потім поділити його назад.
     ```js run
     let num = 1.23456;
 
     alert( Math.floor(num * 100) / 100 ); // 1.23456 -> 123.456 -> 123 -> 1.23
     ```
 
-2. The method [toFixed(n)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) rounds the number to `n` digits after the point and returns a string representation of the result.
+2. Метод [toFixed(n)](https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed) округляє число до `n` цифр після точки та повертає рядкове представлення результату.
 
     ```js run
     let num = 12.34;
     alert( num.toFixed(1) ); // "12.3"
     ```
 
-    This rounds up or down to the nearest value, similar to `Math.round`:
+    Це округляє вгору або вниз до найближчого значення, подібно до `Math.round`:
 
     ```js run
     let num = 12.36;
     alert( num.toFixed(1) ); // "12.4"
     ```
 
-    Please note that result of `toFixed` is a string. If the decimal part is shorter than required, zeroes are appended to the end:
+    Зверніть увагу, що результат `toFixed` - це рядок. Якщо десяткова частина коротша, ніж потрібно, нулі додаються до кінця:
 
     ```js run
     let num = 12.34;
-    alert( num.toFixed(5) ); // "12.34000", added zeroes to make exactly 5 digits
+    alert( num.toFixed(5) ); // "12.34000", додано нулі, щоб зробити рівно 5 цифр
     ```
 
-    We can convert it to a number using the unary plus or a `Number()` call: `+num.toFixed(5)`.
+    Ми можемо перетворити його в число, використовуючи одинарний плюс `+num.toFixed(5)` або `Number()`.
 
-## Imprecise calculations
+## Неточні розрахунки
 
 Internally, a number is represented in 64-bit format [IEEE-754](https://en.wikipedia.org/wiki/IEEE_754-2008_revision), so there are exactly 64 bits to store a number: 52 of them are used to store the digits, 11 of them store the position of the decimal point (they are zero for integer numbers), and 1 bit is for the sign.
 
