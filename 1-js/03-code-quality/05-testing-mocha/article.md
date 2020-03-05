@@ -119,7 +119,7 @@ describe("pow", function() {
 
 ```js
 function pow(x, n) {
-  return 8; // :) це є обман!
+  return 8; // :) це обман!
 }
 ```
 
@@ -142,7 +142,7 @@ function pow(x, n) {
     ```js
     describe("pow", function() {
 
-      it("raises to n-th power", function() {
+      it("підносить до n-нного степеня", function() {
         assert.equal(pow(2, 3), 8);
     *!*
         assert.equal(pow(3, 4), 81);
@@ -239,7 +239,7 @@ describe("pow", function() {
 
     function makeTest(x) {
       let expected = x * x * x;
-      it(`${x} in the power 3 is ${expected}`, function() {
+      it(`${x} піднесене до степеня 3 дорівнює ${expected}`, function() {
         assert.equal(pow(x, 3), expected);
       });
     }
