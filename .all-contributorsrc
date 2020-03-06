@@ -8,7 +8,7 @@
   "projectName": "uk.javascript.info",
   "projectOwner": "javascript-tutorial",
   "repoType": "github",
-  "repoHost": "https://javascript.info/",
+  "repoHost": "https://github.com",
   "skipCi": true,
   "contributors": [
     {
