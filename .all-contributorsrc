@@ -6,6 +6,35 @@
   "commit": false,
   "contributors": [
     {
+      "login": "tarasyyyk",
+      "name": "Taras",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/20100011?v=4",
+      "profile": "https://github.com/tarasyyyk",
+      "contributions": [
+        "maintenance",
+        "review",
+        "translation"
+      ]
+    },
+    {
+      "login": "alexgalkin",
+      "name": "Alex Galkin",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1190812?v=4",
+      "profile": "https://github.com/alexgalkin",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Zim123",
+      "name": "Yuriy Ostapyuk",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1306750?v=4",
+      "profile": "https://github.com/Zim123",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
       "login": "alexandrtovmach",
       "name": "Alexandr Tovmach",
       "avatar_url": "https://avatars0.githubusercontent.com/u/28801003?v=4",
