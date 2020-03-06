@@ -10,13 +10,6 @@
   "repoType": "github",
   "repoHost": "https://javascript.info/",
   "skipCi": true,
-  "types": {
-    "translation": {
-      "symbol": "🌍",
-      "description": "Переклад",
-      "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
-    }
-  },
   "contributors": [
     {
       "login": "tarasyyyk",
