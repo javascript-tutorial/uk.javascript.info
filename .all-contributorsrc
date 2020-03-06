@@ -42,6 +42,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "stevermeister",
+      "name": "Stepan Suvorov",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1526680?v=4",
+      "profile": "http://stepansuvorov.com/blog/",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 8,
