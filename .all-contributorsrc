@@ -10,7 +10,7 @@
   "repoType": "github",
   "repoHost": "https://github.com",
   "skipCi": true,
-  "badgeTemplate": "[![Перекладачі](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#подяка)",
+  "badgeTemplate": "[![Перекладачі](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#подяка-)",
   "contributors": [
     {
       "login": "tarasyyyk",
