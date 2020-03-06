@@ -408,7 +408,7 @@ JavaScript має вбудований [Math](https://developer.mozilla.org/uk/d
 
 Об’єкт `Math` включає ще багато функцій і констант, в тому числі тригонометрію, більше деталей можна знайти в [документації](https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Global_Objects/Math).
 
-## Висновок
+## Підсумки
 
 Щоб записати числа з багатьма нулями:
 
