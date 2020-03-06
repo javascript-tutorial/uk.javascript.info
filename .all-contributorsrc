@@ -4,6 +4,20 @@
   ],
   "imageSize": 70,
   "commit": false,
+  "contributorsPerLine": 8,
+  "projectName": "uk.javascript.info",
+  "projectOwner": "javascript-tutorial",
+  "repoType": "github",
+  "repoHost": "https://javascript.info/",
+  "skipCi": true,
+  "badgeTemplate": "[![перекладачі](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#подяка)",
+  "types": {
+    "translation": {
+      "symbol": "🌍",
+      "description": "Переклад",
+      "link": "[<%= symbol %>](<%= url %> \"<%= description %>\"),"
+    }
+  },
   "contributors": [
     {
       "login": "tarasyyyk",
@@ -61,11 +75,5 @@
         "ideas"
       ]
     }
-  ],
-  "contributorsPerLine": 8,
-  "projectName": "uk.javascript.info",
-  "projectOwner": "javascript-tutorial",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "skipCi": true
+  ]
 }
