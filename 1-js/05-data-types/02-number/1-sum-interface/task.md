@@ -2,10 +2,10 @@ importance: 5
 
 ---
 
-# Sum numbers from the visitor
+# Сума чисел від відвідувача
 
-Create a script that prompts the visitor to enter two numbers and then shows their sum.
+Напишіть скрипт, який просить відвідувача ввести два числа, і в результаті показує їх суму.
 
 [demo]
 
-P.S. There is a gotcha with types.
+P.S. Тут є цікавий момент з типами

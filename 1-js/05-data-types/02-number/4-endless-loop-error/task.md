@@ -2,9 +2,9 @@ importance: 4
 
 ---
 
-# An occasional infinite loop
+# Випадковий безкінечний цикл
 
-This loop is infinite. It never ends. Why?
+Цей цикл безкінечний. Він ніколи не закінчується. Чому?
 
 ```js
 let i = 0;
