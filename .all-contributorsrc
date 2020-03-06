@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "alexandrtovmach",
+      "name": "Alexandr Tovmach",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/28801003?v=4",
+      "profile": "https://alexandrtovmach.com",
+      "contributions": [
+        "translation"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "uk.javascript.info",
+  "projectOwner": "javascript-tutorial",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
