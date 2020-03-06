@@ -2,12 +2,12 @@ importance: 5
 
 ---
 
-# What's wrong in the test?
+# Що не так з цим тестом?
 
-What's wrong in the test of `pow` below?
+Що не так з тестом функціій `pow`, вказаним нижче?
 
 ```js
-it("Raises x to the power n", function() {
+it("Підносить x до n-нного степеня", function() {
   let x = 5;
 
   let result = x;
@@ -21,4 +21,4 @@ it("Raises x to the power n", function() {
 });
 ```
 
-P.S. Syntactically the test is correct and passes.
+P.S. Синтаксичних помилок не має і тести проходять.
