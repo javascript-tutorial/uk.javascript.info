@@ -51,6 +51,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "UkrainianCitizen",
+      "name": "UkrainianCitizen",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/31314423?v=4",
+      "profile": "https://github.com/UkrainianCitizen",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 8,
