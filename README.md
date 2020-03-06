@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://javascript.info> на українську мову.
@@ -73,6 +73,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/tarasyyyk"><img src="https://avatars0.githubusercontent.com/u/20100011?v=4" width="100px;" alt=""/><br /><sub><b>Taras</b></sub></a><br /><a href="#maintenance-tarasyyyk" title="Maintenance">🚧</a> <a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3Atarasyyyk" title="Reviewed Pull Requests">👀</a> <a href="#translation-tarasyyyk" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/alexgalkin"><img src="https://avatars0.githubusercontent.com/u/1190812?v=4" width="100px;" alt=""/><br /><sub><b>Alex Galkin</b></sub></a><br /><a href="#translation-alexgalkin" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/Zim123"><img src="https://avatars2.githubusercontent.com/u/1306750?v=4" width="100px;" alt=""/><br /><sub><b>Yuriy Ostapyuk</b></sub></a><br /><a href="#translation-Zim123" title="Translation">🌍</a></td>
   </tr>
 </table>
 
