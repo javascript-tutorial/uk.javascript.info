@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# Repeat until the input is a number
+# Повторюйте, поки вхід не буде числом
 
-Create a function `readNumber` which prompts for a number until the visitor enters a valid numeric value.
+Створіть функцію `readNumber`, яка запросить число, поки відвідувач не введе дійсне числове значення.
 
-The resulting value must be returned as a number.
+Отримане значення потрібно повернути як число.
 
-The visitor can also stop the process by entering an empty line or pressing "CANCEL". In that case, the function should return `null`.
+Відвідувач також може зупинити процес, ввівши порожній рядок або натиснувши "CANCEL". У цьому випадку функція повинна повернути `null`.
 
 [demo]
 

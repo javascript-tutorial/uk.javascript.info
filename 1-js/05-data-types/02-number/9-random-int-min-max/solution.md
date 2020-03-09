@@ -1,6 +1,6 @@
-# The simple but wrong solution
+# Просте, але неправильне рішення
 
-The simplest, but wrong solution would be to generate a value from `min` to `max` and round it:
+Найпростішим, але неправильним рішенням буде генерувати значення від `min` до `max` і округляти його:
 
 ```js run
 function randomInteger(min, max) {
@@ -11,11 +11,11 @@ function randomInteger(min, max) {
 alert( randomInteger(1, 3) );
 ```
 
-The function works, but it is incorrect. The probability to get edge values `min` and `max` is two times less than any other.
+Функція працює, але вона неправильна. Ймовірність отримати граничні значення `min` і `max` в два рази менше, ніж будь-які інші.
 
-If you run the example above many times, you would easily see that `2` appears the most often.
+Якщо ви запускаєте приклад вище, багато разів, ви легко побачите, що `2` з’являється найчастіше.
 
-That happens because `Math.round()` gets random numbers from the interval `1..3` and rounds them as follows:
+Це відбувається тому, що `Math.round()` отримує випадкові числа з інтервалу `1..3` і округляє їх так:
 
 ```js no-beautify
 values from 1    ... to 1.4999999999  become 1
@@ -23,16 +23,16 @@ values from 1.5  ... to 2.4999999999  become 2
 values from 2.5  ... to 2.9999999999  become 3
 ```
 
-Now we can clearly see that `1` gets twice less values than `2`. And the same with `3`.
+Тепер ми можемо чітко бачити, що `1` генерується вдвічі рідше ніж `2`. І те саме з `3`.
 
-# The correct solution
+# Правильне рішення
 
-There are many correct solutions to the task. One of them is to adjust interval borders. To ensure the same intervals, we can generate values from `0.5 to 3.5`, thus adding the required probabilities to the edges:
+Існує багато правильних рішень задачі. Один з них - коригування інтервальних меж. Щоб забезпечити однакові інтервали, ми можемо генерувати значення від `0.5 до 3.5`, тим самим додаючи необхідні ймовірності до граничних значеннь:
 
 ```js run
 *!*
 function randomInteger(min, max) {
-  // now rand is from  (min-0.5) to (max+0.5)
+  // тепер rand від (min-0.5) до (max+0.5)
   let rand = min - 0.5 + Math.random() * (max - min + 1);
   return Math.round(rand);
 }
@@ -41,12 +41,12 @@ function randomInteger(min, max) {
 alert( randomInteger(1, 3) );
 ```
 
-An alternative way could be to use `Math.floor` for a random number from `min` to `max+1`:
+Альтернативним способом може бути використання `Math.floor` для випадкового числа від `min` до `max + 1`:
 
 ```js run
 *!*
 function randomInteger(min, max) {
-  // here rand is from min to (max+1)
+  // тепер rand від min до (max+1)
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
 }
@@ -55,7 +55,7 @@ function randomInteger(min, max) {
 alert( randomInteger(1, 3) );
 ```
 
-Now all intervals are mapped this way:
+Тепер усі інтервали відображаються таким чином:
 
 ```js no-beautify
 values from 1  ... to 1.9999999999  become 1
@@ -63,4 +63,4 @@ values from 2  ... to 2.9999999999  become 2
 values from 3  ... to 3.9999999999  become 3
 ```
 
-All intervals have the same length, making the final distribution uniform.
+Всі інтервали мають однакову довжину, що робить остаточний розподіл рівномірним.

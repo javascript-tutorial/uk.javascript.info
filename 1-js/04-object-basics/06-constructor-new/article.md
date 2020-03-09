@@ -27,7 +27,7 @@ alert(user.name); // Jack
 alert(user.isAdmin); // false
 ```
 
-When a function is executed as `new User(...)`, it does the following steps:
+When a function is executed with `new`, it does the following steps:
 
 1. A new empty object is created and assigned to `this`.
 2. The function body executes. Usually it modifies `this`, adds new properties to it.
@@ -51,7 +51,7 @@ function User(name) {
 }
 ```
 
-So the result of `new User("Jack")` is the same object as:
+So `let user = new User("Jack")` gives the same result as:
 
 ```js
 let user = {
@@ -136,7 +136,7 @@ Usually, constructors do not have a `return` statement. Their task is to write a
 
 But if there is a `return` statement, then the rule is simple:
 
-- If `return` is called with object, then it is returned instead of `this`.
+- If `return` is called with an object, then the object is returned instead of `this`.
 - If `return` is called with a primitive, it's ignored.
 
 In other words, `return` with an object returns that object, in all other cases `this` is returned.
@@ -148,10 +148,10 @@ function BigUser() {
 
   this.name = "John";
 
-  return { name: "Godzilla" };  // <-- returns an object
+  return { name: "Godzilla" };  // <-- returns this object
 }
 
-alert( new BigUser().name );  // Godzilla, got that object ^^
+alert( new BigUser().name );  // Godzilla, got that object
 ```
 
 And here's an example with an empty `return` (or we could place a primitive after it, doesn't matter):
@@ -161,10 +161,7 @@ function SmallUser() {
 
   this.name = "John";
 
-  return; // finishes the execution, returns this
-
-  // ...
-
+  return; // <-- returns this
 }
 
 alert( new SmallUser().name );  // John
@@ -214,6 +211,8 @@ john = {
 }
 */
 ```
+
+To create complex objects, there's a more advanced syntax, [classes](info:classes), that we'll cover later.
 
 ## Summary
 

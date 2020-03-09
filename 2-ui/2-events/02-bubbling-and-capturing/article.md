@@ -41,7 +41,7 @@ A click on the inner `<p>` first runs `onclick`:
 3. Then on the outer `<form>`.
 4. And so on upwards till the `document` object.
 
-![](event-order-bubbling.png)
+![](event-order-bubbling.svg)
 
 So if we click on `<p>`, then we'll see 3 alerts: `p` -> `div` -> `form`.
 
@@ -68,14 +68,14 @@ For instance, if we have a single handler `form.onclick`, then it can "catch" al
 
 In `form.onclick` handler:
 
-- `this` (`=event.currentTarget`) is the `<form>` element, because the handler runs on it.
-- `event.target` is the concrete element inside the form that actually was clicked.
+- `this` (=`event.currentTarget`) is the `<form>` element, because the handler runs on it.
+- `event.target` is the actual element inside the form that was clicked.
 
 Check it out:
 
 [codetabs height=220 src="bubble-target"]
 
-It's possible that `event.target` equals `this` -- when the click is made directly on the `<form>` element.
+It's possible that `event.target` could equal `this` -- it happens when the click is made directly on the `<form>` element.
 
 ## Stopping bubbling
 
@@ -102,7 +102,7 @@ To stop the bubbling and prevent handlers on the current element from running, t
 ```
 
 ```warn header="Don't stop bubbling without a need!"
-Bubbling is convenient. Don't stop it without a real need: obvious and architecturally well-thought.
+Bubbling is convenient. Don't stop it without a real need: obvious and architecturally well thought out.
 
 Sometimes `event.stopPropagation()` creates hidden pitfalls that later may become problems.
 
@@ -110,7 +110,7 @@ For instance:
 
 1. We create a nested menu. Each submenu handles clicks on its elements and calls `stopPropagation` so that the outer menu won't trigger.
 2. Later we decide to catch clicks on the whole window, to track users' behavior (where people click). Some analytic systems do that. Usually the code uses `document.addEventListener('click'…)` to catch all clicks.
-3. Our analytic won't work over the area where clicks are stopped by `stopPropagation`. We've got a "dead zone".
+3. Our analytic won't work over the area where clicks are stopped by `stopPropagation`. Sadly, we've got a "dead zone".
 
 There's usually no real need to prevent the bubbling. A task that seemingly requires that may be solved by other means. One of them is to use custom events, we'll cover them later. Also we can write our data into the `event` object in one handler and read it in another one, so we can pass to handlers on parents information about the processing below.
 ```
@@ -128,13 +128,13 @@ The standard [DOM Events](http://www.w3.org/TR/DOM-Level-3-Events/) describes 3 
 
 Here's the picture of a click on `<td>` inside a table, taken from the specification:
 
-![](eventflow.png)
+![](eventflow.svg)
 
 That is: for a click on `<td>` the event first goes through the ancestors chain down to the element (capturing phase), then it reaches the target and triggers there (target phase), and then it goes up (bubbling phase), calling handlers on its way.
 
 **Before we only talked about bubbling, because the capturing phase is rarely used. Normally it is invisible to us.**
 
-Handlers added using `on<event>`-property or using HTML attributes or using `addEventListener(event, handler)` don't know anything about capturing, they only run on the 2nd and 3rd phases.
+Handlers added using `on<event>`-property or using HTML attributes or using two-argument `addEventListener(event, handler)` don't know anything about capturing, they only run on the 2nd and 3rd phases.
 
 To catch an event on the capturing phase, we need to set the handler `capture` option to `true`:
 

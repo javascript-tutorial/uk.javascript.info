@@ -1,54 +1,54 @@
 
-# Polyfills
+# Поліфіли
 
-The JavaScript language steadily evolves. New proposals to the language appear regularly, they are analyzed and, if considered worthy, are appended to the list at <https://tc39.github.io/ecma262/> and then progress to the [specification](http://www.ecma-international.org/publications/standards/Ecma-262.htm).
+Мова JavaScript постійно розвивається. Нові пропозиції до мови з'являються регулярно, вони аналізуються і, якщо вважаються гідними, додаються до списку <https://tc39.github.io/ecma262/> а потім переходять до [специфікації](http://www.ecma-international.org/publications/standards/Ecma-262.htm).
 
-Teams behind JavaScript engines have their own ideas about what to implement first. They may decide to implement proposals that are in draft and postpone things that are already in the spec, because they are less interesting or just harder to do.
+Команди, які розробляють рушії JavaScript, мають власні уявлення про те, що потрібно реалізувати спочатку. Вони можуть вирішити реалізувати пропозиції, що знаходяться у чернетці, і відкласти речі, які вже є у специфікації, оскільки вони менш цікаві або їх важче розробити.
 
-So it's quite common for an engine to implement only the part of the standard.
+Тому це цілком звичайна ситуація, коли лише частина стандарту реалізована у самому рушії.
 
-A good page to see the current state of support for language features is <https://kangax.github.io/compat-table/es6/> (it's big, we have a lot to study yet).
+Хороша сторінка, щоб побачити поточний стан підтримки функцій мови, є тут <https://kangax.github.io/compat-table/es6/> (вона велика, нам доведеться ще багато вивчати).
 
 ## Babel
 
-When we use modern features of the language, some engines may fail to support such code. Just as said, not all features are implemented everywhere.
+Коли ми використовуємо сучасний функціонал мови, деякі рушії можуть не підтримувати такий код. Як вже було сказано, не всі функції скрізь реалізовані.
 
-Here Babel comes to the rescue.
+Тут на допомогу приходить Babel.
 
-[Babel](https://babeljs.io) is a [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler). It rewrites modern JavaScript code into the previous standard.
+[Babel](https://babeljs.io) - це [транспілятор](https://en.wikipedia.org/wiki/Source-to-source_compiler). Він перетворює код, написаний сучасною мовою JavaScript, у код попереднього стандарту.
 
-Actually, there are two parts in Babel:
+Власне, Babel має дві частини:
 
-1. First, the transpiler program, which rewrites the code. The developer runs it on their own computer. It rewrites the code into the older standard. And then the code is delivered to the website for users. Modern project build system like [webpack](http://webpack.github.io/) provide means to run transpiler automatically on every code change, so that very easy to integrate into development process.
+1. Перша - це програма-транспілятор, яка переписує код. Розробник запускає її на власному комп’ютері. Вона переписує код у попередньому стандарті. А потім код застосовується на веб-сайті для користувачів. Сучасні системи побудови проєктів, як [webpack](http://webpack.github.io/) забезпечують нас засобами автоматичного запуску транспілятора при кожній зміні коду, так що його дуже легко інтегрувати в процес розробки.
 
-2. Second, the polyfill.
+2. Друга - це поліфіл.
 
-    New language features may include new built-in functions and syntax constructs.
-    The transpiler rewrites the code, transforming syntax constructs into older ones. But as for new built-in functions, we need to implement them. JavaScript is a highly dynamic language, scripts may add/modify any functions, so that they behave according to the modern standard.
+    Нові функції мови можуть включати нові вбудовані функції та синтаксичні конструкції.
+    Транспілятор переписує код, перетворюючи синтаксичні конструкції у конструкції попереднього стандарту. Але що стосується нових вбудованих функцій, нам потрібно їх реалізувати. JavaScript є дуже динамічною мовою, тож скрипти можуть додавати / змінювати будь-які функції, щоб вони поводилися відповідно до сучасного стандарту.
 
-    A script that updates/adds new functions is called "polyfill". It "fills in" the gap and adds missing implementations.
+    Скрипт, що оновлює / додає нові функції, називається "поліфілом". Він "заповнює" прогалину і додає відсутню реалізацію.
 
-    Two interesting polyfills are:
-    - [babel polyfill](https://babeljs.io/docs/usage/polyfill/) that supports a lot, but is big.
-    - [polyfill.io](http://polyfill.io) service that allows to load/construct polyfills on-demand, depending on the features we need.
+    Є два цікавих поліфіла:
+    - [core js](https://github.com/zloirock/core-js), що підтримує багато функціоналу, дозволяє включати лише необхідні функції.
+    - [polyfill.io](http://polyfill.io) - сервіс, який забезпечує нас скриптом з поліфілами залежно від потрібних нам функцій та браузера користувача.
 
-So, if we're going to use modern language features, a transpiler and a polyfill are necessary.
+Отже, якщо ми будемо використовувати сучасні мовні функції, нам потрібен транспілятор та поліфіл.
 
-## Examples in the tutorial
+## Приклади у посібнику
 
 
 ````online
-Most examples are runnable at-place, like this:
+Більшість прикладів можна виконувати "прямо тут", як ось цей:
 
 ```js run
-alert('Press the "Play" button in the upper-right corner to run');
+alert('Натисніть кнопку "Запустити" у правому верхньому куті для запуску');
 ```
 
-Examples that use modern JS will work only if your browser supports it.
+Приклади, які використовують сучасний JS, працюватимуть лише в тому випадку, якщо ваш браузер підтримує його.
 ````
 
 ```offline
-As you're reading the offline version, in PDF examples are not runnable. In EPUB some of them can run.
+Так, як ви читаєте офлайн версію, деякі приклади не працюватимуть у PDF форматі. В EPUB форматі деякі з них можуть працювати.
 ```
 
-Google Chrome is usually the most up-to-date with language features, good to run bleeding-edge demos without any transpilers, but other modern browsers also work fine.
+Google Chrome, як правило, підтримує найсучасніші особливості мови JavaScript, через це зручно запускати в ньому демонстраційні приклади нового функціоналу без будь-яких транспіляторів, але інші сучасні браузери також добре працюють.

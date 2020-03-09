@@ -17,7 +17,7 @@ while (умова) {
 }
 ```
 
-Коли умова є вірною - виконується код із тіла циклу
+Доки умова є `вірною`, виконується `код` із тіла циклу.
 
 Наприклад, цикл нижче виводить `i` поки `i < 3`:
 
@@ -84,7 +84,7 @@ do {
 
 ## Цикл "for"
 
-Цикл `for` є найбільш використовуваним.
+Цикл `for` є більш складним, але також є часто використовуваним циклом.
 
 Виглядає він так:
 
@@ -108,9 +108,8 @@ for (let i = 0; i < 3; i++) { // показується 0, далі 1, поті�
 |-------|----------|----------------------------------------------------------------------------|
 | початок | `i = 0`    | Виконується один раз, при вході в цикл.                                      |
 | умова | `i < 3`| Перевіряється перед кожною ітерацією циклу. Якщо умова невірна, цикл зупиняєтья.              |
-| крок| `i++`      | Виконується після тіла на кожній ітерації, але перед перевіркою умови. |
 | тіло | `alert(i)`| Виконується знову і знову, поки умова є правдивою (`true`).                         |
-
+| крок| `i++`      | Виконується після тіла на кожній ітерації, але перед перевіркою умови. |
 
 Загальний алгоритм циклу працює так:
 ```
@@ -121,7 +120,9 @@ for (let i = 0; i < 3; i++) { // показується 0, далі 1, поті�
 → ...
 ```
 
-Якщо ви новачок у циклах, це може допомогти, поверніться до прикладу і відтворіть, як виконується цикл крок за кроком на аркуші паперу.
+That is, `begin` executes once, and then it iterates: after each `condition` test, `body` and `step` are executed.
+
+If you are new to loops, it could help to go back to the example and reproduce how it runs step-by-step on a piece of paper.
 
 Ось що відбувається у нашому випадку:
 
@@ -210,7 +211,7 @@ But we can force the exit at any time using the special `break` directive.
 
 For example, the loop below asks the user for a series of numbers, "breaking" when no number is entered:
 
-```js
+```js run
 let sum = 0;
 
 while (true) {
@@ -254,7 +255,7 @@ For even values of `i`, the `continue` directive stops executing the body and pa
 ````smart header="The `continue` directive helps decrease nesting"
 A loop that shows odd values could look like this:
 
-```js
+```js run
 for (let i = 0; i < 10; i++) {
 
   if (i % 2) {
@@ -266,7 +267,7 @@ for (let i = 0; i < 10; i++) {
 
 From a technical point of view, this is identical to the example above. Surely, we can just wrap the code in an `if` block instead of using `continue`.
 
-But as a side-effect, this created one more level of nesting (the `alert` call inside the curly braces). If the code inside of`if` is longer than a few lines, that may decrease the overall readability.
+But as a side-effect, this created one more level of nesting (the `alert` call inside the curly braces). If the code inside of `if` is longer than a few lines, that may decrease the overall readability.
 ````
 
 ````warn header="No `break/continue` to the right side of '?'"
@@ -289,8 +290,7 @@ if (i > 5) {
 (i > 5) ? alert(i) : *!*continue*/!*; // continue isn't allowed here
 ```
 
-...it stops working. Code like this will give a syntax error:
-
+...it stops working: there's a syntax error.
 
 This is just another reason not to use the question mark operator `?` instead of `if`.
 ````
@@ -299,7 +299,7 @@ This is just another reason not to use the question mark operator `?` instead of
 
 Sometimes we need to break out from multiple nested loops at once.
 
-For example, in the code below we loop over `i` and `j`, prompting for the coordinates `(i, j)` from `(0,0)` to `(3,3)`:
+For example, in the code below we loop over `i` and `j`, prompting for the coordinates `(i, j)` from `(0,0)` to `(2,2)`:
 
 ```js run no-beautify
 for (let i = 0; i < 3; i++) {
@@ -308,8 +308,7 @@ for (let i = 0; i < 3; i++) {
 
     let input = prompt(`Value at coords (${i},${j})`, '');
 
-    // what if I want to exit from here to Done (below)?
-
+    // what if we want to exit from here to Done (below)?
   }
 }
 
@@ -358,12 +357,12 @@ for (let i = 0; i < 3; i++) { ... }
 
 The `continue` directive can also be used with a label. In this case, code execution jumps to the next iteration of the labeled loop.
 
-````warn header="Labels are not a \"goto\""
+````warn header="Labels do not allow to \"jump\" anywhere"
 Labels do not allow us to jump into an arbitrary place in the code.
 
 For example, it is impossible to do this:
 ```js
-break label;  // jumps to label? No.
+break label; // doesn't jumps to the label below
 
 label: for (...)
 ```

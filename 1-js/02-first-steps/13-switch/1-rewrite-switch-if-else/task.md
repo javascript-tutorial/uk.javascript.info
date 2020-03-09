@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# Rewrite the "switch" into an "if"
+# Перепишіть конструкцію "switch" в аналогічну з використанням "if"
 
-Write the code using `if..else` which would correspond to the following `switch`:
+Напишіть код з використанням `if..else`, що відповідає наступній конструкції `switch`:
 
 ```js
 switch (browser) {
@@ -16,11 +16,11 @@ switch (browser) {
   case 'Firefox':
   case 'Safari':
   case 'Opera':
-    alert( 'Okay we support these browsers too' );
+    alert( 'Ми підтримуємо і ці браузери' );
     break;
 
   default:
-    alert( 'We hope that this page looks ok!' );
+    alert( 'Маємо надію, що ця сторінка виглядає добре!' );
 }
 ```
 

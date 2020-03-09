@@ -1,11 +1,11 @@
-We need to "map" all values from the interval 0..1 into values from `min` to `max`.
+Нам потрібно перевести всі значення з інтервалу 0..1 у значення від `min` до` max`.
 
-That can be done in two stages:
+Це можна зробити у два етапи:
 
-1. If we multiply a random number from 0..1 by `max-min`, then the interval of possible values increases `0..1` to `0..max-min`.
-2. Now if we add `min`, the possible interval becomes from `min` to `max`.
+1. Якщо помножити випадкове число з 0..1 на `max-min`, то інтервал можливих значень збільшується від `0..1` до `0..max-min`.
+2. Тепер, якщо ми додамо `min`, можливий інтервал стає від `min` до `max`.
 
-The function:
+Функція:
 
 ```js run
 function random(min, max) {

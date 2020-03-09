@@ -2,13 +2,13 @@ importance: 2
 
 ---
 
-# A random number from min to max
+# Випадкове число від min до max
 
-The built-in function `Math.random()` creates a random value from `0` to `1` (not including `1`).
+Вбудована функція `Math.random()` створює випадкове значення від `0` до` 1` (не враховуючи `1`).
 
-Write the function `random(min, max)` to generate a random floating-point number from `min` to `max` (not including `max`).
+Напишіть функцію `random(min, max)` для створення випадкового числа з плаваючою крапкою від `min` до `max` (не враховуючи `max`).
 
-Examples of its work:
+Приклади його роботи:
 
 ```js
 alert( random(1, 5) ); // 1.2345623452

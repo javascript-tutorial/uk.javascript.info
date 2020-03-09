@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- add mocha css, to show results -->
+  <!-- додаємо css стилі для mocha, щоб вивести результати -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
-  <!-- add mocha framework code -->
+  <!-- додаємо фреймворк mocha до коду -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
   <script>
-    // enable bdd-style testing
+    // вмикаємо тестування у bdd стилі
     mocha.setup('bdd');
   </script>
-  <!-- add chai -->
+  <!-- додаємо chai -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
   <script>
-    // chai has a lot of stuff, let's make assert global
+    // chai має багато всього, давайте зробимо assert глобальним
     let assert = chai.assert;
   </script>
 </head>
@@ -21,17 +21,17 @@
 
   <script>
     function pow(x, n) {
-      /* function code is to be written, empty now */
+      /* код функції треба написати, поки що цей блок пустий */
     }
   </script>
 
-  <!-- the script with tests (describe, it...) -->
+  <!-- скрипт з тестами (describe, it...) -->
   <script src="test.js"></script>
 
-  <!-- the element with id="mocha" will contain test results -->
+  <!-- елемент з id="mocha" буде містити результати тестів -->
   <div id="mocha"></div>
 
-  <!-- run tests! -->
+  <!-- запускаємо тести! -->
   <script>
     mocha.run();
   </script>

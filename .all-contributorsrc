@@ -1,0 +1,91 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 70,
+  "commit": false,
+  "contributorsPerLine": 8,
+  "projectName": "uk.javascript.info",
+  "projectOwner": "javascript-tutorial",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true,
+  "badgeTemplate": "[![Перекладачі](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#подяка-)",
+  "contributors": [
+    {
+      "login": "tarasyyyk",
+      "name": "Taras",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/20100011?v=4",
+      "profile": "https://github.com/tarasyyyk",
+      "contributions": [
+        "maintenance",
+        "review",
+        "translation"
+      ]
+    },
+    {
+      "login": "alexgalkin",
+      "name": "Alex Galkin",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1190812?v=4",
+      "profile": "https://github.com/alexgalkin",
+      "contributions": [
+        "translation",
+        "ideas"
+      ]
+    },
+    {
+      "login": "Zim123",
+      "name": "Yuriy Ostapyuk",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1306750?v=4",
+      "profile": "https://github.com/Zim123",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "alexandrtovmach",
+      "name": "Alexandr Tovmach",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/28801003?v=4",
+      "profile": "https://alexandrtovmach.com",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "stevermeister",
+      "name": "Stepan Suvorov",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1526680?v=4",
+      "profile": "http://stepansuvorov.com/blog/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "UkrainianCitizen",
+      "name": "UkrainianCitizen",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/31314423?v=4",
+      "profile": "https://github.com/UkrainianCitizen",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "lobanov-oleh",
+      "name": "lobanov-oleh",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/53055773?v=4",
+      "profile": "https://github.com/lobanov-oleh",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "dDenysS",
+      "name": "Denys",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/23075870?v=4",
+      "profile": "https://github.com/dDenysS",
+      "contributions": [
+        "translation"
+      ]
+    }
+  ]
+}

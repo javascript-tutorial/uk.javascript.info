@@ -158,7 +158,7 @@ Such update collision happens rarely, but we should at least have some handling 
 
 ## Object store
 
-To store stomething in IndexedDB, we need an *object store*.
+To store something in IndexedDB, we need an *object store*.
 
 An object store is a core concept of IndexedDB. Counterparts in other databases are called "tables" or "collections". It's where the data is stored. A database may have multiple stores: one for users, another one for goods, etc.
 
@@ -174,7 +174,7 @@ An example of object that can't be stored: an object with circular references. S
 
 A key must have a type one of: number, date, string, binary, or array. It's an unique identifier: we can search/remove/update values by the key.
 
-![](indexeddb-structure.png)
+![](indexeddb-structure.svg)
 
 
 As we'll see very soon, we can provide a key when we add a value to the store, similar to `localStorage`. But when we store objects, IndexedDB allows to setup an object property as the key, that's much more convenient. Or we can auto-generate keys.
@@ -470,9 +470,9 @@ Methods that involve searching support either exact keys or so-called "range que
 
 Ranges are created using following calls:
 
-- `IDBKeyRange.lowerBound(lower, [open])` means: `>lower` (or `≥lower` if `open` is true)
-- `IDBKeyRange.upperBound(upper, [open])` means: `<upper` (or `≤upper` if `open` is true)
-- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` means: between `lower` and `upper`, with optional equality if the corresponding `open` is true.
+- `IDBKeyRange.lowerBound(lower, [open])` means: `≥lower` (or `>lower` if `open` is true)
+- `IDBKeyRange.upperBound(upper, [open])` means: `≤upper` (or `<upper` if `open` is true)
+- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` means: between `lower` and `upper`. If the open flags is true, the corresponding key is not included in the range.
 - `IDBKeyRange.only(key)` -- a range that consists of only one `key`, rarely used.
 
 All searching methods accept a `query` argument that can be either an exact key or a key range:
@@ -491,16 +491,16 @@ Request examples:
 // get one book
 books.get('js')
 
-// get books with 'css' < id < 'html'
+// get books with 'css' <= id <= 'html'
 books.getAll(IDBKeyRange.bound('css', 'html'))
 
-// get books with 'html' <= id
-books.getAll(IDBKeyRange.lowerBound('html', true))
+// get books with id < 'html'
+books.getAll(IDBKeyRange.upperBound('html', true))
 
 // get all books
 books.getAll()
 
-// get all keys: id >= 'js'
+// get all keys: id > 'js'
 books.getAllKeys(IDBKeyRange.lowerBound('js', true))
 ```
 
@@ -551,7 +551,7 @@ openRequest.onupgradeneeded = function() {
 
 Imagine that our `inventory` has 4 books. Here's the picture that shows exactly what the `index` is:
 
-![](indexeddb-index.png)
+![](indexeddb-index.svg)
 
 As said, the index for each value of `price` (second argument) keeps the list of keys that have that price.
 
@@ -580,7 +580,7 @@ request.onsuccess = function() {
 We can also use `IDBKeyRange` to create ranges and looks for cheap/expensive books:
 
 ```js
-// find books where price < 5
+// find books where price <= 5
 let request = priceIndex.getAll(IDBKeyRange.upperBound(5));
 ```
 
@@ -678,7 +678,7 @@ In the example above the cursor was made for the object store.
 
 But we also can make a cursor over an index. As we remember, indexes allow to search by an object field. Cursors over indexes to precisely the same as over object stores -- they save memory by returning one value at a time.
 
-For cursors over indexes, `cursor.key` is the index key (e.g. price), and we should use `cursor.primaryKey` property the object key:
+For cursors over indexes, `cursor.key` is the index key (e.g. price), and we should use `cursor.primaryKey` property for the object key:
 
 ```js
 let request = priceIdx.openCursor(IDBKeyRange.upperBound(5));
