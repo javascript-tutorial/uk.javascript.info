@@ -2,9 +2,9 @@ importance: 3
 
 ---
 
-# Last loop value
+# Останнє значення циклу
 
-What is the last value alerted by this code? Why?
+Яке останнє значення буде виведено на екран? Чому?
 
 ```js
 let i = 3;
