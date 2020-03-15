@@ -204,20 +204,20 @@ for (;;) {
 
 Зауважте, що ці двокрапки `;` повинні бути, інакше виникне синтаксична помилка.
 
-## Breaking the loop
+## Переривання циклу: "break"
 
-Normally, a loop exits when its condition becomes falsy.
+Зазвичай, цикл завершується, коли умова стає `false`.
 
-But we can force the exit at any time using the special `break` directive.
+Але ми можемо в будь-який момент вийти з циклу, використавши спеціальну директиву `break`.
 
-For example, the loop below asks the user for a series of numbers, "breaking" when no number is entered:
+Наприклад, наступний код запитує в користувача число до тих пір, поки користувач їх вводить. Після того, як користувач не ввів число — цикл завершується (директивою "break") і виводить суму чисел:
 
 ```js run
 let sum = 0;
 
 while (true) {
 
-  let value = +prompt("Enter a number", '');
+  let value = +prompt("Введіть число", '');
 
 *!*
   if (!value) break; // (*)
@@ -226,12 +226,12 @@ while (true) {
   sum += value;
 
 }
-alert( 'Sum: ' + sum );
+alert( 'Сума: ' + sum );
 ```
 
-The `break` directive is activated at the line `(*)` if the user enters an empty line or cancels the input. It stops the loop immediately, passing control to the first line after the loop. Namely, `alert`.
+Директива `break` в рядку `(*)` спрацьовує тоді, коли користувач вводить порожній рядок або скасовує введення. Ця директива негайно завершує виконання циклу і передає контроль наступному рядку за циклом, тобто на `alert`.
 
-The combination "infinite loop + `break` as needed" is great for situations when a loop's condition must be checked not in the beginning or end of the loop, but in the middle or even in several places of its body.
+Комбінація «нескінченний цикл + `break`» — чудова річ для тих ситуацій, коли умова для переривання знаходиться не на початку або кінці циклу, а всередині (або навіть в декількох місцях) тіла циклу.
 
 ## Continue to the next iteration [#continue]
 
