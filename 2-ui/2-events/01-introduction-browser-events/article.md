@@ -216,7 +216,7 @@ Web-standard developers understood that long ago and suggested an alternative wa
 The syntax to add a handler:
 
 ```js
-element.addEventListener(event, handler[, options]);
+element.addEventListener(event, handler, [options]);
 ```
 
 `event`
@@ -235,7 +235,7 @@ element.addEventListener(event, handler[, options]);
 To remove the handler, use `removeEventListener`:
 
 ```js
-element.removeEventListener(event, handler[, options]);
+element.removeEventListener(event, handler, [options]);
 ```
 
 ````warn header="Removal requires the same function"
@@ -446,7 +446,7 @@ HTML attributes are used sparingly, because JavaScript in the middle of an HTML 
 
 DOM properties are ok to use, but we can't assign more than one handler of the particular event. In many cases that limitation is not pressing.
 
-The last way is the most flexible, but it is also the longest to write. There are few events that only work with it, for instance `transtionend` and `DOMContentLoaded` (to be covered). Also `addEventListener` supports objects as event handlers. In that case the method `handleEvent` is called in case of the event.
+The last way is the most flexible, but it is also the longest to write. There are few events that only work with it, for instance `transitionend` and `DOMContentLoaded` (to be covered). Also `addEventListener` supports objects as event handlers. In that case the method `handleEvent` is called in case of the event.
 
 No matter how you assign the handler -- it gets an event object as the first argument. That object contains the details about what's happened.
 
