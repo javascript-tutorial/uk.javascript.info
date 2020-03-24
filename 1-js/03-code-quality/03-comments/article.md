@@ -125,6 +125,7 @@ function addJuice(container) {
 Документуйте параметри функції та її використання
 : Існує спеціальний синтаксис [JSDoc](https://uk.wikipedia.org/wiki/JSDoc) для документації функції: її використання, параметри, значення, що повертає.
 
+<<<<<<< HEAD
 Наприклад:
     
 ```js
@@ -134,17 +135,35 @@ function addJuice(container) {
  * @param {number} x число, що треба піднести до степеня.
  * @param {number} n cтепінь, повинно бути натуральним числом.
  * @return {number} x піднесене у n-нну степінь.
+=======
+For instance:
+```js
+/**
+ * Returns x raised to the n-th power.
+ *
+ * @param {number} x The number to raise.
+ * @param {number} n The power, must be a natural number.
+ * @return {number} x raised to the n-th power.
+>>>>>>> 162280b6d238ce32bbd8ff7a3f7992be82c2311a
  */
 function pow(x, n) {
   ...
 }
 ```
 
+<<<<<<< HEAD
 Такі коментарі дозволяють нам зрозуміти мету функції та використовувати її правильно без потреби зазирати у її код.
 
 До речі, багато редакторів, наприклад [WebStorm](https://www.jetbrains.com/webstorm/) можуть їх розуміти та використовувати для автодоповнення і деякої автоматичної перевірки коду.
 
 Також є інструменти, наприклад [JSDoc 3](https://github.com/jsdoc3/jsdoc), які можуть генерувати HTML-документацію з коментарів. Ви можете почитати більше про JSDoc тут: <http://usejsdoc.org/>.
+=======
+Such comments allow us to understand the purpose of the function and use it the right way without looking in its code.
+
+By the way, many editors like [WebStorm](https://www.jetbrains.com/webstorm/) can understand them as well and use them to provide autocomplete and some automatic code-checking.
+
+Also, there are tools like [JSDoc 3](https://github.com/jsdoc3/jsdoc) that can generate HTML-documentation from the comments. You can read more information about JSDoc at <http://usejsdoc.org/>.
+>>>>>>> 162280b6d238ce32bbd8ff7a3f7992be82c2311a
 
 Чому завдання було вирішено у такий спосіб?
 : Те, що написано є дуже важливим. Проте, те, що *не* написано може бути ще більш важливим, щоб зрозуміти, що саме відбувається. Чому завдання було вирішено саме у такий спосіб? Код не дає відповідь на це питання.
