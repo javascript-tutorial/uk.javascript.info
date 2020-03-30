@@ -324,7 +324,11 @@ alert( isFinite(num) );
 
 ```smart header="Порівняння з `Object.is`"
 
+<<<<<<< HEAD
 Існує спеціальний вбудований метод [Object.is](https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Global_Objects/Object/is), який порівнює значення як `===`, але є більш надійним для двох виключних випадків:
+=======
+There is a special built-in method [`Object.is`](mdn:js/Object/is) that compares values like `===`, but is more reliable for two edge cases:
+>>>>>>> 62299ed853674c4fd1427cd310516d5535bce648
 
 1. Працює з `NaN`: `Object.is(NaN, NaN) === true`, і це добре.
 2. Значення `0` і` -0` різні: `Object.is(0, -0) === false`, технічно це правда, оскільки внутрішньо число має біт знаків, який може бути різним, навіть якщо всі інші біти - нулі.
@@ -417,9 +421,15 @@ JavaScript має вбудований [Math](https://developer.mozilla.org/uk/d
 
 Для різних систем числення:
 
+<<<<<<< HEAD
 - Можна записувати числа безпосередньо в шістнадцятковій (`0x`), вісімковій (`0o`) та двійковій (`0b`) системах
 - `parseInt(str, base)` розбирає рядок `str` на ціле число чисельної системи із заданим `base`, `2 ≤ base ≤ 36`.
 - `num.toString(base)` перетворює число в рядок в системі числення за допомогою заданої `base`.
+=======
+- Can write numbers directly in hex (`0x`), octal (`0o`) and binary (`0b`) systems.
+- `parseInt(str, base)` parses the string `str` into an integer in numeral system with given `base`, `2 ≤ base ≤ 36`.
+- `num.toString(base)` converts a number to a string in the numeral system with the given `base`.
+>>>>>>> 62299ed853674c4fd1427cd310516d5535bce648
 
 Для перетворення значень на зразок `12pt` та `100px` у число:
 
