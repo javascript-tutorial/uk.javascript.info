@@ -45,13 +45,8 @@
 
 Тег `<script>` має декілька атрибутів, які рідко використовуються сьогодні, але їх ще можна знайти в старому коді.
 
-<<<<<<< HEAD
 Атрибут `type`: <code>&lt;script <u>type</u>=...&gt;</code>
-: Старий стандарт HTML, HTML4, вимагає щоб у `<script>` був `type`. Зазвичай це був `type="text/javascript"`. Це більше не потрібно. Також, сучасний стандарт HTML повністю змінив зміст цього атрибута. Тепер його можна використовувати для JavaScript модулів. Але це є просунута тема; ми поговоримо про модулі в іншій частині посібника.
-=======
-The `type` attribute: <code>&lt;script <u>type</u>=...&gt;</code>
-: The old HTML standard, HTML4, required a script to have a `type`. Usually it was `type="text/javascript"`. It's not required anymore. Also, the modern HTML standard totally changed the meaning of this attribute. Now, it can be used for JavaScript modules. But that's an advanced topic, we'll talk about modules in another part of the tutorial.
->>>>>>> 62299ed853674c4fd1427cd310516d5535bce648
+: Старий стандарт HTML, HTML4, вимагав щоб у `<script>` був атрибут `type`. Зазвичай це був `type="text/javascript"`. Зараз в ньому немає необхідності — сучасний стандарт HTML повністю змінив зміст цього атрибута. Тепер його можна використовувати для JavaScript модулів. Але це просунута тема, ми поговоримо про модулі в іншій частині посібника.
 
 Атрибут `language`: <code>&lt;script <u>language</u>=...&gt;</code>
 : Цей атрибут вказував на мову скрипта. Цей атрибут більше немає сенсу, оскільки JavaScript є усталеною мовою. Його більше не потрібно використовувати.
