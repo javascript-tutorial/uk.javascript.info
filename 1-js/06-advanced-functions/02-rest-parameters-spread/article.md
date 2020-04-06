@@ -227,11 +227,11 @@ So, for the task of turning something into an array, `Array.from` tends to be mo
 
 ## Get a new copy of an object/array
 
-Remember when we talked about `Object.assign()` [in the past](https://javascript.info/symbol#symbols-are-skipped-by-for-in)?
+Remember when we talked about `Object.assign()` [in the past](https://javascript.info/object#cloning-and-merging-object-assign)?
 
 It is possible to do the same thing with the spread operator!
 
-```
+```js run
 let arr = [1, 2, 3];
 let arrCopy = [...arr]; // spread the array into a list of parameters
                         // then put the result into a new array
@@ -250,7 +250,7 @@ alert(arrCopy); // 1, 2, 3
 
 Note that it is possible to do the same thing to make a copy of an object:
 
-```
+```js run
 let obj = { a: 1, b: 2, c: 3 };
 let objCopy = { ...obj }; // spread the object into a list of parameters
                           // then return the result in a new object

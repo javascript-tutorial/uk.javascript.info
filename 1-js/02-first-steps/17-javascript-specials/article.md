@@ -81,6 +81,7 @@ let x = 5; // присвоєно тип "число"
 x = "Іван"; // тип змінився на "рядок"
 ```
 
+<<<<<<< HEAD
 Існує 7 типів даних:
 
 - число (`number`) для цілих та десяткових чисел,
@@ -89,6 +90,17 @@ x = "Іван"; // тип змінився на "рядок"
 - `null` -- тип з єдиним значенням `null`, який означає "пусто" або "не існує",
 - `undefined` -- тип з єдиним значенням `undefined`, який означає "не присвоєно",
 - об'єкт (`object`) та символ (`symbol`) -- для складних структур даних та унікальних ідентифікаторів, ми їх ще не вивчили.
+=======
+There are 8 data types:
+
+- `number` for both floating-point and integer numbers,
+- `bigint` for integer numbers of arbitrary length,
+- `string` for strings,
+- `boolean` for logical values: `true/false`,
+- `null` -- a type with a single value `null`, meaning "empty" or "does not exist",
+- `undefined` -- a type with a single value `undefined`, meaning "not assigned",
+- `object` and `symbol` -- for complex data structures and unique identifiers, we haven't learnt them yet.
+>>>>>>> c89ddc5d92195e08e2c32e30526fdb755fec4622
 
 Оператор `typeof` повертає тип змінної, за винятком двох випадків:
 ```js
