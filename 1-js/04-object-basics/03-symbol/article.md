@@ -1,31 +1,31 @@
 
-# Symbol type
+# Символьний тип
 
-By specification, object property keys may be either of string type, or of symbol type. Not numbers, not booleans, only strings or symbols, these two types.
+За специфікацією, ключі властивостей об'єкту можуть бути або рядкового типу, або символьного типу. Ні в якому разі не цифри чи булев тип, а лише рядки або символи.
 
-Till now we've been using only strings. Now let's see the benefits that symbols can give us.
+До цього часу ми використовували лише рядки. Тепер давайте подивимося на переваги, які можуть нам надати символи.
 
-## Symbols
+## Символи
 
-A "symbol" represents a unique identifier.
+"Символ" являє собою унікальний ідентифікатор.
 
-A value of this type can be created using `Symbol()`:
+Значення цього типу можна створити використовуючи `Symbol()`:
 
 ```js
-// id is a new symbol
+// id це новий символ
 let id = Symbol();
 ```
 
-Upon creation, we can give symbol a description (also called a symbol name), mostly useful for debugging purposes:
+Після створення, ми можемо дати опис символу (його також його називають ім'ям символу), в основному це корисно для налагодження програми:
 
 ```js
-// id is a symbol with the description "id"
+// id це символ з описом "id"
 let id = Symbol("id");
 ```
 
-Symbols are guaranteed to be unique. Even if we create many symbols with the same description, they are different values. The description is just a label that doesn't affect anything.
+Символи гарантовано є унікальними. Навіть якщо ми створимо багато символів з однаковим описом, вони матимуть різні значення. Опис - це лише позначення, яке ні на що не впливає.
 
-For instance, here are two symbols with the same description -- they are not equal:
+Наприклад, ось два символи з однаковим описом -- вони не рівні:
 
 ```js run
 let id1 = Symbol("id");
@@ -36,12 +36,12 @@ alert(id1 == id2); // false
 */!*
 ```
 
-If you are familiar with Ruby or another language that also has some sort of "symbols" -- please don't be misguided. JavaScript symbols are different.
+Якщо ви знайомі з Ruby або іншою мовою, яка також має деяке поняття "символи" -- будь ласка, не помиляйтесь. Символи в JavaScript відрізняються.
 
-````warn header="Symbols don't auto-convert to a string"
-Most values in JavaScript support implicit conversion to a string. For instance, we can `alert` almost any value, and it will work. Symbols are special. They don't auto-convert.
+````warn header="Символи не перетворюються автоматично в рядок"
+Більшість значень JavaScript підтримують неявне перетворення в рядок. Наприклад, ми можемо використати "alert" для майже будь-якого значення, і воно буде працювати. Символи особливі. Вони не конвертуються автоматично.
 
-For instance, this `alert` will show an error:
+Наприклад, цей `alert` видасть помилку:
 
 ```js run
 let id = Symbol("id");
@@ -50,9 +50,9 @@ alert(id); // TypeError: Cannot convert a Symbol value to a string
 */!*
 ```
 
-That's a "language guard" against messing up, because strings and symbols are fundamentally different and should not accidentally convert one into another.
+Це "захист мови" від можливих помилок, тому що рядки та символи принципово різні, і вони не повинні випадково перетворюватися один в інший.
 
-If we really want to show a symbol, we need to explicitly call `.toString()` on it, like here:
+Якщо ми нам дійсно потрібно вивести символ, нам потрібно явно викликати `.toString()`, як тут:
 ```js run
 let id = Symbol("id");
 *!*
@@ -61,6 +61,7 @@ alert(id.toString()); // Symbol(id), now it works
 ```
 
 Or get `symbol.description` property to show the description only:
+Або властивість `symbol.description`, щоб вивести лише опис:
 ```js run
 let id = Symbol("id");
 *!*
@@ -70,16 +71,16 @@ alert(id.description); // id
 
 ````
 
-## "Hidden" properties
+## "Приховані" властивості
 
-Symbols allow us to create "hidden" properties of an object, that no other part of code can accidentally access or overwrite.
+Символи дозволяють нам створити "приховані" властивості об'єкта, до яких жодна інша частина коду не може випадково отримати доступ або перезаписати.
 
-For instance, if we're working with `user` objects, that belong to a third-party code. We'd like to add identifiers to them.
+Наприклад, якщо ми працюємо з `user` об’єктами, які належать до стороннього коду. Ми хотіли б додати до них ідентифікатори.
 
-Let's use a symbol key for it:
+Давайте використаємо для цього символьний ключ:
 
 ```js run
-let user = { // belongs to another code
+let user = { // належить до іншого коду
   name: "John"
 };
 
@@ -87,16 +88,16 @@ let id = Symbol("id");
 
 user[id] = 1;
 
-alert( user[id] ); // we can access the data using the symbol as the key
+alert( user[id] ); // ми можемо отримати доступ до даних, використовуючи символ як ключ
 ```
 
-What's the benefit of using `Symbol("id")` over a string `"id"`?
+Яка перевага від використання символу `Symbol("id")` замість рядка `"id"`?
 
-As `user` objects belongs to another code, and that code also works with them, we shouldn't just add any fields to it. That's unsafe. But a symbol cannot be accessed accidentally, the third-party code probably won't even see it, so it's probably all right to do.
+Оскільки `user` об’єкти належать до іншого коду, і цей код також працює з ними, ми не повинні додавати до нього жодні поля. Це небезпечно. Але це неможливо випадково отримати доступ до символу, сторонній код, ймовірно, навіть не побачить його, тому це можна робити.
 
-Also, imagine that another script wants to have its own identifier inside `user`, for its own purposes. That may be another JavaScript library, so that the scripts are completely unaware of each other.
+Крім того, уявіть, що інший скрипт хоче мати власний ідентифікатор всередині `user` для власних цілей. Це може бути ще одна бібліотека JavaScript, так що скрипти абсолютно не знають один про одного.
 
-Then that script can create its own `Symbol("id")`, like this:
+Тоді цей скрипт може створити власний `Symbol("id")`, таким чином:
 
 ```js
 // ...
@@ -105,27 +106,27 @@ let id = Symbol("id");
 user[id] = "Their id value";
 ```
 
-There will be no conflict between our and their identifiers, because symbols are always different, even if they have the same name.
+Між нашими та їхніми ідентифікаторами не буде конфлікту, оскільки символи завжди різні, навіть якщо вони мають однакове ім’я.
 
-...But if we used a string `"id"` instead of a symbol for the same purpose, then there *would* be a conflict:
+...Але якщо ми використали рядок `"id"` замість символу з тією ж метою, то *буде* конфлікт:
 
 ```js run
 let user = { name: "John" };
 
-// Our script uses "id" property
+// Наш скрипт використовує властивість "id"
 user.id = "Our id value";
 
-// ...Another script also wants "id" for its purposes...
+// ...Інший скрипт також хоче "id" для своїх цілей ...
 
 user.id = "Their id value"
-// Boom! overwritten by another script!
+// Бум! переписаний іншим скриптом!
 ```
 
-### Symbols in a literal
+### Символи в літералах
 
-If we want to use a symbol in an object literal `{...}`, we need square brackets around it.
+Якщо ми хочемо використовувати символ у літералі об'єкту `{...}`, нам потрібні квадратні дужки навколо нього.
 
-Like this:
+Ось так:
 
 ```js
 let id = Symbol("id");
@@ -133,17 +134,17 @@ let id = Symbol("id");
 let user = {
   name: "John",
 *!*
-  [id]: 123 // not "id: 123"
+  [id]: 123 // не "id: 123"
 */!*
 };
 ```
-That's because we need the value from the variable `id` as the key, not the string "id".
+Це тому, що нам потрібне значення зі змінної `id` як ключ, а не рядок "id".
 
-### Symbols are skipped by for..in
+### Символи опускаються for..in циклом
 
-Symbolic properties do not participate in `for..in` loop.
+Символьні властивості не беруть участь у циклі `for..in`.
 
-For instance:
+Наприклад:
 
 ```js run
 let id = Symbol("id");
@@ -154,16 +155,16 @@ let user = {
 };
 
 *!*
-for (let key in user) alert(key); // name, age (no symbols)
+for (let key in user) alert(key); // name, age (ніяких символів)
 */!*
 
-// the direct access by the symbol works
+// прямий доступ символом працює
 alert( "Direct: " + user[id] );
 ```
 
-`Object.keys(user)` also ignores them. That's a part of the general "hiding symbolic properties" principle. If another script or a library loops over our object, it won't unexpectedly access a symbolic property.
+`Object.keys(user)` також їх ігнорує. Це частина загального принципу "приховування символьних властивостей". Якщо інший скрипт або бібліотека під час циклу доступаються до об’єкту, вони не отримають доступу до властивості символу.
 
-In contrast, [Object.assign](mdn:js/Object/assign) copies both string and symbol properties:
+На відміну від цього, [Object.assign](mdn:js/Object/assign) копіює і властивості рядка, і символу:
 
 ```js run
 let id = Symbol("id");
@@ -176,102 +177,102 @@ let clone = Object.assign({}, user);
 alert( clone[id] ); // 123
 ```
 
-There's no paradox here. That's by design. The idea is that when we clone an object or merge objects, we usually want *all* properties to be copied (including symbols like `id`).
+Тут немає парадоксу. Це передбачено дизайном. Ідея полягає в тому, що коли ми клонуємо об’єкт або об'єднуємо об'єкти, то зазвичай хочемо скопіювати *всі* властивості (включаючи такі символи, як `id`).
 
-## Global symbols
+## Глобальні символи
 
-As we've seen, usually all symbols are different, even if they have the same name. But sometimes we want same-named symbols to be same entities. For instance, different parts of our application want to access symbol `"id"` meaning exactly the same property.
+Як ми бачили, зазвичай всі символи різні, навіть якщо вони мають однакове ім’я. Але іноді ми хочемо, щоб одноіменні символи були однаковими сутностями. Наприклад, різні частини нашої програми хочуть отримати доступ до символу `"id"`, однієї властивості.
 
-To achieve that, there exists a *global symbol registry*. We can create symbols in it and access them later, and it guarantees that repeated accesses by the same name return exactly the same symbol.
+Для цього існує *глобальний реєстр символів*. Ми можемо створювати в ньому символи та отримати доступ до них пізніше, і це гарантує, що повторний доступ під одним іменем повертає абсолютно той самий символ.
 
-In order to read (create if absent) a symbol from the registry, use `Symbol.for(key)`.
+Для того, щоб прочитати (створити, якщо він відсутній) символ з реєстру, використовуйте `Symbol.for(key)`.
 
-That call checks the global registry, and if there's a symbol described as `key`, then returns it, otherwise creates a new symbol `Symbol(key)` and stores it in the registry by the given `key`.
+Цей виклик перевіряє глобальний реєстр, і якщо є символ, описаний як `key` (певний ключ), то повертає його, інакше створює новий символ `Symbol(key)` і зберігає його в реєстрі за допомогою заданого `key`.
 
-For instance:
+Наприклад:
 
 ```js run
-// read from the global registry
-let id = Symbol.for("id"); // if the symbol did not exist, it is created
+// зчитування з глобального реєстру
+let id = Symbol.for("id"); // якщо символ не існував, він створюється
 
-// read it again (maybe from another part of the code)
+// зчитати його ще раз (можливо, з іншої частини коду)
 let idAgain = Symbol.for("id");
 
-// the same symbol
+// той самий символ
 alert( id === idAgain ); // true
 ```
 
-Symbols inside the registry are called *global symbols*. If we want an application-wide symbol, accessible everywhere in the code -- that's what they are for.
+Символи всередині реєстру називаються *глобальними символами*. Якщо ми хочемо, щоб символ був доступний будь-де у коді у всьому додатку -- ми можемо використовувати глобальні символи.
 
-```smart header="That sounds like Ruby"
-In some programming languages, like Ruby, there's a single symbol per name.
+```smart header="Це звучить як Ruby"
+У деяких мовах програмування, як Ruby, є один символ на ім’я.
 
-In JavaScript, as we can see, that's right for global symbols.
+У JavaScript, як ми бачимо, використовується глобальні символи.
 ```
 
 ### Symbol.keyFor
 
-For global symbols, not only `Symbol.for(key)` returns a symbol by name, but there's a reverse call: `Symbol.keyFor(sym)`, that does the reverse: returns a name by a global symbol.
+Для глобальних символів не тільки `Symbol.for(key)` повертає символ через ім'я, але є зворотний виклик: `Symbol.keyFor(sym)`, який робить зворотню дію: повертає ім'я через глобальний символ.
 
-For instance:
+Наприклад:
 
 ```js run
-// get symbol by name
+// отримати символ за ім'ям
 let sym = Symbol.for("name");
 let sym2 = Symbol.for("id");
 
-// get name by symbol
+// отримати ім'я за символом
 alert( Symbol.keyFor(sym) ); // name
 alert( Symbol.keyFor(sym2) ); // id
 ```
 
-The `Symbol.keyFor` internally uses the global symbol registry to look up the key for the symbol. So it doesn't work for non-global symbols. If the symbol is not global, it won't be able to find it and returns `undefined`.
+`Symbol.keyFor` внутрішньо використовує глобальний реєстр символів для пошуку ключа для символу. Отже, це не працює для неглобальних символів. Якщо символ не є глобальним, він не зможе його знайти і поверне `undefined`.
 
-That said, any symbols have `description` property.
+Однак це означає, що будь-які символи мають властивість `description`.
 
-For instance:
+Наприклад:
 
 ```js run
 let globalSymbol = Symbol.for("name");
 let localSymbol = Symbol("name");
 
-alert( Symbol.keyFor(globalSymbol) ); // name, global symbol
-alert( Symbol.keyFor(localSymbol) ); // undefined, not global
+alert( Symbol.keyFor(globalSymbol) ); // name, глобальний символ
+alert( Symbol.keyFor(localSymbol) ); // undefined, не глобальний
 
 alert( localSymbol.description ); // name
 ```
 
-## System symbols
+## Системні символи
 
-There exist many "system" symbols that JavaScript uses internally, and we can use them to fine-tune various aspects of our objects.
+Існує багато "системних" символів, які JavaScript використовує внутрішньо, і ми можемо використовувати їх для тонкого налаштування різних аспектів наших об'єктів.
 
-They are listed in the specification in the [Well-known symbols](https://tc39.github.io/ecma262/#sec-well-known-symbols) table:
+Вони описані в деталях в таблиці [Well-known symbols](https://tc39.github.io/ecma262/#sec-well-known-symbols):
 
 - `Symbol.hasInstance`
 - `Symbol.isConcatSpreadable`
 - `Symbol.iterator`
 - `Symbol.toPrimitive`
-- ...and so on.
+- ...і т.д.
 
-For instance, `Symbol.toPrimitive` allows us to describe object to primitive conversion. We'll see its use very soon.
+Наприклад, `Symbol.toPrimitive` дозволяє нам описати об'єкт до примітивного перетворення. Ми побачимо його використання дуже скоро.
 
-Other symbols will also become familiar when we study the corresponding language features.
+Інші символи також стануть звичними, коли ми вивчимо відповідні особливості мови.
 
-## Summary
+## Підсумок
 
-`Symbol` is a primitive type for unique identifiers.
+`Symbol` - примітивний тип унікальних ідентифікаторів.
 
-Symbols are created with `Symbol()` call with an optional description (name).
+Символи створюються при виклику `Symbol()` з додатковим описом (ім'ям).
 
-Symbols are always different values, even if they have the same name. If we want same-named symbols to be equal, then we should use the global registry: `Symbol.for(key)` returns (creates if needed) a global symbol with `key` as the name. Multiple calls of `Symbol.for` with the same `key` return exactly the same symbol.
+Символи - це завжди різні значення, навіть якщо вони мають однакову назву. Якщо ми хочемо, щоб одноіменні символи були рівними, тоді ми повинні використовувати глобальний реєстр: `Symbol.for(key)` повертає (створює, якщо потрібно) глобальний символ з назвою `key`. Кілька викликів `Symbol.for` з одним і тим же ключем повертають точно той же символ.
 
-Symbols have two main use cases:
+Символи мають два основні випадки використання:
 
-1. "Hidden" object properties.
-    If we want to add a property into an object that "belongs" to another script or a library, we can create a symbol and use it as a property key. A symbolic property does not appear in `for..in`, so it won't be accidentally processed together with other properties. Also it won't be accessed directly, because another script does not have our symbol. So the property will be protected from accidental use or overwrite.
+1. "Приховані" властивості об'єкта.
+    Якщо ми хочемо додати властивість до об'єкта, який "належить" іншому скрипту або бібліотеці, ми можемо створити символ і використовувати його як ключ властивості. Символьна властивість не відображається в циклі `for..in`, тому вона не буде оброблена випадково разом з іншими властивостями. Також до нього не можна буде отримати доступ безпосередньо, оскільки інший скрипт не має нашого символу. Так властивість буде захищено від випадкового використання або перезапису.
 
-    So we can "covertly" hide something into objects that we need, but others should not see, using symbolic properties.
+    Тож ми можемо "ховати" щось у потрібних нам об'єктах, що інші не повинні бачити, використовуючи символьні властивості.
 
-2. There are many system symbols used by JavaScript which are accessible as `Symbol.*`. We can use them to alter some built-in behaviors. For instance, later in the tutorial we'll use `Symbol.iterator` for [iterables](info:iterable), `Symbol.toPrimitive` to setup [object-to-primitive conversion](info:object-toprimitive) and so on.
+2. Існує багато системних символів, які використовуються JavaScript, які доступні як `Symbol.*`. Ми можемо використовувати їх для зміни деяких вбудованих способів поведінки. Наприклад, пізніше в підручнику ми будемо використовувати `Symbol.iterator` для [iterables](info:iterable), `Symbol.toPrimitive` для установки [object-to-primitive conversion](info:object-toprimitive) та ін. 
 
-Technically, symbols are not 100% hidden. There is a built-in method [Object.getOwnPropertySymbols(obj)](mdn:js/Object/getOwnPropertySymbols) that allows us to get all symbols. Also there is a method named [Reflect.ownKeys(obj)](mdn:js/Reflect/ownKeys) that returns *all* keys of an object including symbolic ones. So they are not really hidden. But most libraries, built-in functions and syntax constructs don't use these methods.
+Технічно символи не є на 100% прихованими. Існує вбудований метод [Object.getOwnPropertySymbols(obj)](mdn:js/Object/getOwnPropertySymbols), який дозволяє нам отримувати всі символи. Також існує метод з назвою [Reflect.ownKeys(obj)](mdn:js/Reflect/ownKeys), який повертає *всі* ключі об’єкта, включаючи символічні. Тож вони насправді не приховані. Але більшість бібліотек, вбудованих функцій та синтаксичних конструкцій не використовують ці методи.
