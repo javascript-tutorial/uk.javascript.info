@@ -1,6 +1,6 @@
-# Object methods, "this"
+# Методи об'єктів, "this"
 
-Objects are usually created to represent entities of the real world, like users, orders and so on:
+Об'єкти зазвичай створюються для представлення суб'єктів реального світу, таких як користувачі, замовлення тощо:
 
 ```js
 let user = {
@@ -9,13 +9,14 @@ let user = {
 };
 ```
 
-And, in the real world, a user can *act*: select something from the shopping cart, login, logout etc.
+В реальному світі користувач може *діяти*: вибрати щось із кошика для покупок, залогінитись, вийти тощо.
 
-Actions are represented in JavaScript by functions in properties.
+Дії представлені в JavaScript функціями у властивостях.
 
-## Method examples
+## Приклади методів
 
 For a start, let's teach the `user` to say hello:
+Для початку давайте навчимо `user` (користувача) привітатися:
 
 ```js run
 let user = {
@@ -25,22 +26,22 @@ let user = {
 
 *!*
 user.sayHi = function() {
-  alert("Hello!");
+  alert("Привіт!");
 };
 */!*
 
-user.sayHi(); // Hello!
+user.sayHi(); // Привіт!
 ```
 
-Here we've just used a Function Expression to create the function and assign it to the property `user.sayHi` of the object.
+Тут ми використали Вираз Функції для створення функції та призначення їй властивості об'єкта `user.sayHi`.
 
-Then we can call it. The user can now speak!
+Тепер ми можемо її викликати. Користувач тепер може говорити!
 
-A function that is the property of an object is called its *method*.
+Функція, яка є властивістю об'єкта, називається *метод*.
 
-So, here we've got a method `sayHi` of the object `user`.
+Отже, тут у нас є метод `sayHi` об'єкта `user`.
 
-Of course, we could use a pre-declared function as a method, like this:
+Звичайно, ми могли б використовувати попередньо оголошену функцію як метод:
 
 ```js run
 let user = {
@@ -48,29 +49,29 @@ let user = {
 };
 
 *!*
-// first, declare
+// спочатку, оголосити
 function sayHi() {
-  alert("Hello!");
+  alert("Привіт!");
 };
 
-// then add as a method
+// потім додати як метод
 user.sayHi = sayHi;
 */!*
 
-user.sayHi(); // Hello!
+user.sayHi(); // Привіт!
 ```
 
-```smart header="Object-oriented programming"
-When we write our code using objects to represent entities, that's called [object-oriented programming](https://en.wikipedia.org/wiki/Object-oriented_programming), in short: "OOP".
+````smart header="Об'єктно-орієнтоване програмування"
+Коли ми пишемо наш код, використовуючи об'єкти для представлення сутностей, це називається [об'єктно-орієнтоване програмування](https://en.wikipedia.org/wiki/Object-oriented_programming), коротше: "ООП".
 
-OOP is a big thing, an interesting science of its own. How to choose the right entities? How to organize the interaction between them? That's architecture, and there are great books on that topic, like "Design Patterns: Elements of Reusable Object-Oriented Software" by E. Gamma, R. Helm, R. Johnson, J. Vissides or "Object-Oriented Analysis and Design with Applications" by G. Booch, and more.
-```
-### Method shorthand
+ООП - це велика річ, своя цікава наука. Як правильно вибрати сутності? Як організувати взаємодію між ними? Це архітектура, і на цю тему є чудові книги, такі як "Design Patterns: Elements of Reusable Object-Oriented Software" E. Gamma, R. Helm, R. Johnson, J. Vissides чи "Object-Oriented Analysis and Design with Applications" G. Booch та ін.
+````
+### Скорочене оголошення методів
 
-There exists a shorter syntax for methods in an object literal:
+Існує коротший синтаксис для методів:
 
 ```js
-// these objects do the same
+// ці об’єкти роблять те саме
 
 user = {
   sayHi: function() {
@@ -78,31 +79,31 @@ user = {
   }
 };
 
-// method shorthand looks better, right?
+// коротший синтаксис виглялає краще, так?
 user = {
 *!*
-  sayHi() { // same as "sayHi: function()"
+  sayHi() { // те само що і "sayHi: function()"
 */!*
     alert("Hello");
   }
 };
 ```
 
-As demonstrated, we can omit `"function"` and just write `sayHi()`.
+Як показано, ми можемо опустити `"function"` і просто писати `sayHi()`.
 
-To tell the truth, the notations are not fully identical. There are subtle differences related to object inheritance (to be covered later), but for now they do not matter. In almost all cases the shorter syntax is preferred.
+По правді кажучи, позначення не є повністю ідентичними. Існують тонкі відмінності, пов’язані з успадкуванням об'єктів (висвітлюються пізніше), але наразі вони не мають значення. Майже у всіх випадках кращим є використання коротшого синтаксис.
 
-## "this" in methods
+## "this" в методах
 
-It's common that an object method needs to access the information stored in the object to do its job.
+Загальноприйнято, що для виконання своєї роботи методу потрібно отримати доступ до інформації, що зберігається в об'єкті.
 
-For instance, the code inside `user.sayHi()` may need the name of the `user`.
+Наприклад, для коду всередині `user.sayHi()` може знадобитися ім'я `user`.
 
-**To access the object, a method can use the `this` keyword.**
+**Для доступу до об’єкта метод може використовувати ключове слово `this`.**
 
-The value of `this` is the object "before dot", the one used to call the method.
+Значенням `this` є об'єкт "before dot", той, який використовується для виклику методу.
 
-For instance:
+Наприклад:
 
 ```js run
 let user = {
@@ -111,7 +112,7 @@ let user = {
 
   sayHi() {
 *!*
-    // "this" is the "current object"
+    // "this" це "поточний об’єкт"
     alert(this.name);
 */!*
   }
@@ -121,9 +122,9 @@ let user = {
 user.sayHi(); // John
 ```
 
-Here during the execution of `user.sayHi()`, the value of `this` will be `user`.
+Тут під час виконання `user.sayHi()` значення `this` буде `user`.
 
-Technically, it's also possible to access the object without `this`, by referencing it via the outer variable:
+Технічно також можна отримати доступ до об'єкта без `this`, посилаючись на нього через зовнішню змінну:
 
 ```js
 let user = {
@@ -132,16 +133,16 @@ let user = {
 
   sayHi() {
 *!*
-    alert(user.name); // "user" instead of "this"
+    alert(user.name); // "user" замість "this"
 */!*
   }
 
 };
 ```
 
-...But such code is unreliable. If we decide to copy `user` to another variable, e.g. `admin = user` and overwrite `user` with something else, then it will access the wrong object.
+...Але такий код ненадійний. Якщо ми вирішимо скопіювати `user` в іншу змінну, наприклад `admin = user` і перезаписати `user` на щось інше, тоді він отримає доступ до неправильного об'єкта.
 
-That's demonstrated below:
+Це продемонстровано нижче:
 
 ```js run
 let user = {
@@ -150,7 +151,7 @@ let user = {
 
   sayHi() {
 *!*
-    alert( user.name ); // leads to an error
+    alert( user.name ); // призводить до помилки
 */!*
   }
 
@@ -158,18 +159,19 @@ let user = {
 
 
 let admin = user;
-user = null; // overwrite to make things obvious
+user = null; // перешемо, щоб зробити речі очевидними
 
-admin.sayHi(); // Whoops! inside sayHi(), the old name is used! error!
+admin.sayHi(); // Упс! всередині sayHi(), використовується стара назва! помилка! 
 ```
 
 If we used `this.name` instead of `user.name` inside the `alert`, then the code would work.
+Якби ми використовували `this.name` замість `user.name` всередині `alert`, код запрацював би.
 
-## "this" is not bound
+## "this" не зв'язане
 
-In JavaScript, keyword `this` behaves unlike most other programming languages. It can be used in any function.
+Поведінка ключового слова `this` у JavaScript відрізняється від більшості інших мов програмування. Його можна використовувати в будь-якій функції.
 
-There's no syntax error in the following example:
+У наступному прикладі немає синтаксичної помилки:
 
 ```js
 function sayHi() {
@@ -177,9 +179,9 @@ function sayHi() {
 }
 ```
 
-The value of `this` is evaluated during the run-time, depending on the context.
+Значення `this` оцінюється під час виконання, залежно від контексту.
 
-For instance, here the same function is assigned to two different objects and has different "this" in the calls:
+Наприклад, тут одна і та ж функція відповідає двом різним об'єктам і різним "this" у викликах:
 
 ```js run
 let user = { name: "John" };
@@ -190,23 +192,23 @@ function sayHi() {
 }
 
 *!*
-// use the same function in two objects
+// використовувати ту саму функцію у двох об’єктах
 user.f = sayHi;
 admin.f = sayHi;
 */!*
 
-// these calls have different this
-// "this" inside the function is the object "before the dot"
+// ці виклики використовують різні this
+// "this" всередині функції це об’єкт "before the dot"
 user.f(); // John  (this == user)
 admin.f(); // Admin  (this == admin)
 
-admin['f'](); // Admin (dot or square brackets access the method – doesn't matter)
+admin['f'](); // Admin (точки або квадратні дужки отримують доступ до методу - не має значення)
 ```
 
-The rule is simple: if `obj.f()` is called, then `this` is `obj` during the call of `f`. So it's either `user` or `admin` in the example above.
+Правило просте: якщо викликається `obj.f()`, тоді `this` є `obj` під час виклику `f`. Отже, це або `user`, або `admin` у наведеному вище прикладі.
 
-````smart header="Calling without an object: `this == undefined`"
-We can even call the function without an object at all:
+````smart header="Виклик без об’єкта: `this == undefined`"
+Ми навіть можемо взагалі викликати функцію без об'єкта:
 
 ```js run
 function sayHi() {
@@ -214,34 +216,33 @@ function sayHi() {
 }
 
 sayHi(); // undefined
-```
-
-In this case `this` is `undefined` in strict mode. If we try to access `this.name`, there will be an error.
-
-In non-strict mode the value of `this` in such case will be the *global object* (`window` in a browser, we'll get to it later in the chapter [](info:global-object)). This is a historical behavior that `"use strict"` fixes.
-
-Usually such call is a programming error. If there's `this` inside a function, it expects to be called in an object context.
 ````
 
-```smart header="The consequences of unbound `this`"
-If you come from another programming language, then you are probably used to the idea of a "bound `this`", where methods defined in an object always have `this` referencing that object.
+У цьому випадку `this` є `undefined` у суворому режимі. Якщо ми спробуємо отримати доступ до `this.name`, виникне помилка.
 
-In JavaScript `this` is "free", its value is evaluated at call-time and does not depend on where the method was declared, but rather on what object is "before the dot".
+У не суворому режимі значенням `this` в такому випадку буде *global object* (`window` (вікно) у браузері, ми дізнаємось про це пізніше в главі [](info:global-object)). Це історична поведінка, яка виправлена `"use strict"`.
 
-The concept of run-time evaluated `this` has both pluses and minuses. On the one hand, a function can be reused for different objects. On the other hand, the greater flexibility creates more possibilities for mistakes.
+Зазвичай такий виклик є помилкою програмування. Якщо всередині функції є `this`, очікується, що воно буде викликане в контексті об'єкта.
 
-Here our position is not to judge whether this language design decision is good or bad. We'll understand how to work with it, how to get benefits and avoid problems.
-```
+````smart header="Наслідки незв'язаного `this`"
+Якщо ви використовували іншу мову програмування, то, ймовірно, ви звикли до ідеї "зв'язаного `this`", де в методах, визначених в об'єкті, завжди `this` є посиланням на цей об'єкт.
 
-## Internals: Reference Type
+У JavaScript `this` є "вільним", його значення оцінюється під час виклику і не залежить від того, де був оголошений метод, а скоріше від того, який об'єкт знаходиться перед крапкою.
 
-```warn header="In-depth language feature"
-This section covers an advanced topic, to understand certain edge-cases better.
+Концепція оцінювання `this` під час виклику має як плюси, так і мінуси. З одного боку, функцію можна повторно використовувати для різних об'єктів. З іншого боку, більша гнучкість створює більше можливостей для помилок.
 
-If you want to go on faster, it can be skipped or postponed.
-```
+Тут наша позиція не в тому, щоб судити про те, добре чи погано це рішення дизайну мови. Ми розберемося, як з цим працювати, та як уникнути проблем.
+````
 
-An intricate method call can lose `this`, for instance:
+## Internals: Тип Посиланнь
+
+````warn header="Поглиблена мовна функція"
+Цей розділ охоплює поглиблену тему, щоб краще зрозуміти певні крайні випадки.
+
+Якщо ви хочете продовжувати швидше, це можна пропустити або відкласти.
+````
+
+Виклик складного методу може втратити `this`, наприклад:
 
 ```js run
 let user = {
@@ -250,40 +251,40 @@ let user = {
   bye() { alert("Bye"); }
 };
 
-user.hi(); // John (the simple call works)
+user.hi(); // John (простий виклик працює)
 
 *!*
-// now let's call user.hi or user.bye depending on the name
-(user.name == "John" ? user.hi : user.bye)(); // Error!
+// тепер давайте викличемо user.hi або user.bye залежно від імені
+(user.name == "John" ? user.hi : user.bye)(); // Помилка!
 */!*
 ```
 
-On the last line there is a conditional operator that chooses either `user.hi` or `user.bye`. In this case the result is `user.hi`.
+В останньому рядку є умовний оператор, який вибирає або `user.hi`, або `user.bye`. У цьому випадку результатом є `user.hi`.
 
-Then the method is immediately called with parentheses `()`. But it doesn't work correctly!
+Тоді метод негайно викликається в дужках `()`. Але це працює неправильно!
 
-As you can see, the call results in an error, because the value of `"this"` inside the call becomes `undefined`.
+Як бачимо, виклик призводить до помилки, оскільки значення `"this"` всередині виклику стає `undefined`.
 
-This works (object dot method):
+Це працює (об'єкт крапка метод):
 ```js
 user.hi();
 ```
 
-This doesn't (evaluated method):
+Це не працює (оцінюваний метод):
 ```js
-(user.name == "John" ? user.hi : user.bye)(); // Error!
+(user.name == "John" ? user.hi : user.bye)(); // Помилка!
 ```
 
-Why? If we want to understand why it happens, let's get under the hood of how `obj.method()` call works.
+Чому? Якщо ми хочемо зрозуміти, чому це відбувається, давайте подивимося, як працює виклик `obj.method()`.
 
-Looking closely, we may notice two operations in `obj.method()` statement:
+Придивляючись уважно, ми можемо помітити дві операції в операторі `obj.method()`:
 
-1. First, the dot `'.'` retrieves the property `obj.method`.
-2. Then parentheses `()` execute it.
+1. По-перше, точка `'.'` отримує властивість `obj.method`.
+2. Тоді дужки `()` виконують його.
 
-So, how does the information about `this` get passed from the first part to the second one?
+Отже, як інформація про `this` передається з першої частини в другу?
 
-If we put these operations on separate lines, then `this` will be lost for sure:
+Якщо ми помістимо ці операції в окремі рядки, то `this` буде точно втрачено:
 
 ```js run
 let user = {
@@ -292,44 +293,44 @@ let user = {
 }
 
 *!*
-// split getting and calling the method in two lines
+// розділення отримання та виклик методу на два рядки
 let hi = user.hi;
-hi(); // Error, because this is undefined
+hi(); // Помилка, оскільки це не визначено
 */!*
 ```
 
-Here `hi = user.hi` puts the function into the variable, and then on the last line it is completely standalone, and so there's no `this`.
+Тут `hi = user.hi` присвоює функцію змінній, а потім в останньому рядку вона є повністю автономною, і тому немає `this`.
 
-**To make `user.hi()` calls work, JavaScript uses a trick -- the dot `'.'` returns not a function, but a value of the special [Reference Type](https://tc39.github.io/ecma262/#sec-reference-specification-type).**
+**Щоб виклики `user.hi()` працювали, JavaScript використовує хитрість -- крапка `'.'` повертає не функцію, а значення спеціального типу посилання [Reference Type](https://tc39.github.io/ecma262/#sec-reference-specification-type).**
 
-The Reference Type is a "specification type". We can't explicitly use it, but it is used internally by the language.
+Тип Посилання - це "тип специфікації". Ми не можемо прямо використовувати його, але він використовується внутрішньо мовою.
 
-The value of Reference Type is a three-value combination `(base, name, strict)`, where:
+Значення типу посилання - це тризначне поєднання `(base, name, strict)`, де:
 
-- `base` is the object.
-- `name` is the property name.
-- `strict` is true if `use strict` is in effect.
+- `base` це об'єкт.
+- `name` це ім'я властивості.
+- `strict` має значення true, якщо `use strict` діє.
 
-The result of a property access `user.hi` is not a function, but a value of Reference Type. For `user.hi` in strict mode it is:
+Результат доступу до властивості `user.hi` - це не функція, а значення типу посилання. Для `user.hi` в суворому режимі це:
 
 ```js
-// Reference Type value
+// Значення типу посилання
 (user, "hi", true)
 ```
 
-When parentheses `()` are called on the Reference Type, they receive the full information about the object and its method, and can set the right `this` (`=user` in this case).
+Коли в посилальному типі викликаються круглі дужки `()`, вони отримують повну інформацію про об'єкт та його метод, і можуть встановити правильний `this` (`=user` в даному випадку).
 
-Reference type is a special "intermediary" internal type, with the purpose to pass information from dot `.` to calling parentheses `()`.
+Тип Посилання - це спеціальний "посередницький" внутрішній тип, мета якого є передача інформації від крапки `.` до виклику в дужках `()`.
 
-Any other operation like assignment `hi = user.hi` discards the reference type as a whole, takes the value of `user.hi` (a function) and passes it on. So any further operation "loses" `this`.
+Будь-яка інша операція, як присвоєння `hi = user.hi`, відкидає тип посилання в цілому, приймає значення `user.hi` (функція) і передає його далі. Тож будь-яка подальша операція "втрачає" `this`.
 
-So, as the result, the value of `this` is only passed the right way if the function is called directly using a dot `obj.method()` or square brackets `obj['method']()` syntax (they do the same here). Later in this tutorial, we will learn various ways to solve this problem such as [func.bind()](/bind#solution-2-bind).
+Отже, як результат, значення `this` передається правильно, якщо функція викликається безпосередньо за допомогою крапки `obj.method()` або квадратних дужок `obj['method']()`. Пізніше в цьому підручнику ми дізнаємось різні способи вирішення цієї проблеми, такі як [func.bind()](/bind#solution-2-bind).
 
-## Arrow functions have no "this"
+## Стрілочні функції не мають "this"
 
-Arrow functions are special: they don't have their "own" `this`. If we reference `this` from such a function, it's taken from the outer "normal" function.
+Стрілочні функції особливі: вони не мають "свого" `this`. Якщо ми посилаємося на `this` з такої функції, то буде взято взято із зовнішньої «нормальної» функції.
 
-For instance, here `arrow()` uses `this` from the outer `user.sayHi()` method:
+Наприклад, тут `arrow()` використовує `this` від зовнішнього методу `user.sayHi()`:
 
 ```js run
 let user = {
@@ -343,18 +344,18 @@ let user = {
 user.sayHi(); // Ilya
 ```
 
-That's a special feature of arrow functions, it's useful when we actually do not want to have a separate `this`, but rather to take it from the outer context. Later in the chapter <info:arrow-functions> we'll go more deeply into arrow functions.
+Це особливість стрілочних функцій, це корисно, коли ми насправді не хочемо мати окреме `this`, а скоріше взяти це із зовнішнього контексту. Пізніше у розділі <info:arrow-functions> ми детальніше перейдемо до стрілочних функцій.
 
 
-## Summary
+## Підсумок
 
-- Functions that are stored in object properties are called "methods".
-- Methods allow objects to "act" like `object.doSomething()`.
-- Methods can reference the object as `this`.
+- Функції, які зберігаються у властивостях об'єкта, називаються "методами".
+- Методи дозволяють об'єктам "діяти" як `object.doSomething()`.
+- Методи можуть посилатись на об'єкт як `this`.
 
-The value of `this` is defined at run-time.
-- When a function is declared, it may use `this`, but that `this` has no value until the function is called.
-- A function can be copied between objects.
-- When a function is called in the "method" syntax: `object.method()`, the value of `this` during the call is `object`.
+Значення `this` визначається під час виконання.
+- Коли функція оголошена, вона може використовувати `this`, але `this` не має значення, поки функція не буде викликана.
+- Функція може бути скопійована між об'єктами.
+- Коли функція викликається як "метод": `object.method()`, значення `this` під час виклику є `object`.
 
-Please note that arrow functions are special: they have no `this`. When `this` is accessed inside an arrow function, it is taken from outside.
+Зверніть увагу, що стрілочні функції особливі: вони не мають `this`. Коли доступ до `this` відбувається у межах стрілочної функції, значення `this` береться ззовні.
