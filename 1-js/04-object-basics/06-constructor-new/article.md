@@ -1,17 +1,18 @@
-# Constructor, operator "new"
+# Конструктор, створення об’єктів через "new"
 
-The regular `{...}` syntax allows to create one object. But often we need to create many similar objects, like multiple users or menu items and so on.
+Регулярний синтаксис {...} дозволяє створити один об’єкт. Але часто нам потрібно створити багато подібних об'єктів, як, наприклад, декілька користувачів або пункти меню тощо.
 
-That can be done using constructor functions and the `"new"` operator.
+Это можно сделать при помощи функции-конструктора и оператора `"new"`.
 
-## Constructor function
+## Функція конструктора
 
-Constructor functions technically are regular functions. There are two conventions though:
+Функції конструктора технічно є звичайними функціями. Однак існують дві конвенції:
 
-1. They are named with capital letter first.
-2. They should be executed only with `"new"` operator.
+1.  Ім’я повинно починатися з великої літери.
+2.  Вони повинні виконуватися лише з "new" оператором.
 
-For instance:
+
+Наприклад:
 
 ```js run
 function User(name) {
@@ -27,31 +28,31 @@ alert(user.name); // Jack
 alert(user.isAdmin); // false
 ```
 
-When a function is executed with `new`, it does the following steps:
+Коли функція виконується за допомогою new, вона виконує такі кроки:
 
-1. A new empty object is created and assigned to `this`.
-2. The function body executes. Usually it modifies `this`, adds new properties to it.
-3. The value of `this` is returned.
+1. Створюється і присвоюється новий порожній об’єкт this.
+2. Виконується код функції.  Зазвичай він модифікується this, додає до нього нові властивості.
+3. Значення this повертається. 
 
-In other words, `new User(...)` does something like:
+Іншими словами, new User(...) робить щось на кшталт: 
 
 ```js
 function User(name) {
 *!*
-  // this = {};  (implicitly)
+  // this = {};  (неявно)
 */!*
 
-  // add properties to this
+  // додає властивості до this
   this.name = name;
   this.isAdmin = false;
 
 *!*
-  // return this;  (implicitly)
+  // return this;  (неявно)
 */!*
 }
 ```
 
-So `let user = new User("Jack")` gives the same result as:
+Тому результат виклика let user = new User("Jack") такий самий як:
 
 ```js
 let user = {
@@ -60,171 +61,172 @@ let user = {
 };
 ```
 
-Now if we want to create other users, we can call `new User("Ann")`, `new User("Alice")` and so on. Much shorter than using literals every time, and also easy to read.
+Тепер , якщо ми хочемо створити інших користувачів, ми можемо назвати new User("Ann"), new User("Alice")і так далі. Набагато коротше, ніж кожен раз використовувати літерали, а також легко читати.  
 
-That's the main purpose of constructors -- to implement reusable object creation code.
+Ось головна мета конструкторів - реалізувати код створення об'єктів багаторазового використання.
 
-Let's note once again -- technically, any function can be used as a constructor. That is: any function can be run with `new`, and it will execute the algorithm above. The "capital letter first" is a common agreement, to make it clear that a function is to be run with `new`.
+Відзначимо ще раз - технічно будь-яка функція може бути використана як конструктор. Тобто: будь-яку функцію можна запустити new, і вона виконає алгоритм вище. "Перша велика літера" - це спільна угода, щоб зрозуміти, що функцію слід виконувати new.
+
 
 ````smart header="new function() { ... }"
-If we have many lines of code all about creation of a single complex object, we can wrap them in constructor function, like this:
+Якщо в нашому коді велику кількість рядків, що створюють один складний об'єкт, ми можемо обернути їх в функцію-конструктор в такий спосіб:
 
 ```js
 let user = new function() {
   this.name = "John";
   this.isAdmin = false;
 
-  // ...other code for user creation
-  // maybe complex logic and statements
-  // local variables etc
+  // ...інший код для створення користувача
+  // можлива будь-яка складна логіка і вирази
+  // локальні змінні і т. д.
+
 };
 ```
-
-The constructor can't be called again, because it is not saved anywhere, just created and called. So this trick aims to encapsulate the code that constructs the single object, without future reuse.
+Такий конструктор не може бути викликаний двічі, так як він ніде не зберігається, просто створюється і відразу ж викликається. Таким чином, такий метод створення дозволяє інкапсулювати код, який створює окремий об'єкт, але без можливості його повторного використання.
 ````
 
-## Constructor mode test: new.target
+## Перевірка на виклик в режимі конструктора : new.target
 
-```smart header="Advanced stuff"
-The syntax from this section is rarely used, skip it unless you want to know everything.
+```smart header="Продвинутая возможность"
+Даний метод використовується дуже рідко. Ви можете пропустити цю секцію, якщо не хочете заглиблюватися в деталі мови.
 ```
 
-Inside a function, we can check whether it was called with `new` or without it, using a special `new.target` property.
+Використовуючи спеціальне властивість `new.target` всередині функції, ми можемо перевірити, чи викликана функція за допомогою оператора` new` або без нього.
 
-It is empty for regular calls and equals the function if called with `new`:
+У разі, якщо функція викликана за допомогою `new`, то в` new.target` буде сама функція, в іншому випадку `undefined`.
 
 ```js run
 function User() {
   alert(new.target);
 }
 
-// without "new":
+// без "new":
 *!*
 User(); // undefined
 */!*
 
-// with "new":
+// с "new":
 *!*
 new User(); // function User { ... }
 */!*
 ```
 
-That can be used inside the function to know whether it was called with `new`, "in constructor mode", or without it, "in regular mode".
-
-We can also make both `new` and regular calls to do the same, like this:
+Це можна використовувати, щоб відрізнити звичайний виклик від виклику "в режимі конструктора". Зокрема, ось так можна зробити, щоб функцію можна було викликати як з, так і без `new`:
 
 ```js run
 function User(name) {
-  if (!new.target) { // if you run me without new
-    return new User(name); // ...I will add new for you
+  if (!new.target) { // у випадку, якщо ви викликали без оператора"new":
+    return new User(name); // ...додамо опертор new за вас
   }
 
   this.name = name;
 }
 
-let john = User("John"); // redirects call to new User
+let john = User("John"); // переадресовує виклик на new User
 alert(john.name); // John
 ```
 
-This approach is sometimes used in libraries to make the syntax more flexible. So that people may call the function with or without `new`, and it still works.
+Такий підхід іноді використовується в бібліотеках для створення більш гнучкого синтаксису, який дозволяє розробникам викликати функції за допомогою оператора new або без нього.
 
-Probably not a good thing to use everywhere though, because omitting `new` makes it a bit less obvious what's going on. With `new` we all know that the new object is being created.
+Втім, це не дуже гарна практика, так як відсутність new може ввести розробника в оману. З оператором new ми точно знаємо, що в результаті буде створено новий об'єкт.
 
-## Return from constructors
 
-Usually, constructors do not have a `return` statement. Their task is to write all necessary stuff into `this`, and it automatically becomes the result.
 
-But if there is a `return` statement, then the rule is simple:
+## Повернення  значення із конструктора return
 
-- If `return` is called with an object, then the object is returned instead of `this`.
-- If `return` is called with a primitive, it's ignored.
+Зазвичай конструктори нічого не повертають явно. Їх завдання - записати все необхідне в this, який в підсумку стане результатом.
+Але якщо return все ж є, то застосовується просте правило:
 
-In other words, `return` with an object returns that object, in all other cases `this` is returned.
+-	Якщо return викликається об'єктом, то  повертається об'єкт ,а не this
+-	Якщо return з примітивним значенням, примітивне значення буде відкинуто.
 
-For instance, here `return` overrides `this` by returning an object:
+ Іншими словами, return з об'єктом повертає цей об'єкт, у всіх інших випадках повертається this.
+
+
+У прикладі нижче return повертає об'єкт замість this:
 
 ```js run
 function BigUser() {
 
   this.name = "John";
 
-  return { name: "Godzilla" };  // <-- returns this object
+  return { name: "Godzilla" };  // <-- повертає цей об’єкт
 }
 
-alert( new BigUser().name );  // Godzilla, got that object
+alert( new BigUser().name );  // Godzilla, отримали цей об’єкт
 ```
 
-And here's an example with an empty `return` (or we could place a primitive after it, doesn't matter):
+Ось приклад із порожнім return(або ми можемо розмістити примітив після нього, не має значення):
 
 ```js run
 function SmallUser() {
 
   this.name = "John";
 
-  return; // <-- returns this
+  return; // <-- повертає this
 }
 
-alert( new SmallUser().name );  // John
+alert( new SmallUser().name );  // Jack
 ```
 
-Usually constructors don't have a `return` statement. Here we mention the special behavior with returning objects mainly for the sake of completeness.
+Зазвичай у конструкторів відсутній return. В даному блоці ми згадали особливу поведінка з поверненням об'єктів, щоб не залишати пробілів у вивченні мови.
 
-````smart header="Omitting parentheses"
-By the way, we can omit parentheses after `new`, if it has no arguments:
+
+````smart header="Отсутствие скобок"
+До речі, ми можемо не ставити дужки після `new`, якщо виклик конструктора йде без аргументів.
 
 ```js
-let user = new User; // <-- no parentheses
-// same as
+let user = new User; // <-- без дужок
+// то же, що і
 let user = new User();
 ```
 
-Omitting parentheses here is not considered a "good style", but the syntax is permitted by specification.
+Пропуск дужок вважається поганою практикою, але синтаксис мови таке дозволяє.
 ````
 
-## Methods in constructor
+## Створення методів у конструкторі
 
-Using constructor functions to create objects gives a great deal of flexibility. The constructor function may have parameters that define how to construct the object, and what to put in it.
+Використання функцій конструктора для створення об'єктів дає велику гнучкість. Функція конструктора може мати параметри, які визначають, як конструювати об’єкт і що в нього помістити.
 
-Of course, we can add to `this` not only properties, but methods as well.
+Звичайно, ми можемо додати thisне лише властивості, але й методи.
 
-For instance, `new User(name)` below creates an object with the given `name` and the method `sayHi`:
+Наприклад, new User(name)нижче створюється об'єкт із заданим name методом sayHi:
 
 ```js run
 function User(name) {
   this.name = name;
 
   this.sayHi = function() {
-    alert( "My name is: " + this.name );
+    alert( "Моє ім'я: " + this.name );
   };
 }
 
 *!*
-let john = new User("John");
+let jack = new User("John");
 
-john.sayHi(); // My name is: John
+jack.sayHi(); // Моє ім'я: John
 */!*
 
 /*
-john = {
+jack = {
    name: "John",
    sayHi: function() { ... }
 }
 */
 ```
 
-To create complex objects, there's a more advanced syntax, [classes](info:classes), that we'll cover later.
+Щоб створити складні об'єкти, є більш досконалий синтаксис, класи, які ми розберемо пізніше. 
 
-## Summary
+## Підсумок
 
-- Constructor functions or, briefly, constructors, are regular functions, but there's a common agreement to name them with capital letter first.
-- Constructor functions should only be called using `new`. Such a call implies a creation of empty `this` at the start and returning the populated one at the end.
+- Функції конструктора або, коротко кажучи, конструктори, є звичайними функціями, але існує спільна згода спочатку назвати їх з великої літери. 
+- Функції конструктора слід викликати лише за допомогою new.  Такий дзвінок передбачає створення порожнього this на початку та повернення заповненого в кінці.
 
-We can use constructor functions to make multiple similar objects.
 
-JavaScript provides constructor functions for many built-in language objects: like `Date` for dates, `Set` for sets and others that we plan to study.
+Ми можемо використовувати функції конструктора для створення декількох подібних об'єктів. 
 
-```smart header="Objects, we'll be back!"
-In this chapter we only cover the basics about objects and constructors. They are essential for learning more about data types and functions in the next chapters.
+JavaScript надає функції-конструктори для безлічі вбудованих об'єктів мови: наприклад, Date, Set і інших, які нам ще належить вивчити.
 
-After we learn that, we return to objects and cover them in-depth in the chapters <info:prototypes> and <info:classes>.
+```smart header="Объекты, мы к ним ещё вернёмся!"
+У цьому розділі ми розглянули базові принципи об'єктів і конструкторів. Дана інформація необхідна нам для подальшого вивчення типів даних і функцій. Як тільки ми з ними розберемося, ми повернемося до об'єктів для більш детального вивчення в главах <info: prototypes> і <info: classes>.
 ```
