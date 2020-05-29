@@ -89,18 +89,28 @@ result = value1 || value2 || value3;
 Наприклад:
 
 ```js run
+<<<<<<< HEAD
 alert( 1 || 0 ); // 1 (1 є правдивим)
 alert( true || 'no matter what' ); // (true є правдивим)
 
 alert( null || 1 ); // 1 (1 є першим правдивим значенням)
 alert( null || 0 || 1 ); // 1 (перше правдиве значення)
 alert( undefined || null || 0 ); // 0 (усі не правдиві, повертає останнє значення)
+=======
+alert( 1 || 0 ); // 1 (1 is truthy)
+
+alert( null || 1 ); // 1 (1 is the first truthy value)
+alert( null || 0 || 1 ); // 1 (the first truthy value)
+
+alert( undefined || null || 0 ); // 0 (all falsy, returns the last value)
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 ```
 
 Це призводить до цікавого використання у порівнянни з "чистим, класичним, виключно-булевим АБО".
 
 1. **Отримання першого правдивого значення зі списку змінних або виразів.**
 
+<<<<<<< HEAD
     Уявіть, що у нас є список змінних, які можуть містити дані або бути `null/undefined`. Як ми можемо знайти першу змінну, яка містить дані?
 
     Ми можемо використати АБО `||`:
@@ -108,10 +118,21 @@ alert( undefined || null || 0 ); // 0 (усі не правдиві, повер�
     ```js run
     let currentUser = null;
     let defaultUser = "Іван";
+=======
+    For instance, we have `firstName`, `lastName` and `nickName` variables, all optional.
+
+    Let's use OR `||` to choose the one that has the data and show it (or `anonymous` if nothing set):
+
+    ```js run
+    let firstName = "";
+    let lastName = "";
+    let nickName = "SuperCoder";
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
     *!*
-    let name = currentUser || defaultUser || "unnamed";
+    alert( firstName || lastName || nickName || "Anonymous"); // SuperCoder
     */!*
+<<<<<<< HEAD
 
     alert( name ); // обере "Іван" – перше правдиве значення
     ```
@@ -124,30 +145,45 @@ alert( undefined || null || 0 ); // 0 (усі не правдиві, повер�
     Це чітко видно, коли вираз, заданий як другий аргумент, має побічний ефект, як присвоєння змінної.
 
     У наведеному нижче прикладі `x` не присвоюється значення:
+=======
+    ```
 
-    ```js run no-beautify
-    let x;
+    If all variables were falsy, `Anonymous` would show up.
 
-    *!*true*/!* || (x = 1);
+2. **Short-circuit evaluation.**
 
+    Another feature of OR `||` operator is the so-called "short-circuit" evaluation.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
+
+    It means that `||` processes its arguments until the first truthy value is reached, and then the value is returned immediately, without even touching the other argument.
+
+    That importance of this feature becomes obvious if an operand isn't just a value, but an expression with a side effect, such as a variable assignment or a function call.
+
+<<<<<<< HEAD
     alert(x); // undefined, оскільки (x = 1) не був обчислений
     ```
 
     Якщо замість цього перший аргумент є `false`, `||` обчислює другий, таким чином виконуючи присвоєння:
+=======
+    In the example below, only the second message is printed:
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
     ```js run no-beautify
-    let x;
-
-    *!*false*/!* || (x = 1);
-
-    alert(x); // 1
+    *!*true*/!* || alert("not printed");
+    *!*false*/!* || alert("printed");
     ```
 
+<<<<<<< HEAD
     Присвоєння — це простий випадок. Можливі побічні ефекти, які не з'являтимуться, якщо обчислення не досяген їх.
 
     Як ми бачимо, таке використання є "більш коротким способом виконання `if`". Перший операнд перетворюється на булевий. Якщо він false, то обчислюється другий.
 
     У більшості випадків краще використовувати "звичайний" `if`, щоб код буле легше зрозуміти, але іноді це може бути зручно.
+=======
+    In the first line, the OR `||` operator stops the evaluation immediately upon seeing `true`, so the `alert` isn't run.
+
+    Sometimes, people use this feature to execute commands only if the condition on the left part is falsy.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ## && (І)
 
@@ -236,7 +272,12 @@ alert( 1 && 2 && 3 ); // 3, останнє
 Отже, код `a && b || c && d` по суті є таким самим, як би вираз `&&` був у дужках: `(a && b) || (c && d)`.
 ````
 
+<<<<<<< HEAD
 Так само, як АБО, оператор І `&&` може іноді заміняти `if`.
+=======
+````warn header="Don't replace `if` with || or &&"
+Sometimes, people use the AND `&&` operator as a "shorter to write `if`".
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 Наприклад:
 
@@ -253,6 +294,7 @@ let x = 1;
 ```js run
 let x = 1;
 
+<<<<<<< HEAD
 if (x > 0) {
   alert( 'Більше за нуль!' );
 }
@@ -261,6 +303,14 @@ if (x > 0) {
 Варіант з `&&` є коротшим. Але `if` є більш очевидним і зазвичай є більш чтабельним.
 
 Тому ми рекомендуємо використовувати кожну конструкцію за своїм призначенням: використовуємо `if`, якщо нам потрібен if і використовуємо `&&`, якщо нам потрібен І.
+=======
+if (x > 0) alert( 'Greater than zero!' );
+```
+
+Although, the variant with `&&` appears shorter, `if` is more obvious and tends to be a little bit more readable. So we recommend using every construct for its purpose: use `if` if we want if and use `&&` if we want AND.
+````
+
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ## ! (НЕ)
 

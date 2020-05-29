@@ -1,5 +1,6 @@
 # Взаємодія: alert, prompt, confirm
 
+<<<<<<< HEAD:1-js/02-first-steps/09-alert-prompt-confirm/article.md
 Ця частина посібника спрямована на розгляд JavaScript "як є", без спеціальних налаштувань середовища.
 
 Але ми як і раніше будемо використовувати браузер як середовище для демонстрацій, тому ми повинні знати принаймні деякі з його функцій інтерфейсу користувача. У цьому розділі ми ознайомимося з функціями браузера `alert`, `prompt` та `confirm`.
@@ -13,6 +14,13 @@ alert(message);
 ```
 
 Ця функція показує повідомлення та призупиняє виконання скрипта поки користувач не натисне кнопку "OK".
+=======
+As we'll be using the browser as our demo environment, let's see a couple of functions to interact with the user: `alert`, `prompt` and `confirm`.
+
+## alert
+
+This one we've seen already. It shows a message and waits for the user to presses "OK".
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31:1-js/02-first-steps/06-alert-prompt-confirm/article.md
 
 Наприклад:
 
@@ -20,7 +28,11 @@ alert(message);
 alert("Привіт");
 ```
 
+<<<<<<< HEAD:1-js/02-first-steps/09-alert-prompt-confirm/article.md
 Міні-вікно з повідомленням називається *модальним вікном*. Слово "модальний" означає, що відвідувач не може взаємодіяти з іншою частиною сторінки, натискати інші кнопки, тощо, поки він не завершить операції з вікном. У цьому випадку -- поки він не натисне "OK".
+=======
+The mini-window with the message is called a *modal window*. The word "modal" means that the visitor can't interact with the rest of the page, press other buttons, etc, until they have dealt with the window. In this case -- until they press "OK".
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31:1-js/02-first-steps/06-alert-prompt-confirm/article.md
 
 ## prompt
 
@@ -38,7 +50,15 @@ result = prompt(title, [default]);
 `default`
 : Необов'язковий другий параметр, початкове значення для поля введення.
 
+<<<<<<< HEAD:1-js/02-first-steps/09-alert-prompt-confirm/article.md
 Відвідувач може ввести щось у поле введення запиту і натиснути ОК. Або він може скасувати введення, натиснувши Скасувати або натиснувши клавішу `key:Esc`.
+=======
+```smart header="The square brackets in syntax `[...]`"
+The square brackets around `default` in the syntax above denote that the parameter as optional, not required.
+```
+
+The visitor can type something in the prompt input field and press OK. Then we get that text in the `result`. Or they can cancel the input by pressing Cancel or hitting the `key:Esc` key, then we get `null` as the `result`.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31:1-js/02-first-steps/06-alert-prompt-confirm/article.md
 
 Виклик `prompt` повертає текст з поля введення або `null`, якщо введення було скасовано.
 

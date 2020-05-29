@@ -1,6 +1,14 @@
 # Типи даних
 
+<<<<<<< HEAD
 Змінна в JavaScript може містити будь-які дані. Змінна може в один момент бути рядком, а в інший - числом:
+=======
+A value in JavaScript is always of a certain type. For example, a string or a number.
+
+There are eight basic data types in JavaScript. Here, we'll cover them in general and in the next chapters we'll talk about each of them in detail.
+
+We can put any type in a variable. For example, a variable can at one moment be a string and then store a number:
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ```js
 // тут не буде помилки
@@ -8,9 +16,13 @@ let message = "привіт";
 message = 123456;
 ```
 
+<<<<<<< HEAD
 Мова програмування, яка дозволяє таке робити, називається "динамічно типізованою". Мається на увазі, що є різні типи даних, але змінні не прив'язанні до жодного типу.
 
 Існує вісім базових типів в JavaScript. У цьому розділі ми розглянемо їх поверхнево, а в наступних розлянемо кожен більш детально.
+=======
+Programming languages that allow such things, such as JavaScript, are called "dynamically typed", meaning that there exist data types, but variables are not bound to any of them.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ## Number (число)
 
@@ -64,21 +76,38 @@ n = 12.345;
 
 ## BigInt
 
+<<<<<<< HEAD
 В JavaScript, тип "number" не може вміщувати числа більші за <code>2<sup>53</sup></code> (або менші за <code>-2<sup>53</sup></code> для від'ємних чисел), це технічне обмеження, викликане їх внутрішніми особливостями. Це приблизно 16 десяткових цифр, тому для більшості потреб таке обмеження не є проблемою, але іноді нам потрібні дійсно великі числа, наприклад для криптографії або мікроксекундних часових міток.
+=======
+In JavaScript, the "number" type cannot represent integer values larger than <code>(2<sup>53</sup>-1)</code> (that's `9007199254740991`), or less than <code>-(-2<sup>53</sup>-1)</code> for negatives. It's a technical limitation caused by their internal representation.
+
+For most purposes that's quite enough, but sometimes we need really big numbers, e.g. for cryptography or microsecond-precision timestamps.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 Нещодавно в мову був доданий тип `BigInt` для представлення цілих чисел довільної довжини.
 
+<<<<<<< HEAD
 Тип `BigInt` створюється шляхом додавання `n` в кінець цілого числа:
+=======
+A `BigInt` value is created by appending `n` to the end of an integer:
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ```js
 // буква "n" в кінці означає що це число типу BigInt
 const bigInt = 1234567890123456789012345678901234567890n;
 ```
 
+<<<<<<< HEAD
 Через те, що тип `BigInt` рідко використовується, ми винесли його в окремий розділ <info:bigint>.
 
 ```smart header="Проблеми з сумісністю"
 Цієї миті, підтримка типу `BigInt` є в браузерах Firefox та Chrome, але не в Safari/IE/Edge.
+=======
+As `BigInt` numbers are rarely needed, we don't cover them here, but devoted them a separate chapter <info:bigint>. Read it when you need such big numbers.
+
+```smart header="Compatability issues"
+Right now `BigInt` is supported in Firefox/Chrome/Edge, but not in Safari/IE.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 ```
 
 ## String (рядок)
@@ -163,7 +192,11 @@ let age = null;
 
 Це лише спеціальне значення, яке представляє "нічого", "порожнє" або "невідоме значення".
 
+<<<<<<< HEAD
 В наведеному вище коді зазначено, що змінна `age` невідома чи порожня з якоїсь причини.
+=======
+The code above states that `age` is unknown.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ## Значення "undefined"
 
@@ -174,30 +207,50 @@ let age = null;
 Якщо змінна оголошена, але їй не призначене якесь значення, тоді значення такої змінної буде `undefined`:
 
 ```js run
-let x;
+let age;
 
+<<<<<<< HEAD
 alert(x); // показує "undefined"
 ```
 
 Технічно, є така можливість призначити `undefined` будь-якій змінній:
-
-```js run
-let x = 123;
-
-x = undefined;
-
-alert(x); // "undefined"
+=======
+alert(age); // shows "undefined"
 ```
 
+Technically, it is possible to explicitly assign `undefined` to a variable:
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
+
+```js run
+let age = 100;
+
+// change the value to undefined
+age = undefined;
+
+alert(age); // "undefined"
+```
+
+<<<<<<< HEAD
 ...Але ми не рекомендуємо так робити. Як правило, ми використовуємо `null`, щоб присвоїти змінній значення "порожнє" або "невідоме", і ми використовуємо `undefined` щоб перевірити чи було змінній присвоєне значення.
+=======
+...But we don't recommend doing that. Normally, one uses `null` to assign an "empty" or "unknown" value to a variable, while `undefined` is reserved as a default initial value for unassigned things.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ## Об'єкт (object) та Символ (symbol)
 
 Тип `object` є особливим типом.
 
+<<<<<<< HEAD
 Всі інші типи називаються "примітивами", тому що їх значення можуть містити тільки один елемент (це може бути рядок, або число, або будь-що інше). Об'єкти навпаки - використовуються для зберігання колекцій даних і більш складних об'єктів. Ми розглянемо їх пізніше у розділі <info:object> після того, як ми дізнаємося більше про примітиви.
 
 Тип `symbol` використовується для створення унікальних ідентифікаторів для об'єктів. Ми згадали тут цей тип для повноти, проте ми будемо вивчати його після об'єктів.
+=======
+All other types are called "primitive" because their values can contain only a single thing (be it a string or a number or whatever). In contrast, objects are used to store collections of data and more complex entities.
+
+Being that important, objects deserve a special treatment. We'll deal with them later in the chapter <info:object>, after we learn more about primitives.
+
+The `symbol` type is used to create unique identifiers for objects. We have to mention it here for the sake of completeness, but also postpone the details till we know objects.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ## Оператор typeof [#type-typeof]
 
@@ -240,14 +293,21 @@ typeof alert // "function"  (3)
 
 Останні три рядки можуть потребувати додаткового пояснення:
 
+<<<<<<< HEAD
 1. `Math` — це вбудований об'єкт, який забезпечує математичні операції. Ми вивчемо їх в розділі <info:number>. Тут, вони слухать лише в якості прикладу об'єкта.
 2. Результатом `typeof null` є `"object"`. Це неправильно. Це офіційно визнана помилка в `typeof`, що зберігається для сумісності. Звичайно, `null` не є об'єктом. Це особливе значення з власним типом. Отже, знову ж таки, це помилка в мові.
 3. Результатом `typeof alert` є `"function"`, тому що `alert` — це функція. Ми будемо вивчати функції в наступних розділах, де ми також побачимо, що в JavaScript немає спеціального типу "function". Функції належать до типу об'єкт. Але `typeof` трактує їх по-різному, повертаючи `"function"`. Це не зовсім правильно, але дуже зручно на практиці.
+=======
+1. `Math` is a built-in object that provides mathematical operations. We will learn it in the chapter <info:number>. Here, it serves just as an example of an object.
+2. The result of `typeof null` is `"object"`. That's an officially recognized error in `typeof` behavior, coming from the early days of JavaScript and kept for compatibility. Definitely, `null` is not an object. It is a special value with a separate type of its own.
+3. The result of `typeof alert` is `"function"`, because `alert` is a function. We'll study functions in the next chapters where we'll also see that there's no special "function" type in JavaScript. Functions belong to the object type. But `typeof` treats them differently, returning `"function"`. That also comes from the early days of JavaScript. Technically, such behavior isn't correct, but can be convenient in practice.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 ## Підсумки
 
 В JavaScript існує 8 основних типів.
 
+<<<<<<< HEAD
 - `number` для будь-яких чисел: ціле або з плаваючою точкою; цілі числа обмежені до ±2<sup>53</sup>.
 - `bigint` для цілих чисел будь-якої довжини.
 - `string` для рядків. Рядок може мати один або більше символів, немає окремого типу для одиночних символів.
@@ -256,6 +316,16 @@ typeof alert // "function"  (3)
 - `undefined` для непризначених значень — автономний тип, який має єдине значення `undefined`.
 - `object` для більш складних структур даних.
 - `symbol` для унікальних ідентифікаторів.
+=======
+- `number` for numbers of any kind: integer or floating-point, integers are limited by ±2<sup>53</sup>.
+- `bigint` is for integer numbers of arbitrary length.
+- `string` for strings. A string may have zero or more characters, there's no separate single-character type.
+- `boolean` for `true`/`false`.
+- `null` for unknown values -- a standalone type that has a single value `null`.
+- `undefined` for unassigned values -- a standalone type that has a single value `undefined`.
+- `object` for more complex data structures.
+- `symbol` for unique identifiers.
+>>>>>>> cd2c7ce3c8f033e6f7861ed1b126552e41ba3e31
 
 Оператор `typeof` дозволяє нам бачити, який тип зберігається в змінній.
 
