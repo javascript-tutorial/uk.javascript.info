@@ -78,7 +78,7 @@
 Ми також можемо вказати повну URL-адресу. Наприклад:
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.js"></script>
 ```
 
 Щоб додати кілька скриптів, використовуйте кілька тегів:

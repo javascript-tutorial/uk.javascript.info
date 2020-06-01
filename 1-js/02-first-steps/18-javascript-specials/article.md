@@ -152,8 +152,16 @@ JavaScript підтримує такі оператори:
 Логічні оператори
 : Логічні І `&&` та АБО `||` використовують так звані "ледачі обчислення" і насамкінець повертають значення, на якому воно зупинилося (не обов'язково `true` або `false`). Логічне НЕ `!` конвертує операнд в логічний тип і повертає інвертоване значення.
 
+<<<<<<< HEAD:1-js/02-first-steps/17-javascript-specials/article.md
 Порівнювання
 : Перевірка на рівність `==` для значень різних типів, конвертує їх в число (за винятком `null` і `undefined`, які рівні тільки один одному і нічому іншому), тому приклади нижче рівні:
+=======
+Nullish coalescing operator
+: The `??` operator provides a way to choose a defined value from a list of variables. The result of `a ?? b` is `a` unless it's `null/undefined`, then `b`.
+
+Comparisons
+: Equality check `==` for values of different types converts them to a number (except `null` and `undefined` that equal each other and nothing else), so these are equal:
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/18-javascript-specials/article.md
 
     ```js run
     alert( 0 == false ); // true
@@ -171,7 +179,11 @@ JavaScript підтримує такі оператори:
 Інші оператори
 : Існують й інші оператори, такі як кома.
 
+<<<<<<< HEAD:1-js/02-first-steps/17-javascript-specials/article.md
 Детальніше: <info:operators>, <info:comparison>, <info:logical-operators>.
+=======
+More in: <info:operators>, <info:comparison>, <info:logical-operators>, <info:nullish-coalescing-operator>.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/18-javascript-specials/article.md
 
 ## Цикли
 
@@ -212,7 +224,12 @@ let age = prompt('Скільки вам років?', 18);
 
 switch (age) {
   case 18:
+<<<<<<< HEAD:1-js/02-first-steps/17-javascript-specials/article.md
     alert("Не запрацює"); // результатом prompt є рядок, а не число
+=======
+    alert("Won't work"); // the result of prompt is a string, not a number
+    break;
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/18-javascript-specials/article.md
 
   case "18":
     alert("А так запрацює!");

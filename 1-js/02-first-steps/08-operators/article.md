@@ -1,8 +1,16 @@
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 # Оператори
+=======
+# Basic operators, maths
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
 Зі шкільної програми, ми знаємо багато арифметичний операцій, такі як додавання `+`, множення `*`, віднімання `-`, тощо.
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 У цьому розділі ми зупинимося на аспектах операторів, які не охоплені шкільною арифметикою.
+=======
+In this chapter, we’ll start with simple operators, then concentrate on JavaScript-specific aspects, not covered by school arithmetic.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
 ## Терміни: "унарний", "бінарний", "операнд"
 
@@ -28,9 +36,61 @@
 
     Формально, в прикладі вище, ми маємо два різні оператори, які позначаються однаковим символом: оператор заперечення – унарний оператор, який змінює знак числа, та оператор віднімання – бінарний оператор, який віднімає одне число від іншого.
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 ## Об'єднання рядків, бінарний +
 
 Тепер розглянемо особливості JavaScript операторів, які виходять за межі шкільної арифметики.
+=======
+## Maths
+
+The following math operations are supported:
+
+- Addition `+`,
+- Subtraction `-`,
+- Multiplication `*`,
+- Division `/`,
+- Remainder `%`,
+- Exponentiation `**`.
+
+The first four are straightforward, while `%` and `**` need a few words about them.
+
+### Remainder %
+
+The remainder operator `%`, despite its appearance, is not related to percents.
+
+The result of `a % b` is the [remainder](https://en.wikipedia.org/wiki/Remainder) of the integer division of `a` by `b`.
+
+For instance:
+
+```js run
+alert( 5 % 2 ); // 1, a remainder of 5 divided by 2
+alert( 8 % 3 ); // 2, a remainder of 8 divided by 3
+```
+
+### Exponentiation **
+
+The exponentiation operator `a ** b` multiplies `a` by itself `b` times.
+
+For instance:
+
+```js run
+alert( 2 ** 2 ); // 4  (2 multiplied by itself 2 times)
+alert( 2 ** 3 ); // 8  (2 * 2 * 2, 3 times)
+alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2, 4 times)
+```
+
+Mathematically, the exponentiation is defined for non-integer numbers as well. For example, a square root is an exponentiation by `1/2`:
+
+```js run
+alert( 4 ** (1/2) ); // 2 (power of 1/2 is the same as a square root)
+alert( 8 ** (1/3) ); // 2 (power of 1/3 is the same as a cubic root)
+```
+
+
+## String concatenation with binary +
+
+Let's meet features of JavaScript operators that are beyond school arithmetics.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
 Зазвичай оператор плюс `+` підсумовує числа.
 
@@ -41,7 +101,11 @@ let s = "мій" + "рядок";
 alert(s); // мійрядок
 ```
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 Зверніть увагу, якщо один з операндів є рядком, то інший також перетворюється на рядок.
+=======
+Note that if any of the operands is a string, then the other one is converted to a string too.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
 Наприклад:
 
@@ -50,22 +114,35 @@ alert( '1' + 2 ); // "12"
 alert( 2 + '1' ); // "21"
 ```
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 Бачите, не має значення, чи перший операнд є рядком чи другий. Правило просте: якщо будь-який операнд є рядком, інший також перетворюється на рядок.
 
 Однак зверніть увагу, що операції виконуються зліва направо. Якщо є два числа, за якими йде рядок, числа будуть додані перед перетворенням на рядок:
+=======
+See, it doesn't matter whether the first operand is a string or the second one.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
+Here's a more complex example:
 
 ```js run
 alert(2 + 2 + '1' ); // "41", а не "221"
 ```
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 Об'єднання рядків і перетворення є особливою ознакою бінарного плюса `+`. Інші арифметичні оператори працюють тільки з числами і завжди перетворюють свої операнди на числа.
 
 Наприклад, віднімання і ділення:
+=======
+Here, operators work one after another. The first `+` sums two numbers, so it returns `4`, then the next `+` adds the string `1` to it, so it's like `4 + '1' = 41`.
+
+The binary `+` is the only operator that supports strings in such a way. Other arithmetic operators work only with numbers and always convert their operands to numbers.
+
+Here's the demo for subtraction and division:
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
 ```js run
-alert( 2 - '1' ); // 1
-alert( '6' / '2' ); // 3
+alert( 6 - '2' ); // 4, converts '2' to a number
+alert( '6' / '2' ); // 3, converts both operands to numbers
 ```
 
 ## Числове перетворення, унарний +
@@ -138,12 +215,22 @@ alert( +apples + +oranges ); // 5
 | Пріоритет | Ім'я | Знак |
 |------------|------|------|
 | ... | ... | ... |
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 | 17 | унарний плюс | `+` |
 | 17 | унарне заперечення | `-` |
 | 15 | множення | `*` |
 | 15 | ділення | `/` |
 | 13 | додавання | `+` |
 | 13 | віднімання | `-` |
+=======
+| 17 | unary plus | `+` |
+| 17 | unary negation | `-` |
+| 16 | exponentiation | `**` |
+| 15 | multiplication | `*` |
+| 15 | division | `/` |
+| 13 | addition | `+` |
+| 13 | subtraction | `-` |
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 | ... | ... | ... |
 | 3 | присвоєння | `=` |
 | ... | ... | ... |
@@ -162,6 +249,7 @@ let x = 2 * 2 + 1;
 alert( x ); // 5
 ```
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 Можливе ланцюгове присвоєння:
 
 ```js run
@@ -180,6 +268,13 @@ alert( c ); // 4
 
 ````smart header="Оператор присвоєння `\"=\"` повертає значення"
 Оператор завжди повертає значення. Це очевидно для більшості з них, як додавання `+` або множення `*`. Але оператор присвоєння також додтримується цього правила.
+=======
+### Assignment = returns a value
+
+The fact of `=` being an operator, not a "magical" language construct has an interesting implication.
+
+Most operators in JavaScript return a value. That's obvious for `+` and `-`, but also true for `=`.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
 Виклик `x = значення` записує `значення` у `x`, *а потім повертає його*.
 
@@ -199,6 +294,7 @@ alert( c ); // 0
 
 У наведенному вище прикладі результат виразу `(a = b + 1)` є значенням, яке присвоювалося змінній `a` (тобто `3`). Потім воно використовується для подальших обчислень.
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 Смішний код, чи не так? Ми повинні зрозуміти, як це працює, бо іноді ми бачимо подібне у JavaScript бібліотеках, але самі не повинні писати нічого подібного. Такі трюки, безумовно, не роблять код більш зрозумілим або читабельним.
 ````
 
@@ -223,13 +319,62 @@ alert( 6 % 3 ); // 0 — залишок від 6 поділеного на 3
 Для натурального числа `b`, результатом `a ** b` є `a` помножене на себе `b` разів.
 
 Наприклад:
+=======
+Funny code, isn't it? We should understand how it works, because sometimes we see it in JavaScript libraries.
+
+Although, please don't write the code like that. Such tricks definitely don't make code clearer or readable.
+
+### Chaining assignments
+
+Another interesting feature is the ability to chain assignments:
 
 ```js run
-alert( 2 ** 2 ); // 4  (2 * 2)
-alert( 2 ** 3 ); // 8  (2 * 2 * 2)
-alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2)
+let a, b, c;
+
+*!*
+a = b = c = 2 + 2;
+*/!*
+
+alert( a ); // 4
+alert( b ); // 4
+alert( c ); // 4
 ```
 
+Chained assignments evaluate from right to left. First, the rightmost expression `2 + 2` is evaluated and then assigned to the variables on the left: `c`, `b` and `a`. At the end, all the variables share a single value.
+
+Once again, for the purposes of readability it's better to split such code into few lines:
+
+```js
+c = 2 + 2;
+b = c;
+a = c;
+```
+That's easier to read, especially when eye-scanning the code fast.
+
+## Modify-in-place
+
+We often need to apply an operator to a variable and store the new result in that same variable.
+
+For example:
+
+```js
+let n = 2;
+n = n + 5;
+n = n * 2;
+```
+
+This notation can be shortened using the operators `+=` and `*=`:
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
+
+```js run
+let n = 2;
+n += 5; // now n = 7 (same as n = n + 5)
+n *= 2; // now n = 14 (same as n = n * 2)
+
+alert( n ); // 14
+```
+
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 Оператор працює і для нецілих чисел.
 
 Наприклад:
@@ -237,11 +382,23 @@ alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2)
 ```js run
 alert( 4 ** (1/2) ); // 2 (степінь 1/2 — це теж саме, що і квадратний корінь, це математика)
 alert( 8 ** (1/3) ); // 2 (степінь 1/3 — це теж саме, що і кубічний корінь)
+=======
+Short "modify-and-assign" operators exist for all arithmetical and bitwise operators: `/=`, `-=`, etc.
+
+Such operators have the same precedence as a normal assignment, so they run after most other calculations:
+
+```js run
+let n = 2;
+
+n *= 3 + 5;
+
+alert( n ); // 16  (right part evaluated first, same as n *= 8)
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 ```
 
 ## Інкремент/декремент
 
-<!-- Can't use -- in title, because built-in parse turns it into – -->
+<!-- Can't use -- in title, because the built-in parser turns it into a 'long dash' – -->
 
 Збільшення або зменшення числа на одиницю є однією з найпоширеніших операцій.
 
@@ -368,6 +525,7 @@ counter++;
 - RIGHT SHIFT ( `>>` )
 - ZERO-FILL RIGHT SHIFT ( `>>>` )
 
+<<<<<<< HEAD:1-js/02-first-steps/07-operators/article.md
 Ці оператори використовуються дуже рідко. Щоб їх зрозуміти, нам потрібно заглибитись у представлення числа на низькому рівні і зараз не самий оптимальний час для цього, тим більше, що нам вони не будуть потрібні найближчим часом. Якщо вам цікаво, ви можете прочитати статтю [Bitwise Operators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators) на MDN. Це було би більш практично зробити, коли виникне реальна потреба.
 
 ## Оператор "модифікувати та присвоїти"
@@ -403,6 +561,9 @@ n *= 3 + 5;
 
 alert( n ); // 16  (права частина обчислюється першою, так само, як і n *= 8)
 ```
+=======
+These operators are used very rarely, when we need to fiddle with numbers on the very lowest (bitwise) level. We won't need these operators any time soon, as web development has little use of them, but in some special areas, such as cryptography, they are useful. You can read the [Bitwise Operators](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators) article on MDN when a need arises.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/08-operators/article.md
 
 ## Кома
 

@@ -1,15 +1,32 @@
 # Оператори порівняння
 
+<<<<<<< HEAD:1-js/02-first-steps/08-comparison/article.md
 Багато з операторів порівняння нам відомі з математики:
 
 - Більше/менше: <code>a &gt; b</code>, <code>a &lt; b</code>.
 - Більше/менше або рівне: <code>a &gt;= b</code>, <code>a &lt;= b</code>.
 - Рівне: `a == b` (зверніть увагу, для порівняння потрібно використовувати два знаки рівності `=`. Один знак рівності `a = b` означало б присвоєння).
 - Не рівне. В математиці позначається символом <code>&ne;</code>. В JavaScript записується як знак оклику разом із знаком рівності: <code>a != b</code>.
+=======
+We know many comparison operators from maths.
+
+In JavaScript they are written like this:
+
+- Greater/less than: <code>a &gt; b</code>, <code>a &lt; b</code>.
+- Greater/less than or equals: <code>a &gt;= b</code>, <code>a &lt;= b</code>.
+- Equals: `a == b`, please note the double equality sign `=` means the equality test, while a single one `a = b` means an assignment.
+- Not equals. In maths the notation is <code>&ne;</code>, but in JavaScript it's written as <code>a != b</code>.
+
+In this article we'll learn more about different types of comparisons, how JavaScript makes them, including important peculiarities.
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/09-comparison/article.md
 
 ## Результат порівняння має логічний тип
 
+<<<<<<< HEAD:1-js/02-first-steps/08-comparison/article.md
 Так само як й інші оператори, оператори порівняння повертають значення. У цьому випадку, порівняння повертає логічний тип.
+=======
+All comparison operators return a boolean value:
+>>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74:1-js/02-first-steps/09-comparison/article.md
 
 - `true` -- означає "так", "правильно" або "правда".
 - `false` -- означає "ні", "неправильно" або "не правда".
