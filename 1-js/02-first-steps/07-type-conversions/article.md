@@ -6,8 +6,15 @@
 
 Є також випадки, коли нам необхідно явно перетворити значення на очікуваний тип.
 
+<<<<<<< HEAD:1-js/02-first-steps/06-type-conversions/article.md
 ```smart header="Поки що не говоримо про об'єкти"
 У цьому розділі ми не будемо охоплювати об'єкти. Замість цього спочатку ми вивчемо примітиви. Пізніше, після того, як ми дізнаємося про об'єкти, ми побачимо, як перетворення об'єктів працює в цьому розділі <info:object-toprimitive>.
+=======
+```smart header="Not talking about objects yet"
+In this chapter, we won't cover objects. For now we'll just be talking about primitives.
+
+Later, after we learn about objects, in the chapter <info:object-toprimitive> we'll see how objects fit in.
+>>>>>>> d35baee32dcce127a69325c274799bb81db1afd8:1-js/02-first-steps/07-type-conversions/article.md
 ```
 
 ## Перетворення на рядок
