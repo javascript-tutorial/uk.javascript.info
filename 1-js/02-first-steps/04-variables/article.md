@@ -80,14 +80,8 @@ let user = 'Іван'
 
 Технічно, всі ці способи роблять одне і теж. Тому, це питання особистого смаку та естетики.
 
-<<<<<<< HEAD
-
 ````smart header="`var` замість `let`"
 В старих скриптах, ви можете знайти інше ключове слово: `var` замість `let`:
-=======
-````smart header="`var` instead of `let`"
-In older scripts, you may also find another keyword: `var` instead of `let`:
->>>>>>> d35baee32dcce127a69325c274799bb81db1afd8
 
 ```js
 *!*var*/!* message = 'Привіт';
@@ -140,27 +134,22 @@ alert(hello); // Привіт світ!
 alert(message); // Привіт світ!
 ```
 
-<<<<<<< HEAD
-```smart header="Функціональне програмування"
-Цікаво відзначити, що [функціональні](https://uk.wikipedia.org/wiki/Функційне_програмування) мови програмування, такі як [Scala](http://www.scala-lang.org/) або [Erlang](http://www.erlang.org/), забороняють змінювати значення змінних.
-=======
-````warn header="Declaring twice triggers an error"
-A variable should be declared only once.
+````warn header="Оголошення змінної вдруге призведе до помилки"
+Оголошення змінної повинно бути лише раз.
 
-A repeated declaration of the same variable is an error:
+Повторне оголошення тієї ж змінної спричинить помилку:
 
 ```js run
-let message = "This";
+let message = "Це";
 
-// repeated 'let' leads to an error
-let message = "That"; // SyntaxError: 'message' has already been declared
+// повторне 'let' призведе до помилки
+let message = "Той"; // SyntaxError: 'message' has already been declared
 ```
-So, we should declare a variable once and then refer to it without `let`.
+Тому, ми повинні оголосити змінну лише раз, а потім просто посилатися на неї, без `let`.
 ````
 
-```smart header="Functional languages"
-It's interesting to note that there exist [functional](https://en.wikipedia.org/wiki/Functional_programming) programming languages, like [Scala](http://www.scala-lang.org/) or [Erlang](http://www.erlang.org/) that forbid changing variable values.
->>>>>>> d35baee32dcce127a69325c274799bb81db1afd8
+```smart header="Функціональне програмування"
+Цікаво відзначити, що [функціональні](https://uk.wikipedia.org/wiki/Функційне_програмування) мови програмування, такі як [Scala](http://www.scala-lang.org/) або [Erlang](http://www.erlang.org/), забороняють змінювати значення змінних.
 
 В таких мовах, збережені в "коробку" значення залишаються там назавджи. Якщо нам потрібно зберегти щось інше, мова змусить нас створити нову коробку (оголосити нову змінну). Ми не можемо використати стару змінну.
 
@@ -214,11 +203,7 @@ let імя = '...';
 let 我 = '...';
 ```
 
-<<<<<<< HEAD
 Технічно тут немає помилки, такі імена дозволені, проте існує міжнародна традиція використовувати англійську мову в іменах змінних. Слова теж бажано писати англійські (`yaLyublyuUkrainu` => `iLoveUkraine`). Навіть якщо ми пишемо маленький скрипт, в нього може бути тривале життя попереду. Людям з інших країн, можливо, доведеться прочитати його не один раз.
-=======
-Technically, there is no error here. Such names are allowed, but there is an international convention to use English in variable names. Even if we're writing a small script, it may have a long life ahead. People from other countries may need to read it some time.
->>>>>>> d35baee32dcce127a69325c274799bb81db1afd8
 ````
 
 ````warn header="Зарезервовані слова"
