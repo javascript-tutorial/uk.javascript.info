@@ -19,12 +19,7 @@
 ...
 ```
 
-<<<<<<< HEAD
-Незабаром ми вивчемо функції (такий собі спосіб групування команд). Забігаючи наперед, майте на увазі, що `"use strict"` також можна писати на початку тіла функції, замість цілого скрипта. Таким чином, суворий режим буде використовуватися лише в межах цієї функції. Проте, зазвичай люди використовують цей режим для всього скрипта.
-
-=======
-Quite soon we're going to learn functions (a way to group commands), so let's note in advance that `"use strict"` can be put at the beginning of a function. Doing that enables strict mode in that function only. But usually people use it for the whole script.
->>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74
+Незабаром ми будемо вивчати функції (такий собі спосіб групування команд). Забігаючи наперед, маймо на увазі, що `"use strict"` можна писати на початку функції. Таким чином, суворий режим буде використовуватися лише в межах цієї функції. Проте, зазвичай люди використовують цей режим для всього скрипта.
 
 ````warn header="Переконайтеся, що \"use strict\" написано зверху"
 Будь ласка, завжди переконуйтеся в тому, що директива `"use strict"` написана зверху ваших скриптів, інакше суворий режим не увімкнеться.
@@ -51,21 +46,13 @@ alert("деякий код");
 
 ## Консоль браузера
 
-<<<<<<< HEAD
-На майбутнє, коли ви використовуєте консоль браузера для тестування функцій, будь ласка, запам'ятайте, що консоль усталено не використовує суворий режим.
-=======
-When you use a [developer console](info:devtools) to run code, please note that it doesn't `use strict` by default.
->>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74
+Коли ви використовуєте [консоль розробника](info:devtools) для виконання коду, майте на увазі, що консоль усталено не використовує суворий режим.
 
-В такому випадку, коли `use strict` робитиме різницю, ви можете отримати інші результати.
+В тих випадках, коли `use strict` робитиме різницю, ви отримаєте невірні результати в консолі.
 
-<<<<<<< HEAD
-Ви можете натиснути `key:Shift+Enter`, щоб ввести декілька рядків, і написати `use strict` на початку, ось так:
-=======
-So, how to actually `use strict` in the console?
+Як тоді увімкнути `use strict` в консолі?
 
-First, you can try to press `key:Shift+Enter` to input multiple lines, and put `use strict` on top, like this:
->>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74
+Спершу, потрібно натиснути `key:Shift+Enter`, щоб ввести декілька рядків, і на початку написати `use strict`, ось так:
 
 ```js
 'use strict'; <Shift+Enter для нового рядка>
@@ -75,51 +62,28 @@ First, you can try to press `key:Shift+Enter` to input multiple lines, and put `
 
 Це працюватиме в більшості браузерів, особливо в Firefox і Chrome.
 
-<<<<<<< HEAD
-Якщо не спрацює, тоді найнадійнішим варіантом буде використати `use strict` всередині фукнції ось так:
-=======
-If it doesn't, e.g. in an old browser, there's an ugly, but reliable way to ensure `use strict`. Put it inside this kind of wrapper:
->>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74
+Якщо не спрацює, наприклад, в старих браузерах, тоді найнадійнішим варіантом (це звичайно виглядатиме потворно), буде використати `use strict` всередині функції-обгортки ось так:
 
 ```js
 (function() {
   'use strict';
 
-<<<<<<< HEAD
-  // ...ваш код...
+  // ...тут буде ваш код...
 })()
 ```
 
-## Завжди використовуйте "use strict"
+## Чи повинні ми використовувати суворий режим?
 
-Нам ще доведеться вивчити відмінності між суворим режимом і "усталеним" режимом.
+Питання може здатися очевидним, але це не так.
+
+Одні можуть порекомендувати ставити `"use strict"` на початку скриптів... Але знаєте що круто?
+
+Сучасний JavaScript підтримує "класи" і "модулі" – просунуті структури мови (які ми, звичайно, будемо вивчати), які автоматично вмикають `use strict`. Тому, якщо ми використовуємо ці структури, нам не потрібно прописувати директиву `"use strict"`.
+
+**Отож, зараз бажано ставити `"use strict";` на початку скриптів. Але пізніше, коли наш код "доросте" до класів і модулів, ми зможемо опускати цю директиву.**
+
+Зараз, ми знаємо про `use strict` в загальному.
 
 У наступних розділах, в процесі вивчення особливостей мови, ми замітимо різницю між суворим і усталеним режимами. На щастя, їх не багато, і вони справді роблять наше життя кращим.
 
-Зараз достатньо знати про це в загальному:
-
-1. Директива `"use strict"` переключає рушій у "сучасний" режим, змінюючи поведінку деяких вбудованих функцій. Ми побачимо детальніше згодом, у посібнику.
-2. Суворий режим вмикається шляхом написання `"use strict"` зверху скрипта, або на початку функції. Деякі можливості мови, як "класи" чи "модулі", автоматично вмикають суворий режим.
-3. Суворий режим підтримується всіма сучасними браузерами.
-4. Ми рекомендуємо завжди починати написання скриптів з `"use strict"`. Усі приклади в цьому посібнику припускають увімкнений суворий режим, за випадків (дуже рідких), коли не вказано інше.
-=======
-  // ...your code here...
-})()
-```
-
-## Should we "use strict"?
-
-The question may sound obvious, but it's not so.
-
-One could recommend to start scripts with `"use strict"`... But you know what's cool?
-
-Modern JavaScript supports "classes" and "modules" - advanced language structures (we'll surely get to them), that enable `use strict` automatically. So we don't need to add the `"use strict"` directive, if we use them.
-
-**So, for now `"use strict";` is a welcome guest at the top of your scripts. Later, when your code is all in classes and modules, you may omit it.**
-
-As of now, we've got to know about `use strict` in general.
-
-In the next chapters, as we learn language features, we'll see the differences between the strict and old modes. Luckily, there aren't many and they actually make our lives better.
-
-All examples in this tutorial assume strict mode unless (very rarely) specified otherwise.
->>>>>>> 69e44506c3e9dac74c282be37b55ba7ff122ae74
+Всі приклади в цьому посібнику працюють в суворому режимі, за випадками (дуже рідкісними) коли вказано зворотнє.
