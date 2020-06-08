@@ -233,28 +233,28 @@ alert( 'Сума: ' + sum );
 
 Комбінація «нескінченний цикл + `break`» — чудова річ для тих ситуацій, коли умова для переривання знаходиться не на початку або кінці циклу, а всередині (або навіть в декількох місцях) тіла циклу.
 
-## Continue to the next iteration [#continue]
+## Продовження з наступної ітерації [#continue]
 
-The `continue` directive is a "lighter version" of `break`. It doesn't stop the whole loop. Instead, it stops the current iteration and forces the loop to start a new one (if the condition allows).
+Директива `continue` — це "полегшена версія" `break`. Вона не зупиняє весь цикл. Натомість, вона зупиняє поточну ітерацію і починає виконання циклу спочатку з наступної ітерації (якщо умова циклу досі вірна).
 
-We can use it if we're done with the current iteration and would like to move on to the next one.
+Її зручно використовувати коли закінчили з поточною ітерацією і хочемо продовжити з наступної.
 
-The loop below uses `continue` to output only odd values:
+Цикл нижче використовує `continue` щоб вивести лише непарні значення:
 
 ```js run no-beautify
 for (let i = 0; i < 10; i++) {
 
-  // if true, skip the remaining part of the body
+  // якщо умова справджується, тоді пропускаємо решту тіла циклу і починаємо з наступної ітерації
   *!*if (i % 2 == 0) continue;*/!*
 
-  alert(i); // 1, then 3, 5, 7, 9
+  alert(i); // 1, потім 3, 5, 7, 9
 }
 ```
 
-For even values of `i`, the `continue` directive stops executing the body and passes control to the next iteration of `for` (with the next number). So the `alert` is only called for odd values.
+Для парних значень змінної `i`, директива `continue` зупиняє виконання тіла циклу і передає контроль наступній ітерації в `for` (в цьому випадку це буде наступне число). Таким чином функція `alert` викликається лише для непарних значень змінної `i`.
 
-````smart header="The `continue` directive helps decrease nesting"
-A loop that shows odd values could look like this:
+````smart header="Директива `continue` допомагає зменшити рівень вкладеності"
+Цикл, який показує непарні значення може виглядати так:
 
 ```js run
 for (let i = 0; i < 10; i++) {
@@ -266,15 +266,15 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-From a technical point of view, this is identical to the example above. Surely, we can just wrap the code in an `if` block instead of using `continue`.
+З технічної точки зору, цей приклад ідентичний тому що вище. Звичайно, ми можемо просто обгорнути код в блок `if` замість використання `continue`.
 
-But as a side-effect, this created one more level of nesting (the `alert` call inside the curly braces). If the code inside of `if` is longer than a few lines, that may decrease the overall readability.
+Але побічним ефектом цього буде створення ще одного рівня вкладеності (виклик `alert` всередині фігурних дужок). Якщо код всередині `if` буде більшим за декілька рядків, то це може ускладнити загальну читабельність коду.
 ````
 
-````warn header="No `break/continue` to the right side of '?'"
-Please note that syntax constructs that are not expressions cannot be used with the ternary operator `?`. In particular, directives such as `break/continue` aren't allowed there.
+````warn header="Директиви `break/continue` праворуч від '?' не працюють"
+Майте на увазі, що такі синтаксичні конструкції, які не є виразами, не можуть використовуватися з тернарним оператором `?`. Власне, такі директиви як `break/continue` там не дозволені.
 
-For example, if we take this code:
+Наприклад, якщо взяти код:
 
 ```js
 if (i > 5) {
@@ -284,16 +284,16 @@ if (i > 5) {
 }
 ```
 
-...and rewrite it using a question mark:
+...і переробити його з використанням знака питання:
 
 
 ```js no-beautify
-(i > 5) ? alert(i) : *!*continue*/!*; // continue isn't allowed here
+(i > 5) ? alert(i) : *!*continue*/!*; // використання continue в недозволеному місці
 ```
 
-...it stops working: there's a syntax error.
+...то такий код перестане працювати: виникне синтаксична помилка.
 
-This is just another reason not to use the question mark operator `?` instead of `if`.
+Це ще одна причина не використовувати для умов оператор знака питання `?`, замість повноцінного `if`.
 ````
 
 ## Labels for break/continue
