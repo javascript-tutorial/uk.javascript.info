@@ -296,53 +296,53 @@ if (i > 5) {
 Це ще одна причина не використовувати для умов оператор знака питання `?`, замість повноцінного `if`.
 ````
 
-## Labels for break/continue
+## Мітки для break/continue
 
-Sometimes we need to break out from multiple nested loops at once.
+Деколи нам потрібно вийти з кількох вкладених циклів.
 
-For example, in the code below we loop over `i` and `j`, prompting for the coordinates `(i, j)` from `(0,0)` to `(2,2)`:
+Наприклад, в коді нижче є 2 цикли, які проходяться по змінних `i` та `j`, і запитують в користувача координати `(i, j)` від `(0,0)` до `(2,2)`:
 
 ```js run no-beautify
 for (let i = 0; i < 3; i++) {
 
   for (let j = 0; j < 3; j++) {
 
-    let input = prompt(`Value at coords (${i},${j})`, '');
+    let input = prompt(`Значення в координатах (${i},${j})`, '');
 
-    // what if we want to exit from here to Done (below)?
+    // що якщо ми хочемо вийти звідси відразу до 'Готово!' (в функцію alert нижче)?
   }
 }
 
-alert('Done!');
+alert('Готово!');
 ```
 
-We need a way to stop the process if the user cancels the input.
+Нам потрібен спосіб зупинити ці два цикли, якщо користувач скасує введення.
 
-The ordinary `break` after `input` would only break the inner loop. That's not sufficient--labels, come to the rescue!
+Звичайний `break` після `input` лише перерве внутрішній цикл, а нам цього недостатньо. Ось тут нам пригодяться мітки для циклів!
 
-A *label* is an identifier with a colon before a loop:
+*Мітка* складається з ідентифікатора та двокрапки перед циклом:
 ```js
 labelName: for (...) {
   ...
 }
 ```
 
-The `break <labelName>` statement in the loop below breaks out to the label:
+Вираз `break <labelName>` в циклі нижче шукає найближчий цикл з заданою міткою і переходить в його кінець:
 
 ```js run no-beautify
 *!*outer:*/!* for (let i = 0; i < 3; i++) {
 
   for (let j = 0; j < 3; j++) {
 
-    let input = prompt(`Value at coords (${i},${j})`, '');
+    let input = prompt(`Значення в координатах (${i},${j})`, '');
 
-    // if an empty string or canceled, then break out of both loops
+    // якщо порожній рядок або Скасувати, тоді вихід з обох циклів
     if (!input) *!*break outer*/!*; // (*)
 
-    // do something with the value...
+    // зробити щось із значенням...
   }
 }
-alert('Done!');
+alert('Готово!');
 ```
 
 In the code above, `break outer` looks upwards for the label named `outer` and breaks out of that loop.
