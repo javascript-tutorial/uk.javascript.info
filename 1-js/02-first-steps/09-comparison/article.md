@@ -9,7 +9,13 @@
 - Рівне: `a == b`, зверніть увагу, для порівняння потрібно використовувати два знаки рівності `=`. Один знак рівності `a = b` означало б присвоєння.
 - Не рівне. В математиці позначається символом <code>&ne;</code>, проте в JavaScript записується як <code>a != b</code>.
 
+<<<<<<< HEAD
 В цьому розділі ми вивчимо про різні типи порівнянь, як JavaScript їх виконує та розглянемо важливі особливості.
+=======
+In this article we'll learn more about different types of comparisons, how JavaScript makes them, including important peculiarities. 
+
+At the end you'll find a good recipe to avoid "javascript quirks"-related issues.
+>>>>>>> 445bda39806050acd96f87166a7c97533a0c67e9
 
 ## Результат порівняння має логічний тип
 
@@ -196,6 +202,7 @@ alert( undefined == 0 ); // false (3)
 - Порівняння `(1)` і `(2)` повертає `false`, тому що `undefined` під час порівняння з "не null" значеннями завжди конвертується в `NaN`, а `NaN` — це спеціальне числове значення, яке завжди повертає `false` під час будь-яких порівнянь.
 - Не строге порівняння `(3)` повертає `false`, тому що `undefined` рівне тільки `null` і ніяким іншим значенням.
 
+<<<<<<< HEAD
 ### Як уникнути проблем
 
 Чому ми переглядали ці приклади? Чи повинні ми постійно пам'ятати про всі ці особливості? Не обов'язково. З часом, всі ці заплутані правила стануть для вас знайомими, але можна уникнути проблем, якщо дотримуватися простого правила:
@@ -203,6 +210,14 @@ alert( undefined == 0 ); // false (3)
 Просто будьте пильні під час порівняння будь-якого значення з `undefined/null`, за винятком строгого порівняння `===`.
 
 Не використовуйте порівняння `>= > < <=` зі змінними, які можуть приймати значення `null/undefined`, якщо не впевнені в тому, що робите. Якщо змінна може приймати ці значення, то додайте для них окремі перевірки.
+=======
+### Avoid problems
+
+Why did we go over these examples? Should we remember these peculiarities all the time? Well, not really. Actually, these tricky things will gradually become familiar over time, but there's a solid way to avoid problems with them:
+
+- Treat any comparison with `undefined/null` except the strict equality `===` with exceptional care.
+- Don't use comparisons `>= > < <=` with a variable which may be `null/undefined`, unless you're really sure of what you're doing. If a variable can have these values, check for them separately.
+>>>>>>> 445bda39806050acd96f87166a7c97533a0c67e9
 
 ## Підсумки
 
