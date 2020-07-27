@@ -167,7 +167,7 @@ sayHi(); // Hello, John!
 setTimeout(sayHi, 1000); // Hello, John!
 
 // even if the value of user changes within 1 second
-// sayHi uses the pre-bound value
+// sayHi uses the pre-bound value which is reference to the old user object
 user = {
   sayHi() { alert("Another user in setTimeout!"); }
 };
@@ -202,7 +202,7 @@ for (let key in user) {
 }
 ```
 
-JavaScript libraries also provide functions for convenient mass binding , e.g. [_.bindAll(obj)](http://lodash.com/docs#bindAll) in lodash.
+JavaScript libraries also provide functions for convenient mass binding , e.g. [_.bindAll(object, methodNames)](http://lodash.com/docs#bindAll) in lodash.
 ````
 
 ## Partial functions

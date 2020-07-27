@@ -4,7 +4,11 @@
 
 ## alert
 
+<<<<<<< HEAD
 Ми вже бачили цю функцію. Вона показує повідомлення і чекає доки користувач не натисне кнопку "ОК".
+=======
+This one we've seen already. It shows a message and waits for the user to press "OK".
+>>>>>>> b0464bb32c8efc2a98952e05f363f61eca1a99a2
 
 Наприклад:
 
