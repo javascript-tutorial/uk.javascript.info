@@ -223,8 +223,13 @@ alert( 1 && 2 && 3 ); // 3, останнє
 Отже, код `a && b || c && d` по суті є таким самим, як би вираз `&&` був у дужках: `(a && b) || (c && d)`.
 ````
 
+<<<<<<< HEAD
 ````warn header="Не міняйте `if` на || чи &&"
 Деколи люди використовують оператор І `&&` як "скорочений варіант `if`".
+=======
+````warn header="Don't replace `if` with || or &&"
+Sometimes, people use the AND `&&` operator as a "shorter way to write `if`".
+>>>>>>> f830bc5d9454d85829e011d914f215eb5896579a
 
 Наприклад:
 

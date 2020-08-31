@@ -106,10 +106,18 @@ Javascript – це єдина браузерна технологія, яка �
 
 Приклади таких мов:
 
+<<<<<<< HEAD
 - [CoffeeScript](http://coffeescript.org/) це "синтаксичний цукор" поверх JavaScript. Вона вводить більш короткий синтаксис, дозволяючи нам писати більш чіткий і точний код. Зазвичай, програмісти на Ruby люблять її.
 - [TypeScript](http://www.typescriptlang.org/) зосереджена на додаванні "строгої типізації даних", щоб спростити розробку і підтримку складних систем. ЇЇ розробляє Microsoft.
 - [Flow](http://flow.org/) також додає типізацію даних, але іншим способом. Розробляється компанією Facebook.
 - [Dart](https://www.dartlang.org/) це автономна мова, яка має власний рушій, який виконується в не-браузерних середовищах (таких як, мобільні застосунки), але також може транспілюватися в JavaScript. Розробляється компанією Google.
+=======
+- [CoffeeScript](http://coffeescript.org/) is a "syntactic sugar" for JavaScript. It introduces shorter syntax, allowing us to write clearer and more precise code. Usually, Ruby devs like it.
+- [TypeScript](http://www.typescriptlang.org/) is concentrated on adding "strict data typing" to simplify the development and support of complex systems. It is developed by Microsoft.
+- [Flow](http://flow.org/) also adds data typing, but in a different way. Developed by Facebook.
+- [Dart](https://www.dartlang.org/) is a standalone language that has its own engine that runs in non-browser environments (like mobile apps), but also can be transpiled to JavaScript. Developed by Google.
+- [Brython](https://brython.info/) is a Python transpiler to JavaScript that allow to write application in pure Python without JavaScript.
+>>>>>>> f830bc5d9454d85829e011d914f215eb5896579a
 
 Є ще більше мов. Звичайно, навіть якщо ми використовуємо одну з цих транспілюючих мов, ми також повинні знати JavaScript, щоб дійсно розуміти, що робимо.
 
