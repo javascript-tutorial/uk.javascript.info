@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://javascript.info> на українську мову.
@@ -79,6 +79,9 @@ P.S. Весь перелік мов можна знайти на сторінц�
     <td align="center"><a href="https://github.com/UkrainianCitizen"><img src="https://avatars2.githubusercontent.com/u/31314423?v=4" width="70px;" alt=""/><br /><sub><b>UkrainianCitizen</b></sub></a><br /><a href="#ideas-UkrainianCitizen" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/lobanov-oleh"><img src="https://avatars0.githubusercontent.com/u/53055773?v=4" width="70px;" alt=""/><br /><sub><b>lobanov-oleh</b></sub></a><br /><a href="#translation-lobanov-oleh" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/dDenysS"><img src="https://avatars0.githubusercontent.com/u/23075870?v=4" width="70px;" alt=""/><br /><sub><b>Denys</b></sub></a><br /><a href="#translation-dDenysS" title="Translation">🌍</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/vsemozhetbyt"><img src="https://avatars1.githubusercontent.com/u/10393198?v=4" width="70px;" alt=""/><br /><sub><b>Vse Mozhe Buty</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3Avsemozhetbyt" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
