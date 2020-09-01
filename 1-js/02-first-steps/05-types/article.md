@@ -81,13 +81,8 @@ const bigInt = 1234567890123456789012345678901234567890n;
 
 Через те, що тип `BigInt` рідко використовується, ми не розглядатимемо його в цьому розділі, проте ми винесли його в окремий розділ <info:bigint>. Прочитайте його, якщо вам потрібні такі великі числа.
 
-<<<<<<< HEAD
 ```smart header="Проблеми з сумісністю"
 Цієї миті, підтримка типу `BigInt` є в браузерах Firefox/Chrome/Edge, але не в Safari/IE.
-=======
-```smart header="Compatibility issues"
-Right now `BigInt` is supported in Firefox/Chrome/Edge, but not in Safari/IE.
->>>>>>> f830bc5d9454d85829e011d914f215eb5896579a
 ```
 
 ## String (рядок)
