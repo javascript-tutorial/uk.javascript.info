@@ -73,15 +73,15 @@ P.S. Весь перелік мов можна знайти на сторінц�
   <tr>
     <td align="center"><a href="https://github.com/tarasyyyk"><img src="https://avatars0.githubusercontent.com/u/20100011?v=4" width="70px;" alt=""/><br /><sub><b>Taras</b></sub></a><br /><a href="#maintenance-tarasyyyk" title="Maintenance">🚧</a> <a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3Atarasyyyk" title="Reviewed Pull Requests">👀</a> <a href="#translation-tarasyyyk" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/alexgalkin"><img src="https://avatars0.githubusercontent.com/u/1190812?v=4" width="70px;" alt=""/><br /><sub><b>Alex Galkin</b></sub></a><br /><a href="#translation-alexgalkin" title="Translation">🌍</a> <a href="#ideas-alexgalkin" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/vsemozhetbyt"><img src="https://avatars1.githubusercontent.com/u/10393198?v=4" width="70px;" alt=""/><br /><sub><b>Vse Mozhe Buty</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3Avsemozhetbyt" title="Reviewed Pull Requests">👀</a> <a href="#ideas-vsemozhetbyt" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/Zim123"><img src="https://avatars2.githubusercontent.com/u/1306750?v=4" width="70px;" alt=""/><br /><sub><b>Yuriy Ostapyuk</b></sub></a><br /><a href="#translation-Zim123" title="Translation">🌍</a></td>
     <td align="center"><a href="https://alexandrtovmach.com"><img src="https://avatars0.githubusercontent.com/u/28801003?v=4" width="70px;" alt=""/><br /><sub><b>Alexandr Tovmach</b></sub></a><br /><a href="#translation-alexandrtovmach" title="Translation">🌍</a></td>
     <td align="center"><a href="http://stepansuvorov.com/blog/"><img src="https://avatars1.githubusercontent.com/u/1526680?v=4" width="70px;" alt=""/><br /><sub><b>Stepan Suvorov</b></sub></a><br /><a href="#translation-stevermeister" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/UkrainianCitizen"><img src="https://avatars2.githubusercontent.com/u/31314423?v=4" width="70px;" alt=""/><br /><sub><b>UkrainianCitizen</b></sub></a><br /><a href="#ideas-UkrainianCitizen" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/lobanov-oleh"><img src="https://avatars0.githubusercontent.com/u/53055773?v=4" width="70px;" alt=""/><br /><sub><b>lobanov-oleh</b></sub></a><br /><a href="#translation-lobanov-oleh" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/dDenysS"><img src="https://avatars0.githubusercontent.com/u/23075870?v=4" width="70px;" alt=""/><br /><sub><b>Denys</b></sub></a><br /><a href="#translation-dDenysS" title="Translation">🌍</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/vsemozhetbyt"><img src="https://avatars1.githubusercontent.com/u/10393198?v=4" width="70px;" alt=""/><br /><sub><b>Vse Mozhe Buty</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3Avsemozhetbyt" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/dDenysS"><img src="https://avatars0.githubusercontent.com/u/23075870?v=4" width="70px;" alt=""/><br /><sub><b>Denys</b></sub></a><br /><a href="#translation-dDenysS" title="Translation">🌍</a></td>
   </tr>
 </table>
 
