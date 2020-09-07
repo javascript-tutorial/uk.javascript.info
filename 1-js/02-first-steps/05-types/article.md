@@ -127,7 +127,11 @@ alert("результат ${1 + 2}"); // результат ${1 + 2} (подві
 ```smart header="Не існує типу *символ* (*character*)."
 У деяких мовах існує спеціальний тип "character" для позначення єдиного символу. Наприклад, в мовах C та Java це `char`.
 
+<<<<<<< HEAD
 В JavaScript не існує такого типу. Є єдиний тип: `string`. Він може містити один або більше символів.
+=======
+In JavaScript, there is no such type. There's only one type: `string`. A string may consist of zero characters (be empty), one character or many of them.
+>>>>>>> 58f6599df71b8d50417bb0a52b1ebdc995614017
 ```
 
 ## Boolean (логічний тип)

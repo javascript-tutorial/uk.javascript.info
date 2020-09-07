@@ -1,8 +1,13 @@
 # Ніндзя код
 
 
+<<<<<<< HEAD
 ```quote author="Конфуцій"
 Навчання без міркування – даремне, міркування без навчання – небезпечне
+=======
+```quote author="Confucius (Analects)"
+Learning without thought is labor lost; thought without learning is perilous.
+>>>>>>> 58f6599df71b8d50417bb0a52b1ebdc995614017
 ```
 
 Ніндзя-програмісти минулого використовували деякі хитрощі, щоб загострити розум тих, хто буде підтримувати їх код.
@@ -104,8 +109,13 @@ i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
 
 ## Хитрі синоніми
 
+<<<<<<< HEAD
 ```quote author="Конфуцій"
 Дуже важко шукати чорну кішку у темній кімнаті, особливо, коли її там немає.
+=======
+```quote author="Laozi (Tao Te Ching)"
+The Tao that can be told is not the eternal Tao. The name that can be named is not the eternal name.
+>>>>>>> 58f6599df71b8d50417bb0a52b1ebdc995614017
 ```
 
 Використання *схожих* імен для *однакових* речей зробить ваше життя цікавішим і покаже рівень вашої креативності публіці.
