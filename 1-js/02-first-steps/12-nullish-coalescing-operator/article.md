@@ -60,15 +60,15 @@ alert(height || 100); // 100
 alert(height ?? 100); // 0
 ```
 
-Here, `height || 100` treats zero height as unset, same as `null`, `undefined` or any other falsy value. So zero becames `100`.
+Here, `height || 100` treats zero height as unset, same as `null`, `undefined` or any other falsy value. So the result is `100`.
 
-The `height ?? 100` returns `100` only if `height` is exactly `null` or `undefined`. So zero remains "as is".
+The `height ?? 100` returns `100` only if `height` is exactly `null` or `undefined`. So the `alert` shows the height value `0` "as is".
 
-Which behavior is better depends on a particular use case. When zero height is a valid value, that we shouldn't touch, then `??` is preferrable.
+Which behavior is better depends on a particular use case. When zero height is a valid value, then `??` is preferrable.
 
 ## Precedence
 
-The precedence of the `??` operator is rather low: `7` in the [MDN table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table).
+The precedence of the `??` operator is rather low: `5` in the [MDN table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table).
 
 So `??` is evaluated after most other operations, but before `=` and `?`.
 
