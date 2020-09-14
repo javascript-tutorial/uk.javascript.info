@@ -30,8 +30,13 @@ result = prompt(title, [default]);
 `default`
 : Необов'язковий другий параметр, початкове значення для поля введення.
 
+<<<<<<< HEAD
 ```smart header="Квадратні дужки в синтаксисі `[...]`"
 В синтаксисі вище, навколо `default` є квадратні дужки. Вони означають, що цей параметр є необов'язковим.
+=======
+```smart header="The square brackets in syntax `[...]`"
+The square brackets around `default` in the syntax above denote that the parameter is optional, not required.
+>>>>>>> ff152b126ec70a9de919bfdc1913215539d37187
 ```
 
 Відвідувач може щось ввести у поле введення і натиснути ОК. Ми отримаємо введений текст в `result`. Однак, користувач може скасувати введення, натиснувши Скасувати або клавішу `key:Esc`. В цьому випадку, `result` буде мати значення `null`.
