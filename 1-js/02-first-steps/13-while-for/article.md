@@ -345,42 +345,42 @@ labelName: for (...) {
 alert('Готово!');
 ```
 
-In the code above, `break outer` looks upwards for the label named `outer` and breaks out of that loop.
+В коді вище, вираз `break outer` шукає зверху мітку `outer` і перериває цикл, позначений цією міткою.
 
-So the control goes straight from `(*)` to `alert('Done!')`.
+Тож виконання коду перейде з місця переривання циклу (позначене `(*)`) до функції `alert('Готово!')`.
 
-We can also move the label onto a separate line:
+Мітку можна перемістити в новий рядок:
 
 ```js no-beautify
 outer:
 for (let i = 0; i < 3; i++) { ... }
 ```
 
-The `continue` directive can also be used with a label. In this case, code execution jumps to the next iteration of the labeled loop.
+Також мітками можна використовувати з директивою `continue`. В такому разі, виконання коду перестрибне на наступну ітерацію поміченого циклу.
 
-````warn header="Labels do not allow to \"jump\" anywhere"
-Labels do not allow us to jump into an arbitrary place in the code.
+````warn header="Міткам не дозволено \"стрибати\" будь-де"
+Ми не можемо використовувати мітки, щоб стрибати в довільне місце в коді.
 
-For example, it is impossible to do this:
+Наприклад, ось таке неможливо зробити:
 ```js
-break label; // doesn't jumps to the label below
+break label; // не стрибне в мітку label нижче
 
 label: for (...)
 ```
 
-A call to `break/continue` is only possible from inside a loop and the label must be somewhere above the directive.
+Виклик `break/continue` можливий лише всередині циклу і мітки повинні бути вище цих директив.
 ````
 
-## Summary
+## Підсумки
 
-We covered 3 types of loops:
+Ми вивчили 3 типи циклів:
 
-- `while` -- The condition is checked before each iteration.
-- `do..while` -- The condition is checked after each iteration.
-- `for (;;)` -- The condition is checked before each iteration, additional settings available.
+- `while` -- умова перевіряється перед кожною ітерацією.
+- `do..while` -- умова перевіряється після кожної ітерації.
+- `for (;;)` -- умова перевіряється перед кожною ітерацією. Можна додатково налаштовувати.
 
-To make an "infinite" loop, usually the `while(true)` construct is used. Such a loop, just like any other, can be stopped with the `break` directive.
+Щоб зробити "нескінченний" цикл, використовують вираз `while(true)`. Такі цикли, як і будь-які інші, можна зупинити директивою `break`.
 
-If we don't want to do anything in the current iteration and would like to forward to the next one, we can use the `continue` directive.
+Якщо нам не потрібно нічого виконувати в поточній ітерації циклу, ми можемо пропустити цю ітерацію за допомогою директиви `continue`.
 
-`break/continue` support labels before the loop. A label is the only way for `break/continue` to escape a nested loop to go to an outer one.
+`break/continue` підтримують мітки перед циклом. Лише за допомогою міток `break/continue` ми можемо перервати вкладений цикл.
