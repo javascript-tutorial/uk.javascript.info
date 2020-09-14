@@ -1,46 +1,46 @@
-# Loops: while and for
+# Цикли: while і for
 
-We often need to repeat actions.
+При написанні скриптів часто постає завдання зробити однотипні дії багато разів.
 
-For example, outputting goods from a list one after another or just running the same code for each number from 1 to 10.
+Наприклад, вивести товари зі списку один за одним чи просто запустити один і той же код для кожного числа від 1 до 10.
 
-*Loops* are a way to repeat the same code multiple times.
+*Цикл* - це спосіб повторити один і той же код кілька разів.
 
-## The "while" loop
+## Цикл "while"
 
-The `while` loop has the following syntax:
+Цикл `while` має такий синтаксис:
 
 ```js
-while (condition) {
-  // code
-  // so-called "loop body"
+while (умова) {
+  // код
+  // так зване "тіло циклу"
 }
 ```
 
-While the `condition` is truthy, the `code` from the loop body is executed.
+Доки умова є `вірною`, виконується `код` із тіла циклу.
 
-For instance, the loop below outputs `i` while `i < 3`:
+Наприклад, цикл нижче виводить `i` поки `i < 3`:
 
 ```js run
 let i = 0;
-while (i < 3) { // shows 0, then 1, then 2
+while (i < 3) { // показується 0, далі 1, потім 2
   alert( i );
   i++;
 }
 ```
 
-A single execution of the loop body is called *an iteration*. The loop in the example above makes three iterations.
+Одне виконання циклу називається *ітерацією*. Цикл в зразку вище робить три ітерації.
 
-If `i++` was missing from the example above, the loop would repeat (in theory) forever. In practice, the browser provides ways to stop such loops, and in server-side JavaScript, we can kill the process.
+Якщо `i++` пропустити в коді вище, то цикл виконувався б (в теорії) вічно. На практикі, браузери надають способи зупинити такі цикли, і на серверному JavaScript(Node.js), ми можемо знищити цей процес
 
-Any expression or variable can be a loop condition, not just comparisons: the condition is evaluated and converted to a boolean by `while`.
+Будь-який вираз або змінна може бути умовою циклу, а не тільки порівняння (`a < 5` чи `b !== 10`). Умова виконується і конвертується у логічне значення.
 
-For instance, a shorter way to write `while (i != 0)` is `while (i)`:
+Наприклад, коротший спосіб написання `while (i != 0)` відповідає `while (i)`:
 
 ```js run
 let i = 3;
 *!*
-while (i) { // when i becomes 0, the condition becomes falsy, and the loop stops
+while (i) { // коли i буде 0, умова стане невірною, і цикл зупиниться
 */!*
   alert( i );
   i--;
@@ -48,7 +48,7 @@ while (i) { // when i becomes 0, the condition becomes falsy, and the loop stops
 ```
 
 ````smart header="Curly braces are not required for a single-line body"
-If the loop body has a single statement, we can omit the curly braces `{…}`:
+Якщо тіло цикла має один операцію, ми можемо опустити фігурні дужки `{…}`:
 
 ```js run
 let i = 3;
@@ -58,19 +58,19 @@ while (i) alert(i--);
 ```
 ````
 
-## The "do..while" loop
+## Цикл "do..while"
 
-The condition check can be moved *below* the loop body using the `do..while` syntax:
+Перевірка умови може бути переміщена *нижче* тіла циклу використовуючи `do..while` синтаксис:
 
 ```js
 do {
-  // loop body
-} while (condition);
+  // тіло циклу
+} while (умова);
 ```
 
-The loop will first execute the body, then check the condition, and, while it's truthy, execute it again and again.
+Цикл спочатку виконує тіло, а потім перевіряє умову, і поки умова є `true`, цикл виконується знову і знову.
 
-For example:
+Наприклад:
 
 ```js run
 let i = 0;
@@ -80,109 +80,109 @@ do {
 } while (i < 3);
 ```
 
-This form of syntax should only be used when you want the body of the loop to execute **at least once** regardless of the condition being truthy. Usually, the other form is preferred: `while(…) {…}`.
+Цю форму синтаксису слід використовувати лише тоді, коли ви хочете, щоб тіло циклу виконалось **хоча б один раз**, незалежно від умови. Зазвичай, інша форма є більш бажаною `while(…) {…}`
 
-## The "for" loop
+## Цикл "for"
 
-The `for` loop is more complex, but it's also the most commonly used loop.
+Цикл `for` є більш складним, але також є часто використовуваним циклом.
 
-It looks like this:
+Виглядає він так:
 
 ```js
-for (begin; condition; step) {
-  // ... loop body ...
+for (початок; умова; крок) {
+  // ... тіло циклу ...
 }
 ```
 
-Let's learn the meaning of these parts by example. The loop below runs `alert(i)` for `i` from `0` up to (but not including) `3`:
+Давайте дізнаємовь про значення цих трьох частин за зразком. Цикл нижче виконує `alert(i)` для `i` від `0` до `3` (але не включаючи це число `3`)
 
 ```js run
-for (let i = 0; i < 3; i++) { // shows 0, then 1, then 2
+for (let i = 0; i < 3; i++) { // показується 0, далі 1, потім 2
   alert(i);
 }
 ```
 
-Let's examine the `for` statement part-by-part:
+Давайте розглянемо цикл `for` по частинах:
 
-| part  |          |                                                                            |
+| Назва частини  |          |                                                                            |
 |-------|----------|----------------------------------------------------------------------------|
-| begin | `i = 0`    | Executes once upon entering the loop.                                      |
-| condition | `i < 3`| Checked before every loop iteration. If false, the loop stops.              |
-| body | `alert(i)`| Runs again and again while the condition is truthy.                         |
-| step| `i++`      | Executes after the body on each iteration. |
+| початок | `i = 0`    | Виконується один раз, при вході в цикл.                                      |
+| умова | `i < 3`| Перевіряється перед кожною ітерацією циклу. Якщо умова невірна, цикл зупиняєтья.              |
+| тіло | `alert(i)`| Виконується знову і знову, поки умова є правдивою (`true`).                         |
+| крок| `i++`      | Виконується після тіла на кожній ітерації, але перед перевіркою умови. |
 
-The general loop algorithm works like this:
+Загальний алгоритм циклу працює так:
 
 ```
-Run begin
-→ (if condition → run body and run step)
-→ (if condition → run body and run step)
-→ (if condition → run body and run step)
+*Початок* виконання
+→ (Якщо *умова* == true → виконати тіло і виконати крок)
+→ (Якщо *умова* == true → виконати тіло і виконати крок)
+→ (Якщо *умова* == true → виконати тіло і виконати крок)
 → ...
 ```
 
-That is, `begin` executes once, and then it iterates: after each `condition` test, `body` and `step` are executed.
+Спочатку один раз виконується `початок`, потім при кожній ітерації: перевіряється `умова`, виконується `тіло` циклу та `крок`.
 
-If you are new to loops, it could help to go back to the example and reproduce how it runs step-by-step on a piece of paper.
+Якщо ви новачок у циклах, вам може допомогти покрокове виконання цього прикладу на аркуші паперу.
 
-Here's exactly what happens in our case:
+Ось що відбувається в нашому випадку:
 
 ```js
 // for (let i = 0; i < 3; i++) alert(i)
 
-// run begin
+// Початок виконання
 let i = 0
-// if condition → run body and run step
+// Якщо умова == true → виконати тіло і виконати крок
 if (i < 3) { alert(i); i++ }
-// if condition → run body and run step
+// Якщо умова == true → виконати тіло і виконати крок
 if (i < 3) { alert(i); i++ }
-// if condition → run body and run step
+// Якщо умова == true → виконати тіло і виконати крок
 if (i < 3) { alert(i); i++ }
-// ...finish, because now i == 3
+// ...кінець, тому що зараз i == 3
 ```
 
-````smart header="Inline variable declaration"
-Here, the "counter" variable `i` is declared right in the loop. This is called an "inline" variable declaration. Such variables are visible only inside the loop.
+````smart header="Вбудоване оголошення змінної"
+В цьому прикладі всередині циклу оголошена змінна `i`, яка виконує функцію лічильника. Це так зване «вбудоване» оголошення змінної. Такі змінні доступні лише всередині циклу.
 
 ```js run
 for (*!*let*/!* i = 0; i < 3; i++) {
   alert(i); // 0, 1, 2
 }
-alert(i); // error, no such variable
+alert(i); // помилка, немає такої змінної
 ```
 
-Instead of defining a variable, we could use an existing one:
+Замість оголошення нової змінної, ми можемо використовувати існуючу:
 
 ```js run
 let i = 0;
 
-for (i = 0; i < 3; i++) { // use an existing variable
+for (i = 0; i < 3; i++) { // використовуємо існуючу змінну
   alert(i); // 0, 1, 2
 }
 
-alert(i); // 3, visible, because declared outside of the loop
+alert(i); // 3, змінна доступна, тому що вона оголошена поза циклом
 ```
 
 ````
 
 
-### Skipping parts
+### Пропуск частин в "for"
 
-Any part of `for` can be skipped.
+Будь-яку частину `for` можна пропустити.
 
-For example, we can omit `begin` if we don't need to do anything at the loop start.
+Наприклад, ми можемо опустити `початок`, якщо нам не потрібно нічого робити перед стартом циклу.
 
-Like here:
+Ось так:
 
 ```js run
-let i = 0; // we have i already declared and assigned
+let i = 0; // ми вже маємо оголошену змінну і присвоєне значення
 
-for (; i < 3; i++) { // no need for "begin"
+for (; i < 3; i++) { // немає необхідності в "початку"
   alert( i ); // 0, 1, 2
 }
 ```
 
-We can also remove the `step` part:
+Ми також можемо видалити частину `крок`:
 
 ```js run
 let i = 0;
@@ -192,32 +192,32 @@ for (; i < 3;) {
 }
 ```
 
-This makes the loop identical to `while (i < 3)`.
+Це робить цикл ідентичним до `while (i < 3)`.
 
-We can actually remove everything, creating an infinite loop:
+Можна взагалі забрати все, отримавши нескінченний цикл:
 
 ```js
 for (;;) {
-  // repeats without limits
+  // буде вічно повторюватися
 }
 ```
 
-Please note that the two `for` semicolons `;` must be present. Otherwise, there would be a syntax error.
+Зауважте, що ці двокрапки `;` повинні бути, інакше виникне синтаксична помилка.
 
-## Breaking the loop
+## Переривання циклу: "break"
 
-Normally, a loop exits when its condition becomes falsy.
+Зазвичай, цикл завершується, коли умова стає `false`.
 
-But we can force the exit at any time using the special `break` directive.
+Але ми можемо в будь-який момент вийти з циклу, використавши спеціальну директиву `break`.
 
-For example, the loop below asks the user for a series of numbers, "breaking" when no number is entered:
+Наприклад, наступний код запитує в користувача число до тих пір, поки користувач їх вводить. Після того, як користувач не ввів число — цикл завершується (директивою "break") і виводить суму чисел:
 
 ```js run
 let sum = 0;
 
 while (true) {
 
-  let value = +prompt("Enter a number", '');
+  let value = +prompt("Введіть число", '');
 
 *!*
   if (!value) break; // (*)
@@ -226,35 +226,35 @@ while (true) {
   sum += value;
 
 }
-alert( 'Sum: ' + sum );
+alert( 'Сума: ' + sum );
 ```
 
-The `break` directive is activated at the line `(*)` if the user enters an empty line or cancels the input. It stops the loop immediately, passing control to the first line after the loop. Namely, `alert`.
+Директива `break` в рядку `(*)` спрацьовує тоді, коли користувач вводить порожній рядок або скасовує введення. Ця директива негайно завершує виконання циклу і передає контроль наступному рядку за циклом, тобто на `alert`.
 
-The combination "infinite loop + `break` as needed" is great for situations when a loop's condition must be checked not in the beginning or end of the loop, but in the middle or even in several places of its body.
+Комбінація «нескінченний цикл + `break`» — чудова річ для тих ситуацій, коли умова для переривання знаходиться не на початку або кінці циклу, а всередині (або навіть в декількох місцях) тіла циклу.
 
-## Continue to the next iteration [#continue]
+## Продовження з наступної ітерації [#continue]
 
-The `continue` directive is a "lighter version" of `break`. It doesn't stop the whole loop. Instead, it stops the current iteration and forces the loop to start a new one (if the condition allows).
+Директива `continue` — це "полегшена версія" `break`. Вона не зупиняє весь цикл. Натомість, вона зупиняє поточну ітерацію і починає виконання циклу спочатку з наступної ітерації (якщо умова циклу досі вірна).
 
-We can use it if we're done with the current iteration and would like to move on to the next one.
+Її зручно використовувати коли закінчили з поточною ітерацією і хочемо продовжити з наступної.
 
-The loop below uses `continue` to output only odd values:
+Цикл нижче використовує `continue` щоб вивести лише непарні значення:
 
 ```js run no-beautify
 for (let i = 0; i < 10; i++) {
 
-  // if true, skip the remaining part of the body
+  // якщо умова справджується, тоді пропускаємо решту тіла циклу і починаємо з наступної ітерації
   *!*if (i % 2 == 0) continue;*/!*
 
-  alert(i); // 1, then 3, 5, 7, 9
+  alert(i); // 1, потім 3, 5, 7, 9
 }
 ```
 
-For even values of `i`, the `continue` directive stops executing the body and passes control to the next iteration of `for` (with the next number). So the `alert` is only called for odd values.
+Для парних значень змінної `i`, директива `continue` зупиняє виконання тіла циклу і передає контроль наступній ітерації в `for` (в цьому випадку це буде наступне число). Таким чином функція `alert` викликається лише для непарних значень змінної `i`.
 
-````smart header="The `continue` directive helps decrease nesting"
-A loop that shows odd values could look like this:
+````smart header="Директива `continue` допомагає зменшити рівень вкладеності"
+Цикл, який показує непарні значення може виглядати так:
 
 ```js run
 for (let i = 0; i < 10; i++) {
@@ -266,15 +266,15 @@ for (let i = 0; i < 10; i++) {
 }
 ```
 
-From a technical point of view, this is identical to the example above. Surely, we can just wrap the code in an `if` block instead of using `continue`.
+З технічної точки зору, цей приклад ідентичний тому що вище. Звичайно, ми можемо просто обгорнути код в блок `if` замість використання `continue`.
 
-But as a side-effect, this created one more level of nesting (the `alert` call inside the curly braces). If the code inside of `if` is longer than a few lines, that may decrease the overall readability.
+Але побічним ефектом цього буде створення ще одного рівня вкладеності (виклик `alert` всередині фігурних дужок). Якщо код всередині `if` буде більшим за декілька рядків, то це може ускладнити загальну читабельність коду.
 ````
 
-````warn header="No `break/continue` to the right side of '?'"
-Please note that syntax constructs that are not expressions cannot be used with the ternary operator `?`. In particular, directives such as `break/continue` aren't allowed there.
+````warn header="Директиви `break/continue` праворуч від '?' не працюють"
+Майте на увазі, що такі синтаксичні конструкції, які не є виразами, не можуть використовуватися з тернарним оператором `?`. Власне, такі директиви як `break/continue` там не дозволені.
 
-For example, if we take this code:
+Наприклад, якщо взяти код:
 
 ```js
 if (i > 5) {
@@ -284,103 +284,103 @@ if (i > 5) {
 }
 ```
 
-...and rewrite it using a question mark:
+...і переробити його з використанням знака питання:
 
 
 ```js no-beautify
-(i > 5) ? alert(i) : *!*continue*/!*; // continue isn't allowed here
+(i > 5) ? alert(i) : *!*continue*/!*; // використання continue в недозволеному місці
 ```
 
-...it stops working: there's a syntax error.
+...то такий код перестане працювати: виникне синтаксична помилка.
 
-This is just another reason not to use the question mark operator `?` instead of `if`.
+Це ще одна причина не використовувати для умов оператор знака питання `?`, замість повноцінного `if`.
 ````
 
-## Labels for break/continue
+## Мітки для break/continue
 
-Sometimes we need to break out from multiple nested loops at once.
+Деколи нам потрібно вийти з кількох вкладених циклів.
 
-For example, in the code below we loop over `i` and `j`, prompting for the coordinates `(i, j)` from `(0,0)` to `(2,2)`:
+Наприклад, в коді нижче є 2 цикли, які проходяться по змінних `i` та `j`, і запитують в користувача координати `(i, j)` від `(0,0)` до `(2,2)`:
 
 ```js run no-beautify
 for (let i = 0; i < 3; i++) {
 
   for (let j = 0; j < 3; j++) {
 
-    let input = prompt(`Value at coords (${i},${j})`, '');
+    let input = prompt(`Значення в координатах (${i},${j})`, '');
 
-    // what if we want to exit from here to Done (below)?
+    // що якщо ми хочемо вийти звідси відразу до 'Готово!' (в функцію alert нижче)?
   }
 }
 
-alert('Done!');
+alert('Готово!');
 ```
 
-We need a way to stop the process if the user cancels the input.
+Нам потрібен спосіб зупинити ці два цикли, якщо користувач скасує введення.
 
-The ordinary `break` after `input` would only break the inner loop. That's not sufficient--labels, come to the rescue!
+Звичайний `break` після `input` лише перерве внутрішній цикл, а нам цього недостатньо. Ось тут нам пригодяться мітки для циклів!
 
-A *label* is an identifier with a colon before a loop:
+*Мітка* складається з ідентифікатора та двокрапки перед циклом:
 ```js
 labelName: for (...) {
   ...
 }
 ```
 
-The `break <labelName>` statement in the loop below breaks out to the label:
+Вираз `break <labelName>` в циклі нижче шукає найближчий цикл з заданою міткою і переходить в його кінець:
 
 ```js run no-beautify
 *!*outer:*/!* for (let i = 0; i < 3; i++) {
 
   for (let j = 0; j < 3; j++) {
 
-    let input = prompt(`Value at coords (${i},${j})`, '');
+    let input = prompt(`Значення в координатах (${i},${j})`, '');
 
-    // if an empty string or canceled, then break out of both loops
+    // якщо порожній рядок або Скасувати, тоді вихід з обох циклів
     if (!input) *!*break outer*/!*; // (*)
 
-    // do something with the value...
+    // зробити щось із значенням...
   }
 }
-alert('Done!');
+alert('Готово!');
 ```
 
-In the code above, `break outer` looks upwards for the label named `outer` and breaks out of that loop.
+В коді вище, вираз `break outer` шукає зверху мітку `outer` і перериває цикл, позначений цією міткою.
 
-So the control goes straight from `(*)` to `alert('Done!')`.
+Тож виконання коду перейде з місця переривання циклу (позначене `(*)`) до функції `alert('Готово!')`.
 
-We can also move the label onto a separate line:
+Мітку можна перемістити в новий рядок:
 
 ```js no-beautify
 outer:
 for (let i = 0; i < 3; i++) { ... }
 ```
 
-The `continue` directive can also be used with a label. In this case, code execution jumps to the next iteration of the labeled loop.
+Також мітками можна використовувати з директивою `continue`. В такому разі, виконання коду перестрибне на наступну ітерацію поміченого циклу.
 
-````warn header="Labels do not allow to \"jump\" anywhere"
-Labels do not allow us to jump into an arbitrary place in the code.
+````warn header="Міткам не дозволено \"стрибати\" будь-де"
+Ми не можемо використовувати мітки, щоб стрибати в довільне місце в коді.
 
-For example, it is impossible to do this:
+Наприклад, ось таке неможливо зробити:
 ```js
-break label; // doesn't jumps to the label below
+break label; // не стрибне в мітку label нижче
 
 label: for (...)
 ```
 
-A call to `break/continue` is only possible from inside a loop and the label must be somewhere above the directive.
+Виклик `break/continue` можливий лише всередині циклу і мітки повинні бути вище цих директив.
 ````
 
-## Summary
+## Підсумки
 
-We covered 3 types of loops:
+Ми вивчили 3 типи циклів:
 
-- `while` -- The condition is checked before each iteration.
-- `do..while` -- The condition is checked after each iteration.
-- `for (;;)` -- The condition is checked before each iteration, additional settings available.
+- `while` -- умова перевіряється перед кожною ітерацією.
+- `do..while` -- умова перевіряється після кожної ітерації.
+- `for (;;)` -- умова перевіряється перед кожною ітерацією. Можна додатково налаштовувати.
 
-To make an "infinite" loop, usually the `while(true)` construct is used. Such a loop, just like any other, can be stopped with the `break` directive.
+Щоб зробити "нескінченний" цикл, використовують вираз `while(true)`. Такі цикли, як і будь-які інші, можна зупинити директивою `break`.
 
-If we don't want to do anything in the current iteration and would like to forward to the next one, we can use the `continue` directive.
+Якщо нам не потрібно нічого виконувати в поточній ітерації циклу, ми можемо пропустити цю ітерацію за допомогою директиви `continue`.
 
-`break/continue` support labels before the loop. A label is the only way for `break/continue` to escape a nested loop to go to an outer one.
+`break/continue` підтримують мітки перед циклом. Лише за допомогою міток `break/continue` ми можемо перервати вкладений цикл.
