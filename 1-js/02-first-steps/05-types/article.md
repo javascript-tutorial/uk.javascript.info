@@ -255,7 +255,6 @@ typeof alert // "function"  (3)
 
 В JavaScript існує 8 основних типів.
 
-<<<<<<< HEAD
 - `number` для будь-яких чисел: цілих або з рухомою точкою; цілі числа обмежені до <code>±(2<sup>53</sup>-1)</code>.
 - `bigint` для цілих чисел довільної довжини.
 - `string` для рядків. Рядок може мати нуль або більше символів, немає окремого типу для одного символу.
@@ -264,16 +263,6 @@ typeof alert // "function"  (3)
 - `undefined` для неприсвоєних значень — автономний тип, який має єдине значення `undefined`.
 - `object` для більш складних структур даних.
 - `symbol` для унікальних ідентифікаторів.
-=======
-- `number` for numbers of any kind: integer or floating-point, integers are limited by <code>±(2<sup>53</sup>-1)</code>.
-- `bigint` is for integer numbers of arbitrary length.
-- `string` for strings. A string may have zero or more characters, there's no separate single-character type.
-- `boolean` for `true`/`false`.
-- `null` for unknown values -- a standalone type that has a single value `null`.
-- `undefined` for unassigned values -- a standalone type that has a single value `undefined`.
-- `object` for more complex data structures.
-- `symbol` for unique identifiers.
->>>>>>> ff152b126ec70a9de919bfdc1913215539d37187
 
 Оператор `typeof` дозволяє нам бачити, який тип зберігається в змінній.
 
