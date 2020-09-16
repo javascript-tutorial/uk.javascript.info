@@ -1,4 +1,4 @@
-JavaScript код:
+JavaScript-код:
 
 ```js demo run
 let name = prompt("Як вас звати?", "");
