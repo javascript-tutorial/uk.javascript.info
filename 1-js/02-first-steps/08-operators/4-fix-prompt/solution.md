@@ -1,33 +1,33 @@
-The reason is that prompt returns user input as a string.
+Причина в тому, що вікно запиту повертає ввід користувача як рядок.
 
-So variables have values `"1"` and `"2"` respectively.
+Отже змінні отримують значення `"1"` і `"2"` відповідно.
 
 ```js run
-let a = "1"; // prompt("First number?", 1);
-let b = "2"; // prompt("Second number?", 2);
+let a = "1"; // prompt("Перше число?", 1);
+let b = "2"; // prompt("Друге число?", 2);
 
 alert(a + b); // 12
 ```
 
-What we should do is to convert strings to numbers before `+`. For example, using `Number()` or
-prepending them with `+`.
+Нам треба перетворити рядки на числа перед застосуванням оператора `+`. Наприклад, за допомогою `Number()` або вставлення `+` перед ними.
 
-For example, right before `prompt`:
+
+Вставити `+` можна безпосередньо перед `prompt`:
 
 ```js run
-let a = +prompt("First number?", 1);
-let b = +prompt("Second number?", 2);
+let a = +prompt("Перше число?", 1);
+let b = +prompt("Друге число?", 2);
 
 alert(a + b); // 3
 ```
 
-Or in the `alert`:
+Або всередині `alert`:
 
 ```js run
-let a = prompt("First number?", 1);
-let b = prompt("Second number?", 2);
+let a = prompt("Перше число?", 1);
+let b = prompt("Друге число?", 2);
 
 alert(+a + +b); // 3
 ```
 
-Using both unary and binary `+` in the latest code. Looks funny, doesn't it?
+В останньому варіанті унарний і бінарний `+` використовуються разом. Виглядає химерно, чи не так?
