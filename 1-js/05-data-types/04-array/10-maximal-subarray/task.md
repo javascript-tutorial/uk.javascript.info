@@ -1,16 +1,16 @@
-importance: 2
+Важливість: 2
 
 ---
 
-# A maximal subarray
+# Максимальний підмасив
 
-The input is an array of numbers, e.g. `arr = [1, -2, 3, 4, -9, 6]`.
+На вході мисив чисел, наприклад `arr = [1, -2, 3, 4, -9, 6]`.
 
-The task is: find the contiguous subarray of `arr` with the maximal sum of items.
+Завдання: знайти неперервний підмасив `arr` з максимальною сумою елементів.
 
-Write the function `getMaxSubSum(arr)` that will return that sum.
+Написати функцію `getMaxSubSum(arr)` яка повертає таку суму.
 
-For instance:
+Наприклад:
 
 ```js
 getMaxSubSum([-1, *!*2, 3*/!*, -9]) == 5 (the sum of highlighted items)
@@ -21,10 +21,10 @@ getMaxSubSum([*!*100*/!*, -9, 2, -3, 5]) == 100
 getMaxSubSum([*!*1, 2, 3*/!*]) == 6 (take all)
 ```
 
-If all items are negative, it means that we take none (the subarray is empty), so the sum is zero:
+Якщо всі елементи менші нуля, нічого не беремо, це значає, що підмасив пустий а сума рівна нулю:
 
 ```js
 getMaxSubSum([-1, -2, -3]) = 0
 ```
 
-Please try to think of a fast solution: [O(n<sup>2</sup>)](https://en.wikipedia.org/wiki/Big_O_notation) or even O(n) if you can.
+Будь-ласка, подумайте над швидким рішенням: [O(n<sup>2</sup>)](https://en.wikipedia.org/wiki/Big_O_notation) або над O(n) рішенням, якщо зможете.

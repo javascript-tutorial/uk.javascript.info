@@ -1,10 +1,10 @@
-importance: 5
+Важливість: 5
 
 ---
 
-# Calling in an array context
+# Виклик в контексті масиву
 
-What is the result? Why?
+Який результат? Чому?
 
 ```js
 let arr = ["a", "b"];

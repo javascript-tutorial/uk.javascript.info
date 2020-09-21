@@ -1,4 +1,4 @@
-The result is `4`:
+Відповідь `4`:
 
 
 ```js run
@@ -13,5 +13,5 @@ alert( fruits.length ); // 4
 */!*
 ```
 
-That's because arrays are objects. So both `shoppingCart` and `fruits` are the references to the same array.
+Це відбудеться тому, що масиви це об'єкти. Отже `shoppingCart` and `fruits` посилаються на одий і той самий об'єкт.
 
