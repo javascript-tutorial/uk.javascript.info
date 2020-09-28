@@ -9,9 +9,15 @@
 - Рівне: `a == b`, зверніть увагу, для порівняння потрібно використовувати два знаки рівності `==`. Один знак рівності `a = b` означало б присвоєння.
 - Не рівне. В математиці позначається символом <code>&ne;</code>, проте в JavaScript записується як <code>a != b</code>.
 
+<<<<<<< HEAD
 В цьому розділі ми вивчимо про різні типи порівнянь, як JavaScript їх виконує та розглянемо важливі особливості.
 
 В кінці ви знайдете корисні поради, як уникати специфічні "примхи JavaScript".
+=======
+In this article we'll learn more about different types of comparisons, how JavaScript makes them, including important peculiarities.
+
+At the end you'll find a good recipe to avoid "JavaScript quirks"-related issues.
+>>>>>>> f489145731a45df6e369a3c063e52250f3f0061d
 
 ## Результат порівняння має логічний тип
 
@@ -57,7 +63,11 @@ alert( 'Кома' > 'Комар' ); // false
 4. Порівняння продовжується до того часу, доки не закінчиться один з рядків.
 5. Якщо два рядки закінчуються одночасно, то вони рівні. Інакше, довший рядок вважатиметься більшим.
 
+<<<<<<< HEAD
 В прикладах вище, порівняння `'Я' > 'А'` завершиться на першому кроці, тоді як `"Кіт"` і `"Код"` будуть порівнюватися посимвольно:
+=======
+In the examples above, the comparison `'Z' > 'A'` gets to a result at the first step while the strings `'Glow'` and `'Glee'` are compared character-by-character:
+>>>>>>> f489145731a45df6e369a3c063e52250f3f0061d
 
 1. `К` рівне `К`.
 2. `і` більше за `о`.
