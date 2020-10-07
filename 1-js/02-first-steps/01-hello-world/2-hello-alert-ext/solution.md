@@ -1,4 +1,4 @@
-HTML код:
+HTML-код:
 
 [html src="index.html"]
 
