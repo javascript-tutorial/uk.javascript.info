@@ -1,6 +1,10 @@
 # Вступ до JavaScript
 
+<<<<<<< HEAD
 Давайте розглянемо, що такого особливого в JavaScript, що ми дожемо досягти з його допомогою і які ще технології пов'язані з ним.
+=======
+Let's see what's so special about JavaScript, what we can achieve with it, and what other technologies play well with it.
+>>>>>>> 0599d07b3c13ee25f583fc091cead3c17a7e7779
 
 ## Що таке JavaScript?
 
@@ -24,9 +28,15 @@
 
 Різні рушії мають різні "кодові назви". Наприклад:
 
+<<<<<<< HEAD
 - [V8](https://uk.wikipedia.org/wiki/V8_(рушій_JavaScript)) -- в Chrome і Opera.
 - [SpiderMonkey](https://uk.wikipedia.org/wiki/SpiderMonkey) -- в Firefox.
 - ...Є також інші кодові назви як "Trident" і "Chakra" для різних версій IE, "ChakraCore" для Microsoft Edge, "Nitro" і "SquirrelFish" для Safari, та інші.
+=======
+- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome and Opera.
+- [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey) -- in Firefox.
+- ...There are other codenames like "Chakra" for IE, "ChakraCore" for Microsoft Edge, "Nitro" and "SquirrelFish" for Safari, etc.
+>>>>>>> 0599d07b3c13ee25f583fc091cead3c17a7e7779
 
 Написані вище терміни добре було б запам'ятати, оскільки вони використовуються в статтях розробників на просторах інтернету. Ми також будемо їх використовувати. Наприклад, якщо "можливість X підтримується в V8", тоді ймовірно це буде працювати в Chrome і Opera.
 
@@ -67,8 +77,13 @@
 
     Сучасні браузери дозволяють працювати з файлами, але доступ до них обмежений і надається тільки тоді, коли користувач виконав відповідні дії, наприклад, перетягнув файл у вікно браузера чи вибрав його через теґ `<input>`.
 
+<<<<<<< HEAD
     Є можливість взаємодії з камерою/мікрофоном або іншими пристроями, але для цього потрібен явний дозвіл користувача. Тому сторінка, на якій увімкнений JavaScript, не може нишком увімкнути веб-камеру, спостерігати за оточенням і відсилати інформацію до [СБУ](https://uk.wikipedia.org/wiki/Служба_безпеки_України).
 - Різні вкладки/вікна зазвичай не знають один про одного. Іноді це можливо, наприклад, коли одне вікно використовує JavaScript, щоб відкрити інше. Але навіть в цьому випадку JavaScript з однієї сторінки не має доступу до іншої, якщо вони з різних сайтів (мають різні домени, протоколи чи порти).
+=======
+    There are ways to interact with camera/microphone and other devices, but they require a user's explicit permission. So a JavaScript-enabled page may not sneakily enable a web-camera, observe the surroundings and send the information to the [NSA](https://en.wikipedia.org/wiki/National_Security_Agency).
+- Different tabs/windows generally do not know about each other. Sometimes they do; for example when one window uses JavaScript to open the other one. But even in this case, JavaScript from one page may not access the other if they come from different sites (from a different domain, protocol or port).
+>>>>>>> 0599d07b3c13ee25f583fc091cead3c17a7e7779
 
     Це називається "[Політикою того ж походження (Same Origin Policy)](https://uk.wikipedia.org/wiki/Політика_того_ж_походження)". Щоб обійти це обмеження, *обидві сторінки* повинні погодитися на обмін даними і містити JavaScript код, який спеціальним чином буде обмінюватися даними. Ми розглянемо це в посібнику.
 
@@ -116,6 +131,12 @@ JavaScript – це єдина браузерна технологія, яка �
 
 ## Підсумки
 
+<<<<<<< HEAD
 - JavaScript спочатку був створений лише як мова для браузера, але зараз його також використовують в інших середовищах.
 - Сьогодні, JavaScript позиціонується як найбільш поширена мова для браузера з повною інтеграцією із HTML/CSS.
 - Є багато мов які "транспілюються" в JavaScript і надають певні функції. Рекомендується переглянути їх, принаймні мигцем, після освоєння JavaScript.
+=======
+- JavaScript was initially created as a browser-only language, but it is now used in many other environments as well.
+- Today, JavaScript has a unique position as the most widely-adopted browser language with full integration in HTML/CSS.
+- There are many languages that get "transpiled" to JavaScript and provide certain features. It is recommended to take a look at them, at least briefly, after mastering JavaScript.
+>>>>>>> 0599d07b3c13ee25f583fc091cead3c17a7e7779
