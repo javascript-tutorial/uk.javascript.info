@@ -180,7 +180,11 @@ alert( +apples + +oranges ); // 5
 
 У JavaScript є багато операторів. Кожен оператор має відповідний номер пріоритету. Першим виконується той оператор, який має найбільший номер пріоритету. Якщо пріоритет є однаковим, порядок виконання — зліва направо.
 
+<<<<<<< HEAD
 Ось витяг із [таблиці пріоритетів](https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Operators/Operator_Precedence) (вам не потрібно це запам'ятовувати, але зверніть увагу, що унарні оператори мають вищий пріоритет за відповідні бінарні):
+=======
+Here's an extract from the [precedence table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence) (you don't need to remember this, but note that unary operators are higher than corresponding binary ones):
+>>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 
 | Пріоритет | Ім'я | Знак |
 |------------|------|------|
@@ -428,7 +432,11 @@ counter++;
 - RIGHT SHIFT(зсув праворуч) ( `>>` )
 - ZERO-FILL RIGHT SHIFT(зсув праворуч із заповненням нулями) ( `>>>` )
 
+<<<<<<< HEAD
 Ці оператори використовуються тоді, коли нам потрібно "возитися" з числами на дуже низькому (побітовому) рівні (тобто — вкрай рідко). Найближчим часом такі оператори нам не пригодяться, оскільки у веб-розробці вони майже не використовуються. Проте в таких областях, як криптографія, вони корисні. Ви можете прочитати [розділ про них](https://developer.mozilla.org/uk/docs/Web/JavaScript/Guide/Вирази_та_оператори#Бітові_оператори) на MDN, якщо виникне потреба.
+=======
+These operators are used very rarely, when we need to fiddle with numbers on the very lowest (bitwise) level. We won't need these operators any time soon, as web development has little use of them, but in some special areas, such as cryptography, they are useful. You can read the [Bitwise Operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators#Bitwise) chapter on MDN when a need arises.
+>>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 
 ## Кома
 

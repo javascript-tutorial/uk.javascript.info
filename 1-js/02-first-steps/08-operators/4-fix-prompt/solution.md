@@ -9,7 +9,11 @@ let b = "2"; // prompt("Друге число?", 2);
 alert(a + b); // 12
 ```
 
+<<<<<<< HEAD
 Нам треба перетворити рядки на числа перед застосуванням оператора `+`. Наприклад, за допомогою `Number()` або вставлення `+` перед ними.
+=======
+What we should do is to convert strings to numbers before `+`. For example, using `Number()` or prepending them with `+`.
+>>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 
 
 Вставити `+` можна безпосередньо перед `prompt`:

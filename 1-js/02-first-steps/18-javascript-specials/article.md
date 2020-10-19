@@ -143,8 +143,13 @@ JavaScript підтримує такі оператори:
 Оператори присвоєння
 : Звичайне присвоєння: `a = b` і складені `a *= 2`.
 
+<<<<<<< HEAD
 Бітові операції
 : Бітові оператори працюють з 32-бітними цілими числами на найнижчому, побітовому, рівні. Детальніше про їхнє використання можна прочитати на ресурсі [MDN](mdn:/JavaScript/Reference/Operators/Bitwise_Operators).
+=======
+Bitwise
+: Bitwise operators work with 32-bit integers at the lowest, bit-level: see the [docs](mdn:/JavaScript/Guide/Expressions_and_Operators#Bitwise) when they are needed.
+>>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 
 Умовний оператор
 : Єдиний оператор з трьома параметрами: `cond ? resultA : resultB`. Якщо `cond` вірно, повертається `resultA`, інакше – `resultB`.
