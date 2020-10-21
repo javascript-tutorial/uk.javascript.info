@@ -38,7 +38,7 @@ alert( fruits[2] ); // Plum
 Можемо замінити елемент:
 
 ```js
-fruits[2] = 'Pear'; // зараз ["Apple", "Orange", "Pear"]
+fruits[2] = 'Pear'; // тепер ["Apple", "Orange", "Pear"]
 ```
 
 ...Або додати новий:
