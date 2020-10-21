@@ -2,17 +2,17 @@ importance: 5
 
 ---
 
-# Array operations.
+# Операції з масивами.
 
-Let's try 5 array operations.
+Давайте спробуємо 5 операцій з масивом.
 
-1. Create an array `styles` with items "Jazz" and "Blues".
-2. Append "Rock-n-Roll" to the end.
-3. Replace the value in the middle by "Classics". Your code for finding the middle value should work for any arrays with odd length.
-4. Strip off the first value of the array and show it.
-5. Prepend `Rap` and `Reggae` to the array.
+1. Створіть масив `styles` з елементами "Jazz" та "Blues".
+2. Додайте "Rock-n-Roll" в кінець масиву.
+3. Замініть значення в середині масиву на "Classics". Ваш код повинен шукати медіанний елемент у масивах будь-якої довжини.
+4. Видаліть перший елемент масиву та покажіть його.
+5. Вставте `Rap` та `Reggae` на початок масиву.
 
-The array in the process:
+Вигляд масиву по ходу виконання операцій:
 
 ```js no-beautify
 Jazz, Blues
@@ -21,4 +21,3 @@ Jazz, Classics, Rock-n-Roll
 Classics, Rock-n-Roll
 Rap, Reggae, Classics, Rock-n-Roll
 ```
-

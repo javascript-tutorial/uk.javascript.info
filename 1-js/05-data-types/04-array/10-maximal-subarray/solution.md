@@ -1,43 +1,43 @@
-# Slow solution
+# Повільне рішення
 
-We can calculate all possible subsums.
+Ми можемо порахувати всі можливі підсуми.
 
-The simplest way is to take every element and calculate sums of all subarrays starting from it.
+Найпростіший шлях - це порахувати суми всіх підмасивів, починаючи з кожного елемента.
 
-For instance, for `[-1, 2, 3, -9, 11]`:
+Наприклад, для `[-1, 2, 3, -9, 11]`:
 
 ```js no-beautify
-// Starting from -1:
+// Починаємо з -1:
 -1
 -1 + 2
 -1 + 2 + 3
 -1 + 2 + 3 + (-9)
 -1 + 2 + 3 + (-9) + 11
 
-// Starting from 2:
+// Починаємо з 2:
 2
 2 + 3
 2 + 3 + (-9)
 2 + 3 + (-9) + 11
 
-// Starting from 3:
+// Починаємо з 3:
 3
 3 + (-9)
 3 + (-9) + 11
 
-// Starting from -9
+// Починаємо з -9
 -9
 -9 + 11
 
-// Starting from 11
+// Починаємо з 11
 11
 ```
 
-The code is actually a nested loop: the external loop over array elements, and the internal counts subsums starting with the current element.
+Вирішення потребує використання циклів: зовнішний цикл проходить по елементах масиву, а внутрішній рахує підсуму починаючи з поточного елементу.
 
 ```js run
 function getMaxSubSum(arr) {
-  let maxSum = 0; // if we take no elements, zero will be returned
+  let maxSum = 0; // якщо елементи відсутні - повертаємо 0
 
   for (let i = 0; i < arr.length; i++) {
     let sumFixedStart = 0;
@@ -57,15 +57,15 @@ alert( getMaxSubSum([1, 2, 3]) ); // 6
 alert( getMaxSubSum([100, -9, 2, -3, 5]) ); // 100
 ```
 
-The solution has a time complexety of [O(n<sup>2</sup>)](https://en.wikipedia.org/wiki/Big_O_notation). In other words, if we increase the array size 2 times, the algorithm will work 4 times longer.
+Таке рішення має оцінку часу виконання [O(n<sup>2</sup>)](https://uk.wikipedia.org/wiki/Нотація_Ландау). Інакше кажучи, якщо ми збільшимо розмір масиву вдвічі, алгоритм буде виконуватися в 4 рази довше.
 
-For big arrays (1000, 10000 or more items) such algorithms can lead to a serious sluggishness.
+Для великих масивів (1000, 10000 або більше елементів) подібні алгоритми можуть призводити до серйозних "пригальмувань" роботі.
 
-# Fast solution
+# Швидке рішення
 
-Let's walk the array and keep the current partial sum of elements in the variable `s`. If `s` becomes negative at some point, then assign `s=0`. The maximum of all such `s` will be the answer.
+Пройдемося по масиву і в процесі будемо накопичувати проміжну суму елементів в змінній `s`. Якщо в певний момент `s` стане меншою за 0, присвоїмо `s=0`. Максимальне значення з усіх `s` і буде відповіддю.
 
-If the description is too vague, please see the code, it's short enough:
+Якщо пояснення не дуже зрозуміле, подивіться, будь ласка, на код - він досить лаконічний:
 
 ```js run demo
 function getMaxSubSum(arr) {
@@ -89,6 +89,6 @@ alert( getMaxSubSum([1, 2, 3]) ); // 6
 alert( getMaxSubSum([-1, -2, -3]) ); // 0
 ```
 
-The algorithm requires exactly 1 array pass, so the time complexity is O(n).
+Цей алгоритм потребує рівно один прохід по масиву, його оціночний час виконання -  O(n).
 
-You can find more detail information about the algorithm here: [Maximum subarray problem](http://en.wikipedia.org/wiki/Maximum_subarray_problem). If it's still not obvious why that works, then please trace the algorithm on the examples above, see how it works, that's better than any words.
+Ви можете дізнатися більше про цей алгоритм тут: [Maximum subarray problem](http://en.wikipedia.org/wiki/Maximum_subarray_problem). Якщо досі не цілком зрозуміло, як це працює, будь ласка, подивіться алгоритм у прикладах вище, це буде краще за будь-які слова.

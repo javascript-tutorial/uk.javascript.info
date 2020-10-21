@@ -1,31 +1,31 @@
-# Arrays
+# Масиви
 
-Objects allow you to store keyed collections of values. That's fine.
+Об’єкти дозволяють зберігати набори значень з ключами. Це чудово.
 
-But quite often we find that we need an *ordered collection*, where we have a 1st, a 2nd, a 3rd element and so on. For example, we need that to store a list of something: users, goods, HTML elements etc.
+Але досить часто ми розуміємо, що нам необхідна впорядкована колекція даних, яка складається з 1-го, 2-го, 3-го і т.п елементів. Наприклад, така колеція може знадобитись для зберігання списку користувачів, товарів, HTML елементів та ін.
 
-It is not convenient to use an object here, because it provides no methods to manage the order of elements. We can’t insert a new property “between” the existing ones. Objects are just not meant for such use.
+Використовувати об’єкти в такому випадку не зручно, тому що вони не надають методів управління порядком елементів. Ми не можемо вставити нову властивість "між" існуючих. Об’єкти просто не призначені для такого.
 
-There exists a special data structure named `Array`, to store ordered collections.
+Для зберігання впорядкованих колекцій існує інший тип даних, який має назву масив, `Array`.
 
-## Declaration
+## Оголошення
 
-There are two syntaxes for creating an empty array:
+Існує два типи синтаксу для створення порожнього масиву:
 
 ```js
 let arr = new Array();
 let arr = [];
 ```
 
-Almost all the time, the second syntax is used. We can supply initial elements in the brackets:
+Майже завжди використовують другий тип синтаксису. Ми можемо вказати початкові елементи масиву у квадратних дужках:
 
 ```js
 let fruits = ["Apple", "Orange", "Plum"];
 ```
 
-Array elements are numbered, starting with zero.
+Елементи масиву нумеруються починаючи з нуля.
 
-We can get an element by its number in square brackets:
+Ми можемо отримати елементи масиву, вказавши його номер в квадратних дужках:
 
 ```js run
 let fruits = ["Apple", "Orange", "Plum"];
@@ -35,19 +35,19 @@ alert( fruits[1] ); // Orange
 alert( fruits[2] ); // Plum
 ```
 
-We can replace an element:
+Можемо замінити елемент:
 
 ```js
-fruits[2] = 'Pear'; // now ["Apple", "Orange", "Pear"]
+fruits[2] = 'Pear'; // тепер ["Apple", "Orange", "Pear"]
 ```
 
-...Or add a new one to the array:
+...Або додати новий:
 
 ```js
-fruits[3] = 'Lemon'; // now ["Apple", "Orange", "Pear", "Lemon"]
+fruits[3] = 'Lemon'; // тепер ["Apple", "Orange", "Pear", "Lemon"]
 ```
 
-The total count of the elements in the array is its `length`:
+Загальна кількість елементів масиву зберігається у його властивості `length`:
 
 ```js run
 let fruits = ["Apple", "Orange", "Plum"];
@@ -55,7 +55,7 @@ let fruits = ["Apple", "Orange", "Plum"];
 alert( fruits.length ); // 3
 ```
 
-We can also use `alert` to show the whole array.
+Ми можемо переглянути масив цілком за допомогою `alert`
 
 ```js run
 let fruits = ["Apple", "Orange", "Plum"];
@@ -63,24 +63,24 @@ let fruits = ["Apple", "Orange", "Plum"];
 alert( fruits ); // Apple,Orange,Plum
 ```
 
-An array can store elements of any type.
+У масиви можуть зберігатись елементи будь-якого типу.
 
-For instance:
+Наприклад:
 
 ```js run no-beautify
-// mix of values
+// різні типи значень
 let arr = [ 'Apple', { name: 'John' }, true, function() { alert('hello'); } ];
 
-// get the object at index 1 and then show its name
+// отримати елемент з індексом 1 (об’єкт) та вивести його властивість name
 alert( arr[1].name ); // John
 
-// get the function at index 3 and run it
+// отримати елемент з індексом 3 (функція) та виконати її
 arr[3](); // hello
 ```
 
 
-````smart header="Trailing comma"
-An array, just like an object, may end with a comma:
+````smart header="Кома в кінці"
+Список елементів масиву, як і список елементів об’єкту може закінчуватись комою:
 ```js
 let fruits = [
   "Apple",
@@ -89,57 +89,57 @@ let fruits = [
 ];
 ```
 
-The "trailing comma" style makes it easier to insert/remove items, because all lines become alike.
+Кома в кінці спрощує процес додавання/видалення елементів, тому що всі рядки стають ідентичними.
 ````
 
 
-## Methods pop/push, shift/unshift
+## Методи pop/push, shift/unshift
 
-A [queue](https://en.wikipedia.org/wiki/Queue_(abstract_data_type)) is one of the most common uses of an array. In computer science, this means an ordered collection of elements which supports two operations:
+[Черга](https://uk.wikipedia.org/wiki/Черга_(структура_даних)) — один з найбільш популярних варіантів використання об’єкту. У ком’ютерних науках так позначають колекцію елементів, яка підтримує дві операції:
 
-- `push` appends an element to the end.
-- `shift` get an element from the beginning, advancing the queue, so that the 2nd element becomes the 1st.
+- `push` додає елемент у кінець списку.
+- `shift` видаляє елемент на початку, зміщчуючи чергу, таким чином другий елемент стає першим.
 
 ![](queue.svg)
 
-Arrays support both operations.
+Масиви підтримують обидві операції.
 
-In practice we need it very often. For example, a queue of messages that need to be shown on-screen.
+На практиці це дуже часто стає у нагоді. Наприклад, черга з повідомлень, які необхідно показувати на екрані.
 
-There's another use case for arrays -- the data structure named [stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
+Існує також інший варіант використання масивів - структура даних, яка називається [стек](https://en.wikipedia.org/wiki/Stack_(abstract_data_type)).
 
-It supports two operations:
+Вона підтримує два типи операцій:
 
-- `push` adds an element to the end.
-- `pop` takes an element from the end.
+- `push` додає елементи в кінець.
+- `pop` видаляє крайній елемент.
 
-So new elements are added or taken always from the "end".
+Таким чином нові елементи завжди додаються або видаляються з "кінця".
 
-A stack is usually illustrated as a pack of cards: new cards are added to the top or taken from the top:
+Хорошим пракладом `стеку` є колода карт: нові карти кладуться на верх і беруться теж зверху:
 
 ![](stack.svg)
 
-For stacks, the latest pushed item is received first, that's also called LIFO (Last-In-First-Out) principle. For queues, we have FIFO (First-In-First-Out).
+У стеках  останній доданий елемент повертається першим, цей принцип також називають LIFO (з англ. Last-In-First-Out, "останій прийшов - перший пішов"). Для черг ми використовуємо принцип FIFO (з англ. First-In-First-Out, "перший прийшов - перший пішов").
 
-Arrays in JavaScript can work both as a queue and as a stack. They allow you to add/remove elements both to/from the beginning or the end.
+Масиви в JavaScript можуть працювати як стеки і як черги. Ми можемо додавати/видаляти елементи як на початку так і у кінці масиву.
 
-In computer science the data structure that allows this, is called [deque](https://en.wikipedia.org/wiki/Double-ended_queue).
+В комп’ютерних науках структури даних, які дозволяють це робити, мають назву «[двобічна черга](https://uk.wikipedia.org/wiki/Двобічна_черга)».
 
-**Methods that work with the end of the array:**
+**Методи, які працюють з кінцем масиву:**
 
 `pop`
-: Extracts the last element of the array and returns it:
+: Видаляє останній елемент масиву та повертає його:
 
     ```js run
     let fruits = ["Apple", "Orange", "Pear"];
 
-    alert( fruits.pop() ); // remove "Pear" and alert it
+    alert( fruits.pop() ); // видаляємо "Pear" та виводимо його
 
     alert( fruits ); // Apple, Orange
     ```
 
 `push`
-: Append the element to the end of the array:
+: Додає елемент в кінець масиву:
 
     ```js run
     let fruits = ["Apple", "Orange"];
@@ -149,23 +149,23 @@ In computer science the data structure that allows this, is called [deque](https
     alert( fruits ); // Apple, Orange, Pear
     ```
 
-    The call `fruits.push(...)` is equal to `fruits[fruits.length] = ...`.
+    Виклик `fruits.push(...)` рівнозначний `fruits[fruits.length] = ...`.
 
-**Methods that work with the beginning of the array:**
+**Методи, які працюють з початком масиву:**
 
 `shift`
-: Extracts the first element of the array and returns it:
+: Видаляє перший елемент з масиву та повертає його:
 
     ```js run
     let fruits = ["Apple", "Orange", "Pear"];
 
-    alert( fruits.shift() ); // remove Apple and alert it
+    alert( fruits.shift() ); // видаляємо Apple and виводимо його
 
     alert( fruits ); // Orange, Pear
     ```
 
 `unshift`
-: Add the element to the beginning of the array:
+: Додає елемент в початок масиву:
 
     ```js run
     let fruits = ["Orange", "Pear"];
@@ -175,7 +175,7 @@ In computer science the data structure that allows this, is called [deque](https
     alert( fruits ); // Apple, Orange, Pear
     ```
 
-Methods `push` and `unshift` can add multiple elements at once:
+Методи `push` та `unshift` можуть додавати одразу декілька елементів:
 
 ```js run
 let fruits = ["Apple"];
@@ -187,97 +187,97 @@ fruits.unshift("Pineapple", "Lemon");
 alert( fruits );
 ```
 
-## Internals
+## Внутрішня структура масивів
 
-An array is a special kind of object. The square brackets used to access a property `arr[0]` actually come from the object syntax. That's essentially the same as `obj[key]`, where `arr` is the object, while numbers are used as keys.
+Масив — це спеціальний тип об’єктів. Квадратні дужки використовують для доступу до властивості `arr[0]`, що в свою чергу прийшло з синтаксису об’єктів. Це теж саме, що доступ до властивості об’єкта `obj[key]`, де `arr` це об’єкт в якому числа використовуються як ключі.
 
-They extend objects providing special methods to work with ordered collections of data and also the `length` property. But at the core it's still an object.
+Масиви розширюють функціональність об’єкта тим, що надають можливість працювати з упорядкованими колекціями даних, а також надають доступ до властивості `length`. Але в основі це досі об’єкт.
 
-Remember, there are only eight basic data types in JavaScript (see the [Data types](info:types) chapter for more info). Array is an object and thus behaves like an object.
+Запам’ятайте, JavaScript містить лише 8 базових типів даних (більше інформації у розділі [Типи даних](info:types)). Масив — це об’єкт, який веде себе як об’єкт.
 
-For instance, it is copied by reference:
+Наприклад, копіюється за посиланням:
 
 ```js run
 let fruits = ["Banana"]
 
-let arr = fruits; // copy by reference (two variables reference the same array)
+let arr = fruits; // копіюється за посиланням (дві змінні посилаються на один масив)
 
 alert( arr === fruits ); // true
 
-arr.push("Pear"); // modify the array by reference
+arr.push("Pear"); // зміна масиву за посиланням
 
-alert( fruits ); // Banana, Pear - 2 items now
+alert( fruits ); // Banana, Pear - наразі два елемента
 ```
 
-...But what makes arrays really  special is their internal representation. The engine tries to store its elements in the contiguous memory area, one after another, just as depicted on the illustrations in this chapter, and there are other optimizations as well, to make arrays work really fast.
+...Але те, що робить масиви дійсно особливими – це їх внутрішнє представлення. Рушій JavaScript намагається зберігати елементи масиву у неперервній області пам’яті, один за одним, як це представлено на ілюстраціях в цьому розділі, а також інші способи оптимізації, що дозволяють масивам працювати дуже швидко.
 
-But they all break if we quit working with an array as with an "ordered collection" and start working with it as if it were a regular object.
+Проте масиви втратять всю свою ефективність, якщо ми перестанемо працювати з ними як з "упорядкованою колекцією даних" і почнемо використовувати як звичайний об’єкт.
 
-For instance, technically we can do this:
+Наприклад, технічно ми можемо виконати наступне:
 
 ```js
-let fruits = []; // make an array
+let fruits = []; // створюємо масив
 
-fruits[99999] = 5; // assign a property with the index far greater than its length
+fruits[99999] = 5; // створюємо властивість, індекс якої набагато перевищує довжину масиву
 
-fruits.age = 25; // create a property with an arbitrary name
+fruits.age = 25; // створюємо властивість з довільним ім’ям
 ```
 
-That's possible, because arrays are objects at their base. We can add any properties to them.
+Це можливо тому, що в основі масивів — об’єкти. Ми можемо додати будь-які властивості до них.
 
-But the engine will see that we're working with the array as with a regular object. Array-specific optimizations are not suited for such cases and will be turned off, their benefits disappear.
+Але рушій зрозуміє, що ми використувуємо масиви, як звичайні об’єкти. Методи оптимізації, які використовуються для масивів в цьому випадку не підходять, тому будуть відключені і не принесуть ніякої користі.
 
-The ways to misuse an array:
+Варіанти неправильного використання масивів:
 
-- Add a non-numeric property like `arr.test = 5`.
-- Make holes, like: add `arr[0]` and then `arr[1000]` (and nothing between them).
-- Fill the array in the reverse order, like `arr[1000]`, `arr[999]` and so on.
+- Додавання нечислових властивостей, таких як `arr.test = 5`.
+- Створення "дирок", наприклад: `arr[0]` а за ним `arr[1000]` (та нічого між цими елементами).
+- Заповнення масиву в зворотньому порядку, наприклад: `arr[1000]`, `arr[999]` і т. д.
 
-Please think of arrays as special structures to work with the *ordered data*. They provide special methods for that. Arrays are carefully tuned inside JavaScript engines to work with contiguous ordered data, please use them this way. And if you need arbitrary keys, chances are high that you actually require a regular object `{}`.
+Будь ласка, думайте про масив як про особливу структуру з "впорядкованими даними". Вони надають спеціальні методи для цього. Масиви дуже ретельно налаштовані на роботу з неперервними впорядкованими даними, тому використовуйте їх саме таким чином. Тому, якщо вам необхідні довільні ключі, дуже ймовірно, що вам більше підійдуть звичайні об’єкти `{}`.
 
-## Performance
+## Продуктивність
 
-Methods `push/pop` run fast, while `shift/unshift` are slow.
+Методи `push/pop` працюють швидко, на відміну від методів `shift/unshift` які працюють повільно.
 
 ![](array-speed.svg)
 
-Why is it faster to work with the end of an array than with its beginning? Let's see what happens during the execution:
+Чому працювати з кінцем масиву швидше, ніж з початком? Давайте переглянемо, що відбувається під час виконання:
 
 ```js
-fruits.shift(); // take 1 element from the start
+fruits.shift(); // видалити один елемент з початку
 ```
 
-It's not enough to take and remove the element with the number `0`. Other elements need to be renumbered as well.
+Але недостатньо просто взяти та видалити елемент з номером `0`. В такому випадку всі інші елементи також необхідно пронумерувати ще раз.
 
-The `shift` operation must do 3 things:
+Операція `shift` має виконати 3 дії:
 
-1. Remove the element with the index `0`.
-2. Move all elements to the left, renumber them from the index `1` to `0`, from `2` to `1` and so on.
-3. Update the `length` property.
+1. Видалити елемент з індексом `0`.
+2. Пересунути всі елементи вліво змінивши в них нумерацію - індекс `1` на `0`, `2` на `1` і так далі.
+3. Оновити властивість `length`.
 
 ![](array-shift.svg)
 
-**The more elements in the array, the more time to move them, more in-memory operations.**
+**Чим більше елементів у масиві, тим більше часу необхідно для того, щоб пересунути їх, більше операцій з пам’яттю.**
 
-The similar thing happens with `unshift`: to add an element to the beginning of the array, we need first to move existing elements to the right, increasing their indexes.
+Теж саме відбувається з методом `unshift`: для того, щоб додати елемент в початок масиву, необхідно спочатку перемістити всі елементи масиву вправо збільшуючи їх індекси.
 
-And what's with `push/pop`? They do not need to move anything. To extract an element from the end, the `pop` method cleans the index and shortens `length`.
+А що щодо методів `push/pop`? Вони нічого не переміщують. Для видалення елементу з кінця масиву метод `pop` очищає індекс та скорочує властивість `length`.
 
-The actions for the `pop` operation:
+Дії при операції `pop`:
 
 ```js
-fruits.pop(); // take 1 element from the end
+fruits.pop(); // видаляємо один елемент з кінця масиву
 ```
 
 ![](array-pop.svg)
 
-**The `pop` method does not need to move anything, because other elements keep their indexes. That's why it's blazingly fast.**
+**Метод `pop` не переміщує нічого, адже кожен елемент зберігає свій індекс. Саме тому цей метод так швидко працює.**
 
-The similar thing with the `push` method.
+Метод `push` працює аналогічно.
 
-## Loops
+## Цикли
 
-One of the oldest ways to cycle array items is the `for` loop over indexes:
+Один з найстаріших методів перебору елементів масиву - це цикл `for` по індексах:
 
 ```js run
 let arr = ["Apple", "Orange", "Pear"];
@@ -289,20 +289,20 @@ for (let i = 0; i < arr.length; i++) {
 }
 ```
 
-But for arrays there is another form of loop, `for..of`:
+Але для масивів можливий інший варіант циклу, `for..of`:
 
 ```js run
 let fruits = ["Apple", "Orange", "Plum"];
 
-// iterates over array elements
+// ітерується по елементам масиву
 for (let fruit of fruits) {
   alert( fruit );
 }
 ```
 
-The `for..of` doesn't give access to the number of the current element, just its value, but in most cases that's enough. And it's shorter.
+Цикл `for..of` не надає доступу до індексу поточного елементу, тільки до його значення, але у більшості випадків цього достатньо. До того ж, це коротше.
 
-Technically, because arrays are objects, it is also possible to use `for..in`:
+Технічно, так як масив це об’єкт, ми можемо використовувати цикл `for..in`:
 
 ```js run
 let arr = ["Apple", "Orange", "Pear"];
@@ -314,22 +314,22 @@ for (let key in arr) {
 }
 ```
 
-But that's actually a bad idea. There are potential problems with it:
+Але насправді це погана ідея. Існують потеційні проблеми:
 
-1. The loop `for..in` iterates over *all properties*, not only the numeric ones.
+1. Цикл `for..in` ітерується по *всіх властивостям*, не тільки по числових.
 
-    There are so-called "array-like" objects in the browser and in other environments, that *look like arrays*. That is, they have `length` and indexes properties, but they may also have other non-numeric properties and methods, which we usually don't need. The `for..in` loop will list them though. So if we need to work with array-like objects, then these "extra" properties can become a problem.
+    У браузерах та різних програмних середовищах існують масивоподібні об’єкти, *які виглядають як масив*. Тобто вони мають властивість `length` та індекси, проте вони також містять інші нечислові властивості і методи, які нам часто не потрібні. Цикл `for..in` відобразить і їх. Тому, коли нам необхідно працювати з масивами, ці "екстра" властивості можуть стати проблемою.
 
-2. The `for..in` loop is optimized for generic objects, not arrays, and thus is 10-100 times slower. Of course, it's still very fast. The speedup may only matter in bottlenecks. But still we should be aware of the difference.
+2. Цикл `for..in` оптимізований для довільних об’єктів, не для масивів, і тому це в 10-100 разів повільніше. Звісно, це все одно дуже швидко. Збільшення швидкості виконання має значення лише у *вузьких місцях*. Але ми все одно повинні бути обережні з відмінностями.
 
-Generally, we shouldn't use `for..in` for arrays.
+Словом, не варто використовувати цикл `for..in` для масивів.
 
 
-## A word about "length"
+## Декілька слів про "length"
 
-The `length` property automatically updates when we modify the array. To be precise, it is actually not the count of values in the array, but the greatest numeric index plus one.
+Властивість `length` спрацьовує автоматично, коли масив змінився. Якщо бути точнішим, то `length` відображає не кількість елементів в масиві, а індекс останнього елементу плюс один.
 
-For instance, a single element with a large index gives a big length:
+Наприклад, один елемент з великим індексом дасть велику довжину:
 
 ```js run
 let fruits = [];
@@ -338,54 +338,54 @@ fruits[123] = "Apple";
 alert( fruits.length ); // 124
 ```
 
-Note that we usually don't use arrays like that.
+Зверніть увагу, що зазвичай ми не використовуємо масив подібним чином.
 
-Another interesting thing about the `length` property is that it's writable.
+Інший цікавий момент стосовно властивості `length` - його можна перезаписати.
 
-If we increase it manually, nothing interesting happens. But if we decrease it, the array is truncated. The process is irreversible, here's the example:
+Якщо ми вручну збільшимо `length`, нічого цікавого не відбудеться. Але якщо зменшимо, масив стане коротшим, цей процес незворотній, наприклад:
 
 ```js run
 let arr = [1, 2, 3, 4, 5];
 
-arr.length = 2; // truncate to 2 elements
+arr.length = 2; // зкорочуємо до двох елементів
 alert( arr ); // [1, 2]
 
-arr.length = 5; // return length back
+arr.length = 5; // повертаємо попередню довжину
 alert( arr[3] ); // undefined: the values do not return
 ```
 
-So, the simplest way to clear the array is: `arr.length = 0;`.
+Отож, найпростіший метод очистки масиву це: `arr.length = 0;`.
 
 
 ## new Array() [#new-array]
 
-There is one more syntax to create an array:
+Існує ще один варіант створення масиву:
 
 ```js
 let arr = *!*new Array*/!*("Apple", "Pear", "etc");
 ```
 
-It's rarely used, because square brackets `[]` are shorter. Also there's a tricky feature with it.
+Він використовується рідше, адже квадратні дужки коротші `[]`. А також має певну особливість.
 
-If `new Array` is called with a single argument which is a number, then it creates an array *without items, but with the given length*.
+Якщо `new Array` викликається з одним аргументом, а саме числом, він створить пустий масив з довжиною, яка дорівнює *цьому числу*.
 
-Let's see how one can shoot themself in the foot:
+Давайте подивимось, як можна завдати собі ведмежої послуги:
 
 ```js run
-let arr = new Array(2); // will it create an array of [2] ?
+let arr = new Array(2); // чи створиться масив [2] ?
 
-alert( arr[0] ); // undefined! no elements.
+alert( arr[0] ); // undefined! елементи відсутні.
 
 alert( arr.length ); // length 2
 ```
 
-In the code above, `new Array(number)` has all elements `undefined`.
+Як бачимо в цьому коді `new Array(number)` всі елементи `undefined`.
 
-To evade such surprises, we usually use square brackets, unless we really know what we're doing.
+Для того, щоб позбавитись таких сюрпризів, як правило, ми використовуємо квадратні дужки `[]`, якщо тільки ми дійсно не маємо причини для використання методу `new Array`.
 
-## Multidimensional arrays
+## Багатовимірні масиви 
 
-Arrays can have items that are also arrays. We can use it for multidimensional arrays, for example to store matrices:
+Масиви можуть містити елементи, які в свою чергу теж є масивами. Ми можемо використувати це для створення багатовимірних масивів, наприклад, для зберігання матриць:
 
 ```js run
 let matrix = [
@@ -394,14 +394,14 @@ let matrix = [
   [7, 8, 9]
 ];
 
-alert( matrix[1][1] ); // 5, the central element
+alert( matrix[1][1] ); // 5, центральний елемент
 ```
 
 ## toString
 
-Arrays have their own implementation of `toString` method that returns a comma-separated list of elements.
+Масиви по-своєму реалізують метод `toString`, який повертає список елементів розділених комою.
 
-For instance:
+Наприклад:
 
 
 ```js run
@@ -411,7 +411,7 @@ alert( arr ); // 1,2,3
 alert( String(arr) === '1,2,3' ); // true
 ```
 
-Also, let's try this:
+Давайте спробуємо це:
 
 ```js run
 alert( [] + 1 ); // "1"
@@ -419,9 +419,9 @@ alert( [1] + 1 ); // "11"
 alert( [1,2] + 1 ); // "1,21"
 ```
 
-Arrays do not have `Symbol.toPrimitive`, neither a viable `valueOf`, they implement only `toString` conversion, so here `[]` becomes an empty string, `[1]` becomes `"1"` and `[1,2]` becomes `"1,2"`.
+Масиви не мають `Symbol.toPrimitive`, або функціонуючого `valueOf`, вони реалізують лише метод `toString` таким чином, що `[]` стає пустою строкою, `[1]` стає `"1"` або `[1,2]` стає `"1,2"`.
 
-When the binary plus `"+"` operator adds something to a string, it converts it to a string as well, so the next step looks like this:
+Коли бінарний оператор `"+"` додає щось до строки, це конвертується в строку та виглядає наступним чином:
 
 ```js run
 alert( "" + 1 ); // "1"
@@ -429,31 +429,31 @@ alert( "1" + 1 ); // "11"
 alert( "1,2" + 1 ); // "1,21"
 ```
 
-## Don't compare arrays with ==
+## Не порівнюйте масиви за допомогою `==`
 
-Arrays in JavaScript, unlike some other programming languages, shouldn't be compared with operator `==`.
+На відміну від інших мов програмування, масиви в JavaScript не варто порівнювати за допомогою оператора `==`.
 
-This operator has no special treatment for arrays, it works with them as with any objects.
+Цей оператор не має спеціальних методів для опрацювання масивів, тому він працює з ними, як з об’єктами.
 
-Let's recall the rules:
+Давайте згадаємо правила:
 
-- Two objects are equal `==` only if they're references to the same object.
-- If one of arguments of `==` is an object, and the other one is a primitive, then the object gets converted to primitive, as explained in the chapter <info:object-toprimitive>.
-- ...With an exception of `null` and `undefined` that equal `==` each other and nothing else.
+- Два об’єкти рівні `==` лише коли вони посилаються на один об’єкт.
+- Якщо один з аргументів оператора `==` об’єкт, а інший — примітив, тоді об’єкт конвертується в примітив. Це пояснюється в розділі <info:object-toprimitive>.
+- ...Лише два виключення — це `null` та `undefined`, які рівні `==` один одному та нічому більше.
 
-The strict comparison `===` is even simpler, as it doesn't convert types. 
+Строге порівняння `===` ще простіше, тому що не конвертує типи. 
 
-So, if we compare arrays with `==`, they are never the same, unless we compare two variables that reference exactly the same array.
+Тому, якщо ми порівнюємо масиви оператором `==`, то вони ніколи не будуть одинаковими, за виключенням, коли ми порівнюємо дві змінні, які посилаються на один масив.
 
-For example:
+Наприклад:
 ```js run
 alert( [] == [] ); // false
 alert( [0] == [0] ); // false
 ```
 
-These arrays are technically different objects. So they aren't equal. The `==` operator doesn't do item-by-item comparison.
+Технічно ці масиви, це різні об’єкти. Тому вони не рівні. Оператор `==` не порівнює елемент за елементом.
 
-Comparison with primitives may give seemingly strange results as well:
+Порівняння масиву з примітивами теж може дати досить цікаві результати:
 
 ```js run
 alert( 0 == [] ); // true
@@ -461,54 +461,54 @@ alert( 0 == [] ); // true
 alert('0' == [] ); // false
 ```
 
-Here, in both cases, we compare a primitive with an array object. So the array `[]` gets converted to primitive for the purpose of comparison and becomes an empty string `''`. 
+В обох випадках ми порівнювали примітиви з масивом. Під час порівняння, масив `[]` конвертується в примітив і стає порожнім рядком `''`. 
 
-Then the comparison process goes on with the primitives, as described in the chapter <info:type-conversions>:
+Далі відбувається порівняння примітивів. Логіка такого порівняння описана в розділі <info:type-conversions>:
 
 ```js run
-// after [] was converted to ''
-alert( 0 == '' ); // true, as '' becomes converted to number 0
+// після того, як [] було сконвертовано в ''
+alert( 0 == '' ); // true, тому що '' конвертується в число 0
 
-alert('0' == '' ); // false, no type conversion, different strings
+alert('0' == '' ); // false, тут немає конвертації типів; це різні рядки
 ```
 
-So, how to compare arrays?
+Тож, як порівнювати масиви?
 
-That's simple: don't use the `==` operator. Instead, compare them item-by-item in a loop or using iteration methods explained in the next chapter.
+Все просто: не використовуйте оператор `==`. Натомість, порівнюйте їх в циклі, елемент за елементом. Також можна використати методи перебору, про які написано в наступному розділі.
 
-## Summary
+## Підсумки
 
-Array is a special kind of object, suited to storing and managing ordered data items.
+Масив - це особливий тип об’єкту, створений для зберігання та керування впорядкованих даних. 
 
-- The declaration:
+- Оголошення:
 
     ```js
-    // square brackets (usual)
+    // квадратні дужки (як правило)
     let arr = [item1, item2...];
 
-    // new Array (exceptionally rare)
+    // new Array (набагато рідше)
     let arr = new Array(item1, item2...);
     ```
 
-    The call to `new Array(number)` creates an array with the given length, but without elements.
+    Виклик `new Array(number)` створює масив з заданою довжиною, але без елементів.
 
-- The `length` property is the array length or, to be precise, its last numeric index plus one. It is auto-adjusted by array methods.
-- If we shorten `length` manually, the array is truncated.
+- Властивість `length` демонструє довжину масиву або, якщо точніше, останній цифровий індекс масиву плюс один. Це виконується автоматично методами масиву.
+- Якщо ми вручну скорочуємо `length`, масив зменшується (нагадаємо, що ця операція незворотня).
 
-We can use an array as a deque with the following operations:
+Ми можемо використовувати масив як двосторонню чергу за допомогою наступних оперцій:
 
-- `push(...items)` adds `items` to the end.
-- `pop()` removes the element from the end and returns it.
-- `shift()` removes the element from the beginning and returns it.
-- `unshift(...items)` adds `items` to the beginning.
+- `push(...items)` додає `items` в кінець масиву.
+- `pop()` видаляє елемент з кінця масиву та повертає його.
+- `shift()` видаляє елемент з початку масиву та повертає його.
+- `unshift(...items)` додає `items` в початок масиву.
 
-To loop over the elements of the array:
-  - `for (let i=0; i<arr.length; i++)` -- works fastest, old-browser-compatible.
-  - `for (let item of arr)` -- the modern syntax for items only,
-  - `for (let i in arr)` -- never use.
+Для того, щоб пройтись циклом по елементах масиву:
+  - `for (let i=0; i<arr.length; i++)` — працює швидше, сумісний зі старими браузерами.
+  - `for (let item of arr)` — новий синтакс, лише для значень елементів (відсутній доступ до індексів масиву).
+  - `for (let i in arr)` — ніколи не використовуйте!
 
-To compare arrays, don't use the `==` operator (as well as `>`, `<` and others), as they have no special treatment for arrays. They handle them as any objects, and it's not what we usually want.
+Для порівняння масивів, не використовуйте оператор `==` (так само, як `>`, `<` та інші), тому що в них немає спеціальних методів для порівнювання масивів. Ці оператори працюють з масивами як з об’єктами, а це не те, що нам потрібно.
 
-Instead you can use `for..of` loop to compare arrays item-by-item.
+Натомість, для порівняння масивів використовуйте цикл `for..of`, щоб порівнювати елемент за елементом.
 
-We will continue with arrays and study more methods to add, remove, extract elements and sort arrays in the next chapter <info:array-methods>.
+Ми повернемось до масивів та вивчимо методи додавання, видалення, відокремлення елементів та сортування масивів в розділі <info:array-methods>.
