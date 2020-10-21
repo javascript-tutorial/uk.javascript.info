@@ -84,11 +84,7 @@ result = value1 || value2 || value3;
 
 Значення повертається у первісному вигляді без конвертації.
 
-<<<<<<< HEAD
 Іншими словами, ланцюжок з АБО `||` повертає перше правдиве значення або останнє, якщо правдивого значення не знайдено.
-=======
-In other words, a chain of OR `||` returns the first truthy value or the last one if no truthy value is found.
->>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 
 Наприклад:
 
@@ -105,15 +101,9 @@ alert( undefined || null || 0 ); // 0 (усі хибні, повертаєтьс
 
 1. **Отримання першого істинного значення зі списку змінних або виразів.**
 
-<<<<<<< HEAD
-    Наприклад, маємо змінні `firstName`, `lastName` та `nickName`, усі необов'язкові (тобто вони можуть бути невизначеними або мати хибні значення).
+    Наприклад, маємо змінні `firstName`, `lastName` та `nickName`, усі необов’язкові (тобто вони можуть бути невизначеними або мати хибні значення).
 
     Використаємо АБО `||`, щоб вибрати ту змінну, яка має дані, і виведемо її (або рядок `"Анонім"`, якщо жодна змінна не має даних):
-=======
-    For instance, we have `firstName`, `lastName` and `nickName` variables, all optional (i.e. can be undefined or have falsy values).
-
-    Let's use OR `||` to choose the one that has the data and show it (or `"Anonymous"` if nothing set):
->>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 
     ```js run
     let firstName = "";
@@ -125,11 +115,7 @@ alert( undefined || null || 0 ); // 0 (усі хибні, повертаєтьс
     */!*
     ```
 
-<<<<<<< HEAD
-    Якщо всі змінні мали б порожні рядки, тоді показалося слово "Анонімний".
-=======
-    If all variables were falsy, `"Anonymous"` would show up.
->>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
+    Якщо всі змінні мали б порожні рядки, тоді показалося слово `"Анонімний"`.
 
 2. **Обчислення короткого замикання.**
 
@@ -189,7 +175,7 @@ if (1 && 0) { // обчислюється як true && false
 
 ## І "&&" шукає перше хибне значення
 
-Дано декілька значень, об'єднаних кількома І:
+Дано декілька значень, об’єднаних кількома І:
 
 ```js
 result = value1 && value2 && value3;
@@ -237,13 +223,8 @@ alert( 1 && 2 && 3 ); // 3, останнє
 Отже, код `a && b || c && d` по суті є таким самим, як код з виразами `&&` у дужках: `(a && b) || (c && d)`.
 ````
 
-<<<<<<< HEAD
 ````warn header="Не міняйте `if` на `||` чи `&&`"
 Деколи оператор І `&&` використовують як "скорочений варіант `if`".
-=======
-````warn header="Don't replace `if` with `||` or `&&`"
-Sometimes, people use the AND `&&` operator as a "shorter way to write `if`".
->>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 
 Наприклад:
 
@@ -263,11 +244,7 @@ let x = 1;
 if (x > 0) alert( 'Більше за нуль!' );
 ```
 
-<<<<<<< HEAD
 Хоча варіант з `&&` видається коротшим, конструкція з `if` є більш очевидною і зазвичай більш читабельною. Тому ми рекомендуємо використовувати кожну конструкцію за своїм призначенням: використовуємо `if`, якщо нам потрібна інструкція `if`, і використовуємо `&&`, якщо нам потрібен оператор І.
-=======
-Although, the variant with `&&` appears shorter, `if` is more obvious and tends to be a little bit more readable. So we recommend using every construct for its purpose: use `if` if we want `if` and use `&&` if we want AND.
->>>>>>> d6e88647b42992f204f57401160ebae92b358c0d
 ````
 
 
