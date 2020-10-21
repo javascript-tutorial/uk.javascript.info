@@ -3,7 +3,7 @@
 
 In modern websites, scripts are often "heavier" than HTML: their download size is larger, and processing time is also longer.
 
-When the browser loads HTML and comes across a `<script>...</script>` tag, it can't continue building the DOM. It must execute the script right now. The same happens for external scripts `<script src="..."></script>`: the browser must wait until the script downloads, execute it, and only after process the rest of the page.
+When the browser loads HTML and comes across a `<script>...</script>` tag, it can't continue building the DOM. It must execute the script right now. The same happens for external scripts `<script src="..."></script>`: the browser must wait for the script to download, execute the downloaded script, and only then can it process the rest of the page.
 
 That leads to two important issues:
 
@@ -153,7 +153,7 @@ That is:
 - They don't wait for anything, nothing waits for them.
 - The script that loads first -- runs first ("load-first" order).
 
-This can be changed if we explicitly set `script.async=true`. Then scripts will be executed in the document order, just like `defer`.
+This can be changed if we explicitly set `script.async=false`. Then scripts will be executed in the document order, just like `defer`.
 
 In this example, `loadScript(src)` function adds a script and also sets `async` to `false`.
 
@@ -185,7 +185,7 @@ But there are also essential differences between them:
 
 |         | Order | `DOMContentLoaded` |
 |---------|---------|---------|
-| `async` | *Load-first order*. Their document order doesn't matter -- which loads first |  Irrelevant. May load and execute while the document has not yet been fully downloaded. That happens if scripts are small or cached, and the document is long enough. |
+| `async` | *Load-first order*. Their document order doesn't matter -- which loads first runs first |  Irrelevant. May load and execute while the document has not yet been fully downloaded. That happens if scripts are small or cached, and the document is long enough. |
 | `defer` | *Document order* (as they go in the document). |  Execute after the document is loaded and parsed (they wait if needed), right before `DOMContentLoaded`. |
 
 In practice, `defer` is used for scripts that need the whole DOM and/or their relative execution order is important. 
