@@ -8,7 +8,7 @@ function sumInput() {
 
   while (true) {
 
-    let value = prompt("A number please?", 0);
+    let value = prompt("Введіть, будь ласка, номер", 0);
 
     // Обриваємо введення даних?
     if (value === "" || value === null || !isFinite(value)) break;
@@ -25,4 +25,3 @@ function sumInput() {
 
 alert( sumInput() ); 
 ```
-
