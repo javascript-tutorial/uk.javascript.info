@@ -47,7 +47,7 @@ fruits[2] = 'Pear'; // тепер ["Apple", "Orange", "Pear"]
 fruits[3] = 'Lemon'; // тепер ["Apple", "Orange", "Pear", "Lemon"]
 ```
 
-Загальна кількість елементів масиву  зберігається у його властивості `length`:
+Загальна кількість елементів масиву зберігається у його властивості `length`:
 
 ```js run
 let fruits = ["Apple", "Orange", "Plum"];
