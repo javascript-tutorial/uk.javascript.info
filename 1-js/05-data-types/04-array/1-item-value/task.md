@@ -1,4 +1,4 @@
-важливість: 3
+importance: 3
 
 ---
 
@@ -16,4 +16,3 @@ shoppingCart.push("Banana");
 // Що в fruits?
 alert( fruits.length ); // ?
 ```
-
