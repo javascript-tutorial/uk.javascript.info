@@ -44,7 +44,7 @@ fruits[2] = 'Pear'; // зараз ["Apple", "Orange", "Pear"]
 ...Або додати новий:
 
 ```js
-fruits[3] = 'Lemon'; // зараз ["Apple", "Orange", "Pear", "Lemon"]
+fruits[3] = 'Lemon'; // тепер ["Apple", "Orange", "Pear", "Lemon"]
 ```
 
 Загальна кількість елементів масиву  зберігається у його властивості `length`:
