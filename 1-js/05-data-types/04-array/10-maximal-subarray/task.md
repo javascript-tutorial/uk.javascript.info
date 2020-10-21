@@ -27,4 +27,4 @@ getMaxSubSum([*!*1, 2, 3*/!*]) == 6 (take all)
 getMaxSubSum([-1, -2, -3]) = 0
 ```
 
-Будь ласка, подумайте над швидким рішенням: [O(n<sup>2</sup>)](https://en.wikipedia.org/wiki/Big_O_notation) або над O(n) рішенням, якщо зможете.
+Будь ласка, подумайте над швидким рішенням: [O(n<sup>2</sup>)](https://uk.wikipedia.org/wiki/Нотація_Ландау) або навіть над рішенням O(n), якщо зможете.
