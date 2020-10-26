@@ -82,6 +82,7 @@ const bigInt = 1234567890123456789012345678901234567890n;
 Через те, що тип `BigInt` рідко використовується, ми не розглядатимемо його в цьому розділі, проте ми винесли його в окремий розділ <info:bigint>. Прочитайте його, якщо вам потрібні такі великі числа.
 
 
+<<<<<<< HEAD
 ```smart header="Проблеми з сумісністю"
 Цієї миті, підтримка типу `BigInt` є в останніх версіях Firefox/Chrome/Edge/Safari з iOS 14, але не в IE.
 ```
@@ -89,6 +90,15 @@ const bigInt = 1234567890123456789012345678901234567890n;
 На сайті *MDN* є [таблиця сумісності](https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Global_Objects/BigInt#Сумісність_з_веб-переглядачами), де показано, які версії браузерів підтримують тип `BigInt`.
 
 ## Рядок (string)
+=======
+```smart header="Compatibility issues"
+Right now, `BigInt` is supported in Firefox/Chrome/Edge/Safari, but not in IE.
+```
+
+You can check [*MDN* BigInt compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt#Browser_compatibility) to know which versions of a browser are supported.
+
+## String
+>>>>>>> 2d5be7b7307b0a4a85e872d229e0cebd2d8563b5
 
 Рядок в JavaScript повинен бути оточений лапками.
 
