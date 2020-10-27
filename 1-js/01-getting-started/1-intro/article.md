@@ -1,10 +1,6 @@
 # Вступ до JavaScript
 
-<<<<<<< HEAD
 Давайте розглянемо, що такого особливого в JavaScript, що ми дожемо досягти з його допомогою і які ще технології пов’язані з ним.
-=======
-Let's see what's so special about JavaScript, what we can achieve with it, and what other technologies play well with it.
->>>>>>> 2d5be7b7307b0a4a85e872d229e0cebd2d8563b5
 
 ## Що таке JavaScript?
 
@@ -28,15 +24,9 @@ Let's see what's so special about JavaScript, what we can achieve with it, and w
 
 Різні рушії мають різні "кодові назви". Наприклад:
 
-<<<<<<< HEAD
 - [V8](https://uk.wikipedia.org/wiki/V8_(рушій_JavaScript)) -- в Chrome і Opera.
 - [SpiderMonkey](https://uk.wikipedia.org/wiki/SpiderMonkey) -- в Firefox.
 - ...Є також інші кодові назви як "Chakra" для IE, "ChakraCore" для Microsoft Edge, "Nitro" і "SquirrelFish" для Safari, та інші.
-=======
-- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome and Opera.
-- [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey) -- in Firefox.
-- ...There are other codenames like "Chakra" for IE, "ChakraCore" for Microsoft Edge, "Nitro" and "SquirrelFish" for Safari, etc.
->>>>>>> 2d5be7b7307b0a4a85e872d229e0cebd2d8563b5
 
 Написані вище терміни добре було б запам’ятати, оскільки вони використовуються в статтях розробників на просторах інтернету. Ми також будемо їх використовувати. Наприклад, якщо "можливість X підтримується в V8", тоді ймовірно це буде працювати в Chrome і Opera.
 
@@ -126,12 +116,6 @@ JavaScript – це єдина браузерна технологія, яка �
 
 ## Підсумки
 
-<<<<<<< HEAD
 - Мова JavaScript спочатку була створена лише як мова для браузера, але зараз її також використовують в інших середовищах.
 - Сьогодні, JavaScript позиціонується як найбільш поширена мова для браузера з повною інтеграцією в HTML/CSS.
 - Є багато мов які "транспілюються" в JavaScript і надають певні функції. Рекомендується переглянути їх, принаймні мигцем, після освоєння JavaScript.
-=======
-- JavaScript was initially created as a browser-only language, but it is now used in many other environments as well.
-- Today, JavaScript has a unique position as the most widely-adopted browser language with full integration in HTML/CSS.
-- There are many languages that get "transpiled" to JavaScript and provide certain features. It is recommended to take a look at them, at least briefly, after mastering JavaScript.
->>>>>>> 2d5be7b7307b0a4a85e872d229e0cebd2d8563b5
