@@ -23,8 +23,13 @@
 
 2. Друга - це поліфіл.
 
+<<<<<<< HEAD
     Нові функції мови можуть включати нові вбудовані функції та синтаксичні конструкції.
     Транспілятор переписує код, перетворюючи синтаксичні конструкції у конструкції попереднього стандарту. Але що стосується нових вбудованих функцій, нам потрібно їх реалізувати. JavaScript є дуже динамічною мовою, тож скрипти можуть додавати / змінювати будь-які функції, щоб вони поводилися відповідно до сучасного стандарту.
+=======
+    New language features may include not only syntax constructs, but also built-in functions.
+    The transpiler rewrites the code, transforming syntax constructs into older ones. But as for new built-in functions, we need to implement them. JavaScript is a highly dynamic language, scripts may add/modify any functions, so that they behave according to the modern standard.
+>>>>>>> dccca58f268ad6d5a6f2160613a8ea3c5cd53a2d
 
     Скрипт, що оновлює / додає нові функції, називається "поліфілом". Він "заповнює" прогалину і додає відсутню реалізацію.
 
