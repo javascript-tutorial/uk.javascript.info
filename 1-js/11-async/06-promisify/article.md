@@ -36,11 +36,11 @@ Here it is:
 let loadScriptPromise = function(src) {
   return new Promise((resolve, reject) => {
     loadScript(src, (err, script) => {
-      if (err) reject(err)
+      if (err) reject(err);
       else resolve(script);
     });
-  })
-}
+  });
+};
 
 // usage:
 // loadScriptPromise('path/script.js').then(...)
@@ -71,7 +71,7 @@ function promisify(f) {
       f.call(this, ...args); // call the original function
     });
   };
-};
+}
 
 // usage:
 let loadScriptPromise = promisify(loadScript);
@@ -82,7 +82,7 @@ The code may look a bit complex, but it's essentially the same that we wrote abo
 
 A call to `promisify(f)` returns a wrapper around `f` `(*)`. That wrapper returns a promise and forwards the call to the original `f`, tracking the result in the custom callback `(**)`.
 
-Here, `promisiefy` assumes that the original function expects a callback with exactly two arguments `(err, result)`. That's what we encounter most often. Then our custom callback is in exactly the right format, and `promisify` works great for such a case.
+Here, `promisify` assumes that the original function expects a callback with exactly two arguments `(err, result)`. That's what we encounter most often. Then our custom callback is in exactly the right format, and `promisify` works great for such a case.
 
 But what if the original `f` expects a callback with more arguments `callback(err, res1, res2, ...)`?
 
@@ -110,11 +110,11 @@ function promisify(f, manyArgs = false) {
       f.call(this, ...args);
     });
   };
-};
+}
 
 // usage:
 f = promisify(f, true);
-f(...).then(arrayOfResults => ..., err => ...)
+f(...).then(arrayOfResults => ..., err => ...);
 ```
 
 As you can see it's essentially the same as above, but `resolve` is called with only one or all arguments depending on whether `manyArgs` is truthy.
