@@ -106,11 +106,19 @@ JavaScript – це єдина браузерна технологія, яка �
 
 Приклади таких мов:
 
+<<<<<<< HEAD
 - [CoffeeScript](http://coffeescript.org/) — це "синтаксичний цукор" поверх JavaScript. Він вводить більш короткий синтаксис, дозволяючи нам писати більш чіткий і точний код. Зазвичай, це до вподоби програмістам на Ruby.
 - [TypeScript](http://www.typescriptlang.org/) зосереджений на додаванні "строгої типізації даних", щоб спростити розробку і підтримку складних систем. Розробляється в Microsoft.
 - [Flow](http://flow.org/) також додає типізацію даних, але іншим способом. Розробляється компанією Facebook.
 - [Dart](https://www.dartlang.org/) — це автономна мова, яка має власний рушій, що працює в не-браузерних середовищах (як-от мобільні застосунки), але також може транспілюватися в JavaScript. Розробляється компанією Google.
 - [Brython](https://brython.info/) це транспілятор з мови Python в JavaScript, який дозволяє писати застосунки на чистому Python без використання JavaScript.
+=======
+- [CoffeeScript](http://coffeescript.org/) is a "syntactic sugar" for JavaScript. It introduces shorter syntax, allowing us to write clearer and more precise code. Usually, Ruby devs like it.
+- [TypeScript](http://www.typescriptlang.org/) is concentrated on adding "strict data typing" to simplify the development and support of complex systems. It is developed by Microsoft.
+- [Flow](http://flow.org/) also adds data typing, but in a different way. Developed by Facebook.
+- [Dart](https://www.dartlang.org/) is a standalone language that has its own engine that runs in non-browser environments (like mobile apps), but also can be transpiled to JavaScript. Developed by Google.
+- [Brython](https://brython.info/) is a Python transpiler to JavaScript that enables the writing of applications in pure Python without JavaScript.
+>>>>>>> e1a3f634a47c119cf1ec7420c49fc0fc7172c0b5
 
 Є ще більше мов. Звичайно, навіть якщо ми використовуємо одну з цих транспілюючих мов, ми також повинні знати JavaScript, щоб дійсно розуміти, що робимо.
 
