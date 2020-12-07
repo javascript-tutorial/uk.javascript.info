@@ -6,7 +6,11 @@
 let ourPlanetName = "Земля";
 ```
 
+<<<<<<< HEAD
 Зверніть увагу, ми могли використати коротше ім'я `planet`, але тоді буде незрозуміло, яку планету ми маємо на увазі. Краще описати вміст змінної детальніше. Принаймні до тих пір, поки ім'я змінної неСтанеЗанадтоДовгим.
+=======
+Note, we could use a shorter name `planet`, but it might not be obvious what planet it refers to. It's nice to be more verbose. At least until the variable isNotTooLong.
+>>>>>>> c56e6a57ac3497aab77128c5bfca13513980709b
 
 ## Ім'я поточного відвідувача
 
