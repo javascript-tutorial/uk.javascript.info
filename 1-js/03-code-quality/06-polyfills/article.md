@@ -1,11 +1,7 @@
 
-<<<<<<< HEAD
-# Поліфіли
-=======
-# Polyfills and transpilers
->>>>>>> c56e6a57ac3497aab77128c5bfca13513980709b
+# Поліфіли і транспілятори
 
-Мова JavaScript постійно розвивається. Нові пропозиції до мови з’являються регулярно, вони аналізуються і, якщо вважаються гідними, додаються до списку <https://tc39.github.io/ecma262/> а потім переходять до [специфікації](http://www.ecma-international.org/publications/standards/Ecma-262.htm).
+Мова JavaScript постійно розвивається. До неї регулярно додаються нові пропозиції, далі вони аналізуються і, якщо вважаються гідними, додаються до списку <https://tc39.github.io/ecma262/>, а потім переходять до [специфікації](http://www.ecma-international.org/publications/standards/Ecma-262.htm).
 
 Команди, які розробляють рушії JavaScript, мають власні уявлення про те, що потрібно реалізувати спочатку. Вони можуть вирішити реалізувати пропозиції, що знаходяться у чернетці, і відкласти речі, які вже є у специфікації, оскільки вони менш цікаві або їх важче розробити.
 
@@ -13,44 +9,18 @@
 
 Хороша сторінка, щоб побачити поточний стан підтримки функцій мови, є тут <https://kangax.github.io/compat-table/es6/> (вона велика, нам доведеться ще багато вивчати).
 
-As programmers, we'd like to use most recent features. The more good stuff - the better!
+Як програмісти, ми б хотіли використовувати найновіші можливості. Чим більше хороших речей — тим краще!
 
-<<<<<<< HEAD
-Коли ми використовуємо сучасний функціонал мови, деякі рушії можуть не підтримувати такий код. Як вже було сказано, не всі функції скрізь реалізовані.
+З іншого боку, як змусити працювати «сучасний» код на старих рушіях? Адже вони покищо не підтримують найновіших можливостей.
 
-Тут на допомогу приходить Babel.
+Для цього існує два інструменти:
 
-[Babel](https://babeljs.io) - це [транспілятор](https://en.wikipedia.org/wiki/Source-to-source_compiler). Він перетворює код, написаний сучасною мовою JavaScript, у код попереднього стандарту.
+1. Транспілятори.
+2. Поліфіли.
 
-Власне, Babel має дві частини:
+В цьому розділі ми дізнаємося, як вони працюють та яке їхнє місце у веб-розробці.
 
-1. Перша - це програма-транспілятор, яка переписує код. Розробник запускає її на власному комп’ютері. Вона переписує код у попередньому стандарті. А потім код застосовується на веб-сайті для користувачів. Сучасні системи побудови проєктів, як [webpack](http://webpack.github.io/) забезпечують нас засобами автоматичного запуску транспілятора при кожній зміні коду, так що його дуже легко інтегрувати в процес розробки.
-
-2. Друга - це поліфіл.
-
-    Новий функціонал мови може включати не лише синтаксичні конструкції, але й нові вбудовані функції.
-    Транспілятор переписує код, перетворюючи синтаксичні конструкції у конструкції попереднього стандарту. Але що стосується нових вбудованих функцій, нам потрібно їх реалізувати. JavaScript є дуже динамічною мовою, тож скрипти можуть додавати / змінювати будь-які функції, щоб вони поводилися відповідно до сучасного стандарту.
-
-    Скрипт, що оновлює / додає нові функції, називається "поліфілом". Він "заповнює" прогалину і додає відсутню реалізацію.
-
-    Є два цікавих поліфіла:
-    - [core js](https://github.com/zloirock/core-js), що підтримує багато функціоналу, дозволяє включати лише необхідні функції.
-    - [polyfill.io](http://polyfill.io) - сервіс, який забезпечує нас скриптом з поліфілами залежно від потрібних нам функцій та браузера користувача.
-
-Отже, якщо ми будемо використовувати сучасні мовні функції, нам потрібен транспілятор та поліфіл.
-
-## Приклади у посібнику
-=======
-From the other hand, how to make out modern code work on older engines that don't understand recent features yet?
-
-There are two tools for that:
-
-1. Transpilers.
-2. Polyfills.
-
-Here, in this chapter, our purpose is to get the gist of how they work, and their place in web development.
-
-## Transpilers
+## Транспілятори
 
 A [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler) is a special piece of software that can parse ("read and understand") modern code, and rewrite it using older syntax constructs, so that the result would be the same.
 
@@ -67,32 +37,14 @@ height = (height !== undefined && height !== null) ? height : 100;
 ```
 
 Now the rewritten code is suitable for older JavaScript engines.
->>>>>>> c56e6a57ac3497aab77128c5bfca13513980709b
 
 Usually, a developer runs the transpiler on their own computer, and then deploys the transpiled code to the server.
 
-<<<<<<< HEAD
-````online
-Більшість прикладів можна виконувати "прямо тут", як ось цей:
-
-```js run
-alert('Натисніть кнопку "Запустити" у правому верхньому куті для запуску');
-```
-
-Приклади, які використовують сучасний JS, працюватимуть лише в тому випадку, якщо ваш браузер підтримує його.
-````
-
-```offline
-Так, як ви читаєте офлайн версію, деякі приклади не працюватимуть у PDF форматі. В EPUB форматі деякі з них можуть працювати.
-```
-
-Google Chrome, як правило, підтримує найсучасніші особливості мови JavaScript, через це зручно запускати в ньому демонстраційні приклади нового функціоналу без будь-яких транспіляторів, але інші сучасні браузери також добре працюють.
-=======
 Speaking of names, [Babel](https://babeljs.io) is one of the most prominent transpilers out there. 
 
 Modern project build systems, such as [webpack](http://webpack.github.io/), provide means to run transpiler automatically on every code change, so it's very easy to integrate into development process.
 
-## Polyfills
+## Поліфіли
 
 New language features may include not only syntax constructs and operators, but also built-in functions.
 
@@ -119,12 +71,12 @@ if (!Math.trunc) { // if no such function
 
 JavaScript is a highly dynamic language, scripts may add/modify any functions, even including built-in ones. 
 
-Two interesting libraries of polyfills are:
-- [core js](https://github.com/zloirock/core-js) that supports a lot, allows to include only needed features.
-- [polyfill.io](http://polyfill.io) service that provides a script with polyfills, depending on the features and user's browser.
+Є два цікавих поліфіла:
+- [core js](https://github.com/zloirock/core-js), що підтримує багато функціоналу, дозволяє включати лише необхідні функції.
+- [polyfill.io](http://polyfill.io) - сервіс, що генерує скрипт з поліфілами залежно від потрібних нам функцій та браузера користувача.
 
 
-## Summary
+## Підсумки
 
 In this chapter we'd like to motivate you to study modern and even "bleeding-edge" langauge features, even if they aren't yet well-supported by JavaScript engines.
 
@@ -137,5 +89,3 @@ Good resources that show the current state of support for various features:
 - <https://caniuse.com/> - for browser-related functions.
 
 P.S. Google Chrome is usually the most up-to-date with language features, try it if a tutorial demo fails. Most tutorial demos work with any modern browser though.
-
->>>>>>> c56e6a57ac3497aab77128c5bfca13513980709b

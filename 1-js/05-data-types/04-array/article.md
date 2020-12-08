@@ -209,11 +209,7 @@ arr.push("Pear"); // зміна масиву за посиланням
 alert( fruits ); // Banana, Pear - наразі два елемента
 ```
 
-<<<<<<< HEAD
 ...Але те, що робить масиви дійсно особливими – це їх внутрішнє представлення. Рушій JavaScript намагається зберігати елементи масиву у неперервній області пам’яті, один за одним, як це представлено на ілюстраціях в цьому розділі, а також інші способи оптимізації, що дозволяють масивам працювати дуже швидко.
-=======
-...But what makes arrays really special is their internal representation. The engine tries to store its elements in the contiguous memory area, one after another, just as depicted on the illustrations in this chapter, and there are other optimizations as well, to make arrays work really fast.
->>>>>>> c56e6a57ac3497aab77128c5bfca13513980709b
 
 Проте масиви втратять всю свою ефективність, якщо ми перестанемо працювати з ними як з "упорядкованою колекцією даних" і почнемо використовувати як звичайний об’єкт.
 

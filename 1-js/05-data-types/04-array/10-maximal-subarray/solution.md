@@ -57,11 +57,7 @@ alert( getMaxSubSum([1, 2, 3]) ); // 6
 alert( getMaxSubSum([100, -9, 2, -3, 5]) ); // 100
 ```
 
-<<<<<<< HEAD
 Таке рішення має оцінку часу виконання [O(n<sup>2</sup>)](https://uk.wikipedia.org/wiki/Нотація_Ландау). Інакше кажучи, якщо ми збільшимо розмір масиву вдвічі, алгоритм буде виконуватися в 4 рази довше.
-=======
-The solution has a time complexity of [O(n<sup>2</sup>)](https://en.wikipedia.org/wiki/Big_O_notation). In other words, if we increase the array size 2 times, the algorithm will work 4 times longer.
->>>>>>> c56e6a57ac3497aab77128c5bfca13513980709b
 
 Для великих масивів (1000, 10000 або більше елементів) подібні алгоритми можуть призводити до серйозних "пригальмувань" роботі.
 
