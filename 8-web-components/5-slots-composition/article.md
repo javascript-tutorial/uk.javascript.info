@@ -408,7 +408,7 @@ customElements.define('custom-menu', class extends HTMLElement {
       <ul><slot name="item"></slot></ul>
     </div>`;
 
-    // slottable is added/removed/replaced
+    // triggers when slot content changes
 *!*
     this.shadowRoot.firstElementChild.addEventListener('slotchange', e => {
       let slot = e.target;
@@ -446,7 +446,7 @@ Composition does not really move nodes, from JavaScript point of view the DOM is
 
 JavaScript can access slots using methods:
 - `slot.assignedNodes/Elements()` -- returns nodes/elements inside the `slot`.
-- `node.assignedSlot` -- the reverse meethod, returns slot by a node.
+- `node.assignedSlot` -- the reverse property, returns slot by a node.
 
 If we'd like to know what we're showing, we can track slot contents using:
 - `slotchange` event -- triggers the first time a slot is filled, and on any add/remove/replace operation of the slotted element, but not its children. The slot is `event.target`.

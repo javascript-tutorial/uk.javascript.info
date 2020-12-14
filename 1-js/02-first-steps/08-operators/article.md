@@ -106,7 +106,16 @@ alert(2 + 2 + '1' ); // "41", а не "221"
 
 Тут оператори виконуються один за одним. Перший `+` додає два числа, тому він поверне `4`; а наступний оператор `+` вже додасть (об’єднає) попередній результат з рядком `1`. У підсумку ми отримаємо рядок `41` (`4 + '1'`).
 
+<<<<<<< HEAD
 Лише бінарний `+` працює з рядками таким чином. Інші арифметичні оператори працюють тільки з числами і завжди перетворюють свої операнди на числа.
+=======
+```js run
+alert('1' + 2 + 2); // "122" and not "14"
+```
+Here, the first operand is a string, the compiler treats the other two operands as strings too. The `2` gets concatenated to `'1'`, so it's like `'1' + 2 = "12"` and `"12" + 2 = "122"`.
+
+The binary `+` is the only operator that supports strings in such a way. Other arithmetic operators work only with numbers and always convert their operands to numbers.
+>>>>>>> 23e85b3c33762347e26276ed869e491e959dd557
 
 Ось приклад, як працює віднімання й ділення:
 
