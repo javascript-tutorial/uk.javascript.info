@@ -68,7 +68,11 @@ if (condition) {
 
 ## Блок "else"
 
+<<<<<<< HEAD
 Вираз `if` може містити необов'язковий блок "else" ("інакше"). Він виконується, коли умова є хибною.
+=======
+The `if` statement may contain an optional "else" block. It executes when the condition is falsy.
+>>>>>>> fc3f811c03ca97ff8304271bb2b918413bed720f
 
 Наприклад:
 ```js run
