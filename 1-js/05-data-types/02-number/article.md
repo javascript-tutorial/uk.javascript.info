@@ -383,7 +383,11 @@ JavaScript має вбудований [Math](https://developer.mozilla.org/uk/d
 Декілька прикладів:
 
 `Math.random()`
+<<<<<<< HEAD
 : Повертає випадкове число від 0 до 1 (не включаючи 1)
+=======
+: Returns a random number from 0 to 1 (not including 1).
+>>>>>>> 468e3552884851fcef331fbdfd58096652964b5f
 
     ```js run
     alert( Math.random() ); // 0.1234567894322
@@ -400,7 +404,11 @@ JavaScript має вбудований [Math](https://developer.mozilla.org/uk/d
     ```
 
 `Math.pow(n, power)`
+<<<<<<< HEAD
 : Повертає `n` зведене у ступінь
+=======
+: Returns `n` raised to the given power.
+>>>>>>> 468e3552884851fcef331fbdfd58096652964b5f
 
     ```js run
     alert( Math.pow(2, 10) ); // 2 у ступені 10 = 1024

@@ -134,8 +134,13 @@ function hello(name) {
 
     Натискаючи цю кнопку раз за разом, всі вирази будуть виконуватися покроково.
 
+<<<<<<< HEAD
 <span class="devtools" style="background-position:-62px -192px"></span>&ensp;—&ensp;виконати наступну команду, *не заходячи в функцію*. Швидка клавіша: `key:F10`.
 : Подібна до попередньої команди "Step", проте працює дещо по-іншому, якщо наступний вираз – виклик функції. Ось наприклад, маємо власноруч написану функцію `say()`, яка показує повідомлення.
+=======
+<span class="devtools" style="background-position:-62px -192px"></span> -- "Step over": run the next command, but *don't go into a function*, hotkey `key:F10`.
+: Similar to the previous "Step" command, but behaves differently if the next statement is a function call. That is: not a built-in, like `alert`, but a function of our own.
+>>>>>>> 468e3552884851fcef331fbdfd58096652964b5f
 
     Команда "Step" зайде в неї і зупиниться на її першому рядку, тоді як "Step over" виконає всі вирази, які є в цій функції (включно з викликами вкладених функцій, такі як `alert()`).
 
