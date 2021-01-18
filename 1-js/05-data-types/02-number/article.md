@@ -16,21 +16,42 @@
 let billion = 1000000000;
 ```
 
+<<<<<<< HEAD
 Але в реальному житті ми зазвичай уникаємо написання довгих рядків з нулями, оскільки це додає потенційних помилок. А також ми ліниві. Зазвичай ми напишемо щось на кшталт `"1 млрд"` для мільярда або `"7.3 млрд"` для 7 мільярдів 300 мільйонів. Те саме стосується більшості великих чисел.
 
 У JavaScript ми скорочуємо число, додаючи до числа букву `"е"` та кількість нулів після неї:
+=======
+We also can use underscore `_` as the separator:
+
+```js
+let billion = 1_000_000_000;
+```
+
+Here the underscore `_` plays the role of the "syntactic sugar", it makes the number more readable. The JavaScript engine simply ignores `_` between digits, so it's exactly the same one billion as above.
+
+In real life though, we try to avoid writing long sequences of zeroes. We're too lazy for that. We'll try to write something like `"1bn"` for a billion or `"7.3bn"` for 7 billion 300 million. The same is true for most large numbers.
+
+In JavaScript, we can shorten a number by appending the letter `"e"` to it and specifying the zeroes count:
+>>>>>>> 3a0b3f4e31d4c4bbe90ed4c9c6e676a888ad8311
 
 ```js run
 let billion = 1e9;  // 1 млрд, буквально: 1 та 9 нулів
 
+<<<<<<< HEAD
 alert( 7.3e9 );  // 7.3 млрд (7.300.000.000)
 ```
 
 Іншими словами, `"e"` помножує число на `1` із заданим числом нулів.
+=======
+alert( 7.3e9 );  // 7.3 billions (same as 7300000000 or 7_300_000_000)
+```
+
+In other words, `e` multiplies the number by `1` with the given zeroes count.
+>>>>>>> 3a0b3f4e31d4c4bbe90ed4c9c6e676a888ad8311
 
 ```js
-1e3 = 1 * 1000
-1.23e6 = 1.23 * 1000000
+1e3 = 1 * 1000 // e3 means *1000
+1.23e6 = 1.23 * 1000000 // e6 means *1000000
 ```
 
 Тепер напишемо щось дуже маленьке. Наприклад, 1 мікросекунда (одна мільйонна частина секунди):
@@ -125,7 +146,11 @@ alert( num.toString(2) );   // 11111111
 : Округляє вверх: `3.1` стає `4`, та `-1.1` стає `-1`.
 
 `Math.round`
+<<<<<<< HEAD
 : Округляє до найближчого цілого числа: `3.1` стає `3`, `3.6` стає `4` та `-1.1` стає `-1`.
+=======
+: Rounds to the nearest integer: `3.1` becomes `3`, `3.6` becomes `4`, the middle case: `3.5` rounds up to `4` too.
+>>>>>>> 3a0b3f4e31d4c4bbe90ed4c9c6e676a888ad8311
 
 `Math.trunc` (не підтримується в Internet Explorer)
 : Видаляє все після десяткової крапки без округлення: `3.1` стає `3`, `-1.1` стає `-1`.

@@ -74,12 +74,12 @@ That's why the optional chaining `?.` was added to the language. To solve this p
 
 ## Optional chaining
 
-The optional chaining `?.` stops the evaluation if the part before `?.` is `undefined` or `null` and returns that part.
+The optional chaining `?.` stops the evaluation if the value before `?.` is `undefined` or `null` and returns `undefined`.
 
 **Further in this article, for brevity, we'll be saying that something "exists" if it's not `null` and not `undefined`.**
 
 In other words, `value?.prop`:
-- is the same as `value.prop` if `value` exists,
+- works as `value.prop`, if `value` exists,
 - otherwise (when `value` is `undefined/null`) it returns `undefined`.
 
 Here's the safe way to access `user.address.street` using `?.`:
@@ -103,7 +103,7 @@ alert( user?.address.street ); // undefined
 
 Please note: the `?.` syntax makes optional the value before it, but not any further.
 
-E.g. in `user?.address.street.name` the `?.` allows `user` to be `null/undefined`, but it's all it does. Further properties are accessed in a regular way. If we want some of them to be optional, then we'll need to replace more `.` with `?.`.
+E.g. in `user?.address.street.name` the `?.` allows `user` to safely be `null/undefined` (and returns `undefined` in that case), but that's only for `user`. Further properties are accessed in a regular way. If we want some of them to be optional, then we'll need to replace more `.` with `?.`.
 
 ```warn header="Don't overuse the optional chaining"
 We should use `?.` only where it's ok that something doesn't exist.
@@ -173,18 +173,16 @@ Then `?.()` checks the left part: if the admin function exists, then it runs (th
 The `?.[]` syntax also works, if we'd like to use brackets `[]` to access properties instead of dot `.`. Similar to previous cases, it allows to safely read a property from an object that may not exist.
 
 ```js run
+let key = "firstName";
+
 let user1 = {
   firstName: "John"
 };
 
-let user2 = null; // Imagine, we couldn't authorize the user
-
-let key = "firstName";
+let user2 = null; 
 
 alert( user1?.[key] ); // John
 alert( user2?.[key] ); // undefined
-
-alert( user1?.[key]?.something?.not?.existing); // undefined
 ```
 
 Also we can use `?.` with `delete`:

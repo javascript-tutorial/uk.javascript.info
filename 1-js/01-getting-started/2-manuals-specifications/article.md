@@ -13,20 +13,32 @@
 
 Щоб прочитати про найновіші функції, включно з тими, які "майже входять в стандарт" (так звана "стадія 3"), перегляньте пропозиції на <https://github.com/tc39/proposals>.
 
+<<<<<<< HEAD
 Також, якщо ви розробляєте для браузерів, вам буде цікаво прочитати про інші специфікації, які описано в [другій частині](info:browser-environment) цього посібника.
+=======
+Also, if you're in developing for the browser, then there are other specifications covered in the [second part](info:browser-environment) of the tutorial.
+>>>>>>> 3a0b3f4e31d4c4bbe90ed4c9c6e676a888ad8311
 
 ## Довідники
 
+<<<<<<< HEAD
 - **MDN (Mozilla) JavaScript Reference** — це довідник з прикладами та іншою інформацією. Він чудово підходить для детального вивчення окремих функцій, методів тощо.
+=======
+- **MDN (Mozilla) JavaScript Reference** is the main manual with examples and other information. It's great to get in-depth information about individual language functions, methods etc.
+>>>>>>> 3a0b3f4e31d4c4bbe90ed4c9c6e676a888ad8311
 
     Його можна знайти за цим посиланням <https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference>.
 
+<<<<<<< HEAD
     Хоча, замість пошуку на сайті, краще використовувати пошукові системи. Просто напишіть "MDN [термін]" в пошуковому запиті. Наприклад, запит "[MDN parseInt](https://www.google.com.ua/search?q=MDN+parseInt)" знайде інформацію про функцію `parseInt`.
 
 
 - **MSDN** – довідник від Microsoft, де зібрано багато інформації, включаючи інформацію про JavaScript (часто згадується як JScript). Якщо потрібно дізнатися про щось зв'язане з Internet Explorer/Microsoft Edge, краще шукати інформацію на сайті <https://msdn.microsoft.com/uk-ua/>.
 
     Також, можна використовувати пошукові системи з фразами, такими як "RegExp MSDN" або "RegExp MSDN jscript".
+=======
+Although, it's often best to use an internet search instead. Just use "MDN [term]" in the query, e.g. <https://google.com/search?q=MDN+parseInt> to search for `parseInt` function.
+>>>>>>> 3a0b3f4e31d4c4bbe90ed4c9c6e676a888ad8311
 
 ## Таблиці сумісності
 

@@ -116,7 +116,11 @@ if (
 
     Однією з переваг пробілів є те, що пробіли дозволяють більш гнучку конфігурацію відступів, ніж табуляція.
 
+<<<<<<< HEAD
     Наприклад, ми можемо вирівняти аргументи відносно відкритої дужки:
+=======
+    For instance, we can align the parameters with the opening bracket, like this:
+>>>>>>> 3a0b3f4e31d4c4bbe90ed4c9c6e676a888ad8311
 
     ```js no-beautify
     show(parameters,
