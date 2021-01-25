@@ -437,15 +437,9 @@ alert( "1,2" + 1 ); // "1,21"
 
 Давайте згадаємо правила:
 
-<<<<<<< HEAD
 - Два об’єкти рівні `==` лише коли вони посилаються на один об’єкт.
 - Якщо один з аргументів оператора `==` об’єкт, а інший — примітив, тоді об’єкт конвертується в примітив. Це пояснюється в розділі <info:object-toprimitive>.
 - ...Лише два виключення — це `null` та `undefined`, які рівні `==` один одному та нічому більше.
-=======
-- Two objects are equal `==` only if they're references to the same object.
-- If one of the arguments of `==` is an object, and the other one is a primitive, then the object gets converted to primitive, as explained in the chapter <info:object-toprimitive>.
-- ...With an exception of `null` and `undefined` that equal `==` each other and nothing else.
->>>>>>> 97ef86242f9f236b13152e1baf52a55c4db8728a
 
 Строге порівняння `===` ще простіше, тому що не конвертує типи. 
 
