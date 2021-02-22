@@ -13,11 +13,7 @@
 
 Щоб прочитати про найновіші функції, включно з тими, які "майже входять в стандарт" (так звана "стадія 3"), перегляньте пропозиції на <https://github.com/tc39/proposals>.
 
-<<<<<<< HEAD
 Також, якщо ви розробляєте для браузерів, вам буде цікаво прочитати про інші специфікації, які описано в [другій частині](info:browser-environment) цього посібника.
-=======
-Also, if you're developing for the browser, then there are other specifications covered in the [second part](info:browser-environment) of the tutorial.
->>>>>>> 7533c719fbf62ba57188d6d51fe4c038b282bd0c
 
 ## Довідники
 
