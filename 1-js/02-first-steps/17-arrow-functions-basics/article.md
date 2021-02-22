@@ -5,7 +5,7 @@
 Це так звані "стрілкові функції", а виглядають вони ось так:
 
 ```js
-let func = (arg1, arg2, ...argN) => expression
+let func = (arg1, arg2, ..., argN) => expression
 ```
 
 ...Цей код створить функцію `func` з аргументами `arg1..argN`, що обчислює `expression` з правого боку (використовуючи ці аргументи) та повертає його результат.
@@ -13,7 +13,7 @@ let func = (arg1, arg2, ...argN) => expression
 Іншими словами, це приблизно те ж саме, що і:
 
 ```js
-let func = function(arg1, arg2, ...argN) {
+let func = function(arg1, arg2, ..., argN) {
   return expression;
 };
 ```

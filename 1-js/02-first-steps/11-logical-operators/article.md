@@ -1,6 +1,10 @@
 # Логічні оператори
 
+<<<<<<< HEAD
 У JavaScript існує три логічні оператори: `||` (АБО), `&&` (І), `!` (НЕ).
+=======
+There are four logical operators in JavaScript: `||` (OR), `&&` (AND), `!` (NOT), `??` (Nullish Coalescing). Here we cover the first three, the `??` operator is in the next article.
+>>>>>>> 7533c719fbf62ba57188d6d51fe4c038b282bd0c
 
 Хоча вони називаються "логічними", вони можуть бути застосовані до значень будь-якого типу, не тільки булевих. Їх результати також можуть бути будь-якого типу.
 
