@@ -318,7 +318,11 @@ alert('Готово!');
 
 Нам потрібен спосіб зупинити ці два цикли, якщо користувач скасує введення.
 
+<<<<<<< HEAD
 Звичайний `break` після `input` лише перерве внутрішній цикл, а нам цього недостатньо. Ось тут нам пригодяться мітки для циклів!
+=======
+The ordinary `break` after `input` would only break the inner loop. That's not sufficient -- labels, come to the rescue!
+>>>>>>> e01998baf8f85d9d6cef9f1add6c81b901f16d69
 
 *Мітка* складається з ідентифікатора та двокрапки перед циклом:
 ```js
@@ -363,12 +367,22 @@ for (let i = 0; i < 3; i++) { ... }
 
 Наприклад, ось таке неможливо зробити:
 ```js
+<<<<<<< HEAD
 break label; // не стрибне в мітку label нижче
+=======
+break label; // jump to the label below (doesn't work)
+>>>>>>> e01998baf8f85d9d6cef9f1add6c81b901f16d69
 
 label: for (...)
 ```
 
+<<<<<<< HEAD
 Виклик `break/continue` можливий лише всередині циклу і мітки повинні бути вище цих директив.
+=======
+A call to `continue` is only possible from inside the loop.
+
+The `break` directive may be placed before code blocks too, as `label: { ... }`, but it's almost never used like that. And it also works only inside-out.
+>>>>>>> e01998baf8f85d9d6cef9f1add6c81b901f16d69
 ````
 
 ## Підсумки
