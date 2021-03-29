@@ -368,9 +368,24 @@ break label; // стрибнути в мітку label нижче (не спра
 label: for (...)
 ```
 
+<<<<<<< HEAD
 Виклик `continue` можливий лише всередині циклу.
 
 Також, директиву `break` можна поставити перед блоком коду (як `label: { ... }`), проте такий варіант майже ніколи не використовується.
+=======
+A `break` directive must be inside a code block. Technically, any labelled code block will do, e.g.:
+```js
+label: {
+  // ...
+  break label; // works
+  // ...
+}
+```
+
+...Although, 99.9% of the time `break` used is inside loops, as we've seen in the examples above.
+
+A `continue` is only possible from inside a loop.
+>>>>>>> 7b76185892aa9798c3f058256aed44a9fb413cc3
 ````
 
 ## Підсумки

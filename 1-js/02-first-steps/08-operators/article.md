@@ -56,17 +56,34 @@ alert( 8 % 3 ); // 2 — остача від ділення 8 на 3
 
 ### Піднесення до степеня (експоненція) **
 
+<<<<<<< HEAD
 Оператор піднесення до степеня `a ** b` множить `a` саме на себе `b` разів.
+=======
+The exponentiation operator `a ** b` raises `a` to the power of `b`.
+
+In school maths, we write that as a<sup>b</sup>.
+>>>>>>> 7b76185892aa9798c3f058256aed44a9fb413cc3
 
 Наприклад:
 
 ```js run
+<<<<<<< HEAD
 alert( 2 ** 2 ); // 4  (2 помножене на себе 2 рази)
 alert( 2 ** 3 ); // 8  (2 * 2 * 2, 3 рази)
 alert( 2 ** 4 ); // 16 (2 * 2 * 2 * 2, 4 рази)
 ```
 
 Математично, піднести до степеня також можна дробові числа. Наприклад, квадратний корінь це піднесення до степеня `1/2`:
+=======
+alert( 2 ** 2 ); // 2² = 4  
+alert( 2 ** 3 ); // 2³ = 8 
+alert( 2 ** 4 ); // 2⁴ = 16
+```
+
+Just like in maths, the exponentiation operator is defined for non-integer numbers as well. 
+
+For example, a square root is an exponentiation by ½:
+>>>>>>> 7b76185892aa9798c3f058256aed44a9fb413cc3
 
 ```js run
 alert( 4 ** (1/2) ); // 2 (степінь 1/2 — це теж саме, що квадратний корінь)
