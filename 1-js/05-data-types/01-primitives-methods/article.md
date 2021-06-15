@@ -39,8 +39,13 @@ john.sayHi(); // Привіт друже!
 
 Маємо парадокс, з яким стикається автор JavaScript:
 
+<<<<<<< HEAD
 - Є багато речей, які можна було б зробити з примітивом-рядком або числом. Було б добре отримати доступ до цих методів.
 - Примітиви повинні бути максимально швидкими та легкими.
+=======
+- There are many things one would want to do with a primitive like a string or a number. It would be great to access them using methods.
+- Primitives must be as fast and lightweight as possible.
+>>>>>>> fb4fc33a2234445808100ddc9f5e4dcec8b3d24c
 
 Рішення виглядає трошки дивно, але так і є:
 

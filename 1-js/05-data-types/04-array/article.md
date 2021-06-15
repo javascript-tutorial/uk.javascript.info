@@ -379,9 +379,13 @@ alert( arr[0] ); // undefined! елементи відсутні.
 alert( arr.length ); // length 2
 ```
 
+<<<<<<< HEAD
 Як бачимо в цьому коді `new Array(number)` всі елементи `undefined`.
 
 Для того, щоб позбавитись таких сюрпризів, як правило, ми використовуємо квадратні дужки `[]`, якщо тільки ми дійсно не маємо причини для використання методу `new Array`.
+=======
+To avoid such surprises, we usually use square brackets, unless we really know what we're doing.
+>>>>>>> fb4fc33a2234445808100ddc9f5e4dcec8b3d24c
 
 ## Багатовимірні масиви 
 

@@ -46,7 +46,11 @@ alert(3 +
 + 2);
 ```
 
+<<<<<<< HEAD
 Код виведе `6`, тому що JavaScript не вставить тут крапку з комою. Інтуїтивно зрозуміло, що, якщо рядок закінчується плюсом `"+"`, то це "незакінчений вираз", тому крапка з комою не потрібна. І в цьому випадку все працює як задумано.
+=======
+The code outputs `6` because JavaScript does not insert semicolons here. It is intuitively obvious that if the line ends with a plus `"+"`, then it is an "incomplete expression", so a semicolon there would be incorrect. And in this case, that works as intended.
+>>>>>>> fb4fc33a2234445808100ddc9f5e4dcec8b3d24c
 
 **Але є ситуації, коли JavaScript "забуває" вставити крапку з комою там, де це дійсно потрібно.**
 
@@ -56,19 +60,31 @@ alert(3 +
 Якщо хочете побачити конкретний приклад такої помилки, зверніть увагу на цей код:
 
 ```js run
-[1, 2].forEach(alert)
+alert("Hello");
+
+[1, 2].forEach(alert);
 ```
 
+<<<<<<< HEAD
 Поки що не задумуйтеся, що означають квадратні дужки `[]` і `forEach`. Ми вивчемо їх пізніше. Зараз просто запам'ятайте результат виконання коду: спочатку виведеться `1`, а потім `2`.
 
 А тепер додамо `alert` перед кодом і *не* поставимо крапку з комою в кінці рядка:
 
 ```js run no-beautify
 alert("Тут буде помилка")
+=======
+No need to think about the meaning of the brackets `[]` and `forEach` yet. We'll study them later. For now, just remember the result of running the code: it shows `Hello`, then `1`, then `2`.
 
-[1, 2].forEach(alert)
+Now let's remove the semicolon after the `alert`:
+
+```js run no-beautify
+alert("Hello")
+>>>>>>> fb4fc33a2234445808100ddc9f5e4dcec8b3d24c
+
+[1, 2].forEach(alert);
 ```
 
+<<<<<<< HEAD
 Тепер, якщо ми запустимо код, виведеться тільки перший `alert`, а потім ми отримаємо помилку!
 
 Помилка виправиться, якщо ми додамо крапку з комою після `alert`:
@@ -90,6 +106,23 @@ alert("Тут буде помилка")[1, 2].forEach(alert)
 ```
 
 Але це повинні бути дві окремі інструкції, а не одна. В даному випадку таке об'єднання невірне, тому і виникає помилка. Це може статися в інших випадках.
+=======
+The difference compared to the code above is only one character: the semicolon at the end of the first line is gone.
+
+If we run this code, only the first `Hello` shows (and there's an error, you may need to open the console to see it). There are no numbers any more.
+
+That's because JavaScript does not assume a semicolon before square brackets `[...]`. So, the code in the last example is treated as a single statement.
+
+Here's how the engine sees it:
+
+```js run no-beautify
+alert("Hello")[1, 2].forEach(alert);
+```
+
+Looks weird, right? Such merging in this case is just wrong. We need to put a semicolon after `alert` for the code to work correctly.
+
+This can happen in other situations also.
+>>>>>>> fb4fc33a2234445808100ddc9f5e4dcec8b3d24c
 ````
 
 Ми рекомендуємо ставити крапку з комою між інструкціями, навіть якщо вони розділені новими рядками. Це правило широко використовується в спільноті розробників. Варто повторити ще раз -- в більшості випадків *можна* пропускати крапки з комою. Але безпечніше -- особливо для новачка -- використовувати їх.
