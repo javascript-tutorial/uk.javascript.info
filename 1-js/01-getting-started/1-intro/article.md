@@ -24,15 +24,9 @@
 
 Різні рушії мають різні "кодові назви". Наприклад:
 
-<<<<<<< HEAD
 - [V8](https://uk.wikipedia.org/wiki/V8_(рушій_JavaScript)) -- в Chrome і Opera.
 - [SpiderMonkey](https://uk.wikipedia.org/wiki/SpiderMonkey) -- в Firefox.
-- ...Є також інші кодові назви як "Chakra" для IE, "ChakraCore" для Microsoft Edge, "Nitro" і "SquirrelFish" для Safari, та інші.
-=======
-- [V8](https://en.wikipedia.org/wiki/V8_(JavaScript_engine)) -- in Chrome and Opera.
-- [SpiderMonkey](https://en.wikipedia.org/wiki/SpiderMonkey) -- in Firefox.
-- ...There are other codenames like "Chakra" for IE, "JavaScriptCore", "Nitro" and "SquirrelFish" for Safari, etc.
->>>>>>> fb4fc33a2234445808100ddc9f5e4dcec8b3d24c
+- ...Є також інші кодові назви як "Chakra" для IE, "JavaScriptCore", "Nitro" і "SquirrelFish" для Safari, та інші.
 
 Написані вище терміни добре було б запам’ятати, оскільки вони використовуються в статтях розробників на просторах інтернету. Ми також будемо їх використовувати. Наприклад, якщо "можливість X підтримується в V8", тоді ймовірно це буде працювати в Chrome і Opera.
 
