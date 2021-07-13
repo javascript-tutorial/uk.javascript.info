@@ -1,40 +1,40 @@
-# Functions
+# Функції
 
-Quite often we need to perform a similar action in many places of the script.
+Досить часто нам потрібно виконати подібну дію в багатьох місцях скрипту.
 
-For example, we need to show a nice-looking message when a visitor logs in, logs out and maybe somewhere else.
+Наприклад, нам треба показати приємне повідомлення, коли користувач входить або виходить з системи і може ще десь.
 
-Functions are the main "building blocks" of the program. They allow the code to be called many times without repetition.
+Функції — це головні "будівельні блоки" програми. Вони дозволяють робити ті самі дії багато разів в коді без повторення.
 
-We've already seen examples of built-in functions, like `alert(message)`, `prompt(message, default)` and `confirm(question)`. But we can create functions of our own as well.
+Ми вже стикались з такими вбудованими функціями, як-от `alert(message)`, `prompt(message, default)` та `confirm(question)`. Але ми теж можемо створювати свої функції.
 
-## Function Declaration
+## Оголошення (декларація) функцій
 
-To create a function we can use a *function declaration*.
+Щоб створити функцію нам треба її _оголосити_.
 
-It looks like this:
+Це виглядає ось так:
 
 ```js
 function showMessage() {
-  alert( 'Hello everyone!' );
+  alert('Всім привіт!');
 }
 ```
 
-The `function` keyword goes first, then goes the *name of the function*, then a list of *parameters* between the parentheses (comma-separated, empty in the example above, we'll see examples later) and finally the code of the function, also named "the function body", between curly braces.
+Спочатку ми пишемо `function` — це ключове слово (keyword), яке дає зрозуміти комп’ютеру, що далі буде оголошення функції. Потім — *назву функції*, тоді список її *параметрів* в дужках (розділені комою). Якщо параметрів немає, ми залишаємо _пусті дужки_. І нарешті, код функції, який також називають *тілом функції* між фігурними дужками.
 
 ```js
 function name(parameter1, parameter2, ... parameterN) {
-  ...body...
+  ...тіло функції...
 }
 ```
 
-Our new function can be called by its name: `showMessage()`.
+Нашу нову функцію можна викликати, написавши її ім’я і дужки: `showMessage()`.
 
-For instance:
+Наприклад:
 
 ```js run
 function showMessage() {
-  alert( 'Hello everyone!' );
+  alert( 'Шановні друзі!' );
 }
 
 *!*
@@ -43,96 +43,96 @@ showMessage();
 */!*
 ```
 
-The call `showMessage()` executes the code of the function. Here we will see the message two times.
+Виклик `showMessage()` виконує код із тіла функції. В цьому випадку, ми побачимо повідомлення двічі.
 
-This example clearly demonstrates one of the main purposes of functions: to avoid code duplication.
+Цей приклад яскраво демонструє одну з найголовніших цілей функції - уникнення повторення коду.
 
-If we ever need to change the message or the way it is shown, it's enough to modify the code in one place: the function which outputs it.
+Якщо нам потрібно змінити повідомлення, достатньо змінити тіло функції, яке виводить це повідомлення.
 
-## Local variables
+## Локальні змінні
 
-A variable declared inside a function is only visible inside that function.
+Змінна, яка оголошена в функції доступна лише в тілі цієї функції.
 
-For example:
+До прикладу:
 
 ```js run
 function showMessage() {
 *!*
-  let message = "Hello, I'm JavaScript!"; // local variable
+  let message = "Бажаю вам 36.6"; // локальна змінна
 */!*
 
   alert( message );
 }
 
-showMessage(); // Hello, I'm JavaScript!
+showMessage(); // Бажаю вам 36.6
 
-alert( message ); // <-- Error! The variable is local to the function
+alert( message ); // <-- Помилка! Змінна недоступна поза функцією
 ```
 
-## Outer variables
+## Зовнішні змінні
 
-A function can access an outer variable as well, for example:
+Функція може використовувати зовнішні змінні, наприклад:
 
 ```js run no-beautify
-let *!*userName*/!* = 'John';
+let *!*userName*/!* = 'Іван';
 
 function showMessage() {
-  let message = 'Hello, ' + *!*userName*/!*;
+  let message = 'Привіт, ' + *!*userName*/!*;
   alert(message);
 }
 
-showMessage(); // Hello, John
+showMessage(); // Привіт, Іван
 ```
 
-The function has full access to the outer variable. It can modify it as well.
+Функція має повний доступ до зовнішньої змінної. Вона теж може її змінювати.
 
-For instance:
+Наприклад:
 
 ```js run
-let *!*userName*/!* = 'John';
+let *!*userName*/!* = 'Іван';
 
 function showMessage() {
-  *!*userName*/!* = "Bob"; // (1) changed the outer variable
+  *!*userName*/!* = "Богдан"; // (1) змінено зовнішню змінну
 
-  let message = 'Hello, ' + *!*userName*/!*;
+  let message = 'Здоровенькі були, ' + *!*userName*/!*;
   alert(message);
 }
 
-alert( userName ); // *!*John*/!* before the function call
+alert( userName ); // *!*Іван*/!* перед викликом функції showMessage
 
 showMessage();
 
-alert( userName ); // *!*Bob*/!*, the value was modified by the function
+alert( userName ); // *!*Богдан*/!*, значення було змінено після виклику функції showMessage
 ```
 
-The outer variable is only used if there's no local one.
+Зовнішня змінна використовується тоді, коли немає локальної.
 
-If a same-named variable is declared inside the function then it *shadows* the outer one. For instance, in the code below the function uses the local `userName`. The outer one is ignored:
+Якщо всередині функції є змінна з таким самим ім’ям, то вона *затьмарює* зовнішню. Наприклад, наступний код використовує локальну змінну `userName`. Зовнішня ігнорується.
 
 ```js run
-let userName = 'John';
+let userName = 'Іван'; // оголошення зовнішньої змінної
 
 function showMessage() {
 *!*
-  let userName = "Bob"; // declare a local variable
+  let userName = "Богдан"; // оголошення локальної змінної
 */!*
 
-  let message = 'Hello, ' + userName; // *!*Bob*/!*
+  let message = 'Привіт, ' + userName; // *!*Богдан*/!*
   alert(message);
 }
 
-// the function will create and use its own userName
+// функція завжди віддасть перевагу локальним змінним
 showMessage();
 
-alert( userName ); // *!*John*/!*, unchanged, the function did not access the outer variable
+alert( userName ); // *!*Іван*/!*, без змін, функція не змінила глобальну змінну
 ```
 
-```smart header="Global variables"
-Variables declared outside of any function, such as the outer `userName` in the code above, are called *global*.
+```smart header="Глобальні змінні"
+Змінні, оголошені поза будь-якими функціями (такі як зовнішня зміння `userName` з коду вище), називаються *глобальні* змінні.
 
-Global variables are visible from any function (unless shadowed by locals).
+Глобальні змінні доступні в будь-якій функції (окрім випадків, коли глобальна змінна затьмарена локальною).
 
-It's a good practice to minimize the use of global variables. Modern code has few or no globals. Most variables reside in their functions. Sometimes though, they can be useful to store project-level data.
+Хорошою практикою вважається мінімізація використання глобальних змінних. У сучасному коді є декалька або одна глобальна змінна. Більшість змінних знаходяться в межах функцій. Іноді, буває корисно зберігати "загальні" дані (на рівні проєкту) в таких глобальних змінних.
 ```
 
 ## Parameters
@@ -191,7 +191,7 @@ If a function is called, but an argument is not provided, then the corresponding
 For instance, the aforementioned function `showMessage(from, text)` can be called with a single argument:
 
 ```js
-showMessage("Ann");
+showMessage('Ann');
 ```
 
 That's not an error. Such a call would output `"*Ann*: undefined"`. As the value for `text` isn't passed, it becomes `undefined`.
@@ -330,13 +330,14 @@ function showMovie(age) {
 
 In the code above, if `checkAge(age)` returns `false`, then `showMovie` won't proceed to the `alert`.
 
-````smart header="A function with an empty `return` or without it returns `undefined`"
-If a function does not return a value, it is the same as if it returns `undefined`:
+````smart header="A function with an empty `return`or without it returns`undefined`" If a function does not return a value, it is the same as if it returns `undefined`:
 
 ```js run
-function doNothing() { /* empty */ }
+function doNothing() {
+  /* empty */
+}
 
-alert( doNothing() === undefined ); // true
+alert(doNothing() === undefined); // true
 ```
 
 An empty `return` is also the same as `return undefined`:
@@ -346,9 +347,10 @@ function doNothing() {
   return;
 }
 
-alert( doNothing() === undefined ); // true
+alert(doNothing() === undefined); // true
 ```
-````
+
+`````
 
 ````warn header="Never add a newline between `return` and the value"
 For a long expression in `return`, it might be tempting to put it on a separate line, like this:
@@ -376,7 +378,7 @@ return (
   )
 ```
 And it will work just as we expect it to.
-````
+`````
 
 ## Naming a function [#function-naming]
 
@@ -440,12 +442,11 @@ The first variant uses a label:
 ```js
 function showPrimes(n) {
   nextPrime: for (let i = 2; i < n; i++) {
-
     for (let j = 2; j < i; j++) {
       if (i % j == 0) continue nextPrime;
     }
 
-    alert( i ); // a prime
+    alert(i); // a prime
   }
 }
 ```
@@ -470,7 +471,7 @@ function isPrime(n) {
 }
 ```
 
-The second variant is easier to understand, isn't it? Instead of the code piece we see a name of the action (`isPrime`). Sometimes people refer to such code as *self-describing*.
+The second variant is easier to understand, isn't it? Instead of the code piece we see a name of the action (`isPrime`). Sometimes people refer to such code as _self-describing_.
 
 So, functions can be created even if we don't intend to reuse them. They structure the code and make it readable.
 
