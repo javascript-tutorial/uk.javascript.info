@@ -161,7 +161,7 @@ Object.assign(user, permissions1, permissions2);
 // тепер user = { name: "Іван", canView: true, canEdit: true }
 ```
 
-Якщо приймаючий об’єкт(user) вже має властивість з таким ім’ям, її буде перезаписано:
+Якщо приймаючий об’єкт (`user`) вже має властивість з таким ім’ям, її буде перезаписано:
 
 ```js run
 let user = { name: "Іван" };
