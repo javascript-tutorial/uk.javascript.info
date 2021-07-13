@@ -77,7 +77,7 @@ alert( message ); // <-- Отакої! Змінна недоступна поз�
 let *!*userName*/!* = 'Іван';
 
 function showMessage() {
-  let message = 'Здаров, ' + *!*userName*/!*;
+  let message = 'Привіт, ' + *!*userName*/!*;
   alert(message);
 }
 
