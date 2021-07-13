@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-11-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://javascript.info> з англійської на українську мову.
@@ -84,6 +84,7 @@ P.S. Весь перелік мов можна знайти на сторінц�
     <td align="center"><a href="https://github.com/dDenysS"><img src="https://avatars0.githubusercontent.com/u/23075870?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Denys</b></sub></a><br /><a href="#translation-dDenysS" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/ArtemZununov"><img src="https://avatars1.githubusercontent.com/u/12086644?v=4?s=70" width="70px;" alt=""/><br /><sub><b>ArtemZununov</b></sub></a><br /><a href="#translation-ArtemZununov" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/stas-dolgachov"><img src="https://avatars.githubusercontent.com/u/9461925?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Stanislav</b></sub></a><br /><a href="#translation-stas-dolgachov" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/hypeofpipe"><img src="https://avatars.githubusercontent.com/u/14982064?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Volodymyr V.</b></sub></a><br /><a href="#translation-hypeofpipe" title="Translation">🌍</a></td>
   </tr>
 </table>
 
