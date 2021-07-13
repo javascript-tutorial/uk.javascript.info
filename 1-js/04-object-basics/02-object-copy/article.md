@@ -220,7 +220,7 @@ let user = {
 
 let clone = Object.assign({}, user);
 
-alert( user.sizes === clone.sizes ); // true, один і той же об’єкт
+alert( user.sizes === clone.sizes ); // true, той самий об’єкт
 
 // user і clone мають посилання на єдиний об’єкт у властивості sizes
 user.sizes.width++;       // міняємо властивість з одного місця
