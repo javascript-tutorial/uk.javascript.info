@@ -20,15 +20,15 @@ function showMessage() {
 }
 ```
 
-Спочатку ми пишемо `function` — це ключове слово (keyword), яке дає зрозуміти комп’ютеру, що далі буде оголошення функції. Потім — _назву функції_, тоді список її _параметрів_ в дужках (розділені комою). Якщо параметрів немає, ми залишаємо _пусті дужки_. І нарешті, код функції, який також називають _тілом функції_ між фігурними дужками. Функція може бути і без тіла, про це Ви дізнаєтесь пізніше.
+Спочатку ми пишемо `function` — це ключове слово (keyword), яке дає зрозуміти комп’ютеру, що далі буде оголошення функції. Потім — *назву функції*, тоді список її *параметрів* в дужках (розділені комою). Якщо параметрів немає, ми залишаємо _пусті дужки_. І нарешті, код функції, який також називають *тілом функції* між фігурними дужками.
 
 ```js
-function name(параметри) {
-  ...тіло...
+function name(parameter1, parameter2, ... parameterN) {
+  ...тіло функції...
 }
 ```
 
-Щоб викликати функцію, достатньо написати її ім’я і дужки: `showMessage()`.
+Нашу нову функцію можна викликати, написавши її ім’я і дужки: `showMessage()`.
 
 Наприклад:
 
@@ -47,11 +47,11 @@ showMessage();
 
 Цей приклад яскраво демонструє одну з найголовніших цілей функції - уникнення повторення коду.
 
-Якщо нам треба змінити повідомлення або його вигляд, достатньо змодифікувати тіло функції, яке це повідомлення творить.
+Якщо нам потрібно змінити повідомлення, достатньо змінити тіло функції, яке виводить це повідомлення.
 
-## Локальні (місцеві) змінні
+## Локальні змінні
 
-Змінна, яка оголошена в функції доступна лише в тій функції.
+Змінна, яка оголошена в функції доступна лише в тілі цієї функції.
 
 До прикладу:
 
@@ -66,12 +66,12 @@ function showMessage() {
 
 showMessage(); // Бажаю вам 36.6
 
-alert( message ); // <-- Отакої! Змінна недоступна поза функцією!
+alert( message ); // <-- Помилка! Змінна недоступна поза функцією
 ```
 
 ## Зовнішні змінні
 
-Функція може використовувати зовнішні змінні, ось наприклад:
+Функція може використовувати зовнішні змінні, наприклад:
 
 ```js run no-beautify
 let *!*userName*/!* = 'Іван';
@@ -81,7 +81,7 @@ function showMessage() {
   alert(message);
 }
 
-showMessage(); // Здаров, Іван
+showMessage(); // Привіт, Іван
 ```
 
 Функція має повний доступ до зовнішньої змінної. Вона теж може її змінювати.
@@ -92,7 +92,7 @@ showMessage(); // Здаров, Іван
 let *!*userName*/!* = 'Іван';
 
 function showMessage() {
-  *!*userName*/!* = " Боб"; // (1) змінено зовнішню змінну
+  *!*userName*/!* = "Богдан"; // (1) змінено зовнішню змінну
 
   let message = 'Здоровенькі були, ' + *!*userName*/!*;
   alert(message);
@@ -102,22 +102,22 @@ alert( userName ); // *!*Іван*/!* перед викликом функції
 
 showMessage();
 
-alert( userName ); // *!*Бодя*/!*, значення було змінено після виклику функції showMessage
+alert( userName ); // *!*Богдан*/!*, значення було змінено після виклику функції showMessage
 ```
 
-Зовнішня змінна використовується тоді, коли немає локальної (місцевої).
+Зовнішня змінна використовується тоді, коли немає локальної.
 
-Якщо всередині функції є змінна з таким самим ім'ям, то вона *затьмарює* зовнішню. Наприклад, наступний код використовує локальну змінну `userName`. Зовнішня ігнорується.
+Якщо всередині функції є змінна з таким самим ім’ям, то вона *затьмарює* зовнішню. Наприклад, наступний код використовує локальну змінну `userName`. Зовнішня ігнорується.
 
 ```js run
-let userName = 'Іван'; // декларація зовнішньої змінної
+let userName = 'Іван'; // оголошення зовнішньої змінної
 
 function showMessage() {
 *!*
-  let userName = "Бодя"; // декларація локальної змінної
+  let userName = "Богдан"; // оголошення локальної змінної
 */!*
 
-  let message = 'Здоров, ' + userName; // *!*Бодя*/!*
+  let message = 'Привіт, ' + userName; // *!*Богдан*/!*
   alert(message);
 }
 
@@ -127,29 +127,27 @@ showMessage();
 alert( userName ); // *!*Іван*/!*, без змін, функція не змінила глобальну змінну
 ```
 
-```smart header="Global variables"
-Variables declared outside of any function, such as the outer `userName` in the code above, are called *global*.
+```smart header="Глобальні змінні"
+Змінні, оголошені поза будь-якими функціями (такі як зовнішня зміння `userName` з коду вище), називаються *глобальні* змінні.
 
-Global variables are visible from any function (unless shadowed by locals).
+Глобальні змінні доступні в будь-якій функції (окрім випадків, коли глобальна змінна затьмарена локальною).
 
-It's a good practice to minimize the use of global variables. Modern code has few or no globals. Most variables reside in their functions. Sometimes though, they can be useful to store project-level data.
+Хорошою практикою вважається мінімізація використання глобальних змінних. У сучасному коді є декалька або одна глобальна змінна. Більшість змінних знаходяться в межах функцій. Іноді, буває корисно зберігати "загальні" дані (на рівні проєкту) в таких глобальних змінних.
 ```
 
 ## Parameters
 
-We can pass arbitrary data to functions using parameters (also called _function arguments_) .
+We can pass arbitrary data to functions using parameters.
 
 In the example below, the function has two parameters: `from` and `text`.
 
 ```js run
-function showMessage(*!*from, text*/!*) { // arguments: from, text
+function showMessage(*!*from, text*/!*) { // parameters: from, text
   alert(from + ': ' + text);
 }
 
-*!*
-showMessage('Ann', 'Hello!'); // Ann: Hello! (*)
-showMessage('Ann', "What's up?"); // Ann: What's up? (**)
-*/!*
+*!*showMessage('Ann', 'Hello!');*/!* // Ann: Hello! (*)
+*!*showMessage('Ann', "What's up?");*/!* // Ann: What's up? (**)
 ```
 
 When the function is called in lines `(*)` and `(**)`, the given values are copied to local variables `from` and `text`. Then the function uses them.
@@ -174,9 +172,21 @@ showMessage(from, "Hello"); // *Ann*: Hello
 alert( from ); // Ann
 ```
 
+When a value is passed as a function parameter, it's also called an *argument*.
+
+In other words, to put these terms straight:
+
+- A parameter is the variable listed inside the parentheses in the function declaration (it's a declaration time term)
+- An argument is the value that is passed to the function when it is called (it's a call time term).
+
+We declare functions listing their parameters, then call them passing arguments.
+
+In the example above, one might say: "the function `sayMessage` is declared with two parameters, then called with two arguments: `from` and `"Hello"`".
+
+
 ## Default values
 
-If a parameter is not provided, then its value becomes `undefined`.
+If a function is called, but an argument is not provided, then the corresponding value becomes `undefined`.
 
 For instance, the aforementioned function `showMessage(from, text)` can be called with a single argument:
 
@@ -184,9 +194,9 @@ For instance, the aforementioned function `showMessage(from, text)` can be calle
 showMessage('Ann');
 ```
 
-That's not an error. Such a call would output `"*Ann*: undefined"`. There's no `text`, so it's assumed that `text === undefined`.
+That's not an error. Such a call would output `"*Ann*: undefined"`. As the value for `text` isn't passed, it becomes `undefined`.
 
-If we want to use a "default" `text` in this case, then we can specify it after `=`:
+We can specify the so-called "default" (to use if omitted) value for a parameter in the function declaration, using `=`:
 
 ```js run
 function showMessage(from, *!*text = "no text given"*/!*) {
@@ -210,19 +220,23 @@ function showMessage(from, text = anotherFunction()) {
 ```smart header="Evaluation of default parameters"
 In JavaScript, a default parameter is evaluated every time the function is called without the respective parameter.
 
-In the example above, `anotherFunction()` is called every time `showMessage()` is called without the `text` parameter.
+In the example above, `anotherFunction()` isn't called at all, if the `text` parameter is provided.
+
+On the other hand, it's independently called every time when `text` is missing.
 ```
 
 ### Alternative default parameters
 
-Sometimes it makes sense to set default values for parameters not in the function declaration, but at a later stage, during its execution.
+Sometimes it makes sense to assign default values for parameters not in the function declaration, but at a later stage.
 
-To check for an omitted parameter, we can compare it with `undefined`:
+We can check if the parameter is passed during the function execution, by comparing it with `undefined`:
 
 ```js run
 function showMessage(text) {
+  // ...
+
 *!*
-  if (text === undefined) {
+  if (text === undefined) { // if the parameter is missing
     text = 'empty message';
   }
 */!*
@@ -233,22 +247,22 @@ function showMessage(text) {
 showMessage(); // empty message
 ```
 
-...Or we could use the `||` operator:
+...Or we could use the `??` operator:
 
 ```js
-// if text parameter is omitted or "" is passed, set it to 'empty'
 function showMessage(text) {
+  // if text is undefined or otherwise falsy, set it to 'empty'
   text = text || 'empty';
   ...
 }
 ```
 
-Modern JavaScript engines support the [nullish coalescing operator](info:nullish-coalescing-operator) `??`, it's better when falsy values, such as `0`, are considered regular:
+Modern JavaScript engines support the [nullish coalescing operator](info:nullish-coalescing-operator) `??`, it's better when most falsy values, such as `0`, should be considered "normal":
 
 ```js run
-// if there's no "count" parameter, show "unknown"
 function showCount(count) {
-  alert(count ?? 'unknown');
+  // if count is undefined or null, show "unknown"
+  alert(count ?? "unknown");
 }
 
 showCount(0); // 0
@@ -412,7 +426,7 @@ Functions that are used *very often* sometimes have ultrashort names.
 
 For example, the [jQuery](http://jquery.com) framework defines a function with `$`. The [Lodash](http://lodash.com/) library has its core function named `_`.
 
-These are exceptions. Generally functions names should be concise and descriptive.
+These are exceptions. Generally function names should be concise and descriptive.
 ```
 
 ## Functions == Comments
