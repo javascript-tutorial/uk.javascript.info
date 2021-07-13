@@ -92,7 +92,7 @@ showMessage(); // Здаров, Іван
 let *!*userName*/!* = 'Іван';
 
 function showMessage() {
-  *!*userName*/!* = "Бодя"; // (1) змінена зовнішня змінна
+  *!*userName*/!* = " Боб"; // (1) змінено зовнішню змінну
 
   let message = 'Здоровенькі були, ' + *!*userName*/!*;
   alert(message);
