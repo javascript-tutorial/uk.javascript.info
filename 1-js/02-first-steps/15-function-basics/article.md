@@ -135,53 +135,53 @@ alert( userName ); // *!*Іван*/!*, без змін, функція не зм
 Хорошою практикою вважається мінімізація використання глобальних змінних. У сучасному коді є декалька або одна глобальна змінна. Більшість змінних знаходяться в межах функцій. Іноді, буває корисно зберігати "загальні" дані (на рівні проєкту) в таких глобальних змінних.
 ```
 
-## Parameters
+## Параметри
 
-We can pass arbitrary data to functions using parameters.
+Ми можемо передати в функцію довільні дані використовуючи параметри.
 
-In the example below, the function has two parameters: `from` and `text`.
+В наступному прикладі, функція має два параметри: `from` і `text`.
 
 ```js run
-function showMessage(*!*from, text*/!*) { // parameters: from, text
+function showMessage(*!*from, text*/!*) { // параметри: from, text
   alert(from + ': ' + text);
 }
 
-*!*showMessage('Ann', 'Hello!');*/!* // Ann: Hello! (*)
-*!*showMessage('Ann', "What's up?");*/!* // Ann: What's up? (**)
+*!*showMessage('Анна', 'Привіт!');*/!* // Анна: Привіт! (*)
+*!*showMessage('Анна', "Як справи?");*/!* // Анна: Як справи? (**)
 ```
 
-When the function is called in lines `(*)` and `(**)`, the given values are copied to local variables `from` and `text`. Then the function uses them.
+Під час виклику функції з цими параметрами, в рядках `(*)` та `(**)` відбувається копіювання значень параметрів в локальні змінні `from` та `text`. Ці змінні використовує функція.
 
-Here's one more example: we have a variable `from` and pass it to the function. Please note: the function changes `from`, but the change is not seen outside, because a function always gets a copy of the value:
+Ось ще один приклад: маємо змінну `from`, яку передаємо в функцію. Зауважте: функція змінює значення `from`, проте ці зміни не видно назовні, тому що функція завжди отримує копію значення:
 
 ```js run
 function showMessage(from, text) {
 
 *!*
-  from = '*' + from + '*'; // make "from" look nicer
+  from = '*' + from + '*'; // прикрашаємо "from"
 */!*
 
   alert( from + ': ' + text );
 }
 
-let from = "Ann";
+let from = "Анна";
 
-showMessage(from, "Hello"); // *Ann*: Hello
+showMessage(from, "Привіт"); // *Анна*: Привіт
 
-// the value of "from" is the same, the function modified a local copy
-alert( from ); // Ann
+// значення "from" те саме, функція змінила локальну копію
+alert( from ); // Анна
 ```
 
-When a value is passed as a function parameter, it's also called an *argument*.
+Коли значення передається як параметр функції, то його ще називають *аргумент*.
 
-In other words, to put these terms straight:
+Кажучи "на хлопський розум":
 
-- A parameter is the variable listed inside the parentheses in the function declaration (it's a declaration time term)
-- An argument is the value that is passed to the function when it is called (it's a call time term).
+- Параметр — це змінна всередині дужок функції (використовується під час оголошення функції)
+- Аргумент — це значення, передане в функцію під час її виклику (використовується під час виконання функції).
 
-We declare functions listing their parameters, then call them passing arguments.
+Ми оголошуємо функції, вказуючи їхні параметри, потім викликаємо їх, передаючи аргументи.
 
-In the example above, one might say: "the function `sayMessage` is declared with two parameters, then called with two arguments: `from` and `"Hello"`".
+Дехто може сказати, що в прикладі вище "функцію `sayMessage` оголошено з двома параметрами, потім викликано з двома аргументами: `from` і `"Привіт"`".
 
 
 ## Default values
