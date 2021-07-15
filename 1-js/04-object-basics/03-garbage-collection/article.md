@@ -1,31 +1,31 @@
-# Garbage collection
+# Збирання сміття
 
-Memory management in JavaScript is performed automatically and invisibly to us. We create primitives, objects, functions... All that takes memory.
+Управління пам’яттю в JavaScript виконується автоматично і непомітно. Ми створюємо примітиви, об’єкти, функції... Все це займає пам’ять.
 
-What happens when something is not needed any more? How does the JavaScript engine discover it and clean it up?
+Але що відбувається, коли щось більше не потрібно? Як JavaScript розуміє, що потрібно звільняти пам’ять?
 
-## Reachability
+## Досяжність
 
-The main concept of memory management in JavaScript is *reachability*.
+Основна концепція управління пам’яттю в JavaScript -- це *досяжність*.
 
-Simply put, "reachable" values are those that are accessible or usable somehow. They are guaranteed to be stored in memory.
+Простіше кажучи, "досяжні" значення -- це ті, які якимось чином доступні або придатні для використання. Вони гарантовано зберігаються в пам’яті.
 
-1. There's a base set of inherently reachable values, that cannot be deleted for obvious reasons.
+1. Існує базовий набір досяжних за своєю суттю значень, які неможливо видалити із зрозумілих причин.
 
-    For instance:
+    Наприклад:
 
-    - The currently executing function, its local variables and parameters.
-    - Other functions on the current chain of nested calls, their local variables and parameters.
-    - Global variables.
-    - (there are some other, internal ones as well)
+    - Функція, що виконується зараз, її локальні змінні та параметри.
+    - Інші функції поточного ланцюжка вкладених викликів, їх локальні змінні та параметри.
+    - Глобальні змінні.
+    - (є й деякі інші, внутрішні)
 
-    These values are called *roots*.
+    Ці значення ми будемо називати *корені*.
 
-2. Any other value is considered reachable if it's reachable from a root by a reference or by a chain of references.
+2. Будь-яке інше значення вважається досяжним, якщо воно доступне з кореня за допомогою посилання або ланцюжка посилань.
 
-    For instance, if there's an object in a global variable, and that object has a property referencing another object, *that* object is considered reachable. And those that it references are also reachable. Detailed examples to follow.
+    Наприклад, якщо в глобальній змінній є об’єкт, і цей об’єкт має властивість, що посилається на інший об’єкт, *цей* об’єкт вважається досяжним. І ті, на які він посилається, також досяжні. Далі ви познайомитеся з докладними прикладами на цю тему.
 
-There's a background process in the JavaScript engine that is called [garbage collector](https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)). It monitors all objects and removes those that have become unreachable.
+У рушію JavaScript є фоновий процес, який називається [збирання сміття](https://uk.wikipedia.org/wiki/%D0%97%D0%B1%D0%B8%D1%80%D0%B0%D0%BD%D0%BD%D1%8F_%D1%81%D0%BC%D1%96%D1%82%D1%82%D1%8F). Воно контролює всі об’єкти та видаляє ті, які стали недосяжними.
 
 ## A simple example
 
