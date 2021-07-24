@@ -20,13 +20,13 @@ alert( user.ref.name ); // Error: Cannot read property 'name' of undefined
 
 Значення `this` є одним для всієї функції, блоки коду та літерали об’єктів на це не впливають.
 
-Отже `ref: this` насправді бере значення `this` функції.
+Отже, `ref: this` дійсно бере значення `this` функції.
 
 Ми можемо переписати функцію і повернути те саме `this` зі значенням` undefined`:
 
 ```js run
 function makeUser(){
-  return this; // цього разу немає літералу об’єкта
+  return this; // цього разу немає літерала об’єкта
 }
 
 alert( makeUser().name ); // Error: Cannot read property 'name' of undefined
