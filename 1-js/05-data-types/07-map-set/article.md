@@ -73,7 +73,7 @@ let ben = { name: "Ben" };
 
 let visitsCountObj = {}; // використаємо об'єкт
 
-visitsCountObj[ben] = 234; // використаємо `ben` об'єкт як ключ
+visitsCountObj[ben] = 234; // використаємо об’єкт `ben` як ключ
 visitsCountObj[john] = 123; // використаємо `john` об'єкт як ключ, `ben` об'єкт буде перезаписаний
 
 *!*
