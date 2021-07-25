@@ -71,7 +71,7 @@ alert( visitsCountMap.get(john) ); // 123
 let john = { name: "John" };
 let ben = { name: "Ben" };
 
-let visitsCountObj = {}; // використаємо об'єкт
+let visitsCountObj = {}; // оголосимо звичайний об’єкт
 
 visitsCountObj[ben] = 234; // використаємо об’єкт `ben` як ключ
 visitsCountObj[john] = 123; // використаємо `john` об'єкт як ключ, `ben` об'єкт буде перезаписаний
