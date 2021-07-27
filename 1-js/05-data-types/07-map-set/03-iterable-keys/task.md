@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Iterable keys
+# Перебираємо ключі
 
-We'd like to get an array of `map.keys()` in a variable and then apply array-specific methods to it, e.g. `.push`.
+Ми хотіли б отримати масив ключів `map.keys()` в змінну і далі працювати з ними, наприклад, застосувати метод `.push`.
 
-But that doesn't work:
+Але так не спрацює:
 
 ```js run
 let map = new Map();
@@ -16,9 +16,9 @@ map.set("name", "John");
 let keys = map.keys();
 
 *!*
-// Error: keys.push is not a function
+// Помилка: keys.push -- це не функція
 keys.push("more");
 */!*
 ```
 
-Why? How can we fix the code to make `keys.push` work?
+Чому? Що потрібно виправити в коді, щоб `keys.push` працював?
