@@ -120,7 +120,7 @@ let user = {
   }
 };
 
-// демо перетворення:
+// демонстрація перетворення:
 alert(user); // hint: string -> {name: "Іван"}
 alert(+user); // hint: number -> 1000
 alert(user + 500); // hint: default -> 1500
