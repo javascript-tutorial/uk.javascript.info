@@ -1,6 +1,6 @@
-To find all anagrams, let's split every word to letters and sort them. When letter-sorted, all anagrams are same.
+Щоб знайти всі анаграми, давайте розіб'ємо кожне слово на літери і відсортуємо їх, а потім об'єднаємо масив знову в рядок. Після цього всі анаграми будуть однакові.
 
-For instance:
+Наприклад:
 
 ```
 nap, pan -> anp
@@ -9,14 +9,14 @@ cheaters, hectares, teachers -> aceehrst
 ...
 ```
 
-We'll use the letter-sorted variants as map keys to store only one value per each key:
+Ми будемо використовувати відсортовані рядки як ключі в колекції Map, для того щоб зіставити кожному ключу тільки одне значення:
 
 ```js run
 function aclean(arr) {
   let map = new Map();
 
   for (let word of arr) {
-    // split the word by letters, sort them and join back
+    // розділіть слово на літери, відсортуйте їх та знову з'єднайте
 *!*
     let sorted = word.toLowerCase().split('').sort().join(''); // (*)
 */!*
@@ -31,9 +31,9 @@ let arr = ["nap", "teachers", "cheaters", "PAN", "ear", "era", "hectares"];
 alert( aclean(arr) );
 ```
 
-Letter-sorting is done by the chain of calls in the line `(*)`.
+Сортування літер здійснюється ланцюжком викликів одним рядком `(*)`.
 
-For convenience let's split it into multiple lines:
+Для зручності давайте розіб'ємо на декілька рядків:
 
 ```js
 let sorted = word // PAN
@@ -43,21 +43,21 @@ let sorted = word // PAN
   .join(''); // anp
 ```
 
-Two different words `'PAN'` and `'nap'` receive the same letter-sorted form `'anp'`.
+Два різних слова `'PAN'` і `'nap'` приймають ту ж саму форму після сортування букв - `'anp'`.
 
-The next line put the word into the map:
+Наступна лінія поміщає слово в об'єкт `Map`:
 
 ```js
 map.set(sorted, word);
 ```
 
-If we ever meet a word the same letter-sorted form again, then it would overwrite the previous value with the same key in the map. So we'll always have at maximum one word per letter-form.
+Якщо ми коли-небудь ще зустрінемо слово в тій же відсортованої формі, тоді це слово перезапише значення з тим же ключем в об'єкті. Таким чином, декільком словами у нас буде завжди відповідати одна відсортована форма.
 
-At the end `Array.from(map.values())` takes an iterable over map values (we don't need keys in the result) and returns an array of them.
+Врешті-решт `Array.from(map.values())` приймає значення об'єкта-ітератора 'Map' (в цьому випадку нам не потрібні ключі) і повертає їх у вигляді масиву.
 
-Here we could also use a plain object instead of the `Map`, because keys are strings.
+Тут ми також можемо використовувати звичайний об'єкт замість `Map`, тому що ключі - це рядки.
 
-That's how the solution can look:
+Ось один з варіантів рішень задачі:
 
 ```js run demo
 function aclean(arr) {

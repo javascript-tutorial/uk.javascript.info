@@ -1,20 +1,18 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://javascript.info> з англійської на українську мову.
 
 **Ось як ви можете допомогти:**
 
-- Перегляньте першу issue: [Ukrainian Translate Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).
-- Виберіть розділ, який ви хочете перекласти. Вибирайте з тих розділів, які ще не відмічені і не перекладаються.
-- Додайте коментар до issue, щоб проінформувати інших, що ви перекладаєте цей розділ.
-- Створіть форк репозиторію, перекладіть один розділ і коли завершите, надішліть запит на злиття (PR).
+1. Перегляньте перше обговорення: [Ukrainian Translation Progress](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).
+1. Виберіть розділ, який ви хочете перекласти. Вибирайте з тих розділів, які ще не відмічені і не перекладаються.
+1. До того самого обговорення додайте коментар з назвою розділу, який Ви хочете перекласти. Коментар повинен містити дослівну назву розділу англійською мовою і більше нічого.
+1. Створіть форк репозиторію, перекладіть один розділ і коли завершите, надішліть запит на злиття (PR). Назва PR має збігатися з назвою розділу, який Ви перекладали.
 
-За бажанням можете [створити issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/new) із назвою перекладу, наприклад: "Translation: Code quality > Debugging in Chrome".
-
-**Дайте іншим зрозуміти, що ви перекладаєте. Найкращим способом буде написання коментаря до [цього issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/1).**
+Якщо виникли питання щодо перекладу, можете [створити issue](https://github.com/javascript-tutorial/uk.javascript.info/issues/new) із назвою перекладу, наприклад: "Translation: Code quality > Debugging in Chrome".
 
 🎉 Дякуємо!
 
@@ -24,7 +22,7 @@
 
 Якщо ви хочете стати супроводжуючим (maintainer), мати повний доступ до репозиторію і переглядати переклади інших, [створіть нову issue](https://github.com/javascript-tutorial/translate/issues/new) в головному репозиторію, із заголовком "Become maintainer (Ukrainian)".
 
-P.S. Весь перелік мов можна знайти на сторінці <https://javascript.info/translate>.
+P.S. Весь перелік мов і прогрес перекладу можна знайти на сторінці <https://javascript.info/translate>.
 
 ## Внески 💚
 
@@ -83,8 +81,12 @@ P.S. Весь перелік мов можна знайти на сторінц�
   <tr>
     <td align="center"><a href="https://github.com/dDenysS"><img src="https://avatars0.githubusercontent.com/u/23075870?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Denys</b></sub></a><br /><a href="#translation-dDenysS" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/ArtemZununov"><img src="https://avatars1.githubusercontent.com/u/12086644?v=4?s=70" width="70px;" alt=""/><br /><sub><b>ArtemZununov</b></sub></a><br /><a href="#translation-ArtemZununov" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/stas-dolgachov"><img src="https://avatars.githubusercontent.com/u/9461925?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Stanislav</b></sub></a><br /><a href="#translation-stas-dolgachov" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/stas-dolgachov"><img src="https://avatars.githubusercontent.com/u/9461925?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Stanislav</b></sub></a><br /><a href="#translation-stas-dolgachov" title="Translation">🌍</a> <a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3Astas-dolgachov" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/hypeofpipe"><img src="https://avatars.githubusercontent.com/u/14982064?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Volodymyr V.</b></sub></a><br /><a href="#translation-hypeofpipe" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/didostap"><img src="https://avatars.githubusercontent.com/u/49234191?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Ostap Dribniuk</b></sub></a><br /><a href="#translation-didostap" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/Regnised"><img src="https://avatars.githubusercontent.com/u/2588425?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Vasyl Onopriienko</b></sub></a><br /><a href="#translation-Regnised" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/Tarkeasy"><img src="https://avatars.githubusercontent.com/u/36696571?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Taras Kulchytskyi</b></sub></a><br /><a href="#translation-Tarkeasy" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/m-sopiha/"><img src="https://avatars.githubusercontent.com/u/20689588?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Mykola Sopiha</b></sub></a><br /><a href="#translation-MykolaSopiha" title="Translation">🌍</a></td>
   </tr>
 </table>
 
