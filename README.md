@@ -89,7 +89,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="https://www.linkedin.com/in/m-sopiha/"><img src="https://avatars.githubusercontent.com/u/20689588?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Mykola Sopiha</b></sub></a><br /><a href="#translation-MykolaSopiha" title="Translation">🌍</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/chizzzy"><img src="https://avatars.githubusercontent.com/u/34280137?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Chystiakov Andrei</b></sub></a><br /><a href="#ideas-chizzzy" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/chizzzy"><img src="https://avatars.githubusercontent.com/u/34280137?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Chystiakov Andrei</b></sub></a><br /><a href="#ideas-chizzzy" title="Ideas, Planning, & Feedback">🤔</a> <a href="#translation-chizzzy" title="Translation">🌍</a></td>
   </tr>
 </table>
 
