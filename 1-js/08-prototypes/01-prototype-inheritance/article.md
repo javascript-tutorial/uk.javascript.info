@@ -1,22 +1,22 @@
-# Prototypal inheritance
+# Успадкування через прототипи
 
-In programming, we often want to take something and extend it.
+У програмуванні ми часто хочемо щось взяти і доповнити чи розширити.
 
-For instance, we have a `user` object with its properties and methods, and want to make `admin` and `guest` as slightly modified variants of it. We'd like to reuse what we have in `user`, not copy/reimplement its methods, just build a new object on top of it.
+Наприклад, ми маємо об’єкт 'user' з його властивостями та методами, і хочемо створити 'admin' та 'guest' як дещо змінені варіанти об’єкта 'user'. Тобто ми хочемо повторно використовувати те, що ми маємо в 'user', але також додати ще власні методи і властивості. Іншими словами, просто хочемо збудувати новий об’єкт поверх того, що існує.
 
-*Prototypal inheritance* is a language feature that helps in that.
+*успадкування через прототипи* - це те, що нам допоможе в цьому.
 
-## [[Prototype]]
+## Спеціальна властивість '[[Prototype]]'
 
-In JavaScript, objects have a special hidden property `[[Prototype]]` (as named in the specification), that is either `null` or references another object. That object is called "a prototype":
+В JavaScript, об’єкти мають спеціальну приховану властивість '[[Prototype]]' (як зазначено в специфікаціях мови), яка може приймати значення: або 'null', або мати посилання на інший об’єкт. Цей об’єкт називається 'прототип':
 
 ![prototype](object-prototype-empty.svg)
 
-When we read a property from `object`, and it's missing, JavaScript automatically takes it from the prototype. In programming, this is called "prototypal inheritance". And soon we'll study many examples of such inheritance, as well as cooler language features built upon it.
+Коли ми зчитуємо якусь властивість об’єкта 'object', але її не має, JavaScript автоматично бере її з прототипу. В програмуванні це називається 'успадкування через прототипи'. В скорому часі, ми вивчимо багато прикладів такого успадкування, як і створення більш цікавих прикладів, які побудовані на їх основі.
 
-The property `[[Prototype]]` is internal and hidden, but there are many ways to set it.
+Така властивість '[[Prototype]]' є внутрішньою та прихованою, але є багато шляхів щоб її визначити.
 
-One of them is to use the special name `__proto__`, like this:
+Одним з них є використання спеціального імені '__proto__', наприклад:
 
 ```js run
 let animal = {
@@ -27,13 +27,13 @@ let rabbit = {
 };
 
 *!*
-rabbit.__proto__ = animal; // sets rabbit.[[Prototype]] = animal
+rabbit.__proto__ = animal; // тут встановлюємо rabbit.[[Prototype]] = animal
 */!*
 ```
 
-Now if we read a property from `rabbit`, and it's missing, JavaScript will automatically take it from `animal`.
+І тепер, якщо ми зчитуємо властивість з об’єкта 'rabbit', а її немає то JavaScript автоматично візьме її з 'animal'.
 
-For instance:
+Ось ще приклад:
 
 ```js
 let animal = {
@@ -47,24 +47,24 @@ let rabbit = {
 rabbit.__proto__ = animal; // (*)
 */!*
 
-// we can find both properties in rabbit now:
+// тепер ми можемо знайти обидві властивості в об’єкті 'rabbit':
 *!*
 alert( rabbit.eats ); // true (**)
 */!*
 alert( rabbit.jumps ); // true
 ```
 
-Here the line `(*)` sets `animal` to be a prototype of `rabbit`.
+В позначеному рядку (*), об’єкт 'animal' визначається як прототип для об’єкта 'rabbit'.
 
-Then, when `alert` tries to read property `rabbit.eats` `(**)`, it's not in `rabbit`, so JavaScript follows the `[[Prototype]]` reference and finds it in `animal` (look from the bottom up):
+І коли 'alert' намагається прочитати властивість 'rabbit.eats' на рядку позначеному (**), а її там немає, то JavaScript йде по ссилці '[[Prototype]]' та знаходить її в об’єкті 'animal' (дивіться знизу вверх):
 
 ![](proto-animal-rabbit.svg)
 
-Here we can say that "`animal` is the prototype of `rabbit`" or "`rabbit` prototypically inherits from `animal`".
+Ми можемо сказати, що 'animal' є прототипом для 'rabbit', або так - об’єкт 'rabbit' успадковує властивості об’єкта 'animal'.
 
-So if `animal` has a lot of useful properties and methods, then they become automatically available in `rabbit`. Such properties are called "inherited".
+Якщо 'animal' має багато корисних властивостей та методів, вони стають автоматично доступними для 'rabbit'. Такі властивості називаються 'успадкованими'.
 
-If we have a method in `animal`, it can be called on `rabbit`:
+Також, якщо ми маємо методи в 'animal' то вони можуть бути викликані і в 'rabbit':
 
 ```js run
 let animal = {
@@ -81,17 +81,17 @@ let rabbit = {
   __proto__: animal
 };
 
-// walk is taken from the prototype
+// тут метод 'walk' береться з прототипу
 *!*
-rabbit.walk(); // Animal walk
+rabbit.walk(); // отримуємо 'Animal walk'
 */!*
 ```
 
-The method is automatically taken from the prototype, like this:
+Методи автоматично беруться з прототипу, як тут:
 
 ![](proto-animal-rabbit-walk.svg)
 
-The prototype chain can be longer:
+Ланцюг прототипів може бути навіть довшим:
 
 ```js run
 let animal = {
@@ -115,48 +115,47 @@ let longEar = {
 */!*
 };
 
-// walk is taken from the prototype chain
-longEar.walk(); // Animal walk
-alert(longEar.jumps); // true (from rabbit)
+// Метод 'walk' беремо з ланцюжка прототипів
+longEar.walk(); // отримуємо 'Animal walk'
+alert(longEar.jumps); // true (береться з об’єкта 'rabbit')
 ```
 
 ![](proto-animal-rabbit-chain.svg)
 
-Now if we read something from `longEar`, and it's missing, JavaScript will look for it in `rabbit`, and then in `animal`.
+І тепер, якщо ми хочемо взяти метод з об’єкта 'longEar', а його там не має, JavaScript буде шукати його в 'rabbit', далі в 'animal'.
 
-There are only two limitations:
+Існує два обмеження:
 
-1. The references can't go in circles. JavaScript will throw an error if we try to assign `__proto__` in a circle.
-2. The value of `__proto__` can be either an object or `null`. Other types are ignored.
+1. Посилання через прототипи не може бути замкнено в кільце. JavaScript видасть помилку, якщо ми визначемо '__proto__' в ланцюжку прототипів і замкнем його в кільце.
+2. Значення '__proto__' може бути, або посиланням на об'єк, або 'null'. Інші типи значень - ігноруються.
 
-Also it may be obvious, but still: there can be only one `[[Prototype]]`. An object may not inherit from two others.
+Хоч це і очевидно, але все ж таки: може бути тільки одина властивість '[[Prototype]]'. Об’єкт не може успадковувати властивості та методи від двох прототипів одночасно.
 
 
-```smart header="`__proto__` is a historical getter/setter for `[[Prototype]]`"
-It's a common mistake of novice developers not to know the difference between these two.
+```smart header="'__proto__' є старим і давнім getter/setter для '[[Prototype]]'"
+Вважається поширеною помилкою, особливо для початківців, неможливість чітко визначити різницю між двома поняттями '__proto__' та '[[Prototype]]'.
 
-Please note that `__proto__` is *not the same* as the internal `[[Prototype]]` property. It's a getter/setter for `[[Prototype]]`. Later we'll see situations where it matters, for now let's just keep it in mind, as we build our understanding of JavaScript language.
+Будь ласка зауважте, що властивість '__proto__'  *не є тою самою* властивістю як внутрішня властивість '[[Prototype]]'. Це є 'getter/setter' для '[[Prototype]]'. Пізніше ми побачимо ситуації, коли це важливо, а поки що давайте просто мати це на увазі, примножуючи своє розуміння мови JavaScript.
+Властивість '__proto__' вважається трохи застарілим. Вона існує з історичних причин, сучасна мова JavaScript пропонує використовувати функцію 'Object.getPrototypeOf/Object.setPrototypeOf' замість 'get/set' прототипу. Ми також розберем ці функції пізніше.
 
-The `__proto__` property is a bit outdated. It exists for historical reasons, modern JavaScript suggests that we should use `Object.getPrototypeOf/Object.setPrototypeOf` functions instead that get/set the prototype. We'll also cover these functions later.
+Згідно специфікаціям мови, '__proto__' повинно тільки підтримуватись в браузерах. Проте насправді, усі середовища, включаючи серверні, підтримують '__proto__', а тому використовувати його можна досить безпечно.
 
-By the specification, `__proto__` must only be supported by browsers. In fact though, all environments including server-side support `__proto__`, so we're quite safe using it.
-
-As the `__proto__` notation is a bit more intuitively obvious, we use it in the examples.
+Оскільки позначення '__proto__' більш інтуїтивно зрозуміліше, ми будемо його використовуємо в прикладах.
 ```
 
-## Writing doesn't use prototype
+## Операція по запису/видаленню не застосовується на прототипах
 
-The prototype is only used for reading properties.
+Прототипи можна використовувати тільки для зчитування властивостей.
 
-Write/delete operations work directly with the object.
+А такі операції як запис/видалення, працюють напряму тільки на самому об’єкті.
 
-In the example below, we assign its own `walk` method to `rabbit`:
+У прикладі нижче, ми визначаємо власний метод 'walk' для об’єкта 'rabbit':
 
 ```js run
 let animal = {
   eats: true,
   walk() {
-    /* this method won't be used by rabbit */  
+    /* цей метод не буде використаний об’єктом 'rabbit' */
   }
 };
 
@@ -170,16 +169,16 @@ rabbit.walk = function() {
 };
 */!*
 
-rabbit.walk(); // Rabbit! Bounce-bounce!
+rabbit.walk(); // тут отримаємо 'Rabbit! Bounce-bounce!'
 ```
 
-From now on, `rabbit.walk()` call finds the method immediately in the object and executes it, without using the prototype:
+Як тільки ми задаємо метод таким чином 'rabbit.walk()', виклик одразу знайде його на самому об’єкті та виконає без використання такого самого методу, який визначений в прототипі:
 
 ![](proto-animal-rabbit-walk-2.svg)
 
-Accessor properties are an exception, as assignment is handled by a setter function. So writing to such a property is actually the same as calling a function.
+Властивості 'Accessor' є винятком, оскільки присвоєння обробляється функцією встановлення (через 'setter'). Отже, запис у таку властивість насправді те саме, що виклик функції.
 
-For that reason `admin.fullName` works correctly in the code below:
+З цієї причини 'admin.fullName' коректно працює в коді, що показаний нижче:
 
 ```js run
 let user = {
@@ -202,33 +201,33 @@ let admin = {
 
 alert(admin.fullName); // John Smith (*)
 
-// setter triggers!
+// відпрацьовує setter
 admin.fullName = "Alice Cooper"; // (**)
 
-alert(admin.fullName); // Alice Cooper, state of admin modified
-alert(user.fullName); // John Smith, state of user protected
+alert(admin.fullName); // Alice Cooper, стан об’єкта 'admin' було змінено
+alert(user.fullName); // John Smith, стан об’єкта 'user' захищено
 ```
 
-Here in the line `(*)` the property `admin.fullName` has a getter in the prototype `user`, so it is called. And in the line `(**)` the property has a setter in the prototype, so it is called.
+Тут на рядку позначеному (*), властивість 'admin.fullName' викликається через 'getter' визначений в прототипі 'user'. А на рядку позначеному (**) властивість задається через setter, який також визначений в прототипі.
 
-## The value of "this"
+## Значення ключового слова "this"
 
-An interesting question may arise in the example above: what's the value of `this` inside `set fullName(value)`? Where are the properties `this.name` and `this.surname` written: into `user` or `admin`?
+Цікаве питання може виникнути в прикладі вище: яке значення ключового слова 'this' всередині 'set fullName(value)'? Де визначаютья властивості 'this.name' та 'this.surname': в об’єкті 'user' чи 'admin'?
 
-The answer is simple: `this` is not affected by prototypes at all.
+Відповідь проста: на 'this' не впливає прототип узагалі.
 
-**No matter where the method is found: in an object or its prototype. In a method call, `this` is always the object before the dot.**
+**Незалежно від того, де метод визначений: в об’єкті чи його прототипі, ключове слово 'this' завжди вказує на об’єкт перед крапкою.**
 
-So, the setter call `admin.fullName=` uses `admin` as `this`, not `user`.
+Таким чином, виклик в методі 'set' виразу 'admin.fullName=' буде брати як 'this' значення властивостей з об’єкту 'admin' а не 'user'.
 
-That is actually a super-important thing, because we may have a big object with many methods, and have objects that inherit from it. And when the inheriting objects run the inherited methods, they will modify only their own states, not the state of the big object.
+В дійсності це є дуже важлива річ бо наприклад, ми можемо мати дуже великий об’єкт з багатьма методами, і також маємо об’єкти, які успадковують властивості або методи від того великого об’єкту. Коли успадковані методи викликаються на стороні об’єктів, що їх успадкували, вони можуть змінювати тільки свої стани а не стан того великого об’єкту.
 
-For instance, here `animal` represents a "method storage", and `rabbit` makes use of it.
+У цьому прикладі, об’єкт 'animal' представляє "набір методів", а об’єкт 'rabbit' може використовувати якісь з цих методів.
 
-The call `rabbit.sleep()` sets `this.isSleeping` on the `rabbit` object:
+Виклик 'rabbit.sleep()' встановлює 'this.isSleeping' в об’єкті 'rabbit':
 
 ```js run
-// animal has methods
+// об’єкт 'animal' має набір методів has
 let animal = {
   walk() {
     if (!this.isSleeping) {
@@ -245,26 +244,26 @@ let rabbit = {
   __proto__: animal
 };
 
-// modifies rabbit.isSleeping
+// змінює тільки свій стан методом rabbit.isSleeping
 rabbit.sleep();
 
 alert(rabbit.isSleeping); // true
-alert(animal.isSleeping); // undefined (no such property in the prototype)
+alert(animal.isSleeping); // undefined (немає такого методу в прототипі)
 ```
 
-The resulting picture:
+Остаточний вигляд:
 
 ![](proto-animal-rabbit-walk-3.svg)
 
-If we had other objects, like `bird`, `snake`, etc., inheriting from `animal`, they would also gain access to methods of `animal`. But `this` in each method call would be the corresponding object, evaluated at the call-time (before dot), not `animal`. So when we write data into `this`, it is stored into these objects.
+Якщо ми маємо інші об’єкти: 'bird', 'snake', і т.д, які успадковують методи від об’єкта 'animal'. Кожний раз, при виклику будь-якого методу, ключове слово 'this' буде вказувати на той об’єкт, на стороні якого був викликаний цей метод, а не на об’єкт 'animal'. Отже, коли ми записуємо будь-які дані в 'this', вони зберігаються в об’єктах на які і вказує 'this'.
 
-As a result, methods are shared, but the object state is not.
+Як результат, методи можуть успадковуватись (передаватись), але стани об’єктів - не можуть.
 
-## for..in loop
+## цикл for..in
 
-The `for..in` loop iterates over inherited properties too.
+Цикл 'for..in' може проходитись по успадкованим властивостям також.
 
-For instance:
+Наприклад:
 
 ```js run
 let animal = {
@@ -277,19 +276,19 @@ let rabbit = {
 };
 
 *!*
-// Object.keys only returns own keys
+// Object.keys повертає тільки влвасні ключі
 alert(Object.keys(rabbit)); // jumps
 */!*
 
 *!*
-// for..in loops over both own and inherited keys
-for(let prop in rabbit) alert(prop); // jumps, then eats
+// Цикл for..in loops повертає як власні так і успадковані ключі
+for(let prop in rabbit) alert(prop); // jumps, потім eats
 */!*
 ```
 
-If that's not what we want, and we'd like to exclude inherited properties, there's a built-in method [obj.hasOwnProperty(key)](mdn:js/Object/hasOwnProperty): it returns `true` if `obj` has its own (not inherited) property named `key`.
+Якщо це не те, що нам потрібно, і ми б хотіли виключити отримання успадкованих значень, існує вбудований метод '[obj.hasOwnProperty(key)](mdn:js/Object/hasOwnProperty)', який повертає 'true' якщо 'obj' має тільки власні (не успадковані) властивості.
 
-So we can filter out inherited properties (or do something else with them):
+Отже, ми можемо відфільтрувати успадковані властивості (чи щось зробити з ними інше ):
 
 ```js run
 let animal = {
@@ -312,28 +311,28 @@ for(let prop in rabbit) {
 }
 ```
 
-Here we have the following inheritance chain: `rabbit` inherits from `animal`, that inherits from `Object.prototype` (because `animal` is a literal object `{...}`, so it's by default), and then `null` above it:
+У цьому прикладі ми маємо наступний ланцюжок: 'rabbit' успадковує властивості від об’єкта 'animal', який, у свою чергу, успадковує властивості від глобального 'Object.prototype' (тому що 'animal' є літералом об’єкта '{...}' за замовчуванням) і на самому верху маємо 'null':
 
 ![](rabbit-animal-object.svg)
 
-Note, there's one funny thing. Where is the method `rabbit.hasOwnProperty` coming from? We did not define it. Looking at the chain we can see that the method is provided by `Object.prototype.hasOwnProperty`. In other words, it's inherited.
+Зауважте одну цікаву річ: звідки метод 'rabbit.hasOwnProperty' забезпечує роботу свого функціоналу, адже властивості на той момент ще не визначені. Дивлячись на ланцюжок успадкувань ми можемо побачити, що отримання властивостей забезпечується 'Object.prototype.hasOwnProperty'. Іншими словами, властивості успадковуються.
 
-...But why does `hasOwnProperty` not appear in the `for..in` loop like `eats` and `jumps` do, if `for..in` lists inherited properties?
+...але чому метод 'hasOwnProperty' не визначає в циклі 'for..in' властивості 'eats' та 'jumps', якщо сам цикл 'for..in' ітерує або проходить по цим успадкованим властивостям?
 
-The answer is simple: it's not enumerable. Just like all other properties of `Object.prototype`, it has `enumerable:false` flag. And `for..in` only lists enumerable properties. That's why it and the rest of the `Object.prototype` properties are not listed.
+Відповідь проста: вони позначені (кажемо стоять під прапорцем) як такі, що не рахуються (not enumerable) так само як і інші властивості в глобальному об’єкті 'Object.prototype'. Прапорець у цьому випадку стоїть як 'enumerable:false', а цикл 'for..in' тільки зчитує властивості, які визначені як такі, що перераховуються. Ось чому і решта властивостей глобального об’єкту 'Object.prototype' не зчитуються також.
 
-```smart header="Almost all other key/value-getting methods ignore inherited properties"
-Almost all other key/value-getting methods, such as `Object.keys`, `Object.values` and so on ignore inherited properties.
+```smart header="Інші, майже всі, методи по отриманню пар ключ/значення ігнорують успадковані властивості."
+Отримання пар ключ/значення в інших методах, таких як: 'Object.keys', 'Object.values' і т.д. ігнорують успадковані властивості.
 
-They only operate on the object itself. Properties from the prototype are *not* taken into account.
+Методи працюють тільки на самому об’єкті. Властивості від прототипів *не* беруться до уваги.
 ```
 
-## Summary
+## Підсумок
 
-- In JavaScript, all objects have a hidden `[[Prototype]]` property that's either another object or `null`.
-- We can use `obj.__proto__` to access it (a historical getter/setter, there are other ways, to be covered soon).
-- The object referenced by `[[Prototype]]` is called a "prototype".
-- If we want to read a property of `obj` or call a method, and it doesn't exist, then JavaScript tries to find it in the prototype.
-- Write/delete operations act directly on the object, they don't use the prototype (assuming it's a data property, not a setter).
-- If we call `obj.method()`, and the `method` is taken from the prototype, `this` still references `obj`. So methods always work with the current object even if they are inherited.
-- The `for..in` loop iterates over both its own and its inherited properties. All other key/value-getting methods only operate on the object itself.
+- В JavaScript, усі об’єкти мають скриту властивість '[[Prototype]]', яка може бути іншим об’єктом або 'null'.
+- Ми можемо використати 'obj.__proto__' для доступу до цієї властивості (це історичний getter/setter; є і інші методи, які будуть розглянуті згодом).
+- Об’єкт, на який посилається властивість '[[Prototype]]' називається 'прототип'.
+- Якщо ми хочемо прочитати властивості об’єкта 'obj' чи викликаємо метод, який не існує, тоді JavaScript намагається знайти їх в прототипі.
+- Операції по запису/видаленню здійснюються безпосередньо на об’єкті. Ці операції не використовують прототипи (припускаючи, що це властивість даних, а не сеттер).
+- Якщо ми викликаємо 'obj.method()', і при цьому, 'method' береться з прототипу, ключове слово 'this' вказує на 'obj'. Таким чином, методи завжди працюють з поточним об’єктом, навіть, якщо ці методи успадковані.
+- Цикл 'for..in' ітерує як по власних властивостям так і тим, що успадковані. Усі інші методи з отримання пар ключ/значення діють тільки на власних об’єктах.
