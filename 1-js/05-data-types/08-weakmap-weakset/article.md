@@ -139,7 +139,7 @@ function countUser(user) {
 
 ```js
 // 📁 main.js
-let john = { name: "John" };
+let john = { name: "Іван" };
 
 countUser(john); // рахує його візити
 
