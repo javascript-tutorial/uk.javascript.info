@@ -112,7 +112,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
       "profile": "https://github.com/stas-dolgachov",
       "contributions": [
-        "translation"
+        "translation",
+        "review"
       ]
     },
     {
@@ -121,6 +122,52 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/14982064?v=4",
       "profile": "https://github.com/hypeofpipe",
       "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "didostap",
+      "name": "Ostap Dribniuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49234191?v=4",
+      "profile": "https://github.com/didostap",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Regnised",
+      "name": "Vasyl Onopriienko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2588425?v=4",
+      "profile": "https://github.com/Regnised",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Tarkeasy",
+      "name": "Taras Kulchytskyi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36696571?v=4",
+      "profile": "https://github.com/Tarkeasy",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "MykolaSopiha",
+      "name": "Mykola Sopiha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
+      "profile": "https://www.linkedin.com/in/m-sopiha/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "chizzzy",
+      "name": "Chystiakov Andrei",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34280137?v=4",
+      "profile": "https://github.com/chizzzy",
+      "contributions": [
+        "ideas",
         "translation"
       ]
     }
