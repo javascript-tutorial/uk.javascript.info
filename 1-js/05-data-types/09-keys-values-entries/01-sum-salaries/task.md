@@ -2,21 +2,21 @@ importance: 5
 
 ---
 
-# Sum the properties
+# Підсумуйте властивості
 
-There is a `salaries` object with arbitrary number of salaries. 
+Є об’єкт `salaries` з довільною кількістю властивостей, що містять заробітні плати. 
 
-Write the function `sumSalaries(salaries)` that returns the sum of all salaries using `Object.values` and the `for..of` loop.
+Напишіть функцію `sumSalaries(salaries)`, що повертає суму всіх зарплат за допомогою `Object.values` та циклу`for..of`.
 
-If `salaries` is empty, then the result must be `0`.
+Якщо об’єкт `salaries` порожній, тоді результат повинен бути `0`.
 
-For instance:
+Наприклад:
 
 ```js
 let salaries = {
-  "John": 100,
-  "Pete": 300,
-  "Mary": 250
+  "Іван": 100,
+  "Петро": 300,
+  "Марія": 250
 };
 
 alert( sumSalaries(salaries) ); // 650

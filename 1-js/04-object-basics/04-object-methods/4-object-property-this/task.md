@@ -2,22 +2,22 @@ importance: 5
 
 ---
 
-# Using "this" in object literal
+# Використання "this" в об’єктному літералі
 
-Here the function `makeUser` returns an object.
+Тут функція `makeUser` повертає об’єкт.
 
-What is the result of accessing its `ref`? Why?
+Який результат доступу до його `ref`? Чому?
 
 ```js
 function makeUser() {
   return {
-    name: "John",
+    name: "Іван",
     ref: this
   };
 }
 
 let user = makeUser();
 
-alert( user.ref.name ); // What's the result?
+alert( user.ref.name ); // Який результат?
 ```
 

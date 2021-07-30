@@ -2,9 +2,9 @@ importance: 2
 
 ---
 
-# Chaining
+# Ланцюг викликів
 
-There's a `ladder` object that allows to go up and down:
+Існує об'єкт `ladder`, що дозволяє підійматися вгору-вниз:
 
 ```js
 let ladder = {
@@ -15,13 +15,13 @@ let ladder = {
   down() { 
     this.step--;
   },
-  showStep: function() { // shows the current step
+  showStep: function() { // показує поточний крок
     alert( this.step );
   }
 };
 ```
 
-Now, if we need to make several calls in sequence, can do it like this:
+Тепер, якщо нам потрібно зробити кілька викликів послідовно, можна зробити це так:
 
 ```js
 ladder.up();
@@ -30,10 +30,10 @@ ladder.down();
 ladder.showStep(); // 1
 ```
 
-Modify the code of `up`, `down` and `showStep` to make the calls chainable, like this:
+Змініть код `up`, `down` і `showStep` так, щоб зробити доступним ланцюг викликів, наприклад:
 
 ```js
 ladder.up().up().down().showStep(); // 1
 ```
 
-Such approach is widely used across JavaScript libraries.
+Такий підхід широко використовується в бібліотеках JavaScript.
