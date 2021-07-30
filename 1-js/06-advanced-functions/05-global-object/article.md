@@ -1,89 +1,89 @@
 
-# Глобальний об’єкт
+# Global object
 
-Глобальний об’єкт надає змінні та функції, доступні в будь-якому місці програми. За замовчуванням ті, які вбудовані в мову або середовище.
+The global object provides variables and functions that are available anywhere. By default, those that are built into the language or the environment.
 
-У браузері він має назву `window`, у Node.js -- `global`, для інших середовищ він може мати іншу назву.
+In a browser it is named `window`, for Node.js it is `global`, for other environments it may have another name.
 
-Нещодавно до мови було додано `globalThis` як стандартизовану назву глобального об’єкта, який має підтримуватися у всіх середовищах. Він підтримується у всіх основних браузерах.
+Recently, `globalThis` was added to the language, as a standardized name for a global object, that should be supported across all environments. It's supported in all major browsers.
 
-Ми будемо використовувати `window`, вважаючи, що наше середовище -- це браузер. Якщо ваш скрипт може працювати в інших середовищах, краще використовувати замість цього `globalThis`.
+We'll use `window` here, assuming that our environment is a browser. If your script may run in other environments, it's better to use `globalThis` instead.
 
-До всіх властивостей глобального об’єкта можна отримати доступ напряму:
+All properties of the global object can be accessed directly:
 
 ```js run
-alert("Привіт");
-// це те ж саме, що і
-window.alert("Привіт");
+alert("Hello");
+// is the same as
+window.alert("Hello");
 ```
 
-У браузері глобальні функції і змінні оголошені за допомогою `var` (не `let/const`!) стають властивостями глобального об’єкта:
+In a browser, global functions and variables declared with `var` (not `let/const`!) become the property of the global object:
 
 ```js run untrusted refresh
 var gVar = 5;
 
-alert(window.gVar); // 5 (змінна стала властивістю глобального об’єкта)
+alert(window.gVar); // 5 (became a property of the global object)
 ```
 
-Такий же ефект мають оголошення функцій (оператори з ключовим словом `function` у потоці основного коду, а не функціональні вирази).
+The same effect have function declarations (statements with `function` keyword in the main code flow, not function expressions).
 
-Будь ласка, не покладайтесь на це! Така поведінка існує з міркувань сумісності. Сучасні скрипти використовують [JavaScript модулі](info:modules), де такого не відбувається
+Please don't rely on that! This behavior exists for compatibility reasons. Modern scripts use [JavaScript modules](info:modules) where such a thing doesn't happen.
 
-Якщо замість `var` ми використаємо `let`, такого не станеться:
+If we used `let` instead, such thing wouldn't happen:
 
 ```js run untrusted refresh
 let gLet = 5;
 
-alert(window.gLet); // undefined (змінна не стає властивістю глобального об’єкта)
+alert(window.gLet); // undefined (doesn't become a property of the global object)
 ```
 
-Якщо значення настільки важливе, що ви хочете зробити його глобальним, то напишіть його безпосередньо як властивість:
+If a value is so important that you'd like to make it available globally, write it directly as a property:
 
 ```js run
 *!*
-// робимо інформацію про користувача глобальною, щоб вона була доступною  в будь-якому місці коду
+// make current user information global, to let all scripts access it
 window.currentUser = {
   name: "John"
 };
 */!*
 
-// десь у коді
+// somewhere else in code
 alert(currentUser.name);  // John
 
-// або, якщо ми маємо локальну змінну з ім’ям "currentUser"
-// отримаймо явно з window (безпечно!)
+// or, if we have a local variable with the name "currentUser"
+// get it from window explicitly (safe!)
 alert(window.currentUser.name); // John
 ```
 
-При цьому зазвичай не рекомендується використовувати глобальні змінні. Слід застосовувати їх якомога рідше. Дизайн коду, при якому функція отримує вхідні параметри і видає певний результат, чистіше, надійніше і зручніше для тестування, ніж коли використовуються зовнішні, а тим більш глобальні змінні.
+That said, using global variables is generally discouraged. There should be as few global variables as possible. The code design where a function gets "input" variables and produces certain "outcome" is clearer, less prone to errors and easier to test than if it uses outer or global variables.
 
-## Використання поліфілів
+## Using for polyfills
 
-Ми використовуємо глобальний об’єкт для тестування підтримки сучасних мовних функцій браузером.
+We use the global object to test for support of modern language features.
 
-Наприклад, перевірте, чи існує вбудований об’єкт `Promise` (його немає у  дуже старих браузерах):
+For instance, test if a built-in `Promise` object exists (it doesn't in really old browsers):
 ```js run
 if (!window.Promise) {
-  alert("Твій браузер застарів!");
+  alert("Your browser is really old!");
 }
 ```
 
-Якщо його немає (побачимо повідомлення: "Твій браузер застарів!"), ми можемо створити «поліфіли», щоб додати підтримку цього об’єкту. Додати функції, які не підтримуються середовищем, але існують у сучасному стандарті.
+If there's none (say, we're in an old browser), we can create "polyfills": add functions that are not supported by the environment, but exist in the modern standard.
 
 ```js run
 if (!window.Promise) {
-  window.Promise = ... // Не стандартна реалізація `Promise`
+  window.Promise = ... // custom implementation of the modern language feature
 }
 ```
 
-## Підсумки
+## Summary
 
-- Глобальний об’єкт містить змінні, які мають бути доступними скрізь.
+- The global object holds variables that should be available everywhere.
 
-    Включаючи вбудовані у JavaScript, такі як `Array`, та значення, характерні для середовища, такі як `window.innerHeight` -- висота вікна у браузері.
-- Глобальний об’єкт має універсальну назву `globalThis`.
+    That includes JavaScript built-ins, such as `Array` and environment-specific values, such as `window.innerHeight` -- the window height in the browser.
+- The global object has a universal name `globalThis`.
 
-    ... Але частіше згадуються специфічні назви середовища "старої школи", такі як `window` (браузер) та `global` (Node.js).
-- Ми повинні зберігати значення у глобальному об’єкті, лише якщо вони дійсно глобальні для нашого проєкту. І тримати їх кількість мінімальною.
-- В браузерах, якщо ми не використовуємо [модулі](info:modules), глобальні функції та змінні, оголошені за допомогою `var`, стають властивістю глобального об’єкта.
-- Для того, щоб код був простішим і в майбутньому його легше було підтримувати, слід звертатися до властивостей глобального об’єкта безпосередньо, через `window.x`.
+    ...But more often is referred by "old-school" environment-specific names, such as `window` (browser) and `global` (Node.js).
+- We should store values in the global object only if they're truly global for our project. And keep their number at minimum.
+- In-browser, unless we're using [modules](info:modules), global functions and variables declared with `var` become a property of the global object.
+- To make our code future-proof and easier to understand, we should access properties of the global object directly, as `window.x`.
