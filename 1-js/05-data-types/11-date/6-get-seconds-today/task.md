@@ -2,14 +2,14 @@ importance: 5
 
 ---
 
-# How many seconds have passed today?
+# Скільки секунд пройшло сьогодні?
 
-Write a function `getSecondsToday()` that returns the number of seconds from the beginning of today.
+Напишіть функцію `getSecondsToday()`, що повертає кількість секунд з початку сьогоднішнього дня.
 
-For instance, if now were `10:00 am`, and there was no daylight savings shift, then:
+Наприклад, якщо зараз `10:00 am`, і не було зміни літнього часу, то:
 
 ```js
 getSecondsToday() == 36000 // (3600 * 10)
 ```
 
-The function should work in any day. That is, it should not have a hard-coded value of "today".
+Функція повинна працювати в будь-який день. Тобто, вона не повинна мати жорстко-кодоване значення "сьогодні".

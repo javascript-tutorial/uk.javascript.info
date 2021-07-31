@@ -1,15 +1,15 @@
-The `new Date` constructor uses the local time zone. So the only important thing to remember is that months start from zero.
+Конструктор `new Date` використовує місцевий часовий пояс. Отже, єдина важлива річ, яку слід пам’ятати це те, що місяці починаються з нуля.
 
-So February has number 1.
+Тому лютий має номер 1.
 
-Here's an example with numbers as date components:
+Ось приклад з номерами як компонентам дати:
 
 ```js run
 //new Date(year, month, date, hour, minute, second, millisecond)
 let d1 = new Date(2012, 1, 20, 3, 12);
 alert( d1 );
 ```
-We could also create a date from a string, like this:
+Ми також можемо створити дату з рядка, як наприклад:
 
 ```js run
 //new Date(datastring)
