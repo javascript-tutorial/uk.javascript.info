@@ -1,14 +1,14 @@
-# JSON methods, toJSON
+# Методи JSON, toJSON
 
-Let's say we have a complex object, and we'd like to convert it into a string, to send it over a network, or just to output it for logging purposes.
+Скажімо, у нас є складний об'єкт, і ми хотіли б перетворити його в рядок, щоб відправити його через мережу або просто вивести його для цілей логування.
 
-Naturally, such a string should include all important properties.
+Безумовно, такий рядок повинен включати всі важливі властивості.
 
-We could implement the conversion like this:
+Ми могли б реалізувати перетворення, наступним чином:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   age: 30,
 
 *!*
@@ -18,26 +18,26 @@ let user = {
 */!*
 };
 
-alert(user); // {name: "John", age: 30}
+alert(user); // {name: "Іван", age: 30}
 ```
 
-...But in the process of development, new properties are added, old properties are renamed and removed. Updating such `toString` every time can become a pain. We could try to loop over properties in it, but what if the object is complex and has nested objects in properties? We'd need to implement their conversion as well.
+... Але в процесі розробки додаються нові властивості, старі властивості перейменовуються та видаляються. Оновлення такого `toString` кожен раз може стати проблемою. Ми могли б спробувати проходити в циклі над властивостями в об’єкті, але що, якщо об’єкт є складним і має вкладені об’єкти у властивостях? Ми також повинні реалізувати їх перетворення.
 
-Luckily, there's no need to write the code to handle all this. The task has been solved already.
+На щастя, немає необхідності писати код для обробки всього цього. Завдання вже вирішено.
 
 ## JSON.stringify
 
-The [JSON](http://en.wikipedia.org/wiki/JSON) (JavaScript Object Notation) is a general format to represent values and objects. It is described as in [RFC 4627](http://tools.ietf.org/html/rfc4627) standard. Initially it was made for JavaScript, but many other languages have libraries to handle it as well.  So it's easy to use JSON for data exchange when the client uses JavaScript and the server is written on Ruby/PHP/Java/Whatever.
+[JSON](http://uk.wikipedia.org/wiki/json) (JavaScript Object Notation) -- це загальний формат, який представляє значення та об’єкти. Він описується у [RFC 4627](http://tools.ietf.org/html/rfc4627) cтандарті. Спочатку він був зроблений для JavaScript, але багато інших мов мають бібліотеки, щоб обробляють його також. Тому легко використовувати JSON для обміну даними, коли клієнт використовує JavaScript, а сервер написаний на Ruby/PHP/Java/що завгодно.
 
-JavaScript provides methods:
+JavaScript надає методи:
 
-- `JSON.stringify` to convert objects into JSON.
-- `JSON.parse` to convert JSON back into an object.
+- `JSON.stringify` для перетворити об’єктів в JSON.
+- `JSON.parse` для перетворення JSON назад в об’єкт.
 
-For instance, here we `JSON.stringify` a student:
+Наприклад, тут ми викликаємо `JSON.stringify` з об’єктом `student`:
 ```js run
 let student = {
-  name: 'John',
+  name: 'Іван',
   age: 30,
   isAdmin: false,
   courses: ['html', 'css', 'js'],
@@ -48,13 +48,13 @@ let student = {
 let json = JSON.stringify(student);
 */!*
 
-alert(typeof json); // we've got a string!
+alert(typeof json); // ми отримали рядок!
 
 alert(json);
 *!*
-/* JSON-encoded object:
+/* JSON-кодований об’єкт:
 {
-  "name": "John",
+  "name": "Іван",
   "age": 30,
   "isAdmin": false,
   "courses": ["html", "css", "js"],
