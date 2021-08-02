@@ -184,45 +184,45 @@ alert( from ); // Анна
 Дехто може сказати, що в прикладі вище "функцію `sayMessage` оголошено з двома параметрами, потім викликано з двома аргументами: `from` і `"Привіт"`".
 
 
-## Default values
+## Типові значення
 
-If a function is called, but an argument is not provided, then the corresponding value becomes `undefined`.
+Якщо викликати функцію без аргументів, тоді відповідні значення стануть `undefined`.
 
-For instance, the aforementioned function `showMessage(from, text)` can be called with a single argument:
+Наприклад, функцію `showMessage(from, text)`, яку ми згадували вище, можна викликати з одним аргументом:
 
 ```js
-showMessage('Ann');
+showMessage('Анна');
 ```
 
-That's not an error. Such a call would output `"*Ann*: undefined"`. As the value for `text` isn't passed, it becomes `undefined`.
+Помилки не виникне. Такий виклик виведе `"*Анна*: undefined"`. Оскільки значення для змінної `text` не задане, воно стане `undefined`.
 
-We can specify the so-called "default" (to use if omitted) value for a parameter in the function declaration, using `=`:
+Ми можемо задати так зване "типове" значення параметра, яке використовуватиметься, якщо не задати аргумент. Для цього потрібно написати значення через `=`:
 
 ```js run
-function showMessage(from, *!*text = "no text given"*/!*) {
+function showMessage(from, *!*text = "текст не задано"*/!*) {
   alert( from + ": " + text );
 }
 
-showMessage("Ann"); // Ann: no text given
+showMessage("Анна"); // Анна: текст не задано
 ```
 
-Now if the `text` parameter is not passed, it will get the value `"no text given"`
+Тепер, якщо параметр `text` не задано, його значення стане `"текст не задано"`.
 
-Here `"no text given"` is a string, but it can be a more complex expression, which is only evaluated and assigned if the parameter is missing. So, this is also possible:
+Тут `"текст не задано"` це рядок, проте це може бути складніший вираз, який обчислюється і присвоюється лише якщо параметр відсутній. Отож, такий варіант теж можливий:
 
 ```js run
 function showMessage(from, text = anotherFunction()) {
-  // anotherFunction() only executed if no text given
-  // its result becomes the value of text
+  // anotherFunction() виконується лише якщо `text` не задано
+  // результат виконання цієї функції присвоїться змінній `text`
 }
 ```
 
-```smart header="Evaluation of default parameters"
-In JavaScript, a default parameter is evaluated every time the function is called without the respective parameter.
+```smart header="Обчислення типових параметрів"
+В JavaScript, типовий параметр обчислюється кожного разу, коли викликається функція без відповідного параметру.
 
-In the example above, `anotherFunction()` isn't called at all, if the `text` parameter is provided.
+В прикладі вище, функція `anotherFunction()` не викличеться, якщо буде задано параметр `text`.
 
-On the other hand, it's independently called every time when `text` is missing.
+З іншого боку, вона буде викликатися кожного разу, коли `text` відсутній.
 ```
 
 ### Alternative default parameters
