@@ -18,7 +18,7 @@
 
 ```js
 let promise = new Promise(function(resolve, reject) {
-  // executor (код виробник, "співак")
+  // код, котрий поверне результат (код–"виробник", "співак")
 });
 ```
 
