@@ -377,11 +377,7 @@ label: {
 }
 ```
 
-<<<<<<< HEAD
 ...Однак, 99.9% часу `break` використовується всередині циклів, як ми бачили в прикладах вище.  
-=======
-...Although, 99.9% of the time `break` is used inside loops, as we've seen in the examples above.
->>>>>>> ef8d576821ff28c69bfb7410dc79fd216b0a315b
 
 Виклик `continue` можливий лише всередині циклу.
 ````
