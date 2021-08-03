@@ -22,14 +22,14 @@
 
 <body>
 
-  <button onclick="go()">Click me</button>
+  <button onclick="go()">Клацни на мене</button>
 
   <script>
 
   function go() {
     showCircle(150, 150, 100).then(div => {
       div.classList.add('message-ball');
-      div.append("Hello, world!");
+      div.append("Привіт, світ!");
     });
   }
 

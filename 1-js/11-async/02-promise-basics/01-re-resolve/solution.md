@@ -1,3 +1,3 @@
-The output is: `1`.
+Результат буде: `1`.
 
-The second call to `resolve` is ignored, because only the first call of `reject/resolve` is taken into account. Further calls are ignored.
+Другий виклик `resolve` проігнорується, оскільки враховується тільки перший виклик `reject/resolve`. Всі наступні їхні виклики ігноруються.

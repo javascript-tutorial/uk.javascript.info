@@ -1,14 +1,14 @@
 
-# Delay with a promise
+# Затримка на промісах
 
-The built-in function `setTimeout` uses callbacks. Create a promise-based alternative.
+Вбудована функція `setTimeout` використовує колбек-функції. Створіть альтернативу яка базується на промісах.
 
-The function `delay(ms)` should return a promise. That promise should resolve after `ms` milliseconds, so that we can add `.then` to it, like this:
+Функція `delay(ms)` повинна повертати проміс, який перейде в стан `resolved` через `ms` мілісекунд, так щоб ми могли додати до нього `.then`:
 
 ```js
 function delay(ms) {
-  // your code
+  // ваш код
 }
 
-delay(3000).then(() => alert('runs after 3 seconds'));
+delay(3000).then(() => alert('виконалось через 3 секунди'));
 ```
