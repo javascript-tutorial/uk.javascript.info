@@ -2,22 +2,22 @@ importance: 5
 
 ---
 
-# Store "unread" flags
+# Зберігати мітки "непрочитане"
 
-There's an array of messages:
+Є масив повідомлень:
 
 ```js
 let messages = [
-  {text: "Hello", from: "John"},
-  {text: "How goes?", from: "John"},
-  {text: "See you soon", from: "Alice"}
+  {text: "Привіт", from: "Іван"},
+  {text: "Як справи?", from: "Іван"},
+  {text: "До зустрічі", from: "Аліса"}
 ];
 ```
 
-Your code can access it, but the messages are managed by someone else's code. New messages are added, old ones are removed regularly by that code, and you don't know the exact moments when it happens.
+Ваш код може отримати доступ до нього, але повідомлення керуються чужим кодом. Нові повідомлення додаються, старі видаляються регулярно цим кодом, і ви не знаєте точних моментів, коли це станеться.
 
-Now, which data structure could you use to store information about whether the message "has been read"? The structure must be well-suited to give the answer "was it read?" for the given message object.
+Тепер, яку структуру даних ви могли б використати для зберігання інформації про те, чи було повідомлення прочитаним? Структура повинна добре підходити, щоб дати відповідь на питання "чи він прочитаний?" для об’єкта даного повідомлення.
 
-P.S. When a message is removed from `messages`, it should disappear from your structure as well.
+P.S. Коли повідомлення видаляється з `messages`, воно також повинне зникнути з вашої структури.
 
-P.P.S. We shouldn't modify message objects, add our properties to them. As they are managed by someone else's code, that may lead to bad consequences.
+P.P.S. Ми не повинні змінювати об’єкти повідомлення, додаючи до них наші властивості. Оскільки вони керуються іншим кодом, це може призвести до поганих наслідків.
