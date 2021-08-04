@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# Last day of month?
+# Останній день місяця?
 
-Write a function `getLastDayOfMonth(year, month)` that returns the last day of month. Sometimes it is 30th, 31st or even 28/29th for Feb.
+Напишіть функцію `getLastDayOfMonth(year, month)`, що повертає останній день місяця. Іноді це 30-е, 31-ше або навіть 28/29-е для лютого.
 
-Parameters:
+Параметри:
 
-- `year` -- four-digits year, for instance 2012.
-- `month` -- month, from 0 to 11.
+- `year` -- чотиризначний рік, наприклад 2012.
+- `month` -- місяць, від 0 to 11.
 
-For instance, `getLastDayOfMonth(2012, 1) = 29` (leap year, Feb).
+Наприклад, `getLastDayOfMonth(2012, 1) = 29` (високосний рік, лютий).

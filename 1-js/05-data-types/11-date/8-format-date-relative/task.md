@@ -2,24 +2,24 @@ importance: 4
 
 ---
 
-# Format the relative date
+# Формат відносної дати
 
-Write a function `formatDate(date)` that should format `date` as follows:
+Напишіть функцію `formatDate(date)`, яка повинна форматувати `date` наступним чином:
 
-- If since `date` passed less than 1 second, then `"right now"`.
-- Otherwise, if since `date` passed less than 1 minute, then `"n sec. ago"`.
-- Otherwise, if less than an hour, then `"m min. ago"`.
-- Otherwise, the full date in the format `"DD.MM.YY HH:mm"`. That is: `"day.month.year hours:minutes"`, all in 2-digit format, e.g. `31.12.16 10:00`.
+- Якщо з `date` пройшла менше, ніж 1 секунда, то `"прямо зараз"`.
+- Інакше, якщо з `date` пройшло менше 1 хвилини, то `"n сек. назад"`.
+- Інакше, якщо менше години, то `"m хв. назад"`.
+- В іншому випадку повна дата у форматі `"DD.MM.YY HH:mm"`. Тобто: `"день.місяць.рік години:хвилини"`, все в 2-значному форматі, наприклад, `31.12.16 10:00`.
 
-For instance:
+Наприклад:
 
 ```js
-alert( formatDate(new Date(new Date - 1)) ); // "right now"
+alert( formatDate(new Date(new Date - 1)) ); // "прямо зараз"
 
-alert( formatDate(new Date(new Date - 30 * 1000)) ); // "30 sec. ago"
+alert( formatDate(new Date(new Date - 30 * 1000)) ); // "30 сек. назад"
 
-alert( formatDate(new Date(new Date - 5 * 60 * 1000)) ); // "5 min. ago"
+alert( formatDate(new Date(new Date - 5 * 60 * 1000)) ); // "5 хв. назад"
 
-// yesterday's date like 31.12.16 20:00
+// вчорашня дата, як 31.12.16 20:00
 alert( formatDate(new Date(new Date - 86400 * 1000)) );
 ```
