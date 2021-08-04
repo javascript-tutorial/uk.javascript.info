@@ -1,7 +1,7 @@
-**The answer: `rabbit`.**
+**Відповідь: `rabbit`.**
 
-That's because `this` is an object before the dot, so `rabbit.eat()` modifies `rabbit`.
+Це тому, що ключове слово `this` вказує на об’єкт перед крапкою, отже `rabbit.eat()` буде записано в `rabbit`.
 
-Property lookup and execution are two different things.
+Пошук метода та його виконання - це дві різні речі.
 
-The method `rabbit.eat` is first found in the prototype, then executed with `this=rabbit`.
+Метод `rabbit.eat` спочатку шукається в прототипі, а потім виконується з умовою `this=rabbit`.

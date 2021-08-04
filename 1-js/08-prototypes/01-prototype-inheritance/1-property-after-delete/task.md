@@ -1,12 +1,12 @@
-importance: 5
+Важливість: 5
 
 ---
 
-# Working with prototype
+# Робота з прототипами
 
-Here's the code that creates a pair of objects, then modifies them.
+Ось код, у якому створюють пару об’єктів і потім в ході виконання їх модифікують.
 
-Which values are shown in the process?
+Які значення будуть показані в результаті виконання коду?
 
 ```js
 let animal = {
@@ -28,4 +28,4 @@ delete animal.jumps;
 alert( rabbit.jumps ); // ? (3)
 ```
 
-There should be 3 answers.
+Повинно бути 3 відповіді.
