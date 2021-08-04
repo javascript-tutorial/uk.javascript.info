@@ -58,7 +58,7 @@ showMessage();
 ```js run
 function showMessage() {
 *!*
-  let message = "Бажаю вам 36.6"; // локальна змінна
+  let message = "Привіт, я JavaScript!"; // локальна змінна
 */!*
 
   alert( message );
