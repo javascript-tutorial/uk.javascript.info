@@ -135,7 +135,7 @@ alert( date.getUTCHours() );
 
 ## Налаштування компонентів дати
 
-Наступні методи дозволяють встановити дату/часові компонентів:
+Наступні методи дозволяють встановити дату/часові компоненти:
 
 - [`setFullYear(year, [month], [date])`](mdn:js/Date/setFullYear)
 - [`setMonth(month, [date])`](mdn:js/Date/setMonth)
