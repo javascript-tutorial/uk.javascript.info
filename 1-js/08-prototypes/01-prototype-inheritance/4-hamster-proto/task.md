@@ -1,4 +1,4 @@
-Важливість: 5
+importance: 5
 
 ---
 
@@ -29,7 +29,6 @@ let lazy = {
 speedy.eat("apple");
 alert( speedy.stomach ); // apple
 
-// Але цей також має їду, чому? Виправте це.
+// Але цей також має їжу, чому? Виправте це.
 alert( lazy.stomach ); // apple
 ```
-
