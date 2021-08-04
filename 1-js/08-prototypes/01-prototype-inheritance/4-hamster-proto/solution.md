@@ -10,7 +10,7 @@
 
 Таким чином, усі хом’ячки мають спільний шлунок!
 
-Для обох методів `lazy.stomach.push(...)` і `speedy.stomach.push()`, властивість `stomach` знаходисться в прототипі (бо в самих об’єктах такої властивості немає), яка отрммує нові дані.
+Для обох методів `lazy.stomach.push(...)` і `speedy.stomach.push()`, властивість `stomach` знаходисться в прототипі (бо в самих об’єктах такої властивості немає), яка потім отрммує нові дані.
 
 Будь ласка, зауважте, що така річ не відбувається у випадку простого визначення `this.stomach=`:
 
@@ -20,7 +20,7 @@ let hamster = {
 
   eat(food) {
 *!*
-    // визначається до this.stomach замість this.stomach.push
+    // визначається до `this.stomach` замість `this.stomach.push`
     this.stomach = [food];
 */!*
   }
@@ -34,11 +34,11 @@ let lazy = {
   __proto__: hamster
 };
 
-// Хом’ячок 'Speedy' знайшов їду
+// Хом’ячок `Speedy` знайшов їду
 speedy.eat("apple");
 alert( speedy.stomach ); // apple
 
-// Шлунок хом’ячка 'Lazy' пустий
+// Шлунок хом’ячка `Lazy` пустий
 alert( lazy.stomach ); // <nothing>
 ```
 
@@ -69,11 +69,11 @@ let lazy = {
 */!*
 };
 
-// Хом’ячок 'Speedy' знайшов їду
+// Хом’ячок `Speedy` знайшов їду
 speedy.eat("apple");
 alert( speedy.stomach ); // apple
 
-//  Шлунок хом’ячка 'Lazy' пустий
+//  Шлунок хом’ячка `Lazy` пустий
 alert( lazy.stomach ); // <nothing>
 ```
 
