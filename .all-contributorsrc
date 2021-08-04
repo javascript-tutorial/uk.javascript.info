@@ -24,6 +24,43 @@
       ]
     },
     {
+      "login": "stas-dolgachov",
+      "name": "Stanislav",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
+      "profile": "https://github.com/stas-dolgachov",
+      "contributions": [
+        "translation",
+        "review"
+      ]
+    },
+    {
+      "login": "MykolaSopiha",
+      "name": "Mykola Sopiha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
+      "profile": "https://www.linkedin.com/in/m-sopiha/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Regnised",
+      "name": "Vasyl Onopriienko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2588425?v=4",
+      "profile": "https://github.com/Regnised",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "didostap",
+      "name": "Ostap Dribniuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49234191?v=4",
+      "profile": "https://github.com/didostap",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
       "login": "alexgalkin",
       "name": "Alex Galkin",
       "avatar_url": "https://avatars0.githubusercontent.com/u/1190812?v=4",
@@ -53,6 +90,16 @@
       ]
     },
     {
+      "login": "UkrainianCitizen",
+      "name": "UkrainianCitizen",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/31314423?v=4",
+      "profile": "https://github.com/UkrainianCitizen",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
+    },
+    {
       "login": "alexandrtovmach",
       "name": "Alexandr Tovmach",
       "avatar_url": "https://avatars0.githubusercontent.com/u/28801003?v=4",
@@ -68,15 +115,6 @@
       "profile": "http://stepansuvorov.com/blog/",
       "contributions": [
         "translation"
-      ]
-    },
-    {
-      "login": "UkrainianCitizen",
-      "name": "UkrainianCitizen",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/31314423?v=4",
-      "profile": "https://github.com/UkrainianCitizen",
-      "contributions": [
-        "ideas"
       ]
     },
     {
@@ -107,38 +145,10 @@
       ]
     },
     {
-      "login": "stas-dolgachov",
-      "name": "Stanislav",
-      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
-      "profile": "https://github.com/stas-dolgachov",
-      "contributions": [
-        "translation",
-        "review"
-      ]
-    },
-    {
       "login": "hypeofpipe",
       "name": "Volodymyr V.",
       "avatar_url": "https://avatars.githubusercontent.com/u/14982064?v=4",
       "profile": "https://github.com/hypeofpipe",
-      "contributions": [
-        "translation"
-      ]
-    },
-    {
-      "login": "didostap",
-      "name": "Ostap Dribniuk",
-      "avatar_url": "https://avatars.githubusercontent.com/u/49234191?v=4",
-      "profile": "https://github.com/didostap",
-      "contributions": [
-        "translation"
-      ]
-    },
-    {
-      "login": "Regnised",
-      "name": "Vasyl Onopriienko",
-      "avatar_url": "https://avatars.githubusercontent.com/u/2588425?v=4",
-      "profile": "https://github.com/Regnised",
       "contributions": [
         "translation"
       ]
@@ -153,21 +163,21 @@
       ]
     },
     {
-      "login": "MykolaSopiha",
-      "name": "Mykola Sopiha",
-      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
-      "profile": "https://www.linkedin.com/in/m-sopiha/",
-      "contributions": [
-        "translation"
-      ]
-    },
-    {
       "login": "chizzzy",
       "name": "Chystiakov Andrei",
       "avatar_url": "https://avatars.githubusercontent.com/u/34280137?v=4",
       "profile": "https://github.com/chizzzy",
       "contributions": [
         "ideas",
+        "translation"
+      ]
+    },
+    {
+      "login": "hordiienko-tatiana",
+      "name": "hordiienko-tatiana",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49336627?v=4",
+      "profile": "https://github.com/hordiienko-tatiana",
+      "contributions": [
         "translation"
       ]
     }
