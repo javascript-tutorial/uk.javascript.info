@@ -1,185 +1,185 @@
-# WeakMap and WeakSet
+# WeakMap та WeakSet
 
-As we know from the chapter <info:garbage-collection>, JavaScript engine keeps a value in memory while it is "reachable" and can potentially be used.
+Як ми знаємо з розділу <info:garbage-collection>, рушій JavaScript зберігає значення в пам’яті, поки воно є "доступним" і потенційно може бути використаним.
 
-For instance:
+Наприклад:
 ```js
-let john = { name: "John" };
+let john = { name: "Іван" };
 
-// the object can be accessed, john is the reference to it
+// Об’єкт можна отримати, john -- це посилання на нього
 
-// overwrite the reference
+// перезапишемо посилання
 john = null;
 
 *!*
-// the object will be removed from memory
+// об’єкт буде видалено з пам’яті
 */!*
 ```
 
-Usually, properties of an object or elements of an array or another data structure are considered reachable and kept in memory while that data structure is in memory.
+Зазвичай властивості об’єкта або елементів масиву або іншої структури даних вважаються доступними та зберігаються в пам’яті, поки та структура даних є в пам’яті.
 
-For instance, if we put an object into an array, then while the array is alive, the object will be alive as well, even if there are no other references to it.
+Наприклад, якщо ми покладемо об’єкт в масив, то, поки масив живий, об’єкт буде живим, навіть якщо немає інших посилань на цей об’єкт.
 
-Like this:
+Ось так:
 
 ```js
-let john = { name: "John" };
+let john = { name: "Іван" };
 
 let array = [ john ];
 
-john = null; // overwrite the reference
+john = null; // перезапишемо посилання
 
 *!*
-// the object previously referenced by john is stored inside the array
-// therefore it won't be garbage-collected
-// we can get it as array[0]
+// об’єкт, на який раніше посилалася змінна john, зберігається всередині масиву
+// тому він не буде видалений збирачем сміття
+// ми можемо отримати його як array[0]
 */!*
 ```
 
-Similar to that, if we use an object as the key in a regular `Map`, then while the `Map` exists, that object exists as well. It occupies memory and may not be garbage collected.
+Подібно до цього, якщо ми використовуємо об’єкт як ключ у звичайному `Map`, то в той час, коли `Map` існує, цей об’єкт також існує. Він займає пам’ять і не може бути видалений збирачем сміття.
 
-For instance:
+Наприклад:
 
 ```js
-let john = { name: "John" };
+let john = { name: "Іван" };
 
 let map = new Map();
 map.set(john, "...");
 
-john = null; // overwrite the reference
+john = null; // перезапишемо посилання
 
 *!*
-// john is stored inside the map,
-// we can get it by using map.keys()
+// john зберігається всередині map,
+// ми можемо отримати його, використовуючи map.keys()
 */!*
 ```
 
-`WeakMap` is fundamentally different in this aspect. It doesn't prevent garbage-collection of key objects.
+`WeakMap` -- принципово відрізняється в цьому аспекті. Він не перешкоджає збиранню сміття серед об’єктів, що є ключами.
 
-Let's see what it means on examples.
+Подивимося, що це означає на прикладах.
 
 ## WeakMap
 
-The first difference between `Map` and `WeakMap` is that keys must be objects, not primitive values:
+Перша відмінність між `Map` та `WeakMap` -- це те, що ключі повинні бути об’єктами, а не примітивними значеннями:
 
 ```js run
 let weakMap = new WeakMap();
 
 let obj = {};
 
-weakMap.set(obj, "ok"); // works fine (object key)
+weakMap.set(obj, "ок"); // працює (об’єкт є ключем)
 
 *!*
-// can't use a string as the key
-weakMap.set("test", "Whoops"); // Error, because "test" is not an object
+// не можна використовувати рядок як ключ
+weakMap.set("тест", "Ой!"); // Помилка, тому що "тест" не є об’єктом
 */!*
 ```
 
-Now, if we use an object as the key in it, and there are no other references to that object -- it will be removed from memory (and from the map) automatically.
+Тепер, якщо ми використовуємо об’єкт як ключ, і немає інших посилань на цей об’єкт -- його буде видалено з пам’яті (і з мапи) автоматично.
 
 ```js
-let john = { name: "John" };
+let john = { name: "Іван" };
 
 let weakMap = new WeakMap();
 weakMap.set(john, "...");
 
-john = null; // overwrite the reference
+john = null; // перезапишемо посилання
 
-// john is removed from memory!
+// john видалено з пам’яті!
 ```
 
-Compare it with the regular `Map` example above. Now if `john` only exists as the key of `WeakMap` -- it will be automatically deleted from the map (and memory).
+Порівняйте його зі звичайним `Map`, що наведений вище. Тепер, якщо `john` існує лише як ключ `WeakMap` -- він буде автоматично видалений з мапи (і з пам’яті).
 
-`WeakMap` does not support iteration and methods `keys()`, `values()`, `entries()`, so there's no way to get all keys or values from it.
+`WeakMap` не підтримує ітерацію та методи `keys()`, `values()`, `entries()`, тому немає способу отримати всі ключі або значення від нього.
 
-`WeakMap` has only the following methods:
+`WeakMap` має лише такі методи:
 
 - `weakMap.get(key)`
 - `weakMap.set(key, value)`
 - `weakMap.delete(key)`
 - `weakMap.has(key)`
 
-Why such a limitation? That's for technical reasons. If an object has lost all other references (like `john` in the code above), then it is to be garbage-collected automatically. But technically it's not exactly specified *when the cleanup happens*.
+Чому є таке обмеження? Це з технічних причин. Якщо об’єкт втратив всі інші посилання (наприклад, `john` у коді вище), то він буде автоматично видалений збирачем сміття. Але технічно немає точних вказівок *коли відбувається видалення*.
 
-The JavaScript engine decides that. It may choose to perform the memory cleanup immediately or to wait and do the cleaning later when more deletions happen. So, technically, the current element count of a `WeakMap` is not known. The engine may have cleaned it up or not, or did it partially. For that reason, methods that access all keys/values are not supported.
+Рушій JavaScript вирішує це. Він може вибрати очищення пам’яті негайно або почекати, і зробити очищення пізніше, коли трапиться більше видалень. Отже, технічно, поточна кількість елементів `WeakMap` невідома. Рушій, можливо, очистив його чи ні, або зробив це частково. З цієї причини методи, які дають доступ до всіх ключів/значень не підтримуються.
 
-Now, where do we need such a data structure?
+Отже, де нам потрібна така структура даних?
 
-## Use case: additional data
+## Приклад використання: додаткові дані
 
-The main area of application for `WeakMap` is an *additional data storage*.
+Основна область застосування для `WeakMap` -- це *зберігання додаткових даних*.
 
-If we're working with an object that "belongs" to another code, maybe even a third-party library, and would like to store some data associated with it, that should only exist while the object is alive - then `WeakMap` is exactly what's needed.
+Якщо ми працюємо з об’єктом, що "належить" до іншого коду, можливо навіть сторонньої бібліотеки, і хотіли б зберегти деякі дані, пов’язані з ним, що повинні існувати лише поки об’єкт живий -- тоді `WeakMap` цє саме те, що потрібно.
 
-We put the data to a `WeakMap`, using the object as the key, and when the object is garbage collected, that data will automatically disappear as well.
+Ми покладемо дані в `WeakMap`, використовуючи об’єкт як ключ, і коли об’єкт буде видалено збирачем сміття, то ці дані також автоматично зникнуть.
 
 ```js
-weakMap.set(john, "secret documents");
-// if john dies, secret documents will be destroyed automatically
+weakMap.set(john, "секретні документи");
+// якщо об’єкт john зникне, секретні документи будуть знищені автоматично
 ```
 
-Let's look at an example.
+Подивімося на приклад.
 
-For instance, we have code that keeps a visit count for users. The information is stored in a map: a user object is the key and the visit count is the value. When a user leaves (its object gets garbage collected), we don't want to store their visit count anymore.
+У нас є код, який зберігає кількість відвідувань користувачів. Інформація зберігається в мапі: об’єкт користувачів є ключем, а кількість відвідувань -- це значення. Коли користувач зникає (його об’єкт видаляється збирачем сміття), ми більше не хочемо зберігати його кількість відвідувань.
 
-Here's an example of a counting function with `Map`:
+Ось приклад функції підрахунку з `Map`:
 
 ```js
 // 📁 visitsCount.js
-let visitsCountMap = new Map(); // map: user => visits count
+let visitsCountMap = new Map(); // мапа: користувач => кількість відвідувань
 
-// increase the visits count
+// збільшити кількість відвідувань
 function countUser(user) {
   let count = visitsCountMap.get(user) || 0;
   visitsCountMap.set(user, count + 1);
 }
 ```
 
-And here's another part of the code, maybe another file using it:
+І ось ще одна частина коду, можливо, інший файл використовує це:
 
 ```js
 // 📁 main.js
-let john = { name: "John" };
+let john = { name: "Іван" };
 
-countUser(john); // count his visits
+countUser(john); // рахує його візити
 
-// later john leaves us
+// пізніше john покидає нас
 john = null;
 ```
 
-Now, `john` object should be garbage collected, but remains in memory, as it's a key in `visitsCountMap`.
+Зараз, об’єкт `john` повинен бути видалений збирачем сміттям, але залишається в пам’яті тому, що це ключ `visitsCountMap`.
 
-We need to clean `visitsCountMap` when we remove users, otherwise it will grow in memory indefinitely. Such cleaning can become a tedious task in complex architectures.
+Нам потрібно очищувати `visitsCountMap`, коли ми видаляємо користувачів, інакше він буде рости в пам’яті необмежено довго. Таке очищення може стати нудним завданням у складних архітектурах.
 
-We can avoid it by switching to `WeakMap` instead:
+Ми можемо уникнути цього, перейшовши на `WeakMap`:
 
 ```js
 // 📁 visitsCount.js
-let visitsCountMap = new WeakMap(); // weakmap: user => visits count
+let visitsCountMap = new WeakMap(); // weakmap: користувач => кількість відвідувань
 
-// increase the visits count
+// збільшити кількість відвідувань
 function countUser(user) {
   let count = visitsCountMap.get(user) || 0;
   visitsCountMap.set(user, count + 1);
 }
 ```
 
-Now we don't have to clean `visitsCountMap`. After `john` object becomes unreachable, by all means except as a key of `WeakMap`, it gets removed from memory, along with the information by that key from `WeakMap`.
+Тепер ми не повинні очищати `visitsCountMap`. Після того, як об’єкт `john` стає недоступним будь-яким способом, за винятком того, як ключ `WeakMap`, він видаляється з пам’яті, разом з інформацією за цим ключем в `WeakMap`.
 
-## Use case: caching
+## Приклад використання: кешування
 
-Another common example is caching. We can store ("cache") results from a function, so that future calls on the same object can reuse it.
+Іншим загальним прикладом є кешування. Ми можемо зберігати ("кеш") результати з функції, щоб майбутні виклики на тому ж об’єкті могли повторно використовувати його.
 
-To achieve that, we can use `Map` (not optimal scenario):
+Щоб досягти цього, ми можемо використовувати `Map` (не оптимальний сценарій):
 
 ```js run
 // 📁 cache.js
 let cache = new Map();
 
-// calculate and remember the result
+// обчислити та запам’ятати результат
 function process(obj) {
   if (!cache.has(obj)) {
-    let result = /* calculations of the result for */ obj;
+    let result = /* розрахунки результату для */ obj;
 
     cache.set(obj, result);
   }
@@ -188,26 +188,26 @@ function process(obj) {
 }
 
 *!*
-// Now we use process() in another file:
+// Тепер ми використовуємо process() в іншому файлі:
 */!*
 
 // 📁 main.js
-let obj = {/* let's say we have an object */};
+let obj = {/* скажімо, у нас є об’єкт */};
 
-let result1 = process(obj); // calculated
+let result1 = process(obj); // розраховано
 
-// ...later, from another place of the code...
-let result2 = process(obj); // remembered result taken from cache
+// ...пізніше, з іншого місця в коді...
+let result2 = process(obj); // запам’ятований результат, взятий з кешу
 
-// ...later, when the object is not needed any more:
+// ...пізніше, коли об’єкт більше не потрібний:
 obj = null;
 
-alert(cache.size); // 1 (Ouch! The object is still in cache, taking memory!)
+alert(cache.size); // 1 (Ой! Об’єкт досі в кеші і займає пам’ять!)
 ```
 
-For multiple calls of `process(obj)` with the same object, it only calculates the result the first time, and then just takes it from `cache`. The downside is that we need to clean `cache` when the object is not needed any more.
+Для багаторазових викликів `process(obj)` з тим самим об’єктом він лише обчислює результат вперше, а потім просто бере його з `cache`. Недоліком є те, що нам потрібно чистити `cache`, коли об’єкт більше не потрібний.
 
-If we replace `Map` with `WeakMap`, then this problem disappears. The cached result will be removed from memory automatically after the object gets garbage collected.
+Якщо ми замінимо `Map` на `WeakMap`, то ця проблема зникає. Кешований результат буде видалено з пам’яті автоматично після того, як об’єкт видаляється збирачем сміття.
 
 ```js run
 // 📁 cache.js
@@ -215,10 +215,10 @@ If we replace `Map` with `WeakMap`, then this problem disappears. The cached res
 let cache = new WeakMap();
 */!*
 
-// calculate and remember the result
+// обчислити та запам’ятати результат
 function process(obj) {
   if (!cache.has(obj)) {
-    let result = /* calculate the result for */ obj;
+    let result = /* розрахувати результат для */ obj;
 
     cache.set(obj, result);
   }
@@ -227,65 +227,65 @@ function process(obj) {
 }
 
 // 📁 main.js
-let obj = {/* some object */};
+let obj = {/* якийсь об’єкт */};
 
 let result1 = process(obj);
 let result2 = process(obj);
 
-// ...later, when the object is not needed any more:
+// ...пізніше, коли об’єкт більше не потрібний:
 obj = null;
 
-// Can't get cache.size, as it's a WeakMap,
-// but it's 0 or soon be 0
-// When obj gets garbage collected, cached data will be removed as well
+// Не можна отримати cache.size тому, що це WeakMap,
+// але це 0 або незабаром буде 0
+// Коли obj видаляється збирачем сміття, кешовані дані будуть вилучені також
 ```
 
 ## WeakSet
 
-`WeakSet` behaves similarly:
+`WeakSet` поводитися аналогічно:
 
-- It is analogous to `Set`, but we may only add objects to `WeakSet` (not primitives).
-- An object exists in the set while it is reachable from somewhere else.
-- Like `Set`, it supports `add`, `has` and `delete`, but not `size`, `keys()` and no iterations.
+- Це аналог `Set`, але ми можемо додати лише об’єкти до `WeakSet` (не примітиви).
+- Об’єкт існує в наборі, коли він доступний з де-небудь ще.
+- Так само як `Set`, він підтримує `add`, `has` і `delete`, але не підтримує `size`, `keys()` та ітерацію.
 
-Being "weak", it also serves as additional storage. But not for arbitrary data, rather for "yes/no" facts. A membership in `WeakSet` may mean something about the object.
+Будучи "слабким", він також служить зберігання додаткових даних. Але не для довільних даних, а для фактів "так/ні". Приналежність до `WeakSet` може означати щось про об’єкт.
 
-For instance, we can add users to `WeakSet` to keep track of those who visited our site:
+Наприклад, ми можемо додати користувачів до `WeakSet`, щоб відстежувати тих, хто відвідав наш сайт:
 
 ```js run
 let visitedSet = new WeakSet();
 
-let john = { name: "John" };
-let pete = { name: "Pete" };
-let mary = { name: "Mary" };
+let john = { name: "Іван" };
+let pete = { name: "Петро" };
+let mary = { name: "Марія" };
 
-visitedSet.add(john); // John visited us
-visitedSet.add(pete); // Then Pete
-visitedSet.add(john); // John again
+visitedSet.add(john); // Іван відвідав нас
+visitedSet.add(pete); // Потім Петро
+visitedSet.add(john); // Знову Іван
 
-// visitedSet has 2 users now
+// visitedSet має зараз 2-ох користувачів
 
-// check if John visited?
+// перевірте, чи відвідав Іван?
 alert(visitedSet.has(john)); // true
 
-// check if Mary visited?
+// перевірте, чи відвідала Марія?
 alert(visitedSet.has(mary)); // false
 
 john = null;
 
-// visitedSet will be cleaned automatically
+// visitedSet буде очищено автоматично
 ```
 
-The most notable limitation of `WeakMap` and `WeakSet` is the absence of iterations, and the inability to get all current content. That may appear inconvenient, but does not prevent `WeakMap/WeakSet` from doing their main job -- be an "additional" storage of data for objects which are stored/managed at another place.
+Найбільш помітним обмеженням `WeakMap` та `WeakSet` є відсутність ітерацій та нездатність отримати весь поточний вміст. Це може виявитися незручним, але не перешкоджає `WeakMap/WeakSet` виконувати свою основну роботу -- бути «додатковим» сховищем даних для об’єктів, які зберігаються/управляються в іншому місці.
 
-## Summary
+## Підсумки
 
-`WeakMap` is `Map`-like collection that allows only objects as keys and removes them together with associated value once they become inaccessible by other means.
+`WeakMap` -- це подібна до `Map` колекція, яка дозволяє використовувати лише об’єкти, як ключі і видаляє їх разом з пов’язаним значенням, коли вони стануть недоступними іншим засобам.
 
-`WeakSet` is `Set`-like collection that stores only objects and removes them once they become inaccessible by other means.
+`WeakSet` -- це подібна до `Set` колекція, яка зберігає тільки об’єкти та видаляє їх після того, як вони стануть недоступними іншим засобам.
 
-Their main advantages are that they have weak reference to objects, so they can easily be removed by garbage collector.
+Їх основна перевага полягає у тому, що вони мають слабке посилання на об’єкти, тому вони можуть бути легко видаленими збирачем сміття.
 
-That comes at the cost of not having support for `clear`, `size`, `keys`, `values`...
+Це досягається внаслідок відсутності підтримки `clear`, `size`, `keys`, `values`...
 
-`WeakMap` and `WeakSet` are used as "secondary" data structures in addition to the "primary" object storage. Once the object is removed from the primary storage, if it is only found as the key of `WeakMap` or in a `WeakSet`, it will be cleaned up automatically.
+`WeakMap` та `WeakSet` використовуються як "вторинні" структури даних, на додаток до "первинного" сховища об’єктів. Після того, як об’єкт видаляється з первинного сховища, якщо він виявляється лише як ключ `WeakMap` або в `WeakSet`, він буде очищений автоматично.

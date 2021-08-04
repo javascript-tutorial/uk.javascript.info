@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# Show a weekday
+# Показати робочий день
 
-Write a function `getWeekDay(date)` to show the weekday in short format: 'MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'.
+Напишіть функцію `getWeekDay(date)`, щоб показати робочий день у короткому форматі: 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'НД'.
 
-For instance:
+Наприклад:
 
 ```js no-beautify
-let date = new Date(2012, 0, 3);  // 3 Jan 2012
-alert( getWeekDay(date) );        // should output "TU"
+let date = new Date(2012, 0, 3);  // 3 січня 2012
+alert( getWeekDay(date) );        // повинно виводити "ВТ"
 ```

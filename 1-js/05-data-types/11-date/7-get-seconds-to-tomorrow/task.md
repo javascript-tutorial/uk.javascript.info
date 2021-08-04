@@ -2,14 +2,14 @@ importance: 5
 
 ---
 
-# How many seconds till tomorrow?
+# Скільки секунд до завтра?
 
-Create a function `getSecondsToTomorrow()` that returns the number of seconds till tomorrow.
+Створіть функцію `getSecondsToTomorrow()`, що повертає кількість секунд до завтра.
 
-For instance, if now is `23:00`, then:
+Наприклад, якщо зараз є `23:00`, то:
 
 ```js
 getSecondsToTomorrow() == 3600
 ```
 
-P.S. The function should work at any day, the "today" is not hardcoded.
+P.S. Функція повинна працювати в будь-який день, "сьогодні" не є жорстко закодованим.

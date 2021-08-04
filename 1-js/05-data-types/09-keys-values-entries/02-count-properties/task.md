@@ -2,20 +2,19 @@ importance: 5
 
 ---
 
-# Count properties
+# Порахуйте властивості
 
-Write a function `count(obj)` that returns the number of properties in the object:
+Напишіть функцію `count(obj)`, що повертає кількість властивостей об’єкта:
 
 ```js
 let user = {
-  name: 'John',
+  name: 'Іван',
   age: 30
 };
 
 alert( count(user) ); // 2
 ```
 
-Try to make the code as short as possible.
+Намагайтеся зробити код якомога коротшим.
 
-P.S. Ignore symbolic properties, count only "regular" ones.
-
+P.S. Ігноруйте символьні властивості, враховуйте лише “звичайні”.
