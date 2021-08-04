@@ -1,8 +1,8 @@
-Yes, it's possible.
+Так, це можливо.
 
-If a function returns an object then `new` returns it instead of `this`.
+Якщо функція повертає об’єкт, тоді `new` повертає його замість `this`.
 
-So they can, for instance, return the same externally defined object `obj`:
+Так функції `A` та `B` можуть, наприклад, повертати один і той самий об’єкт `obj`, визначений незалежно від цих функцій:
 
 ```js run no-beautify
 let obj = {};

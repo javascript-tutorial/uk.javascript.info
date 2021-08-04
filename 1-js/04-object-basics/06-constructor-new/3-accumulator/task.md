@@ -2,26 +2,26 @@ importance: 5
 
 ---
 
-# Create new Accumulator
+# Створити Accumulator
 
-Create a constructor function `Accumulator(startingValue)`.
+Створіть функцію-конструктор `Accumulator(startingValue)`.
 
-Object that it creates should:
+Об’єкт, який він створює повинен:
 
-- Store the "current value" in the property `value`. The starting value is set to the argument of the constructor `startingValue`.
-- The `read()` method should use `prompt` to read a new number and add it to `value`.
+- Зберігати "поточне значення" у властивості `value`. Початкове значення має значення аргументу конструктора `startingValue`.
+- Метод `read()` повинен використовувати `prompt` для зчитування нового числа та додавати його до `value`.
 
-In other words, the `value` property is the sum of all user-entered values with the initial value  `startingValue`.
+Іншими словами, властивість `value` -- це сума всіх введенних користувачем значень разом із початковим значенням `startingValue`.
 
-Here's the demo of the code:
+Нижче ви можете подивитись демонстрацію роботи коду:
 
 ```js
-let accumulator = new Accumulator(1); // initial value 1
+let accumulator = new Accumulator(1); // початкове значення 1
 
-accumulator.read(); // adds the user-entered value
-accumulator.read(); // adds the user-entered value
+accumulator.read(); // додає введене користувачем значення
+accumulator.read(); // додає введене користувачем значення
 
-alert(accumulator.value); // shows the sum of these values
+alert(accumulator.value); // показує суму цих значень
 ```
 
 [demo]
