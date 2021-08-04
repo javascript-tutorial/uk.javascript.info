@@ -149,7 +149,7 @@ function BigUser() {
 
   this.name = "Джон";
 
-  return { name: "Годзілла" };  // <-- повертає цей об’єкт
+  return { name: "Ґодзілла" };  // <-- повертає цей об’єкт
 }
 
 alert( new BigUser().name );  // Годзілла, отримали цей об’єкт
