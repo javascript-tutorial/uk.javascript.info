@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-17-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://javascript.info> з англійської на українську мову.
@@ -90,6 +90,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/chizzzy"><img src="https://avatars.githubusercontent.com/u/34280137?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Chystiakov Andrei</b></sub></a><br /><a href="#ideas-chizzzy" title="Ideas, Planning, & Feedback">🤔</a> <a href="#translation-chizzzy" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/hordiienko-tatiana"><img src="https://avatars.githubusercontent.com/u/49336627?v=4?s=70" width="70px;" alt=""/><br /><sub><b>hordiienko-tatiana</b></sub></a><br /><a href="#translation-hordiienko-tatiana" title="Translation">🌍</a></td>
   </tr>
 </table>
 
