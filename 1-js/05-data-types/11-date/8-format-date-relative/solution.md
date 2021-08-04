@@ -28,7 +28,7 @@ function formatDate(date) {
     '' + d.getFullYear(),
     '0' + d.getHours(),
     '0' + d.getMinutes()
-  ].map(component => component.slice(-2)); // take last 2 digits of every component
+  ].map(component => component.slice(-2)); // отримати останні 2 цифри кожного компоненту
 
   // з’єднати компоненти в дату
   return d.slice(0, 3).join('.') + ' ' + d.slice(3).join(':');
