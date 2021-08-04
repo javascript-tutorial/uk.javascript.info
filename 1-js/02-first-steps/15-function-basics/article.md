@@ -378,7 +378,6 @@ return (
   )
 ```
 And it will work just as we expect it to.
-`````
 
 ## Naming a function [#function-naming]
 
