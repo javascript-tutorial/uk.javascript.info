@@ -1,4 +1,4 @@
-Важливість: 5
+importance: 5
 
 ---
 
@@ -32,4 +32,3 @@ alert( speedy.stomach ); // apple
 // Але цей також має їду, чому? Виправте це.
 alert( lazy.stomach ); // apple
 ```
-
