@@ -2,20 +2,20 @@ importance: 4
 
 ---
 
-# Which day of month was many days ago?
+# Який день місяця був багато днів тому?
 
-Create a function `getDateAgo(date, days)` to return the day of month `days` ago from the `date`.
+Створіть функцію `getDateAgo(date, days)`, щоб повернути день місяця, який був `days` днів після `date`.
 
-For instance, if today is 20th, then `getDateAgo(new Date(), 1)` should be 19th and `getDateAgo(new Date(), 2)` should be 18th.
+Наприклад, якщо сьогодні -- 20-й, то `getDateAgo(new Date(), 1)` має бути 19-го, а `getDateAgo(new Date(), 2)` має бути 18-го.
 
-Should work reliably for `days=365` or more:
+Має працювати надійно для `days = 365` або більше:
 
 ```js
 let date = new Date(2015, 0, 2);
 
-alert( getDateAgo(date, 1) ); // 1, (1 Jan 2015)
-alert( getDateAgo(date, 2) ); // 31, (31 Dec 2014)
-alert( getDateAgo(date, 365) ); // 2, (2 Jan 2014)
+alert( getDateAgo(date, 1) ); // 1, (1 січня 2015)
+alert( getDateAgo(date, 2) ); // 31, (31 грудня 2014)
+alert( getDateAgo(date, 365) ); // 2, (2 січня 2014)
 ```
 
-P.S. The function should not modify the given `date`.
+P.S. Функція не повинна змінювати `date`.

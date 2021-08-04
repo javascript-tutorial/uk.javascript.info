@@ -1,8 +1,8 @@
 
-# Re-resolve a promise?
+# Чи можливо "перевиконати" проміс?
 
 
-What's the output of the code below? 
+Що виведе код нижче?
 
 ```js
 let promise = new Promise(function(resolve, reject) {
