@@ -225,49 +225,49 @@ function showMessage(from, text = anotherFunction()) {
 З іншого боку, вона буде викликатися кожного разу, коли `text` відсутній.
 ```
 
-### Alternative default parameters
+### Альтернативні типові параметри
 
-Sometimes it makes sense to assign default values for parameters not in the function declaration, but at a later stage.
+Інколи виникає необхідність присвоїти типове значення для змінних під час виконання функції, а не під час її оголошення.
 
-We can check if the parameter is passed during the function execution, by comparing it with `undefined`:
+Під час виконання функції, ми можемо перевірити, чи параметр надано, порівнюючи його з `undefined`:
 
 ```js run
 function showMessage(text) {
   // ...
 
 *!*
-  if (text === undefined) { // if the parameter is missing
-    text = 'empty message';
+  if (text === undefined) { // якщо параметр відсутній
+    text = 'порожнє повідомлення';
   }
 */!*
 
   alert(text);
 }
 
-showMessage(); // empty message
+showMessage(); // порожнє повідомлення
 ```
 
-...Or we could use the `||` operator:
+...Або ми можемо використати оператор `??`:
 
 ```js
 function showMessage(text) {
-  // if text is undefined or otherwise falsy, set it to 'empty'
-  text = text || 'empty';
+  // якщо text не задано (значення `undefined`) або `null`, тоді присвоїти рядок 'порожньо'
+  text = text || 'порожньо';
   ...
 }
 ```
 
-Modern JavaScript engines support the [nullish coalescing operator](info:nullish-coalescing-operator) `??`, it's better when most falsy values, such as `0`, should be considered "normal":
+Сучасні рушії JavaScript підтримують [оператор нульового злиття](info:nullish-coalescing-operator) `??`. Його краще використовувати, коли "майже false" значення, типу `0`, мають вважатися за "нормальні":
 
 ```js run
 function showCount(count) {
-  // if count is undefined or null, show "unknown"
-  alert(count ?? "unknown");
+  // якщо `count` має значення undefined чи null, показати "невідомо"
+  alert(count ?? "невідомо");
 }
 
 showCount(0); // 0
-showCount(null); // unknown
-showCount(); // unknown
+showCount(null); // невідомо
+showCount(); // невідомо
 ```
 
 ## Returning a value
@@ -378,6 +378,7 @@ return (
   )
 ```
 And it will work just as we expect it to.
+````
 
 ## Naming a function [#function-naming]
 
