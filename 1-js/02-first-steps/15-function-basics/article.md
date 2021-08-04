@@ -257,11 +257,11 @@ function showMessage(text) {
 }
 ```
 
-Сучасні рушії JavaScript підтримують [оператор нульового злиття](info:nullish-coalescing-operator) `??`. Його краще використовувати, коли "майже false" значення, типу `0`, мають вважатися за "нормальні":
+Сучасні рушії JavaScript підтримують [оператор null-злиття](info:nullish-coalescing-operator) `??`. Його краще використовувати, коли "майже false" значення, типу `0`, мають вважатися за "нормальні":
 
 ```js run
 function showCount(count) {
-  // якщо `count` має значення undefined чи null, показати "невідомо"
+  // якщо count має значення undefined чи null, показати "невідомо"
   alert(count ?? "невідомо");
 }
 
@@ -330,14 +330,13 @@ function showMovie(age) {
 
 In the code above, if `checkAge(age)` returns `false`, then `showMovie` won't proceed to the `alert`.
 
-````smart header="A function with an empty `return`or without it returns`undefined`" If a function does not return a value, it is the same as if it returns `undefined`:
+````smart header="A function with an empty `return`or without it returns`undefined`"
+If a function does not return a value, it is the same as if it returns `undefined`:
 
 ```js run
-function doNothing() {
-  /* empty */
-}
+function doNothing() { /* empty */ }
 
-alert(doNothing() === undefined); // true
+alert( doNothing() === undefined ); // true
 ```
 
 An empty `return` is also the same as `return undefined`:
@@ -347,10 +346,9 @@ function doNothing() {
   return;
 }
 
-alert(doNothing() === undefined); // true
+alert( doNothing() === undefined ); // true
 ```
-
-`````
+````
 
 ````warn header="Never add a newline between `return` and the value"
 For a long expression in `return`, it might be tempting to put it on a separate line, like this:
@@ -442,11 +440,12 @@ The first variant uses a label:
 ```js
 function showPrimes(n) {
   nextPrime: for (let i = 2; i < n; i++) {
+
     for (let j = 2; j < i; j++) {
       if (i % j == 0) continue nextPrime;
     }
 
-    alert(i); // a prime
+    alert( i ); // a prime
   }
 }
 ```
