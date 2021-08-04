@@ -11,7 +11,7 @@ describe("calculator", function() {
     calculator.read();
   });
 
-  it("метод read запитує два значення за допомогою prompt і запам'ятовує їх у властивостях об’єкта", function() {
+  it("метод read запитує два значення за допомогою prompt і запам’ятовує їх у властивостях об’єкта", function() {
     assert.equal(calculator.a, 2);
     assert.equal(calculator.b, 3);
   });
