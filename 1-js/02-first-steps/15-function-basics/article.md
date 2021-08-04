@@ -64,7 +64,7 @@ function showMessage() {
   alert( message );
 }
 
-showMessage(); // Бажаю вам 36.6
+showMessage(); // Привіт, я JavaScript!
 
 alert( message ); // <-- Помилка! Змінна недоступна поза функцією
 ```
