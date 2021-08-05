@@ -1,12 +1,12 @@
 
-# Map і Set
+# Map та Set
 
 Зараз ми знаємо про наступні складні структури даних:
 
 - Об’єкти для зберігання іменованих колекцій.
 - Масиви для зберігання впорядкованих колекцій.
 
-Але цього не завжди достатньо в реальному житті. Ось чому існують `Map` і `Set`.
+Але цього не завжди достатньо в реальному житті. Ось чому існують `Map` та `Set`.
 
 ## Map
 
@@ -33,7 +33,7 @@ map.set(true, 'bool1'); // булеве значення як ключ
 
 // пам’ятаєте звичайний об’єкт `Object`? Він перетворює всі ключі в рядок
 // Map зберігає тип ключів, так що в цьому випадку ми отримаємо 2 різних значення:
-alert( map.get(1)   ); // 'num1'
+alert( map.get(1) );   // 'num1'
 alert( map.get('1') ); // 'str1'
 
 alert( map.size ); // 3
@@ -52,15 +52,15 @@ alert( map.size ); // 3
 Наприклад:
 
 ```js run
-let john = { name: "John" };
+let ivan = { name: "Іван" };
 
 // збережімо кількість відвідувань для кожного користувача
 let visitsCountMap = new Map();
 
-// об’єкт john -- це ключ для значення в колекції Map
-visitsCountMap.set(john, 123);
+// об’єкт ivan -- це ключ для значення в колекції Map
+visitsCountMap.set(ivan, 123);
 
-alert( visitsCountMap.get(john) ); // 123
+alert( visitsCountMap.get(ivan) ); // 123
 ```
 
 Об’єкти в якості ключів -- це одна з відомих можливостей колекції `Map`, яку часто використовують. У звичайному об’єкті `Object`, ми можемо використати ключі-рядки, проте ключі-об’єкти -- вже ні.
@@ -68,13 +68,13 @@ alert( visitsCountMap.get(john) ); // 123
 Розгляньмо такий приклад:
 
 ```js run
-let john = { name: "John" };
-let ben = { name: "Ben" };
+let ivan = { name: "Іван" };
+let bohdan = { name: "Богдан" };
 
 let visitsCountObj = {}; // оголосимо звичайний об’єкт
 
-visitsCountObj[ben] = 234; // використаємо об’єкт `ben` як ключ
-visitsCountObj[john] = 123; // використаємо `john` об’єкт як ключ, `ben` об’єкт буде перезаписаний
+visitsCountObj[bohdan] = 234; // використаємо об’єкт `bohdan` як ключ
+visitsCountObj[ivan] = 123; // використаємо `ivan` об’єкт як ключ, `bohdan` об’єкт буде перезаписаний
 
 *!*
 // Ось як це було записано!
@@ -82,7 +82,7 @@ alert( visitsCountObj["[object Object]"] ); // 123
 */!*
 ```
 
-Оскільки `visitsCountObj` -- це об’єкт, він конвертує всі ключі типу `Object` (такі як `john` і `ben`) до рядка `"[object Object]"`. Це однозначно не той результат, який ми очікуємо.
+Оскільки `visitsCountObj` -- це об’єкт, він конвертує всі ключі типу `Object` (такі як `ivan` і `bohdan`) до рядка `"[object Object]"`. Це однозначно не той результат, який ми очікуємо.
 
 ```smart header="Як `Map` порівнює ключі"
 Порівнюючи ключі, об’єкт `Map` використовує алгоритм [SameValueZero](https://tc39.github.io/ecma262/#sec-samevaluezero). Це майже таке ж порівняння, що і `===`, з тією лише різницею, що `NaN` вважається рівним `NaN`. Таким чином `NaN` може також бути використаний як ключ.
@@ -95,8 +95,8 @@ alert( visitsCountObj["[object Object]"] ); // 123
 
 ```js
 map.set('1', 'str1')
-.set(1, 'num1')
-.set(true, 'bool1');
+  .set(1, 'num1')
+  .set(true, 'bool1');
 ```
 ````
 
@@ -113,24 +113,24 @@ map.set('1', 'str1')
 
 ```js run
 let recipeMap = new Map([
-['cucumber', 500],
-['tomatoes', 350],
-['onion',    50]
+  ['огірок',   500],
+  ['помідори', 350],
+  ['цибуля',   50]
 ]);
 
 // перебираємо ключі (овочі)
 for (let vegetable of recipeMap.keys()) {
-  alert(vegetable); // cucumber, tomatoes, onion
+  alert(vegetable); // огірок, помідори, цибуля
 }
 
-// перебираємо значення (числа)
+// перебираємо значення (кількість)
 for (let amount of recipeMap.values()) {
   alert(amount); // 500, 350, 50
 }
 
 // перебір елементів у форматі [ключ, значення]
 for (let entry of recipeMap) { // те ж саме, що recipeMap.entries()
-  alert(entry); // cucumber,500 (і так далі)
+  alert(entry); // огірок,500 (і так далі)
 }
 ```
 
@@ -143,7 +143,7 @@ for (let entry of recipeMap) { // те ж саме, що recipeMap.entries()
 ```js
 // виконуємо функцію для кожної пари (ключ, значення)
 recipeMap.forEach( (value, key, map) => {
-  alert(`${key}: ${value}`); // cucumber: 500 і так далі
+  alert(`${key}: ${value}`); // огірок: 500 і так далі
 });
 ```
 
@@ -156,19 +156,19 @@ recipeMap.forEach( (value, key, map) => {
 let map = new Map([
   ['1',  'str1'],
   [1,    'num1'],
-[true, 'bool1']
+  [true, 'bool1']
 ]);
 
 alert( map.get('1') ); // str1
 ```
 
-Якщо у нас вже є звичайний об’єкт, і ми хотіли б створити `Map` з нього, то допоможе вбудований метод [Object.entries(obj)](mdn:js/Object/entries) який отримує об’єкт і повертає масив пар ключ-значення для нього, як раз в цьому форматі.
+Якщо у нас вже є звичайний об’єкт, і ми б хотіли створити з нього `Map`, то допоможе вбудований метод [Object.entries(obj)](mdn:js/Object/entries), котрий отримує об’єкт і повертає масив пар ключ-значення для нього, як раз в цьому форматі.
 
 Таким чином ми можемо створити `Map` з об’єкта наступним чином:
 
 ```js run
 let obj = {
-  name: "John",
+  name: "Іван",
   age: 30
 };
 
@@ -176,10 +176,10 @@ let obj = {
 let map = new Map(Object.entries(obj));
 */!*
 
-alert( map.get('name') ); // John
+alert( map.get('name') ); // Іван
 ```
 
-В цьому випадку `Object.entries` повертає масив пар ключ-значення: `[ ["name","John"], ["age", 30] ]`. Це саме те, що потрібно для створення `Map`.
+В цьому випадку `Object.entries` повертає масив пар ключ-значення: `[ ["name", "Іван"], ["age", 30] ]`. Це саме те, що потрібно для створення `Map`.
 
 
 ## Object.fromEntries: Object з Map
@@ -190,14 +190,14 @@ alert( map.get('name') ); // John
 
 ```js run
 let prices = Object.fromEntries([
-['banana', 1],
-['orange', 2],
-['meat', 4]
+  ['банан', 1],
+  ['апельсин', 2],
+  ['яблуко', 4]
 ]);
 
-// now prices = { banana: 1, orange: 2, meat: 4 }
+// тепер prices = { банан: 1, апельсин: 2, яблуко: 4 }
 
-alert(prices.orange); // 2
+alert(prices.апельсин); // 2
 ```
 
 Ми можемо використати `Object.fromEntries`, щоб отримати звичайний об’єкт з `Map`.
@@ -208,18 +208,18 @@ alert(prices.orange); // 2
 
 ```js run 
 let map = new Map();
-map.set('banana', 1);
-map.set('orange', 2);
-map.set('meat', 4);
+map.set('банан', 1);
+map.set('апельсин', 2);
+map.set('яблуко', 4);
 
 *!*
 let obj = Object.fromEntries(map.entries()); // робимо простий об’єкт (*)
 */!*
 
 // Готово!
-// obj = { banana: 1, orange: 2, meat: 4 }
+// obj = { банан: 1, апельсин: 2, яблуко: 4 }
 
-alert(obj.orange); // 2
+alert(obj.апельсин); // 2
 ```
 
 Виклик `map.entries()` повертає масив пар ключ/значення, як раз в потрібному форматі для `Object.fromEntries`.
@@ -253,22 +253,22 @@ let obj = Object.fromEntries(map); // прибрати .entries()
 ```js run
 let set = new Set();
 
-let john = { name: "John" };
-let pete = { name: "Pete" };
-let mary = { name: "Mary" };
+let ivan = { name: "Іван" };
+let petro = { name: "Петро" };
+let maria = { name: "Марія" };
 
 // підраховуємо гостей, деякі приходять кілька разів
-set.add(john);
-set.add(pete);
-set.add(mary);
-set.add(john);
-set.add(mary);
+set.add(ivan);
+set.add(petro);
+set.add(maria);
+set.add(ivan);
+set.add(maria);
 
 // set зберігає тільки 3 унікальних значення
 alert( set.size ); // 3
 
 for (let user of set) {
-  alert(user.name); // John (тоді Pete і Mary)
+  alert(user.name); // "Іван" (тоді "Петро" і "Марія")
 }
 ```
 
@@ -279,7 +279,7 @@ for (let user of set) {
 Ми можемо перебрати вміст об’єкта `set` як за допомогою методу `for..of`, так і використовуючи `forEach`:
 
 ```js run
-let set = new Set(["oranges", "apples", "bananas"]);
+let set = new Set(["апельсини", "яблука", "банани"]);
 
 for (let value of set) alert(value);
 
@@ -289,7 +289,7 @@ set.forEach((value, valueAgain, set) => {
 });
 ```
 
-Зауважимо цікаву річ. Функція в `forEach` у `Set` має 3 аргументи: значення 'value', потім знову *те ж саме значення* 'valueAgain', і тільки потім цільовий об’єкт. Це дійсно так, значення з’являється в списку аргументів двічі.
+Зауважимо цікаву річ. Функція в `forEach` у `Set` має 3 аргументи: значення 'value', потім знову *те саме значення* 'valueAgain', і тільки потім цільовий об’єкт. Це дійсно так, значення з’являється в списку аргументів двічі.
 
 Це зроблено для сумісності з об’єктом `Map`, в якому колбек `forEach` має 3 аргумента. Виглядає трохи дивно, але в деяких випадках може допомогти легко замінити `Map` на `Set` і навпаки.
 
