@@ -64,29 +64,29 @@ alert(json);
 */!*
 ```
 
-The method `JSON.stringify(student)` takes the object and converts it into a string.
+Метод `JSON.stringify(student)` бере об’єкт і перетворює його в рядок.
 
-The resulting `json` string is called a *JSON-encoded* or *serialized* or *stringified* or *marshalled* object. We are ready to send it over the wire or put into a plain data store.
+Результуючий `json` рядок називається *JSON-кодованим* або *серіалізованим* об’єктом. Ми готові відправити його по мережі або покласти в просте сховище даних.
 
 
-Please note that a JSON-encoded object has several important differences from the object literal:
+Будь ласка, зверніть увагу, що JSON-кодований об’єкт має кілька важливих відмінностей від літерального об’єкта:
 
-- Strings use double quotes. No single quotes or backticks in JSON. So `'John'` becomes `"John"`.
-- Object property names are double-quoted also. That's obligatory. So `age:30` becomes `"age":30`.
+- Рядки використовують подвійні кавички. Немає одиничних кавичок або зворотніх кавичок у JSON. Отже, `'Іван'` стає `'Іван'`.
+- Назви властивостей об'єкта також обертаються в подвійні кавички. Це обов'язково. Отже, `age:30` стає `"age":30`.
 
-`JSON.stringify` can be applied to primitives as well.
+`JSON.stringify` можна застосувати до примітивів.
 
-JSON supports following data types:
+JSON підтримує наступні типи даних:
 
-- Objects `{ ... }`
-- Arrays `[ ... ]`
-- Primitives:
-    - strings,
-    - numbers,
-    - boolean values `true/false`,
+- Об'єкти `{ ... }`
+- Масиви `[ ... ]`
+- Примітиви:
+    - рядки,
+    - числа,
+    - бульові значення `true/false`,
     - `null`.
 
-For instance:
+Наприклад:
 
 ```js run
 // a number in JSON is just a number
