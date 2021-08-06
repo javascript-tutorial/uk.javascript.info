@@ -89,10 +89,10 @@ JSON підтримує наступні типи даних:
 Наприклад:
 
 ```js run
-// a number in JSON is just a number
+// число JSON це просто число
 alert( JSON.stringify(1) ) // 1
 
-// a string in JSON is still a string, but double-quoted
+// рядок в JSON - це ще рядок, але обернутий в подвійні кавички
 alert( JSON.stringify('test') ) // "test"
 
 alert( JSON.stringify(true) ); // true
@@ -100,55 +100,55 @@ alert( JSON.stringify(true) ); // true
 alert( JSON.stringify([1, 2, 3]) ); // [1,2,3]
 ```
 
-JSON is data-only language-independent specification, so some JavaScript-specific object properties are skipped by `JSON.stringify`.
+JSON - це лише незалежна специфікація даних, тому деякі притаманні для JavaScript властивості об'єктів пропускаються в `JSON.stringify`.
 
-Namely:
+А саме:
 
-- Function properties (methods).
-- Symbolic keys and values.
-- Properties that store `undefined`.
+- Функціональні властивості (методи).
+- Символьні ключі та значення.
+- Властивості, що зберігають `undefined`.
 
 ```js run
 let user = {
-  sayHi() { // ignored
+  sayHi() { // ігнорується
     alert("Hello");
   },
-  [Symbol("id")]: 123, // ignored
-  something: undefined // ignored
+  [Symbol("id")]: 123, // ігнорується
+  something: undefined // ігнорується
 };
 
-alert( JSON.stringify(user) ); // {} (empty object)
+alert( JSON.stringify(user) ); // {} (порожній об'єкт)
 ```
 
 Usually that's fine. If that's not what we want, then soon we'll see how to customize the process.
 
-The great thing is that nested objects are supported and converted automatically.
+Чудово, що вкладені об'єкти підтримуються та перетворюються автоматично.
 
-For instance:
+Наприклад:
 
 ```js run
 let meetup = {
-  title: "Conference",
+  title: "Конференція",
 *!*
   room: {
     number: 23,
-    participants: ["john", "ann"]
+    participants: ["Іван", "Анна"]
   }
 */!*
 };
 
 alert( JSON.stringify(meetup) );
-/* The whole structure is stringified:
+/* Вся структура серіалізується:
 {
-  "title":"Conference",
-  "room":{"number":23,"participants":["john","ann"]},
+  "title":"Конференція",
+  "room":{"number":23,"participants":["Іван","Анна"]},
 }
 */
 ```
 
-The important limitation: there must be no circular references.
+Важливі обмеження: не повинно бути жодних кругових посилань.
 
-For instance:
+Наприклад:
 
 ```js run
 let room = {
@@ -156,12 +156,12 @@ let room = {
 };
 
 let meetup = {
-  title: "Conference",
-  participants: ["john", "ann"]
+  title: "Конференція",
+  participants: ["Іван", "Анна"]
 };
 
-meetup.place = room;       // meetup references room
-room.occupiedBy = meetup; // room references meetup
+meetup.place = room;      // meetup посилається на room
+room.occupiedBy = meetup; // room посилається на meetup
 
 *!*
 JSON.stringify(meetup); // Error: Converting circular structure to JSON
