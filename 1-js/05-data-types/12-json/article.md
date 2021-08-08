@@ -146,7 +146,7 @@ alert( JSON.stringify(meetup) );
 */
 ```
 
-Важливі обмеження: не повинно бути жодних кругових посилань.
+Важливі обмеження: не повинно бути жодних циклічних посилань.
 
 Наприклад:
 
@@ -168,33 +168,33 @@ JSON.stringify(meetup); // Error: Converting circular structure to JSON
 */!*
 ```
 
-Here, the conversion fails, because of circular reference: `room.occupiedBy` references `meetup`, and `meetup.place` references `room`:
+Тут перетворення не вдається із-за циклічного посилання: `room.occupiedBy` посилається на `meetup`, і `metup.place` посилається на `room`:
 
 ![](json-meetup.svg)
 
 
-## Excluding and transforming: replacer
+## За винятком та трансформацією: Замінник
 
-The full syntax of `JSON.stringify` is:
+Повний синтаксис `JSON.stringify`:
 
 ```js
 let json = JSON.stringify(value[, replacer, space])
 ```
 
 value
-: A value to encode.
+: Значення для кодування.
 
 replacer
-: Array of properties to encode or a mapping function `function(key, value)`.
+: Масив властивостей для кодування або функція відображення `function(key, value)`.
 
 space
-: Amount of space to use for formatting
+: Кількість пробілів для форматування
 
-Most of the time, `JSON.stringify` is used with the first argument only. But if we need to fine-tune the replacement process, like to filter out circular references, we can use the second argument of `JSON.stringify`.
+Зазвичай, `JSON.stringify` використовується лише з першим аргументом. Але якщо нам потрібно добре налаштувати процес заміни, наприклад, якщо ми хочемо відфільтрувати циклічні посилання, то ми можемо використовувати другий аргумент `JSON.stringify`.
 
-If we pass an array of properties to it, only these properties will be encoded.
+Якщо ми передаємо йому масив властивостей, то будуть закодовані лише ці властивості.
 
-For instance:
+Наприклад:
 
 ```js run
 let room = {
@@ -204,10 +204,10 @@ let room = {
 let meetup = {
   title: "Conference",
   participants: [{name: "John"}, {name: "Alice"}],
-  place: room // meetup references room
+  place: room // meetup посилається на room
 };
 
-room.occupiedBy = meetup; // room references meetup
+room.occupiedBy = meetup; // room посилається на meetup
 
 alert( JSON.stringify(meetup, *!*['title', 'participants']*/!*) );
 // {"title":"Conference","participants":[{},{}]}
