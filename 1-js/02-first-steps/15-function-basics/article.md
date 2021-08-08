@@ -270,11 +270,11 @@ showCount(null); // невідомо
 showCount(); // невідомо
 ```
 
-## Returning a value
+## Повернення значення
 
-A function can return a value back into the calling code as the result.
+В якості результату, функція може повертати назад значення в код, який викликав цю функцію.
 
-The simplest example would be a function that sums two values:
+Найпростіший приклад — функція, яка сумує два значення:
 
 ```js run no-beautify
 function sum(a, b) {
@@ -285,9 +285,9 @@ let result = sum(1, 2);
 alert( result ); // 3
 ```
 
-The directive `return` can be in any place of the function. When the execution reaches it, the function stops, and the value is returned to the calling code (assigned to `result` above).
+Директива `return` може бути в будь-якому місці функції. Коли виконання досягає цієї директиви, функція зупиняється, і в код, який викликав цю функцію, повертається значення (в прикладі вище, це значення присвоюється змінній `result`).
 
-There may be many occurrences of `return` in a single function. For instance:
+В одній функції може бути декілька директив `return`. Наприклад:
 
 ```js run
 function checkAge(age) {
@@ -297,23 +297,23 @@ function checkAge(age) {
 */!*
   } else {
 *!*
-    return confirm('Do you have permission from your parents?');
+    return confirm('У вас є дозвіл ваших батьків?');
 */!*
   }
 }
 
-let age = prompt('How old are you?', 18);
+let age = prompt('Скільки вам років?', 18);
 
 if ( checkAge(age) ) {
-  alert( 'Access granted' );
+  alert( 'Доступ надано' );
 } else {
-  alert( 'Access denied' );
+  alert( 'У доступі відмовлено' );
 }
 ```
 
-It is possible to use `return` without a value. That causes the function to exit immediately.
+Можна використовувати `return` без значення. Це призведе до негайного виходу з функції.
 
-For example:
+Наприклад:
 
 ```js
 function showMovie(age) {
@@ -323,23 +323,23 @@ function showMovie(age) {
 */!*
   }
 
-  alert( "Showing you the movie" ); // (*)
+  alert( "Показуємо фільм" ); // (*)
   // ...
 }
 ```
 
-In the code above, if `checkAge(age)` returns `false`, then `showMovie` won't proceed to the `alert`.
+В коді вище, якщо `checkAge(age)` поверне `false`, тоді функція `showMovie` не дійде до виконання `alert`.
 
-````smart header="A function with an empty `return`or without it returns`undefined`"
-If a function does not return a value, it is the same as if it returns `undefined`:
+````smart header="Функція з порожнім `return`, або без `return` повертає `undefined`"
+Якщо функція не повертає значення, тоді "повернене" значення буде `undefined`:
 
 ```js run
-function doNothing() { /* empty */ }
+function doNothing() { /* порожньо */ }
 
 alert( doNothing() === undefined ); // true
 ```
 
-An empty `return` is also the same as `return undefined`:
+Порожній `return` це те саме, що `return undefined`:
 
 ```js run
 function doNothing() {
@@ -350,32 +350,32 @@ alert( doNothing() === undefined ); // true
 ```
 ````
 
-````warn header="Never add a newline between `return` and the value"
-For a long expression in `return`, it might be tempting to put it on a separate line, like this:
+````warn header="Ніколи не додавайте новий рядок між `return` і значенням"
+Іноді кортить перенести довгий вираз після `return` на новий рядок, ось так:
 
 ```js
 return
- (some + long + expression + or + whatever * f(a) + f(b))
+ ('деякий' + 'довгий' + 'вираз' + 'або' + 'що' * f(a) + f(b))
 ```
-That doesn't work, because JavaScript assumes a semicolon after `return`. That'll work the same as:
+Це не спрацює, тому що JavaScript вважатиме новий рядок після `return` за крапку з комою. Це працюватиме ось так:
 
 ```js
 return*!*;*/!*
- (some + long + expression + or + whatever * f(a) + f(b))
+ ('деякий' + 'довгий' + 'вираз' + 'або' + 'що' * f(a) + f(b))
 ```
 
-So, it effectively becomes an empty return.
+Тобто, повернеться порожній результат.
 
-If we want the returned expression to wrap across multiple lines, we should start it at the same line as `return`. Or at least put the opening parentheses there as follows:
+Якщо ми хочемо повернути довгий вираз, який займе декілька рядків, ми повинні писати його на одному рядку з `return`. Або обгорнути його в дужки. Ось так:
 
 ```js
 return (
-  some + long + expression
-  + or +
-  whatever * f(a) + f(b)
+  'деякий' + 'довгий' + 'вираз'
+  + 'або' +
+  'що' * f(a) + f(b)
   )
 ```
-And it will work just as we expect it to.
+Такий варіант працюватиме так, як ми задумали.
 ````
 
 ## Naming a function [#function-naming]
