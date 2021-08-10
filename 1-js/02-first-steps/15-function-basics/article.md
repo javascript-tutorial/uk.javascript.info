@@ -378,53 +378,53 @@ return (
 Такий варіант працюватиме так, як ми задумали.
 ````
 
-## Naming a function [#function-naming]
+## Найменування функції [#function-naming]
 
-Functions are actions. So their name is usually a verb. It should be brief, as accurate as possible and describe what the function does, so that someone reading the code gets an indication of what the function does.
+Функції виконують дії. Тому в їхніх назвах зазвичай використовують дієслова. Назва повинна бути лаконічна, повинна якнайточніше описувати, що робить функція, щоб кожен хто читає код зміг зрозуміти, що саме робить функція.
 
-It is a widespread practice to start a function with a verbal prefix which vaguely describes the action. There must be an agreement within the team on the meaning of the prefixes.
+Поширена практика розпочинати назву функції зі словесного префіксу, який описує дію. В команді має бути домовленість щодо значення префіксів.
 
-For instance, functions that start with `"show"` usually show something.
+Наприклад, функції, які починаються з префіксу `"show"` зазвичай щось показують.
 
-Function starting with...
+Функції, які починаються з ...
 
-- `"get…"` -- return a value,
-- `"calc…"` -- calculate something,
-- `"create…"` -- create something,
-- `"check…"` -- check something and return a boolean, etc.
+- `"get…"` -- повертають значення,
+- `"calc…"` -- щось обчислюють,
+- `"create…"` -- щось створюють,
+- `"check…"` -- щось перевіряють і повертають булеве значення.
 
-Examples of such names:
+Ось приклади таких назв:
 
 ```js no-beautify
-showMessage(..)     // shows a message
-getAge(..)          // returns the age (gets it somehow)
-calcSum(..)         // calculates a sum and returns the result
-createForm(..)      // creates a form (and usually returns it)
-checkPermission(..) // checks a permission, returns true/false
+showMessage(..)     // показує повідомлення
+getAge(..)          // повертає вік (якось його отримує або обчислює)
+calcSum(..)         // обчислює суму і повертає результат
+createForm(..)      // створює форму (і зазвичай її повертає)
+checkPermission(..) // перевіряє доступ, повертає true/false
 ```
 
-With prefixes in place, a glance at a function name gives an understanding what kind of work it does and what kind of value it returns.
+Якщо є префікси, погляд на назву функції дає зрозуміти, яку роботу вона виконує і яке значення повертає.
 
-```smart header="One function -- one action"
-A function should do exactly what is suggested by its name, no more.
+```smart header="Одна функція -- одна дія"
+Функція повинна робити саме те, що написано в її назві, не більше.
 
-Two independent actions usually deserve two functions, even if they are usually called together (in that case we can make a 3rd function that calls those two).
+Дві незалежні дії зазвичай заслуговують двох функцій, навіть якщо вони зазвичай викликаються разом (у цьому випадку ми можемо створити 3-ю функцію, яка викликає ці дві).
 
-A few examples of breaking this rule:
+Ось декілька прикладів, які порушують це правило:
 
-- `getAge` -- would be bad if it shows an `alert` with the age (should only get).
-- `createForm` -- would be bad if it modifies the document, adding a form to it (should only create it and return).
-- `checkPermission` -- would be bad if it displays the `access granted/denied` message (should only perform the check and return the result).
+- `getAge` -- функція викликає `alert` з віком (а повинна лише отримувати вік).
+- `createForm` -- функція змінює документ, додаючи форму до неї (а повинна лише створити форму і її вернути).
+- `checkPermission` -- функція відображає повідомлення `доступ надано/відхилено` (а повинна лише повертати результат `true/false`).
 
-These examples assume common meanings of prefixes. You and your team are free to agree on other meanings, but usually they're not much different. In any case, you should have a firm understanding of what a prefix means, what a prefixed function can and cannot do. All same-prefixed functions should obey the rules. And the team should share the knowledge.
+Ці приклади передбачають загальне значення префіксів. Ви та ваша команда можете вільно домовлятися про інші значення, але зазвичай вони не сильно відрізняються. У будь-якому випадку ви повинні чітко розуміти, що означає префікс, що може робити префіксна функція, а що ні. Усі функції з однаковими префіксами повинні підкорятися правилам. І команда повинна ділитися знаннями.
 ```
 
-```smart header="Ultrashort function names"
-Functions that are used *very often* sometimes have ultrashort names.
+```smart header="Дуже короткі назви функцій"
+Функції, які використовуються *дуже часто* деколи мають дуже короткі назви.
 
-For example, the [jQuery](http://jquery.com) framework defines a function with `$`. The [Lodash](http://lodash.com/) library has its core function named `_`.
+Наприклад, фреймворк [jQuery](http://jquery.com) оголошує функцію знаком `$`. Бібліотека [Lodash](http://lodash.com/) має вбудовану функцію, яка називається `_`.
 
-These are exceptions. Generally function names should be concise and descriptive.
+Це винятки. Загалом назви функцій повинні бути стислими та описовими.
 ```
 
 ## Functions == Comments
