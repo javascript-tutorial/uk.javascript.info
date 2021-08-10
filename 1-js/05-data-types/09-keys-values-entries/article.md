@@ -76,15 +76,9 @@ for (let value of Object.values(user)) {
 
 Якщо б ми хотіли їх застосувати, тоді б ми використовували `Object.entries` з подальшим викликом `Object.fromEntries`:
 
-<<<<<<< HEAD
 1. Викликаємо `Object.entries(obj)`, щоб отримати масив пар ключ/значення з `obj`.
 2. На ньому використовуємо методи масиву, наприклад `map`, щоб перетворити ці пари ключів/значень.
 3. Використаємо `Object.fromEntries(array)` на отриманому масиві, щоб перетворити його знову на об’єкт.
-=======
-1. Use `Object.entries(obj)` to get an array of key/value pairs from `obj`.
-2. Use array methods on that array, e.g. `map`, to transform these key/value pairs.
-3. Use `Object.fromEntries(array)` on the resulting array to turn it back into an object.
->>>>>>> bc08fd1b32285304b14afea12a9deaa10d13452b
 
 Наприклад, у нас є об’єкт з цінами, і ми б хотіли їх подвоїти:
 
@@ -97,13 +91,8 @@ let prices = {
 
 *!*
 let doublePrices = Object.fromEntries(
-<<<<<<< HEAD
   // перетворити ціни на масив, потім застосувати map, щоб перетворити на пари ключ/значення
   // а потім fromEntries повертає об’єкт
-=======
-  // convert prices to array, map each key/value pair into another pair
-  // and then fromEntries gives back the object
->>>>>>> bc08fd1b32285304b14afea12a9deaa10d13452b
   Object.entries(prices).map(entry => [entry[0], entry[1] * 2])
 );
 */!*
@@ -111,8 +100,4 @@ let doublePrices = Object.fromEntries(
 alert(doublePrices.meat); // 8
 ```
 
-<<<<<<< HEAD
 З першого погляду це може здатися важким, але стане зрозумілим після того, як ви використаєте це декілька разів. Таким чином ми можемо створювати потужні ланцюги перетворень.
-=======
-It may look difficult at first sight, but becomes easy to understand after you use it once or twice. We can make powerful chains of transforms this way.
->>>>>>> bc08fd1b32285304b14afea12a9deaa10d13452b
