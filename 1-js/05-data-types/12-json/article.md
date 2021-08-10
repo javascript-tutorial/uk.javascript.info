@@ -213,9 +213,9 @@ alert( JSON.stringify(meetup, *!*['title', 'participants']*/!*) );
 // {"title":"Conference","participants":[{},{}]}
 ```
 
-Here we are probably too strict. The property list is applied to the whole object structure. So the objects in `participants` are empty, because `name` is not in the list.
+Тут ми, мабуть, занадто суворі. Список властивостей застосовується до всієї структури об'єкта. Отже, об'єкти в `participants` є порожніми, тому що `name` не в списку.
 
-Let's include in the list every property except `room.occupiedBy` that would cause the circular reference:
+Давайте включимо в список кожної власності, крім `room.occupiedBy`, що призведе до циклічного посилання:
 
 ```js run
 let room = {
@@ -223,30 +223,30 @@ let room = {
 };
 
 let meetup = {
-  title: "Conference",
-  participants: [{name: "John"}, {name: "Alice"}],
-  place: room // meetup references room
+  title: "Конференція",
+  participants: [{name: "Іван"}, {name: "Аліса"}],
+  place: room // meetup посилається на room
 };
 
-room.occupiedBy = meetup; // room references meetup
+room.occupiedBy = meetup; // room посилається на meetup
 
 alert( JSON.stringify(meetup, *!*['title', 'participants', 'place', 'name', 'number']*/!*) );
 /*
 {
-  "title":"Conference",
-  "participants":[{"name":"John"},{"name":"Alice"}],
+  "title":"Конференція",
+  "participants":[{"name":"Іван"},{"name":"Аліса"}],
   "place":{"number":23}
 }
 */
 ```
 
-Now everything except `occupiedBy` is serialized. But the list of properties is quite long.
+Тепер все, крім `occupiedBy`, серіалізується. Але список властивостей досить довгий.
 
-Fortunately, we can use a function instead of an array as the `replacer`.
+На щастя, ми можемо використовувати функцію замість масиву, в якості `raplacer`.
 
-The function will be called for every `(key, value)` pair and should return the "replaced" value, which will be used instead of the original one. Or `undefined` if the value is to be skipped.
+Функція буде викликана для кожного `(key, value)`, і повинна повернути значення "replaced", яке буде використовуватися замість оригінального. Або `undefined`, якщо значення буде пропущено.
 
-In our case, we can return `value` "as is" for everything except `occupiedBy`. To ignore `occupiedBy`, the code below returns `undefined`:
+У нашому випадку ми можемо повернути `value` "як є" для всього, крім `occupiedBy`. Щоб ігнорувати `occupiedBy`, код нижче повертає `undefined`:
 
 ```js run
 let room = {
@@ -254,12 +254,12 @@ let room = {
 };
 
 let meetup = {
-  title: "Conference",
-  participants: [{name: "John"}, {name: "Alice"}],
-  place: room // meetup references room
+  title: "Конференція",
+  participants: [{name: "Іван"}, {name: "Аліса"}],
+  place: room // meetup посилається на room
 };
 
-room.occupiedBy = meetup; // room references meetup
+room.occupiedBy = meetup; // room посилається на meetup
 
 alert( JSON.stringify(meetup, function replacer(key, value) {
   alert(`${key}: ${value}`);
@@ -268,12 +268,12 @@ alert( JSON.stringify(meetup, function replacer(key, value) {
 
 /* key:value pairs that come to replacer:
 :             [object Object]
-title:        Conference
+title:        Конференція
 participants: [object Object],[object Object]
 0:            [object Object]
-name:         John
+name:         Іван
 1:            [object Object]
-name:         Alice
+name:         Аліса
 place:        [object Object]
 number:       23
 occupiedBy: [object Object]
