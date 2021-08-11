@@ -427,15 +427,15 @@ checkPermission(..) // перевіряє доступ, повертає true/fa
 Це винятки. Загалом назви функцій повинні бути стислими та описовими.
 ```
 
-## Functions == Comments
+## Функції == Коментарі
 
-Functions should be short and do exactly one thing. If that thing is big, maybe it's worth it to split the function into a few smaller functions. Sometimes following this rule may not be that easy, but it's definitely a good thing.
+Функції повинні бути короткими і робити щось одне. Якщо це щось велике, в цьому випадку доцільно розділити таку функцію на декілька менших. Іноді дотримуватися цього правила досить важко, але це, безумовно, хороша практика.
 
-A separate function is not only easier to test and debug -- its very existence is a great comment!
+Невеликі функції не тільки полегшують перевірку та налагодження - саме їхнє існування виконує роль хороших коментарів, які покращують зрозумілість коду!
 
-For instance, compare the two functions `showPrimes(n)` below. Each one outputs [prime numbers](https://en.wikipedia.org/wiki/Prime_number) up to `n`.
+Ось для прикладу, порівняйте дві функції `showPrimes(n)`. Кожна з них виводить [прості числа](https://uk.wikipedia.org/wiki/Просте_число) до `n`.
 
-The first variant uses a label:
+Перший варіант використовує мітку `nextPrime`:
 
 ```js
 function showPrimes(n) {
@@ -445,12 +445,12 @@ function showPrimes(n) {
       if (i % j == 0) continue nextPrime;
     }
 
-    alert( i ); // a prime
+    alert( i ); // просте число
   }
 }
 ```
 
-The second variant uses an additional function `isPrime(n)` to test for primality:
+Другий варіант використовує додаткову функцію `isPrime(n)`, щоб перевіряти, чи число просте:
 
 ```js
 function showPrimes(n) {
@@ -458,7 +458,7 @@ function showPrimes(n) {
   for (let i = 2; i < n; i++) {
     *!*if (!isPrime(i)) continue;*/!*
 
-    alert(i);  // a prime
+    alert(i);  // просте число
   }
 }
 
@@ -470,9 +470,9 @@ function isPrime(n) {
 }
 ```
 
-The second variant is easier to understand, isn't it? Instead of the code piece we see a name of the action (`isPrime`). Sometimes people refer to such code as *self-describing*.
+Другий варіант легше зрозуміти, чи не так? Замість частини коду ми бачимо назву дії (`isPrime`). Іноді розробники називають такий код *самодокументованим*.
 
-So, functions can be created even if we don't intend to reuse them. They structure the code and make it readable.
+Отже, функції можна створювати, навіть якщо ми не маємо наміру повторно їх використовувати. Вони структурують код і роблять його читабельним та зрозумілим.
 
 ## Summary
 
