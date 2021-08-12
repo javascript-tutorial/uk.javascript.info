@@ -474,28 +474,28 @@ function isPrime(n) {
 
 Отже, функції можна створювати, навіть якщо ми не маємо наміру повторно їх використовувати. Вони структурують код і роблять його читабельним та зрозумілим.
 
-## Summary
+## Підсумки
 
-A function declaration looks like this:
+Оголошення функції виглядає ось так:
 
 ```js
-function name(parameters, delimited, by, comma) {
-  /* code */
+function назва(параметри, розділені, комою) {
+  /* тіло, код функції */
 }
 ```
 
-- Values passed to a function as parameters are copied to its local variables.
-- A function may access outer variables. But it works only from inside out. The code outside of the function doesn't see its local variables.
-- A function can return a value. If it doesn't, then its result is `undefined`.
+- Значення, які передаються в функцію в якості параметрів, копіюються в локальні змінні.
+- Функції мають доступ до зовнішніх змінних. Але це працює тільки зсередини назовні. Код поза функцією не має доступу до локальних змінних функції.
+- Функція може повертати значення. Якщо цього не відбувається, результат буде `undefined`.
 
-To make the code clean and easy to understand, it's recommended to use mainly local variables and parameters in the function, not outer variables.
+Для того, щоб зробити код чистим і зрозумілим, рекомендується використовувати локальні змінні і параметри функції, не користуватися зовнішніми змінними.
 
-It is always easier to understand a function which gets parameters, works with them and returns a result than a function which gets no parameters, but modifies outer variables as a side-effect.
+Завжди легше зрозуміти функцію, яка отримує параметри, працює з ними і повертає результ. На відмінну від функції, в якої немає параметрів, але яка змінює зовнішні змінні, що може призводити до побічних ефектів.
 
-Function naming:
+Найменування функцій:
 
-- A name should clearly describe what the function does. When we see a function call in the code, a good name instantly gives us an understanding what it does and returns.
-- A function is an action, so function names are usually verbal.
-- There exist many well-known function prefixes like `create…`, `show…`, `get…`, `check…` and so on. Use them to hint what a function does.
+- Назва функції повинну бути короткою і чітко відображати, що робить функція. Побачивши виклик функції в коді, ви повинні зразу зрозуміти, що функція робить, і що повертає.
+- Функція -- це дія, тому її назва зазвичай дієслово.
+- Є багато загальноприйнятих префіксів, такі як `create…`, `show…`, `get…`, `check…` тощо. Використовуйте їх щоб пояснити, що робить функція.
 
-Functions are the main building blocks of scripts. Now we've covered the basics, so we actually can start creating and using them. But that's only the beginning of the path. We are going to return to them many times, going more deeply into their advanced features.
+Функції -- це основні будівельні блоки скриптів. Ми розглянули лише основи функцій в JavaScript,проте вже зараз цього достатньо, щоб почати їх створювати і використовувати. Це лише початок шляху. Ми будемо неодноразово повертатися до функцій і вивчатимо їх все глибше і глибше.
