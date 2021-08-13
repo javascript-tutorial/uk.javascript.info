@@ -449,45 +449,45 @@ let json = `{
 }`;
 ```
 
-Besides, JSON does not support comments. Adding a comment to JSON makes it invalid.
+Крім того, JSON не підтримує коментарі. Додавання коментаря до JSON робить його недійсним.
 
-There's another format named [JSON5](http://json5.org/), which allows unquoted keys, comments etc. But this is a standalone library, not in the specification of the language.
+Існує інший формат, який називається [JSON5](http://json5.org/), що підтримує ключі не обернені в лапки, коментарі тощо. Але це окрема бібліотека, а не частина специфікації мови.
 
-The regular JSON is that strict not because its developers are lazy, but to allow easy, reliable and very fast implementations of the parsing algorithm.
+Звичайний JSON є настільки строгим не тому, що її розробники ледачі, а тому, що дозволяє легко, надійно та дуже швидко реалізувати алгоритм кодування та читання.
 
-## Using reviver
+## Використання функції відновлення
 
-Imagine, we got a stringified `meetup` object from the server.
+Уявіть, що ми отримали серіалізований об’єкт `metchup` з сервера.
 
-It looks like this:
+Це виглядає так:
 
 ```js
 // title: (meetup title), date: (meetup date)
-let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+let str = '{"title":"Конференція","date":"2017-11-30T12:00:00.000Z"}';
 ```
 
-...And now we need to *deserialize* it, to turn back into JavaScript object.
+...І тепер нам потрібно *десеріалізувати* цей об’єкт, щоб перетворити його у об'єкт JavaScript.
 
-Let's do it by calling `JSON.parse`:
+Давайте зробимо це, викликавши `JSON.parse`:
 
 ```js run
-let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+let str = '{"title":"Конференція","date":"2017-11-30T12:00:00.000Z"}';
 
 let meetup = JSON.parse(str);
 
 *!*
-alert( meetup.date.getDate() ); // Error!
+alert( meetup.date.getDate() ); // Помилка!
 */!*
 ```
 
-Whoops! An error!
+Ой! Помилка!
 
-The value of `meetup.date` is a string, not a `Date` object. How could `JSON.parse` know that it should transform that string into a `Date`?
+Значення `metaup.date` - це рядок, а не об'єкт `Date`. Як `JSON.parse` знає, що він повинен перетворити цей рядок на об’єкт `Date`?
 
-Let's pass to `JSON.parse` the reviving function as the second argument, that returns all values "as is", but `date` will become a `Date`:
+Давайте передамо до `JSON.parse` функції відновлення як другий аргумент, який повертає всі значення "як є", але `date` стане об’єктом `Date`:
 
 ```js run
-let str = '{"title":"Conference","date":"2017-11-30T12:00:00.000Z"}';
+let str = '{"title":"Конференція","date":"2017-11-30T12:00:00.000Z"}';
 
 *!*
 let meetup = JSON.parse(str, function(key, value) {
@@ -496,16 +496,16 @@ let meetup = JSON.parse(str, function(key, value) {
 });
 */!*
 
-alert( meetup.date.getDate() ); // now works!
+alert( meetup.date.getDate() ); // зараз працює!
 ```
 
-By the way, that works for nested objects as well:
+До речі, це також працює для вкладених об'єктів:
 
 ```js run
 let schedule = `{
   "meetups": [
-    {"title":"Conference","date":"2017-11-30T12:00:00.000Z"},
-    {"title":"Birthday","date":"2017-04-18T12:00:00.000Z"}
+    {"title":"Конференція","date":"2017-11-30T12:00:00.000Z"},
+    {"title":"День народження","date":"2017-04-18T12:00:00.000Z"}
   ]
 }`;
 
@@ -515,16 +515,16 @@ schedule = JSON.parse(schedule, function(key, value) {
 });
 
 *!*
-alert( schedule.meetups[1].date.getDate() ); // works!
+alert( schedule.meetups[1].date.getDate() ); // працює!
 */!*
 ```
 
 
 
-## Summary
+## Підсумки
 
-- JSON is a data format that has its own independent standard and libraries for most programming languages.
-- JSON supports plain objects, arrays, strings, numbers, booleans, and `null`.
-- JavaScript provides methods [JSON.stringify](mdn:js/JSON/stringify) to serialize into JSON and [JSON.parse](mdn:js/JSON/parse) to read from JSON.
-- Both methods support transformer functions for smart reading/writing.
-- If an object has `toJSON`, then it is called by `JSON.stringify`.
+- JSON - це формат даних, який має власний незалежний стандарт та бібліотеки для більшості мов програмування.
+- JSON підтримує прості об'єкти, масиви, рядки, цифри, булеві значення та `null`.
+- JavaScript надає методи [JSON.stringify](mdn:js/JSON/stringify) для серіалізування в JSON і [JSON.parse](mdn:js/JSON/parse), щоб зчитати данні з JSON.
+- Обидва методи підтримують функції трансформації для інтелектуального читання/запису.
+- Якщо об'єкт має метод `toJSON`, то він викликається при виконанні `JSON.stringify`.
