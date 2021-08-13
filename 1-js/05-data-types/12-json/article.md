@@ -280,24 +280,24 @@ occupiedBy: [object Object]
 */
 ```
 
-Please note that `replacer` function gets every key/value pair including nested objects and array items. It is applied recursively. The value of `this` inside `replacer` is the object that contains the current property.
+Будь ласка, зверніть увагу, що функція `replacer` отримує кожну пару ключ/значення, включаючи вкладені об'єкти та елементи масиву. Він застосовується рекурсивно. Значення `this` всередині `raplacer` -- це об'єкт, який містить поточну властивість.
 
-The first call is special. It is made using a special "wrapper object": `{"": meetup}`. In other words, the first `(key, value)` pair has an empty key, and the value is the target object as a whole. That's why the first line is `":[object Object]"` in the example above.
+Перший виклик особливий. Він зроблений з використанням спеціального "об'єкта обгортки": `{"": meetup}`. Іншими словами, перша пара `(key, value)` має порожній ключ, а значення є цільовим об'єктом загалом. Ось чому перший рядок -- `":[object Object]"` в прикладі вище.
 
-The idea is to provide as much power for `replacer` as possible: it has a chance to analyze and replace/skip even the whole object if necessary.
+Ідея полягає в тому, щоб забезпечити якомога більше потужності для функції `replacer`: вона має можливість аналізувати та замінити/пропустити навіть весь об'єкт, якщо це необхідно.
 
 
-## Formatting: space
+## Форматування: пробіл
 
-The third argument of `JSON.stringify(value, replacer, space)` is the number of spaces to use for pretty formatting.
+Третій аргумент `JSON.stringify(value, replacer, space)` -- це кількість пробілів, що використовуються для гарного форматування.
 
-Previously, all stringified objects had no indents and extra spaces. That's fine if we want to send an object over a network. The `space` argument is used exclusively for a nice output.
+Раніше всі розтягнуті об'єкти не мали відступу та додаткових пробілів. Це добре, якщо ми хочемо надіслати об'єкт через мережу. Аргумент `space` використовується виключно для виводу в зручному для читання вигляді.
 
-Here `space = 2` tells JavaScript to show nested objects on multiple lines, with indentation of 2 spaces inside an object:
+Тут `space = 2` указує JavaScript показати вкладені об'єкти на декількох рядках, з відступом у 2 пробіли всередині об'єкта:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   age: 25,
   roles: {
     isAdmin: false,
@@ -306,9 +306,9 @@ let user = {
 };
 
 alert(JSON.stringify(user, null, 2));
-/* two-space indents:
+/* відступ в 2 пробіли:
 {
-  "name": "John",
+  "name": "Іван",
   "age": 25,
   "roles": {
     "isAdmin": false,
@@ -317,9 +317,9 @@ alert(JSON.stringify(user, null, 2));
 }
 */
 
-/* for JSON.stringify(user, null, 4) the result would be more indented:
+/* для JSON.stringify(user, null, 4) результат містить більше пробілів:
 {
-    "name": "John",
+    "name": "Іван",
     "age": 25,
     "roles": {
         "isAdmin": false,
@@ -329,15 +329,15 @@ alert(JSON.stringify(user, null, 2));
 */
 ```
 
-The third argument can also be a string. In this case, the string is used for indentation instead of a number of spaces.
+Третій аргумент також може бути рядок. У цьому випадку рядок використовується для відступу замість числа пробілів.
 
-The `space` parameter is used solely for logging and nice-output purposes.
+Параметр `space` використовується виключно для логування та гарного виводу.
 
-## Custom "toJSON"
+## Спеціальний "toJSON"
 
-Like `toString` for string conversion, an object may provide method `toJSON` for to-JSON conversion. `JSON.stringify` automatically calls it if available.
+Подібно до `tostring` для перетворення в рядки, об'єкт може надати метод `toJSON` для перетворення в JSON. `Json.stringify` автоматично викликає його, він доступний.
 
-For instance:
+Наприклад:
 
 ```js run
 let room = {
@@ -345,7 +345,7 @@ let room = {
 };
 
 let meetup = {
-  title: "Conference",
+  title: "Конференція",
   date: new Date(Date.UTC(2017, 0, 1)),
   room
 };
@@ -353,7 +353,7 @@ let meetup = {
 alert( JSON.stringify(meetup) );
 /*
   {
-    "title":"Conference",
+    "title":"Конференція",
 *!*
     "date":"2017-01-01T00:00:00.000Z",  // (1)
 */!*
@@ -362,9 +362,9 @@ alert( JSON.stringify(meetup) );
 */
 ```
 
-Here we can see that `date` `(1)` became a string. That's because all dates have a built-in `toJSON` method which returns such kind of string.
+Тут ми бачимо, що `date` `(1)` став рядком. Це тому, що всі дати мають вбудований метод `toJSON`, який повертає такий вид рядка.
 
-Now let's add a custom `toJSON` for our object `room` `(2)`:
+Тепер давайте додамо спеціальний `toJSON` для нашого об'єкта `room` `(2)`:
 
 ```js run
 let room = {
@@ -377,7 +377,7 @@ let room = {
 };
 
 let meetup = {
-  title: "Conference",
+  title: "Конференція",
   room
 };
 
@@ -388,7 +388,7 @@ alert( JSON.stringify(room) ); // 23
 alert( JSON.stringify(meetup) );
 /*
   {
-    "title":"Conference",
+    "title":"Конференція",
 *!*
     "room": 23
 */!*
@@ -396,28 +396,28 @@ alert( JSON.stringify(meetup) );
 */
 ```
 
-As we can see, `toJSON` is used both for the direct call `JSON.stringify(room)` and when `room` is nested in another encoded object.
+Як ми бачимо, `toJSON` використовується як для прямого виклику `JSON.stringify(room)`, а також коли властивість `room` вкладена в іншому закодованому об'єкті.
 
 
 ## JSON.parse
 
-To decode a JSON-string, we need another method named [JSON.parse](mdn:js/JSON/parse).
+Щоб декодувати JSON-рядок, нам потрібен інший метод, що назвається [JSON.parse](mdn:js/JSON/parse).
 
-The syntax:
+Синтаксис:
 ```js
 let value = JSON.parse(str, [reviver]);
 ```
 
 str
-: JSON-string to parse.
+: JSON-рядок для перетворення в об’єкт.
 
 reviver
-: Optional function(key,value) that will be called for each `(key, value)` pair and can transform the value.
+: Необов'язкова функція, яка буде викликана для кожного `(key, value)` та може перетворювати значення.
 
-For instance:
+Наприклад:
 
 ```js run
-// stringified array
+// масив у вигляді рядка
 let numbers = "[0, 1, 2, 3]";
 
 numbers = JSON.parse(numbers);
@@ -428,24 +428,24 @@ alert( numbers[1] ); // 1
 Or for nested objects:
 
 ```js run
-let userData = '{ "name": "John", "age": 35, "isAdmin": false, "friends": [0,1,2,3] }';
+let userData = '{ "name": "Іван", "age": 35, "isAdmin": false, "friends": [0,1,2,3] }';
 
 let user = JSON.parse(userData);
 
 alert( user.friends[1] ); // 1
 ```
 
-The JSON may be as complex as necessary, objects and arrays can include other objects and arrays. But they must obey the same JSON format.
+JSON може бути настільки складним, наскільки це необхідно, об'єкти та масиви можуть включати інші об'єкти та масиви. Але вони повинні дотримуватися того ж формату JSON.
 
-Here are typical mistakes in hand-written JSON (sometimes we have to write it for debugging purposes):
+Ось типові помилки в рукописному JSON (іноді ми повинні писати його для знаходження помилок):
 
 ```js
 let json = `{
-  *!*name*/!*: "John",                     // mistake: property name without quotes
-  "surname": *!*'Smith'*/!*,               // mistake: single quotes in value (must be double)
-  *!*'isAdmin'*/!*: false                  // mistake: single quotes in key (must be double)
-  "birthday": *!*new Date(2000, 2, 3)*/!*, // mistake: no "new" is allowed, only bare values
-  "friends": [0,1,2,3]              // here all fine
+  *!*name*/!*: "Іван",                     // помилка: ім'я власності без лапок
+  "surname": *!*'Smith'*/!*,               // помилка: одинарні лапки для значень (повинні бути подвійними)
+  *!*'isAdmin'*/!*: false                  // помилка: одинарні лапки для ключей (повинні бути подвійними)
+  "birthday": *!*new Date(2000, 2, 3)*/!*, // помилка: не дозволяється конструктор "new", тільки значення
+  "friends": [0,1,2,3]              // тут все добре
 }`;
 ```
 
