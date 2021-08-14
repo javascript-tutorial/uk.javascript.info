@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# Sum object properties
+# Сума властивостей об’єкта
 
-We have an object storing salaries of our team:
+У нас є об’єкт для зберігання заробітної плати нашої команди:
 
 ```js
 let salaries = {
@@ -14,6 +14,6 @@ let salaries = {
 }
 ```
 
-Write the code to sum all salaries and store in the variable `sum`. Should be `390` in the example above.
+Напишіть код для підсумовування всіх зарплат і збережіть у змінній `sum`. У наведеному вище прикладі має бути `390`.
 
-If `salaries` is empty, then the result must be `0`.
+Якщо об’єкт `salaries` порожній, то результат має бути `0`.
