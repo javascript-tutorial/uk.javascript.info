@@ -1,5 +1,5 @@
 describe("multiplyNumeric", function () {
-  it("помножити всі числові властивості на 2", function () {
+  it("множить всі числові властивості на 2", function () {
     let menu = {
       width: 200,
       height: 300,
