@@ -2,32 +2,32 @@ importance: 3
 
 ---
 
-# Multiply numeric property values by 2
+# Помножте числові значення властивостей на 2
 
-Create a function `multiplyNumeric(obj)` that multiplies all numeric property values of `obj` by `2`.
+Створіть функцію `multiplyNumeric(obj)`, яка примножує всі числові властивості об’єкта `obj` на `2`.
 
-For instance:
+Наприклад:
 
 ```js
-// before the call
+// до виклику функції
 let menu = {
   width: 200,
   height: 300,
-  title: "My menu"
+  title: "Моє меню"
 };
 
 multiplyNumeric(menu);
 
-// after the call
+// після виклику функції
 menu = {
   width: 400,
   height: 600,
-  title: "My menu"
+  title: "Моє меню"
 };
 ```
 
-Please note that `multiplyNumeric` does not need to return anything. It should modify the object in-place.
+Зверніть увагу, що `multiplyNumeric` не потрібно нічого повертати. Слід безпосередньо змінювати об’єкт.
 
-P.S. Use `typeof` to check for a number here.
+P.S. Використовуйте `typeof` для перевірки, що значення властивості числове.
 
 

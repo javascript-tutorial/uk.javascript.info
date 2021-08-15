@@ -1,60 +1,60 @@
 
-# Objects
+# Об’єкти
 
-As we know from the chapter <info:types>, there are eight data types in JavaScript. Seven of them are called "primitive", because their values contain only a single thing (be it a string or a number or whatever).
+Як ми знаємо з глави <info:types>, у JavaScript є вісім типів даних. Сім з них називаються "примітивними", оскільки їх значення містять лише одну річ (чи то рядок, число чи щось інше).
 
-In contrast, objects are used to store keyed collections of various data and more complex entities. In JavaScript, objects penetrate almost every aspect of the language. So we must understand them first before going in-depth anywhere else.
+На противагу цьому, об’єкти використовуються для зберігання ключів різних колекцій даних та складніших об’єктів. У JavaScript об’єкти проникають майже в усі аспекти мови. Тому ми повинні їх спочатку зрозуміти, перш ніж заглиблюватися в складніші теми.
 
-An object can be created with figure brackets `{…}` with an optional list of *properties*. A property is a "key: value" pair, where `key` is a string (also called a "property name"), and `value` can be anything.
+Об’єкт можна створити за допомогою фігурних дужок `{…}` з необов’язковим списком *властивостей*. Властивість -- це пара "ключ: значення", де `ключ` -- це рядок (також називається "ім’я властивості"), а `значення` може бути будь-яким.
 
-We can imagine an object as a cabinet with signed files. Every piece of data is stored in its file by the key. It's easy to find a file by its name or add/remove a file.
+Ми можемо уявити собі об’єкт як шафу з підписаними файлами. Кожен фрагмент даних зберігається у своєму файлі за допомогою ключа. Легко знайти файл за назвою або додати/видалити файл.
 
 ![](object.svg)
 
-An empty object ("empty cabinet") can be created using one of two syntaxes:
+Порожній об’єкт ("порожню шафу") можна створити за допомогою одного з двох синтаксисів:
 
 ```js
-let user = new Object(); // "object constructor" syntax
-let user = {};  // "object literal" syntax
+let user = new Object(); // синтаксис "конструктора об’єктів"
+let user = {};  // синтаксис "літералу об’єкта"
 ```
 
 ![](object-user-empty.svg)
 
-Usually, the figure brackets `{...}` are used. That declaration is called an *object literal*.
+Зазвичай використовуються фігурні дужки `{...}`. Таке оголошення називається *літералом об’єкта*.
 
-## Literals and properties
+## Літерали та властивості
 
-We can immediately put some properties into `{...}` as "key: value" pairs:
+Ми можемо одразу помістити деякі властивості у `{...}` як пари "ключ: значення":
 
 ```js
-let user = {     // an object
-  name: "John",  // by key "name" store value "John"
-  age: 30        // by key "age" store value 30
+let user = {     // об’єкт
+  name: "Іван",  // за ключем "name" зберігаємо значення "Іван"
+  age: 30        // за ключем "age" зберігати значення "30" 
 };
 ```
 
-A property has a key (also known as "name" or "identifier") before the colon `":"` and a value to the right of it.
+Властивість має ключ (також відомий як "ім’я" або "ідентифікатор") перед двокрапкою `":"` і значення праворуч від нього.
 
-In the `user` object, there are two properties:
+В об’єкті `user` зараз знаходяться дві властивості:
 
-1. The first property has the name `"name"` and the value `"John"`.
-2. The second one has the name `"age"` and the value `30`.
+1. Перша властивість з ім’ям `"name"` і значенням `"Іван"`.
+2. Друга властивість з ім’ям `"age"` і значенням `30`.
 
-The resulting `user` object can be imagined as a cabinet with two signed files labeled "name" and "age".
+Отриманий об’єкт `user` можна уявити собі як шафу з двома підписаними файлами з позначками "name" та "age".
 
 ![user object](object-user.svg)
 
-We can add, remove and read files from it any time.
+Ми можемо в будь-який момент додати в нього нові файли, видалити файли або прочитати вміст будь-якого файлу.
 
-Property values are accessible using the dot notation:
+Для звернення до властивостей використовується запис через крапку:
 
 ```js
-// get property values of the object:
-alert( user.name ); // John
+// отримаємо значення властивостей об’єкта:
+alert( user.name ); // Іван
 alert( user.age ); // 30
 ```
 
-The value can be of any type. Let's add a boolean one:
+Значення може бути будь-якого типу. Додамо булеве значення:
 
 ```js
 user.isAdmin = true;
@@ -62,7 +62,7 @@ user.isAdmin = true;
 
 ![user object 2](object-user-isadmin.svg)
 
-To remove a property, we can use `delete` operator:
+Щоб видалити властивість ми можемо використовувати оператор `delete`:
 
 ```js
 delete user.age;
@@ -70,88 +70,88 @@ delete user.age;
 
 ![user object 3](object-user-delete.svg)
 
-We can also use multiword property names, but then they must be quoted:
+Ім’я властивості може складатися з декількох слів, але тоді воно має бути поміщено в лапки:
 
 ```js
 let user = {
-  name: "John",
+  name: "Іван",
   age: 30,
-  "likes birds": true  // multiword property name must be quoted
+  "likes birds": true  // Ім’я властивості з декількох слів повинно бути в лапках
 };
 ```
 
 ![](object-user-props.svg)
 
 
-The last property in the list may end with a comma:
+Остання властивість у списку може закінчуватися комою:
 ```js
 let user = {
-  name: "John",
+  name: "Іван",
   age: 30*!*,*/!*
 }
 ```
-That is called a "trailing" or "hanging" comma. Makes it easier to add/remove/move around properties, because all lines become alike.
+Це називається "кінцевою" або "висячою" комою. Полегшує додавання/видалення/переміщення по властивостях, оскільки всі рядки стають однаковими.
 
-## Square brackets
+## Квадратні дужки
 
-For multiword properties, the dot access doesn't work:
+Для властивостей, імена яких складаються з декількох слів, доступ до значення «через крапку» не працює:
 
 ```js run
-// this would give a syntax error
+// це викличе синтаксичну помилку
 user.likes birds = true
 ```
 
-JavaScript doesn't understand that. It thinks that we address `user.likes`, and then gives a syntax error when comes across unexpected `birds`.
+JavaScript бачить, що ми звертаємося до властивості `user.likes`, а потім йде незрозуміле слово `birds`. В результаті отримаємо синтаксичну помилку.
 
-The dot requires the key to be a valid variable identifier. That implies: contains no spaces, doesn't start with a digit and doesn't include special characters (`$` and `_` are allowed).
+Крапка вимагає, щоб ключ був правильним ідентифікатором змінної. Це означає: не містить пробілів, не починається з цифри та не містить спеціальних символів (`$` та `_` дозволені).
 
-There's an alternative "square bracket notation" that works with any string:
+Для таких випадків існує альтернативний спосіб доступу до властивостей через квадратні дужки. Такий спосіб спрацює з будь-яким ім’ям властивості:
 
 ```js run
 let user = {};
 
-// set
-user["likes birds"] = true;
+// присвоювання значення властивості
+user["любить птахів"] = true;
 
-// get
-alert(user["likes birds"]); // true
+// отримання значення властивості
+alert(user["любить птахів"]); // true
 
-// delete
-delete user["likes birds"];
+// видалення властивості
+delete user["любить птахів"];
 ```
 
-Now everything is fine. Please note that the string inside the brackets is properly quoted (any type of quotes will do).
+Зараз усе гаразд. Зверніть увагу, що рядок у квадратних дужках міститься в лапках (підійде будь-який тип лапок).
 
-Square brackets also provide a way to obtain the property name as the result of any expression -- as opposed to a literal string -- like from a variable as follows:
+Квадратні дужки також дозволяють звернутися до властивості, ім’я якої може бути результатом виразу. Наприклад, ім'я властивості може зберігатися в змінній:
 
 ```js
-let key = "likes birds";
+let key = "любить птахів";
 
-// same as user["likes birds"] = true;
+// так само, як user["любить птахів"] = true;
 user[key] = true;
 ```
 
-Here, the variable `key` may be calculated at run-time or depend on the user input. And then we use it to access the property. That gives us a great deal of flexibility.
+Тут змінна `key` може бути обчислена під час виконання або залежатиме від вводу користувача. І тоді ми використовуємо його для доступу до властивості. Це дає нам велику гнучкість.
 
-For instance:
+Приклад:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   age: 30
 };
 
-let key = prompt("What do you want to know about the user?", "name");
+let key = prompt("Що ви хочете знати про користувача?", "name");
 
-// access by variable
-alert( user[key] ); // John (if enter "name")
+// доступ до властивості через змінну
+alert( user[key] ); // Іван (якщо ввести "name")
 ```
 
-The dot notation cannot be used in a similar way:
+Запис «через крапку» такого не дозволяє:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   age: 30
 };
 
@@ -159,40 +159,40 @@ let key = "name";
 alert( user.key ) // undefined
 ```
 
-### Computed properties
+### Обчислювані властивості
 
-We can use square brackets in an object literal, when creating an object. That's called *computed properties*.
+Ми можемо використовувати квадратні дужки в літеральній нотації для створення обчислюваної властивості.
 
-For instance:
+Наприклад:
 
 ```js run
-let fruit = prompt("Which fruit to buy?", "apple");
+let fruit = prompt("Які фрукти купити?", "apple");
 
 let bag = {
 *!*
-  [fruit]: 5, // the name of the property is taken from the variable fruit
+  [fruit]: 5, // назву властивості взято зі змінної fruit
 */!*
 };
 
-alert( bag.apple ); // 5 if fruit="apple"
+alert( bag.apple ); // 5 якщо fruit="apple"
 ```
 
-The meaning of a computed property is simple: `[fruit]` means that the property name should be taken from `fruit`.
+Значення обчислюваної властивості просте: `[fruit]` означає, що назву властивості слід брати з `fruit`.
 
-So, if a visitor enters `"apple"`, `bag` will become `{apple: 5}`.
+І якщо відвідувач введе слово `"apple"`, то в об’єкті `bag` тепер буде лежати властивість `{apple: 5}`.
 
-Essentially, that works the same as:
+По суті, це працює так само, як:
 ```js run
-let fruit = prompt("Which fruit to buy?", "apple");
+let fruit = prompt("Які фрукти купити?", "apple");
 let bag = {};
 
-// take property name from the fruit variable
+// назву властивості взято зі змінної fruit
 bag[fruit] = 5;
 ```
 
-...But looks nicer.
+... Але виглядає приємніше.
 
-We can use more complex expressions inside square brackets:
+Ми можемо використати більш складні вирази в квадратних дужках:
 
 ```js
 let fruit = 'apple';
@@ -201,63 +201,63 @@ let bag = {
 };
 ```
 
-Square brackets are much more powerful than the dot notation. They allow any property names and variables. But they are also more cumbersome to write.
+Квадратні дужки набагато потужніші за крапкову нотацію. Вони допускають будь-які назви властивостей та змінні. Але вони також більш громіздкі для написання.
 
-So most of the time, when property names are known and simple, the dot is used. And if we need something more complex, then we switch to square brackets.
+Тому більшість часу, коли назви властивостей відомі та прості, використовується крапка. А якщо нам потрібно щось складніше, то переходимо до квадратних дужок.
 
-## Property value shorthand
+## Властивість з змінної
 
-In real code we often use existing variables as values for property names.
+У реальному коді ми часто використовуємо наявні змінні як значення для імен властивостей.
 
-For instance:
+Приклад:
 
 ```js run
 function makeUser(name, age) {
   return {
     name: name,
     age: age,
-    // ...other properties
+    // ...інші властивості
   };
 }
 
-let user = makeUser("John", 30);
-alert(user.name); // John
+let user = makeUser("Іван", 30);
+alert(user.name); // Іван
 ```
 
-In the example above, properties have the same names as variables. The use-case of making a property from a variable is so common, that there's a special *property value shorthand* to make it shorter.
+В наведеному вище прикладі назва властивостей `name` і `age` збігаються з назвами змінних, які ми підставляємо в якості значень цих властивостей. Такий підхід настільки поширений, що існують спеціальні *короткі властивості* для спрощення цього запису.
 
-Instead of `name:name` we can just write `name`, like this:
+Замість `name: name` ми можемо написати просто `name`:
 
 ```js
 function makeUser(name, age) {
 *!*
   return {
-    name, // same as name: name
-    age,  // same as age: age
+    name, // те ж саме, що name: name
+    age,  // те ж саме, що age: age
     // ...
   };
 */!*
 }
 ```
 
-We can use both normal properties and shorthands in the same object:
+Ми можемо використовувати як звичайні властивості, так і скорочення в одному об’єкті:
 
 ```js
 let user = {
-  name,  // same as name:name
+  name,  // те ж саме, що name:name
   age: 30
 };
 ```
 
 
-## Property names limitations
+## Обмеження для імен властивостей
 
-As we already know, a variable cannot have a name equal to one of language-reserved words like "for", "let", "return" etc.
+Як ми вже знаємо, змінна не може мати ім’я, рівне одному зі слів, зарезервованих мовою, як-от "for", "let", "return" тощо.
 
-But for an object property, there's no such restriction:
+То для властивості об’єкта немає такого обмеження:
 
 ```js run
-// these properties are all right
+// ці назви властивостей -- правильні
 let obj = {
   for: 1,
   let: 2,
@@ -267,142 +267,142 @@ let obj = {
 alert( obj.for + obj.let + obj.return );  // 6
 ```
 
-In short, there are no limitations on property names. They can be any strings or symbols (a special type for identifiers, to be covered later).
+Коротко кажучи, немає ніяких обмежень щодо назв властивостей. Це можуть бути будь-які рядки або символи (спеціальний тип для ідентифікаторів, про які буде сказано пізніше).
 
-Other types are automatically converted to strings.
+Інші типи автоматично перетворюються на рядки.
 
-For instance, a number `0` becomes a string `"0"` when used as a property key:
+Наприклад, число `0` стає рядком `"0"`, коли використовується як ключ властивості:
 
 ```js run
 let obj = {
-  0: "test" // same as "0": "test"
+  0: "тест" // те ж саме, що "0": "тест"
 };
 
-// both alerts access the same property (the number 0 is converted to string "0")
-alert( obj["0"] ); // test
-alert( obj[0] ); // test (same property)
+// обидва попередження мають доступ до однієї властивості (число 0 перетворюється на рядок "0")
+alert( obj["0"] ); // тест
+alert( obj[0] ); // тест (таж сама властивість)
 ```
 
-There's a minor gotcha with a special property named `__proto__`. We can't set it to a non-object value:
+Є невеликий підводний камінь, пов’язаний зі спеціальною властивістю `__proto__`. Ми можемо встановити в нього значення об’єктного типу:
 
 ```js run
 let obj = {};
-obj.__proto__ = 5; // assign a number
-alert(obj.__proto__); // [object Object] - the value is an object, didn't work as intended
+obj.__proto__ = 5; // присвоїмо число
+alert(obj.__proto__); // [object Object] - значення -- це об’єкт, тобто не те, що ми очікували
 ```
 
-As we see from the code, the assignment to a primitive `5` is ignored.
+Як ми бачимо з коду, присвоєння числа `5` ігнорується.
 
-We'll cover the special nature of `__proto__` in [subsequent chapters](info:prototype-inheritance), and suggest the [ways to fix](info:prototype-methods) such behavior.
+Ми розглянемо особливий характер `__proto__` у [наступних розділах](info:prototype-inheritance) і запропонуємо [способи виправлення](info:prototype-methods) такої поведінки.
 
-## Property existence test, "in" operator
+## Перевірка існування властивості, оператор "in"
 
-A notable feature of objects in JavaScript, compared to many other languages, is that it's possible to access any property. There will be no error if the property doesn't exist!
+Помітною особливістю об’єктів у JavaScript, у порівнянні з багатьма іншими мовами, є можливість доступу до будь-якої властивості. Помилки не буде, якщо властивості не існує!
 
-Reading a non-existing property just returns `undefined`. So we can easily test whether the property exists:
+Читання відсутньої властивості просто повертає `undefined`. Тому ми можемо легко перевірити, чи існує властивість:
 
 ```js run
 let user = {};
 
-alert( user.noSuchProperty === undefined ); // true means "no such property"
+alert( user.noSuchProperty === undefined ); // true означає "такої властивості немає"
 ```
 
-There's also a special operator `"in"` for that.
+Для цього також є спеціальний оператор `"in"`.
 
-The syntax is:
+Синтаксис такий:
 ```js
 "key" in object
 ```
 
-For instance:
+Наприклад:
 
 ```js run
-let user = { name: "John", age: 30 };
+let user = { name: "Іван", age: 30 };
 
-alert( "age" in user ); // true, user.age exists
-alert( "blabla" in user ); // false, user.blabla doesn't exist
+alert( "age" in user ); // true, user.age існує
+alert( "blabla" in user ); // false, user.blabla не існує
 ```
 
-Please note that on the left side of `in` there must be a *property name*. That's usually a quoted string.
+Зверніть увагу, що зліва від оператора `in` повинно бути ім’я властивості. Зазвичай це рядок в лапках.
 
-If we omit quotes, that means a variable, it should contain the actual name to be tested. For instance:
+Якщо ми опускаємо лапки, це означає, що ми вказуємо змінну, в якій знаходиться ім'я властивості. Наприклад:
 
 ```js run
 let user = { age: 30 };
 
 let key = "age";
-alert( *!*key*/!* in user ); // true, property "age" exists
+alert( *!*key*/!* in user ); // true, властивість "age" існує
 ```
 
-Why does the `in` operator exist? Isn't it enough to compare against `undefined`?
+Для чого взагалі потрібен оператор `in`? Хіба недостатньо порівняння з `undefined`?
 
-Well, most of the time the comparison with `undefined` works fine. But there's a special case when it fails, but `"in"` works correctly.
+У більшості випадків прекрасно спрацює порівняння з `undefined`. Але є особливий випадок, коли воно не підходить, і потрібно використовувати `"in"`.
 
-It's when an object property exists, but stores `undefined`:
+Це коли властивість існує, але містить значення `undefined`:
 
 ```js run
 let obj = {
   test: undefined
 };
 
-alert( obj.test ); // it's undefined, so - no such property?
+alert( obj.test ); // виведеться undefined, значить властивість не існує?
 
-alert( "test" in obj ); // true, the property does exist!
+alert( "test" in obj ); // true, властивість існує!
 ```
 
-In the code above, the property `obj.test` technically exists. So the `in` operator works right.
+У наведеному вище коді властивість `obj.test` технічно існує. Отже, оператор `in` працює правильно.
 
-Situations like this happen very rarely, because `undefined` should not be explicitly assigned. We mostly use `null` for "unknown" or "empty" values. So the `in` operator is an exotic guest in the code.
+Такі ситуації трапляються дуже рідко, тому що `undefined` не слід чітко призначати. Ми в основному використовуємо `null` для "невідомих" або "порожніх" значень. Отже, оператор `in` -- екзотичний гість у коді.
 
 
-## The "for..in" loop
+## Цикл "for..in"
 
-To walk over all keys of an object, there exists a special form of the loop: `for..in`. This is a completely different thing from the `for(;;)` construct that we studied before.
+Для перебору всіх властивостей об’єкта використовується цикл `for..in`. Цей цикл відрізняється від вивченого раніше циклу `for(;;)`.
 
-The syntax:
+Синтаксис:
 
 ```js
 for (key in object) {
-  // executes the body for each key among object properties
+  // тіло циклу виконується для кожної властивості об’єкта
 }
 ```
 
-For instance, let's output all properties of `user`:
+Наприклад, виведемо всі властивості `user`:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   age: 30,
   isAdmin: true
 };
 
 for (let key in user) {
-  // keys
+  // ключі
   alert( key );  // name, age, isAdmin
-  // values for the keys
-  alert( user[key] ); // John, 30, true
+  // значення ключів
+  alert( user[key] ); // Іван, 30, true
 }
 ```
 
-Note that all "for" constructs allow us to declare the looping variable inside the loop, like `let key` here.
+Зверніть увагу, що всі конструкції "for" дозволяють нам оголошувати змінну всередині циклу, як, наприклад, `let key` тут.
 
-Also, we could use another variable name here instead of `key`. For instance, `"for (let prop in obj)"` is also widely used.
+Крім того, ми могли б використовувати інше ім’я змінної. Наприклад, часто використовується варіант `"for (let prop in obj)"`.
 
-### Ordered like an object
+### Впорядкування властивостей об’єкта
 
-Are objects ordered? In other words, if we loop over an object, do we get all properties in the same order they were added? Can we rely on this?
+Чи упорядковані властивості об’єкта? Іншими словами, якщо ми будемо в циклі перебирати всі властивості об’єкта, чи отримаємо ми їх в тому ж порядку, в якому ми їх додавали? Чи можемо ми на це розраховувати?
 
-The short answer is: "ordered in a special fashion": integer properties are sorted, others appear in creation order. The details follow.
+Коротка відповідь: "властивості впорядковані особливим чином". Властивості з цілочисельними ключами сортуються за зростанням, інші розташовуються в порядку створення. Розберемося докладніше.
 
-As an example, let's consider an object with the phone codes:
+Як приклад розглянемо об’єкт з телефонними кодами:
 
 ```js run
-let codes = {
-  "49": "Germany",
-  "41": "Switzerland",
-  "44": "Great Britain",
-  // ..,
-  "1": "USA"
+let codes ={
+   "49": "Німеччина",
+   "41": "Швейцарія",
+   "44": "Великобританія",
+   // ..,
+   "1": "США"
 };
 
 *!*
@@ -412,48 +412,48 @@ for (let code in codes) {
 */!*
 ```
 
-The object may be used to suggest a list of options to the user. If we're making a site mainly for German audience then we probably want `49` to be the first.
+Якщо ми робимо сайт для німецької аудиторії, то, ймовірно, ми хочемо, щоб код `49` був першим.
 
-But if we run the code, we see a totally different picture:
+Але якщо ми запустимо код, ми побачимо зовсім іншу картину:
 
-- USA (1) goes first
-- then Switzerland (41) and so on.
+- США (1) йде першим
+- потім Швейцарія (41) і так далі.
 
-The phone codes go in the ascending sorted order, because they are integers. So we see `1, 41, 44, 49`.
+Телефонні коди йдуть в порядку зростання, тому що вони є цілими числами: `1, 41, 44, 49`.
 
-````smart header="Integer properties? What's that?"
-The "integer property" term here means a string that can be converted to-and-from an integer without a change.
+````smart header="Цілочисельні властивості? Що це?"
+Термін "цілочисельна властивість" означає рядок, який може бути перетворений в ціле число і назад без змін.
 
-So, "49" is an integer property name, because when it's transformed to an integer number and back, it's still the same. But "+49" and "1.2" are not:
+Тобто, "49" -- це цілочисельне ім'я властивості, тому що якщо його перетворити в ціле число, а потім назад в рядок, то воно не зміниться. А ось властивості "+49" або "1.2" такими не є:
 
 ```js run
-// Math.trunc is a built-in function that removes the decimal part
-alert( String(Math.trunc(Number("49"))) ); // "49", same, integer property
-alert( String(Math.trunc(Number("+49"))) ); // "49", not same "+49" ⇒ not integer property
-alert( String(Math.trunc(Number("1.2"))) ); // "1", not same "1.2" ⇒ not integer property
+// Math.trunc -- вбудована функція, яка видаляє десяткову частину
+alert( String( Math.trunc( Number("49"))) ); // "49", те ж саме ⇒ властивість цілочисельна
+alert( String( Math.trunc( Number("+49"))) ); // "49", не те ж саме, що "+49" ⇒ властивість не цілочисельна
+alert( String( Math.trunc( Number("1.2")))); // "1", не те ж саме, що "1.2" ⇒ властивість не цілочисельна
 ```
 ````
 
-...On the other hand, if the keys are non-integer, then they are listed in the creation order, for instance:
+...З іншого боку, якщо ключ не цілочисельний, то вони перебираються в порядку створення, наприклад:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   surname: "Smith"
 };
-user.age = 25; // add one more
+user.age = 25; // добавимо ще одну властивість
 
 *!*
-// non-integer properties are listed in the creation order
+// не цілочисельні властивості перераховані в порядку створення
 */!*
 for (let prop in user) {
   alert( prop ); // name, surname, age
 }
 ```
 
-So, to fix the issue with the phone codes, we can "cheat" by making the codes non-integer. Adding a plus `"+"` sign before each code is enough.
+Таким чином, щоб вирішити нашу проблему з телефонними кодами, ми можемо схитрувати, зробивши коди не цілочисельними властивостями. Додамо знак `"+"` перед кожним кодом.
 
-Like this:
+Приклад:
 
 ```js run
 let codes = {
@@ -469,34 +469,34 @@ for (let code in codes) {
 }
 ```
 
-Now it works as intended.
+Зараз скрипт працює, як передбачалося.
 
-## Summary
+## Висновок
 
-Objects are associative arrays with several special features.
+Об’єкти -- це асоціативні масиви з рядом додаткових можливостей.
 
-They store properties (key-value pairs), where:
-- Property keys must be strings or symbols (usually strings).
-- Values can be of any type.
+Вони зберігають властивості (пари ключ-значення), де:
+- Ключі властивостей повинні бути рядками або символами (зазвичай рядками).
+- Значення можуть бути будь-якого типу.
 
-To access a property, we can use:
-- The dot notation: `obj.property`.
-- Square brackets notation `obj["property"]`. Square brackets allow to take the key from a variable, like `obj[varWithKey]`.
+Щоб отримати доступ до властивості, ми можемо використовувати:
+- Запис через крапку: `obj.property`.
+- Квадратні дужки `obj["property"]`. Квадратні дужки дозволяють взяти ключ з змінної, наприклад, `obj[varWithKey]`.
 
-Additional operators:
-- To delete a property: `delete obj.prop`.
-- To check if a property with the given key exists: `"key" in obj`.
-- To iterate over an object: `for (let key in obj)` loop.
+Додаткові оператори:
+- Видалення властивості: `delete obj.prop`.
+- Перевірка існування властивості: `"key" in obj`.
+- Перебір властивостей об’єкта: цикл `for for (let key in obj)`.
 
-What we've studied in this chapter is called a "plain object", or just `Object`.
+Те, що ми вивчали в цьому розділі, називається "простим об’єктом" або просто `Object`.
 
-There are many other kinds of objects in JavaScript:
+В JavaScript є багато інших типів об’єктів:
 
-- `Array` to store ordered data collections,
-- `Date` to store the information about the date and time,
-- `Error` to store the information about an error.
-- ...And so on.
+- `Array` для зберігання впорядкованих колекцій даних,
+- `Date` для зберігання інформації про дату і час,
+- `Error` для зберігання інформації про помилку.
+- … і так далі.
 
-They have their special features that we'll study later. Sometimes people say something like "Array type" or "Date type", but formally they are not types of their own, but belong to a single "object" data type. And they extend it in various ways.
+У них є свої особливості, які ми вивчимо пізніше. Іноді люди говорять щось на кшталт "тип даних Array" або "тип даних Date", але формально вони не є окремими типами, а належать до типу даних `"Object"`. Вони лише розширюють його різними способами.
 
-Objects in JavaScript are very powerful. Here we've just scratched the surface of a topic that is really huge. We'll be closely working with objects and learning more about them in further parts of the tutorial.
+Об’єкти в JavaScript дуже потужні. Тут ми тільки трохи заглибилися в дійсно величезну тему. Ми будемо тісно працювати з об’єктами і дізнаємося про них більше в наступних частинах підручника.
