@@ -1,4 +1,4 @@
-describe("помножимоЧисла", function () {
+describe("multiplyNumeric", function () {
   it("помножити всі числові властивості на 2", function () {
     let menu = {
       width: 200,
