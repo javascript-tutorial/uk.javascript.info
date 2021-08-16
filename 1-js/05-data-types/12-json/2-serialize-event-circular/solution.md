@@ -27,3 +27,4 @@ alert( JSON.stringify(meetup, function replacer(key, value) {
 ```
 
 Тут нам також потрібно перевірити `key==""`, щоб виключити перший виклик, де значення `value` рівне `meetup`.
+
