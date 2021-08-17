@@ -181,11 +181,7 @@ alert( from ); // Анна
 
 Ми оголошуємо функції, вказуючи їхні параметри, потім викликаємо їх, передаючи аргументи.
 
-<<<<<<< HEAD
-Дехто може сказати, що в прикладі вище "функцію `sayMessage` оголошено з двома параметрами, потім викликано з двома аргументами: `from` і `"Привіт"`".
-=======
-In the example above, one might say: "the function `showMessage` is declared with two parameters, then called with two arguments: `from` and `"Hello"`".
->>>>>>> 4d01fc20d4d82358e61518a31efe80dec9bb2602
+Дехто може сказати, що в прикладі вище "функцію `showMessage` оголошено з двома параметрами, потім викликано з двома аргументами: `from` і `"Привіт"`".
 
 
 ## Типові значення
@@ -251,11 +247,7 @@ function showMessage(text) {
 showMessage(); // порожнє повідомлення
 ```
 
-<<<<<<< HEAD
-...Або ми можемо використати оператор `??`:
-=======
-...Or we could use the `||` operator:
->>>>>>> 4d01fc20d4d82358e61518a31efe80dec9bb2602
+...Або ми можемо використати оператор `||`:
 
 ```js
 function showMessage(text) {
