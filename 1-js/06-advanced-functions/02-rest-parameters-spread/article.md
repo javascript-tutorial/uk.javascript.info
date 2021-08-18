@@ -53,8 +53,8 @@ function showName(firstName, lastName, ...titles) {
 
   // решта переходять до масиву titles
   // i.e. titles = ["Consul", "Imperator"]
-  alert(titles[0]); // Consul
-  alert(titles[1]); // Imperator
+  alert( titles[0] ); // Консул
+  alert( titles[1] ); // Полководець
   alert( titles.length ); // 2
 }
 
