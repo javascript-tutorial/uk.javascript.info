@@ -30,7 +30,7 @@ alert(sum(1, 2, 3, 4, 5));
 Наприклад, щоб зібрати всі аргументи в масив `args`:
 
 ```js run
-function sumAll(...args) {// args is the name for the array
+function sumAll(...args) { // args – це ім’я масиву
   let sum = 0;
 
   for (let arg of args) sum += arg;
