@@ -49,7 +49,7 @@ alert(sumAll(1, 2, 3)); // 6
 
 ```js run
 function showName(firstName, lastName, ...titles) {
-  alert(firstName + " " + lastName); // Julius Caesar
+  alert( firstName + ' ' + lastName ); // Юлій Цезар
 
   // решта параметрів переходять до масиву
   // titles = ["Консул", "Полководець"]
