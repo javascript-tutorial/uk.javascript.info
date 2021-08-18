@@ -51,7 +51,7 @@ alert(sumAll(1, 2, 3)); // 6
 function showName(firstName, lastName, ...titles) {
   alert(firstName + " " + lastName); // Julius Caesar
 
-  // решта переходять до масиву titles
+  // решта параметрів переходять до масиву
   // titles = ["Консул", "Полководець"]
   alert( titles[0] ); // Консул
   alert( titles[1] ); // Полководець
