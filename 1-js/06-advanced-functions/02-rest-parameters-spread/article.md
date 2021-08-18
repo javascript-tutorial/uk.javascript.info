@@ -55,7 +55,7 @@ function showName(firstName, lastName, ...titles) {
   // i.e. titles = ["Consul", "Imperator"]
   alert(titles[0]); // Consul
   alert(titles[1]); // Imperator
-  alert(titles.length); // 2
+  alert( titles.length ); // 2
 }
 
 showName("Юлій", "Цезар", "Консул", "Полководець");
