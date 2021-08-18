@@ -52,7 +52,7 @@ function showName(firstName, lastName, ...titles) {
   alert(firstName + " " + lastName); // Julius Caesar
 
   // решта переходять до масиву titles
-  // i.e. titles = ["Consul", "Imperator"]
+  // titles = ["Консул", "Полководець"]
   alert( titles[0] ); // Консул
   alert( titles[1] ); // Полководець
   alert( titles.length ); // 2
