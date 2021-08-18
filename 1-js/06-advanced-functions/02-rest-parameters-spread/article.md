@@ -58,7 +58,7 @@ function showName(firstName, lastName, ...titles) {
   alert(titles.length); // 2
 }
 
-showName("Julius", "Caesar", "Consul", "Imperator");
+showName("Юлій", "Цезар", "Консул", "Полководець");
 ```
 
 ````warn header="Залишкові параметри повинні бути в кінці"
