@@ -2,8 +2,8 @@ importance: 5
 
 ---
 
-# Output even numbers in the loop
+# Виведіть парні числа
 
-Use the `for` loop to output even numbers from `2` to `10`.
+Виведіть парні числа від `2` до `10`, використовуючи цикл `for`.
 
 [demo]
