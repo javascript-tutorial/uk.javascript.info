@@ -2,22 +2,22 @@ importance: 4
 
 ---
 
-# Filter unique array members
+# Залишити унікальні елементи масиву
 
-Let `arr` be an array.
+Нехай `arr` -- масив рядків. 
 
-Create a function `unique(arr)` that should return an array with unique items of `arr`.
+Напишіть функцію `unique(arr)`, яка повертає масив, що містить тільки унікальні елементи `arr`.
 
-For instance:
+Наприклад:
 
 ```js
 function unique(arr) {
-  /* your code */
+  /* ваш код */
 }
 
-let strings = ["Hare", "Krishna", "Hare", "Krishna",
-  "Krishna", "Krishna", "Hare", "Hare", ":-O"
+let strings = ["Привіт", "Світ", "Привіт", "Світ",
+  "Привіт", "Привіт", "Світ", "Світ", ":-O"
 ];
 
-alert( unique(strings) ); // Hare, Krishna, :-O
+alert( unique(strings) ); // Привіт, Світ, :-O
 ```
