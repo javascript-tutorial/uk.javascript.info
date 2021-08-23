@@ -1,4 +1,4 @@
-**The answer: from `0` to `4` in both cases.**
+**Відповідь: обидва цикли виведуть від `0` до `4`.**
 
 ```js run
 for (let i = 0; i < 5; ++i) alert( i );
@@ -6,12 +6,12 @@ for (let i = 0; i < 5; ++i) alert( i );
 for (let i = 0; i < 5; i++) alert( i );
 ```
 
-That can be easily deducted from the algorithm of `for`:
+Такий результат обумовлений алгоритмом роботи `for`:
 
-1. Execute once `i = 0` before everything (begin).
-2. Check the condition `i < 5`
-3. If `true` -- execute the loop body `alert(i)`, and then `i++`
+1. Перед виконанням циклу, присвоїти `i = 0` (початок).
+2. Перевірити умову `i < 5`.
+3. Якщо `true` -- виконати тіло циклу: викликати `alert(i)`, а потім `i++`.
 
-The increment `i++` is separated from the condition check (2). That's just another statement.
+Збільшення `i++` виконується окремо від перевірки умови (2 крок). Це інша інструкція.
 
-The value returned by the increment is not used here, so there's no difference between `i++` and `++i`.
+Значення `i` після збільшення тут не використовується, тому немає різниці між `i++` та `++i`.

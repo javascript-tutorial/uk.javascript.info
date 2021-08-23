@@ -2,16 +2,16 @@ importance: 3
 
 ---
 
-# Output prime numbers
+# Вивести прості числа
 
-An integer number greater than `1` is called a [prime](https://en.wikipedia.org/wiki/Prime_number) if it cannot be divided without a remainder by anything except `1` and itself.
+[Просте число](https://uk.wikipedia.org/wiki/Просте_число) -- це натуральне число, яке має два дільники (`1` і саме число).
 
-In other words, `n > 1` is a prime if it can't be evenly divided by anything except `1` and `n`.
+Інакше кажучи, `n > 1` -- просте, якщо воно більше за `1` і ділиться без остачі на `1` та `n`.
 
-For example, `5` is a prime, because it cannot be divided without a remainder by `2`, `3` and `4`.
+Наприклад, число `5` -- просте, тому що воно не ділиться без остачі на `2`, `3` і `4`. Воно ділиться без остачі лише на `1` і на `5`.
 
-**Write the code which outputs prime numbers in the interval from `2` to `n`.**
+**Напишіть код, який виводить всі прості числа в діапазоні від `2` до `n`.**
 
-For `n = 10` the result will be `2,3,5,7`.
+Для `n = 10` результат повинен бути `2,3,5,7`.
 
-P.S. The code should work for any `n`, not be hard-tuned for any fixed value.
+P.S. Код також повинен легко модифікуватися для будь-якого числа `n`.
