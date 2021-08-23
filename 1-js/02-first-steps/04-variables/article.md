@@ -24,7 +24,11 @@ let message;
 let message;
 
 *!*
+<<<<<<< HEAD
 message = 'Привіт'; // збереження рядка 'Привіт' у змінній `message`
+=======
+message = 'Hello'; // store the string 'Hello' in the variable named message
+>>>>>>> 4d01fc20d4d82358e61518a31efe80dec9bb2602
 */!*
 ```
 
