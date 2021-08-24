@@ -1,6 +1,6 @@
-We can use such approach if we are sure that `"constructor"` property has the correct value.
+Так, ми можемо використовувати такий підхід якщо ми впевнені, що властивість `"constructor"` має правильне значення.
 
-For instance, if we don't touch the default `"prototype"`, then this code works for sure:
+Для прикладу, якщо ми не чіпаємо властивість за замовчуванням `"prototype"`, тоді цей код буде працювати правильно:
 
 ```js run
 function User(name) {
@@ -10,14 +10,14 @@ function User(name) {
 let user = new User('John');
 let user2 = new user.constructor('Pete');
 
-alert( user2.name ); // Pete (worked!)
+alert( user2.name ); // Pete (працює!)
 ```
 
-It worked, because `User.prototype.constructor == User`.
+Код працює, тому що `User.prototype.constructor == User`.
 
-..But if someone, so to speak, overwrites `User.prototype` and forgets to recreate `constructor` to reference `User`, then it would fail.
+..Але якщо хтось, якщо можна так виразитись, перезапише `User.prototype` і забуде додати властивість `constructor` в посиланні властивості об’єкта `User`, тоді цей код не буде працювати правильно.
 
-For instance:
+Наприклад:
 
 ```js run
 function User(name) {
@@ -33,17 +33,17 @@ let user2 = new user.constructor('Pete');
 alert( user2.name ); // undefined
 ```
 
-Why `user2.name` is `undefined`?
+Чому `user2.name` є `undefined`?
 
-Here's how `new user.constructor('Pete')` works:
+Ось тут пояснення як `new user.constructor('Pete')` працює:
 
-1. First, it looks for `constructor` in `user`. Nothing.
-2. Then it follows the prototype chain. The prototype of `user` is `User.prototype`, and it also has no `constructor` (because we "forgot" to set it right!).
-3. Going further up the chain, `User.prototype` is a plain object, its prototype is the built-in `Object.prototype`. 
-4. Finally, for the built-in `Object.prototype`, there's a built-in `Object.prototype.constructor == Object`. So it is used.
+1. Спочатку, здійснюється пошук у властивості `constructor` об’єкта `user`. Нічого не знаходять.
+2. Потім переключаються на ланцюжок прототипу. Прототипом для об’єкта `user` є `User.prototype`, і він також не має властивості `constructor` (тому що ми "забули" визначити його правильним чином!).
+3. Йдучи далі по ланцюжку прототипу, визначаємо, що `User.prototype` є простий об’єкт, його прототипом є вбудований глобальний `Object.prototype`. 
+4. Врешті, для вбудованого `Object.prototype`, є вбудований конструктор глобального об’єкта `Object.prototype.constructor == Object` от він і використовується.
 
-Finally, at the end, we have `let user2 = new Object('Pete')`. 
+Таким чином, в кінці, ми отримуємо `let user2 = new Object('Pete')`. 
 
-Probably, that's not what we want. We'd like to create `new User`, not `new Object`. That's the outcome of the missing `constructor`.
+Ймовірно, це не те, що нам потрібно. Ми би хотіли стоврити `new User`, а не `new Object`. Це і є наслідки пропуску властивості `constructor`.
 
-(Just in case you're curious, the `new Object(...)` call converts its argument to an object. That's a theoretical thing, in practice no one calls `new Object` with a value, and generally we don't use `new Object` to make objects at all).
+(на випадок, якщо вас зацікавить, виклик `new Object(...)` перетворює його аргументи на об’єкт. Це в теорії, але на практиці ніхто не викликає `new Object` з аргументами; і загалом, не використовується узагалі `new Object` для створення нових об’єктів).
