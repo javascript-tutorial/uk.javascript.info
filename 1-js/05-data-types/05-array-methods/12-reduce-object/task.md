@@ -12,9 +12,9 @@ importance: 4
 
 ```js
 let users = [
-  {id: 'john', name: "John Smith", age: 20},
-  {id: 'ann', name: "Ann Smith", age: 24},
-  {id: 'pete', name: "Pete Peterson", age: 31},
+  {id: 'іван', name: "Іван Іванко", age: 20},
+  {id: 'ганна', name: "Ганна Іванко", age: 24},
+  {id: 'петро', name: "Петро Петренко", age: 31},
 ];
 
 let usersById = groupById(users);
@@ -23,9 +23,9 @@ let usersById = groupById(users);
 // після виклику функції ви повинні отримати:
 
 usersById = {
-  john: {id: 'john', name: "John Smith", age: 20},
-  ann: {id: 'ann', name: "Ann Smith", age: 24},
-  pete: {id: 'pete', name: "Pete Peterson", age: 31},
+  іван: {id: 'іван', name: "Іван Іванко", age: 20},
+  ганна: {id: 'ганна', name: "Ганна Іванко", age: 24},
+  петро: {id: 'петро', name: "Петро Петренко", age: 31},
 }
 */
 ```
