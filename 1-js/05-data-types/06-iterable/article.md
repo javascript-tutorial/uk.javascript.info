@@ -1,20 +1,20 @@
 
-# Iterables
+# Ітеративні об’єкти
 
-*Iterable* objects are a generalization of arrays. That's a concept that allows us to make any object useable in a `for..of` loop.
+*Ітеративні* об’єкти є узагальненням масивів. Це концепція, яка дозволяє нам зробити будь-який об’єкт придатним для використання в циклі `for..of`.
 
-Of course, Arrays are iterable. But there are many other built-in objects, that are iterable as well. For instance, strings are also iterable.
+Звичайно, по масивам можна ітеруватися. Але є багато інших вбудованих об’єктів, які також можна ітерувати. Наприклад, рядки також можна ітерувати.
 
-If an object isn't technically an array, but represents a collection (list, set) of something, then `for..of` is a great syntax to loop over it, so let's see how to make it work.
+Якщо об’єкт технічно не є масивом, а представляє колекцію (list, set) чогось, то `for..of` - чудовий синтаксис для його обходу, тому давайте подивимося, як змусити його працювати.
 
 
 ## Symbol.iterator
 
-We can easily grasp the concept of iterables by making one of our own.
+Ми можемо легко зрозуміти концепцію ітеративних об’єктіва, зробивши її власноруч.
 
-For instance, we have an object that is not an array, but looks suitable for `for..of`.
+Наприклад, у нас є об’єкт, який не є масивом, але виглядає придатним для `for..of`.
 
-Like a `range` object that represents an interval of numbers:
+Як, наприклад, об’єкт `range`, який представляє інтервал чисел:
 
 ```js
 let range = {
@@ -22,18 +22,18 @@ let range = {
   to: 5
 };
 
-// We want the for..of to work:
+// Ми хочемо, щоб for..of працював:
 // for(let num of range) ... num=1,2,3,4,5
 ```
 
-To make the `range` object iterable (and thus let `for..of` work) we need to add a method to the object named `Symbol.iterator` (a special built-in symbol just for that).
+Щоб зробити об'єкт `range` ітерабельним (і таким чином дозволити `for..of` працювати), нам потрібно додати метод до об’єкта з назвою `Symbol.iterator` (спеціальний вбудований символ саме для цього).
 
-1. When `for..of` starts, it calls that method once (or errors if not found). The method must return an *iterator* -- an object with the method `next`.
-2. Onward, `for..of` works *only with that returned object*.
-3. When `for..of` wants the next value, it calls `next()` on that object.
-4. The result of `next()` must have the form `{done: Boolean, value: any}`, where `done=true`  means that the iteration is finished, otherwise `value` is the next value.
+1. Коли `for..of` запускається, він викликає цей метод один раз (або викликає помилку, якщо цей метод не знайдено). Метод повинен повернути *ітератор* -- об’єкт з методом `next`.
+2. Далі `for..of` працює *лише з поверненим об’єктом*.
+3. Коли `for..of` хоче отримати наступне значення, він викликає `next()` на цьому об’єкті.
+4. Результат `next()` повинен мати вигляд `{done: Boolean, value: any}`, де `done=true` означає, що ітерація завершена, інакше `value` -- це наступне значення.
 
-Here's the full implementation for `range` with remarks:
+Ось повна реалізація об’єкту `range` із зауваженнями:
 
 ```js run
 let range = {
@@ -41,18 +41,18 @@ let range = {
   to: 5
 };
 
-// 1. call to for..of initially calls this
+// 1. виклик for..of спочатку викликає цю функцію
 range[Symbol.iterator] = function() {
 
-  // ...it returns the iterator object:
-  // 2. Onward, for..of works only with this iterator, asking it for next values
+  // ...вона повертає об’єкт ітератора:
+  // 2. Далі, for..of працює тільки з цим ітератором, запитуючи у нього наступні значення
   return {
     current: this.from,
     last: this.to,      
 
-    // 3. next() is called on each iteration by the for..of loop
+    // 3. next() викликається на кожній ітерації циклом for..of
     next() {
-      // 4. it should return the value as an object {done:.., value :...}
+      // 4. він повинен повертати значення як об’єкт {done:.., value :...}
       if (this.current <= this.last) {
         return { done: false, value: this.current++ };
       } else {
@@ -62,16 +62,16 @@ range[Symbol.iterator] = function() {
   };
 };
 
-// now it works!
+// тепер це працює!
 for (let num of range) {
-  alert(num); // 1, then 2, 3, 4, 5
+  alert(num); // 1, потім 2, 3, 4, 5
 }
 ```
 
-Please note the core feature of iterables: separation of concerns.
+Будь ласка, зверніть увагу на основну особливість ітеративних об’єктів: розділення проблем.
 
-- The `range` itself does not have the `next()` method.
-- Instead, another object, a so-called "iterator" is created by the call to `range[Symbol.iterator]()`, and its `next()` generates values for the iteration.
+- Сам `range` не має методу `next()`.
+- Натомість інший об’єкт, так званий "ітератор", створюється за допомогою виклику `range[Symbol.iterator]()`, а його `next()` генерує значення для ітерації.
 
 So, the iterator object is separate from the object it iterates over.
 
