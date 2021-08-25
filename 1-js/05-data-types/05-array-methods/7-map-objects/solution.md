@@ -1,10 +1,10 @@
 
 ```js run no-beautify
-let john = { name: "John", surname: "Smith", id: 1 };
-let pete = { name: "Pete", surname: "Hunt", id: 2 };
-let mary = { name: "Mary", surname: "Key", id: 3 };
+let ivan = { name: "Іван", surname: "Іванко", id: 1 };
+let petro = { name: "Петро", surname: "Петренко", id: 2 };
+let mariya = { name: "Марія", surname: "Мрійко", id: 3 };
 
-let users = [ john, pete, mary ];
+let users = [ ivan, petro, mariya ];
 
 *!*
 let usersMapped = users.map(user => ({
@@ -15,19 +15,19 @@ let usersMapped = users.map(user => ({
 
 /*
 usersMapped = [
-  { fullName: "John Smith", id: 1 },
-  { fullName: "Pete Hunt", id: 2 },
-  { fullName: "Mary Key", id: 3 }
+  { fullName: "Іван Іванко", id: 1 },
+  { fullName: "Петро Петренко", id: 2 },
+  { fullName: "Марія Мрійко", id: 3 }
 ]
 */
 
 alert( usersMapped[0].id ); // 1
-alert( usersMapped[0].fullName ); // John Smith
+alert( usersMapped[0].fullName ); // Іван Іванко
 ```
 
-Please note that in the arrow functions we need to use additional brackets. 
+Зверніть увагу, що для стрілкових функцій ми повинні використовувати додаткові дужки.
 
-We can't write like this:
+Ми не можемо написати ось так:
 ```js
 let usersMapped = users.map(user => *!*{*/!*
   fullName: `${user.name} ${user.surname}`,
@@ -35,9 +35,9 @@ let usersMapped = users.map(user => *!*{*/!*
 });
 ```
 
-As we remember, there are two arrow functions: without body `value => expr` and with body `value => {...}`.
+Як ми памʼятаємо, є дві функції зі стрілками: без тіла `value => expr` та з тілом `value => {...}`.
 
-Here JavaScript would treat `{` as the start of function body, not the start of the object. The workaround is to wrap them in the "normal" brackets:
+Тут JavaScript трактуватиме `{` як початок тіла функції, а не початок обʼєкта. Щоб обійти це, потрібно укласти їх в круглі дужки:
 
 ```js
 let usersMapped = users.map(user => *!*({*/!*
@@ -46,6 +46,6 @@ let usersMapped = users.map(user => *!*({*/!*
 }));
 ```
 
-Now fine.
+Тепер усе добре.
 
 
