@@ -2,7 +2,7 @@
 
 ```js
 let user = {
-  name: "John Smith",
+  name: "Іван Іванов",
   age: 35
 };
 

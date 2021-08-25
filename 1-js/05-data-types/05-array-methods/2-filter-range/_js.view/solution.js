@@ -1,5 +1,5 @@
 
 function filterRange(arr, a, b) {
-  // added brackets around the expression for better readability
+  // навколо виразу додано дужки для кращої читабельності
   return arr.filter(item => (a <= item && item <= b));
 }

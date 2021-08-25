@@ -2,12 +2,12 @@ importance: 5
 
 ---
 
-# Repeat until the input is correct
+# Повторяти цикл, доки ввід невірний
 
-Write a loop which prompts for a number greater than `100`. If the visitor enters another number -- ask them to input again.
+Напишіть цикл, який пропонує `prompt` ввести число більше за `100`. Якщо відвідувач введе інше число -- попросити ввести ще раз, і так далі.
 
-The loop must ask for a number until either the visitor enters a number greater than `100` or cancels the input/enters an empty line.
+Цикл повинен запитувати число доти, доки відвідувач не введе число, більше за `100`, або не скасує ввід/введе порожній рядок.
 
-Here we can assume that the visitor only inputs numbers. There's no need to implement a special handling for a non-numeric input in this task.
+Ми припускаємо, що відвідувач вводитиме лише числа. В цьому завданні не обов’язково реалізовувати оброблення не-числового введення.
 
 [demo]

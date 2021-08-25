@@ -1,6 +1,6 @@
-Let's walk the array items:
-- For each item we'll check if the resulting array already has that item.
-- If it is so, then ignore, otherwise add to results.
+Давайте пройдемося по елементам масиву:
+- Для кожного елемента ми перевіримо, чи є він в масиві з результатом.
+- Якщо є, то ігноруємо його, а якщо немає -- додаємо до результатів.
 
 ```js run demo
 function unique(arr) {
@@ -15,25 +15,25 @@ function unique(arr) {
   return result;
 }
 
-let strings = ["Hare", "Krishna", "Hare", "Krishna",
-  "Krishna", "Krishna", "Hare", "Hare", ":-O"
+let strings = ["Привіт", "Світ", "Привіт", "Світ",
+  "Привіт", "Привіт", "Світ", "Світ", ":-O"
 ];
 
-alert( unique(strings) ); // Hare, Krishna, :-O
+alert( unique(strings) ); // Привіт, Світ, :-O
 ```
 
-The code works, but there's a potential performance problem in it.
+Код працює, але в ньому є потенційна проблема з продуктивністю.
 
-The method `result.includes(str)` internally walks the array `result` and compares each element against `str` to find the match.
+Метод `result.includes(str)` всередині себе обходить масив `result` і порівнює кожен елемент з `str`, щоб знайти збіг.
 
-So if there are `100` elements in `result` and no one matches `str`, then it will walk the whole `result` and do exactly `100` comparisons. And if `result` is large, like `10000`, then there would be `10000` comparisons.
+Таким чином, якщо `result` містить `100` елементів і жоден з них не збігається з `str`, тоді він обійде весь `result` і зробить рівно `100` порівнянь. А якщо `result` великий масив, наприклад, `10000` елементів, то буде зроблено `10000` порівнянь.
 
-That's not a problem by itself, because JavaScript engines are very fast, so walk `10000` array is a matter of microseconds.
+Само собою це не проблема, адже рушій JavaScript дуже швидкий, тому обхід `10000` елементів масиву займає лічені мікросекунди.
 
-But we do such test for each element of `arr`, in the `for` loop.
+Але ми робимо таку перевірку для кожного елемента `arr` в циклі `for`.
 
-So if `arr.length` is `10000` we'll have something like `10000*10000` = 100 millions of comparisons. That's a lot.
+Тому, якщо `arr.length` дорівнює `10000`, у нас буде щось на зразок `10000*10000` = 100 мільйонів порівнянь. Це забагато. 
 
-So the solution is only good for small arrays.
+Ось чому дане рішення підходить тільки для невеликих масивів.
 
-Further in the chapter <info:map-set> we'll see how to optimize it.
+Далі в розділі <info:map-set> ми побачимо, як його оптимізувати.

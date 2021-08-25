@@ -2,24 +2,24 @@ importance: 5
 
 ---
 
-# Create an extendable calculator
+# Створити розширюваний калькулятор
 
-Create a constructor function `Calculator` that creates "extendable" calculator objects.
+Створіть функцію-конструктор `Calculator`, яка створює «розширюваний» обʼєкт калькулятора.
 
-The task consists of two parts.
+Завдання складається з двох частин.
 
-1. First, implement the method `calculate(str)` that takes a string like `"1 + 2"` in the format "NUMBER operator NUMBER" (space-delimited) and returns the result. Should understand plus `+` and minus `-`.
+1. По-перше, реалізуйте метод `calculate(str)`, який приймає рядок типу `"1 + 2"` в форматі «ЧИСЛО оператор ЧИСЛО» (розділені пробілами) і повертає результат. Метод повинен розуміти плюс `+` і мінус `-`.
 
-    Usage example:
+    Приклад використання:
 
     ```js
     let calc = new Calculator;
 
     alert( calc.calculate("3 + 7") ); // 10
     ```
-2. Then add the method `addMethod(name, func)` that teaches the calculator a new operation. It takes the operator `name` and the two-argument function `func(a,b)` that implements it.
+2. Потім додайте метод `addMethod(name, func)`, який додає в калькулятор нові операції. Він приймає оператор `name` і функцію з двома аргументами `func(a, b)`, яка описує його.
 
-    For instance, let's add the multiplication `*`, division `/` and power `**`:
+    Наприклад, давайте додамо множення `*`, ділення `/` і зведення в ступінь `**`:
 
     ```js
     let powerCalc = new Calculator;
@@ -31,6 +31,6 @@ The task consists of two parts.
     alert( result ); // 8
     ```
 
-- No parentheses or complex expressions in this task.
-- The numbers and the operator are delimited with exactly one space.
-- There may be error handling if you'd like to add it.
+- Для цього завдання не потрібні дужки або складні вирази.
+- Числа і оператор розділені рівно одним пропуском.
+- Не зайвим буде додати обробку помилок.

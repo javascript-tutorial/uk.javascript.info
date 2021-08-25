@@ -2,21 +2,21 @@ importance: 5
 
 ---
 
-# Map to names
+# Трансформувати в масив імен
 
-You have an array of `user` objects, each one has `user.name`. Write the code that converts it into an array of names.
+У вас є масив об’єктів user, і в кожному з них є `user.name`. Напишіть код, який перетворює їх в масив імен.
 
-For instance:
+Наприклад:
 
 ```js no-beautify
-let john = { name: "John", age: 25 };
-let pete = { name: "Pete", age: 30 };
-let mary = { name: "Mary", age: 28 };
+let ivan = { name: "Іван", age: 25 };
+let petro = { name: "Петро", age: 30 };
+let mariya = { name: "Марія", age: 28 };
 
-let users = [ john, pete, mary ];
+let users = [ ivan, petro, mariya ];
 
-let names = /* ... your code */
+let names = /* ... ваш код */
 
-alert( names ); // John, Pete, Mary
+alert( names ); // Іван, Петро, Марія
 ```
 

@@ -10,17 +10,17 @@ describe("calculator", function() {
     calculator = new Calculator();
     calculator.read();
   });
-  
-  it("the read method asks for two values using prompt and remembers them in object properties", function() {
+
+  it("метод read запитує два значення за допомогою prompt і запам’ятовує їх у властивостях об’єкта", function() {
     assert.equal(calculator.a, 2);
     assert.equal(calculator.b, 3);
   });
 
-  it("when 2 and 3 are entered, the sum is 5", function() {
+  it("при введенні 2 і 3 сума дорівнює 5", function() {
     assert.equal(calculator.sum(), 5);
   });
 
-  it("when 2 and 3 are entered, the product is 6", function() {
+  it("при введені 2 і 3, добуток дорівнює 6", function() {
     assert.equal(calculator.mul(), 6);
   });
 

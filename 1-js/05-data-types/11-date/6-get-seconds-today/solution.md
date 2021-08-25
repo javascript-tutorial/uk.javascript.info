@@ -1,22 +1,22 @@
-To get the number of seconds, we can generate a date using the current day and time 00:00:00, then substract it from "now".
+Щоб отримати кількість секунд, ми можемо створити дату, використовуючи поточний день та час 00:00:00, а потім відняти його від "зараз".
 
-The difference is the number of milliseconds from the beginning of the day, that we should divide by 1000 to get seconds:
+Різниця -- це кількість мілісекунд з початку дня, яку ми повинні розділити на 1000, щоб отримати секунди:
 
 ```js run
 function getSecondsToday() {
   let now = new Date();
 
-  // create an object using the current day/month/year
+  // створити об’єкт, використовуючи поточний день/місяць/рік
   let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  let diff = now - today; // ms difference
-  return Math.round(diff / 1000); // make seconds
+  let diff = now - today; // мс різниця
+  return Math.round(diff / 1000); // зробити секунди
 }
 
 alert( getSecondsToday() );
 ```
 
-An alternative solution would be to get hours/minutes/seconds and convert them to seconds:
+Альтернативне рішення полягає в тому, щоб отримати години/хвилини/секунди та конвертувати їх до секунд:
 
 ```js run
 function getSecondsToday() {

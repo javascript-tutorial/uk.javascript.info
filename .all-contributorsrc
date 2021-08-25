@@ -4,7 +4,7 @@
   ],
   "imageSize": 70,
   "commit": false,
-  "contributorsPerLine": 8,
+  "contributorsPerLine": 7,
   "projectName": "uk.javascript.info",
   "projectOwner": "javascript-tutorial",
   "repoType": "github",
@@ -20,6 +20,62 @@
       "contributions": [
         "maintenance",
         "review",
+        "translation"
+      ]
+    },
+    {
+      "login": "stas-dolgachov",
+      "name": "Stanislav",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
+      "profile": "https://github.com/stas-dolgachov",
+      "contributions": [
+        "translation",
+        "review"
+      ]
+    },
+    {
+      "login": "MykolaSopiha",
+      "name": "Mykola Sopiha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
+      "profile": "https://www.linkedin.com/in/m-sopiha/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Regnised",
+      "name": "Vasyl Onopriienko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2588425?v=4",
+      "profile": "https://github.com/Regnised",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "didostap",
+      "name": "Ostap Dribniuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49234191?v=4",
+      "profile": "https://github.com/didostap",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "chizzzy",
+      "name": "Chystiakov Andrei",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34280137?v=4",
+      "profile": "https://github.com/chizzzy",
+      "contributions": [
+        "ideas",
+        "translation"
+      ]
+    },
+    {
+      "login": "hordiienko-tatiana",
+      "name": "hordiienko-tatiana",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49336627?v=4",
+      "profile": "https://github.com/hordiienko-tatiana",
+      "contributions": [
         "translation"
       ]
     },
@@ -53,6 +109,16 @@
       ]
     },
     {
+      "login": "UkrainianCitizen",
+      "name": "UkrainianCitizen",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/31314423?v=4",
+      "profile": "https://github.com/UkrainianCitizen",
+      "contributions": [
+        "ideas",
+        "review"
+      ]
+    },
+    {
       "login": "alexandrtovmach",
       "name": "Alexandr Tovmach",
       "avatar_url": "https://avatars0.githubusercontent.com/u/28801003?v=4",
@@ -68,15 +134,6 @@
       "profile": "http://stepansuvorov.com/blog/",
       "contributions": [
         "translation"
-      ]
-    },
-    {
-      "login": "UkrainianCitizen",
-      "name": "UkrainianCitizen",
-      "avatar_url": "https://avatars2.githubusercontent.com/u/31314423?v=4",
-      "profile": "https://github.com/UkrainianCitizen",
-      "contributions": [
-        "ideas"
       ]
     },
     {
@@ -107,19 +164,46 @@
       ]
     },
     {
-      "login": "stas-dolgachov",
-      "name": "Stanislav",
-      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
-      "profile": "https://github.com/stas-dolgachov",
+      "login": "hypeofpipe",
+      "name": "Volodymyr V.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14982064?v=4",
+      "profile": "https://github.com/hypeofpipe",
       "contributions": [
         "translation"
       ]
     },
     {
-      "login": "hypeofpipe",
-      "name": "Volodymyr V.",
-      "avatar_url": "https://avatars.githubusercontent.com/u/14982064?v=4",
-      "profile": "https://github.com/hypeofpipe",
+      "login": "Tarkeasy",
+      "name": "Taras Kulchytskyi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36696571?v=4",
+      "profile": "https://github.com/Tarkeasy",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "VolodymyrSSS",
+      "name": "Volodymyr Sych",
+      "avatar_url": "https://avatars.githubusercontent.com/u/49289546?v=4",
+      "profile": "https://github.com/VolodymyrSSS",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Tuoris",
+      "name": "Tuoris",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16479460?v=4",
+      "profile": "https://github.com/Tuoris",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "MariaTar",
+      "name": "Maria",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22173769?v=4",
+      "profile": "https://github.com/MariaTar",
       "contributions": [
         "translation"
       ]

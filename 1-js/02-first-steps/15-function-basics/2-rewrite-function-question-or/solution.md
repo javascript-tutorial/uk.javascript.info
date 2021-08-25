@@ -1,17 +1,17 @@
-Using a question mark operator `'?'`:
+Використовуючи оператор `'?'`:
 
 ```js
 function checkAge(age) {
-  return (age > 18) ? true : confirm('Did parents allow you?');
+  return (age > 18) ? true : confirm('Батьки дозволили?');
 }
 ```
 
-Using OR `||` (the shortest variant):
+Використовуючи оператор АБО `||` (найкоротший варіант):
 
 ```js
 function checkAge(age) {
-  return (age > 18) || confirm('Did parents allow you?');
+  return (age > 18) || confirm('Батьки дозволили?');
 }
 ```
 
-Note that the parentheses around `age > 18` are not required here. They exist for better readability.
+Зверніть увагу, що круглі дужки навколо `age > 18` не обов’язкові. Вони тут для кращої читабельності коду.

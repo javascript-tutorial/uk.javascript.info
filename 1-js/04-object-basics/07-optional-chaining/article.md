@@ -1,42 +1,42 @@
 
-# Optional chaining '?.'
+# Опціональний ланцюжок '?.'
 
 [recent browser="new"]
 
-The optional chaining `?.` is a safe way to access nested object properties, even if an intermediate property doesn't exist.
+Опціональний ланцюжок `?.` -- це безпечний спосіб доступу до вкладених властивостей об’єктів, навіть якщо проміжних властивостей не існує.
 
-## The "non-existing property" problem
+## Проблема "відсутньої властивості"
 
-If you've just started to read the tutorial and learn JavaScript, maybe the problem hasn't touched you yet, but it's quite common.
+Якщо ви тільки почали читати підручник і вивчати JavaScript, можливо ця проблема вам наразі незнайома, проте вона достатньо розповсюджена.
 
-As an example, let's say we have `user` objects that hold the information about our users.
+Наприклад, розглянемо об’єкт `user` який містить інформацію про наших користувачів.
 
-Most of our users have addresses in `user.address` property, with the street `user.address.street`, but some did not provide them.
+В більшості наших користувачів є адреса `user.address` з вулицею `user.address.street`, проте дехто вирішив взагалі не вказувати адресу.
 
-In such case, when we attempt to get `user.address.street`, and the user happens to be without an address, we get an error:
-
-```js run
-let user = {}; // a user without "address" property
-
-alert(user.address.street); // Error!
-```
-
-That's the expected result. JavaScript works like this. As `user.address` is `undefined`, an attempt to get `user.address.street` fails with an error.
-
-In many practical cases we'd prefer to get `undefined` instead of an error here (meaning "no street").
-
-...And another example. In the web development, we can get an object that corresponds to a web page element using a special method call, such as `document.querySelector('.elem')`, and it returns `null` when there's no such element.
+Отож якщо користувач не вказав адресу, а ми своєю чергою спробуємо отримати доступ до властивості `user.address.street`, то отримаємо помилку.
 
 ```js run
-// document.querySelector('.elem') is null if there's no element
-let html = document.querySelector('.elem').innerHTML; // error if it's null
+let user = {}; // користувач без властивості "address"
+
+alert(user.address.street); // помилка!
 ```
 
-Once again, if the element doesn't exist, we'll get an error accessing `.innerHTML` of `null`. And in some cases, when the absence of the element is normal, we'd like to avoid the error and just accept `html = null` as the result.
+Це очікуваний розвиток подій, так працює JavaScript. Оскільки `user.address` є `undefined`, то і спроба отримати `user.address.street` закінчується помилкою.
 
-How can we do this?
+Проте в багатьох життєвих ситуаціях було б набагато зручніше просто отримати `undefined`, що буде означати "немає вулиці".
 
-The obvious solution would be to check the value using `if` or the conditional operator `?`, before accessing its property, like this:
+Ще один приклад. У веброзробці ми можемо отримати об’єкт котрий відповідає елементу на вебсторінці за допомогою спеціальних методів, наприклад: `document.querySelector('.elem')`. Проте якщо ми намагатимемось отримати елемент, якого немає на сторінці, то нам вернеться `null`.
+
+```js run
+// document.querySelector('.elem') рівний null якщо такого елемента не існує
+let html = document.querySelector('.elem').innerHTML; // помилка оскільки null
+```
+
+Для закріплення. Якщо елемента немає на вебсторінці, ми отримаємо помилку при спробі доступитися до властивості `.innerHTML`, оскільки при спробі його знайти ми отримаємо `null`. І в деяких випадках, коли відсутність елемента для нас є нормою, ми хотіли б просто отримати `.innerHTML = null` (тобто `html = null`).
+
+Як ми можемо це реалізувати?
+
+Найочевиднішим рішенням було б перевірити властивість використавши `if` або за допомогою умовного оператора `?`:
 
 ```js
 let user = {};
@@ -44,55 +44,55 @@ let user = {};
 alert(user.address ? user.address.street : undefined);
 ```
 
-It works, there's no error... But it's quite inelegant. As you can see, the `"user.address"` appears twice in the code. For more deeply nested properties, that becomes a problem as more repetitions are required.
+Варіант робочий, помилки не буде... Але виглядає це вкрай неелегантно. Як ви бачите `"user.address"` двічі з’являється в коді. Для властивостей які лежать глибше, це стає проблемою оскільки потребує більшого дублювання.
 
-E.g. let's try getting `user.address.street.name`.
+Спробуймо отримати доступ до `user.address.street.name`.
 
-We need to check both `user.address` and `user.address.street`:
+Нам потрібно перевірити дві властивості `user.address` і `user.address.street`:
 
 ```js
-let user = {}; // user has no address
+let user = {}; // користувач без властивості "address"
 
 alert(user.address ? user.address.street ? user.address.street.name : null : null);
 ```
 
-That's just awful, one may even have problems understanding such code.
+Виглядає просто жахливо і нечитабельно
 
-Don't even care to, as there's a better way to write it, using the `&&` operator:
-
-```js run
-let user = {}; // user has no address
-
-alert( user.address && user.address.street && user.address.street.name ); // undefined (no error)
-```
-
-AND'ing the whole path to the property ensures that all components exist (if not, the evaluation stops), but also isn't ideal.
-
-As you can see, property names are still duplicated in the code. E.g. in the code above, `user.address` appears three times.
-
-That's why the optional chaining `?.` was added to the language. To solve this problem once and for all!
-
-## Optional chaining
-
-The optional chaining `?.` stops the evaluation if the value before `?.` is `undefined` or `null` and returns `undefined`.
-
-**Further in this article, for brevity, we'll be saying that something "exists" if it's not `null` and not `undefined`.**
-
-In other words, `value?.prop`:
-- works as `value.prop`, if `value` exists,
-- otherwise (when `value` is `undefined/null`) it returns `undefined`.
-
-Here's the safe way to access `user.address.street` using `?.`:
+Але не хвилюйтесь, існує кращий варіант реалізації такої задачі за допомогою логічного оператора `&&`:
 
 ```js run
-let user = {}; // user has no address
+let user = {}; // користувач без властивості "address"
 
-alert( user?.address?.street ); // undefined (no error)
+alert( user.address && user.address.street && user.address.street.name ); // undefined (немає помилки)
 ```
 
-The code is short and clean, there's no duplication at all.
+Логічне "І" з ланцюжком властивостей гарантує нам, що всі вони існують (якщо ж ні -- обчислення припиняється), але й це все ще не ідеал.
 
-Reading the address with `user?.address` works even if `user` object doesn't exist:
+Як ви бачите, імена властивостей досі дублюються в коді. В прикладі вище властивість `user.address` появляється тричі. 
+
+Ось чому опціональний ланцюжок `?.` був доданий в мову. Щоб вирішити цю проблему раз і назавжди!
+
+## Опціональний ланцюжок
+
+Опціональний ланцюжок `?.` припиняє обчислення, якщо значення перед `?.` є `undefined` або `null`, і повертає `undefined`.
+
+**Для стислості надалі в цій статті ми будемо говорити про значення, що воно "існує", якщо воно відрізняється від `null` чи `undefined`**
+
+Іншими словами, `value?.prop`:
+- працює як `value.prop`, якщо `value` існує,
+- інакше (коли `value` є `undefined/null`) воно повертає `undefined`.
+
+Ось безпечний спосіб доступитись до властивості `user.address.street` за допомогою  `?.`:
+
+```js run
+let user = {}; // користувач без властивості "address"
+
+alert( user?.address?.street ); // undefined (немає помилки)
+```
+
+Такий код виглядає коротшим і чистішим, взагалі немає ніякого дублювання.
+
+Читання властивості "address" з `user?.address` спрацює навіть коли в змінній `user` зберігається зовсім не об’єкт:
 
 ```js run
 let user = null;
@@ -101,120 +101,120 @@ alert( user?.address ); // undefined
 alert( user?.address.street ); // undefined
 ```
 
-Please note: the `?.` syntax makes optional the value before it, but not any further.
+Зверніть увагу, що синтаксис `?.` робить необов’язковою тільки властивість перед ним, а не будь-яку наступну. 
 
-E.g. in `user?.address.street.name` the `?.` allows `user` to safely be `null/undefined` (and returns `undefined` in that case), but that's only for `user`. Further properties are accessed in a regular way. If we want some of them to be optional, then we'll need to replace more `.` with `?.`.
+Наприклад в `user?.address.street.name` конструкція `user?.` дозволяє `user`  залишатись `null/undefined` (і повертати `undefined` в такому випадку), але це працює тільки для `user`. Доступ до решти властивостей здійснюється звичайним способом. Якщо ми хочемо, щоб якась з них була необов’язковою, тоді конкретно для цієї властивості нам доведеться замінити `.` на `?.`.
 
-```warn header="Don't overuse the optional chaining"
-We should use `?.` only where it's ok that something doesn't exist.
+````warn header="Не зловживайте опціональним ланцюжком"
+Нам слід використовувати `?.` тільки в тих ситуаціях коли ми припускаємо що значення може не існувати.
 
-For example, if according to our coding logic `user` object must exist, but `address` is optional, then we should write `user.address?.street`, but not `user?.address?.street`.
+Наприклад, якщо по нашій логіці об’єкт `user` точно існує, але його властивість `address` є необов’язковою, тоді нам слід використовувати конструкцію `user.address?.street`. Проте аж ніяк не `user?.address?.street`.
 
-So, if `user` happens to be undefined due to a mistake, we'll see a programming error about it and fix it. Otherwise, coding errors can be silenced where not appropriate, and become more difficult to debug.
-```
+Тоді якщо помилково змінна `user` виявиться пустою, ми побачимо програмну помилку і зможемо це виправити. В іншому випадку помилки можуть замовчуватися там де це непотрібно й ускладнювати процес налагодження.
+````
 
-````warn header="The variable before `?.` must be declared"
-If there's no variable `user` at all, then `user?.anything` triggers an error:
+````warn header="Змінна перед `?.` повинна бути оголошеною"
+Якщо змінної `user` взагалі не існує, тоді конструкція `user?.anything` видасть помилку:
 
 ```js run
 // ReferenceError: user is not defined
 user?.address;
 ```
-The variable must be declared (e.g. `let/const/var user` or as a function parameter). The optional chaining works only for declared variables.
+Змінна обов’язково повинна бути оголошена (наприклад `let/const/var user` або як параметр функції). Опціональний ланцюжок працює тільки з існуючими змінними.
 ````
 
-## Short-circuiting
+## Скорочене обчислення
 
-As it was said before, the `?.` immediately stops ("short-circuits") the evaluation if the left part doesn't exist.
+Як вже говорилось, `?.` негайно припиняє обчислення, якщо лівої частини не існує.
 
-So, if there are any further function calls or side effects, they don't occur.
+Таким чином подальші виклики функцій чи операції не будуть виконані.
 
-For instance:
+Наприклад:
 
 ```js run
 let user = null;
 let x = 0;
 
-user?.sayHi(x++); // no "sayHi", so the execution doesn't reach x++
+user?.sayHi(x++); // немає "sayHi", отже до x++ обчислення не дійде
 
-alert(x); // 0, value not incremented
+alert(x); // 0, значення не було збільшено
 ```
 
-## Other variants: ?.(), ?.[]
+## Інші способи застосування: ?.(), ?.[]
 
-The optional chaining `?.` is not an operator, but a special syntax construct, that also works with functions and square brackets.
+Опціональний ланцюжок `?.` -- це не оператор, а спеціальна синтаксична конструкція, що також працює з функціями і квадратними дужками.
 
-For example, `?.()` is used to call a function that may not exist.
+Наприклад, `?.()` використовується для виклику потенційно неіснуючої функції.
 
-In the code below, some of our users have `admin` method, and some don't:
+В прикладі нижче не в усіх користувачів є метод `admin`:
 
 ```js run
 let userAdmin = {
   admin() {
-    alert("I am admin");
+    alert("Я адміністратор");
   }
 };
 
 let userGuest = {};
 
 *!*
-userAdmin.admin?.(); // I am admin
+userAdmin.admin?.(); // Я адміністратор
 */!*
 
 *!*
-userGuest.admin?.(); // nothing (no such method)
+userGuest.admin?.(); // нічого (немає такого методу)
 */!*
 ```
 
-Here, in both lines we first use the dot (`userAdmin.admin`) to get `admin` property, because we assume that the user object exists, so it's safe read from it.
+В обох випадках спочатку використовуємо крапку (`userAdmin.admin`) для доступу до властивості `admin`, оскільки об’єкт користувача точно існує, а це означає що ми можемо звернутись до будь-якої його властивості на першому рівні вкладеності без помилки.
 
-Then `?.()` checks the left part: if the admin function exists, then it runs (that's so for `userAdmin`). Otherwise (for `userGuest`) the evaluation stops without errors.
+Вже потім `?.()` перевіряє ліву частину: якщо функція `admin` існує, то вона виконається (у випадку з `userAdmin`). Інакше (для `userGuest`) обчислення припиниться без помилок.
 
-The `?.[]` syntax also works, if we'd like to use brackets `[]` to access properties instead of dot `.`. Similar to previous cases, it allows to safely read a property from an object that may not exist.
+Також існує синтаксис `?.[]`, якщо ми хочемо отримати доступ до властивості за допомогою квадратних дужок `[]`, а не через крапку `.`. Як і в решті випадків, таких спосіб дає змогу безпечно читати властивості об’єкту яких може не існувати.
 
 ```js run
 let key = "firstName";
 
 let user1 = {
-  firstName: "John"
+  firstName: "Іван"
 };
 
-let user2 = null; 
+let user2 = null; // уявімо, що користувач не авторизувався
 
-alert( user1?.[key] ); // John
+alert( user1?.[key] ); // Іван
 alert( user2?.[key] ); // undefined
 ```
 
-Also we can use `?.` with `delete`:
+Ми також можемо використовувати `?.` з `delete`:
 
 ```js run
-delete user?.name; // delete user.name if user exists
+delete user?.name; // видалити user.name, якщо користувач існує
 ```
 
-````warn header="We can use `?.` for safe reading and deleting, but not writing"
-The optional chaining `?.` has no use at the left side of an assignment.
+````warn header="Ми можемо використовувати `?.` для безпечного читання і видалення властивостей, але не для запису"
+Опціональний ланцюжок `?.` не має сенсу у лівій частині присвоювання.
 
-For example:
+Наприклад:
 ```js run
 let user = null;
 
-user?.name = "John"; // Error, doesn't work
-// because it evaluates to undefined = "John"
+user?.name = "Іван"; // Помилка, не працює
+// це по суті те ж саме що undefined = "John"
 ```
 
-It's just not that smart.
+Воно недостатньо «розумне» для цього.
 ````
 
-## Summary
+## Підсумки
 
-The optional chaining `?.` syntax has three forms:
+Синтаксис опціонального ланцюжка `?.` має три форми:
 
-1. `obj?.prop` -- returns `obj.prop` if `obj` exists, otherwise `undefined`.
-2. `obj?.[prop]` -- returns `obj[prop]` if `obj` exists, otherwise `undefined`.
-3. `obj.method?.()` -- calls `obj.method()` if `obj.method` exists, otherwise returns `undefined`.
+1. `obj?.prop` -- повертає `obj.prop`, якщо існує `obj`, і `undefined` в іншому випадку.
+2. `obj?.[prop]` -- повертає `obj[prop]`, якщо існує `obj`, і `undefined` в іншому випадку.
+3. `obj.method?.()` -- викликає `obj.method()`, якщо існує `obj.method`, в іншому випадку повертає `undefined`.
 
-As we can see, all of them are straightforward and simple to use. The `?.` checks the left part for `null/undefined` and allows the evaluation to proceed if it's not so.
+Як бачимо, всі вони прості та зрозумілі в використанні. `?.` перевіряє ліву частину на рівність `null/undefined` і дозволяє продовжувати обчислення якщо це не так.
 
-A chain of `?.` allows to safely access nested properties.
+Ланцюжок `?.` дозволяє без виникнення помилок звертатись до вкладених властивостей.
 
-Still, we should apply `?.` carefully, only where it's acceptable that the left part doesn't exist. So that it won't hide programming errors from us, if they occur.
+Тим не менш, потрібно розумно застосовувати `?.`, тільки в тих випадках де допустимо що ліва частина не існує. Щоб таким чином не приховувати потенційні помилки програмування.

@@ -1,97 +1,97 @@
 
-# Map and Set
+# Map та Set
 
-Till now, we've learned about the following complex data structures:
+Зараз ми знаємо про наступні складні структури даних:
 
-- Objects are used for storing keyed collections.
-- Arrays are used for storing ordered collections.
+- Об’єкти для зберігання іменованих колекцій.
+- Масиви для зберігання впорядкованих колекцій.
 
-But that's not enough for real life. That's why `Map` and `Set` also exist.
+Але цього не завжди достатньо в реальному житті. Ось чому існують `Map` та `Set`.
 
 ## Map
 
-[Map](mdn:js/Map) is a collection of keyed data items, just like an `Object`. But the main difference is that `Map` allows keys of any type.
+[Map](mdn:js/Map) це колекція ключ/значення, як і `Object`. Але основна відмінність полягає в тому, що `Map` дозволяє мати ключі будь-якого типу.
 
-Methods and properties are:
+Методи та властивості:
 
-- `new Map()` -- creates the map.
-- `map.set(key, value)` -- stores the value by the key.
-- `map.get(key)` -- returns the value by the key, `undefined` if `key` doesn't exist in map.
-- `map.has(key)` -- returns `true` if the `key` exists, `false` otherwise.
-- `map.delete(key)` -- removes the value by the key.
-- `map.clear()` -- removes everything from the map.
-- `map.size` -- returns the current element count.
+- `new Map()` -- створює колекцію.
+- `map.set(key, value)` -- зберігає значення `value` за ключем `key`.
+- `map.get(key)` -- повертає значення за ключем; повертає `undefined` якщо `key` немає в колекції.
+- `map.has(key)` -- повертає `true` якщо `key` існує, інакше `false`.
+- `map.delete(key)` -- видаляє елемент по ключу.
+- `map.clear()` -- видаляє всі елементи колекції.
+- `map.size` -- повертає поточну кількість елементів.
 
-For instance:
+Наприклад:
 
 ```js run
 let map = new Map();
 
-map.set('1', 'str1');   // a string key
-map.set(1, 'num1');     // a numeric key
-map.set(true, 'bool1'); // a boolean key
+map.set('1', 'str1');   // рядок як ключ
+map.set(1, 'num1');     // цифра як ключ
+map.set(true, 'bool1'); // булеве значення як ключ
 
-// remember the regular Object? it would convert keys to string
-// Map keeps the type, so these two are different:
-alert( map.get(1)   ); // 'num1'
+// пам’ятаєте звичайний об’єкт `Object`? Він перетворює всі ключі в рядок
+// Map зберігає тип ключів, так що в цьому випадку ми отримаємо 2 різних значення:
+alert( map.get(1) );   // 'num1'
 alert( map.get('1') ); // 'str1'
 
 alert( map.size ); // 3
 ```
 
-As we can see, unlike objects, keys are not converted to strings. Any type of key is possible.
+Як ми бачимо, на відміну від об’єктів, ключі не були приведені до рядків. Можна використовувати будь-які типи даних для ключів.
 
-```smart header="`map[key]` isn't the right way to use a `Map`"
-Although `map[key]` also works, e.g. we can set `map[key] = 2`, this is treating `map` as a plain JavaScript object, so it implies all corresponding limitations (only string/symbol keys and so on).
+```smart header="`map[key]` не є правильним методом використання `Map`"
+Хоча `map[key]` також працює, але такий спосіб присвоєння `map[key] = 2` використовує колекцію як звичайний JavaScript об’єкт, тобто накладає відповідні обмеження (тільки типи рядки/символи як ключі та інше).
 
-So we should use `map` methods: `set`, `get` and so on.
+Таким чином ми повинні користуватись `map` методами: `set`, `get` і так далі.
 ```
 
-**Map can also use objects as keys.**
+**Map також може використовувати об’єкти як ключі.**
 
-For instance:
+Наприклад:
 
 ```js run
-let john = { name: "John" };
+let ivan = { name: "Іван" };
 
-// for every user, let's store their visits count
+// збережімо кількість відвідувань для кожного користувача
 let visitsCountMap = new Map();
 
-// john is the key for the map
-visitsCountMap.set(john, 123);
+// об’єкт ivan -- це ключ для значення в колекції Map
+visitsCountMap.set(ivan, 123);
 
-alert( visitsCountMap.get(john) ); // 123
+alert( visitsCountMap.get(ivan) ); // 123
 ```
 
-Using objects as keys is one of the most notable and important `Map` features. The same does not count for `Object`. String as a key in `Object` is fine, but we can't use another `Object` as a key in `Object`.
+Об’єкти в якості ключів -- це одна з відомих можливостей колекції `Map`, яку часто використовують. У звичайному об’єкті `Object`, ми можемо використати ключі-рядки, проте ключі-об’єкти -- вже ні.
 
-Let's try:
+Розгляньмо такий приклад:
 
 ```js run
-let john = { name: "John" };
-let ben = { name: "Ben" };
+let ivan = { name: "Іван" };
+let bohdan = { name: "Богдан" };
 
-let visitsCountObj = {}; // try to use an object
+let visitsCountObj = {}; // оголосимо звичайний об’єкт
 
-visitsCountObj[ben] = 234; // try to use ben object as the key
-visitsCountObj[john] = 123; // try to use john object as the key, ben object will get replaced
+visitsCountObj[bohdan] = 234; // використаємо об’єкт `bohdan` як ключ
+visitsCountObj[ivan] = 123; // використаємо `ivan` об’єкт як ключ, `bohdan` об’єкт буде перезаписаний
 
 *!*
-// That's what got written!
-alert( visitsCountObj["[object Object]"] ); // 123 
+// Ось як це було записано!
+alert( visitsCountObj["[object Object]"] ); // 123
 */!*
 ```
 
-As `visitsCountObj` is an object, it converts all `Object` keys, such as `john` and `ben` above, to same string `"[object Object]"`. Definitely not what we want.
+Оскільки `visitsCountObj` -- це об’єкт, він конвертує всі ключі типу `Object` (такі як `ivan` і `bohdan`) до рядка `"[object Object]"`. Це однозначно не той результат, який ми очікуємо.
 
-```smart header="How `Map` compares keys"
-To test keys for equivalence, `Map` uses the algorithm [SameValueZero](https://tc39.github.io/ecma262/#sec-samevaluezero). It is roughly the same as strict equality `===`, but the difference is that `NaN` is considered equal to `NaN`. So `NaN` can be used as the key as well.
+```smart header="Як `Map` порівнює ключі"
+Порівнюючи ключі, об’єкт `Map` використовує алгоритм [SameValueZero](https://tc39.github.io/ecma262/#sec-samevaluezero). Це майже таке ж порівняння, що і `===`, з тією лише різницею, що `NaN` вважається рівним `NaN`. Таким чином `NaN` може також бути використаний як ключ.
 
-This algorithm can't be changed or customized.
+Цей алгоритм не може бути замінений або модифікований.
 ```
 
-````smart header="Chaining"
-Every `map.set` call returns the map itself, so we can "chain" the calls:
+````smart header="Послідовні виклики"
+Кожен виклик `map.set` повертає об’єкт map, таким чином ми можемо об’єднати виклики в ланцюжок:
 
 ```js
 map.set('1', 'str1')
@@ -101,58 +101,58 @@ map.set('1', 'str1')
 ````
 
 
-## Iteration over Map
+## Перебір Map
 
-For looping over a `map`, there are 3 methods:
+Для перебору колекції Map є 3 метода:
 
-- `map.keys()` -- returns an iterable for keys,
-- `map.values()` -- returns an iterable for values,
-- `map.entries()` -- returns an iterable for entries `[key, value]`, it's used by default in `for..of`.
+- `map.keys()` -- повертає об’єкт-ітератор для ключів,
+- `map.values()` -- повертає об’єкт-ітератор для значень,
+- `map.entries()` -- повертає об’єкт-ітератор зі значеннями виду [ключ, значення], цей варіант використовується за умовчанням у `for..of`.
 
-For instance:
+Наприклад:
 
 ```js run
 let recipeMap = new Map([
-  ['cucumber', 500],
-  ['tomatoes', 350],
-  ['onion',    50]
+  ['огірок',   500],
+  ['помідори', 350],
+  ['цибуля',   50]
 ]);
 
-// iterate over keys (vegetables)
+// перебираємо ключі (овочі)
 for (let vegetable of recipeMap.keys()) {
-  alert(vegetable); // cucumber, tomatoes, onion
+  alert(vegetable); // огірок, помідори, цибуля
 }
 
-// iterate over values (amounts)
+// перебираємо значення (кількість)
 for (let amount of recipeMap.values()) {
   alert(amount); // 500, 350, 50
 }
 
-// iterate over [key, value] entries
-for (let entry of recipeMap) { // the same as of recipeMap.entries()
-  alert(entry); // cucumber,500 (and so on)
+// перебір елементів у форматі [ключ, значення]
+for (let entry of recipeMap) { // те ж саме, що recipeMap.entries()
+  alert(entry); // огірок,500 (і так далі)
 }
 ```
 
-```smart header="The insertion order is used"
-The iteration goes in the same order as the values were inserted. `Map` preserves this order, unlike a regular `Object`.
+```smart header="Використовується порядок вставки"
+На відміну від звичайних об’єктів `Object`, в `Map` перебір відбувається в тому ж порядку, в якому відбувалося додавання елементів.
 ```
 
-Besides that, `Map` has a built-in `forEach` method, similar to `Array`:
+Крім цього, `Map` має вбудований метод `forEach`, схожий з вбудованим методом масивів `Array`:
 
 ```js
-// runs the function for each (key, value) pair
+// виконуємо функцію для кожної пари (ключ, значення)
 recipeMap.forEach( (value, key, map) => {
-  alert(`${key}: ${value}`); // cucumber: 500 etc
+  alert(`${key}: ${value}`); // огірок: 500 і так далі
 });
 ```
 
-## Object.entries: Map from Object
+## Object.entries: Map з Object
 
-When a `Map` is created, we can pass an array (or another iterable) with key/value pairs for initialization, like this:
+При створенні `Map` ми можемо вказати масив (або інший об’єкт-ітератор) з парами ключ-значення для ініціалізації, як тут:
 
 ```js run
-// array of [key, value] pairs
+// масив пар [ключ, значення]
 let map = new Map([
   ['1',  'str1'],
   [1,    'num1'],
@@ -162,13 +162,13 @@ let map = new Map([
 alert( map.get('1') ); // str1
 ```
 
-If we have a plain object, and we'd like to create a `Map` from it, then we can use built-in method [Object.entries(obj)](mdn:js/Object/entries) that returns an array of key/value pairs for an object exactly in that format.
+Якщо у нас вже є звичайний об’єкт, і ми б хотіли створити з нього `Map`, то допоможе вбудований метод [Object.entries(obj)](mdn:js/Object/entries), котрий отримує об’єкт і повертає масив пар ключ-значення для нього, як раз в цьому форматі.
 
-So we can create a map from an object like this:
+Таким чином ми можемо створити `Map` з об’єкта наступним чином:
 
 ```js run
 let obj = {
-  name: "John",
+  name: "Іван",
   age: 30
 };
 
@@ -176,157 +176,157 @@ let obj = {
 let map = new Map(Object.entries(obj));
 */!*
 
-alert( map.get('name') ); // John
+alert( map.get('name') ); // Іван
 ```
 
-Here, `Object.entries` returns the array of key/value pairs: `[ ["name","John"], ["age", 30] ]`. That's what `Map` needs.
+В цьому випадку `Object.entries` повертає масив пар ключ-значення: `[ ["name", "Іван"], ["age", 30] ]`. Це саме те, що потрібно для створення `Map`.
 
 
-## Object.fromEntries: Object from Map
+## Object.fromEntries: Object з Map
 
-We've just seen how to create `Map` from a plain object with `Object.entries(obj)`.
+Ми щойно створювали `Map` з простого об’єкта за допомогою `Object.entries(obj)`.
 
-There's `Object.fromEntries` method that does the reverse: given an array of `[key, value]` pairs, it creates an object from them:
+Ми можемо використати `Object.fromEntries` метод, який виконає зворотну дію: трансформує отриманий масив пар `[ключ, значення]` в об’єкт. Наприклад:
 
 ```js run
 let prices = Object.fromEntries([
-  ['banana', 1],
-  ['orange', 2],
-  ['meat', 4]
+  ['банан', 1],
+  ['апельсин', 2],
+  ['яблуко', 4]
 ]);
 
-// now prices = { banana: 1, orange: 2, meat: 4 }
+// тепер prices = { банан: 1, апельсин: 2, яблуко: 4 }
 
-alert(prices.orange); // 2
+alert(prices.апельсин); // 2
 ```
 
-We can use `Object.fromEntries` to get a plain object from `Map`.
+Ми можемо використати `Object.fromEntries`, щоб отримати звичайний об’єкт з `Map`.
 
-E.g. we store the data in a `Map`, but we need to pass it to a 3rd-party code that expects a plain object.
+Наприклад, ми маємо дані в `Map`, але потрібно їх передати в сторонній код, який чекає простий об’єкт.
 
-Here we go:
+Ось як це зробити:
 
-```js run
+```js run 
 let map = new Map();
-map.set('banana', 1);
-map.set('orange', 2);
-map.set('meat', 4);
+map.set('банан', 1);
+map.set('апельсин', 2);
+map.set('яблуко', 4);
 
 *!*
-let obj = Object.fromEntries(map.entries()); // make a plain object (*)
+let obj = Object.fromEntries(map.entries()); // робимо простий об’єкт (*)
 */!*
 
-// done!
-// obj = { banana: 1, orange: 2, meat: 4 }
+// Готово!
+// obj = { банан: 1, апельсин: 2, яблуко: 4 }
 
-alert(obj.orange); // 2
+alert(obj.апельсин); // 2
 ```
 
-A call to `map.entries()` returns an iterable of key/value pairs, exactly in the right format for `Object.fromEntries`.
+Виклик `map.entries()` повертає масив пар ключ/значення, як раз в потрібному форматі для `Object.fromEntries`.
 
-We could also make line `(*)` shorter:
+Ми могли б написати рядок `(*)` ще коротше:
 ```js
-let obj = Object.fromEntries(map); // omit .entries()
+let obj = Object.fromEntries(map); // прибрати .entries()
 ```
 
-That's the same, because `Object.fromEntries` expects an iterable object as the argument. Not necessarily an array. And the standard iteration for `map` returns same key/value pairs as `map.entries()`. So we get a plain object with same key/values as the `map`.
+Це те ж саме, оскільки `Object.fromEntries` чекає аргументом об’єкт-ітератор, не обов’язково масив. А перебір `map` якраз повертає пари ключ/значення, як і `map.entries()`. Так що в підсумку ми матимемо звичайний об’єкт з тими ж ключами/значеннями, що і в `map`.
 
 ## Set
 
-A `Set` is a special type collection - "set of values" (without keys), where each value may occur only once.
+Об’єкт `Set` -- це особливий тип колекції: "множина" значень (без ключів), де кожне значення може з’являтися тільки раз.
 
-Its main methods are:
+Основні методи:
 
-- `new Set(iterable)` -- creates the set, and if an `iterable` object is provided (usually an array), copies values from it into the set.
-- `set.add(value)` -- adds a value, returns the set itself.
-- `set.delete(value)` -- removes the value, returns `true` if `value` existed at the moment of the call, otherwise `false`.
-- `set.has(value)` -- returns `true` if the value exists in the set, otherwise `false`.
-- `set.clear()` -- removes everything from the set.
-- `set.size` -- is the elements count.
+- `new Set(iterable)` -- створює `Set`, якщо аргументом виступає об’єкт-ітератор, тоді значення копіюються в `Set`.
+- `set.add(value)` -- додає нове значення до `Set`, повертає `Set`.
+- `set.delete(value)` -- видаляє значення з `Set`, повертає `true`, якщо `value` наявне в множині значень на момент виклику методу, інакше `false`.
+- `set.has(value)` -- повертає `true`, якщо `value` присутнє в множині `Set`, інакше `false`.
+- `set.clear()` -- видаляє всі значення множини `Set`.
+- `set.size` -- повертає кількість елементів в множині.
 
-The main feature is that repeated calls of `set.add(value)` with the same value don't do anything. That's the reason why each value appears in a `Set` only once.
+Родзинкою `Set` є виклики `set.add(value)`, що повторюються з однаковими значеннями `value`. Повторні виклики цього методу не змінюють `Set`. Це причина того, що кожне значення з’являється тільки один раз.
 
-For example, we have visitors coming, and we'd like to remember everyone. But repeated visits should not lead to duplicates. A visitor must be "counted" only once.
+Наприклад, ми очікуємо гостей, і нам необхідно скласти їх список. Але повторні записи не повинні призводити до дублікатів. Кожен гість повинен з’явитися в списку лише один раз.
 
-`Set` is just the right thing for that:
+Множина `Set` -- це саме те, що потрібно для цього:
 
 ```js run
 let set = new Set();
 
-let john = { name: "John" };
-let pete = { name: "Pete" };
-let mary = { name: "Mary" };
+let ivan = { name: "Іван" };
+let petro = { name: "Петро" };
+let maria = { name: "Марія" };
 
-// visits, some users come multiple times
-set.add(john);
-set.add(pete);
-set.add(mary);
-set.add(john);
-set.add(mary);
+// підраховуємо гостей, деякі приходять кілька разів
+set.add(ivan);
+set.add(petro);
+set.add(maria);
+set.add(ivan);
+set.add(maria);
 
-// set keeps only unique values
+// set зберігає тільки 3 унікальних значення
 alert( set.size ); // 3
 
 for (let user of set) {
-  alert(user.name); // John (then Pete and Mary)
+  alert(user.name); // "Іван" (тоді "Петро" і "Марія")
 }
 ```
 
-The alternative to `Set` could be an array of users, and the code to check for duplicates on every insertion using [arr.find](mdn:js/Array/find). But the performance would be much worse, because this method walks through the whole array checking every element. `Set` is much better optimized internally for uniqueness checks.
+Альтернативою множини `Set` може виступати масив для зберігання гостей і додатковий код для перевірки вже наявного елемента за допомогою [arr.find](mdn:js/Array/find). Але в цьому випадку буде гірша продуктивність, тому що `arr.find` проходить весь масив для перевірки наявності елемента. Множина `Set` краще оптимізована для перевірки унікальності.
 
-## Iteration over Set
+## Перебір об’єкта Set
 
-We can loop over a set either with `for..of` or using `forEach`:
+Ми можемо перебрати вміст об’єкта `set` як за допомогою методу `for..of`, так і використовуючи `forEach`:
 
 ```js run
-let set = new Set(["oranges", "apples", "bananas"]);
+let set = new Set(["апельсини", "яблука", "банани"]);
 
 for (let value of set) alert(value);
 
-// the same with forEach:
+// те ж саме з forEach:
 set.forEach((value, valueAgain, set) => {
   alert(value);
 });
 ```
 
-Note the funny thing. The callback function passed in `forEach` has 3 arguments: a `value`, then *the same value* `valueAgain`, and then the target object. Indeed, the same value appears in the arguments twice.
+Зауважимо цікаву річ. Функція в `forEach` у `Set` має 3 аргументи: значення 'value', потім знову *те саме значення* 'valueAgain', і тільки потім цільовий об’єкт. Це дійсно так, значення з’являється в списку аргументів двічі.
 
-That's for compatibility with `Map` where the callback passed `forEach` has three arguments. Looks a bit strange, for sure. But may help to replace `Map` with `Set` in certain cases with ease, and vice versa.
+Це зроблено для сумісності з об’єктом `Map`, в якому колбек `forEach` має 3 аргумента. Виглядає трохи дивно, але в деяких випадках може допомогти легко замінити `Map` на `Set` і навпаки.
 
-The same methods `Map` has for iterators are also supported:
+`Set` має ті ж вбудовані методи, що і `Map`:
 
-- `set.keys()` -- returns an iterable object for values,
-- `set.values()` -- same as `set.keys()`, for compatibility with `Map`,
-- `set.entries()` -- returns an iterable object for entries `[value, value]`, exists for compatibility with `Map`.
+- `set.keys()` -- повертає об’єкт-ітератор для значень,
+- `set.values()` -- те ж саме, що `set.keys()`, для сумісності з `Map`,
+- `set.entries()` -- повертає об’єкт-ітератор для пар виду `[значення, значення]`, присутній для сумісності з `Map`.
 
-## Summary
+## Підсумки
 
-`Map` -- is a collection of keyed values.
+`Map` -- це колекція ключ/значення.
 
-Methods and properties:
+Методи та властивості:
 
-- `new Map([iterable])` -- creates the map, with optional `iterable` (e.g. array) of `[key,value]` pairs for initialization.
-- `map.set(key, value)` -- stores the value by the key, returns the map itself.
-- `map.get(key)` -- returns the value by the key, `undefined` if `key` doesn't exist in map.
-- `map.has(key)` -- returns `true` if the `key` exists, `false` otherwise.
-- `map.delete(key)` -- removes the value by the key, returns `true` if `key` existed at the moment of the call, otherwise `false`.
-- `map.clear()` -- removes everything from the map.
-- `map.size` -- returns the current element count.
+- `new Map([iterable])` -- створює колекцію, можна вказати `об’єкт-ітератор` (зазвичай масив) з пар `[ключ, значення]` для ініціалізації.
+ - `map.set(key, value)` -- записує по ключу `key` значення `value`.
+- `map.get(key)` -- повертає значення по `key` або `undefined`, якщо ключ `key` відсутній.
+- `map.has(key)` -- повертає `true`, якщо ключ `key` присутній в колекції, інакше `false`.
+- `map.delete(key)` -- видаляє елемент по ключу `key`. Повертає `true`, якщо `key` існує на момент виклику функції, інакше `false`.
+- `map.clear()` -- очищає колекцію від всіх елементів.
+- `map.size` -- повертає поточну кількість елементів.
 
-The differences from a regular `Object`:
+Відмінності від звичайного об’єкта `Object`:
 
-- Any keys, objects can be keys.
-- Additional convenient methods, the `size` property.
+- Що завгодно може бути ключем, в тому числі і об’єкти.
+- Є додаткові методи, властивість `size`.
 
-`Set` -- is a collection of unique values.
+`Set` -- колекція унікальних значень, так звана «множина».
 
-Methods and properties:
+Методи та властивості:
 
-- `new Set([iterable])` -- creates the set, with optional `iterable` (e.g. array) of values for initialization.
-- `set.add(value)` -- adds a value (does nothing if `value` exists), returns the set itself.
-- `set.delete(value)` -- removes the value, returns `true` if `value` existed at the moment of the call, otherwise `false`.
-- `set.has(value)` -- returns `true` if the value exists in the set, otherwise `false`.
-- `set.clear()` -- removes everything from the set.
-- `set.size` -- is the elements count.
+- `new Set([iterable])` -- створює `Set`, можна вказати `об’єкт-ітератор` (зазвичай масив).
+- `set.add(value)` -- додає значення (якщо воно вже є, то нічого не робить), повертає той же об’єкт `set`.
+- `set.delete(value)` -- видаляє значення, повертає `true` якщо `value` було в множині на момент виклику, інакше `false`.
+- `set.has(value)` -- повертає `true`, якщо значення присутній в множині, інакше `false`.
+- `set.clear()` -- видаляє всі наявні значення.
+- `set.size` -- повертає кількість елементів у множині.
 
-Iteration over `Map` and `Set` is always in the insertion order, so we can't say that these collections are unordered, but we can't reorder elements or directly get an element by its number.
+Перебір `Map` і `Set` завжди здійснюється в порядку додавання елементів, так що не можна сказати, що це невпорядковані колекції, але поміняти порядок елементів або отримати елемент безпосередньо по його номеру не можна.
