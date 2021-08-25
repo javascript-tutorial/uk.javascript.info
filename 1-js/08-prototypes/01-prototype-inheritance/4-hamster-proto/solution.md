@@ -20,7 +20,7 @@ let hamster = {
 
   eat(food) {
 *!*
-    // визначається до this.stomach замість this.stomach.push
+    // визначається до `this.stomach` замість `this.stomach.push`
     this.stomach = [food];
 */!*
   }
@@ -39,7 +39,7 @@ speedy.eat("apple");
 alert( speedy.stomach ); // apple
 
 // Шлунок хом’ячка 'Lazy' пустий
-alert( lazy.stomach ); // <nothing>
+alert( lazy.stomach ); // <нічого>
 ```
 
 Тепер все працює добре, тому що `this.stomach=` не виконує пошук властивості `stomach`. Значення записується прямо в `this` об’єкта.
@@ -69,12 +69,12 @@ let lazy = {
 */!*
 };
 
-// Хом’ячок 'Speedy' знайшов їду
-speedy.eat("apple");
-alert( speedy.stomach ); // apple
+// Хом’ячок `Speedy` знайшов їжу
+speedy.eat("яблуко");
+alert( speedy.stomach ); // яблуко
 
-//  Шлунок хом’ячка 'Lazy' пустий
-alert( lazy.stomach ); // <nothing>
+//  Шлунок хом’ячка `Lazy` пустий
+alert( lazy.stomach ); // <нічого>
 ```
 
 Отже, спільним рішенням може бути те, що всі властивості, які описують стан конкретного об’єкта (подібно як `stomach`), повинні бути записані (визначені) в цьому ж самому об’єкті. Це уникне подібної проблеми.
