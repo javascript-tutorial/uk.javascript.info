@@ -25,24 +25,24 @@
 
     Наприклад, якщо в глобальній змінній є об’єкт, і цей об’єкт має властивість, що посилається на інший об’єкт, *цей* об’єкт вважається досяжним. І ті, на які він посилається, також досяжні. Далі ви познайомитеся з докладними прикладами на цю тему.
 
-У рушію JavaScript є фоновий процес, який називається [збирання сміття](https://uk.wikipedia.org/wiki/%D0%97%D0%B1%D0%B8%D1%80%D0%B0%D0%BD%D0%BD%D1%8F_%D1%81%D0%BC%D1%96%D1%82%D1%82%D1%8F). Воно контролює всі об’єкти та видаляє ті, які стали недосяжними.
+У рушію JavaScript є фоновий процес, який називається [збирання сміття](https://uk.wikipedia.org/wiki/%D0%97%D0%B1%D0%B8%D1%80%D0%B0%D0%BD%D0%BD%D1%8F_%D1%81%D0%BC%D1%96%D1%82%D1%82%D1%8F). Він контролює всі об’єкти та видаляє ті, які стали недосяжними.
 
-## A simple example
+## Простий приклад
 
-Here's the simplest example:
+Ось найпростіший приклад:
 
 ```js
-// user has a reference to the object
+// user має посилання на об’єкт
 let user = {
-  name: "John"
+  name: "Іван"
 };
 ```
 
 ![](memory-user-john.svg)
 
-Here the arrow depicts an object reference. The global variable `"user"` references the object `{name: "John"}` (we'll call it John for brevity). The `"name"` property of John stores a primitive, so it's painted inside the object.
+Тут стрілка зображує посилання на об’єкт. Глобальна змінна `"user"` посилається на об’єкт `{name: "Іван"}` (ми будемо називати його Іван для стислості). Властивість `"name"` Івана зберігає примітив, тому він зображений всередині об’єкта.
 
-If the value of `user` is overwritten, the reference is lost:
+Якщо значення в змінній `user` переписується, посилання втрачається:
 
 ```js
 user = null;
@@ -50,16 +50,16 @@ user = null;
 
 ![](memory-user-john-lost.svg)
 
-Now John becomes unreachable. There's no way to access it, no references to it. Garbage collector will junk the data and free the memory.
+Тепер Іван стає недосяжним. Немає доступу до нього, немає посилань на нього. Процес збирання сміття видалить дані і звільнить пам’ять.
 
-## Two references
+## Два посилання
 
-Now let's imagine we copied the reference from `user` to `admin`:
+Тепер уявімо, що ми скопіювали посилання зі змінної `user` у змінну `admin`:
 
 ```js
-// user has a reference to the object
+// user має посилання на об’єкт
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 *!*
@@ -69,16 +69,16 @@ let admin = user;
 
 ![](memory-user-john-admin.svg)
 
-Now if we do the same:
+Тепер, якщо ми зробимо те саме:
 ```js
 user = null;
 ```
 
-...Then the object is still reachable via `admin` global variable, so it's in memory. If we overwrite `admin` too, then it can be removed.
+...Тепер об’єкт все ще є досяжним через глобальну змінну `admin`, таким чином він залишається у пам’яті. Якщо переписати змінну `admin` також, його можна буде видалити.
 
-## Interlinked objects
+## Взаємозв’язані об’єкти
 
-Now a more complex example. The family:
+Тепер більш складний приклад. Сім’я:
 
 ```js
 function marry(man, woman) {
@@ -92,21 +92,21 @@ function marry(man, woman) {
 }
 
 let family = marry({
-  name: "John"
+  name: "Іван"
 }, {
-  name: "Ann"
+  name: "Анна"
 });
 ```
 
-Function `marry` "marries" two objects by giving them references to each other and returns a new object that contains them both.
+Функція `marry` "одружує" два об’єкти, даючи їм посилання один на одного та повертаючи новий об’єкт, що містить їх обох.
 
-The resulting memory structure:
+Отримана структура даних:
 
 ![](family.svg)
 
-As of now, all objects are reachable.
+Наразі всі об’єкти досяжні.
 
-Now let's remove two references:
+Тепер видалимо два посилання:
 
 ```js
 delete family.father;
@@ -115,75 +115,75 @@ delete family.mother.husband;
 
 ![](family-delete-refs.svg)
 
-It's not enough to delete only one of these two references, because all objects would still be reachable.
+Недостатньо видалити лише одне з цих двох посилань, оскільки всі об’єкти все одно будуть досяжними.
 
-But if we delete both, then we can see that John has no incoming reference any more:
+Але якщо видалити обидва, то можна побачити, що Іван більше не має посилань на себе:
 
 ![](family-no-father.svg)
 
-Outgoing references do not matter. Only incoming ones can make an object reachable. So, John is now unreachable and will be removed from the memory with all its data that also became unaccessible.
+Вихідні посилання не мають значення. Тільки вхідні можуть зробити об’єкт досяжним. Отже, Іван зараз недосяжний і буде видалений з пам’яті з усіма його даними, які також стали недосяжними.
 
-After garbage collection:
+Після збирання сміття:
 
 ![](family-no-father-2.svg)
 
-## Unreachable island
+## Недосяжний "острів"
 
-It is possible that the whole island of interlinked objects becomes unreachable and is removed from the memory.
+Можливо, що весь "острів" взаємопов’язаних об’єктів стане недосяжним і видалиться з пам’яті.
 
-The source object is the same as above. Then:
+Якщо об’єкт такий самий, як і вище, тоді:
 
 ```js
 family = null;
 ```
 
-The in-memory picture becomes:
+Подання в пам'яті стає таким:
 
 ![](family-no-family.svg)
 
-This example demonstrates how important the concept of reachability is.
+Цей приклад демонструє, наскільки важливою є концепція досяжності.
 
-It's obvious that John and Ann are still linked, both have incoming references. But that's not enough.
+Очевидно, що Іван і Анна все ще пов’язані, обидва мають вхідні посилання. Але цього недостатньо.
 
-The former `"family"` object has been unlinked from the root, there's no reference to it any more, so the whole island becomes unreachable and will be removed.
+Колишній об’єкт `"family"` було від’єднано від кореня, більше на нього немає посилання, тому весь "острів" стає недосяжним і буде видалений.
 
-## Internal algorithms
+## Внутрішні алгоритми
 
-The basic garbage collection algorithm is called "mark-and-sweep".
+Основний алгоритм збирання сміття називається "позначення і видалення" (англ. "mark-and-sweep").
 
-The following "garbage collection" steps are regularly performed:
+Зазвичай виконуються такі етапи "збирання сміття":
 
-- The garbage collector takes roots and "marks" (remembers) them.
-- Then it visits and "marks" all references from them.
-- Then it visits marked objects and marks *their* references. All visited objects are remembered, so as not to visit the same object twice in the future.
-- ...And so on until every reachable (from the roots) references are visited.
-- All objects except marked ones are removed.
+- Збирання сміття розпочинається з коренів, які позначаються (запам'ятовуються) особливим чином.
+- Потім позначаються всі посилання від них.
+- Потім він відвідує позначені об’єкти та позначає інші об’єкти на які є посилання від них. Усі відвідані об’єкти запам’ятовуються, щоб у майбутньому не відвідувати один і той же об’єкт двічі.
+- ...І так до тих пір, поки не будуть відвідані усі досяжні (з коренів) посилання.
+- Усі об’єкти, крім позначених, видаляються.
 
-For instance, let our object structure look like this:
+Наприклад, нехай наша структура об’єктів виглядатиме так:
 
 ![](garbage-collection-1.svg)
 
-We can clearly see an "unreachable island" to the right side. Now let's see how "mark-and-sweep" garbage collector deals with it.
+З правого боку ми чітко бачимо "недосяжний острів". Тепер давайте подивимося, як збирання сміття "позначає і видаляє".
 
-The first step marks the roots:
+Перший крок позначає корені:
 
 ![](garbage-collection-2.svg)
 
-Then their references are marked:
+Потім позначаються посилання від них:
 
 ![](garbage-collection-3.svg)
 
-...And their references, while possible:
+...І посилання від них, поки це можливо:
 
 ![](garbage-collection-4.svg)
 
-Now the objects that could not be visited in the process are considered unreachable and will be removed:
+Тепер об’єкти, які не вдалося відвідати в процесі, вважаються недосяжними і будуть видалені:
 
 ![](garbage-collection-5.svg)
 
-We can also imagine the process as spilling a huge bucket of paint from the roots, that flows through all references and marks all reachable objects. The unmarked ones are then removed.
+Ми також можемо уявити собі цей процес, як виливання великого відра фарби починаючи з коренів, фарба протікає через усі посилання і позначає всі об’єкти, до яких можна дістатися. Потім непозначені об’єкти видаляються.
 
-That's the concept of how garbage collection works. JavaScript engines apply many optimizations to make it run faster and not affect the execution.
+Це концепція того, як працює збирання сміття. Рушій JavaScript застосовує багато оптимізацій, щоб прискорити це та не вплинути на виконання.
 
 Some of the optimizations:
 
