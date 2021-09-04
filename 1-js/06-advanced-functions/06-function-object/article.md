@@ -128,36 +128,36 @@ ask("Запитання?", () => alert('Ти сказав так'), result => al
 
 Це конкретний випадок так званого [поліморфізму](https://uk.wikipedia.org/wiki/Поліморфізм_(програмування)) -- обробка аргументів по-різному залежно від їх типу або, у нашому випадку залежно від `length`. Ця ідея використовується в бібліотеках JavaScript.
 
-## Custom properties
+## Кастомні властивості
 
-We can also add properties of our own.
+Ми також можемо додати власні властивості.
 
-Here we add the `counter` property to track the total calls count:
+Тут ми додаємо властивість `counter` для відстеження загальної кількості викликів:
 
 ```js run
 function sayHi() {
-  alert("Hi");
+  alert("Привіт");
 
   *!*
-  // let's count how many times we run
+  // давайте порахувати, скільки викликів функції ми зробили
   sayHi.counter++;
   */!*
 }
-sayHi.counter = 0; // initial value
+sayHi.counter = 0; // початкове значення
 
-sayHi(); // Hi
-sayHi(); // Hi
+sayHi(); // Привіт
+sayHi(); // Привіт
 
-alert( `Called ${sayHi.counter} times` ); // Called 2 times
+alert( `Викликана ${sayHi.counter} рази` ); // Викликана 2 рази
 ```
 
 ```warn header="A property is not a variable"
-A property assigned to a function like `sayHi.counter = 0` does *not* define a local variable `counter` inside it. In other words, a property `counter` and a variable `let counter` are two unrelated things.
+Властивість, присвоєна функції, як `sayhi.counter = 0` *не* визначає локальну змінну `counter` всередині цієї функції. Іншими словами, властивість `counter` та змінна `let counter` є двома незв'язаними речами.
 
-We can treat a function as an object, store properties in it, but that has no effect on its execution. Variables are not function properties and vice versa. These are just parallel worlds.
+Ми можемо використовувати функцію як об'єкт, зберігати властивості у ньому, але це не впливатиме на її виконання. Змінні -- це не властивості функції і навпаки. Це два паралельні світи.
 ```
 
-Function properties can replace closures sometimes. For instance, we can rewrite the counter function example from the chapter <info:closure> to use a function property:
+Властивості функцій можуть іноді замінити замикання. Наприклад, ми можемо переписати приклад функції лічильника з розділу <info:closure> використовуючи властивість функції:
 
 ```js run
 function makeCounter() {
@@ -178,11 +178,11 @@ alert( counter() ); // 0
 alert( counter() ); // 1
 ```
 
-The `count` is now stored in the function directly, not in its outer Lexical Environment.
+Зараз `count` зберігається в функції безпосередньо, а не у зовнішньому лексичному середовищі.
 
-Is it better or worse than using a closure?
+Це краще або гірше, ніж використання замикання?
 
-The main difference is that if the value of `count` lives in an outer variable, then external code is unable to access it. Only nested functions may modify it. And if it's bound to a function, then such a thing is possible:
+Основна відмінність полягає в тому, що якщо значення `count` живе в зовнішній змінній, то зовнішній код не може отримати доступ до нього.Тільки вкладені функції можуть змінювати його. А якщо це значення присвоєно як властивість функції, то ми можемо отримати до нього доступ:
 
 ```js run
 function makeCounter() {
@@ -204,17 +204,17 @@ alert( counter() ); // 10
 */!*
 ```
 
-So the choice of implementation depends on our aims.
+Таким чином, вибір реалізації залежить від наших цілей.
 
 ## Named Function Expression
 
-Named Function Expression, or NFE, is a term for Function Expressions that have a name.
+Named Function Expression, або NFE -- це термін для Function Expressions, у якого є назва.
 
-For instance, let's take an ordinary Function Expression:
+Наприклад, давайте об’явимо звичайний Function Expression:
 
 ```js
 let sayHi = function(who) {
-  alert(`Hello, ${who}`);
+  alert(`Привіт, ${who}`);
 };
 ```
 
@@ -222,68 +222,68 @@ And add a name to it:
 
 ```js
 let sayHi = function *!*func*/!*(who) {
-  alert(`Hello, ${who}`);
+  alert(`Привіт, ${who}`);
 };
 ```
 
-Did we achieve anything here? What's the purpose of that additional `"func"` name?
+Чого ми досягли тут? Яка мета додаткової назви `"func"`?
 
-First let's note, that we still have a Function Expression. Adding the name `"func"` after `function` did not make it a Function Declaration, because it is still created as a part of an assignment expression.
+Спочатку відзначимо, що у нас ще є Function Expression. Додавання назви `"func"` після `function` не робить оголошення функції у вигляді Functional Declaration, оскільки функція все є частиною виразу присвоєння.
 
-Adding such a name also did not break anything.
+Додавання такої назви нічого не порушує.
 
-The function is still available as `sayHi()`:
+Функція все ще доступна як `sayHi()`:
 
 ```js run
 let sayHi = function *!*func*/!*(who) {
-  alert(`Hello, ${who}`);
+  alert(`Привіт, ${who}`);
 };
 
-sayHi("John"); // Hello, John
+sayHi("Іван"); // Привіт, Іван
 ```
 
-There are two special things about the name `func`, that are the reasons for it:
+Є дві важливі особливості назви `func`, через які воно дається:
 
-1. It allows the function to reference itself internally.
-2. It is not visible outside of the function.
+1. Вона дозволяє функції посилатися на себе.
+2. Вона не доступна за межами функції.
 
-For instance, the function `sayHi` below calls itself again with `"Guest"` if no `who` is provided:
+Наприклад, функція `sayHi` нижче викликає себе знову `"Гість"` якщо `who` не надається:
 
 ```js run
 let sayHi = function *!*func*/!*(who) {
   if (who) {
-    alert(`Hello, ${who}`);
+    alert(`Привіт, ${who}`);
   } else {
 *!*
-    func("Guest"); // use func to re-call itself
+    func("Гість"); // використовує func для повторного виклику
 */!*
   }
 };
 
-sayHi(); // Hello, Guest
+sayHi(); // Привіт, Гість
 
-// But this won't work:
-func(); // Error, func is not defined (not visible outside of the function)
+// Але це не буде працювати:
+func(); // Помилка, func не оголошена (недоступна за межами функції)
 ```
 
-Why do we use `func`? Maybe just use `sayHi` for the nested call?
+Чому ми використовуємо `func`? Можливо, просто використовувати `sayHi` для вкладеного виклику?
 
 
-Actually, in most cases we can:
+Насправді, в більшості випадків ми можемо це зробити:
 
 ```js
 let sayHi = function(who) {
   if (who) {
-    alert(`Hello, ${who}`);
+    alert(`Привіт, ${who}`);
   } else {
 *!*
-    sayHi("Guest");
+    sayHi("Гість");
 */!*
   }
 };
 ```
 
-The problem with that code is that `sayHi` may change in the outer code. If the function gets assigned to another variable instead, the code will start to give errors:
+Проблема з цим кодом полягає в тому, що `sayHi` може змінюватися у зовнішньому коді. Якщо функція присвоється іншій змінній, код почне давати помилки:
 
 ```js run
 let sayHi = function(who) {
@@ -291,7 +291,7 @@ let sayHi = function(who) {
     alert(`Hello, ${who}`);
   } else {
 *!*
-    sayHi("Guest"); // Error: sayHi is not a function
+    sayHi("Guest"); // Помилка: sayHi не є функцією
 */!*
   }
 };
@@ -299,10 +299,10 @@ let sayHi = function(who) {
 let welcome = sayHi;
 sayHi = null;
 
-welcome(); // Error, the nested sayHi call doesn't work any more!
+welcome(); // Помилка, вкладений виклик sayHi більше не працює!
 ```
 
-That happens because the function takes `sayHi` from its outer lexical environment. There's no local `sayHi`, so the outer variable is used. And at the moment of the call that outer `sayHi` is `null`.
+Це відбувається тому, що функція приймає `sayHi` з його зовнішнього лексичного середовища. Там немає місцевого `sayHi`, тому використовується зовнішня змінна. І в момент виклику зовнішній `sayHi` є `null`.
 
 The optional name which we can put into the Function Expression is meant to solve exactly these kinds of problems.
 
