@@ -160,7 +160,7 @@ while (true) {
 }
 ```
 
-Це рідко потрібно, але дає нам більше контролю над процесом, ніж `для ..of`. Наприклад, ми можемо розділити процес ітерації: трохи ітерувати, а потім зупинитися, зробити щось інше, а потім відновити пізніше.
+Це рідко потрібно, але дає нам більше контролю над процесом, ніж `for ..of`. Наприклад, ми можемо розділити процес ітерації: трохи ітерувати, а потім зупинитися, зробити щось інше, а потім відновити пізніше.
 
 ## Ітеровані об’єкти та псевдомасиви [#array-like]
 
@@ -186,7 +186,7 @@ let arrayLike = { // має індекси та length => псевдомасив
 };
 
 *!*
-// Error (немає Symbol.iterator)
+// Помилка (немає Symbol.iterator)
 for (let item of arrayLike) {}
 */!*
 ```
@@ -195,57 +195,57 @@ for (let item of arrayLike) {}
 
 ## Array.from
 
-There's a universal method [Array.from](mdn:js/Array/from) that takes an iterable or array-like value and makes a "real" `Array` from it. Then we can call array methods on it.
+Існує універсальний метод [Array.from](mdn:js/Array/from), який приймає ітерований об’єкт або псевдомасив і робить з нього "справжній" масив. Тоді ми можемо викликати на ньому методи масиву.
 
-For instance:
+Наприклад:
 
 ```js run
 let arrayLike = {
-  0: "Hello",
-  1: "World",
+  0: "Привіт",
+  1: "Світ",
   length: 2
 };
 
 *!*
 let arr = Array.from(arrayLike); // (*)
 */!*
-alert(arr.pop()); // World (method works)
+alert(arr.pop()); // Світ (метод працює)
 ```
 
-`Array.from` at the line `(*)` takes the object, examines it for being an iterable or array-like, then makes a new array and copies all items to it.
+`Array.from` у рядку `(*)` бере об'єкт, перевіряє його на ітерабельність або те, що це псевдомасив, потім створює новий масив і копіює до нього всі елементи.
 
-The same happens for an iterable:
+Те ж саме відбувається і з ітерованим об’єктом:
 
 ```js
-// assuming that range is taken from the example above
+// припустимо, що діапазон взятий з наведеного вище прикладу
 let arr = Array.from(range);
 alert(arr); // 1,2,3,4,5 (array toString conversion works)
 ```
 
-The full syntax for `Array.from` also allows us to provide an optional "mapping" function:
+Повний синтаксис для `Array.from` також дозволяє нам надати додаткову функцію "трансформації":
 ```js
 Array.from(obj[, mapFn, thisArg])
 ```
 
 The optional second argument `mapFn` can be a function that will be applied to each element before adding it to the array, and `thisArg` allows us to set `this` for it.
 
-For instance:
+Наприклад:
 
 ```js
-// assuming that range is taken from the example above
+// припустимо, що діапазон взятий з наведеного вище прикладу
 
-// square each number
+// порахуємо квадрат кожного числа
 let arr = Array.from(range, num => num * num);
 
 alert(arr); // 1,4,9,16,25
 ```
 
-Here we use `Array.from` to turn a string into an array of characters:
+Тут ми використовуємо `Array.from`, щоб перетворити рядок у масив символів:
 
 ```js run
 let str = '𝒳😂';
 
-// splits str into array of characters
+// розіб’ємо рядок на масив символів
 let chars = Array.from(str);
 
 alert(chars[0]); // 𝒳
@@ -253,14 +253,14 @@ alert(chars[1]); // 😂
 alert(chars.length); // 2
 ```
 
-Unlike `str.split`, it relies on the iterable nature of the string and so, just like `for..of`, correctly works with surrogate pairs.
+На відміну від `str.split`, він спирається на ітерабельний характер рядка і тому, так само, як `for..of`, коректно працює з сурогатними парами.
 
-Technically here it does the same as:
+Технічно тут це відбувається так само, як:
 
 ```js run
 let str = '𝒳😂';
 
-let chars = []; // Array.from internally does the same loop
+let chars = []; // Array.from внутрішньо робить цей самий цикл
 for (let char of str) {
   chars.push(char);
 }
@@ -268,9 +268,9 @@ for (let char of str) {
 alert(chars);
 ```
 
-...But it is shorter.    
+...Але це коротше.
 
-We can even build surrogate-aware `slice` on it:
+Ми навіть можемо побудувати на ньому `slice`, що підтримує сутогатні пари:
 
 ```js run
 function slice(str, start, end) {
@@ -281,25 +281,26 @@ let str = '𝒳😂𩷶';
 
 alert( slice(str, 1, 3) ); // 😂𩷶
 
-// the native method does not support surrogate pairs
-alert( str.slice(1, 3) ); // garbage (two pieces from different surrogate pairs)
+// нативний метод не підтримує сурогатні пари
+alert( str.slice(1, 3) ); // сміття (дві частини з різних сурогатних пар)
 ```
 
 
-## Summary
+## Підсумки
 
-Objects that can be used in `for..of` are called *iterable*.
+Об'єкти, які можна використовуватися у `for..of`, називаються *ітерованими*.
 
-- Technically, iterables must implement the method named `Symbol.iterator`.
-    - The result of `obj[Symbol.iterator]()` is called an *iterator*. It handles further iteration process.
+- Технічно ітеровані об’єкти повинні реалізовувати метод з назвою `Symbol.iterator`.
+    - Результат `obj[Symbol.iterator]()` називається *ітератором*. Він забезпечує подальший процес ітерації.
     - An iterator must have the method named `next()` that returns an object `{done: Boolean, value: any}`, here `done:true` denotes the end of the iteration process, otherwise the `value` is the next value.
-- The `Symbol.iterator` method is called automatically by `for..of`, but we also can do it directly.
-- Built-in iterables like strings or arrays, also implement `Symbol.iterator`.
-- String iterator knows about surrogate pairs.
+    - Ітератор повинен мати метод з назвою `next()`, який повертає об'єкт `{done: Boolean, value: any}`, де `done: true` означає кінець процесу ітерації, інакше `value` є наступним значенням.
+- Метод `Symbol.iterator` автоматично викликається `for..of`, але ми також можемо це зробити безпосередньо.
+- Вбудовані ітеровані об’єкти, такі як рядки або масиви, також реалізують `Symbol.iterator`.
+- Рядковий ітератор знає про сурогатні пари.
 
 
-Objects that have indexed properties and `length` are called *array-like*. Such objects may also have other properties and methods, but lack the built-in methods of arrays.
+Об'єкти, які мають індексовані властивості та `length`, називаються *псевдомасивами*. Такі об’єкти також можуть мати інші властивості та методи, але не мають вбудованих методів масивів.
 
-If we look inside the specification -- we'll see that most built-in methods assume that they work with iterables or array-likes instead of "real" arrays, because that's more abstract.
+Якщо ми заглянемо в специфікацію -- ми побачимо, що більшість вбудованих методів припускають, що вони працюють з ітерованими об’єктами або псевдомасивами замість "реальних" масивів, тому що це більш абстрактно.
 
-`Array.from(obj[, mapFn, thisArg])` makes a real `Array` from an iterable or array-like `obj`, and we can then use array methods on it. The optional arguments `mapFn` and `thisArg` allow us to apply a function to each item.
+`Array.from(obj[, mapFn, thisArg])` створює справжній `Array` з ітерованого об’єкту або псевдомасиву `obj`, і тоді ми можемо використовувати на ньому методи масиву. Необов’язкові аргументи `mapFn` та` thisArg` дозволяють нам застосовувати функції до кожного елемента.
