@@ -1,52 +1,52 @@
 
-# Function object, NFE
+# Об'єкт функції, NFE
 
-As we already know, a function in JavaScript is a value.
+Як ми вже знаємо, функція в JavaScript - це значення.
 
-Every value in JavaScript has a type. What type is a function?
+Кожне значення в JavaScript має тип. Який тип функції?
 
-In JavaScript, functions are objects.
+У JavaScript, функції є об'єктами.
 
 A good way to imagine functions is as callable "action objects". We can not only call them, but also treat them as objects: add/remove properties, pass by reference etc.
+Хороший спосіб уявити функції - це як "об'єкти, що можна викликати, та які можуть виконувати якісь дії". Ми можемо не тільки викликати їх, але й ставитися до них як до об'єктів: додавання/видаляти властивості, передавати за посиланням тощо.
 
+## Властивість "name"
 
-## The "name" property
+Функціональні об'єкти містять деякі зручні властивості.
 
-Function objects contain some useable properties.
-
-For instance, a function's name is accessible as the "name" property:
+Наприклад, назва функції доступна як властивість "name":
 
 ```js run
 function sayHi() {
-  alert("Hi");
+  alert("Привіт");
 }
 
 alert(sayHi.name); // sayHi
 ```
 
-What's kind of funny, the name-assigning logic is smart. It also assigns the correct name to a function even if it's created without one, and then immediately assigned:
+Що доволі смішно, логіка присвоєння "name" досить розумна. Вона працює так, що призначає правильне ім'я функції, навіть якщо функція була створена без ім’я, а потім була негайно призначена:
 
 ```js run
 let sayHi = function() {
-  alert("Hi");
+  alert("Привіт");
 };
 
-alert(sayHi.name); // sayHi (there's a name!)
+alert(sayHi.name); // sayHi (є імя!)
 ```
 
-It also works if the assignment is done via a default value:
+Це також працює, якщо призначення виконується за допомогою значення за замовчуванням:
 
 ```js run
 function f(sayHi = function() {}) {
-  alert(sayHi.name); // sayHi (works!)
+  alert(sayHi.name); // sayHi (працює!)
 }
 
 f();
 ```
 
-In the specification, this feature is called a "contextual name". If the function does not provide one, then in an assignment it is figured out from the context.
+У специфікації ця ознака називається "контекстне ім'я". Якщо функція не надає власне ім’я, то в присвоєнні воно з'являється з контексту.
 
-Object methods have names too:
+Методи об'єктів також мають назви:
 
 ```js run
 let user = {
@@ -65,21 +65,21 @@ alert(user.sayHi.name); // sayHi
 alert(user.sayBye.name); // sayBye
 ```
 
-There's no magic though. There are cases when there's no way to figure out the right name. In that case, the name property is empty, like here:
+Проте тут немає ніякої магії. Є випадки, коли немає жодного способу з'ясувати правильну назву. У цьому випадку ім'я назви порожнє, як тут:
 
 ```js run
-// function created inside array
+// функція створена всередині масиву
 let arr = [function() {}];
 
-alert( arr[0].name ); // <empty string>
-// the engine has no way to set up the right name, so there is none
+alert( arr[0].name ); // <порожній рядок>
+// рущій JavaScript не має можливості налаштувати правильну назву, тому в цьому випадку немає жодного значення
 ```
 
-In practice, however, most functions do have a name.
+На практиці, однак, більшість функцій мають назву.
 
-## The "length" property
+## Властивість "length"
 
-There is another built-in property "length" that returns the number of function parameters, for instance:
+Існує ще одна вбудована властивість "length", яка повертає кількість параметрів функції, наприклад:
 
 ```js run
 function f1(a) {}
@@ -91,20 +91,21 @@ alert(f2.length); // 2
 alert(many.length); // 2
 ```
 
-Here we can see that rest parameters are not counted.
+В станньому випадку ми бачимо, що решта параметрів не підраховуються.
 
-The `length` property is sometimes used for [introspection](https://en.wikipedia.org/wiki/Type_introspection) in functions that operate on other functions.
+Власність `length` іноді використовується для [introspection](https://uk.wikipedia.org/wiki/Інтроспекція_(програмування)) у функціях, які працюють за іншими функціями.
 
-For instance, in the code below the `ask` function accepts a `question` to ask and an arbitrary number of `handler` functions to call.
+Наприклад, у коді нижче функція `ask` приймає в якості аргументів запитання `question` та довільну кількість функцій-оброблювачів відповіді `handler`.
 
-Once a user provides their answer, the function calls the handlers. We can pass two kinds of handlers:
+Після того, як користувач надає відповідь, функція викликає оброблювачі. Ми можемо передати два типи обробників:
 
-- A zero-argument function, which is only called when the user gives a positive answer.
-- A function with arguments, which is called in either case and returns an answer.
+- функція без аргументів, яка лише викликається, коли користувач дає позитивну відповідь.
 
-To call `handler` the right way, we examine the `handler.length` property.
+- функція з аргументами, яка називається в будь-якому випадку, і повертає відповідь.
 
-The idea is that we have a simple, no-arguments handler syntax for positive cases (most frequent variant), but are able to support universal handlers as well:
+Щоб викликати `handler` правильно, ми розглядаємо властивість `handler.length`.
+
+Ідея полягає в тому, що у нас є простий, синтаксис обробника без аргументів для позитивних випадків (найчастіший варіант), але також підтримуються універсальні обробники:
 
 ```js run
 function ask(question, ...handlers) {
@@ -120,12 +121,12 @@ function ask(question, ...handlers) {
 
 }
 
-// for positive answer, both handlers are called
-// for negative answer, only the second one
-ask("Question?", () => alert('You said yes'), result => alert(result));
+// Для позитивної відповіді, обидва обробники викликаються
+// для негативної відповіді, тільки другий
+ask("Запитання?", () => alert('Ти сказав так'), result => alert(result));
 ```
 
-This is a particular case of so-called [polymorphism](https://en.wikipedia.org/wiki/Polymorphism_(computer_science)) -- treating arguments differently depending on their type or, in our case depending on the `length`. The idea does have a use in JavaScript libraries.
+Це конкретний випадок так званого [поліморфізму](https://uk.wikipedia.org/wiki/Поліморфізм_(програмування)) -- обробка аргументів по-різному залежно від їх типу або, у нашому випадку залежно від `length`. Ця ідея використовується в бібліотеках JavaScript.
 
 ## Custom properties
 
