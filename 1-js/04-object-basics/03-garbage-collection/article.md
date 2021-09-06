@@ -187,26 +187,26 @@ family = null;
 
 Some of the optimizations:
 
-- **Generational collection** -- objects are split into two sets: "new ones" and "old ones". Many  objects appear, do their job and die fast, they can be cleaned up aggressively. Those that survive for long enough, become "old" and are examined less often.
-- **Incremental collection** -- if there are many objects, and we try to walk and mark the whole object set at once, it may take some time and introduce visible delays in the execution. So the engine tries to split the garbage collection into pieces. Then the pieces are executed one by one, separately. That requires some extra bookkeeping between them to track changes, but we have many tiny delays instead of a big one.
-- **Idle-time collection** -- the garbage collector tries to run only while the CPU is idle, to reduce the possible effect on the execution.
+- **Збірка поколінь (Generational collection)** -- об’єкти поділяються на два набори: "нові" та "старі". Багато об’єктів з’являється, виконує свою роботу і швидко гине, їх можна агресивно прибирати. Ті, що виживають досить довго, стають "старими" і оглядаються рідше.
+- **Інкрементний збір (Incremental collection)** -- якщо об’єктів багато, і ми намагаємось пройтися і позначити весь набір об’єктів одночасно, це може зайняти деякий час і ввести видимі затримки у виконанні. Тому рушій намагається розділити збирання сміття на частини. Потім частини виконуються по одній, окремо. Це вимагає додаткового обліку між ними для відстеження змін, але ми маємо багато маленьких затримок замість великих.
+- **Збір під час простою (Idle-time collection)** -- завзвичай збирання сміття працює лише під час простою процесора, щоб зменшити можливий вплив на виконання.
 
-There exist other optimizations and flavours of garbage collection algorithms. As much as I'd like to describe them here, I have to hold off, because different engines implement different tweaks and techniques. And, what's even more important, things change as engines develop, so studying deeper "in advance", without a real need is probably not worth that. Unless, of course, it is a matter of pure interest, then there will be some links for you below.
+Існують й інші оптимізації та варіанти алгоритмів збирання сміття. Але як би нам не хотілося описати їх тут, ми повинні утриматися від цього, тому що різні інтерпретатори JavaScript застосовують різні прийоми і хитрощі. І, що ще важливіше, все змінюється в міру розвитку інтерпретаторів, тому глибше вивчення "заздалегідь" без реальної потреби, ймовірно, не варто того. Якщо, звичайно, це не питання чистого інтересу, нижче для вас будуть деякі посилання.
 
-## Summary
+## Підсумки
 
-The main things to know:
+Основне, що потрібно знати:
 
-- Garbage collection is performed automatically. We cannot force or prevent it.
-- Objects are retained in memory while they are reachable.
-- Being referenced is not the same as being reachable (from a root): a pack of interlinked objects can become unreachable as a whole.
+- Збирання сміття здійснюється автоматично. Ми не можемо примусити або запобігти цьому.
+- Об’єкти зберігаються в пам’яті, поки вони досяжні.
+- Посилання -- це не те ж саме, що бути досяжним (з кореня): декілька взаємопов’язаних об’єктів можуть стати недосяжними усі разом.
 
-Modern engines implement advanced algorithms of garbage collection.
+Сучасні рушії реалізують передові алгоритми збирання сміття.
 
-A general book "The Garbage Collection Handbook: The Art of Automatic Memory Management" (R. Jones et al) covers some of them.
+Деякі з них висвітлені в книзі "The Garbage Collection Handbook: The Art of Automatic Memory Management" (R. Jones et al).
 
-If you are familiar with low-level programming, the more detailed information about V8 garbage collector is in the article [A tour of V8: Garbage Collection](http://jayconrod.com/posts/55/a-tour-of-v8-garbage-collection).
+Якщо ви знайомі з низькорівневим програмуванням, більш детальна інформація про збирання сміття у рушії V8 міститься у статті [A tour of V8: Garbage Collection](http://jayconrod.com/posts/55/a-tour-of-v8-garbage-collection).
 
-[V8 blog](https://v8.dev/) also publishes articles about changes in memory management from time to time. Naturally, to learn the garbage collection, you'd better prepare by learning about V8 internals in general and read the blog of [Vyacheslav Egorov](http://mrale.ph) who worked as one of V8 engineers. I'm saying: "V8", because it is best covered with articles in the internet. For other engines, many approaches are similar, but garbage collection differs in many aspects.
+[V8 blog](https://v8.dev/) також час від часу публікує статті про зміни в управлінні пам’яттю. Зрозуміло, вам необхідно розуміти, як влаштований всередині рущія V8 в цілому. Про це ви можете прочитати у блозі [Вячеслава Єгорова](http://mrale.ph) який працював одним з інженерів V8. Я кажу: "V8", тому що він найкраще висвітлений статтями в Інтернеті. Для інших інтерпретаторів деякі підходи схожі, але збирання сміття відрізняється в багатьох аспектах.
 
-In-depth knowledge of engines is good when you need low-level optimizations. It would be wise to plan that as the next step after you're familiar with the language.  
+Глибоке розуміння роботи інтерпретаторів необхідно, коли вам потрібні низькорівневі оптимізації. Було б розумно планувати їх вивчення тільки як наступний крок після вивчення мови JavaScript.
