@@ -304,17 +304,17 @@ welcome(); // Помилка, вкладений виклик sayHi більше
 
 Це відбувається тому, що функція приймає `sayHi` з його зовнішнього лексичного середовища. Там немає місцевого `sayHi`, тому використовується зовнішня змінна. І в момент виклику зовнішній `sayHi` є `null`.
 
-The optional name which we can put into the Function Expression is meant to solve exactly these kinds of problems.
+Необов'язкове ім'я, яке ми можемо ввести в Function Expression, призначене для вирішення цих проблем.
 
-Let's use it to fix our code:
+Давайте використовувати це, щоб виправити наш код:
 
 ```js run
 let sayHi = function *!*func*/!*(who) {
   if (who) {
-    alert(`Hello, ${who}`);
+    alert(`Привіт, ${who}`);
   } else {
 *!*
-    func("Guest"); // Now all fine
+    func("Гість"); // Тепер все добре
 */!*
   }
 };
@@ -322,33 +322,33 @@ let sayHi = function *!*func*/!*(who) {
 let welcome = sayHi;
 sayHi = null;
 
-welcome(); // Hello, Guest (nested call works)
+welcome(); // Привіт, Гість (вкладений виклик виконується)
 ```
 
-Now it works, because the name `"func"` is function-local. It is not taken from outside (and not visible there). The specification guarantees that it will always reference the current function.
+Тепер це працює, тому що назва `"func"` -- локальне і знаходиться в середині функції. Воно не береться ззовні (і не доступно звідти). Специфікація гарантує, що воно завжди посилається на поточну функцію.
 
-The outer code still has its variable `sayHi` or `welcome`. And `func` is an "internal function name", how the function can call itself internally.
+Зовнішній код все ще має свою змінну `sayHi` або `welcome`. А `func` - це "внутрішньє ім'я функції", яким функція може викликати себе зсередини.
 
-```smart header="There's no such thing for Function Declaration"
-The "internal name" feature described here is only available for Function Expressions, not for Function Declarations. For Function Declarations, there is no syntax for adding an "internal" name.
+```smart header="Це не працює з Function Declaration"
+Функціональність з "внутрішньою назвою", що описана вище, доступна лише для Function Expression, а не для Function Declaration. Для Function Declaration немає синтаксису для додавання "внутрішньої" назви.
 
-Sometimes, when we need a reliable internal name, it's the reason to rewrite a Function Declaration to Named Function Expression form.
+Іноді, коли нам потрібна надійна внутрішня назва, це причина перезаписати Function Declaration на Named Function Expression.
 ```
 
-## Summary
+## Підсумки
 
-Functions are objects.
+Функції є об'єктами.
 
-Here we covered their properties:
+Їх властивості:
 
-- `name` -- the function name. Usually taken from the function definition, but if there's none, JavaScript tries to guess it from the context (e.g. an assignment).
-- `length` -- the number of arguments in the function definition. Rest parameters are not counted.
+- `name` - назва функції. Зазвичай береться з оголошення функції, але якщо немає, JavaScript намагається здогадатися з контексту (наприклад, з присвоєння).
+- `length` -- кількість аргументів в оголошенні функції. Параметри, що зібрані за допомогою rest оператора, не підраховуються.
 
-If the function is declared as a Function Expression (not in the main code flow), and it carries the name, then it is called a Named Function Expression. The name can be used inside to reference itself, for recursive calls or such.
+Якщо функція оголошується як Function Expression (не в основному потоці коду), і має власну назву, то це називається Named Function Expression.Назва може бути використана всередині функції, щоб посилатися на саму себе, для рекурсійних викликів та ін..
 
-Also, functions may carry additional properties. Many well-known JavaScript libraries make great use of this feature.
+Також функції можуть нести додаткові властивості. Багато відомих бібліотек JavaScript активно використовують цю властивість функції.
 
-They create a "main" function and attach many other "helper" functions to it. For instance, the [jQuery](https://jquery.com) library creates a function named `$`. The [lodash](https://lodash.com) library creates a function `_`, and then adds `_.clone`, `_.keyBy` and other properties to it (see the [docs](https://lodash.com/docs) when you want to learn more about them). Actually, they do it to lessen their pollution of the global space, so that a single library gives only one global variable. That reduces the possibility of naming conflicts.
+Вони створюють "головну" функцію і додають багато інших "допоміжних" функцій до неї. Наприклад, бібліотека [jQuery](https://jquery.com) створює функцію, що називається `$`. Бібліотека [lodash](https://lodash.com) створює функцію `_`, а потім додає `_.clone`, `_.keyBy` та інші властивості до неї (див. [документацію](https://lodash.com/docs), що дізнатися більше).мВласне, вони роблять це, щоб зменшити своє забруднення глобального простору імен, так що одна бібліотека дає лише одну глобальну змінну. Це зменшує можливість конфліктів імен.
 
 
-So, a function can do a useful job by itself and also carry a bunch of other functionality in properties.
+Отже, функція може робити корисну роботу сама по собі, а також нести купу інших функцій у властивостях.
