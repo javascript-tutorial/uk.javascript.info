@@ -24,6 +24,15 @@
       ]
     },
     {
+      "login": "MykolaSopiha",
+      "name": "Mykola Sopiha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
+      "profile": "https://www.linkedin.com/in/m-sopiha/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
       "login": "stas-dolgachov",
       "name": "Stanislav",
       "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
@@ -31,15 +40,6 @@
       "contributions": [
         "translation",
         "review"
-      ]
-    },
-    {
-      "login": "MykolaSopiha",
-      "name": "Mykola Sopiha",
-      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
-      "profile": "https://www.linkedin.com/in/m-sopiha/",
-      "contributions": [
-        "translation"
       ]
     },
     {
