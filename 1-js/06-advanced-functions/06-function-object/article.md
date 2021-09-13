@@ -7,7 +7,6 @@
 
 У JavaScript, функції є об’єктами.
 
-A good way to imagine functions is as callable "action objects". We can not only call them, but also treat them as objects: add/remove properties, pass by reference etc.
 Хороший спосіб уявити функції -- це як "об’єкти, що можна викликати, та які можуть виконувати якісь дії". Ми можемо не тільки викликати їх, але й ставитися до них як до об’єктів: додавання/видаляти властивості, передавати за посиланням тощо.
 
 ## Властивість "name"
