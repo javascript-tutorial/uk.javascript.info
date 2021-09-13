@@ -160,7 +160,7 @@ alert( `Викликана ${sayHi.counter} рази` ); // Викликана 2
 
 ```js run
 function makeCounter() {
-  // instead of:
+  // замість:
   // let count = 0
 
   function counter() {
