@@ -209,7 +209,7 @@ alert( counter() ); // 10
 
 Named Function Expression, або NFE -- це термін для Function Expressions, у якого є назва.
 
-Наприклад, об'явімо звичайний Function Expression:
+Наприклад, об’явімо звичайний Function Expression:
 
 ```js
 let sayHi = function(who) {
