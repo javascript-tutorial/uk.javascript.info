@@ -2,52 +2,52 @@ importance: 5
 
 ---
 
-# Throttle decorator
+# Дросельний (throttle) декоратор
 
-Create a "throttling" decorator `throttle(f, ms)` -- that returns a wrapper.
+Створіть "дросельний" декоратор `throttle(f, ms)` -- що повертає обгортку.
 
-When it's called multiple times, it passes the call to `f` at maximum once per `ms` milliseconds.
+Коли він викликається кілька разів, він передає виклик до `f` максимум один раз на `ms` мілісекунд.
 
-The difference with debounce is that it's completely different decorator:
-- `debounce` runs the function once after the "cooldown" period. Good for processing the final result.
-- `throttle` runs it not more often than given `ms` time. Good for regular updates that shouldn't be very often.
+Різниця з debounce полягає в тому, що це зовсім інший декоратор:
+- `debounce` запускає функцію один раз після періоду "спокою". Це добре для обробки кінцевого результату.
+- `throttle` запускає функцію не частіше, ніж дано `ms` часу. Це добре для регулярних оновлень, які не повинні бути дуже часто.
 
-In other words, `throttle` is like a secretary that accepts phone calls, but bothers the boss (calls the actual `f`) not more often than once per `ms` milliseconds.
+Іншими словами, `throttle` -- це як секретар, який приймає телефонні дзвінки, але турбує боса (викликає фактичну `f`) не частіше, ніж один раз на `ms` мілісекунд.
 
-Let's check the real-life application to better understand that requirement and to see where it comes from.
+Перевірмо застосунок з реального життя, щоб краще зрозуміти ці вимогу та побачити, звідки вони походять.
 
-**For instance, we want to track mouse movements.**
+**Наприклад, ми хочемо відстежувати рухи миші.**
 
-In a browser we can setup a function to run at every mouse movement and get the pointer location as it moves. During an active mouse usage, this function usually runs very frequently, can be something like 100 times per second (every 10 ms).
-**We'd like to update some information on the web-page when the pointer moves.**
+У браузері ми можемо налаштувати запускати функцію при кожному русі миші та отримати місце курсору та те, як він рухається. Під час активного використання миші ця функція зазвичай працює дуже часто, може бути щось на зразок 100 разів на секунду (кожні 10 мс).
+**Ми хотіли б оновити деяку інформацію на вебсторінці, коли курсор рухається.**
 
-...But updating function `update()` is too heavy to do it on every micro-movement. There is also no sense in updating more often than once per 100ms.
+...Але функція оновлення `update()` занадто тяжка, щоб виконувати її це на кожному мікрорусі. Також немає сенсу в оновленні частіше, ніж один раз на 100 мс.
 
-So we'll wrap it into the decorator: use `throttle(update, 100)` as the function to run on each mouse move instead of the original `update()`. The decorator will be called often, but forward the call to `update()` at maximum once per 100ms.
+Отже, ми загорнемо її в декоратор: використовуємо `throttle(update, 100)` як функцію для запуску на кожному переміщенні миші замість оригінального `update()`. Декоратор буде викликатися часто, але передавали виклик до `update()` максимум один раз на 100 мс.
 
-Visually, it will look like this:
+Візуально, це буде виглядати так:
 
-1. For the first mouse movement the decorated variant immediately passes the call to `update`. That's important, the user sees our reaction to their move immediately.
-2. Then as the mouse moves on, until `100ms` nothing happens. The decorated variant ignores calls.
-3. At the end of `100ms` -- one more `update` happens with the last coordinates.
-4. Then, finally, the mouse stops somewhere. The decorated variant waits until `100ms` expire and then runs `update` with last coordinates. So, quite important, the final mouse coordinates are processed.
+1. Для першого руху миші декорований варіант негайно передає виклик до `update`. Це важливо, що користувач негайно побачить нашу реакцію на його рух.
+2. Після того, як миша рухається, до `100ms` нічого не відбувається. Декорований варіант ігнорує виклики.
+3. Наприкінці `100ms` -- ще один `update` відбувається з останніми координатами.
+4. Тоді, нарешті, миша зупиняється десь. Декорований варіант чекає, доки `100ms` закінчуються, а потім запускає `update` з останніми координатами. Отже, дуже важливо, щоб остаточні координати миші обробилися.
 
-A code example:
+Приклад коду:
 
 ```js
 function f(a) {
   console.log(a);
 }
 
-// f1000 passes calls to f at maximum once per 1000 ms
+// f1000 передає виклики до f максимум один раз на 1000 мс
 let f1000 = throttle(f, 1000);
 
-f1000(1); // shows 1
-f1000(2); // (throttling, 1000ms not out yet)
-f1000(3); // (throttling, 1000ms not out yet)
+f1000(1); // показує 1
+f1000(2); // (обмеження, 1000 мс ще не закінчилися)
+f1000(3); // (обмеження, 1000 мс ще не закінчилися)
 
-// when 1000 ms time out...
-// ...outputs 3, intermediate value 2 was ignored
+// коли 1000 ms time out ...
+// ...вивід 3, проміжне значення 2 було проігноровано
 ```
 
-P.S. Arguments and the context `this` passed to `f1000` should be passed to the original `f`.
+P.S. Аргументи та контекст `this` передані в `f1000` повинні бути передані оригінальній `f`.

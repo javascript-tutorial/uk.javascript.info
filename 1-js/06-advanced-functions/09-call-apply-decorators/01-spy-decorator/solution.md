@@ -1,1 +1,1 @@
-The wrapper returned by `spy(f)` should store all arguments and then use `f.apply` to forward the call.
+Обгортка, що повертається за допомогою `spy(f)`, повинна зберігати всі аргументи, а потім використовувати `f.apply`, щоб переадресувати виклик.
