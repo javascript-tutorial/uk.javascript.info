@@ -1,18 +1,18 @@
-# Recursion and stack
+# Рекурсія та стек
 
-Let's return to functions and study them more in-depth.
+Давайте повернемося до функцій і вивчимо їх більш поглиблено.
 
-Our first topic will be *recursion*.
+Нашою першою темою буде *рекурсія*.
 
-If you are not new to programming, then it is probably familiar and you could skip this chapter.
+Якщо ви не новачок в програмуванні, то, мабуть, знайомі з рекурсією, і можете пропустити цю главу.
 
-Recursion is a programming pattern that is useful in situations when a task can be naturally split into several tasks of the same kind, but simpler. Or when a task can be simplified into an easy action plus a simpler variant of the same task. Or, as we'll see soon, to deal with certain data structures.
+Рекурсія -- це паттерн, який є корисним у ситуаціях, коли завдання може бути розділена на кілька завдань того ж роду, але простіших. Або коли завдання може бути спрощене до простої дії плюс простіший варіант того ж завдання. Або, як ми побачимо найближчим часом, щоб праювати з певними структурами даних.
 
-When a function solves a task, in the process it can call many other functions. A partial case of this is when a function calls *itself*. That's called *recursion*.
+Коли функція вирішує завдання, у процесі вона може викликати багато інших функцій. Частковий випадок цього є те, коли функція викликає *себе*. Це називається *рекурсія*.
 
-## Two ways of thinking
+## Два способи мислення
 
-For something simple to start with -- let's write a function `pow(x, n)` that raises `x` to a natural power of `n`. In other words, multiplies `x` by itself `n` times.
+Щоб почати з чогось простого -- давайте напишемо функцію `pow(x, n)`, що приводить `x` в натуральну степінь `n`. Іншими словами, множить `x` сам на себе `n` разів.
 
 ```js
 pow(2, 2) = 4
@@ -20,15 +20,15 @@ pow(2, 3) = 8
 pow(2, 4) = 16
 ```
 
-There are two ways to implement it.
+Існує два способи реалізації цього.
 
-1. Iterative thinking: the `for` loop:
+1. Ітеративне мислення: цикл `for`:
 
     ```js run
     function pow(x, n) {
       let result = 1;
 
-      // multiply result by x n times in the loop
+      // множимо result на x n разів в циклі
       for (let i = 0; i < n; i++) {
         result *= x;
       }
@@ -39,7 +39,7 @@ There are two ways to implement it.
     alert( pow(2, 3) ); // 8
     ```
 
-2. Recursive thinking: simplify the task and call self:
+2. Рекурсивне мислення: спростити завдання та викликати функцією саму себе:
 
     ```js run
     function pow(x, n) {
@@ -53,9 +53,9 @@ There are two ways to implement it.
     alert( pow(2, 3) ); // 8
     ```
 
-Please note how the recursive variant is fundamentally different.
+Зверніть увагу, як рекурсивний варіант принципово відрізняється.
 
-When `pow(x, n)` is called, the execution splits into two branches:
+Коли `pow(x, n)` викликається, виконання розділяється на дві гілки:
 
 ```js
               if n==1  = x
@@ -65,27 +65,27 @@ pow(x, n) =
               else     = x * pow(x, n - 1)
 ```
 
-1. If `n == 1`, then everything is trivial. It is called *the base* of recursion, because it immediately produces the obvious result: `pow(x, 1)` equals `x`.
-2. Otherwise, we can represent `pow(x, n)` as `x * pow(x, n - 1)`. In maths, one would write <code>x<sup>n</sup> = x * x<sup>n-1</sup></code>. This is called *a recursive step*: we transform the task into a simpler action (multiplication by `x`) and a simpler call of the same task (`pow` with lower `n`). Next steps simplify it further and further until `n` reaches `1`.
+1. Якщо `n == 1`, то все тривіально. Це називається *база* рекурсії, оскільки вона негайно виробляє очевидний результат: `pow(x, 1)` дорівнює `x`.
+2. Інакше ми можемо представляти `pow(x, n)` як `x * pow(x, n)`. У математиці можна написати <code>x<sup>n</sup> = x * x<sup>n-1</sup></code>. Це називається *рекурсивний крок*: ми перетворюємо завдання на простішу дію (множення за допомогою `x`) та на простий виклик того ж завдання (`pow` з меньшим `n`). Наступні кроки спрощують його далі і далі до `n`, що дорівнює `1`.
 
-We can also say that `pow` *recursively calls itself* till `n == 1`.
+Ми також можемо сказати, що `pow` *рекурсивно викликаэ себе* до`n == 1`.
 
-![recursive diagram of pow](recursion-pow.svg)
+![рекурсивна діаграма pow](recursion-pow.svg)
 
 
-For example, to calculate `pow(2, 4)` the recursive variant does these steps:
+Наприклад, для розрахунку `pow(2, 4)` рекурсивний варіант виконує ці кроки:
 
 1. `pow(2, 4) = 2 * pow(2, 3)`
 2. `pow(2, 3) = 2 * pow(2, 2)`
 3. `pow(2, 2) = 2 * pow(2, 1)`
 4. `pow(2, 1) = 2`
 
-So, the recursion reduces a function call to a simpler one, and then -- to even more simpler, and so on, until the result becomes obvious.
+Отже, рекурсія робить виклик функції простішим, а потім - ще більш простішим, і так далі, доки результат стане очевидним.
 
-````smart header="Recursion is usually shorter"
-A recursive solution is usually shorter than an iterative one.
+````smart header="Рекурсія зазвичай коротша"
+Рекурсивне рішення, як правило, коротше, ніж ітераційне.
 
-Here we can rewrite the same using the conditional operator `?` instead of `if` to make `pow(x, n)` more terse and still very readable:
+Ми можемо переписати те ж саме, використовуючи умовний оператор `?` замість `if`, щоб зробити `pow(x, n)` більш лаконічним і зберегти легкість читання:
 
 ```js run
 function pow(x, n) {
@@ -94,11 +94,11 @@ function pow(x, n) {
 ```
 ````
 
-The maximal number of nested calls (including the first one) is called *recursion depth*. In our case, it will be exactly `n`.
+Максимальна кількість вкладених викликів (включаючи перший) називається *глибина рекурсії*. У нашому випадку вона буде точно дорівнювати `n`.
 
-The maximal recursion depth is limited by JavaScript engine. We can rely on it being 10000, some engines allow more, but 100000 is probably out of limit for the majority of them. There are automatic optimizations that help alleviate this ("tail calls optimizations"), but they are not yet supported everywhere and work only in simple cases.
+Максимальна глибина рекурсії обмежена рушієм JavaScript. Ми можемо покластися, що вона може дорівнювати 10000, деякі рушії дозволяють отримати більшу глибину, але 100000, ймовірно, не підтримується більшістю з них. Є автоматичні оптимізації, які допомагають пом'якшити це ("оптимізація хвостових викликів"), але вони ще не підтримуються скрізь і працюють лише у простих випадках.
 
-That limits the application of recursion, but it still remains very wide. There are many tasks where recursive way of thinking gives simpler code, easier to maintain.
+Це обмежує застосування рекурсії, але вона все ще залишається дуже широко поширеною. Є багато завдань, де рекурсивний спосіб мислення дає простіший код, який легше підтримувати.
 
 ## The execution context and stack
 
