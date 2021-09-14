@@ -2,17 +2,17 @@ importance: 5
 
 ---
 
-# Spy decorator
+# Декоратор-шпигун
 
-Create a decorator `spy(func)` that should return a wrapper that saves all calls to function in its `calls` property.
+Створіть декоратор `spy(func)`, який повинен повернути обгортку, яка зберігає всі виклики функції у властивості `calls`.
 
-Every call is saved as an array of arguments.
+Кожен виклик зберігається як масив аргументів.
 
 For instance:
 
 ```js
 function work(a, b) {
-  alert( a + b ); // work is an arbitrary function or method
+  alert( a + b ); // працює як довільна функція або метод
 }
 
 *!*
@@ -23,8 +23,8 @@ work(1, 2); // 3
 work(4, 5); // 9
 
 for (let args of work.calls) {
-  alert( 'call:' + args.join() ); // "call:1,2", "call:4,5"
+  alert( 'виклик:' + args.join() ); // "виклик:1,2", "виклик:4,5"
 }
 ```
 
-P.S. That decorator is sometimes useful for unit-testing. Its advanced form is `sinon.spy` in [Sinon.JS](http://sinonjs.org/) library.
+P.S. Цей декоратор іноді корисний для unit-тестування. Його просунута форма -- `sinon.spy` у бібліотеці [Sinon.JS](http://sinonjs.org/).
