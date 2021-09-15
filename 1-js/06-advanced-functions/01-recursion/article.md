@@ -100,39 +100,39 @@ function pow(x, n) {
 
 Це обмежує застосування рекурсії, але вона все ще залишається дуже широко поширеною. Є багато завдань, де рекурсивний спосіб мислення дає простіший код, який легше підтримувати.
 
-## The execution context and stack
+## Контекст виконання та стек
 
-Now let's examine how recursive calls work. For that we'll look under the hood of functions.
+Тепер давайте розглянемо роботу рекурсивних викликів. Для цього ми подивимося під капот функцій.
 
-The information about the process of execution of a running function is stored in its *execution context*.
+Інформація про процес виконання викликаної функції зберігається у *контексті виконання*.
 
-The [execution context](https://tc39.github.io/ecma262/#sec-execution-contexts) is an internal data structure that contains details about the execution of a function: where the control flow is now, the current variables, the value of `this` (we don't use it here) and few other internal details.
+[Контекст виконання](https:///tc39.github.io/ecma262/#sec-excution-contexts) -- це внутрішня структура даних, яка містить деталі про виконання функції: де зараз керуючий потік, поточні змінні, значення `this` (ми не використовуємо його тут) і кілька інших внутрішніх деталей.
 
-One function call has exactly one execution context associated with it.
+Один виклик функції має рівно один контекст виконання, пов'язаний з ним.
 
-When a function makes a nested call, the following happens:
+Коли функція робить вкладений виклик, відбувається наступне:
 
-- The current function is paused.
-- The execution context associated with it is remembered in a special data structure called *execution context stack*.
-- The nested call executes.
-- After it ends, the old execution context is retrieved from the stack, and the outer function is resumed from where it stopped.
+- Поточна функція зупиняється.
+- Контекст виконання, пов'язаний з нею, запам'ятовується в спеціальній структурі даних, що називається *стек контекстів виконання*.
+- Вкладений виклик виконується.
+- Після закінчення, старий контекст виконання витягується з стека, і зовнішня функція відновлюється з того місця, де вона зупинилася.
 
-Let's see what happens during the `pow(2, 3)` call.
+Давайте подивимося, що відбувається під час виклика `pow(2, 3)`.
 
 ### pow(2, 3)
 
-In the beginning of the call `pow(2, 3)` the execution context will store variables: `x = 2, n = 3`, the execution flow is at line `1` of the function.
+На початку виклика `pow(2, 3)` контекст виконання буде зберігати змінні: `x = 2, n = 3`, потік виконання знаходиться на рядку `1` функції.
 
-We can sketch it as:
+Ми можемо намалювати його наступним чином:
 
 <ul class="function-execution-context-list">
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 1 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 3, на рядку 1}</span>
     <span class="function-execution-context-call">pow(2, 3)</span>
   </li>
 </ul>
 
-That's when the function starts to execute. The condition `n == 1` is falsy, so the flow continues into the second branch of `if`:
+Ось тоді, функція починає виконуватися. Умова `n == 1` -- хибна, тому потік продовжується у другій гілці `if`:
 
 ```js run
 function pow(x, n) {
@@ -149,76 +149,76 @@ alert( pow(2, 3) );
 ```
 
 
-The variables are same, but the line changes, so the context is now:
+Змінні однакові, але виконання функції перейшло на інший рядок, тому контекст зараз:
 
 <ul class="function-execution-context-list">
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 3, на рядку 5}</span>
     <span class="function-execution-context-call">pow(2, 3)</span>
   </li>
 </ul>
 
-To calculate `x * pow(x, n - 1)`, we need to make a subcall of `pow` with new arguments `pow(2, 2)`.
+Для розрахунку `x * pow(x, n - 1)`, ми повинні зробити підвиклик `pow` з новими аргументами `pow(2, 2)`.
 
 ### pow(2, 2)
 
-To do a nested call, JavaScript remembers the current execution context in the *execution context stack*.
+Щоб зробити вкладений виклик, JavaScript пам'ятає контекст поточного виконання в *стеці контексту виконання*.
 
-Here we call the same function `pow`, but it absolutely doesn't matter. The process is the same for all functions:
+Тут ми викликаємо ту ж функцію `pow`, але це абсолютно не має значення. Цей процес однаковий для всіх функцій:
 
-1. The current context is "remembered" on top of the stack.
-2. The new context is created for the subcall.
-3. When the subcall is finished -- the previous context is popped from the stack, and its execution continues.
+1. Поточний контекст "запам'ятовується" на вершині стека.
+2. Новий контекст створюється для підвиклику.
+3. Коли закінчиться підвиклик -- попередній контекст дістається зі стека, і його виконання продовжується.
 
-Here's the context stack when we entered the subcall `pow(2, 2)`:
+Ось контекстний стек, коли ми увійшли до підвиклику `pow(2, 2)`:
 
 <ul class="function-execution-context-list">
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 2, at line 1 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 2, на рядку 1}</span>
     <span class="function-execution-context-call">pow(2, 2)</span>
   </li>
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 3, на рядку 5}</span>
     <span class="function-execution-context-call">pow(2, 3)</span>
   </li>
 </ul>
 
-The new current execution context is on top (and bold), and previous remembered contexts are below.
+Новий поточний контекст виконання знаходиться на вершині (виділений жирним шрифтом), а попередні контексти знаходяться в пам'яті нижче.
 
-When we finish the subcall -- it is easy to resume the previous context, because it keeps both variables and the exact place of the code where it stopped.
+Коли ми закінчимо підвиклик, легко відновити попередній контекст, оскільки він зберігає як змінні, так і точне місце коду, де він зупинився.
 
 ```smart
-Here in the picture we use the word "line", as in our example there's only one subcall in line, but generally a single line of code may contain multiple subcalls, like `pow(…) + pow(…) + somethingElse(…)`.
+Тут, на малюнку, ми використовуємо "на рядку", так як у нашому прикладі є лише один підвиклик в рядку, але, як правило, один рядок коду може містити декілька підвикликів, як `pow(…) + pow(…) + somethingElse(…)`.
 
-So it would be more precise to say that the execution resumes "immediately after the subcall".
+Тому було б точніше сказати, що виконання продовжується "відразу після підвиклику".
 ```
 
 ### pow(2, 1)
 
-The process repeats: a new subcall is made at line `5`, now with arguments `x=2`, `n=1`.
+Процес повторюється: новий підвиклик здійснюється на рядку `5`, тепер з аргументами `x=2`, `n=1`.
 
-A new execution context is created, the previous one is pushed on top of the stack:
+Створено новий контекст виконання, попередній витиснуто на вершину стека:
 
 <ul class="function-execution-context-list">
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 1, at line 1 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 1, на рядку 1}</span>
     <span class="function-execution-context-call">pow(2, 1)</span>
   </li>
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 2, at line 5 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 2, на рядку 5}</span>
     <span class="function-execution-context-call">pow(2, 2)</span>
   </li>
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 3, на рядку 5}</span>
     <span class="function-execution-context-call">pow(2, 3)</span>
   </li>
 </ul>
 
-There are 2 old contexts now and 1 currently running for `pow(2, 1)`.
+Зараз існує 2 старі контексти і 1 зараз працює для `pow(2, 1)`.
 
-### The exit
+### Вихід
 
-During the execution of `pow(2, 1)`, unlike before, the condition `n == 1` is truthy, so the first branch of `if` works:
+Під час виконання `pow(2, 1)`, умова `n==1` -- це істинна, на відміну того, що було раніше, тому перша гілка працює `if`:
 
 ```js
 function pow(x, n) {
@@ -232,42 +232,42 @@ function pow(x, n) {
 }
 ```
 
-There are no more nested calls, so the function finishes, returning `2`.
+Немає більше вкладених викликів, тому функція закінчується, повертаючись `2`.
 
-As the function finishes, its execution context is not needed anymore, so it's removed from the memory. The previous one is restored off the top of the stack:
+Оскільки функція завершується, то контекст виконання більше не потрібний, тому він видаляється з пам'яті. Попередній контекст відновлюється з вершини стека:
 
 
 <ul class="function-execution-context-list">
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 2, at line 5 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 2, на рядку 5}</span>
     <span class="function-execution-context-call">pow(2, 2)</span>
   </li>
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 3, на рядку 5}</span>
     <span class="function-execution-context-call">pow(2, 3)</span>
   </li>
 </ul>
 
-The execution of `pow(2, 2)` is resumed. It has the result of the subcall `pow(2, 1)`, so it also can finish the evaluation of `x * pow(x, n - 1)`, returning `4`.
+Виконання `pow(2, 2)` відновлено. Воно має результат підвиклику `pow(2, 1)`, тому воно також може закінчити розрахунок `x * pow(x, n - 1)`, повернувши `4`.
 
-Then the previous context is restored:
+Після цього відновлюється попередній контекст:
 
 <ul class="function-execution-context-list">
   <li>
-    <span class="function-execution-context">Context: { x: 2, n: 3, at line 5 }</span>
+    <span class="function-execution-context">Контекст: {x: 2, n: 3, на рядку 5}</span>
     <span class="function-execution-context-call">pow(2, 3)</span>
   </li>
 </ul>
 
-When it finishes, we have a result of `pow(2, 3) = 8`.
+Коли він закінчується, ми маємо результат `pow(2, 3) = 8`.
 
-The recursion depth in this case was: **3**.
+Глибина рекурсії в цьому випадку була: **3**.
 
-As we can see from the illustrations above, recursion depth equals the maximal number of context in the stack.
+Як ми бачимо з наведених вище ілюстрацій, глибина рекурсії дорівнює максимальній кількості контексту у стеці.
 
-Note the memory requirements. Contexts take memory. In our case, raising to the power of `n` actually requires the memory for `n` contexts, for all lower values of `n`.
+Зверніть увагу на вимоги до пам'яті. Зберігання контекстів потребує пам'яті. У нашому випадку, підведення до степеня `n` фактично вимагає пам'яті для `n` контекстів, для всіх значень, що нижче `n`.
 
-A loop-based algorithm is more memory-saving:
+Алгоритм на основі циклу економить більше пам'яті:
 
 ```js
 function pow(x, n) {
@@ -281,7 +281,7 @@ function pow(x, n) {
 }
 ```
 
-The iterative `pow` uses a single context changing `i` and `result` in the process. Its memory requirements are small, fixed and do not depend on `n`.
+Ітеративний `pow` використовує єдиний контекст змінюючи `i` and `result` у процесі. Його вимоги до пам'яті невеликі, фіксовані та не залежать від `n`.
 
 **Any recursion can be rewritten as a loop. The loop variant usually can be made more effective.**
 
