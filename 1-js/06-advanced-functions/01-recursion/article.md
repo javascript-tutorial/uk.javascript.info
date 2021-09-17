@@ -381,56 +381,56 @@ alert(sumSalaries(company)); // 7700
 
 ![recursive salaries](recursive-salaries.svg)
 
-We can easily see the principle: for an object `{...}` subcalls are made, while arrays `[...]` are the "leaves" of the recursion tree, they give immediate result.
+Ми можемо легко побачити принцип: для об'єкта `{...}` зроблені підвиклики, а масиви` `[...]` -- "листя" рекурсійного дерева, вони дають негайний результат.
 
-Note that the code uses smart features that we've covered before:
+Зауважте, що код використовує розумні функції, які ми розглянули раніше:
 
-- Method `arr.reduce` explained in the chapter <info:array-methods> to get the sum of the array.
-- Loop `for(val of Object.values(obj))` to iterate over object values: `Object.values` returns an array of them.
+- Метод `arr.reduce` пояснено в розділі <info:array-methods>, щоб отримати суму масиву.
+- Цикл `for(val of Object.values(obj))` для ітерування значень об'єкта: `Object.values` повертає їх масив.
 
 
-## Recursive structures
+## Рекурсивні структури
 
-A recursive (recursively-defined) data structure is a structure that replicates itself in parts.
+Рекурсивна (рекурсивно визначена) структура даних є структурою, яка повторює себе в своїх частинах.
 
-We've just seen it in the example of a company structure above.
+Ми тільки що бачили це вище на прикладі структури компанії.
 
-A company *department* is:
-- Either an array of people.
-- Or an object with *departments*.
+*Відділ* компанії це:
+- Або масив людей.
+- Або об'єкт з *відділами*.
 
-For web-developers there are much better-known examples: HTML and XML documents.
+Для веб-розробників набагато краще відомі приклади: HTML та XML-документи.
 
-In the HTML document, an *HTML-tag* may contain a list of:
-- Text pieces.
-- HTML-comments.
-- Other *HTML-tags* (that in turn may contain text pieces/comments or other tags etc).
+У HTML-документі *HTML-тег* може містити список:
+- частини тексту.
+- HTML-коментарі.
+- Інших *HTML-тегів* (що, у свою чергу, можуть містити частини тексту/коментарі або інші теги тощо).
 
-That's once again a recursive definition.
+Це ще одне рекурсивне визначення.
 
-For better understanding, we'll cover one more recursive structure named "Linked list" that might be a better alternative for arrays in some cases.
+Для кращого розуміння ми розглянемо ще одну рекурсивну структуру "Зв'язаний список", який може бути кращою альтернативою для масивів у деяких випадках.
 
-### Linked list
+### Зв'язаний список
 
 Imagine, we want to store an ordered list of objects.
 
-The natural choice would be an array:
+Очевидним вибором буде масивом:
 
 ```js
 let arr = [obj1, obj2, obj3];
 ```
 
-...But there's a problem with arrays. The "delete element" and "insert element" operations are expensive. For instance, `arr.unshift(obj)` operation has to renumber all elements to make room for a new `obj`, and if the array is big, it takes time. Same with `arr.shift()`.
+...Але є проблема з масивами. Операції "видалити елемент" та "вставити елемент" -- дорогі. Наприклад, операція `arr.unshift(obj)` повинна мати справу зі всіма елементами, щоб звільнити місце для нового `obj` і, якщо масив великий, це вимагає часу. Те ж саме з `arr.shift()`.
 
-The only structural modifications that do not require mass-renumbering are those that operate with the end of array: `arr.push/pop`. So an array can be quite slow for big queues, when we have to work with the beginning.
+Єдині структурні модифікації, які не потребують масової перенумерації об’єктів, є ті, які працюють з кінцем масиву: `arr.push/pop`. Таким чином, масив може бути досить повільним для великих черг, коли ми повинні працювати з його початком.
 
-Alternatively, if we really need fast insertion/deletion, we can choose another data structure called a [linked list](https://en.wikipedia.org/wiki/Linked_list).
+Крім того, якщо нам дійсно потрібна швидка вставка/видалення, ми можемо вибрати іншу структуру даних, яка називається [зв'язаний список](https://uk.wikipedia.org/wiki/Зв'язаний список).
 
-The *linked list element* is recursively defined as an object with:
+*Елемент зв'язаного списку* рекурсивно визначається як об'єкт з:
 - `value`.
-- `next` property referencing the next *linked list element* or `null` if that's the end.
+- `next` властивість, що посилається на наступний *елемент зв'язаного списку* або `null`, якщо це кінець.
 
-For instance:
+Наприклад:
 
 ```js
 let list = {
@@ -448,11 +448,11 @@ let list = {
 };
 ```
 
-Graphical representation of the list:
+Графічне представлення списку:
 
 ![linked list](linked-list.svg)
 
-An alternative code for creation:
+Альтернативний код для створення:
 
 ```js no-beautify
 let list = { value: 1 };
@@ -462,9 +462,9 @@ list.next.next.next = { value: 4 };
 list.next.next.next.next = null;
 ```
 
-Here we can even more clearly see that there are multiple objects, each one has the `value` and `next` pointing to the neighbour. The `list` variable is the first object in the chain, so following `next` pointers from it we can reach any element.
+Тут ми можемо ще більш чітко бачити, що є декілька об'єктів, кожен з яких має `value` та `next`, що вказуює на сусіда. Змінна `list` -- це перший об'єкт у ланцюжку, тому слідуючи вказівникам `next` з неї ми можемо досягти будь-якого елемента.
 
-The list can be easily split into multiple parts and later joined back:
+Список можна легко розділити на декілька частин, а пізніше з’єднати знову:
 
 ```js
 let secondList = list.next.next;
@@ -479,9 +479,9 @@ To join:
 list.next.next = secondList;
 ```
 
-And surely we can insert or remove items in any place.
+І, безумовно, ми можемо вставити або видалити елементи в будь-якому місці.
 
-For instance, to prepend a new value, we need to update the head of the list:
+Наприклад, для підготовки нового значення, нам потрібно оновити голову списку:
 
 ```js
 let list = { value: 1 };
@@ -490,14 +490,14 @@ list.next.next = { value: 3 };
 list.next.next.next = { value: 4 };
 
 *!*
-// prepend the new value to the list
+// додавання нового значення до списку
 list = { value: "new item", next: list };
 */!*
 ```
 
 ![linked list](linked-list-0.svg)
 
-To remove a value from the middle, change `next` of the previous one:
+Щоб видалити значення з середини, змінити `next` попереднього:
 
 ```js
 list.next = list.next.next;
@@ -505,20 +505,20 @@ list.next = list.next.next;
 
 ![linked list](linked-list-remove-1.svg)
 
-We made `list.next` jump over `1` to value `2`. The value `1` is now excluded from the chain. If it's not stored anywhere else, it will be automatically removed from the memory.
+Ми зробили `list.next` стрибає через `1` на значення `2`. Значення `1` зараз виключається з ланцюга. Якщо воно не зберігається ніде, то воно буде автоматично видалено з пам'яті.
 
-Unlike arrays, there's no mass-renumbering, we can easily rearrange elements.
+На відміну від масивів, немає массових перенумерацій, ми можемо легко переставляти елементи.
 
-Naturally, lists are not always better than arrays. Otherwise everyone would use only lists.
+Звичайно, списки не завжди краще, ніж масиви. Інакше кожен буде використовувати лише списки.
 
-The main drawback is that we can't easily access an element by its number. In an array that's easy: `arr[n]` is a direct reference. But in the list we need to start from the first item and go `next` `N` times to get the Nth element.
+Основний недолік полягає в тому, що ми не можемо легко отримати доступ до елемента за його номером. У масиві це легко: `arr[n]` є прямим посиланням. А в списку ми повинні почати з першого елемента і піти `next` `N` разів, щоб отримати n-ий елемент.
 
-...But we don't always need such operations. For instance, when we need a queue or even a [deque](https://en.wikipedia.org/wiki/Double-ended_queue) -- the ordered structure that must allow very fast adding/removing elements from both ends, but access to its middle is not needed.
+...Але ми не завжди потребуємо таких операцій. Наприклад, коли нам потрібна черга або навіть [двобічна черга](https://uk.wikipedia.org/wiki/Двобічна_черга) -- упорядкована структура, яка повинна дозволити дуже швидко додавати/видаляти елементи з обох кінців, але доступ до середини не потрібний.
 
-Lists can be enhanced:
-- We can add property `prev` in addition to `next` to reference the previous element, to move back easily.
-- We can also add a variable named `tail` referencing the last element of the list (and update it when adding/removing elements from the end).
-- ...The data structure may vary according to our needs.
+Списки можуть бути покращені:
+- Ми можемо додати властивість `prev` на доповнення до `next`, для посилання на попередній елемент, щоб легко переміщатися.
+- Ми також можемо додати змінну названу `tail`, що посилається на останній елемент списку (і оновлювати його при додаванні/видалення елементів з кінця).
+- ...Структура даних може відрізнятися залежно від наших потреб.
 
 ## Summary
 
