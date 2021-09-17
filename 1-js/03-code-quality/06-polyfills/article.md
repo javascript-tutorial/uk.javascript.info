@@ -13,7 +13,7 @@
 
 З іншого боку, як змусити працювати «сучасний» код на старих рушіях? Адже вони покищо не підтримують найновіших можливостей.
 
-Для цього існує два інструменти:
+Для цього існують два інструменти:
 
 1. Транспілятори.
 2. Поліфіли.
@@ -22,54 +22,54 @@
 
 ## Транспілятори
 
-A [transpiler](https://en.wikipedia.org/wiki/Source-to-source_compiler) is a special piece of software that can parse ("read and understand") modern code, and rewrite it using older syntax constructs, so that the result would be the same.
+[Транспілятор](https://uk.wikipedia.org/wiki/Транскомпілятор) -- це спеціальний інструмент, який «перекладає» вихідний код з однієї мови програмування в код на іншій мові програмування. Також обробка коду може виконуватися в межах однієї мови програмування. Транспілятор парсить  ("читає та розуміє") сучасний код і переписує його, використовуючи старі синтаксичні конструкції, які працюють на старих рушіях.
 
-E.g. JavaScript before year 2020 didn't have the "nullish coalescing operator" `??`. So, if a visitor uses an outdated browser, it may fail to understand the code like `height = height ?? 100`.
+Наприклад, JavaScript до 2020 року не мав "оператора об’єднання з null" `??`. Якщо відвідувач використовує старий браузер, він не зможе виконати код, на кшталт `height = height ?? 100`.
 
-A transpiler would analyze our code and rewrite `height ?? 100` into `(height !== undefined && height !== null) ? height : 100`.
+Транспілятор проаналізує такий код і перепише `height ?? 100` на `(height !== undefined && height !== null) ? height : 100`.
 
 ```js
-// before running the transpiler
+// перед запуском транспілятора
 height = height ?? 100;
 
-// after running the transpiler
+// після виконання транспілятора
 height = (height !== undefined && height !== null) ? height : 100;
 ```
 
-Now the rewritten code is suitable for older JavaScript engines.
+Тепер, переписаний код буде коректно виконуватися на старих рушіях JavaScript.
 
-Usually, a developer runs the transpiler on their own computer, and then deploys the transpiled code to the server.
+Зазвичай, розробник запускає на своєму комп’ютері транспілятор разом з компілятором, а вже після цього розгортає ("деплоє" від слова deploy) код на сервер.
 
-Speaking of names, [Babel](https://babeljs.io) is one of the most prominent transpilers out there. 
+Говорячи про імена, [Babel](https://babeljs.io) -- один з найвідоміших транспіляторів.
 
-Modern project build systems, such as [webpack](http://webpack.github.io/), provide means to run transpiler automatically on every code change, so it's very easy to integrate into development process.
+Сучасні збирачі проєктів, такі як [webpack](http://webpack.github.io/), надають засоби для автоматичного запуску транспілятора при кожній зміні коду, тому його дуже легко інтегрувати в процес розробки.
 
 ## Поліфіли
 
-New language features may include not only syntax constructs and operators, but also built-in functions.
+Серед нового функціоналу мови можуть бути не тільки синтаксичні конструкції та оператори, але й також вбудовані функції.
 
-For example, `Math.trunc(n)` is a function that "cuts off" the decimal part of a number, e.g `Math.trunc(1.23)` returns `1`.
+Наприклад, функція `Math.trunc(n)` "відрізає" десяткову частину числа, тобто `Math.trunc(1.23)` поверне `1`.
 
-In some (very outdated) JavaScript engines, there's no `Math.trunc`, so such code will fail.
+В деяких (дуже старих) рушіях JavaScript, немає функції `Math.trunc`, тому такий код призведе до помилки.
 
-As we're talking about new functions, not syntax changes, there's no need to transpile anything here. We just need to declare the missing function.
+Якщо ми говоримо про нові функції, а не синтаксичні вирази, то тут нічого не потрібно транспілювати ("перекладати"). Нам лише потрібно оголосити відсутні функції.
 
-A script that updates/adds new functions is called "polyfill". It "fills in" the gap and adds missing implementations.
+Скрипт, який оновлює/додає нові функції називається "**поліфіл**" (polyfill). Він "заповнює" прогалини і додає відсутній функціонал.
 
-For this particular case, the polyfill for `Math.trunc` is a script that implements it, like this:
+Для нашого випадку з функцією `Math.trunc`, поліфілом буде такий скрипт, який реалізує цю функцію, ось так:
 
 ```js
-if (!Math.trunc) { // if no such function
-  // implement it
+if (!Math.trunc) { // якщо немає такої функції
+  // реалізувати її:
   Math.trunc = function(number) {
-    // Math.ceil and Math.floor exist even in ancient JavaScript engines
-    // they are covered later in the tutorial
+    // функції Math.ceil та Math.floor існують навіть в древніх рушіях JavaScript
+    // ми розглянемо їх пізніше
     return number < 0 ? Math.ceil(number) : Math.floor(number);
   };
 }
 ```
 
-JavaScript is a highly dynamic language, scripts may add/modify any functions, even including built-in ones. 
+JavaScript дуже динамічна мова -- скрипти можуть додавати чи оновлювати функції, навіть якщо вони вбудовані.
 
 Є два цікавих поліфіла:
 - [core js](https://github.com/zloirock/core-js), що підтримує багато функціоналу, дозволяє включати лише необхідні функції.
@@ -78,14 +78,14 @@ JavaScript is a highly dynamic language, scripts may add/modify any functions, e
 
 ## Підсумки
 
-In this chapter we'd like to motivate you to study modern and even "bleeding-edge" language features, even if they aren't yet well-supported by JavaScript engines.
+В цьому розділі ми намагалися вмотивувати вас вивчати сучасний та навіть "передовий" функціонал мови, навіть якщо цей функціонал поки що не підтримується сучасними рушіями JavaScript.
 
-Just don't forget to use transpiler (if using modern syntax or operators) and polyfills (to add functions that may be missing). And they'll ensure that the code works.
+Просто не забувайте використовувати транспілятор (якщо будете використовувати сучасний синтаксис чи оператори) та поліфіли (щоб додавати функції, які можуть бути відсутні). Це дозволить впевнитися, що код працює на різних рушіях.
 
-For example, later when you're familiar with JavaScript, you can setup a code build system based on [webpack](http://webpack.github.io/) with [babel-loader](https://github.com/babel/babel-loader) plugin.
+Наприклад, пізніше (коли достатньо вивчите JavaScript), ви зможете налаштувати систему складання проєкту на основі [webpack](http://webpack.github.io/) із плаґіном [babel-loader](https://github.com/babel/babel-loader).
 
-Good resources that show the current state of support for various features:
-- <https://kangax.github.io/compat-table/es6/> - for pure JavaScript.
-- <https://caniuse.com/> - for browser-related functions.
+Ось хороші ресурси, де можна дізнатися поточний стан підтримки різного функціоналу:
+- <https://kangax.github.io/compat-table/es6/> - для чистого JavaScript.
+- <https://caniuse.com/> - для браузерних функцій.
 
-P.S. Google Chrome is usually the most up-to-date with language features, try it if a tutorial demo fails. Most tutorial demos work with any modern browser though.
+P.S. Зазвичай браузер Google Chrome підтримує більшість найновіших функцій мови, спробуйте його, якщо демонстрація не працює. Більшість демонстрацій працюють із сучасними браузерами.

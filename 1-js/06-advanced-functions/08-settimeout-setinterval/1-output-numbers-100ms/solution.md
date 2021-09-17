@@ -1,5 +1,5 @@
 
-Using `setInterval`:
+Використовуючи `setInterval`:
 
 ```js run
 function printNumbers(from, to) {
@@ -14,11 +14,11 @@ function printNumbers(from, to) {
   }, 1000);
 }
 
-// usage:
+// використання:
 printNumbers(5, 10);
 ```
 
-Using nested `setTimeout`:
+Використовуючи вкладений `setTimeout`:
 
 
 ```js run
@@ -34,13 +34,13 @@ function printNumbers(from, to) {
   }, 1000);
 }
 
-// usage:
+// використання:
 printNumbers(5, 10);
 ```
 
-Note that in both solutions, there is an initial delay before the first output. The function is called after `1000ms` the first time.
+Зауважте, що в обох рішеннях є початкова затримка перед першим виходом. Функція викликається після `1000 мс` у перший раз.
 
-If we also want the function to run immediately, then we can add an additional call on a separate line, like this:
+Якщо ми також хочемо, щоб функція запускалася негайно, ми можемо додати додатковий виклик в окремому рядку, наприклад:
 
 ```js run
 function printNumbers(from, to) {

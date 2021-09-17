@@ -2,20 +2,20 @@ importance: 5
 
 ---
 
-# Store read dates
+# Зберігати дати читання
 
-There's an array of messages as in the [previous task](info:task/recipients-read). The situation is similar.
+Є масив повідомлень, як у [попередньому завдані](info:task/recipients-read). Ситуація схожа.
 
 ```js
 let messages = [
-  {text: "Hello", from: "John"},
-  {text: "How goes?", from: "John"},
-  {text: "See you soon", from: "Alice"}
+  {text: "Привіт", from: "Іван"},
+  {text: "Як справи?", from: "Іван"},
+  {text: "До зустрічі", from: "Аліса"}
 ];
 ```
 
-The question now is: which data structure you'd suggest to store the information: "when the message was read?".
+Зараз питання наступне: яку структуру даних ви б запропонували для того, щоб зберегти інформацію: "Коли повідомлення було прочитано?".
 
-In the previous task we only needed to store the "yes/no" fact. Now we need to store the date, and it should only remain in memory until the message is garbage collected.
+У попередньому завданні нам потрібно лише зберігати інформацію "так/ні". Тепер нам потрібно зберігати дату, і це повинно залишитися в пам’яті лише доки повідомлення не буде видалено.
 
-P.S. Dates can be stored as objects of built-in `Date` class, that we'll cover later.
+P.S. Дати можуть зберігатися як об’єкти вбудованого класу `Data`, що ми розглянемо пізніше.

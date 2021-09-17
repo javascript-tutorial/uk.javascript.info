@@ -1,5 +1,5 @@
 
-1. Let's add `__proto__`:
+1. Додаймо властивість `__proto__`:
 
     ```js run
     let head = {
@@ -27,6 +27,6 @@
     alert( table.money ); // undefined
     ```
 
-2. In modern engines, performance-wise, there's no difference whether we take a property from an object or its prototype. They remember where the property was found and reuse it in the next request.
+2. Для сучасних рушіїв немає різниці, звідки ми беремо властивість -- з самого об’єкта, чи його прототипу. Рушії запам’ятовують де розташована властивість і при повторному запиті одразу її використовують.
 
-    For instance, for `pockets.glasses` they remember where they found `glasses` (in `head`), and next time will search right there. They are also smart enough to update internal caches if something changes, so that optimization is safe.
+    Наприклад, для `pockets.glasses` вони запам’ятають, що властивість `glasses` знаходиться в об’єкті `head`, і наступного разу шукатимуть її там. Вони також достатньо розумні для поновлення внутрішньої пам’яті, якщо вона була змінена, а тому подібна оптимізація є достатньо безпечною.

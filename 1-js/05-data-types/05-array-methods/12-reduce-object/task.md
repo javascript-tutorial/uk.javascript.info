@@ -2,36 +2,36 @@ importance: 4
 
 ---
 
-# Create keyed object from array
+# Створення об’єкта з ключем з масиву
 
-Let's say we received an array of users in the form `{id:..., name:..., age... }`.
+Припустимо, ми отримали масив користувачів у вигляді `{id:..., name:..., age:...}`.
 
-Create a function `groupById(arr)` that creates an object from it, with `id` as the key, and array items as values.
+Створіть функцію `groupById(arr)`, яка створює з масиву об’єкт із ключом `id` та елементами масиву як значеннями.
 
-For example:
+Наприклад:
 
 ```js
 let users = [
-  {id: 'john', name: "John Smith", age: 20},
-  {id: 'ann', name: "Ann Smith", age: 24},
-  {id: 'pete', name: "Pete Peterson", age: 31},
+  {id: 'іван', name: "Іван Іванко", age: 20},
+  {id: 'ганна', name: "Ганна Іванко", age: 24},
+  {id: 'петро', name: "Петро Петренко", age: 31},
 ];
 
 let usersById = groupById(users);
 
 /*
-// after the call we should have:
+// після виклику функції ви повинні отримати:
 
 usersById = {
-  john: {id: 'john', name: "John Smith", age: 20},
-  ann: {id: 'ann', name: "Ann Smith", age: 24},
-  pete: {id: 'pete', name: "Pete Peterson", age: 31},
+  іван: {id: 'іван', name: "Іван Іванко", age: 20},
+  ганна: {id: 'ганна', name: "Ганна Іванко", age: 24},
+  петро: {id: 'петро', name: "Петро Петренко", age: 31},
 }
 */
 ```
 
-Such function is really handy when working with server data.
+Така функція дійсно зручна при роботі з даними сервера.
 
-In this task we assume that `id` is unique. There may be no two array items with the same `id`.
+У цьому завданні ми вважаємо, що `id` унікальний. Не може бути двох елементів масиву з однаковими `id`.
 
-Please use array `.reduce` method in the solution.
+Будь ласка, використовуйте метод масиву `.reduce`  у рішенні.

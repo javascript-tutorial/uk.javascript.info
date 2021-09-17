@@ -2,14 +2,14 @@ importance: 5
 
 ---
 
-# Create an object with the same constructor
+# Створення нового об’єкта з одинаковим конструктором
 
-Imagine, we have an arbitrary object `obj`, created by a constructor function -- we don't know which one, but we'd like to create a new object using it.
+Уявіть собі, у нас є довільний об’єкт `obj`, який створений функцією-конструктором -- ми не знаємо яким саме конструктором, але потрібно створити новий об’єкт використовуючи той самий конструктор.
 
-Can we do it like that?
+Чи можна створити новий об’єкт ось так?
 
 ```js
 let obj2 = new obj.constructor();
 ```
 
-Give an example of a constructor function for `obj` which lets such code work right. And an example that makes it work wrong.
+Покажіть приклад функції-конструктора для обєкта `obj`, який забезпечить правильну роботу такого коду, а також приклад, який, при такому коді, працює неправельно.

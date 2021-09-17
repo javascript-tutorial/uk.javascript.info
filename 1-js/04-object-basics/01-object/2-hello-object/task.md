@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# Hello, object
+# Привіт, object
 
-Write the code, one line for each action:
+Напишіть код, виконавши завдання з кожного пункту окремим рядком:
 
-1. Create an empty object `user`.
-2. Add the property `name` with the value `John`.
-3. Add the property `surname` with the value `Smith`.
-4. Change the value of the `name` to `Pete`.
-5. Remove the property `name` from the object.
+1. Створіть порожній об’єкт `user`.
+2. Додайте властивість `name` зі значенням `Іван`.
+3. Додайте властивість `surname` зі значенням `Сміт`.
+4. Змініть значення `name` на `Петро`.
+5. Видаліть властивість `name` з об’єкта.
 

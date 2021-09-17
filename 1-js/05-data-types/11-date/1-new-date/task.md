@@ -2,8 +2,8 @@ importance: 5
 
 ---
 
-# Create a date
+# Створити дату
 
-Create a `Date` object for the date: Feb 20, 2012, 3:12am. The time zone is local.
+Створити об’єкт `Date` на дату: 20 лютого 2012, 3:12 ранку. Часовий пояс є місцевим.
 
-Show it using `alert`.
+Показати його за допомогою `alert`.

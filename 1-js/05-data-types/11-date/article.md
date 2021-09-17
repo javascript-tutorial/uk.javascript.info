@@ -1,141 +1,141 @@
-# Date and time
+# Дата і час
 
-Let's meet a new built-in object: [Date](mdn:js/Date). It stores the date, time and provides methods for date/time management.
+Познайомтеся з новим вбудованим об’єктом: [Date](mdn:js/Date). Він зберігає дату, час і надає методи для управління датою/часом.
 
-For instance, we can use it to store creation/modification times, to measure time, or just to print out the current date.
+Наприклад, ми можемо використовувати його для зберігання часу створення/модифікації, щоб виміряти час, або просто для друку поточної дати.
 
-## Creation
+## Створення
 
-To create a new `Date` object call `new Date()` with one of the following arguments:
+Щоб створити новий об’єкт `Date` викличемо `new Date()` з одним з наступних аргументів:
 
 `new Date()`
-: Without arguments -- create a `Date` object for the current date and time:
+: Без аргументів -- створює об’єкт `Date` для поточної дати та часу:
 
     ```js run
     let now = new Date();
-    alert( now ); // shows current date/time
+    alert( now ); // показує поточну дату/час
     ```
 
 `new Date(milliseconds)`
-: Create a `Date` object with the time equal to number of milliseconds (1/1000 of a second) passed after the Jan 1st of 1970 UTC+0.
+: Створює об’єкт `Date` з часом, що дорівнює кількості мілісекунд (1/1000 секунди), що минули після 1 січня 1970 UTC+0.
 
     ```js run
-    // 0 means 01.01.1970 UTC+0
+    // 0 означає 01.01.1970 UTC+0
     let Jan01_1970 = new Date(0);
     alert( Jan01_1970 );
 
-    // now add 24 hours, get 02.01.1970 UTC+0
+    // тепер додамо 24 години, отримаємо 02.01.1970 UTC+0
     let Jan02_1970 = new Date(24 * 3600 * 1000);
     alert( Jan02_1970 );
     ```
 
-    An integer number representing the number of milliseconds that has passed since the beginning of 1970 is called a *timestamp*.
+    Ціле число, яке являє собою кількість мілісекунд, що пройшли з початку 1970 року, називається міткою часу (*timestamp*).
 
-    It's a lightweight numeric representation of a date. We can always create a date from a timestamp using `new Date(timestamp)` and convert the existing `Date` object to a timestamp using the `date.getTime()` method (see below).
+    Це легке числове представлення дати. Ми завжди можемо створити дату з timestamp за допомогою `new Date(timestamp)` і перетворити об’єкт `Date`, що існує, до timestamp за допомогою методу `date.getTime()` (див. нижче).
 
-    Dates before 01.01.1970 have negative timestamps, e.g.:
+    Дати до 01.01.1970 р. мають негативний timestamp, наприклад:
     ```js run
-    // 31 Dec 1969
+    // 31 грудня 1969 року
     let Dec31_1969 = new Date(-24 * 3600 * 1000);
     alert( Dec31_1969 );
     ```
 
 `new Date(datestring)`
-: If there is a single argument, and it's a string, then it is parsed automatically. The algorithm is the same as `Date.parse` uses, we'll cover it later.
+: Якщо є єдиний аргумент, і це рядок, то він автоматично аналізується. Алгоритм той же, що використовує `Date.parse`, ми розглянемо це пізніше.
 
     ```js run
     let date = new Date("2017-01-26");
     alert(date);
-    // The time is not set, so it's assumed to be midnight GMT and
-    // is adjusted according to the timezone the code is run in
-    // So the result could be
+    // Час не встановлений, тому припускається, що це буде північ за GMT і
+    // регулюється відповідно до того часового поясу, де запускається код
+    // Тому результат може бути
     // Thu Jan 26 2017 11:00:00 GMT+1100 (Australian Eastern Daylight Time)
-    // or
+    // або
     // Wed Jan 25 2017 16:00:00 GMT-0800 (Pacific Standard Time)
     ```
 
 `new Date(year, month, date, hours, minutes, seconds, ms)`
-: Create the date with the given components in the local time zone. Only the first two arguments are obligatory.
+: Створює дату з заданими компонентами у місцевому часовому поясі. Тільки перші два аргументи обов’язкові.
 
-    - The `year` must have 4 digits: `2013` is okay, `98` is not.
-    - The `month` count starts with `0` (Jan), up to `11` (Dec).
-    - The `date` parameter is actually the day of month, if absent then `1` is assumed.
-    - If `hours/minutes/seconds/ms` is absent, they are assumed to be equal `0`.
+    - `year` має мати 4 цифри: `2013` -- це нормально, `98` -- ні.
+    - Рахунок місяців починається з `0` (січня), до `11` (грудня).
+    - Параметр `date` насправді день місяця, якщо він відсутній, то береться "1".
+    - Якщо `hours/minutes/seconds/ms` відсутні, вони вважаються рівними `0`.
 
-    For instance:
+    Наприклад:
 
     ```js
-    new Date(2011, 0, 1, 0, 0, 0, 0); // 1 Jan 2011, 00:00:00
-    new Date(2011, 0, 1); // the same, hours etc are 0 by default
+    new Date(2011, 0, 1, 0, 0, 0, 0); // 1 січня 2011 року, 00:00:00
+    new Date(2011, 0, 1); // те ж саме, години тощо -- 0 за замовчуванням
     ```
 
-    The maximal precision is 1 ms (1/1000 sec):
+    Максимальна точність становить 1 мс (1/1000 сек):
 
     ```js run
     let date = new Date(2011, 0, 1, 2, 3, 4, 567);
     alert( date ); // 1.01.2011, 02:03:04.567
     ```
 
-## Access date components
+## Доступ до компонентів дати 
 
-There are methods to access the year, month and so on from the `Date` object:
+Існують методи доступу до року, місяця і так далі з об’єкта `Date`:
 
 [getFullYear()](mdn:js/Date/getFullYear)
-: Get the year (4 digits)
+: Отримати рік (4 цифри)
 
 [getMonth()](mdn:js/Date/getMonth)
-: Get the month, **from 0 to 11**.
+: Отримати місяць, **від 0 до 11**.
 
 [getDate()](mdn:js/Date/getDate)
-: Get the day of month, from 1 to 31, the name of the method does look a little bit strange.
+: Отримати день місяця, від 1 до 31, назва методу виглядає трохи дивно.
 
 [getHours()](mdn:js/Date/getHours), [getMinutes()](mdn:js/Date/getMinutes), [getSeconds()](mdn:js/Date/getSeconds), [getMilliseconds()](mdn:js/Date/getMilliseconds)
-: Get the corresponding time components.
+: Отримати відповідні компоненти часу.
 
-```warn header="Not `getYear()`, but `getFullYear()`"
-Many JavaScript engines implement a non-standard method `getYear()`. This method is deprecated. It returns 2-digit year sometimes. Please never use it. There is `getFullYear()` for the year.
+```warn header="Не `getYear()`, а `getFullYear()`"
+Багато рушіїв JavaScript реалізують нестандартний метод `getYear()`. Цей метод застарілий. Іноді він повертає 2-значний рік. Будь ласка, не використовуйте його. Щоб отримати рік є `getFullYear()`.
 ```
 
-Additionally, we can get a day of week:
+Крім того, ми можемо отримати день тижня:
 
 [getDay()](mdn:js/Date/getDay)
-: Get the day of week, from `0` (Sunday) to `6` (Saturday). The first day is always Sunday, in some countries that's not so, but can't be changed.
+: Отримати день тижня, від `0` (неділя) до `6` (субота). Перший день завжди неділя, в деяких країнах це не так, але ми не можемо змінити поведінку методу.
 
-**All the methods above return the components relative to the local time zone.**
+**Всі методи, наведені вище, повертають компоненти відносно місцевого часового поясу.**
 
-There are also their UTC-counterparts, that return day, month, year and so on for the time zone UTC+0: [getUTCFullYear()](mdn:js/Date/getUTCFullYear), [getUTCMonth()](mdn:js/Date/getUTCMonth), [getUTCDay()](mdn:js/Date/getUTCDay). Just insert the `"UTC"` right after `"get"`.
+Є також їхні UTC-аналоги, що повертається день, місяць, рік і так далі за часовим поясом UTC+0: [getUTCFullYear()](mdn:js/Date/getUTCFullYear), [getUTCMonth()](mdn:js/Date/getUTCMonth), [getUTCDay()](mdn:js/Date/getUTCDay). Просто вставте `"UTC"` відразу після `"get"`.
 
-If your local time zone is shifted relative to UTC, then the code below shows different hours:
+Якщо ваш місцевий часовий пояс зміщений відносно UTC, то код нижче показує різні години:
 
 ```js run
-// current date
+// поточна дата
 let date = new Date();
 
-// the hour in your current time zone
+// години у поточному часовому поясі
 alert( date.getHours() );
 
-// the hour in UTC+0 time zone (London time without daylight savings)
+// години у часовій зоні UTC+0 (Лондонський час без літніх переводів часу)
 alert( date.getUTCHours() );
 ```
 
-Besides the given methods, there are two special ones that do not have a UTC-variant:
+Окрім наведених методів, є два спеціальних, які не мають UTC-варіанту:
 
 [getTime()](mdn:js/Date/getTime)
-: Returns the timestamp for the date -- a number of milliseconds passed from the January 1st of 1970 UTC+0.
+: Повертає timestamp для дати -- кількість мілісекунд, що пройшли з 1 січня 1970 UTC+0.
 
 [getTimezoneOffset()](mdn:js/Date/getTimezoneOffset)
-: Returns the difference between UTC and the local time zone, in minutes:
+: Повертає різницю між UTC та місцевим часовим поясом, у хвилинах:
 
     ```js run
-    // if you are in timezone UTC-1, outputs 60
-    // if you are in timezone UTC+3, outputs -180
+    // якщо ви знаходитесь в часовому поясі UTC-1 -- видасть 60
+    // якщо ви знаходитесь в часовому поясі UTC+3 -- видасть -180
     alert( new Date().getTimezoneOffset() );
 
     ```
 
-## Setting date components
+## Налаштування компонентів дати
 
-The following methods allow to set date/time components:
+Наступні методи дозволяють встановити дату/часові компоненти:
 
 - [`setFullYear(year, [month], [date])`](mdn:js/Date/setFullYear)
 - [`setMonth(month, [date])`](mdn:js/Date/setMonth)
@@ -144,38 +144,38 @@ The following methods allow to set date/time components:
 - [`setMinutes(min, [sec], [ms])`](mdn:js/Date/setMinutes)
 - [`setSeconds(sec, [ms])`](mdn:js/Date/setSeconds)
 - [`setMilliseconds(ms)`](mdn:js/Date/setMilliseconds)
-- [`setTime(milliseconds)`](mdn:js/Date/setTime) (sets the whole date by milliseconds since 01.01.1970 UTC)
+- [`setTime(milliseconds)`](mdn:js/Date/setTime) (встановлює всю дату в мілісекундах з 01.01.1970 UTC)
 
-Every one of them except `setTime()` has a UTC-variant, for instance: `setUTCHours()`.
+Кожен з них, крім `secTime()` має UTC-аналог, наприклад: `setUTCHours()`.
 
-As we can see, some methods can set multiple components at once, for example `setHours`. The components that are not mentioned are not modified.
+Як ми бачимо, деякі методи можуть встановити кілька компонентів відразу, наприклад `setHours`. Компоненти дати/часу, які не згадуються, -- не модифікуються.
 
-For instance:
+Наприклад:
 
 ```js run
 let today = new Date();
 
 today.setHours(0);
-alert(today); // still today, but the hour is changed to 0
+alert(today); // ще сьогодні, але година змінюється на 0
 
 today.setHours(0, 0, 0, 0);
-alert(today); // still today, now 00:00:00 sharp.
+alert(today); // ще сьогодні, зараз рівно 00:00:00.
 ```
 
-## Autocorrection
+## Автокорекція
 
-The *autocorrection* is a very handy feature of `Date` objects. We can set out-of-range values, and it will auto-adjust itself.
+*Автокорекція* -- це дуже зручна особливість об’єктів `Date`. Ми можемо встановити данні за межами діапазону, і вони будуть автоматично налаштувати себе.
 
-For instance:
+Наприклад:
 
 ```js run
-let date = new Date(2013, 0, *!*32*/!*); // 32 Jan 2013 ?!?
-alert(date); // ...is 1st Feb 2013!
+let date = new Date(2013, 0, *!*32*/!*); // 32 січня 2013 ?!?
+alert(date); // ...це 1 лютого 2013!
 ```
 
-Out-of-range date components are distributed automatically.
+Компоненти поза межами діапазону розподіляються автоматично.
 
-Let's say we need to increase the date "28 Feb 2016" by 2 days. It may be "2 Mar" or "1 Mar" in case of a leap-year. We don't need to think about it. Just add 2 days. The `Date` object will do the rest:
+Скажімо, нам потрібно збільшити дату "28 лютого 2016" на 2 дні. Це може бути "2 березня" або "1 березня" у випадку високосного року. Нам не потрібно думати про це. Просто додайте 2 дні. Об’єкт `Date` зробить все інше:
 
 ```js run
 let date = new Date(2016, 1, 28);
@@ -183,112 +183,112 @@ let date = new Date(2016, 1, 28);
 date.setDate(date.getDate() + 2);
 */!*
 
-alert( date ); // 1 Mar 2016
+alert( date ); // 1 березня 2016
 ```
 
-That feature is often used to get the date after the given period of time. For instance, let's get the date for "70 seconds after now":
+Ця особливість часто використовується для отримання дати після певного проміжку часу. Наприклад, отримаймо дату "70 секунд після зараз":
 
 ```js run
 let date = new Date();
 date.setSeconds(date.getSeconds() + 70);
 
-alert( date ); // shows the correct date
+alert( date ); // показує правильну дату
 ```
 
-We can also set zero or even negative values. For example:
+Ми також можемо встановити нуль або навіть негативні значення. Наприклад:
 
 ```js run
-let date = new Date(2016, 0, 2); // 2 Jan 2016
+let date = new Date(2016, 0, 2); // 2 січня 2016
 
-date.setDate(1); // set day 1 of month
+date.setDate(1); // встановити 1 день місяця
 alert( date );
 
-date.setDate(0); // min day is 1, so the last day of the previous month is assumed
-alert( date ); // 31 Dec 2015
+date.setDate(0); // мінімальний номер дня -- 1, тому передбачається, що це останній день попереднього місяця 
+alert( date ); // 31 грудня 2015
 ```
 
-## Date to number, date diff
+## Перетворення дати до числа, різниця дат
 
-When a `Date` object is converted to number, it becomes the timestamp same as `date.getTime()`:
+Коли `Date` об’єкт перетворюється на номер, він стає timestamp так само, як `date.getTime()`:
 
 ```js run
 let date = new Date();
-alert(+date); // the number of milliseconds, same as date.getTime()
+alert(+date); // кількість мілісекунд, так само, як date.getTime()
 ```
 
-The important side effect: dates can be subtracted, the result is their difference in ms.
+Важливий побічний ефект: дати можуть відніматися, результатом є їх різниця в мілісекундах.
 
-That can be used for time measurements:
+Це можна використовувати для вимірювання часу:
 
 ```js run
-let start = new Date(); // start measuring time
+let start = new Date(); // початок вимірювання часу
 
-// do the job
+// виконується робота
 for (let i = 0; i < 100000; i++) {
   let doSomething = i * i * i;
 }
 
-let end = new Date(); // end measuring time
+let end = new Date(); // кінець вимірювання часу
 
-alert( `The loop took ${end - start} ms` );
+alert( `Цикл зайняв ${end - start} мс` );
 ```
 
 ## Date.now()
 
-If we only want to measure time, we don't need the `Date` object.
+Якщо ми хочемо тільки виміряти час, нам не потрібен об’єкт `Date`.
 
-There's a special method `Date.now()` that returns the current timestamp.
+Існує спеціальний метод `Date.now()`, що повертає поточний timestamp.
 
-It is semantically equivalent to `new Date().getTime()`, but it doesn't create an intermediate `Date` object. So it's faster and doesn't put pressure on garbage collection.
+Це семантично еквівалентно до `new Date().getTime()`, але не створює проміжного об’єкта `Date`. Так що цей підхід працює швидше і не навантажує збирач сміття.
 
-It is used mostly for convenience or when performance matters, like in games in JavaScript or other specialized applications.
+Він використовується в основному для зручності або коли важлива продуктивність, як в іграх на JavaScript або інших спеціалізованих застосунках.
 
-So this is probably better:
+Отже, це, мабуть, краще:
 
 ```js run
 *!*
-let start = Date.now(); // milliseconds count from 1 Jan 1970
+let start = Date.now(); // кількість мілісекунд з 1 січня 1970 року
 */!*
 
-// do the job
+// виконується робота
 for (let i = 0; i < 100000; i++) {
   let doSomething = i * i * i;
 }
 
 *!*
-let end = Date.now(); // done
+let end = Date.now(); // готово
 */!*
 
-alert( `The loop took ${end - start} ms` ); // subtract numbers, not dates
+alert( `Цикл зайняв ${end - start} мс` ); // віднімемо цифри, а не дати
 ```
 
-## Benchmarking
+## Вимірювання швидкодії (Benchmarking)
 
-If we want a reliable benchmark of CPU-hungry function, we should be careful.
+Якщо ми хочемо достовірний аналіз швидкодії функції, що залежить від процесора, ми повинні бути обережними.
 
-For instance, let's measure two functions that calculate the difference between two dates: which one is faster?
+Наприклад, давайте вимірюємо дві функції, які обчислюють різницю між двома датами: яка з них швидше?
 
-Such performance measurements are often called "benchmarks".
+Такі вимірювання продуктивності часто називаються "бенчмарками".
 
 ```js
-// we have date1 and date2, which function faster returns their difference in ms?
+// У нас є date1 і date2. Яка функція швидше поверне їхню різницю в мс?
 function diffSubtract(date1, date2) {
   return date2 - date1;
 }
 
-// or
+// чи
 function diffGetTime(date1, date2) {
   return date2.getTime() - date1.getTime();
 }
 ```
 
-These two do exactly the same thing, but one of them uses an explicit `date.getTime()` to get the date in ms, and the other one relies on a date-to-number transform. Their result is always the same.
+Ці дві функції роблять схожі речі, але одна з них використовує явний `date.getTime()`, щоб отримати дату в мс, а інша покладається на перетворення дати до числа. Їх результат завжди однаковий.
 
-So, which one is faster?
+Отже, яка з цих функцій швидша?
 
-The first idea may be to run them many times in a row and measure the time difference. For our case, functions are very simple, so we have to do it at least 100000 times.
+Перша ідея полягає в тому, що можна багато разів запустити їх поспіль і виміряти різницю часу. Для нашого випадку функції дуже прості, тому ми повинні запустити їх щонайменше 100000 разів.
 
-Let's measure:
+Вимірюємо:
 
 ```js run
 function diffSubtract(date1, date2) {
@@ -308,23 +308,23 @@ function bench(f) {
   return Date.now() - start;
 }
 
-alert( 'Time of diffSubtract: ' + bench(diffSubtract) + 'ms' );
-alert( 'Time of diffGetTime: ' + bench(diffGetTime) + 'ms' );
+alert( 'Час diffSubtract: ' + bench(diffSubtract) + 'мс' );
+alert( 'Час diffGetTime: ' + bench(diffGetTime) + 'мс' );
 ```
 
-Wow! Using `getTime()` is so much faster! That's because there's no type conversion, it is much easier for engines to optimize.
+Оце так! Використання `getTime()` набагато швидше! Це тому, що немає перетворення типу, це набагато простіше для оптимізації.
 
-Okay, we have something. But that's not a good benchmark yet.
+Гаразд, у нас є щось. Але це ще не хороший бенчмарк.
 
-Imagine that at the time of running `bench(diffSubtract)` CPU was doing something in parallel, and it was taking resources. And by the time of running `bench(diffGetTime)` that work has finished.
+Уявіть собі, що під час запуску `bench(diffSubtract)` процесор робив щось паралельно, і це забирало певні ресурси. І до часу роботи `bench(diffGetTime)` ця робота закінчилася.
 
-A pretty real scenario for a modern multi-process OS.
+Досить реальний сценарій для сучасної багатопроцесорної ОС.
 
-As a result, the first benchmark will have less CPU resources than the second. That may lead to wrong results.
+Як результат, перший бенчмарк буде мати менше ресурсів процесора, ніж другий. Це може призвести до неправильних результатів.
 
-**For more reliable benchmarking, the whole pack of benchmarks should be rerun multiple times.**
+**Для більш достовірного порівняльного аналізу, весь пакет бенчмарків повинен бути повторно запущений кілька разів.**
 
-For example, like this:
+Наприклад, як це:
 
 ```js run
 function diffSubtract(date1, date2) {
@@ -348,53 +348,53 @@ let time1 = 0;
 let time2 = 0;
 
 *!*
-// run bench(diffSubtract) and bench(diffGetTime) each 10 times alternating
+// запустіть bench(diffSubtract) і bench(diffGetTime) кожен по 10 разів
 for (let i = 0; i < 10; i++) {
   time1 += bench(diffSubtract);
   time2 += bench(diffGetTime);
 }
 */!*
 
-alert( 'Total time for diffSubtract: ' + time1 );
-alert( 'Total time for diffGetTime: ' + time2 );
+alert( 'Загальний час для diffSubtract: ' + time1 );
+alert( 'Загальний час для diffGetTime: ' + time2 );
 ```
 
-Modern JavaScript engines start applying advanced optimizations only to "hot code" that executes many times (no need to optimize rarely executed things). So, in the example above, first executions are not well-optimized. We may want to add a heat-up run:
+Сучасні рушії JavaScript починають застосовувати передові оптимізації лише до "гарячого коду", який виконує багато разів (не потрібно оптимізувати рідко виконані речі). Отже, у наведеному вище прикладі перші виконання не оптимізовані. Ми можемо захотіти додати "нагрівання":
 
 ```js
-// added for "heating up" prior to the main loop
+// додано для "нагрівання" до основного циклу
 bench(diffSubtract);
 bench(diffGetTime);
 
-// now benchmark
+// тепер бенчмарк
 for (let i = 0; i < 10; i++) {
   time1 += bench(diffSubtract);
   time2 += bench(diffGetTime);
 }
 ```
 
-```warn header="Be careful doing microbenchmarking"
-Modern JavaScript engines perform many optimizations. They may tweak results of "artificial tests" compared to "normal usage", especially when we benchmark something very small, such as how an operator works, or a built-in function. So if you seriously want to understand performance, then please study how the JavaScript engine works. And then you probably won't need microbenchmarks at all.
+```warn header="Будьте обережні, що робить мікробенчмаркінг"
+Сучасні рушії JavaScript застосовують багато оптимізацій. Вони можуть підналаштувати результати "штучних тестів" у порівнянні з "нормальним використанням", особливо коли ми тестуємо щось дуже мале, наприклад, як працює оператор, або вбудована функція. Отже, якщо ви серйозно хочете оцінити продуктивність, то, будь ласка, дослідіть, як працює рушій JavaScript. І тоді ви, мабуть, не потребуєте мікробенчмаркінгів взагалі.
 
-The great pack of articles about V8 can be found at <http://mrale.ph>.
+Великий набір статей про V8 можна знайти на <http://mrale.ph>.
 ```
 
-## Date.parse from a string
+## Date.parse з рядка
 
-The method [Date.parse(str)](mdn:js/Date/parse) can read a date from a string.
+Метод [Date.parse(str)](mdn:js/Date/parse) може читати дату з рядка.
 
-The string format should be: `YYYY-MM-DDTHH:mm:ss.sssZ`, where:
+Формат рядка повинен бути: `YYYY-MM-DDTHH:mm:ss.sssZ`, де:
 
-- `YYYY-MM-DD` -- is the date: year-month-day.
-- The character `"T"` is used as the delimiter.
-- `HH:mm:ss.sss` -- is the time: hours, minutes, seconds and milliseconds.
-- The optional `'Z'` part denotes the time zone in the format `+-hh:mm`. A single letter `Z` would mean UTC+0.
+- `YYYY-MM-DD` -- це дата: рік-місяць-день.
+- Символ `"T"` використовується як роздільник.
+- `HH:mm:ss.sss` -- це час: години, хвилини, секунди і мілісекунди.
+- Необов’язкова частина `'Z'` позначає часовий пояс у форматі `+-hh:mm`. Одинична буква `Z` буде означати UTC+0.
 
-Shorter variants are also possible, like `YYYY-MM-DD` or `YYYY-MM` or even `YYYY`.
+Коротші варіанти також можливі, як `YYYY-MM-DD` або `YYYY-MM` або навіть `YYYY`.
 
-The call to `Date.parse(str)` parses the string in the given format and returns the timestamp (number of milliseconds from 1 Jan 1970 UTC+0). If the format is invalid, returns `NaN`.
+Виклик `Date.parse(str)` аналізує рядок у заданому форматі та повертає timestamp (кількість мілісекунд з 1 січня 1970 UTC+0). Якщо формат недійсний, повертає `NaN`.
 
-For instance:
+Наприклад:
 
 ```js run
 let ms = Date.parse('2012-01-26T13:51:50.417-07:00');
@@ -402,7 +402,7 @@ let ms = Date.parse('2012-01-26T13:51:50.417-07:00');
 alert(ms); // 1327611110417  (timestamp)
 ```
 
-We can instantly create a `new Date` object from the timestamp:
+Ми можемо миттєво створити об’єкт за допомогою `new Date` з timestamp:
 
 ```js run
 let date = new Date( Date.parse('2012-01-26T13:51:50.417-07:00') );
@@ -410,24 +410,24 @@ let date = new Date( Date.parse('2012-01-26T13:51:50.417-07:00') );
 alert(date);  
 ```
 
-## Summary
+## Підсумки
 
-- Date and time in JavaScript are represented with the [Date](mdn:js/Date) object. We can't create "only date" or "only time": `Date` objects always carry both.
-- Months are counted from zero (yes, January is a zero month).
-- Days of week in `getDay()` are also counted from zero (that's Sunday).
-- `Date` auto-corrects itself when out-of-range components are set. Good for adding/subtracting days/months/hours.
-- Dates can be subtracted, giving their difference in milliseconds. That's because a `Date` becomes the timestamp when converted to a number.
-- Use `Date.now()` to get the current timestamp fast.
+- Дата та час у JavaScript представлені об’єктом [Date](mdn:js/Date). Ми не можемо створити "тільки дату" або "тільки час": об’єкти `Date` завжди несуть в собі обидва значення.
+- Місяці рахуються з нуля (так, січень -- це нульовий місяць).
+- Дні тижня в `getDay()` також рахуються з нуля (з неділі).
+- `Date` автоматично виправляє себе, коли встановлено компоненти, які виходять за межі. Це добре для додавання/віднімання днів/місяців/годин.
+- Дати можуть відніматися, даючи їхню різницю в мілісекундах. Це тому, що `Date` стає timestamp, коли перетворюється на число.
+- Використовуйте `Date.now()`, щоб швидко отримати поточний timestamp.
 
-Note that unlike many other systems, timestamps in JavaScript are in milliseconds, not in seconds.
+Зауважте, що на відміну від багатьох інших систем, значенния timestamp в JavaScript вимірюється в мілісекундах, а не в секундах.
 
-Sometimes we need more precise time measurements. JavaScript itself does not have a way to measure time in microseconds (1 millionth of a second), but most environments provide it. For instance, browser has [performance.now()](mdn:api/Performance/now) that gives the number of milliseconds from the start of page loading with microsecond precision (3 digits after the point):
+Іноді нам потрібно більш точні вимірювання часу. Сам JavaScript не має способу вимірювання часу в мікросекундах (1 мільйон у секунду), але більшість середовищ забезпечують його. Наприклад, браузер має [performance.now()](mdn:api/Performance/now), що дає кількість мілісекунд з початку завантаження сторінки з мікросекундною точністю (3 цифри після крапки):
 
 ```js run
-alert(`Loading started ${performance.now()}ms ago`);
-// Something like: "Loading started 34731.26000000001ms ago"
-// .26 is microseconds (260 microseconds)
-// more than 3 digits after the decimal point are precision errors, only the first 3 are correct
+alert(`Завантаження почалося ${performance.now()}мс тому`);
+// Щось на зразок: "Завантаження почалося 34731.26000000001мс тому"
+// .26 це мікросекунди (260 мікросекунд)
+// коректними є тільки перші три цифри після крапки, а решта -- це помилка точності
 ```
 
-Node.js has `microtime` module and other ways. Technically, almost any device and environment allows to get more precision, it's just not in `Date`.
+Node.js має модуль `microtime` та інші способи. Технічно, майже будь-який пристрій та середовище дозволяє отримати більшу точність, просто її немає в `Date`.

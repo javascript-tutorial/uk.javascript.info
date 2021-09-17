@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Searching algorithm
+# Алгоритм пошуку
 
-The task has two parts.
+Задача має дві частини.
 
-Given the following objects:
+Ми маємо ось такі об’єкти:
 
 ```js
 let head = {
@@ -27,5 +27,5 @@ let pockets = {
 };
 ```
 
-1. Use `__proto__` to assign prototypes in a way that any property lookup will follow the path: `pockets` -> `bed` -> `table` -> `head`. For instance, `pockets.pen` should be `3` (found in `table`), and `bed.glasses` should be `1` (found in `head`).
-2. Answer the question: is it faster to get `glasses` as `pockets.glasses` or `head.glasses`? Benchmark if needed.
+1. Використайте властивість `__proto__` визначивши прототипи таким чином, щоб отримання властивостей було можливим по ось такому шляху: `pockets` -> `bed` -> `table` -> `head`. Для прикладу, `pockets.pen` повинно отримати значення `3` (було знайдено в `table`), а `bed.glasses` отримує значення `1` (було знайдено в `head`).
+2. Дайте відповідь: для отримання властивості `glasses` що буде швидше: визначити її так `pockets.glasses` чи так `head.glasses`? При необхідності зробіть порівняльний тест.

@@ -1,36 +1,36 @@
-# Rest parameters and spread syntax
+# Залишкові параметри та синтаксис поширення
 
-Many JavaScript built-in functions support an arbitrary number of arguments.
+Багато вбудованих функцій JavaScript підтримують довільну кількість аргументів.
 
-For instance:
+Наприклад:
 
-- `Math.max(arg1, arg2, ..., argN)` -- returns the greatest of the arguments.
-- `Object.assign(dest, src1, ..., srcN)` -- copies properties from `src1..N` into `dest`.
-- ...and so on.
+- `Math.max(arg1, arg2, ..., argN)` -- повертає найбільший з аргументів.
+- `Object.assign(dest, src1, ..., srcN)` -- копіює властивості з `src1..N` до `dest`.
+- ...і багато ще.
 
-In this chapter we'll learn how to do the same. And also, how to pass arrays to such functions as parameters.
+У цьому розділі ми дізнаємось, як зробити те саме. А також, як передати масиви таким функціям, як параметри.
 
-## Rest parameters `...`
+## Залишкові параметри `...`
 
-A function can be called with any number of arguments, no matter how it is defined.
+Функцію можна викликати з будь-якою кількістю аргументів, незалежно від того, як вона визначена.
 
-Like here:
+Як тут:
 ```js run
 function sum(a, b) {
   return a + b;
 }
 
-alert( sum(1, 2, 3, 4, 5) );
+alert(sum(1, 2, 3, 4, 5));
 ```
 
-There will be no error because of "excessive" arguments. But of course in the result only the first two will be counted.
+Помилки "надмірних" аргументів у цьому випадку не буде. Але, звичайно, будуть враховані лише перші два.
 
-The rest of the parameters can be included in the function definition by using three dots `...` followed by the name of the array that will contain them. The dots literally mean "gather the remaining parameters into an array".
+Решту параметрів можна включити до визначення функції за допомогою трьох крапок `...` що передують імені масиву, який їх міститиме. Точки буквально означають "зібрати решту параметрів у масив".
 
-For instance, to gather all arguments into array `args`:
+Наприклад, щоб зібрати всі аргументи в масив `args`:
 
 ```js run
-function sumAll(...args) { // args is the name for the array
+function sumAll(...args) { // args – це ім’я масиву
   let sum = 0;
 
   for (let arg of args) sum += arg;
@@ -43,71 +43,71 @@ alert( sumAll(1, 2) ); // 3
 alert( sumAll(1, 2, 3) ); // 6
 ```
 
-We can choose to get the first parameters as variables, and gather only the rest.
+Ми можемо вибрати перші параметри як змінні, а зібрати у масив лише залишки.
 
-Here the first two arguments go into variables and the rest go into `titles` array:
+У цьому прикладі перші два аргументи переходять у змінні, а решта -- в масив `titles`:
 
 ```js run
 function showName(firstName, lastName, ...titles) {
-  alert( firstName + ' ' + lastName ); // Julius Caesar
+  alert( firstName + ' ' + lastName ); // Юлій Цезар
 
-  // the rest go into titles array
-  // i.e. titles = ["Consul", "Imperator"]
-  alert( titles[0] ); // Consul
-  alert( titles[1] ); // Imperator
+  // решта параметрів переходять до масиву
+  // titles = ["Консул", "Полководець"]
+  alert( titles[0] ); // Консул
+  alert( titles[1] ); // Полководець
   alert( titles.length ); // 2
 }
 
-showName("Julius", "Caesar", "Consul", "Imperator");
+showName("Юлій", "Цезар", "Консул", "Полководець");
 ```
 
-````warn header="The rest parameters must be at the end"
-The rest parameters gather all remaining arguments, so the following does not make sense and causes an error:
+````warn header="Залишкові параметри повинні бути в кінці"
+Залишкові параметри збирають усі залишені аргументи, тому наступне не має сенсу та викликає помилку:
 
 ```js
-function f(arg1, ...rest, arg2) { // arg2 after ...rest ?!
+function f(arg1, ...rest, arg2) { // arg2 після ...rest ?!
   // error
 }
 ```
 
-The `...rest` must always be last.
+Залишок `...rest` завжди повинен бути останнім.
 ````
 
-## The "arguments" variable
+## Змінна "arguments"
 
-There is also a special array-like object named `arguments` that contains all arguments by their index.
+Існує також спеціальний об’єкт, подібний масиву `arguments` який містить усі аргументи за їх індексом.
 
-For instance:
+Наприклад:
 
 ```js run
 function showName() {
-  alert( arguments.length );
-  alert( arguments[0] );
-  alert( arguments[1] );
+  alert(arguments.length);
+  alert(arguments[0]);
+  alert(arguments[1]);
 
-  // it's iterable
+  // це повторюване
   // for(let arg of arguments) alert(arg);
 }
 
-// shows: 2, Julius, Caesar
+// показує: 2, Julius, Caesar
 showName("Julius", "Caesar");
 
-// shows: 1, Ilya, undefined (no second argument)
+// показує: 1, Ilya, undefined (жодного другого аргументу)
 showName("Ilya");
 ```
 
-In old times, rest parameters did not exist in the language, and using `arguments` was the only way to get all arguments of the function. And it still works, we can find it in the old code.
+За старих часів залишкові параметри не існували в мові, єдиний спосіб отримати всі аргументи функції був за допомогою `arguments`. І він все ще працює, ми можемо знайти його в старому коді.
 
-But the downside is that although `arguments` is both array-like and iterable, it's not an array. It does not support array methods, so we can't call `arguments.map(...)` for example.
+Але недоліком є те, що хоча `arguments` є одночасно масивом і ітерабельним, це не масив. Він не підтримує методи масиву, тому ми не можемо наприклад викликати `arguments.map(...)`.
 
-Also, it always contains all arguments. We can't capture them partially, like we did with rest parameters.
+Крім того, він завжди містить усі аргументи. Ми не можемо отримати їх частково, як це було зроблено з параметрами залишку.
 
-So when we need these features, then rest parameters are preferred.
+Тому, коли нам потрібні вбудовані мутоди, тоді краще використати параметри залишку.
 
-````smart header="Arrow functions do not have `\"arguments\"`"
-If we access the `arguments` object from an arrow function, it takes them from the outer "normal" function.
+````smart header="Стрілочні функції на мають `\"arguments\"`"
+ Якщо ми викличемо `arguments` об'єкти на стрілочній функції, він візьме їх із зовнішньої "звичайної" функції.
 
-Here's an example:
+Ось приклад:
 
 ```js run
 function f() {
@@ -118,25 +118,25 @@ function f() {
 f(1); // 1
 ```
 
-As we remember, arrow functions don't have their own `this`. Now we know they don't have the special `arguments` object either.
+Як ми пам’ятаємо, стрілочні функції не мають власних `this`. Тепер ми знаємо, що у них також немає особливого об'єкту `arguments`.
 ````
 
 
-## Spread syntax [#spread-syntax]
+## Синтаксис розширення [#spread-syntax]
 
-We've just seen how to get an array from the list of parameters.
+Ми тільки що побачили, як отримати масив зі списку параметрів.
 
-But sometimes we need to do exactly the reverse.
+Але іноді нам потрібно зробити зворотнє.
 
-For instance, there's a built-in function [Math.max](mdn:js/Math/max) that returns the greatest number from a list:
+Наприклад, є вбудована функція [Math.max](mdn:js/Math/max) що повертає найбільше число зі списку:
 
 ```js run
 alert( Math.max(3, 5, 1) ); // 5
 ```
 
-Now let's say we have an array `[3, 5, 1]`. How do we call `Math.max` with it?
+Тепер припустимо, що у нас є масив `[3, 5, 1]`. Як нам викликати `Math.max` з цим?
 
-Passing it "as is" won't work, because `Math.max` expects a list of numeric arguments, not a single array:
+Передати "як є" не вийде, бо `Math.max` очікує список числових аргументів, а не єдиний масив:
 
 ```js run
 let arr = [3, 5, 1];
@@ -146,21 +146,21 @@ alert( Math.max(arr) ); // NaN
 */!*
 ```
 
-And surely we can't manually list items in the code `Math.max(arr[0], arr[1], arr[2])`, because we may be unsure how many there are. As our script executes, there could be a lot, or there could be none. And that would get ugly.
+І, звісно ж, ми не можемо вручну перераховувати елементи в коді `Math.max(arr[0], arr[1], arr[2])`, тому що ми можемо не знати, скільки їх існує. Під час виконання нашого сценарію їх може бути багато, а може і не бути. І це було б потворно.
 
-*Spread syntax* to the rescue! It looks similar to rest parameters, also using `...`, but does quite the opposite.
+*Синтаксис розширення* надопомогу! Він схожий на параметри залишку, також використовуються `...`, але працює все навпаки.
 
-When `...arr` is used in the function call, it "expands" an iterable object `arr` into the list of arguments.
+Коли `...arr` використовується у виклику функції, він "розширює" повторюванний об'єкт `arr` до списку аргументів.
 
-For `Math.max`:
+Для `Math.max`:
 
 ```js run
 let arr = [3, 5, 1];
 
-alert( Math.max(...arr) ); // 5 (spread turns array into a list of arguments)
+alert( Math.max(...arr) ); // 5 (перетворює масив у список аргументів)
 ```
 
-We also can pass multiple iterables this way:
+Таким чином, ми також можемо передати кілька ітерацій:
 
 ```js run
 let arr1 = [1, -2, 3, 4];
@@ -169,7 +169,7 @@ let arr2 = [8, 3, -8, 1];
 alert( Math.max(...arr1, ...arr2) ); // 8
 ```
 
-We can even combine the spread syntax with normal values:
+Ми навіть можемо поєднати синтаксис розширення з нормальними значеннями:
 
 
 ```js run
@@ -179,7 +179,7 @@ let arr2 = [8, 3, -8, 1];
 alert( Math.max(1, ...arr1, 2, ...arr2, 25) ); // 25
 ```
 
-Also, the spread syntax can be used to merge arrays:
+Також синтаксис розширення можна використовувати для об’єднання масивів:
 
 ```js run
 let arr = [3, 5, 1];
@@ -192,9 +192,9 @@ let merged = [0, ...arr, 2, ...arr2];
 alert(merged); // 0,3,5,1,2,8,9,15 (0, then arr, then 2, then arr2)
 ```
 
-In the examples above we used an array to demonstrate the spread syntax, but any iterable will do.
+У наведених вище прикладах ми використовували масив для демонстрації синтаксису розширення, але підходить будь-який повторюванний об'єкт.
 
-For instance, here we use the spread syntax to turn the string into array of characters:
+Наприклад, тут ми використовуємо синтаксис розширення, щоб перетворити рядок у масив символів:
 
 ```js run
 let str = "Hello";
@@ -202,94 +202,94 @@ let str = "Hello";
 alert( [...str] ); // H,e,l,l,o
 ```
 
-The spread syntax internally uses iterators to gather elements, the same way as `for..of` does.
+Синтаксис розширення внутрішньо використовує ітератори для збору елементів так само, як це робить `for..of`.
 
-So, for a string, `for..of` returns characters and `...str` becomes `"H","e","l","l","o"`. The list of characters is passed to array initializer `[...str]`.
+Отже, для рядка, `for..of` повертає символи так само `...str` повертає `"H","e","l","l","o"`. Список символів передається в ініціалізатор масиву `[...str]`.
 
-For this particular task we could also use `Array.from`, because it converts an iterable (like a string) into an array:
+Для цього конкретного завдання ми також могли б використовувати `Array.from`, тому що він перетворює ітерабельний (як рядок) в масив:
 
 ```js run
 let str = "Hello";
 
-// Array.from converts an iterable into an array
+// Array.from перетворює ітерабельний об'єкт в масив
 alert( Array.from(str) ); // H,e,l,l,o
 ```
 
-The result is the same as `[...str]`.
+Результат такий самий як `[...str]`.
 
-But there's a subtle difference between `Array.from(obj)` and `[...obj]`:
+Але між `Array.from(obj)` та `[...obj]` є тонка різниця:
 
-- `Array.from` operates on both array-likes and iterables.
-- The spread syntax works only with iterables.
+- `Array.from` працює як з масиво-подібними, так і з ітераторами.
+- Синтаксис розширення працює тільки з ітераторами.
 
-So, for the task of turning something into an array, `Array.from` tends to be more universal.
+Отже, для завдання перетворити щось на масив, `Array.from` буде більш універсальним.
 
 
-## Copy an array/object
+## Створити копію масива/об’єкта
 
-Remember when we talked about `Object.assign()` [in the past](info:object-copy#cloning-and-merging-object-assign)?
+Пригадайте, коли ми говорили `Object.assign()` [в минулому розділі](info:object-copy#cloning-and-merging-object-assign)?
 
-It is possible to do the same thing with the spread syntax.
+Те ж саме можна зробити і з синтаксисом розширення.
 
 ```js run
 let arr = [1, 2, 3];
 
 *!*
-let arrCopy = [...arr]; // spread the array into a list of parameters
-                        // then put the result into a new array
+let arrCopy = [...arr]; // розширить масив у список параметрів
+                        // а потім помістіть результат у новий масив
 */!*
 
-// do the arrays have the same contents?
+// чи мають масиви однаковий вміст?
 alert(JSON.stringify(arr) === JSON.stringify(arrCopy)); // true
 
-// are the arrays equal?
-alert(arr === arrCopy); // false (not same reference)
+// чи масиви однакові?
+alert(arr === arrCopy); // false (не однакові посилання)
 
-// modifying our initial array does not modify the copy:
+// зміна нашого початкового масиву не змінює копію:
 arr.push(4);
 alert(arr); // 1, 2, 3, 4
 alert(arrCopy); // 1, 2, 3
 ```
 
-Note that it is possible to do the same thing to make a copy of an object:
+Зауважте, що те ж саме можна зробити, щоб зробити копію об’єкта:
 
 ```js run
 let obj = { a: 1, b: 2, c: 3 };
 
 *!*
-let objCopy = { ...obj }; // spread the object into a list of parameters
-                          // then return the result in a new object
+let objCopy = { ...obj }; // розширить об'єкт у список параметрів
+                          // потім поверне результат у новий об’єкт
 */!*
 
-// do the objects have the same contents?
+// чи однаковий вміст мають об’єкти?
 alert(JSON.stringify(obj) === JSON.stringify(objCopy)); // true
 
-// are the objects equal?
-alert(obj === objCopy); // false (not same reference)
+// чи однакові об’єкти?
+alert(obj === objCopy); // false (не однакові посилання)
 
-// modifying our initial object does not modify the copy:
+// зміна нашого початкового об'єкта не змінює копію:
 obj.d = 4;
 alert(JSON.stringify(obj)); // {"a":1,"b":2,"c":3,"d":4}
 alert(JSON.stringify(objCopy)); // {"a":1,"b":2,"c":3}
 ```
 
-This way of copying an object is much shorter than `let objCopy = Object.assign({}, obj)` or for an array `let arrCopy = Object.assign([], arr)` so we prefer to use it whenever we can.
+Цей спосіб копіювання об’єкта набагато коротший, ніж `let objCopy = Object.assign({}, obj)` чи для масиву `let arrCopy = Object.assign([], arr)` тому ми вважаємо за краще використовувати його, коли це можливо.
 
 
-## Summary
+## Підсумки
 
-When we see `"..."` in the code, it is either rest parameters or the spread syntax.
+Коли ми бачимо `"..."` у коді це або залишкові параметри, або синтаксис розширення.
 
-There's an easy way to distinguish between them:
+Існує простий спосіб відрізнити їх:
 
-- When `...` is at the end of function parameters, it's "rest parameters" and gathers the rest of the list of arguments into an array.
-- When `...` occurs in a function call or alike, it's called a "spread syntax" and expands an array into a list.
+- Коли `...` находиться в кінці параметрів функції, це "залишкові параметри" і збирають решту списку аргументів у масив.
+- Коли `...` виникає під час виклику функції чи подібного, це називається "синтаксисом розширення" і розширює масив у список.
 
-Use patterns:
+Використовуйте паттерни:
 
-- Rest parameters are used to create functions that accept any number of arguments.
-- The spread syntax is used to pass an array to functions that normally require a list of many arguments.
+- Залишкові параметри використовуються для створення функцій, які приймають будь-яку кількість аргументів.
+- Синтаксис розширення використовується для передачі масиву у функції, які зазвичай вимагають список із багатьох аргументів.
 
-Together they help to travel between a list and an array of parameters with ease.
+Разом вони допомагають легко переміщатися між списком та масивом параметрів.
 
-All arguments of a function call are also available in "old-style" `arguments`: array-like iterable object.
+Усі аргументи виклику функції також доступні в "олдскульному" ітерабельному об’єкті `arguments`.

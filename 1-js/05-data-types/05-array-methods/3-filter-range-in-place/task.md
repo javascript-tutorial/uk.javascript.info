@@ -2,17 +2,17 @@ importance: 4
 
 ---
 
-# Filter range "in place"
+# Фільтрація за діапазоном "на місці"
 
-Write a function `filterRangeInPlace(arr, a, b)` that gets an array `arr` and removes from it all values except those that are between `a` and `b`. The test is: `a ≤ arr[i] ≤ b`.
+Напишіть функцію `filterRangeInPlace(arr, a, b)`, яка приймає масив `arr` і видаляє з нього всі значення крім тих, які знаходяться між `a` і `b`. Тобто, перевірка має вигляд `a ≤ arr[i] ≤ b`.
 
-The function should only modify the array. It should not return anything.
+Функція повинна змінювати поточний масив і нічого не повертати.
 
-For instance:
+Наприклад:
 ```js
 let arr = [5, 3, 8, 1];
 
-filterRangeInPlace(arr, 1, 4); // removed the numbers except from 1 to 4
+filterRangeInPlace(arr, 1, 4); // видаляє всі числа крім тих, що в діапазоні від 1 до 4
 
 alert( arr ); // [3, 1]
 ```

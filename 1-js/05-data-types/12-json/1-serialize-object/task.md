@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# Turn the object into JSON and back
+# Перетворіть об’єкт в JSON і назад
 
-Turn the `user` into JSON and then read it back into another variable.
+Перетворіть `user` в JSON, а потім перетворіть його назад в іншу змінну.
 
 ```js
 let user = {
-  name: "John Smith",
+  name: "Іван Іванов",
   age: 35
 };
 ```

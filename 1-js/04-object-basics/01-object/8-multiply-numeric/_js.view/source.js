@@ -1,13 +1,13 @@
 let menu = {
   width: 200,
   height: 300,
-  title: "My menu"
+  title: "Моє меню"
 };
 
 
 function multiplyNumeric(obj) {
   
-  /* your code */
+  /* ваш код */
 
 }
 

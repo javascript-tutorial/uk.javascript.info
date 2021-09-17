@@ -1,31 +1,31 @@
-# Arrow functions revisited
+# Повторення стрілкових функцій
 
-Let's revisit arrow functions.
+Повернемося до стрілкових функцій.
 
-Arrow functions are not just a "shorthand" for writing small stuff. They have some very specific and useful features.
+Стрілкові функції - це не просто «скорочення» для написання усіляких дрібниць. Вони мають деякі дуже специфічні та корисні особливості.
 
-JavaScript is full of situations where we need to write a small function that's executed somewhere else.
+При написанні JavaScript-коду часто виникають ситуації, коли потрібно написати невелику функцію, яка буде виконана десь ще.
 
-For instance:
+Наприклад:
 
-- `arr.forEach(func)` -- `func` is executed by `forEach` for every array item.
-- `setTimeout(func)` -- `func` is executed by the built-in scheduler.
-- ...there are more.
+- `arr.forEach(func)` -- `func` виконується `forEach` для кожного елемента масиву.
+- `setTimeout(func)` -- `func` виконується вбудованим планувальником.
+- ...тощо.
 
-It's in the very spirit of JavaScript to create a function and pass it somewhere.
+Створення функції та передача її кудись - це в дусі JavaScript.
 
-And in such functions we usually don't want to leave the current context. That's where arrow functions come in handy.
+І в таких функціях ми зазвичай не хочемо виходити з поточного контексту. В таких випадках і корисні стрілкові функції.
 
-## Arrow functions have no "this"
+## Стрілкові функції не мають "this"
 
-As we remember from the chapter <info:object-methods>, arrow functions do not have `this`. If `this` is accessed, it is taken from the outside.
+Як ми пам’ятаємо з розділу <info:object-methods>, стрілкові функції не мають `this`. Якщо відбувається звернення до `this`, його значення береться зовні.
 
-For instance, we can use it to iterate inside an object method:
+Наприклад, ми можемо використовувати це для ітерації всередині методу об’єкта:
 
 ```js run
 let group = {
-  title: "Our Group",
-  students: ["John", "Pete", "Alice"],
+  title: "Наша група",
+  students: ["Іван", "Петро", "Марія"],
 
   showList() {
 *!*
@@ -39,14 +39,14 @@ let group = {
 group.showList();
 ```
 
-Here in `forEach`, the arrow function is used, so `this.title` in it is exactly the same as in the outer method `showList`. That is: `group.title`.
+Тут у `forEach` використовується стрілкова функція, тому `this.title` у ній має таке ж саме значення, як і у методі `showList`, -- `group.title`.
 
-If we used a "regular" function, there would be an error:
+Якби ми використали "звичайну" функцію, була б помилка:
 
 ```js run
 let group = {
-  title: "Our Group",
-  students: ["John", "Pete", "Alice"],
+  title: "Наша група",
+  students: ["Іван", "Петро", "Марія"],
 
   showList() {
 *!*
@@ -61,28 +61,28 @@ let group = {
 group.showList();
 ```
 
-The error occurs because `forEach` runs functions with `this=undefined` by default, so the attempt to access `undefined.title` is made.
+Помилка виникає через те, що `forEach` запускає функції з `this=undefined` за замовчуванням, тому ми намагаємося звернутися до `undefined.title`.
 
-That doesn't affect arrow functions, because they just don't have `this`.
+Це не впливає на стрілкові функції, тому що вони не мають власного `this`.
 
-```warn header="Arrow functions can't run with `new`"
-Not having `this` naturally means another limitation: arrow functions can't be used as constructors. They can't be called with `new`.
+```warn header="Стрілкові функції не можна використовувати з `new`"
+Відсутність `this` призводить до ще одного обмеження: стрілкові функції не можуть бути використані як конструктори. Їх не можна викликати з `new`.
 ```
 
-```smart header="Arrow functions VS bind"
-There's a subtle difference between an arrow function `=>` and a regular function called with `.bind(this)`:
+```smart header="Стрілкові функції проти bind"
+Між стрілковою функцією `=>` та звичайною функцією, що викликається з `.bind(this)` є невеличка різниця:
 
-- `.bind(this)` creates a "bound version" of the function.
-- The arrow `=>` doesn't create any binding. The function simply doesn't have `this`. The lookup of `this` is made exactly the same way as a regular variable search: in the outer lexical environment.
+- `.bind(this)` створює "зв’язану версію" функції.
+- Стрілка `=>` не створює жодних прив’язок. Ця функція просто не має `this`. Пошук `this` здійснюється так само, як і звичайний пошук змінних: у зовнішньому лексичному середовищі.
 ```
 
-## Arrows have no "arguments"
+## Стрілкові функції не мають "arguments"
 
-Arrow functions also have no `arguments` variable.
+Стрілкові функції також не мають змінної `arguments`.
 
-That's great for decorators, when we need to forward a call with the current `this` and `arguments`.
+Це чудово підходить для створення декораторів, коли нам потрібно прокинути виклик з поточними `this` та `arguments`.
 
-For instance, `defer(f, ms)` gets a function and returns a wrapper around it that delays the call by `ms` milliseconds:
+Наприклад, `defer(f, ms)` приймає функцію і повертає обгортку над нею, яка відкладає виклик на `ms` мілісекунд:
 
 ```js run
 function defer(f, ms) {
@@ -92,14 +92,14 @@ function defer(f, ms) {
 }
 
 function sayHi(who) {
-  alert('Hello, ' + who);
+  alert('Привіт, ' + who);
 }
 
 let sayHiDeferred = defer(sayHi, 2000);
-sayHiDeferred("John"); // Hello, John after 2 seconds
+sayHiDeferred("Іван"); // "Привіт, Іван" через 2 секунди
 ```
 
-The same without an arrow function would look like:
+Те ж саме без стрілкової функції виглядатиме так:
 
 ```js
 function defer(f, ms) {
@@ -112,15 +112,15 @@ function defer(f, ms) {
 }
 ```
 
-Here we had to create additional variables `args` and `ctx` so that the function inside `setTimeout` could take them.
+Тут нам довелося створити додаткові змінні `args` and `ctx`, щоб функція всередині `setTimeout` могла їх прийняти.
 
-## Summary
+## Підсумки
 
-Arrow functions:
+Стрілкові функції:
 
-- Do not have `this`
-- Do not have `arguments`
-- Can't be called with `new`
-- They also don't have `super`, but we didn't study it yet. We will on the chapter <info:class-inheritance>
+- Не мають `this`
+- Не мають `arguments`
+- Не можуть бути викликані з `new`
+- Також вони не мають `super`, але до цієї теми ми ще не дійшли. Ми про це поговоримо у розділі <info:class-inheritance>
 
-That's because they are meant for short pieces of code that do not have their own "context", but rather work in the current one. And they really shine in that use case.
+Це все тому, що вони призначені для невеличких фрагментів коду, які не мають власного "контексту", а скоріше працюють у поточному. І вони дійсно дуже добре впоруються з цим завданням.

@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Where does it write?
+# Де буде записано?
 
-We have `rabbit` inheriting from `animal`.
+Ми маємо об’єкт `rabbit`, котрий успадковує властивості від об’єкта `animal`.
 
-If we call `rabbit.eat()`, which object receives the `full` property: `animal` or `rabbit`? 
+Якщо ми викличемо `rabbit.eat()`, у який з об’єктів буде записана властивість `full`: в `animal` чи `rabbit`?
 
 ```js
 let animal = {

@@ -1,1 +1,1 @@
-Just loop over the object and `return false` immediately if there's at least one property.
+Просто в циклі перебираємо властивості об’єкта і повертаємо `false`, як тільки зустрічаємо властивість.

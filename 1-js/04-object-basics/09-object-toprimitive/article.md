@@ -1,117 +1,117 @@
 
-# Object to primitive conversion
+# Перетворення об’єктів в примітиви
 
-What happens when objects are added `obj1 + obj2`, subtracted `obj1 - obj2` or printed using `alert(obj)`?
+Що відбувається, коли об’єкти додаються `obj1 + obj2`, віднімаються `obj1 - obj2` або друкуються за допомогою `alert(obj)`?
 
-JavaScript doesn't exactly allow to customize how operators work on objects. Unlike some other programming languages, such as Ruby or C++, we can't implement a special object method to handle an addition (or other operators).
+JavaScript не дозволяє налаштувати, як працюють оператори з об’єктами. На відміну від деяких інших мов програмування, таких як Ruby або C++, ми не можемо реалізувати спеціальний об’єктний метод для обробки додавання (або інших операторів).
 
-In case of such operations, objects are auto-converted to primitives, and then the operation is carried out over these primitives and results in a primitive value.
+У разі таких операцій об’єкти автоматично перетворюються на примітиви, а потім операція здійснюється над цими примітивами та повертає результат у вигляді примітивного значення.
 
-That's an important limitation, as the result of `obj1 + obj2` can't be another object!
+Це важливе обмеження, оскільки результат `obj1 + obj2` не може бути іншим об’єктом!
 
-E.g. we can't make objects representing vectors or matrices (or archievements or whatever), add them and expect a "summed" object as the result. Such architectural feats are automatically "off the board".
+Наприклад, ми не можемо зробити об’єкти, що представляють вектори або матриці (або досягнення або що завгодно) та додати їх і очікувати, що "підсумковий" результат буде об’єктом. Автоматично такі архітектурні особливості недоступні.
 
-So, because we can't do much here, there's no maths with objects in real projects. When it happens, it's usually because of a coding mistake.
+Отже, оскільки ми не можемо автоматично за допомогою мови програмування виконувати подібні операції над об’єктами, то в реальних проєктах немає "математики з об’єктами". Коли стаються подібні операції (наприклад, `obj1 + obj2`), причиною цьому зазвичай є помилка програмування.
 
-In this chapter we'll cover how an object converts to primitive and how to customize it.
+У цьому розділі ми розглянемо те, як об’єкти перетворюється на примітиви і як налаштувати це.
 
-We have two purposes:
+У нас є два цілі:
 
-1. It will allow us to understand what's going on in case of coding mistakes, when such an operation happened accidentally.
-2. There are exceptions, where such operations are possible and look good. E.g. subtracting or comparing dates (`Date` objects). We'll come across them later.
+1. Це дозволить нам зрозуміти, що відбувається у випадку помилок коду, коли така операція відбулася випадково.
+2. Є винятки, де такі операції можливі і доцільні. Наприклад, віднімання або порівняння дати (`Date` об’єкти). Ми будемо зустрічатися з ними пізніше.
 
-## Conversion rules
+## Правила перетворення
 
-In the chapter <info:type-conversions> we've seen the rules for numeric, string and boolean conversions of primitives. But we left a gap for objects. Now, as we know about methods and symbols it becomes possible to fill it.
+У розділі <info:type-conversions> ми бачили правила для перетворення чисел, рядків та булевих примітивів. Але ми залишили пробіл для об’єктів. Тепер, оскільки ми знаємо про методи та символи, можемо заповнити його.
 
-1. All objects are `true` in a boolean context. There are only numeric and string conversions.
-2. The numeric conversion happens when we subtract objects or apply mathematical functions. For instance, `Date` objects (to be covered in the chapter <info:date>) can be subtracted, and the result of `date1 - date2` is the time difference between two dates.
-3. As for the string conversion -- it usually happens when we output an object like `alert(obj)` and in similar contexts.
+1. Всі об’єкти -- це `true` в булевому контексті. Є лише числові та рядкові конверсії.
+2. Числове перетворення відбувається, коли ми віднімаємо об’єкти або застосовуємо математичні функції. Наприклад, `Date` об’єкти (розглянуті в розділі <info:date>) можуть відніматися, і результат `date1 - date2` -- це різниця у часі між двома датами.
+3. Що стосується перетворення рядків -- це зазвичай відбувається, коли ми виводимо об’єкт, наприклад `alert(obj)` і в подібних контекстах.
 
-We can fine-tune string and numeric conversion, using special object methods.
+Ми можемо точно налагоджувати перетворення рядків та чисел, використовуючи спеціальні методи об’єкта.
 
-There are three variants of type conversion, that happen in various situations.
+Є три варіанти перетворення типів, що відбуваються в різних ситуаціях.
 
-They're called "hints", as described in the [specification](https://tc39.github.io/ecma262/#sec-toprimitive):
+Вони називаються "підказками" ("hints"), як описано в [специфікації](https://tc39.github.io/ecma262/#sec-toprimitive):
 
 `"string"`
-: For an object-to-string conversion, when we're doing an operation on an object that expects a string, like `alert`:
+: Перетворення об’єкта в рядок відбувається коли ми виконуємо операцію, яка очікує рядок, над об’єктом. Наприклад, `alert`:
 
     ```js
-    // output
+    // вивід
     alert(obj);
 
-    // using object as a property key
+    // використання об’єкта як ключа властивості об’єкта
     anotherObj[obj] = 123;
     ```
 
 `"number"`
-: For an object-to-number conversion, like when we're doing maths:
+: Перетворення об’єкта в число, коли ми робимо математичні операції:
 
     ```js
-    // explicit conversion
+    // явне перетворення
     let num = Number(obj);
 
-    // maths (except binary plus)
-    let n = +obj; // unary plus
+    // математичні операції (крім бінарного додавання)
+    let n = +obj; // унарне додавання
     let delta = date1 - date2;
 
-    // less/greater comparison
+    // порівняння менше/більше
     let greater = user1 > user2;
     ```
 
 `"default"`
-: Occurs in rare cases when the operator is "not sure" what type to expect.
+: Виникає в рідкісних випадках, коли оператор "не впевнений", який тип очікується.
 
-    For instance, binary plus `+` can work both with strings (concatenates them) and numbers (adds them), so both strings and numbers would do. So if a binary plus gets an object as an argument, it uses the `"default"` hint to convert it.
+    Наприклад, бінарний плюс `+` може працювати як з рядками (об’єднувати їх), так і з цифрами (додавати їх), тому обидва випадки -- рядки та цифри -- будуть працювати. Отже, якщо бінарний плюс отримує об’єкт як аргумент, він використовує підказку `"default"`, щоб перетворити його.
 
-    Also, if an object is compared using `==` with a string, number or a symbol, it's also unclear which conversion should be done, so the `"default"` hint is used.
+    Також, якщо об’єкт порівнюється (`==`) з рядком, числом чи символом, тоді незрозуміло, яке порівняння використати, тому використовується підказка `"default"`.
 
     ```js
-    // binary plus uses the "default" hint
+    // бінарний плюс використовує підказку "default"
     let total = obj1 + obj2;
 
-    // obj == number uses the "default" hint
+    // obj == цифра використовує підказку "default"
     if (user == 1) { ... };
     ```
 
-    The greater and less comparison operators, such as `<` `>`, can work with both strings and numbers too. Still, they use the `"number"` hint, not `"default"`. That's for historical reasons.
+    Оператори порівняння більше та менше, такі як `<` `>`, також можуть працювати як з рядками, так і з цифрами. Проте, вони з історичних причин використовують `"number"` підказку, а не `"default"`.
 
-    In practice though, we don't need to remember these peculiar details, because all built-in objects except for one case (`Date` object, we'll learn it later) implement `"default"` conversion the same way as `"number"`. And we can do the same.
+    На практиці, хоча нам не потрібно пам’ятати ці особливі деталі, тому що всі вбудовані об’єкти, крім одного випадку (об’єкт `Date`, ми дізнаємося пізніше) реалізовують `"default"` перетворення так само, як `"number"`. І ми можемо зробити те ж саме.
 
-```smart header="No `\"boolean\"` hint"
-Please note -- there are only three hints. It's that simple.
+```smart header="Відсутність підказки `\"boolean\"`"
+Будь ласка, зверніть увагу -- є лише три підказки. Це просто.
 
-There is no "boolean" hint (all objects are `true` in boolean context) or anything else. And if we treat `"default"` and `"number"` the same, like most built-ins do, then there are only two conversions.
+Немає "boolean" підказки (всі об’єкти `true` у булевому контексті) або будь-яких ще. І якщо ми однаково ставимося до `default` і `number`, як і більшість вбудованих об’єктів, то є лише два перетворення.
 ```
 
-**To do the conversion, JavaScript tries to find and call three object methods:**
+** Щоб зробити перетворення, JavaScript намагається знайти та викликати три методи об’єкта: **
 
-1. Call `obj[Symbol.toPrimitive](hint)` - the method with the symbolic key `Symbol.toPrimitive` (system symbol), if such method exists,
-2. Otherwise if hint is `"string"`
-    - try `obj.toString()` and `obj.valueOf()`, whatever exists.
-3. Otherwise if hint is `"number"` or `"default"`
-    - try `obj.valueOf()` and `obj.toString()`, whatever exists.
+1. Викликати `obj[Symbol.toPrimitive](hint)` -- метод з символьним ключем `Symbol.toPrimitive` (системний символ), якщо такий метод існує,
+2. Інакше, якщо підказка - це `"string"`
+    - спробує `obj.toString()` та `obj.valueOf()` -- будь-що, що існує.
+3. Інакше, якщо підказка - `"номер"` або `"default"`
+    - спробує `obj.valueOf()` та `obj.toString()` -- будь-що, що існує.
 
 ## Symbol.toPrimitive
 
-Let's start from the first method. There's a built-in symbol named `Symbol.toPrimitive` that should be used to name the conversion method, like this:
+Почнемо з першого методу. Є вбудований символ під назвою `Symbol.toPrimitive`, який слід використовувати для назви методу перетворення, як наприклад:
 
 ```js
 obj[Symbol.toPrimitive] = function(hint) {
-  // here goes the code to convert this object to a primitive
-  // it must return a primitive value
-  // hint = one of "string", "number", "default"
+  // тут йде код, щоб перетворити цей об’єкт в примітив
+  // він повинен повернути примітивне значення
+  // hint = один з "string", "number", "default"
 };
 ```
 
-If the method `Symbol.toPrimitive` exists, it's used for all hints, and no more methods are needed.
+Якщо метод `symbol.toprimitive` існує, він використовується для всіх підказок, і не потрібно більше методів.
 
-For instance, here `user` object implements it:
+Наприклад, тут об’єкт `user` реалізує його:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   money: 1000,
 
   [Symbol.toPrimitive](hint) {
@@ -120,128 +120,128 @@ let user = {
   }
 };
 
-// conversions demo:
-alert(user); // hint: string -> {name: "John"}
+// демонстрація перетворення:
+alert(user); // hint: string -> {name: "Іван"}
 alert(+user); // hint: number -> 1000
 alert(user + 500); // hint: default -> 1500
 ```
 
-As we can see from the code, `user` becomes a self-descriptive string or a money amount depending on the conversion. The single method `user[Symbol.toPrimitive]` handles all conversion cases.
+Як ми бачимо з коду, `user` стає самоописаним рядком або грошовою сумою залежно від перетворення. Єдиний метод `[Symbol.toPrimitive]` об’єкту `user` обробляє всі випадки перетворення.
 
 
 ## toString/valueOf
 
-If there's no `Symbol.toPrimitive` then JavaScript tries to find methods `toString` and `valueOf`:
+Якщо немає `Symbol.toPrimitive` тоді JavaScript намагається знайти методи `toString` і `valueOf`:
 
-- For the "string" hint: `toString`, and if it doesn't exist, then `valueOf` (so `toString` has the priority for stirng conversions).
-- For other hints: `valueOf`, and if it doesn't exist, then `toString` (so `valueOf` has the priority for maths).
+- Для "string" підказки: `toString`, і якщо цей метод не існує, то `valueOf` (таким чином `toString` має пріоритет при перетворенні в рядок).
+- Для інших підказок: `valueOf`, і якщо це не існує, то `toString` (таким чином `valueOf` має пріоритет для математики).
 
-Methods `toString` and `valueOf` come from ancient times. They are not symbols (symbols did not exist that long ago), but rather "regular" string-named methods. They provide an alternative "old-style" way to implement the conversion.
+Методи `toString` і `valueOf` походять з давніх часів. Вони не є символами (багато часу назад символи не існували), а скоріше є "звичними" методами, що названі за допомогою рядків. Вони забезпечують альтернативний шлях "старого стилю" для реалізації перетворення.
 
-These methods must return a primitive value. If `toString` or `valueOf` returns an object, then it's ignored (same as if there were no method).
+Ці методи повинні повертати примітивне значення. Якщо `toString` чи `valueOf` повертає об’єкт, то він ігнорується (так само, якби цього методу не існувало).
 
-By default, a plain object has following `toString` and `valueOf` methods:
+За замовчуванням, простий об’єкт має слідувати методами `toString` та `valueOf`:
 
-- The `toString` method returns a string `"[object Object]"`.
-- The `valueOf` method returns the object itself.
+- Метод `toString` повертає рядок `"[object Object]"`.
+- Метод `valueOf` повертає сам об’єкт.
 
-Here's the demo:
+Ось демо:
 
 ```js run
-let user = {name: "John"};
+let user = {name: "Іван"};
 
 alert(user); // [object Object]
 alert(user.valueOf() === user); // true
 ```
 
-So if we try to use an object as a string, like in an `alert` or so, then by default we see `[object Object]`.
+Отже, якщо ми спробуємо використовувати об’єкт як рядок, наприклад в `alert` та ін., то за замовчуванням ми бачимо `[object Object]`.
 
-The default `valueOf` is mentioned here only for the sake of completeness, to avoid any confusion. As you can see, it returns the object itself, and so is ignored. Don't ask me why, that's for historical reasons. So we can assume it doesn't exist.
+За замовчуванням метод `valueOf` згадується тут лише заради повноти, щоб уникнути будь-якої плутанини. Як ви бачите, він повертає сам об’єкт, і тому ігнорується. Не питайте мене, чому це для історичних причин. Тому ми можемо припустити, що цього не існує.
 
-Let's implement these methods to customize the conversion.
+Реалізуємо ці методи для налаштування перетворення.
 
-For instance, here `user` does the same as above using a combination of `toString` and `valueOf` instead of `Symbol.toPrimitive`:
+Наприклад, тут `user` робить те ж саме, що й вище, використовуючи комбінацію `toString` і `valueOf` замість `Symbol.toPrimitive`:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   money: 1000,
 
-  // for hint="string"
+  // для hint="string"
   toString() {
     return `{name: "${this.name}"}`;
   },
 
-  // for hint="number" or "default"
+  // для hint="number" чи "default"
   valueOf() {
     return this.money;
   }
 
 };
 
-alert(user); // toString -> {name: "John"}
+alert(user); // toString -> {name: "Іван"}
 alert(+user); // valueOf -> 1000
 alert(user + 500); // valueOf -> 1500
 ```
 
-As we can see, the behavior is the same as the previous example with `Symbol.toPrimitive`.
+Як ми бачимо, поведінка така ж, як і в попередньому прикладі з `Symbol.toPrimitive`.
 
-Often we want a single "catch-all" place to handle all primitive conversions. In this case, we can implement `toString` only, like this:
+Часто ми хочемо, щоб в одному місці перехоплювалися та оброблялися всі перетворення в примітиви. У цьому випадку ми можемо реалізувати `toString`, як наприклад:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
 
   toString() {
     return this.name;
   }
 };
 
-alert(user); // toString -> John
-alert(user + 500); // toString -> John500
+alert(user); // toString -> Іван
+alert(user + 500); // toString -> Іван500
 ```
 
-In the absence of `Symbol.toPrimitive` and `valueOf`, `toString` will handle all primitive conversions.
+За відсутності `Symbol.toPrimitive` і `valueOf`, `toString` буде обробляти всі примітивні перетворення.
 
-### A conversion can return any primitive type
+### Перетворення може повернути будь-який примітивний тип
 
-The important thing to know about all primitive-conversion methods is that they do not necessarily return the "hinted" primitive.
+Важливо знати про всі методи примітивні перетворення те, що вони не обов’язково повертають "підказаний" примітив.
 
-There is no control whether `toString` returns exactly a string, or whether `Symbol.toPrimitive` method returns a number for a hint `"number"`.
+Немає контролю, чи повертає `toString` саме рядок, або чи `symbol.toprimitive` метод повертає номер для підказки `"number"`.
 
-The only mandatory thing: these methods must return a primitive, not an object.
+Єдина обов’язкова річ: ці методи повинні повертати примітивний тип, а не об’єкт.
 
-```smart header="Historical notes"
-For historical reasons, if `toString` or `valueOf` returns an object, there's no error, but such value is ignored (like if the method didn't exist). That's because in ancient times there was no good "error" concept in JavaScript.
+```smart header="Історичні нотатки"
+З історичних причин, якщо `toString` чи `valueOf` повертає об’єкт. В цьому немає помилки, але таке значення ігнорується (так само, якби цей метод не існував). Це тому, що в давнину в JavaScript не було хорошого концепту "помилка".
 
-In contrast, `Symbol.toPrimitive` *must* return a primitive, otherwise there will be an error.
+Навпаки, `Symbol.toPrimitive` *повинен* повернути примітив, інакше буде помилка.
 ```
 
-## Further conversions
+## Подальші перетворення
 
-As we know already, many operators and functions perform type conversions, e.g. multiplication `*` converts operands to numbers.
+Як ми вже знаємо, багато операторів та функцій виконують перетворення типу, наприклад, множення `*` перетворює операнди в цифри.
 
-If we pass an object as an argument, then there are two stages:
-1. The object is converted to a primitive (using the rules described above).
-2. If the resulting primitive isn't of the right type, it's converted.
+Якщо ми передамо об’єкт як аргумент, то є два етапи:
+1. об’єкт перетворюється на примітив (використовуючи правила, описані вище).
+2. Якщо отриманий примітив не є правильним типом, він перетворюється.
 
-For instance:
+Наприклад:
 
 ```js run
 let obj = {
-  // toString handles all conversions in the absence of other methods
+  // toString обробляє всі перетворення за відсутності інших методів
   toString() {
     return "2";
   }
 };
 
-alert(obj * 2); // 4, object converted to primitive "2", then multiplication made it a number
+alert(obj * 2); // 4, об’єкт перетворився на примітив "2", потім множення зробило це числом
 ```
 
-1. The multiplication `obj * 2` first converts the object to primitive (that's a string `"2"`).
-2. Then `"2" * 2` becomes `2 * 2` (the string is converted to number).
+1. Множення `obj * 2` спочатку перетворює об’єкт в примітив (це рядок `"2"`).
+2. Тоді `"2" * 2` стає `2 * 2` (рядок перетворюється на номер).
 
-Binary plus will concatenate strings in the same situation, as it gladly accepts a string:
+Бінарний плюс буде об’єднувати рядки в такій же ситуації, оскільки він приймає рядки:
 
 ```js run
 let obj = {
@@ -250,28 +250,28 @@ let obj = {
   }
 };
 
-alert(obj + 2); // 22 ("2" + 2), conversion to primitive returned a string => concatenation
+alert(obj + 2); // 22 ("2" + 2), перетворення до примітиву повернуло рядок => Конкатенація
 ```
 
-## Summary
+## Підсумки
 
-The object-to-primitive conversion is called automatically by many built-in functions and operators that expect a primitive as a value.
+Об’єктно-примітивне перетворення викликається автоматично багатьма вбудованими функціями та операторами, які очікують примітиву як значення.
 
-There are 3 types (hints) of it:
-- `"string"` (for `alert` and other operations that need a string)
-- `"number"` (for maths)
-- `"default"` (few operators)
+Є 3 типи (підказки) цього:
+- `"string"` (для `alert` та інших операцій, які потребують рядка)
+- `"number"` (для математичних операцій)
+- `"default"` (кілька операторів)
 
-The specification describes explicitly which operator uses which hint. There are very few operators that "don't know what to expect" and use the `"default"` hint. Usually for built-in objects `"default"` hint is handled the same way as `"number"`, so in practice the last two are often merged together.
+Специфікація явно описує, який оператор використовує яку підказку. Є дуже мало операторів, які "не знаю, що очікувати" і використовують підказку `"default"`. Зазвичай для вбудованих об’єктів `"default"` підказка обробляється так само, як `"number"`, тому на практиці останні дві часто об’єднуються разом.
 
-The conversion algorithm is:
+Алгоритм перетворення це:
 
-1. Call `obj[Symbol.toPrimitive](hint)` if the method exists,
-2. Otherwise if hint is `"string"`
-    - try `obj.toString()` and `obj.valueOf()`, whatever exists.
-3. Otherwise if hint is `"number"` or `"default"`
-    - try `obj.valueOf()` and `obj.toString()`, whatever exists.
+1. Викликати `obj[Symbol.toPrimitive](hint)`, якщо метод існує,
+2. Інакше, якщо підказка -- це `"string"`
+    - спробувати `obj.toString()` та `obj.valueOf()`, залежно від того, що існує.
+3. Інакше, якщо підказка -- це `"number"` чи `"default"`
+    - спробувати `obj.valueOf()` та `obj.toString()`, залежно від того, що існує.
 
-In practice, it's often enough to implement only `obj.toString()` as a "catch-all" method for string conversions that should return a "human-readable" representation of an object, for logging or debugging purposes.  
+На практиці досить часто для реалізації достатньо лише `obj.toString()` як методу для перетворення рядків, який повинен повернути "читабельне для людини" представлення об’єкта, для цілей логування або пошуку помилок.
 
-As for math operations, JavaScript doesn't provide a way to "override" them using methods, so real life projects rarely use them on objects.
+Що стосується математичних операцій, JavaScript не надає способу "перевизначити" їх через методи, тому реальні проєкти рідко використовують математичні операції на об’єктах.

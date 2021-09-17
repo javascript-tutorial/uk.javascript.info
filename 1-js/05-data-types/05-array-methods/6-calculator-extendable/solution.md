@@ -1,3 +1,3 @@
 
-- Please note how methods are stored. They are simply added to `this.methods` property.
-- All tests and numeric conversions are done in the `calculate` method. In future it may be extended to support more complex expressions.
+- Зверніть увагу, як зберігаються методи. Вони просто додаються до внутрішнього обʼєкта (`this.methods`).
+- Всі тести та числові перетворення виконуються в методі `calculate`. У майбутньому він може бути розширений для підтримки складніших виразів.

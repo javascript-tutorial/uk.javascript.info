@@ -1,30 +1,30 @@
-The task demonstrates how postfix/prefix forms can lead to different results when used in comparisons.
+Завдання демонструє, як префіксна/постфіксна форми можуть призвести до різних результатів при їх порівнянні.
 
-1. **From 1 to 4**
+1. Перший цикл виведе числа **від 1 до 4**
 
     ```js run
     let i = 0;
     while (++i < 5) alert( i );
     ```
 
-    The first value is `i = 1`, because `++i` first increments `i` and then returns the new value. So the first comparison is `1 < 5` and the `alert` shows `1`.
+    Перше значення `i = 1`, тому що операція `++i` спочатку збільшує `i`, і після цього повертає *нове* значення. Відповідно, перше порівняння буде `1 < 5` і `alert` виведе `1`.
 
-    Then follow `2, 3, 4…` -- the values show up one after another. The comparison always uses the incremented value, because `++` is before the variable.
+    Далі йдуть `2, 3, 4…` -- значення показуються одне за одним. Порівняння завжди відбувається зі збільшеним значенням, тому що `++` стоїть перед змінною.
 
-    Finally, `i = 4` is incremented to `5`, the comparison `while(5 < 5)` fails, and the loop stops. So `5` is not shown.
-2. **From 1 to 5**
+    Наприкінці, коли `i = 4` збільшується до `5`, умова `while(5 < 5)` не справджується, і в результаті цикл зупиняється. Отже, `5` не покажеться.
+2. Другий цикл виведе числа **від 1 до 5**
 
     ```js run
     let i = 0;
     while (i++ < 5) alert( i );
     ```
 
-    The first value is again `i = 1`. The postfix form of `i++` increments `i` and then returns the *old* value, so the comparison `i++ < 5` will use `i = 0` (contrary to `++i < 5`).
+    Перше значення знову `i = 1`. Постфіксна форма `i++` збільшує `i` до `1` і повертає *старе* значення, тому порівняння `i++ < 5` буде виконуватися з `i = 0` (на противагу `++i < 5`).
 
-    But the `alert` call is separate. It's another statement which executes after the increment and the comparison. So it gets the current `i = 1`.
+    Далі йде виклик `alert`. Однак, це вже інший вираз, який виконується після збільшення `i` та порівняння. Тому він отримає поточне значення `i = 1`.
 
-    Then follow `2, 3, 4…`
+    Далі слідують `2, 3, 4…`.
 
-    Let's stop on `i = 4`. The prefix form `++i` would increment it and use `5` in the comparison. But here we have the postfix form `i++`. So it increments `i` to `5`, but returns the old value. Hence the comparison is actually `while(4 < 5)` -- true, and the control goes on to `alert`.
+    Зупинимося на `i = 4`. Префіксна форма `++i` збільшила б `i` до `5` і використала це значення в порівнянні. Проте ми маємо постфіксну форму `i++`. Отже, вона збільшить `i` до `5`, але поверне старе значення. Таким чином порівняння буде `while(4 < 5)` -- що вірно, а тому відбудеться виклик `alert`.
 
-    The value `i = 5` is the last one, because on the next step `while(5 < 5)` is false.
+    Значення `i = 5` буде останнім, тому що наступний крок вже буде `while(5 < 5)` -- що не вірно.

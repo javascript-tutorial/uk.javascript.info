@@ -1,4 +1,4 @@
-The solution:
+Рішення:
 
 ```js run demo
 function delay(f, ms) {
@@ -11,22 +11,22 @@ function delay(f, ms) {
 
 let f1000 = delay(alert, 1000);
 
-f1000("test"); // shows "test" after 1000ms
+f1000("тест"); // показує "тест" після 1000 мс
 ```
 
-Please note how an arrow function is used here. As we know, arrow functions do not have own `this` and `arguments`, so `f.apply(this, arguments)` takes `this` and `arguments` from the wrapper.
+Зверніть увагу, як тут використовується стрілочна функція. Як відомо, стрілочні функції не мають власних `this` та `arguments`, тому `f.apply(this, arguments)` бере `this` та `arguments` з обгортки.
 
-If we pass a regular function, `setTimeout` would call it without arguments and `this=window` (assuming we're in the browser).
+Якщо ми передамо звичайну функцію, `setTimeout` буде викликати її без аргументів, а `this=window` (припускаючи, що ми знаходимося в браузері).
 
-We still can pass the right `this` by using an intermediate variable, but that's a little bit more cumbersome:
+Ми все ще можемо передати право `this` за допомогою проміжної змінної, але це трохи більше громіздко:
 
 ```js
 function delay(f, ms) {
 
   return function(...args) {
-    let savedThis = this; // store this into an intermediate variable
+    let savedThis = this; // зберігаємо this в проміжну змінну
     setTimeout(function() {
-      f.apply(savedThis, args); // use it here
+      f.apply(savedThis, args); // використовуємо її тут
     }, ms);
   };
 

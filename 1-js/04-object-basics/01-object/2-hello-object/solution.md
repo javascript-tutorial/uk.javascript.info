@@ -2,9 +2,9 @@
 
 ```js
 let user = {};
-user.name = "John";
-user.surname = "Smith";
-user.name = "Pete";
+user.name = "Іван";
+user.surname = "Сміт";
+user.name = "Петро";
 delete user.name;
 ```
 

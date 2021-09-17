@@ -2,14 +2,14 @@ importance: 5
 
 ---
 
-# Set and decrease for counter
+# Встановити і зменшити лічильник
 
-Modify the code of `makeCounter()` so that the counter can also decrease and set the number:
+Змініть код `makeCounter()` так, щоб лічильник міг також зменшити та встановити рахунок:
 
-- `counter()` should return the next number (as before).
-- `counter.set(value)` should set the counter to `value`.
-- `counter.decrease()` should decrease the counter by 1.
+- `counter()` повинен повернути наступний рахунок (як раніше).
+- `counter.set(value)` повинен встановити лічильник в значення `value`.
+- `counter.decrease()` повинен зменшити лічильник на 1.
 
-See the sandbox code for the complete usage example.
+Див. код пісочниці з повним прикладом використання.
 
-P.S. You can use either a closure or the function property to keep the current count. Or write both variants.
+P.S. Ви можете використовувати або замикання, або властивість функції, щоб зберегти поточний рахунок. Або напишіть обидва варіанти.

@@ -1,40 +1,40 @@
-# Functions
+# Функції
 
-Quite often we need to perform a similar action in many places of the script.
+Досить часто нам потрібно виконати однакову дію в декількох місцях програми.
 
-For example, we need to show a nice-looking message when a visitor logs in, logs out and maybe somewhere else.
+Наприклад, нам треба показати якесь повідомлення, коли користувач входить або виходить з системи і може ще десь.
 
-Functions are the main "building blocks" of the program. They allow the code to be called many times without repetition.
+Функції — це головні "будівельні блоки" програми. Вони дозволяють робити однакові дії багато разів без повторення коду.
 
-We've already seen examples of built-in functions, like `alert(message)`, `prompt(message, default)` and `confirm(question)`. But we can create functions of our own as well.
+Ми вже стикались з такими вбудованими функціями, як-от `alert(message)`, `prompt(message, default)` та `confirm(question)`. Але ми теж можемо створювати свої функції.
 
-## Function Declaration
+## Оголошення (декларація) функцій
 
-To create a function we can use a *function declaration*.
+Щоб створити функцію нам треба її *оголосити*.
 
-It looks like this:
+Це виглядає ось так:
 
 ```js
 function showMessage() {
-  alert( 'Hello everyone!' );
+  alert('Всім привіт!');
 }
 ```
 
-The `function` keyword goes first, then goes the *name of the function*, then a list of *parameters* between the parentheses (comma-separated, empty in the example above, we'll see examples later) and finally the code of the function, also named "the function body", between curly braces.
+Спочатку ми пишемо `function` — це ключове слово (keyword), яке дає зрозуміти комп’ютеру, що далі буде оголошення функції. Потім — *назву функції* і список її *параметрів* в дужках (розділені комою). Якщо параметрів немає, ми залишаємо *пусті дужки*. І нарешті, код функції, який також називають *тілом функції* між фігурними дужками.
 
 ```js
 function name(parameter1, parameter2, ... parameterN) {
-  ...body...
+  ...тіло функції...
 }
 ```
 
-Our new function can be called by its name: `showMessage()`.
+Нашу нову функцію можна викликати, написавши її ім’я і дужки: `showMessage()`.
 
-For instance:
+Наприклад:
 
 ```js run
 function showMessage() {
-  alert( 'Hello everyone!' );
+  alert( 'Шановні друзі!' );
 }
 
 *!*
@@ -43,238 +43,238 @@ showMessage();
 */!*
 ```
 
-The call `showMessage()` executes the code of the function. Here we will see the message two times.
+Виклик `showMessage()` виконує код із тіла функції. В цьому випадку, ми побачимо повідомлення двічі.
 
-This example clearly demonstrates one of the main purposes of functions: to avoid code duplication.
+Цей приклад яскраво демонструє одну з найголовніших цілей функції -- уникнення повторення коду.
 
-If we ever need to change the message or the way it is shown, it's enough to modify the code in one place: the function which outputs it.
+Якщо нам потрібно змінити повідомлення, достатньо змінити тіло функції, яке виводить це повідомлення.
 
-## Local variables
+## Локальні змінні
 
-A variable declared inside a function is only visible inside that function.
+Змінна, яка оголошена в функції доступна лише в тілі цієї функції.
 
-For example:
+Наприклад:
 
 ```js run
 function showMessage() {
 *!*
-  let message = "Hello, I'm JavaScript!"; // local variable
+  let message = "Привіт, я JavaScript!"; // локальна змінна
 */!*
 
   alert( message );
 }
 
-showMessage(); // Hello, I'm JavaScript!
+showMessage(); // Привіт, я JavaScript!
 
-alert( message ); // <-- Error! The variable is local to the function
+alert( message ); // <-- Помилка! Змінна недоступна поза функцією
 ```
 
-## Outer variables
+## Зовнішні змінні
 
-A function can access an outer variable as well, for example:
+Функція може використовувати зовнішні змінні, наприклад:
 
 ```js run no-beautify
-let *!*userName*/!* = 'John';
+let *!*userName*/!* = 'Іван';
 
 function showMessage() {
-  let message = 'Hello, ' + *!*userName*/!*;
+  let message = 'Привіт, ' + *!*userName*/!*;
   alert(message);
 }
 
-showMessage(); // Hello, John
+showMessage(); // Привіт, Іван
 ```
 
-The function has full access to the outer variable. It can modify it as well.
+Функція має повний доступ до зовнішньої змінної. Вона теж може її змінювати.
 
-For instance:
+Наприклад:
 
 ```js run
-let *!*userName*/!* = 'John';
+let *!*userName*/!* = 'Іван';
 
 function showMessage() {
-  *!*userName*/!* = "Bob"; // (1) changed the outer variable
+  *!*userName*/!* = "Богдан"; // (1) змінено зовнішню змінну
 
-  let message = 'Hello, ' + *!*userName*/!*;
+  let message = 'Здоровенькі були, ' + *!*userName*/!*;
   alert(message);
 }
 
-alert( userName ); // *!*John*/!* before the function call
+alert( userName ); // *!*Іван*/!* перед викликом функції showMessage
 
 showMessage();
 
-alert( userName ); // *!*Bob*/!*, the value was modified by the function
+alert( userName ); // *!*Богдан*/!*, значення було змінено після виклику функції showMessage
 ```
 
-The outer variable is only used if there's no local one.
+Зовнішня змінна використовується тоді, коли немає локальної.
 
-If a same-named variable is declared inside the function then it *shadows* the outer one. For instance, in the code below the function uses the local `userName`. The outer one is ignored:
+Якщо всередині функції є змінна з таким самим ім’ям, то вона *перекриває* зовнішню. Наприклад, наступний код використовує локальну змінну `userName`. Зовнішня ігнорується.
 
 ```js run
-let userName = 'John';
+let userName = 'Іван'; // оголошення зовнішньої змінної
 
 function showMessage() {
 *!*
-  let userName = "Bob"; // declare a local variable
+  let userName = "Богдан"; // оголошення локальної змінної
 */!*
 
-  let message = 'Hello, ' + userName; // *!*Bob*/!*
+  let message = 'Привіт, ' + userName; // *!*Богдан*/!*
   alert(message);
 }
 
-// the function will create and use its own userName
+// функція завжди віддасть перевагу локальним змінним
 showMessage();
 
-alert( userName ); // *!*John*/!*, unchanged, the function did not access the outer variable
+alert( userName ); // *!*Іван*/!*, без змін, функція не змінила глобальну змінну
 ```
 
-```smart header="Global variables"
-Variables declared outside of any function, such as the outer `userName` in the code above, are called *global*.
+```smart header="Глобальні змінні"
+Змінні, оголошені поза будь-якими функціями (такі як зовнішня зміння `userName` з коду вище), називаються *глобальні* змінні.
 
-Global variables are visible from any function (unless shadowed by locals).
+Глобальні змінні доступні в будь-якій функції (окрім випадків, коли глобальна змінна перекрита локальною).
 
-It's a good practice to minimize the use of global variables. Modern code has few or no globals. Most variables reside in their functions. Sometimes though, they can be useful to store project-level data.
+Хорошою практикою вважається мінімізація використання глобальних змінних. У сучасному коді зазвичай є декілька або зовсім немає глобальних змінних. Більшість змінних знаходяться в межах функцій. Іноді буває корисно зберігати "загальні" дані (на рівні проєкту) в таких глобальних змінних.
 ```
 
-## Parameters
+## Параметри
 
-We can pass arbitrary data to functions using parameters.
+Ми можемо передати в функцію довільні дані використовуючи параметри.
 
-In the example below, the function has two parameters: `from` and `text`.
+В наступному прикладі, функція має два параметри: `from` і `text`.
 
 ```js run
-function showMessage(*!*from, text*/!*) { // parameters: from, text
+function showMessage(*!*from, text*/!*) { // параметри: from, text
   alert(from + ': ' + text);
 }
 
-*!*showMessage('Ann', 'Hello!');*/!* // Ann: Hello! (*)
-*!*showMessage('Ann', "What's up?");*/!* // Ann: What's up? (**)
+*!*showMessage('Анна', 'Привіт!');*/!* // Анна: Привіт! (*)
+*!*showMessage('Анна', "Як справи?");*/!* // Анна: Як справи? (**)
 ```
 
-When the function is called in lines `(*)` and `(**)`, the given values are copied to local variables `from` and `text`. Then the function uses them.
+Під час виклику функції з цими параметрами, в рядках `(*)` та `(**)` відбувається копіювання значень параметрів в локальні змінні `from` та `text`. Ці змінні використовує функція.
 
-Here's one more example: we have a variable `from` and pass it to the function. Please note: the function changes `from`, but the change is not seen outside, because a function always gets a copy of the value:
+Ось ще один приклад: маємо змінну `from`, яку передаємо в функцію. Зауважте: функція змінює значення `from`, проте ці зміни не видно назовні, тому що функція завжди отримує копію значення:
 
 ```js run
 function showMessage(from, text) {
 
 *!*
-  from = '*' + from + '*'; // make "from" look nicer
+  from = '*' + from + '*'; // прикрашаємо "from"
 */!*
 
   alert( from + ': ' + text );
 }
 
-let from = "Ann";
+let from = "Анна";
 
-showMessage(from, "Hello"); // *Ann*: Hello
+showMessage(from, "Привіт"); // *Анна*: Привіт
 
-// the value of "from" is the same, the function modified a local copy
-alert( from ); // Ann
+// значення "from" те саме, функція змінила локальну копію
+alert( from ); // Анна
 ```
 
-When a value is passed as a function parameter, it's also called an *argument*.
+Коли значення передається як параметр функції, то його ще називають *аргумент*.
 
-In other words, to put these terms straight:
+Кажучи "на хлопський розум":
 
-- A parameter is the variable listed inside the parentheses in the function declaration (it's a declaration time term)
-- An argument is the value that is passed to the function when it is called (it's a call time term).
+- Параметр — це змінна між дужками функції (використовується під час оголошення функції)
+- Аргумент — це значення, передане в функцію під час її виклику (використовується під час виконання функції).
 
-We declare functions listing their parameters, then call them passing arguments.
+Ми оголошуємо функції, вказуючи їхні параметри, потім викликаємо їх, передаючи аргументи.
 
-In the example above, one might say: "the function `sayMessage` is declared with two parameters, then called with two arguments: `from` and `"Hello"`".
+Дехто може сказати, що в прикладі вище "функцію `showMessage` оголошено з двома параметрами, потім викликано з двома аргументами: `from` і `"Привіт"`".
 
 
-## Default values
+## Типові значення
 
-If a function is called, but an argument is not provided, then the corresponding value becomes `undefined`.
+Якщо викликати функцію без аргументів, тоді відповідні значення стануть `undefined`.
 
-For instance, the aforementioned function `showMessage(from, text)` can be called with a single argument:
+Наприклад, функцію `showMessage(from, text)`, яку ми згадували вище, можна викликати з одним аргументом:
 
 ```js
-showMessage("Ann");
+showMessage('Анна');
 ```
 
-That's not an error. Such a call would output `"*Ann*: undefined"`. As the value for `text` isn't passed, it becomes `undefined`.
+Помилки не виникне. Такий виклик виведе `"*Анна*: undefined"`. Оскільки значення для змінної `text` не задане, воно стане `undefined`.
 
-We can specify the so-called "default" (to use if omitted) value for a parameter in the function declaration, using `=`:
+Ми можемо задати так зване "типове" значення параметра, яке використовуватиметься, якщо не задати аргумент. Для цього потрібно написати значення через `=`:
 
 ```js run
-function showMessage(from, *!*text = "no text given"*/!*) {
+function showMessage(from, *!*text = "текст не задано"*/!*) {
   alert( from + ": " + text );
 }
 
-showMessage("Ann"); // Ann: no text given
+showMessage("Анна"); // Анна: текст не задано
 ```
 
-Now if the `text` parameter is not passed, it will get the value `"no text given"`
+Тепер, якщо параметр `text` не задано, його значення стане `"текст не задано"`.
 
-Here `"no text given"` is a string, but it can be a more complex expression, which is only evaluated and assigned if the parameter is missing. So, this is also possible:
+Тут `"текст не задано"` це рядок, проте це може бути складніший вираз, який обчислюється і присвоюється лише якщо параметр відсутній. Отож, такий варіант теж можливий:
 
 ```js run
 function showMessage(from, text = anotherFunction()) {
-  // anotherFunction() only executed if no text given
-  // its result becomes the value of text
+  // anotherFunction() виконується лише якщо `text` не задано
+  // результат виконання цієї функції присвоїться змінній `text`
 }
 ```
 
-```smart header="Evaluation of default parameters"
-In JavaScript, a default parameter is evaluated every time the function is called without the respective parameter.
+```smart header="Обчислення типових параметрів"
+В JavaScript, типовий параметр обчислюється кожного разу, коли викликається функція без відповідного параметру.
 
-In the example above, `anotherFunction()` isn't called at all, if the `text` parameter is provided.
+В прикладі вище, функція `anotherFunction()` не викличеться, якщо буде задано параметр `text`.
 
-On the other hand, it's independently called every time when `text` is missing.
+З іншого боку, вона буде викликатися кожного разу, коли `text` відсутній.
 ```
 
-### Alternative default parameters
+### Альтернативні типові параметри
 
-Sometimes it makes sense to assign default values for parameters not in the function declaration, but at a later stage.
+Інколи виникає необхідність присвоїти типове значення для змінних під час виконання функції, а не під час її оголошення.
 
-We can check if the parameter is passed during the function execution, by comparing it with `undefined`:
+Під час виконання функції, ми можемо перевірити, чи параметр надано, порівнюючи його з `undefined`:
 
 ```js run
 function showMessage(text) {
   // ...
 
 *!*
-  if (text === undefined) { // if the parameter is missing
-    text = 'empty message';
+  if (text === undefined) { // якщо параметр відсутній
+    text = 'порожнє повідомлення';
   }
 */!*
 
   alert(text);
 }
 
-showMessage(); // empty message
+showMessage(); // порожнє повідомлення
 ```
 
-...Or we could use the `??` operator:
+...Або ми можемо використати оператор `||`:
 
 ```js
 function showMessage(text) {
-  // if text is undefined or otherwise falsy, set it to 'empty'
-  text = text || 'empty';
+  // якщо text не задано (значення `undefined`) або `null`, тоді присвоїти рядок 'порожньо'
+  text = text || 'порожньо';
   ...
 }
 ```
 
-Modern JavaScript engines support the [nullish coalescing operator](info:nullish-coalescing-operator) `??`, it's better when most falsy values, such as `0`, should be considered "normal":
+Сучасні рушії JavaScript підтримують [оператор null-злиття](info:nullish-coalescing-operator) `??`. Його краще використовувати, коли "майже false" значення, типу `0`, мають вважатися за "нормальні":
 
 ```js run
 function showCount(count) {
-  // if count is undefined or null, show "unknown"
-  alert(count ?? "unknown");
+  // якщо count має значення undefined чи null, показати "невідомо"
+  alert(count ?? "невідомо");
 }
 
 showCount(0); // 0
-showCount(null); // unknown
-showCount(); // unknown
+showCount(null); // невідомо
+showCount(); // невідомо
 ```
 
-## Returning a value
+## Повернення значення
 
-A function can return a value back into the calling code as the result.
+В якості результату, функція може повертати назад значення в код, який викликав цю функцію.
 
-The simplest example would be a function that sums two values:
+Найпростіший приклад — функція, яка сумує два значення:
 
 ```js run no-beautify
 function sum(a, b) {
@@ -285,9 +285,9 @@ let result = sum(1, 2);
 alert( result ); // 3
 ```
 
-The directive `return` can be in any place of the function. When the execution reaches it, the function stops, and the value is returned to the calling code (assigned to `result` above).
+Директива `return` може бути в будь-якому місці функції. Коли виконання досягає цієї директиви, функція зупиняється, і в код, який викликав цю функцію, повертається значення (в прикладі вище, це значення присвоюється змінній `result`).
 
-There may be many occurrences of `return` in a single function. For instance:
+В одній функції може бути декілька директив `return`. Наприклад:
 
 ```js run
 function checkAge(age) {
@@ -297,23 +297,23 @@ function checkAge(age) {
 */!*
   } else {
 *!*
-    return confirm('Do you have permission from your parents?');
+    return confirm('У вас є дозвіл ваших батьків?');
 */!*
   }
 }
 
-let age = prompt('How old are you?', 18);
+let age = prompt('Скільки вам років?', 18);
 
 if ( checkAge(age) ) {
-  alert( 'Access granted' );
+  alert( 'Доступ надано' );
 } else {
-  alert( 'Access denied' );
+  alert( 'У доступі відмовлено' );
 }
 ```
 
-It is possible to use `return` without a value. That causes the function to exit immediately.
+Можна використовувати `return` без значення. Це призведе до негайного виходу з функції.
 
-For example:
+Наприклад:
 
 ```js
 function showMovie(age) {
@@ -323,23 +323,23 @@ function showMovie(age) {
 */!*
   }
 
-  alert( "Showing you the movie" ); // (*)
+  alert( "Показуємо фільм" ); // (*)
   // ...
 }
 ```
 
-In the code above, if `checkAge(age)` returns `false`, then `showMovie` won't proceed to the `alert`.
+В коді вище, якщо `checkAge(age)` поверне `false`, тоді функція `showMovie` не дійде до виконання `alert`.
 
-````smart header="A function with an empty `return` or without it returns `undefined`"
-If a function does not return a value, it is the same as if it returns `undefined`:
+````smart header="Функція з порожнім `return`, або без `return` повертає `undefined`"
+Якщо функція не повертає значення, тоді "повернене" значення буде `undefined`:
 
 ```js run
-function doNothing() { /* empty */ }
+function doNothing() { /* порожньо */ }
 
 alert( doNothing() === undefined ); // true
 ```
 
-An empty `return` is also the same as `return undefined`:
+Порожній `return` це те саме, що `return undefined`:
 
 ```js run
 function doNothing() {
@@ -350,92 +350,92 @@ alert( doNothing() === undefined ); // true
 ```
 ````
 
-````warn header="Never add a newline between `return` and the value"
-For a long expression in `return`, it might be tempting to put it on a separate line, like this:
+````warn header="Ніколи не додавайте новий рядок між `return` і значенням"
+Іноді кортить перенести довгий вираз після `return` на новий рядок, ось так:
 
 ```js
 return
- (some + long + expression + or + whatever * f(a) + f(b))
+ ('деякий' + 'довгий' + 'вираз' + 'або' + 'що' * f(a) + f(b))
 ```
-That doesn't work, because JavaScript assumes a semicolon after `return`. That'll work the same as:
+Це не спрацює, тому що JavaScript вважатиме новий рядок після `return` за крапку з комою. Це працюватиме ось так:
 
 ```js
 return*!*;*/!*
- (some + long + expression + or + whatever * f(a) + f(b))
+ ('деякий' + 'довгий' + 'вираз' + 'або' + 'що' * f(a) + f(b))
 ```
 
-So, it effectively becomes an empty return.
+Тобто, повернеться порожній результат.
 
-If we want the returned expression to wrap across multiple lines, we should start it at the same line as `return`. Or at least put the opening parentheses there as follows:
+Якщо ми хочемо повернути довгий вираз, який займе декілька рядків, ми повинні писати його на одному рядку з `return`. Або обгорнути його в дужки. Ось так:
 
 ```js
 return (
-  some + long + expression
-  + or +
-  whatever * f(a) + f(b)
+  'деякий' + 'довгий' + 'вираз'
+  + 'або' +
+  'що' * f(a) + f(b)
   )
 ```
-And it will work just as we expect it to.
+Такий варіант працюватиме так, як ми задумали.
 ````
 
-## Naming a function [#function-naming]
+## Найменування функції [#function-naming]
 
-Functions are actions. So their name is usually a verb. It should be brief, as accurate as possible and describe what the function does, so that someone reading the code gets an indication of what the function does.
+Функції виконують дії. Тому в їхніх іменах зазвичай використовують дієслова. Ім’я повинне бути лаконічним, повинне якнайточніше описувати, що робить функція, щоб кожен хто читає код зміг зрозуміти, що саме робить функція.
 
-It is a widespread practice to start a function with a verbal prefix which vaguely describes the action. There must be an agreement within the team on the meaning of the prefixes.
+Поширена практика розпочинати ім’я функції зі словесного префіксу, який описує дію. В команді має бути домовленість щодо значення префіксів.
 
-For instance, functions that start with `"show"` usually show something.
+Наприклад, функції, які починаються з префіксу `"show"` зазвичай щось показують.
 
-Function starting with...
+Функції, які починаються з ...
 
-- `"get…"` -- return a value,
-- `"calc…"` -- calculate something,
-- `"create…"` -- create something,
-- `"check…"` -- check something and return a boolean, etc.
+- `"get…"` -- повертають значення,
+- `"calc…"` -- щось обчислюють,
+- `"create…"` -- щось створюють,
+- `"check…"` -- щось перевіряють і повертають булеве значення.
 
-Examples of such names:
+Ось приклади таких імен:
 
 ```js no-beautify
-showMessage(..)     // shows a message
-getAge(..)          // returns the age (gets it somehow)
-calcSum(..)         // calculates a sum and returns the result
-createForm(..)      // creates a form (and usually returns it)
-checkPermission(..) // checks a permission, returns true/false
+showMessage(..)     // показує повідомлення
+getAge(..)          // повертає вік (якось його отримує або обчислює)
+calcSum(..)         // обчислює суму і повертає результат
+createForm(..)      // створює форму (і зазвичай її повертає)
+checkPermission(..) // перевіряє доступ, повертає true/false
 ```
 
-With prefixes in place, a glance at a function name gives an understanding what kind of work it does and what kind of value it returns.
+Якщо є префікси, погляд на ім’я функції дає зрозуміти, яку роботу вона виконує і яке значення повертає.
 
-```smart header="One function -- one action"
-A function should do exactly what is suggested by its name, no more.
+```smart header="Одна функція -- одна дія"
+Функція повинна робити саме те, що написано в її імені, не більше.
 
-Two independent actions usually deserve two functions, even if they are usually called together (in that case we can make a 3rd function that calls those two).
+Дві незалежні дії зазвичай заслуговують двох функцій, навіть якщо вони зазвичай викликаються разом (у цьому випадку ми можемо створити 3-ю функцію, яка викликає ці дві).
 
-A few examples of breaking this rule:
+Ось декілька прикладів, які порушують це правило:
 
-- `getAge` -- would be bad if it shows an `alert` with the age (should only get).
-- `createForm` -- would be bad if it modifies the document, adding a form to it (should only create it and return).
-- `checkPermission` -- would be bad if it displays the `access granted/denied` message (should only perform the check and return the result).
+- `getAge` -- функція викликає `alert` з віком (а повинна лише отримувати вік).
+- `createForm` -- функція змінює документ, додаючи форму до неї (а повинна лише створити форму і її вернути).
+- `checkPermission` -- функція відображає повідомлення `доступ надано/відхилено` (а повинна лише повертати результат `true/false`).
 
-These examples assume common meanings of prefixes. You and your team are free to agree on other meanings, but usually they're not much different. In any case, you should have a firm understanding of what a prefix means, what a prefixed function can and cannot do. All same-prefixed functions should obey the rules. And the team should share the knowledge.
+Ці приклади передбачають загальне значення префіксів. Ви та ваша команда можете вільно домовлятися про інші значення, але зазвичай вони не сильно відрізняються. У будь-якому випадку ви повинні чітко розуміти, що означає префікс, що може робити префіксна функція, а що ні. Усі функції з однаковими префіксами повинні підкорятися правилам. І команда повинна ділитися знаннями.
 ```
 
-```smart header="Ultrashort function names"
-Functions that are used *very often* sometimes have ultrashort names.
+```smart header="Дуже короткі імена функцій"
+Функції, які використовуються *дуже часто* деколи мають дуже короткі імена.
 
-For example, the [jQuery](http://jquery.com) framework defines a function with `$`. The [Lodash](http://lodash.com/) library has its core function named `_`.
+Наприклад, фреймворк [jQuery](http://jquery.com) оголошує функцію знаком `$`. Бібліотека [Lodash](http://lodash.com/) має вбудовану функцію, яка називається `_`.
 
-These are exceptions. Generally function names should be concise and descriptive.
+Це винятки. Загалом імена функцій повинні бути стислими та описовими.
 ```
 
-## Functions == Comments
+## Функції == Коментарі
 
-Functions should be short and do exactly one thing. If that thing is big, maybe it's worth it to split the function into a few smaller functions. Sometimes following this rule may not be that easy, but it's definitely a good thing.
+Функції повинні бути короткими і робити щось одне. Якщо це щось велике, в цьому випадку доцільно розділити таку функцію на декілька менших. Іноді дотримуватися цього правила досить важко, але це, безумовно, хороша практика.
 
-A separate function is not only easier to test and debug -- its very existence is a great comment!
+Невеликі функції не тільки полегшують перевірку та налагодження - саме їхнє існування виконує роль хороших коментарів, які покращують зрозумілість коду!
 
-For instance, compare the two functions `showPrimes(n)` below. Each one outputs [prime numbers](https://en.wikipedia.org/wiki/Prime_number) up to `n`.
+Ось для прикладу, порівняйте дві функції `showPrimes(n)`. Кожна з них виводить [прості числа](https://uk.wikipedia.org/wiki/Просте_число) до `n`.
 
-The first variant uses a label:
+Перший варіант використовує мітку `nextPrime`:
 
 ```js
 function showPrimes(n) {
@@ -445,12 +445,12 @@ function showPrimes(n) {
       if (i % j == 0) continue nextPrime;
     }
 
-    alert( i ); // a prime
+    alert( i ); // просте число
   }
 }
 ```
 
-The second variant uses an additional function `isPrime(n)` to test for primality:
+Другий варіант використовує додаткову функцію `isPrime(n)`, щоб перевіряти, чи число просте:
 
 ```js
 function showPrimes(n) {
@@ -458,7 +458,7 @@ function showPrimes(n) {
   for (let i = 2; i < n; i++) {
     *!*if (!isPrime(i)) continue;*/!*
 
-    alert(i);  // a prime
+    alert(i);  // просте число
   }
 }
 
@@ -470,32 +470,32 @@ function isPrime(n) {
 }
 ```
 
-The second variant is easier to understand, isn't it? Instead of the code piece we see a name of the action (`isPrime`). Sometimes people refer to such code as *self-describing*.
+Другий варіант легше зрозуміти, чи не так? Замість частини коду ми бачимо назву дії (`isPrime`). Іноді розробники називають такий код *самодокументованим*.
 
-So, functions can be created even if we don't intend to reuse them. They structure the code and make it readable.
+Отже, функції можна створювати, навіть якщо ми не маємо наміру повторно їх використовувати. Вони структурують код і роблять його читабельним та зрозумілим.
 
-## Summary
+## Підсумки
 
-A function declaration looks like this:
+Оголошення функції виглядає ось так:
 
 ```js
-function name(parameters, delimited, by, comma) {
-  /* code */
+function ім’я(параметри, розділені, комою) {
+  /* тіло, код функції */
 }
 ```
 
-- Values passed to a function as parameters are copied to its local variables.
-- A function may access outer variables. But it works only from inside out. The code outside of the function doesn't see its local variables.
-- A function can return a value. If it doesn't, then its result is `undefined`.
+- Значення, які передаються в функцію в якості параметрів, копіюються в локальні змінні.
+- Функції мають доступ до зовнішніх змінних. Але це працює тільки зсередини назовні. Код поза функцією не має доступу до локальних змінних функції.
+- Функція може повертати значення. Якщо цього не відбувається, результат буде `undefined`.
 
-To make the code clean and easy to understand, it's recommended to use mainly local variables and parameters in the function, not outer variables.
+Для того, щоб зробити код чистим і зрозумілим, рекомендується використовувати локальні змінні і параметри функції, не користуватися зовнішніми змінними.
 
-It is always easier to understand a function which gets parameters, works with them and returns a result than a function which gets no parameters, but modifies outer variables as a side-effect.
+Завжди легше зрозуміти функцію, яка отримує параметри, працює з ними і повертає результ. На відмінну від функції, в якої немає параметрів, але яка змінює зовнішні змінні, що може призводити до побічних ефектів.
 
-Function naming:
+Найменування функцій:
 
-- A name should clearly describe what the function does. When we see a function call in the code, a good name instantly gives us an understanding what it does and returns.
-- A function is an action, so function names are usually verbal.
-- There exist many well-known function prefixes like `create…`, `show…`, `get…`, `check…` and so on. Use them to hint what a function does.
+- Ім’я функції повинне бути коротким і чітко відображати, що робить функція. Побачивши виклик функції в коді, ви повинні зразу зрозуміти, що функція робить, і що повертає.
+- Функція -- це дія, тому її ім’я зазвичай складається з дієслова.
+- Є багато загальноприйнятих префіксів, такі як `create…`, `show…`, `get…`, `check…` тощо. Використовуйте їх щоб пояснити, що робить функція.
 
-Functions are the main building blocks of scripts. Now we've covered the basics, so we actually can start creating and using them. But that's only the beginning of the path. We are going to return to them many times, going more deeply into their advanced features.
+Функції -- це основні будівельні блоки скриптів. Ми розглянули лише основи функцій в JavaScript, проте вже зараз цього достатньо, щоб почати їх створювати і використовувати. Це лише початок шляху. Ми будемо неодноразово повертатися до функцій і вивчатимо їх все глибше і глибше.

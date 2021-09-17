@@ -2,35 +2,35 @@ importance: 5
 
 ---
 
-# Map to objects
+# Трансформувати в обʼєкти
 
-You have an array of `user` objects, each one has `name`, `surname` and `id`.
+У вас є масив обʼєктів `user`, і у кожного з обʼєктів є `name`, `surname` та `id`.
 
-Write the code to create another array from it, of objects with `id` and `fullName`, where `fullName` is generated from `name` and `surname`.
+Напишіть код, який створить ще один масив обʼєктів з параметрами `id` й `fullName`, де `fullName` -- складається з `name` та `surname`.
 
-For instance:
+Наприклад:
 
 ```js no-beautify
-let john = { name: "John", surname: "Smith", id: 1 };
-let pete = { name: "Pete", surname: "Hunt", id: 2 };
-let mary = { name: "Mary", surname: "Key", id: 3 };
+let ivan = { name: "Іван", surname: "Іванко", id: 1 };
+let petro = { name: "Петро", surname: "Петренко", id: 2 };
+let mariya = { name: "Марія", surname: "Мрійко", id: 3 };
 
-let users = [ john, pete, mary ];
+let users = [ ivan, petro, mariya ];
 
 *!*
-let usersMapped = /* ... your code ... */
+let usersMapped = /* ... ваш код ... */
 */!*
 
 /*
 usersMapped = [
-  { fullName: "John Smith", id: 1 },
-  { fullName: "Pete Hunt", id: 2 },
-  { fullName: "Mary Key", id: 3 }
+  { fullName: "Іван Іванко", id: 1 },
+  { fullName: "Петро Петренко", id: 2 },
+  { fullName: "Марія Мрійко", id: 3 }
 ]
 */
 
 alert( usersMapped[0].id ) // 1
-alert( usersMapped[0].fullName ) // John Smith
+alert( usersMapped[0].fullName ) // Іван Іванко
 ```
 
-So, actually you need to map one array of objects to another. Try using `=>` here. There's a small catch.
+Отже, насправді вам потрібно трансформувати один масив обʼєктів в інший. Спробуйте використовувати `=>`. Це невелика хитрість.
