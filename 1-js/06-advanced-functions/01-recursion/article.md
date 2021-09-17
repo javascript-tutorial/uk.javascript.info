@@ -283,73 +283,73 @@ function pow(x, n) {
 
 Ітеративний `pow` використовує єдиний контекст змінюючи `i` and `result` у процесі. Його вимоги до пам'яті невеликі, фіксовані та не залежать від `n`.
 
-**Any recursion can be rewritten as a loop. The loop variant usually can be made more effective.**
+**Будь-яка рекурсія може бути переписана за допомогою циклу. Варіант з використанням циклу зазвичай може бути більш ефективним.**
 
-...But sometimes the rewrite is non-trivial, especially when function uses different recursive subcalls depending on conditions and merges their results or when the branching is more intricate. And the optimization may be unneeded and totally not worth the efforts.
+... Але іноді переписати рішення на цикл нетривіально, особливо коли функція використовує різні рекурсивні підвиклики залежно від умов та поєднує їх результат або коли розгалуження є більш складним. Тому така оптимізація може бути непотрібна і повністю не варта зусиль.
 
-Recursion can give a shorter code, easier to understand and support. Optimizations are not required in every place, mostly we need a good code, that's why it's used.
+Рекурсія може дати коротший код, який легше зрозуміти та підтримувати.Оптимізація не потрібна в кожному місці, в основному нам потрібний хороший код, тому використовується рекурсія.
 
-## Recursive traversals
+## Рекурсивний обхід
 
-Another great application of the recursion is a recursive traversal.
+Ще одним чудовим застосування рекурсії є рекурсивний обхід.
 
-Imagine, we have a company. The staff structure can be presented as an object:
+Уявіть, у нас є компанія. Структура персоналу може бути представлена як об'єкт:
 
 ```js
 let company = {
   sales: [{
-    name: 'John',
+    name: 'Іван',
     salary: 1000
   }, {
-    name: 'Alice',
+    name: 'Аліса',
     salary: 1600
   }],
 
   development: {
     sites: [{
-      name: 'Peter',
+      name: 'Петро',
       salary: 2000
     }, {
-      name: 'Alex',
+      name: 'Олександр',
       salary: 1800
     }],
 
     internals: [{
-      name: 'Jack',
+      name: 'Евген',
       salary: 1300
     }]
   }
 };
 ```
 
-In other words, a company has departments.
+Іншими словами, компанія має відділи.
 
-- A department may have an array of staff. For instance, `sales` department has 2 employees: John and Alice.
-- Or a department may split into subdepartments, like `development` has two branches: `sites` and `internals`. Each of them has their own staff.
-- It is also possible that when a subdepartment grows, it divides into subsubdepartments (or teams).
+- Відділи можуть мати масив персоналу. Наприклад, відділ продажу має 2 співробітника: Евген та Аліса.
+- Або відділ може бути розділеним на підрозділи, наприклад, `development` має дві гілки: `sites` та `internals`. Кожна з них має свій персонал.
+- Можливо також, що коли відділ зростає, він розділяється на субвідділи (або команди).
 
-    For instance, the `sites` department in the future may be split into teams for `siteA` and `siteB`. And they, potentially, can split even more. That's not on the picture, just something to have in mind.
+    Наприклад, відділ `sites` у майбутньому може бути розділений на команди для `siteA` і `siteB`. І вони, потенційно, можуть бути розділити в подальшому. Це не зображено на малюнку, просто слід мати це на увазі.
 
-Now let's say we want a function to get the sum of all salaries. How can we do that?
+Тепер припустимо, що ми хочемо, щоб функція отримати суму всіх зарплат. Як ми можемо це зробити?
 
-An iterative approach is not easy, because the structure is not simple. The first idea may be to make a `for` loop over `company` with nested subloop over 1st level departments. But then we need more nested subloops to iterate over the staff in 2nd level departments like `sites`... And then another subloop inside those for 3rd level departments that might appear in the future? If we put 3-4 nested subloops in the code to traverse a single object, it becomes rather ugly.
+Ітеративний підхід нелегкий, тому що структура не проста. Перша ідея може полягати в тому, щоб зробити `for` цикл через `company` з вкладеним підциклами через 1-ий рівень відділів. Але тоді нам потрібно більше вкладених циклів, щоб ітеруватися через персонал у 2-му рівні, такому як `sites`... А потім ще один підцикл всередині них для 3-го рівня, який міг би з'явитися в майбутньому? Якщо ми поставимо 3-4 вкладені цикли у коді, щоб пройти один об'єкт, це стає досить потворним.
 
-Let's try recursion.
+Давайте спробуємо рекурсію.
 
-As we can see, when our function gets a department to sum, there are two possible cases:
+Як ми бачимо, коли наша функція отримує відділ для підрахунку суми зарплат, є два можливі випадки:
 
-1. Either it's a "simple" department with an *array* of people -- then we can sum the salaries in a simple loop.
-2. Or it's *an object* with `N` subdepartments -- then we can make `N` recursive calls to get the sum for each of the subdeps and combine the results.
+1. Або це "простий" відділ з *масивом* людей -- тоді ми можемо підсумувати зарплату в простому циклі.
+2. Або це *об'єкт* з `n` підвідділами -- тоді ми можемо зробити `n` рекурсивних дзвінки, щоб отримати суму для кожного з підвідділів та поєднати результати.
 
-The 1st case is the base of recursion, the trivial case, when we get an array.
+1-й випадок є базою рекурсії, тривіальном випадком, коли ми отримуємо масив.
 
-The 2nd case when we get an object is the recursive step. A complex task is split into subtasks for smaller departments. They may in turn split again, but sooner or later the split will finish at (1).
+2-й випадок, коли ми отримуємо об'єкт, -- це рекурсивний крок. Комплексне завдання розділяється на підзадачі для менших відділів. Вони в свою чергу можуть знову поділятися на підвідділи, але рано чи пізно поділ закінчиться і зведеться до випадку (1).
 
-The algorithm is probably even easier to read from the code:
+Алгоритм, мабуть, навіть легше читати у вигляді коду:
 
 
 ```js run
-let company = { // the same object, compressed for brevity
+let company = { // той же об'єкт, стиснутий для компактності
   sales: [{name: 'John', salary: 1000}, {name: 'Alice', salary: 1600 }],
   development: {
     sites: [{name: 'Peter', salary: 2000}, {name: 'Alex', salary: 1800 }],
@@ -357,15 +357,15 @@ let company = { // the same object, compressed for brevity
   }
 };
 
-// The function to do the job
+// Функція для підрахунку суми зарплат
 *!*
 function sumSalaries(department) {
-  if (Array.isArray(department)) { // case (1)
-    return department.reduce((prev, current) => prev + current.salary, 0); // sum the array
-  } else { // case (2)
+  if (Array.isArray(department)) { // випадок (1)
+    return department.reduce((prev, current) => prev + current.salary, 0); // сума масиву
+  } else { // випадок (2)
     let sum = 0;
     for (let subdep of Object.values(department)) {
-      sum += sumSalaries(subdep); // recursively call for subdepartments, sum the results
+      sum += sumSalaries(subdep); // рекурсивно викликається для підвідділів, суммуючи результат
     }
     return sum;
   }
@@ -375,9 +375,9 @@ function sumSalaries(department) {
 alert(sumSalaries(company)); // 7700
 ```
 
-The code is short and easy to understand (hopefully?). That's the power of recursion. It also works for any level of subdepartment nesting.
+Код короткий і його легко зрозуміти (сподіваюся?). Це сила рекурсії. Він також працює для будь-якого рівня вкладеного підвідділу.
 
-Here's the diagram of calls:
+Ось діаграма викликів:
 
 ![recursive salaries](recursive-salaries.svg)
 
