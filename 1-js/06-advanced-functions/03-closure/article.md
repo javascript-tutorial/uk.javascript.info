@@ -1,130 +1,129 @@
 
-# Variable scope, closure
+# Замикання 
 
-JavaScript is a very function-oriented language. It gives us a lot of freedom. A function can be created at any moment, passed as an argument to another function, and then called from a totally different place of code later.
+JavaScript -- це дуже функціонально орієнтована мова. Це дає нам багато свободи. Функцію можна створити в будь-який момент, її можна передати як аргумент іншій функції, а потім викликати з абсолютно іншого місця коду.
 
-We already know that a function can access variables outside of it ("outer" variables).
+Ми вже знаємо, що функція може отримати доступ до змінних з зовнішнього середовища (зовнішні змінні).
 
-But what happens if outer variables change since a function is created? Will the function get newer values or the old ones?
+Але що станеться, якщо зовнішні змінні змінюються після створення функції? Чи отримає функція нові значення чи старі?
 
-And what if a function is passed along as a parameter and called from another place of code, will it get access to outer variables at the new place?
+А що буде, коли функція передається як параметр і викликається з іншого місця коду, чи отримає вона доступ до зовнішніх змінних на новому місці?
 
-Let's expand our knowledge to understand these scenarios and more complex ones.
+Давайте розширимо наші знання, щоб зрозуміти ці та більш складні сценарії.
 
-```smart header="We'll talk about `let/const` variables here"
-In JavaScript, there are 3 ways to declare a variable: `let`, `const` (the modern ones), and `var` (the remnant of the past).
+```smart header="Тут ми поговоримо про змінні `let/const`"
+У JavaScript існує 3 способи оголошення змінної: `let`,` const` (сучасні) та `var` (залишок минулого).
 
-- In this article we'll use `let` variables in examples.
-- Variables, declared with `const`, behave the same, so this article is about `const` too.
-- The old `var` has some notable differences, they will be covered in the article <info:var>.
+- У цій статті ми будемо використовувати `let` для змінних у прикладах.
+- Змінні, оголошені через `const`, поводяться так само, тому ця стаття також стосується `const`.
+- `var` має деякі помітні відмінності, вони будуть розглянуті в статті <info:var>.
 ```
 
-## Code blocks
+## Блоки коду
 
-If a variable is declared inside a code block `{...}`, it's only visible inside that block.
+Якщо змінна оголошена всередині блоку коду `{...}`, вона буде доступна лише всередині цього блоку.
 
-For example:
+Наприклад:
 
 ```js run
 {
-  // do some job with local variables that should not be seen outside
+  // тут виконується певна робота з локальними змінними, яку не слід бачити зовні
 
-  let message = "Hello"; // only visible in this block
-
-  alert(message); // Hello
+  let message = "Привіт"; // змінна видима тільки у цьому блоці 
+  alert(message); // Привіт
 }
 
-alert(message); // Error: message is not defined
+alert(message); // Помилка: змінну message не було оголошено
 ```
 
-We can use this to isolate a piece of code that does its own task, with variables that only belong to it:
+Ми можемо використовувати це, щоб виділити фрагмент коду, який працює зі змінними, які доступні лише з нього:
 
 ```js run
 {
-  // show message
-  let message = "Hello";
+  // показати повідомлення
+  let message = "Привіт";
   alert(message);
 }
 
 {
-  // show another message
-  let message = "Goodbye";
+  // показати інше повідомлення
+  let message = "Бувай";
   alert(message);
 }
 ```
 
-````smart header="There'd be an error without blocks"
-Please note, without separate blocks there would be an error, if we use `let` with the existing variable name:
+````smart header="Без блоків буде помилка"
+Будь-ласка, зверніть увагу, що без окремих блоків буде помилка, якщо ми використовуємо `let` з однаковою назвою змінної:
 
 ```js run
-// show message
-let message = "Hello";
+// показати повідомлення
+let message = "Привіт";
 alert(message);
 
-// show another message
+// показати інше повідомлення
 *!*
-let message = "Goodbye"; // Error: variable already declared
+let message = "Бувай"; // Помилка: змінна вже оголошена
 */!*
 alert(message);
 ```
 ````
 
-For `if`, `for`, `while` and so on, variables declared in `{...}` are also only visible inside:
+Для `if`, `for`, `while` і так далі, змінні, оголошені в `{...}` також видно тільки всередині:
 
 ```js run
 if (true) {
-  let phrase = "Hello!";
+  let phrase = "Привіт!";
 
-  alert(phrase); // Hello!
+  alert(phrase); // Привіт!
 }
 
-alert(phrase); // Error, no such variable!
+alert(phrase); // Помилка, такої змінної немає!
 ```
 
-Here, after `if` finishes, the `alert` below won't see the `phrase`, hence the error.
+Тут, після завершення `if`, `alert` нижче не побачить `phrase`, отже, помилка.
 
-That's great, as it allows us to create block-local variables, specific to an `if` branch.
+Це чудово, оскільки це дозволяє нам створювати локально-блокові змінні, специфічні для гілки `if`.
 
-The similar thing holds true for `for` and `while` loops:
+Те ж саме справедливо і для циклів `for` та `while`:
 
 ```js run
 for (let i = 0; i < 3; i++) {
-  // the variable i is only visible inside this for
-  alert(i); // 0, then 1, then 2
+  // змінну i видно тільки всередині цього циклу for
+  alert(i); // 0, потім 1, потім 2
 }
 
-alert(i); // Error, no such variable
+alert(i); // Помилка, такої змінної немає
 ```
 
-Visually, `let i` is outside of `{...}`. But the `for` construct is special here: the variable, declared inside it, is considered a part of the block.
+Візуально, `let i` знаходиться за межами `{...}`. Але конструкція `for` особлива: змінна, оголошена всередині неї, вважається частиною блоку.
 
-## Nested functions
+## Вкладені функції
 
-A function is called "nested" when it is created inside another function.
+Функція називається "вкладеною", коли вона створюється всередині іншої функції.
 
-It is easily possible to do this with JavaScript.
+З JavaScript це зробити дуже легко.
 
-We can use it to organize our code, like this:
+І ми можемо використовувати це для організації нашого коду, наприклад:
 
 ```js
 function sayHiBye(firstName, lastName) {
 
-  // helper nested function to use below
+  // допоміжна вкладена функція для використання нижче
   function getFullName() {
     return firstName + " " + lastName;
   }
 
-  alert( "Hello, " + getFullName() );
-  alert( "Bye, " + getFullName() );
+  alert( "Привіт, " + getFullName() );
+  alert( "Бувай, " + getFullName() );
 
 }
 ```
 
-Here the *nested* function `getFullName()` is made for convenience. It can access the outer variables and so can return the full name. Nested functions are quite common in JavaScript.
+Тут *вкладена* функція `getFullName()` створена для зручності. Вона має доступ до внутрішніх змінних функції і тому може повернути повне ім’я. Вкладені функції досить поширені в JavaScript.
 
-What's much more interesting, a nested function can be returned: either as a property of a new object or as a result by itself. It can then be used somewhere else. No matter where, it still has access to the same outer variables.
+Що ще цікавіше, вкладену функцію можна повернути: як властивість нового об’єкта, або як самостійний результат. Потім її можна використати десь в іншому місці. Незалежно від того, де її викликають, вона завжди буде мати доступ до внутрішніх змінних функцію, в якій її було створено.
 
-Below, `makeCounter` creates the "counter" function that returns the next number on each invocation:
+Нижче, `makeCounter` створює функцію "counter", яка повертає наступний номер при кожному виклику:
 
 ```js run
 function makeCounter() {
@@ -142,11 +141,11 @@ alert( counter() ); // 1
 alert( counter() ); // 2
 ```
 
-Despite being simple, slightly modified variants of that code have practical uses, for instance, as a [random number generator](https://en.wikipedia.org/wiki/Pseudorandom_number_generator) to generate random values for automated tests.
+Незважаючи на простоту, трохи змінені варіанти цього коду мають практичне застосування, наприклад, [генератор псевдовипадкових чисел](https://uk.wikipedia.org/wiki/Генератор_псевдовипадкових_чисел) для генерації випадкових значень для автоматизованих тестів.
 
-How does this work? If we create multiple counters, will they be independent? What's going on with the variables here?
+Як це працює? Якщо ми створимо кілька лічильників, чи будуть вони незалежними? Що відбувається зі змінними тут?
 
-Understanding such things is great for the overall knowledge of JavaScript and beneficial for more complex scenarios. So let's go a bit in-depth.
+Розуміння таких речей чудово не тільки для загального знання JavaScript, але й корисно для роботи з більш складними сценаріями. Тож давайте трохи поглибимося.
 
 ## Lexical Environment
 
