@@ -1,4 +1,4 @@
-The solution using a loop:
+Рішення за допомогою циклу:
 
 ```js run
 function sumTo(n) {
@@ -12,7 +12,7 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-The solution using recursion:
+Рішення за допомогою рекурсії:
 
 ```js run
 function sumTo(n) {
@@ -23,7 +23,7 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-The solution using the formula: `sumTo(n) = n*(n+1)/2`:
+Рішення за допомогою формули: `sumTo(n) = n*(n+1)/2`:
 
 ```js run
 function sumTo(n) {
@@ -33,8 +33,8 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-P.S. Naturally, the formula is the fastest solution. It uses only 3 operations for any number `n`. The math helps!
+P.S. Звичайно, формула є найшвидшим рішенням. Вона використовує лише 3 операції для будь-якого числа `n`. Математика допомагає!
 
-The loop variant is the second in terms of speed. In both the recursive and the loop variant we sum the same numbers. But the recursion involves nested calls and execution stack management. That also takes resources, so it's slower.
+Варіант циклу є другим з точки зору швидкості. Як і у випадку рекурсії, так і в циклі, ми сумуємо ті ж числа. Але рекурсія передбачає вкладені виклики та управління стеком. Це також займає ресурси, тому це повільніше.
 
-P.P.S. Some engines support the "tail call" optimization: if a recursive call is the very last one in the function (like in `sumTo` above), then the outer function will not need to resume the execution, so the engine doesn't need to remember its execution context. That removes the burden on memory, so counting `sumTo(100000)` becomes possible. But if the JavaScript engine does not support tail call optimization (most of them don't), there will be an error: maximum stack size exceeded, because there's usually a limitation on the total stack size.
+P.P.S. Деякі рущії підтримують оптимізацію "хвостового виклику": якщо рекурсивний відклик є останнім у функції (як в `sumTo` вище), то зовнішня функція не повинна буде відновлювати виконання, тому рущій не потребує запам’ятовувати контекст виконання. Це зменшує потребу в пам’яті, тому вважається можливим підрахунок `sumTo(100000)`. Але якщо рущій JavaScript не підтримує оптимізацію хвостового виклику (більшість з них), то буде помилка: максимальний розмір стека перевищиться, оскільки зазвичай є обмеження на загальний розмір стека.

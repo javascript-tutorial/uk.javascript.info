@@ -2,17 +2,17 @@ importance: 4
 
 ---
 
-# Calculate factorial
+# Розрахувати факторіал
 
-The [factorial](https://en.wikipedia.org/wiki/Factorial) of a natural number is a number multiplied by `"number minus one"`, then by `"number minus two"`, and so on till `1`. The factorial of `n` is denoted as `n!`
+[Факторіал](https://uk.wikipedia.org/wiki/Факторіал) з натурального числа -- це число, помножене на `"число мінус один"`, потім на `"число мінус два"` і так до `1`. Факторіал `n` позначається як `n!`
 
-We can write a definition of factorial like this:
+Ми можемо написати визначення факторіалу наступним чином:
 
 ```js
 n! = n * (n - 1) * (n - 2) * ...*1
 ```
 
-Values of factorials for different `n`:
+Значення факторіалів для різних `n`:
 
 ```js
 1! = 1
@@ -22,10 +22,10 @@ Values of factorials for different `n`:
 5! = 5 * 4 * 3 * 2 * 1 = 120
 ```
 
-The task is to write a function `factorial(n)` that calculates `n!` using recursive calls.
+Завдання полягає в тому, щоб написати функцію `factorial(n)`, яка обчислює `n!` за допомогою рекурсивних викликів.
 
 ```js
 alert( factorial(5) ); // 120
 ```
 
-P.S. Hint: `n!` can be written as `n * (n-1)!` For instance: `3! = 3*2! = 3*2*1! = 6`
+P.S. Підказка: `n!` може бути записане як `n * (n-1)!`. Наприклад: `3!= 3*2!= 3*2*1!= 6`
