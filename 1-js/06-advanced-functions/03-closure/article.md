@@ -147,81 +147,81 @@ alert( counter() ); // 2
 
 Розуміння таких речей чудово не тільки для загального знання JavaScript, але й корисно для роботи з більш складними сценаріями. Тож давайте трохи поглибимося.
 
-## Lexical Environment
+## Лексичне середовище
 
-```warn header="Here be dragons!"
-The in-depth technical explanation lies ahead.
+```warn header="Тут будуть дракони!"
+Поглиблене технічне пояснення попереду.
 
-As far as I'd like to avoid low-level language details, any understanding without them would be lacking and incomplete, so get ready.
+Чесно кажучи, пояснюючи це, я хотів би уникнути низькорівневих деталей, але без них розуміння буде не повним, тому готуйтесь.
 ```
 
-For clarity, the explanation is split into multiple steps.
+Для наочності пояснення поділено на кілька етапів.
 
-### Step 1. Variables
+### 1 Етап. Змінні
 
-In JavaScript, every running function, code block `{...}`, and the script as a whole have an internal (hidden) associated object known as the *Lexical Environment*.
+У JavaScript кожна запущена функція, блок коду `{...}`, і скрипт в цілому мають внутрішній (прихований) асоційований об’єкт, відомий як *Лексичне Середовище (Lexical Environment)*.
 
-The Lexical Environment object consists of two parts:
+Об’єкт лексичного середовища складається з двох частин:
 
-1. *Environment Record* -- an object that stores all local variables as its properties (and some other information like the value of `this`).
-2. A reference to the *outer lexical environment*, the one associated with the outer code.
+1. *Запис Середовища (Environment Record)* -- об’єкт, який зберігає всі локальні змінні як властивості (та деяку іншу інформацію, наприклад значення `this`).
+2. Посилання на *зовнішнє лексичне середовище*, яке пов’язане із зовнішнім кодом.
 
-**A "variable" is just a property of the special internal object, `Environment Record`. "To get or change a variable" means "to get or change a property of that object".**
+**"Змінна" це лише властивість спеціального внутрішнього об’єкта, `Запис Середовища (Environment Record)`. "Отримати або змінити змінну" насправді означає "отримати або змінити властивість цього об’єкта".**
 
-In this simple code without functions, there is only one Lexical Environment:
+У цьому простому коді без функцій є лише одне лексичне середовище:
 
 ![lexical environment](lexical-environment-global.svg)
 
-This is the so-called *global* Lexical Environment, associated with the whole script.
+Це так зване *глобальне* лексичне середовище, пов’язане з усім скриптом.
 
-On the picture above, the rectangle means Environment Record (variable store) and the arrow means the outer reference. The global Lexical Environment has no outer reference, that's why the arrow points to `null`.
+На зображенні вище прямокутник означає запис середовища (сховище змінних), а стрілка означає зовнішнє посилання. Глобальне лексичне середовище не має зовнішнього посилання, тому стрілка вказує на `null`.
 
-As the code starts executing and goes on, the Lexical Environment changes.
+Коли код виконується, лексичне середовище змінюється.
 
-Here's a little bit longer code:
+Ось трохи довший код:
 
 ![lexical environment](closure-variable-phrase.svg)
 
-Rectangles on the right-hand side demonstrate how the global Lexical Environment changes during the execution:
+Прямокутники праворуч демонструють, як змінюється глобальне лексичне середовище під час виконання:
 
-1. When the script starts, the Lexical Environment is pre-populated with all declared variables.
-    - Initially, they are in the "Uninitialized" state. That's a special internal state, it means that the engine knows about the variable, but it cannot be referenced until it has been declared with `let`. It's almost the same as if the variable didn't exist.
-2. Then `let phrase` definition appears. There's no assignment yet, so its value is `undefined`. We can use the variable from this point forward.
-3. `phrase` is assigned a value.
-4. `phrase` changes the value.
+1. Коли скрипт запускається, лексичне середовище попередньо заповнюється усіма оголошеними змінними.
+    - Спочатку вони перебувають у стані "Неініціалізовані (Uninitialized)". Це особливий внутрішній стан, це означає, що рушій знає про змінну, але на неї не можна посилатися, поки вона не буде оголошена з `let`. Це майже те саме, ніби змінна не існує.
+2. Потім з’являється оголошення змінної `let phrase`. Поки що ми тільки оголосили змінну, тому її значення `undefined`. Але з цього моменту ми можемо використовувати її.
+3. `phrase` присвоюється значення.
+4. `phrase` змінює значення.
 
-Everything looks simple for now, right?
+Поки що все виглядає просто, правда?
 
-- A variable is a property of a special internal object, associated with the currently executing block/function/script.
-- Working with variables is actually working with the properties of that object.
+- Змінна -- це властивість спеціального внутрішнього об’єкта, пов’язана з блоком/функцієї/скриптом що зараз виконується.
+- Робота зі змінними -- це насправді робота з властивостями цього об’єкта.
 
-```smart header="Lexical Environment is a specification object"
-"Lexical Environment" is a specification object: it only exists "theoretically" in the [language specification](https://tc39.es/ecma262/#sec-lexical-environments) to describe how things work. We can't get this object in our code and manipulate it directly.
+```smart header="Лексичне середовище -- це об'єкт специфікації"
+"Лексичне середовище" -- це об’єкт специфікації: він існує лише "теоретично" в [специфікації мови](https://tc39.es/ecma262/#sec-lexical-environments) щоб показати, як все працює. Ми не можемо отримати цей об’єкт у нашому коді та керувати ним безпосередньо.
 
-JavaScript engines also may optimize it, discard variables that are unused to save memory and perform other internal tricks, as long as the visible behavior remains as described.
+Рушії JavaScript також можуть його оптимізувати, відкидати змінні, які не використовуються для економії пам’яті та виконувати інші внутрішні трюки, доки видима поведінка залишається такою, як описано у специфікації.
 ```
 
-### Step 2. Function Declarations
+### 2 Етап. Функції створені як Function Declarations
 
-A function is also a value, like a variable.
+Функція також є значенням, як і значення у змінних.
 
-**The difference is that a Function Declaration is instantly fully initialized.**
+**Різниця в тому, що функція створена за допомогою Function Declaration, ініціалізується миттєво і повністю .**
 
-When a Lexical Environment is created, a Function Declaration immediately becomes a ready-to-use function (unlike `let`, that is unusable till the declaration).
+Коли створюється лексичне середовище, така функції відразу стає готовою до використання (на відміну від значення у змінній `let`, що непридатна для викорстиння до оголошення).
 
-That's why we can use a function, declared as Function Declaration, even before the declaration itself.
+Ось чому ми можемо використовувати функцію, оголошену з Function Declaration, ще до рядка з оголошенням.
 
-For example, here's the initial state of the global Lexical Environment when we add a function:
+Наприклад, ось початковий стан глобального лексичного середовища, коли ми додаємо функцію:
 
 ![](closure-function-declaration.svg)
 
-Naturally, this behavior only applies to Function Declarations, not Function Expressions where we assign a function to a variable, such as `let say = function(name)...`.
+Така поведінка стосується лише Function Declarations, а не Function Expressions, де ми призначаємо функцію змінній, наприклад ось так `let say = function(name)...`.
 
-### Step 3. Inner and outer Lexical Environment
+### 3 етап. Внутрішнє та зовнішнє лексичне середовище
 
-When a function runs, at the beginning of the call, a new Lexical Environment is created automatically to store local variables and parameters of the call.
+Коли функція виконується, на початку виклику автоматично створюється нове лексичне середовище для зберігання локальних змінних та параметрів виклику.
 
-For instance, for `say("John")`, it looks like this (the execution is at the line, labelled with an arrow):
+Наприклад, для `say("John")`, це виглядає так (виконання знаходиться у рядку, позначеному стрілкою):
 
 <!--
     ```js
@@ -236,28 +236,28 @@ For instance, for `say("John")`, it looks like this (the execution is at the lin
 
 ![](lexical-environment-simple.svg)
 
-During the function call we have two Lexical Environments: the inner one (for the function call) and the outer one (global):
+Під час виклику функції у нас є два лексичні середовища: внутрішнє (для виклику функції) і зовнішнє (глобальне):
 
-- The inner Lexical Environment corresponds to the current execution of `say`. It has a single property: `name`, the function argument. We called `say("John")`, so the value of the `name` is `"John"`.
-- The outer Lexical Environment is the global Lexical Environment. It has the `phrase` variable and the function itself.
+- Внутрішнє лексичне середовище відповідає поточному виконанню функції `say`. Воно має єдину властивість: `name` -- аргумент функції. Ми викликали `say("John")`, тож значення у `name` буде `"John"`.
+- Зовнішнє лексичне середовище -- це глобальне лексичне середовище. У ньому є змінна `phrase` та сама функція.
 
-The inner Lexical Environment has a reference to the `outer` one.
+Внутрішнє лексичне середовище має посилання на `зовнішнє`.
 
-**When the code wants to access a variable -- the inner Lexical Environment is searched first, then the outer one, then the more outer one and so on until the global one.**
+**Коли код хоче отримати доступ до змінної -- спочатку шукає її у внутрішньому лексичному середовищі, потім у зовнішньому, потім у зовнішньому до попереднього і так далі поки не дійде до глобального.**
 
-If a variable is not found anywhere, that's an error in strict mode (without `use strict`, an assignment to a non-existing variable creates a new global variable, for compatibility with old code).
+Якщо змінна ніде не знайдена, то буде помилка для увімкненого суворого режиму (без `use strict`, присвоєння неіснуючої змінної створює нову глобальну змінну для сумісності зі старим кодом).
 
-In this example the search proceeds as follows:
+У цьому прикладі пошук відбувається наступним чином:
 
-- For the `name` variable, the `alert` inside `say` finds it immediately in the inner Lexical Environment.
-- When it wants to access `phrase`, then there is no `phrase` locally, so it follows the reference to the outer Lexical Environment and finds it there.
+- Для змінної `name`, `alert` у функції `say` знаходить її негайно у внутрішньому лексичному середовищі.
+- Коли він хоче отримати доступ до `phrase`, він спочатку шукає її серед локальних змінних, де її немає, і врешті решт іде за посиланням на зовнішнє лексичне середовище і знаходить її там.
 
 ![lexical environment lookup](lexical-environment-simple-lookup.svg)
 
 
-### Step 4. Returning a function
+### 4 Етап. Повернення функції
 
-Let's return to the `makeCounter` example.
+Повернемося до прикладу з `makeCounter`.
 
 ```js
 function makeCounter() {
@@ -271,33 +271,33 @@ function makeCounter() {
 let counter = makeCounter();
 ```
 
-At the beginning of each `makeCounter()` call, a new Lexical Environment object is created, to store variables for this `makeCounter` run.
+На початку кожного виклику `makeCounter()`, створюється новий об’єкт лексичного середовища для зберігання змінних конкретного виклику `makeCounter`.
 
-So we have two nested Lexical Environments, just like in the example above:
+Отже, у нас є два вкладених лексичних середовища, як і у прикладі вище:
 
 ![](closure-makecounter.svg)
 
-What's different is that, during the execution of `makeCounter()`, a tiny nested function is created of only one line: `return count++`. We don't run it yet, only create.
+Різниця полягає в тому, що під час виконання `makeCounter()`, крихітна вкладена функція створюється, яка складається лише з одного рядка: `return count++`. Ми не запускаємо її, лише створюємо.
 
-All functions remember the Lexical Environment in which they were made. Technically, there's no magic here: all functions have the hidden property named `[[Environment]]`, that keeps the reference to the Lexical Environment where the function was created:
+Усі функції пам’ятають лексичне середовище, в якому вони були створені. Технічно тут немає ніякої магії: усі функції мають приховану властивість з назвою `[[Environment]]`, що зберігає посилання на лексичне середовище, де була створена функція:
 
 ![](closure-makecounter-environment.svg)
 
-So, `counter.[[Environment]]` has the reference to `{count: 0}` Lexical Environment. That's how the function remembers where it was created, no matter where it's called. The `[[Environment]]` reference is set once and forever at function creation time.
+Тому, `counter.[[Environment]]` має посилання на лексичне середовище, яке має вигляд `{count: 0}`. Так функція запам’ятовує, де вона була створена, незалежно від того, де вона викликається. Посилання у `[[Environment]]` встановлюється раз і назавжди під час створення функції.
 
-Later, when `counter()` is called, a new Lexical Environment is created for the call, and its outer Lexical Environment reference is taken from `counter.[[Environment]]`:
+Пізніше коли `counter()` викликається, для виклику створюється нове лексичне середовище, а посилання на зовнішнє лексичне середовище для нього береться з `counter.[[Environment]]`:
 
 ![](closure-makecounter-nested-call.svg)
 
-Now when the code inside `counter()` looks for `count` variable, it first searches its own Lexical Environment (empty, as there are no local variables there), then the Lexical Environment of the outer `makeCounter()` call, where it finds and changes it.
+Тепер, коли код всередині `counter()` шукає змінну `count`, він спочатку шукає у власному лексичному середовищі (воно порожнє, оскільки там немає локальних змінних), потім у зовнішньому лексичному середовищі виклику `makeCounter()`, де він її знаходить і змінює.
 
-**A variable is updated in the Lexical Environment where it lives.**
+**Змінна оновлюється в лексичному середовищі, де вона існує.**
 
-Here's the state after the execution:
+Ось стан після виконання:
 
 ![](closure-makecounter-nested-call-2.svg)
 
-If we call `counter()` multiple times, the `count` variable will be increased to `2`, `3` and so on, at the same place.
+Якщо ми викликаємо `counter()` кілька разів, змінна `count` буде збільшена до `2`, `3` і так далі, в одному місці.
 
 ```smart header="Closure"
 There is a general programming term "closure", that developers generally should know.
