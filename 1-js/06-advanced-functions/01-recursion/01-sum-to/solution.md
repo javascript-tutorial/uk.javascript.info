@@ -23,7 +23,7 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-Рішення за допомогою формули: `sumTo(n) = n*(n+1)/2`:
+Рішення з використанням формули: `sumTo(n) = n*(n+1)/2`:
 
 ```js run
 function sumTo(n) {
