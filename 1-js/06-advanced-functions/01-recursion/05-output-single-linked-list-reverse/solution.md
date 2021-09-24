@@ -1,8 +1,8 @@
-# Using a recursion
+# Використання рекурсії
 
-The recursive logic is a little bit tricky here.
+Тут рекурсивна логіка трохи складна.
 
-We need to first output the rest of the list and *then* output the current one:
+Нам потрібно спочатку вивести останні елементи списку, а *потім* вивести поточний:
 
 ```js run
 let list = {
@@ -31,13 +31,13 @@ function printReverseList(list) {
 printReverseList(list);
 ```
 
-# Using a loop
+# За допомогою циклу
 
-The loop variant is also a little bit more complicated then the direct output.
+Варіант циклу також трохи складніше, ніж прямий вивід.
 
-There is no way to get the last value in our `list`. We also can't "go back".
+Немає можливості отримати останнє значення в нашому `list`. Ми також не можемо "повернутися назад".
 
-So what we can do is to first go through the items in the direct order and remember them in an array, and then output what we remembered in the reverse order:
+Отже, що ми можемо зробити, так це спочатку пройти елементи в прямому порядку і запам’ятати їх у масиві, а потім вивести те, що ми запам’ятали, в зворотному порядку:
 
 ```js run
 let list = {
@@ -71,4 +71,4 @@ function printReverseList(list) {
 printReverseList(list);
 ```
 
-Please note that the recursive solution actually does exactly the same: it follows the list, remembers the items in the chain of nested calls (in the execution context stack), and then outputs them. 
+Зверніть увагу, що рекурсивне рішення фактично робить точно так само: проходиться списком, запам’ятовує елементи в ланцюжку вкладених викликів (у контекстному стеку виконання), а потім виводить їх. 

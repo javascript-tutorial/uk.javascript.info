@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Sum all numbers till the given one
+# Сума всіх чисел до даного
 
-Write a function `sumTo(n)` that calculates the sum of numbers `1 + 2 + ... + n`.
+Напишіть функцію `sumTo(n)`, що обчислює суму чисел `1 + 2 + ... + n`.
 
-For instance:
+Наприклад:
 
 ```js no-beautify
 sumTo(1) = 1
@@ -17,20 +17,20 @@ sumTo(4) = 4 + 3 + 2 + 1 = 10
 sumTo(100) = 100 + 99 + ... + 2 + 1 = 5050
 ```
 
-Make 3 solution variants:
+Зробити 3 варіанти рішення:
 
-1. Using a for loop.
-2. Using a recursion, cause `sumTo(n) = n + sumTo(n-1)` for `n > 1`.
-3. Using the [arithmetic progression](https://en.wikipedia.org/wiki/Arithmetic_progression) formula.
+1. Використання циклу.
+2. Використання рекурсії, у випадку `sumTo(n) = n + sumTo(n-1)` для `n > 1`.
+3. Використання формули [арифметичної прогресії] (https://uk.wikipedia.org/wiki/Арифметична_прогресія).
 
-An example of the result:
+Приклад результату:
 
 ```js
-function sumTo(n) { /*... your code ... */ }
+function sumTo(n) { /*... ваш код ... */ }
 
 alert( sumTo(100) ); // 5050
 ```
 
-P.S. Which solution variant is the fastest? The slowest? Why?
+P.S. Який варіант рішення є найшвидшим? Найповільнішим? Чому?
 
-P.P.S. Can we use recursion to count `sumTo(100000)`? 
+P.P.S. Чи можемо ми використовувати рекурсію для підрахунку `sumTo(100000)`?
