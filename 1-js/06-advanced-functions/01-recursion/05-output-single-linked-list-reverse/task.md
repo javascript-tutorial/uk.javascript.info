@@ -2,8 +2,8 @@ importance: 5
 
 ---
 
-# Output a single-linked list in the reverse order
+# Вивести одинозв’язаний список у зворотному порядку
 
-Output a single-linked list from the previous task <info:task/output-single-linked-list> in the reverse order.
+Виведіть одинозв’язаний список з попереднього завдання <info:task/output-single-linked-list> у зворотному порядку.
 
-Make two solutions: using a loop and using a recursion.
+Зробіть два рішення: за допомогою циклу та з використанням рекурсії.
