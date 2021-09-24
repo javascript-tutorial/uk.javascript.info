@@ -12,7 +12,7 @@ function sumTo(n) {
 alert( sumTo(100) );
 ```
 
-Рішення за допомогою рекурсії:
+Рішення з використанням рекурсії:
 
 ```js run
 function sumTo(n) {
