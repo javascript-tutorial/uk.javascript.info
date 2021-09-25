@@ -1,44 +1,44 @@
 
-# Property flags and descriptors
+# Прапори та дескриптори властивостей
 
-As we know, objects can store properties.
+Як відомо, об'єкти можуть зберігати властивості.
 
-Until now, a property was a simple "key-value" pair to us. But an object property is actually a more flexible and powerful thing.
+До цих пір властивість була простою парою "ключ-значення" для нас. Але властивість об'єкта насправді є більш гнучкою та потужною.
 
-In this chapter we'll study additional configuration options, and in the next we'll see how to invisibly turn them into getter/setter functions.
+У цьому розділі ми вивчимо додаткові параметри конфігурації, а в наступному ми побачимо, як можна непомітно перетворити їх у функції -- гетери та сетери.
 
-## Property flags
+## Прапори властивостей
 
-Object properties, besides a **`value`**, have three special attributes (so-called "flags"):
+Властивості об'єкта, крім **`value`**, мають три спеціальні атрибути (так звані "прапори"):
 
-- **`writable`** -- if `true`, the value can be changed, otherwise it's read-only.
-- **`enumerable`** -- if `true`, then listed in loops, otherwise not listed.
-- **`configurable`** -- if `true`, the property can be deleted and these attributes can be modified, otherwise not.
+- **`writable`** -- якщо` true`, значення може бути змінено, інакше воно доступне лише для читання.
+- **`enumerable`** -- якщо` true`, то властивість враховується в циклах, в іншому випадку цикли його ігнорують.
+- **`configurable`** -- якщо `true`, властивість можна видалити, а ці атрибути можна змінювати, інакше цього робити не можна.
 
-We didn't see them yet, because generally they do not show up. When we create a property "the usual way", all of them are `true`. But we also can change them anytime.
+Ми ще не бачили ці атрибути, тому що зазвичай вони не приховані. Коли ми створюємо властивість "звичайним способом", всі вони мають значення `true`. Але ми також можемо їх змінити в будь-який час.
 
-First, let's see how to get those flags.
+По-перше, давайте подивимося, як отримати ці прапори.
 
-The method [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor) allows to query the *full* information about a property.
+Метод [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor) дозволяє отримати *повну* інформацію про властивість.
 
-The syntax is:
+Синтаксис:
 ```js
 let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName);
 ```
 
 `obj`
-: The object to get information from.
+: Об'єкт, з якого буде отримана інформація.
 
 `propertyName`
-: The name of the property.
+: Назва властивості.
 
-The returned value is a so-called "property descriptor" object: it contains the value and all the flags.
+Повернене значення -- це так званий об'єкт "дескриптор властивості": він містить значення та всі прапори.
 
-For instance:
+Наприклад:
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
@@ -46,7 +46,7 @@ let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
 alert( JSON.stringify(descriptor, null, 2 ) );
 /* property descriptor:
 {
-  "value": "John",
+  "value": "Іван",
   "writable": true,
   "enumerable": true,
   "configurable": true
@@ -54,30 +54,30 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 */
 ```
 
-To change the flags, we can use [Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty).
+Щоб змінити прапори, ми можемо використовувати [Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty).
 
-The syntax is:
+Синтаксис:
 
 ```js
 Object.defineProperty(obj, propertyName, descriptor)
 ```
 
 `obj`, `propertyName`
-: The object and its property to apply the descriptor.
+: Об'єкт і його властивість, щоб застосувати дескриптор.
 
 `descriptor`
-: Property descriptor object to apply.
+: Об'єкт дескриптора властивості, який буде застосовано.
 
-If the property exists, `defineProperty` updates its flags. Otherwise, it creates the property with the given value and flags; in that case, if a flag is not supplied, it is assumed `false`.
+Якщо властивість існує, `defineProperty` оновлює свої прапори. В іншому випадку метод створює властивість з данним значенням та прапорами; у цьому випадку, якщо прапор не вказано, передбачається, що його значення `false`.
 
-For instance, here a property `name` is created with all falsy flags:
+Наприклад, тут властивість `name` створюється з усіма хибними флагами:
 
 ```js run
 let user = {};
 
 *!*
 Object.defineProperty(user, "name", {
-  value: "John"
+  value: "Іван"
 });
 */!*
 
@@ -86,7 +86,7 @@ let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
 alert( JSON.stringify(descriptor, null, 2 ) );
 /*
 {
-  "value": "John",
+  "value": "Іван",
 *!*
   "writable": false,
   "enumerable": false,
@@ -96,17 +96,17 @@ alert( JSON.stringify(descriptor, null, 2 ) );
  */
 ```
 
-Compare it with "normally created" `user.name` above: now all flags are falsy. If that's not what we want then we'd better set them to `true` in `descriptor`.
+Порівняйте це з попереднім прикладом "нормального створення" `user.name` вище: тепер всі прапори є хибними. Якщо це не те, що ми хочемо, тоді ми краще встановили їх значення в `true` у `descriptor`.
 
-Now let's see effects of the flags by example.
+Тепер давайте розглянемо ефекти від прапорів на прикладах.
 
-## Non-writable
+## Не для запису
 
-Let's make `user.name` non-writable (can't be reassigned) by changing `writable` flag:
+Давайте зробимо `user.name` недоступним для запису (недоступним для переприсвоення), змінюючи `writable` прапор:
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 Object.defineProperty(user, "name", {
@@ -116,49 +116,49 @@ Object.defineProperty(user, "name", {
 });
 
 *!*
-user.name = "Pete"; // Error: Cannot assign to read only property 'name'
+user.name = "Петро"; // Помилка: неможливо присвоїти доступну лише для читання властивість 'name'
 */!*
 ```
 
-Now no one can change the name of our user, unless they apply their own `defineProperty` to override ours.
+Тепер ніхто не може змінити ім’я нашого користувача, якщо тільки не оновить відповідний прапор викликавши `defineProperty`, щоб перекрити наші дескриптори.
 
 ```smart header="Errors appear only in strict mode"
-In the non-strict mode, no errors occur when writing to non-writable properties and such. But the operation still won't succeed. Flag-violating actions are just silently ignored in non-strict.
+У нестрогому режимі, без `use strict`, не виникає помилки при присвоенні значеня до недоступних для запису властивостей та ін. Але така операція все рівно не будуть виконані успішно. Дії, що порушують прапори, просто мовчки ігноруються в нестрогому режимі.
 ```
 
-Here's the same example, but the property is created from scratch:
+Ось той же приклад, але властивість створена "з нуля":
 
 ```js run
 let user = { };
 
 Object.defineProperty(user, "name", {
 *!*
-  value: "John",
-  // for new properties we need to explicitly list what's true
+  value: "Іван",
+  // для нових властивостей ми повинні явно вказати всі прапори, для яких значення true
   enumerable: true,
   configurable: true
 */!*
 });
 
-alert(user.name); // John
-user.name = "Pete"; // Error
+alert(user.name); // Іван
+user.name = "Петро"; // Помилка
 ```
 
-## Non-enumerable
+## Неперелічувана властивість
 
-Now let's add a custom `toString` to `user`.
+Тепер давайте додамо кастомний `toString` до `user`.
 
-Normally, a built-in `toString` for objects is non-enumerable, it does not show up in `for..in`. But if we add a `toString` of our own, then by default it shows up in `for..in`, like this:
+Зазвичай, вбудований `toString` для об'єктів неперелічуваний, він не з'являється в `for..in`. Але якщо ми додамо свій власний `toString`, то за замовчуванням він з'являється в `for..in`, як наприклад:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   toString() {
     return this.name;
   }
 };
 
-// By default, both our properties are listed:
+// за замовчуванням, вказані обидві наші властивості:
 for (let key in user) alert(key); // name, toString
 ```
 
