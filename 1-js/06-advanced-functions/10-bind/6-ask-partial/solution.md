@@ -1,14 +1,14 @@
 
 
-1. Either use a wrapper function, an arrow to be concise:
+1. Або використовуйте стрілкову функцію як функцію обгортку для короткого запису:
 
     ```js 
     askPassword(() => user.login(true), () => user.login(false)); 
     ```
 
-    Now it gets `user` from outer variables and runs it the normal way.
+    Тепер `user` отримується з зовнішніх змінних та код виконується правильно.
 
-2. Or create a partial function from `user.login` that uses `user` as the context and has the correct first argument:
+2. Або створіть частково застосовану функцію `user.login`, що використовує `user` як контекст та має правильний аргумент:
 
 
     ```js 

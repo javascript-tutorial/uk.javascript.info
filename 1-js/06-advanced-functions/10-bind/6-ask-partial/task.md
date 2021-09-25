@@ -1,27 +1,27 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Partial application for login
+# Часткове застосування для логіну
 
-The task is a little more complex variant of <info:task/question-use-bind>. 
+Задача трохи складніша ніж <info:task/question-use-bind>. 
 
-The `user` object was modified. Now instead of two functions `loginOk/loginFail`, it has a single function `user.login(true/false)`.
+Об'єкт `user` був змінений. Тепер замість двох функцій `loginOk/loginFail`, він має одну функцію `user.login(true/false)`.
 
-What should we pass `askPassword` in the code below, so that it calls `user.login(true)` as `ok` and `user.login(false)` as `fail`?
+Що ми маємо передати `askPassword` в коді нижче, щоб вона викликала `user.login(true)` при `ok` та `user.login(false)` при `fail`?
 
 ```js
 function askPassword(ok, fail) {
-  let password = prompt("Password?", '');
+  let password = prompt("Пароль?", '');
   if (password == "rockstar") ok();
   else fail();
 }
 
 let user = {
-  name: 'John',
+  name: 'Іван',
 
   login(result) {
-    alert( this.name + (result ? ' logged in' : ' failed to log in') );
+    alert( this.name + (result ? ' увійшов' : ' виконав невдалу спробу входу') );
   }
 };
 
@@ -30,5 +30,5 @@ askPassword(?, ?); // ?
 */!*
 ```
 
-Your changes should only modify the highlighted fragment.
+Вносіть зміни тільки у виділений рядок.
 
