@@ -1,19 +1,19 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Second bind
+# Друга прив'язка
 
-Can we change `this` by additional binding?
+Чи можемо ми змінити `this` за допомогою додаткового прив'язування?
 
-What will be the output?
+Який результат буде виведено?
 
 ```js no-beautify
 function f() {
   alert(this.name);
 }
 
-f = f.bind( {name: "John"} ).bind( {name: "Ann" } );
+f = f.bind( {name: "Іван"} ).bind( {name: "Христя" } );
 
 f();
 ```

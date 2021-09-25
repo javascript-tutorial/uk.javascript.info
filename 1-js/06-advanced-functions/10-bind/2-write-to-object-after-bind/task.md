@@ -1,10 +1,10 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Bound function as a method
+# Прив'язана функція як метод
 
-What will be the output?
+Що виведе функція?
 
 ```js
 function f() {

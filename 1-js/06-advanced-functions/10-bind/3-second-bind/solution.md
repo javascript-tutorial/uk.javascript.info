@@ -1,15 +1,15 @@
-The answer: **John**.
+Відповідь: **Іван**.
 
 ```js run no-beautify
 function f() {
   alert(this.name);
 }
 
-f = f.bind( {name: "John"} ).bind( {name: "Pete"} );
+f = f.bind( {name: "Іван"} ).bind( {name: "Христя"} );
 
-f(); // John
+f(); // Іван
 ```
 
-The exotic [bound function](https://tc39.github.io/ecma262/#sec-bound-function-exotic-objects) object returned by `f.bind(...)` remembers the context (and arguments if provided) only at creation time. 
+Екзотичний об'єкт [прив'язаної функції](https://tc39.github.io/ecma262/#sec-bound-function-exotic-objects) повертається від `f.bind(...)`, що запам'ятовує контекст (та аргументи, якщо передані) тільки під час створення. 
 
-A function cannot be re-bound.
+Функція не може бути переприв'язана.

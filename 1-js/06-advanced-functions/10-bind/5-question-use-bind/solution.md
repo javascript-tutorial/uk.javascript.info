@@ -1,26 +1,26 @@
 
-The error occurs because `ask` gets functions `loginOk/loginFail` without the object.
+Помилка виникає тому що `askPassword` отримує функції `loginOk/loginFail` без об'єкту.
 
-When it calls them, they naturally assume `this=undefined`.
+Коли вона викликає їх, їх контекст втрачено `this=undefined`.
 
-Let's `bind` the context:
+Спробуємо використати `bind`, щоб прив'язати контекст:
 
 ```js run
 function askPassword(ok, fail) {
-  let password = prompt("Password?", '');
+  let password = prompt("Пароль?", '');
   if (password == "rockstar") ok();
   else fail();
 }
 
 let user = {
-  name: 'John',
+  name: 'Іван',
 
   loginOk() {
-    alert(`${this.name} logged in`);
+    alert(`${this.name} увійшов`);
   },
 
   loginFail() {
-    alert(`${this.name} failed to log in`);
+    alert(`${this.name} виконав невдалу спробу входу`);
   },
 
 };
@@ -30,14 +30,14 @@ askPassword(user.loginOk.bind(user), user.loginFail.bind(user));
 */!*
 ```
 
-Now it works.
+Тепер це працює.
 
-An alternative solution could be:
+Альтернативне рішення могло б бути:
 ```js
 //...
 askPassword(() => user.loginOk(), () => user.loginFail());
 ```
 
-Usually that also works and looks good.
+Зазвичай це також працює та чудово виглядає.
 
-It's a bit less reliable though in more complex situations where `user` variable might change *after* `askPassword` is called, but *before* the visitor answers and calls `() => user.loginOk()`. 
+Це менш найдіно, так як в більш складних ситуаціях змінна `user` може змінитися *після* виклику `askPassword`, але *перед* викликом `() => user.loginOk()`. 
