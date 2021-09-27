@@ -148,7 +148,7 @@ user.name = "Петро"; // Помилка
 
 Тепер давайте додамо кастомний `toString` до `user`.
 
-Зазвичай, вбудований `toString` для об'єктів неперелічуваний, він не з'являється в `for..in`. Але якщо ми додамо свій власний `toString`, то за замовчуванням він з'являється в `for..in`, як наприклад:
+Зазвичай, вбудований `toString` для об'єктів неперелічуваний, тобто він не з'являється в `for..in`. Але якщо ми додамо свій власний `toString`, то за замовчуванням він з'являється в `for..in`, як наприклад:
 
 ```js run
 let user = {
@@ -162,11 +162,11 @@ let user = {
 for (let key in user) alert(key); // name, toString
 ```
 
-If we don't like it, then we can set `enumerable:false`. Then it won't appear in a `for..in` loop, just like the built-in one:
+Якщо нам це не подобається, то ми можемо встановити `enumerable:false`. Тоді `toString` не з'явиться в `for..in` так само, як вбудований метод.
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   toString() {
     return this.name;
   }
@@ -179,24 +179,24 @@ Object.defineProperty(user, "toString", {
 });
 
 *!*
-// Now our toString disappears:
+// Тепер наш toString зникає:
 */!*
 for (let key in user) alert(key); // name
 ```
 
-Non-enumerable properties are also excluded from `Object.keys`:
+Неперелічувані властивості також виключаються з `Object.keys`:
 
 ```js
 alert(Object.keys(user)); // name
 ```
 
-## Non-configurable
+## Неналаштовувані властивості
 
-The non-configurable flag (`configurable:false`) is sometimes preset for built-in objects and properties.
+Прапор неналаштовуваної властивості (`configurable:false`) іноді встановлений для вбудованих об'єктів та властивостей.
 
-A non-configurable property can't be deleted, its attributes can't be modified.
+Неналаштовувана властивість не може бути видалена, її атрибути не можуть бути змінені.
 
-For instance, `Math.PI` is non-writable, non-enumerable and non-configurable:
+Наприклад, властивість `Math.PI` доступна тільки для читання, неперелічувана і неналаштовувана:
 
 ```js run
 let descriptor = Object.getOwnPropertyDescriptor(Math, 'PI');
@@ -211,47 +211,47 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 }
 */
 ```
-So, a programmer is unable to change the value of `Math.PI` or overwrite it.
+Отже, програміст не може змінити значення `Math.PI` або перезаписати його.
 
 ```js run
-Math.PI = 3; // Error, because it has writable: false
+Math.PI = 3; // Помилка, тому що властивість має writable: false
 
-// delete Math.PI won't work either
+// видалення Math.PI також не буде працювати
 ```
 
-We also can't change `Math.PI` to be `writable` again:
+Ми також не можемо змінити властивість `Math.PI`, щоб вона знову була `writable`:
 
 ```js run
-// Error, because of configurable: false
+// Помилка, через configurable: false
 Object.defineProperty(Math, "PI", { writable: true });
 ```
 
-There's absolutely nothing we can do with `Math.PI`.
+Абсолютно нічого не можна зробити з `Math.PI`.
 
-Making a property non-configurable is a one-way road. We cannot change it back with `defineProperty`.
+Створення неналаштовуваної властивості -- це дорога в один кінець. Ми не можемо змінити цю властивість з `defineProperty`.
 
 **Please note: `configurable: false` prevents changes of property flags and its deletion, while allowing to change its value.**
 
-Here `user.name` is non-configurable, but we can still change it (as it's writable):
+Тут `user.name` неналаштовувана властивість, але ми все ще можемо змінити її (так як вона доступна для запису):
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 Object.defineProperty(user, "name", {
   configurable: false
 });
 
-user.name = "Pete"; // works fine
-delete user.name; // Error
+user.name = "Петро"; // працює добре
+delete user.name; // Помилка
 ```
 
-And here we make `user.name` a "forever sealed" constant, just like the built-in `Math.PI`:
+І ось ми робимо `user.name` "назавжди запечатаною" константою, як і вбудована `Math.PI`:
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 Object.defineProperty(user, "name", {
@@ -259,15 +259,15 @@ Object.defineProperty(user, "name", {
   configurable: false
 });
 
-// won't be able to change user.name or its flags
-// all this won't work:
+// тепер не можливо змінювати user.name чи її прапори
+// все це не буде працювати:
 user.name = "Pete";
 delete user.name;
-Object.defineProperty(user, "name", { value: "Pete" });
+Object.defineProperty(user, "name", { value: "Петро" });
 ```
 
 ```smart header="The only attribute change possible: writable true -> false"
-There's a minor exception about changing flags.
+Існує незначний виняток щодо зміни прапорів.
 
 We can change `writable: true` to `false` for a non-configurable property, thus preventing its value modification (to add another layer of protection). Not the other way around though.
 ```
