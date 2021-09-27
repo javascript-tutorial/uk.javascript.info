@@ -1,4 +1,4 @@
-важливість: 5
+importance: 5
 
 ---
 
@@ -6,7 +6,7 @@
 
 Задача трохи складніша ніж <info:task/question-use-bind>. 
 
-Об'єкт `user` був змінений. Тепер замість двох функцій `loginOk/loginFail`, він має одну функцію `user.login(true/false)`.
+Об’єкт `user` був змінений. Тепер замість двох функцій `loginOk/loginFail`, він має одну функцію `user.login(true/false)`.
 
 Що ми маємо передати `askPassword` в коді нижче, щоб вона викликала `user.login(true)` при `ok` та `user.login(false)` при `fail`?
 
