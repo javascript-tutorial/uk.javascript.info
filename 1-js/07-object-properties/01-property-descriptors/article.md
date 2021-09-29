@@ -269,14 +269,14 @@ Object.defineProperty(user, "name", { value: "Петро" });
 ```smart header="The only attribute change possible: writable true -> false"
 Існує незначний виняток щодо зміни прапорів.
 
-We can change `writable: true` to `false` for a non-configurable property, thus preventing its value modification (to add another layer of protection). Not the other way around though.
+Ми можемо змінити `writable: true` на `false` для не неналаштовуваної властивості, таким чином, запобігаючи модифікації її значення (додає інший шар захисту). Навпаки такий підхід не працює.
 ```
 
 ## Object.defineProperties
 
-There's a method [Object.defineProperties(obj, descriptors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties) that allows to define many properties at once.
+Існує метод [Object.defineProperties(obj, descriptors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties), що дозволяє визначити багато властивостей відразу.
 
-The syntax is:
+Синтаксис:
 
 ```js
 Object.defineProperties(obj, {
@@ -286,29 +286,29 @@ Object.defineProperties(obj, {
 });
 ```
 
-For instance:
+Наприклад:
 
 ```js
 Object.defineProperties(user, {
-  name: { value: "John", writable: false },
-  surname: { value: "Smith", writable: false },
+  name: { value: "Іван", writable: false },
+  surname: { value: "Іванов", writable: false },
   // ...
 });
 ```
 
-So, we can set many properties at once.
+Отже, ми можемо одночасно встановити багато властивостей.
 
 ## Object.getOwnPropertyDescriptors
 
-To get all property descriptors at once, we can use the method [Object.getOwnPropertyDescriptors(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors).
+Щоб отримати всі дескриптори одночасно, ми можемо використовувати метод [Object.getOwnPropertyDescriptors(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors).
 
-Together with `Object.defineProperties` it can be used as a "flags-aware" way of cloning an object:
+Разом з `Object.defineProperties` цей метод може бути використаний як "прапорний" спосіб клонування об'єкта:
 
 ```js
 let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
 ```
 
-Normally when we clone an object, we use an assignment to copy properties, like this:
+Зазвичай, коли ми клонуємо об'єкт, ми використовуємо присвоєння для копіювання властивостей, як наприклад:
 
 ```js
 for (let key in user) {
@@ -316,34 +316,34 @@ for (let key in user) {
 }
 ```
 
-...But that does not copy flags. So if we want a "better" clone then `Object.defineProperties` is preferred.
+...Але це не копіює прапори. Отже, якщо ми хочемо "кращого" клону, то `Object.defineProperties` є переважним.
 
-Another difference is that `for..in` ignores symbolic properties, but `Object.getOwnPropertyDescriptors` returns *all* property descriptors including symbolic ones.
+Інша відмінність полягає в тому, що `for..in` ігнорує символьні властивості, але `Object.getOwnPropertyDescriptors` повертає *всі* дескриптори властивостей, включаючи символьні.
 
-## Sealing an object globally
+## Глобальне запечатування об'єкта
 
-Property descriptors work at the level of individual properties.
+Дескриптори властивостей працюють на рівні окремих властивостей.
 
-There are also methods that limit access to the *whole* object:
+Існують також способи, які обмежують доступ до *всього* об'єкта:
 
 [Object.preventExtensions(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/preventExtensions)
-: Forbids the addition of new properties to the object.
+: Забороняє додавання нових властивостей до об'єкта.
 
 [Object.seal(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal)
-: Forbids adding/removing of properties. Sets `configurable: false` for all existing properties.
+: Забороняє додавання/видалення властивостей. Встановлює `configurable: false` для всіх існуючих властивостей.
 
 [Object.freeze(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
-: Forbids adding/removing/changing of properties. Sets `configurable: false, writable: false` for all existing properties.
+: Забороняє додавання/видалення/зміну властивостей. Встановлює `configurable: false, writable: false` для всіх існуючих властивостей.
 
-And also there are tests for them:
+А також для них є тести:
 
 [Object.isExtensible(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible)
-: Returns `false` if adding properties is forbidden, otherwise `true`.
+: Повертає `false`, якщо додавання властивостей заборонено, інакше `true`.
 
 [Object.isSealed(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed)
-: Returns `true` if adding/removing properties is forbidden, and all existing properties have `configurable: false`.
+: Повертає `true`, якщо додавання/видалення властивостей заборонено, і всі існуючі властивості мають `configurable: false`.
 
 [Object.isFrozen(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen)
-: Returns `true` if adding/removing/changing properties is forbidden, and all current properties are `configurable: false, writable: false`.
+: Повертає `true`, якщо додавання/видалення/зміна властивостей заборонена і всі поточні властивості є `configurable: false, writable: false`.
 
-These methods are rarely used in practice.
+Ці методи рідко використовуються на практиці.
