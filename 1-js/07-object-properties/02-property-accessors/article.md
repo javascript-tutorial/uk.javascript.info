@@ -1,45 +1,45 @@
 
-# Property getters and setters
+# Гетери і сетери властивостей
 
-There are two kinds of object properties.
+Є два види властивостей об’єкта.
 
-The first kind is *data properties*. We already know how to work with them. All properties that we've been using until now were data properties.
+Перший вид *властивості даних (data properties)*. Ми вже знаємо, як працювати з ними. Всі властивості, які ми використовували дотепер, були властивостями даним.
 
-The second type of properties is something new. It's *accessor properties*. They are essentially functions that execute on getting and setting a value, but look like regular properties to an external code.
+Другий вид властивостей -- це щось нове. Це *властивості аксесорів*. Вони по суті функції, які виконуються при отриманні та встановленні значення, але виглядають як звичайні властивості в зовнішньому коді.
 
-## Getters and setters
+## Гетери та сетери
 
-Accessor properties are represented by "getter" and "setter" methods. In an object literal they are denoted by `get` and `set`:
+Властивості аксесорів представлені методами "гетер" та "сетер". У об’єкті вони буквально позначаються як `get` і `set`:
 
 ```js
 let obj = {
   *!*get propName()*/!* {
-    // getter, the code executed on getting obj.propName
+    // гетер, код виконано під час отримання obj.propName
   },
 
   *!*set propName(value)*/!* {
-    // setter, the code executed on setting obj.propName = value
+    // сетер, код виконано під час встановлення obj.propName = value
   }
 };
 ```
 
-The getter works when `obj.propName` is read, the setter -- when it is assigned.
+Гетер працює, коли `obj.propName` зчитується, сетер -- коли він призначається.
 
-For instance, we have a `user` object with `name` and `surname`:
+Наприклад, у нас є об’єкт `user` з `name` і `surname`:
 
 ```js
 let user = {
-  name: "John",
-  surname: "Smith"
+  name: "Іван",
+  surname: "Іванов"
 };
 ```
 
-Now we want to add a `fullName` property, that should be `"John Smith"`. Of course, we don't want to copy-paste existing information, so we can implement it as an accessor:
+Тепер ми хочемо додати властивість `fullName`, яка повинна бути `"John Smith"`. Звичайно, ми не хочемо копіювати-вставляти інформацію, що існує, тому ми можемо реалізувати її як аксесор:
 
 ```js run
 let user = {
-  name: "John",
-  surname: "Smith",
+  name: "Іван",
+  surname: "Іванов",
 
 *!*
   get fullName() {
@@ -49,13 +49,13 @@ let user = {
 };
 
 *!*
-alert(user.fullName); // John Smith
+alert(user.fullName); // Іван Іванов
 */!*
 ```
 
-From the outside, an accessor property looks like a regular one. That's the idea of accessor properties. We don't *call* `user.fullName` as a function, we *read* it normally: the getter runs behind the scenes.
+Ззовні аксесор виглядає як звичайна властивість. В цьому і є ідея аксесорів властивостей. Ми не *викликаємо* `user.fullname` як функцію, ми *читаємо* її як звичайну властивість: гетер виконає свою роботу за кулісами.
 
-As of now, `fullName` has only a getter. If we attempt to assign `user.fullName=`, there will be an error:
+Зараз `fullname` має тільки гетер. Якщо ми намагаємося присвоїти `user.fullName=`, буде помилка:
 
 ```js run
 let user = {
@@ -65,16 +65,16 @@ let user = {
 };
 
 *!*
-user.fullName = "Test"; // Error (property has only a getter)
+user.fullName = "Test"; // Помилка (властивість має лише гетер)
 */!*
 ```
 
-Let's fix it by adding a setter for `user.fullName`:
+Виправмо це, додавши сетер для `user.fullName`:
 
 ```js run
 let user = {
-  name: "John",
-  surname: "Smith",
+  name: "Іван",
+  surname: "Іванов",
 
   get fullName() {
     return `${this.name} ${this.surname}`;
@@ -87,34 +87,34 @@ let user = {
 */!*
 };
 
-// set fullName is executed with the given value.
-user.fullName = "Alice Cooper";
+// виконується встановлення повного ім’я із заданим значенням.
+user.fullName = "Аліса Бондар";
 
-alert(user.name); // Alice
-alert(user.surname); // Cooper
+alert(user.name); // Аліса
+alert(user.surname); // Бондар
 ```
 
-As the result, we have a "virtual" property `fullName`. It is readable and writable.
+Як результат, у нас є "віртуальна" властивість `fullName`. Вона читається і записується.
 
-## Accessor descriptors
+## Дескриптори аксесорів
 
-Descriptors for accessor properties are different from those for data properties.
+Дескриптори для аксесорів властивостей відрізняються від дескрипторів для властивостей даних.
 
-For accessor properties, there is no `value` or `writable`, but instead there are `get` and `set` functions.
+Для аксесорів властивостей немає `value` або `writable`, але замість цього є `get` і `set` функції.
 
-That is, an accessor descriptor may have:
+Тобто, дескриптор аксесорів може мати:
 
-- **`get`** -- a function without arguments, that works when a property is read,
-- **`set`** -- a function with one argument, that is called when the property is set,
-- **`enumerable`** -- same as for data properties,
-- **`configurable`** -- same as for data properties.
+- **`get`** -- функція без аргументів, що працює, коли читається властивість,
+- **`set`** -- функція з одним аргументом, що викликається, коли встановлюється властивість,
+- **`enumerable`** -- теж саме, що і для властивостей даних,
+- **`configurable`** -- теж саме, що і для властивостей даних.
 
-For instance, to create an accessor `fullName` with `defineProperty`, we can pass a descriptor with `get` and `set`:
+Наприклад, щоб створити аксесори `fullName` з `defineProperty`, ми можемо передати дескриптор з `get` і `set`:
 
 ```js run
 let user = {
-  name: "John",
-  surname: "Smith"
+  name: "Іван",
+  surname: "Іванов"
 };
 
 *!*
@@ -129,18 +129,18 @@ Object.defineProperty(user, 'fullName', {
 */!*
 });
 
-alert(user.fullName); // John Smith
+alert(user.fullName); // Іван Іванов
 
 for(let key in user) alert(key); // name, surname
 ```
 
-Please note that a property can be either an accessor (has `get/set` methods) or a data property (has a `value`), not both.
+Будь ласка, зверніть увагу, що властивість може бути або аксесором (має `get/set` методи) або властивістю даних (має `value`), але не обома одразу.
 
-If we try to supply both `get` and `value` in the same descriptor, there will be an error:
+Якщо ми спробуємо передати як `get` і `value` у тому ж дескрипторі, то буде помилка:
 
 ```js run
 *!*
-// Error: Invalid property descriptor.
+// Помилка: Неправильний дескриптор властивостей.
 */!*
 Object.defineProperty({}, 'prop', {
   get() {
@@ -151,11 +151,11 @@ Object.defineProperty({}, 'prop', {
 });
 ```
 
-## Smarter getters/setters
+## Розумні гетери/сетери
 
-Getters/setters can be used as wrappers over "real" property values to gain more control over operations with them.
+Гетери/сетери можуть бути використані як обгортки над "реальними" значеннями властивостей, щоб отримати більше контролю над операціями з ними.
 
-For instance, if we want to forbid too short names for `user`, we can have a setter `name` and keep the value in a separate property `_name`:
+Наприклад, якщо ми хочемо заборонити занадто короткі імена для `user`, ми можемо мати сетер `name` і зберігати значення в окремій властивості `_name`:
 
 ```js run
 let user = {
@@ -165,29 +165,29 @@ let user = {
 
   set name(value) {
     if (value.length < 4) {
-      alert("Name is too short, need at least 4 characters");
+      alert("Ім’я занадто коротке, потрібно щонайменше 4 символи");
       return;
     }
     this._name = value;
   }
 };
 
-user.name = "Pete";
-alert(user.name); // Pete
+user.name = "Петро";
+alert(user.name); // Петро
 
-user.name = ""; // Name is too short...
+user.name = ""; // Ім’я занадто коротке...
 ```
 
-So, the name is stored in `_name` property, and the access is done via getter and setter.
+Отже, ім’я зберігається у властивості `_name`, а доступ виконується за допомогою гетера та сетера.
 
-Technically, external code is able to access the name directly by using `user._name`. But there is a widely known convention that properties starting with an underscore `"_"` are internal and should not be touched from outside the object.
+Технічно зовнішній код може мати доступ до ім’я безпосередньо за допомогою `user._name`. Але існує широко відома конвенція, що властивості, що починаються з підкреслення `"_"`, є внутрішніми і не повинні використовуватися ззовні об’єкта.
 
 
-## Using for compatibility
+## Використання для сумісності
 
-One of the great uses of accessors is that they allow to take control over a "regular" data property at any moment by replacing it with a getter and a setter and tweak its behavior.
+Одним з чудових прикладів використання аксесорів полягає у тому, що вони дозволяють контролювати "звичайну" властивість даних в будь-який момент, замінюючи її гетером і сетером і налаштовуючи її поведінку.
 
-Imagine we started implementing user objects using data properties `name` and `age`:
+Уявіть, що ми почали реалізувати об’єкти користувача за допомогою властивостей даних `name` та `age`:
 
 ```js
 function User(name, age) {
@@ -195,12 +195,12 @@ function User(name, age) {
   this.age = age;
 }
 
-let john = new User("John", 25);
+let john = new User("Іван", 25);
 
 alert( john.age ); // 25
 ```
 
-...But sooner or later, things may change. Instead of `age` we may decide to store `birthday`, because it's more precise and convenient:
+...Але рано чи пізно, речі можуть змінюватися. Замість `age` ми можемо вирішити зберігати `birthday`, тому що це точніше і зручніше:
 
 ```js
 function User(name, birthday) {
@@ -208,16 +208,16 @@ function User(name, birthday) {
   this.birthday = birthday;
 }
 
-let john = new User("John", new Date(1992, 6, 1));
+let john = new User("Іван", new Date(1992, 6, 1));
 ```
 
-Now what to do with the old code that still uses `age` property?
+Тепер, що робити зі старим кодом, який все ще використовує властивість `age`?
 
-We can try to find all such places and fix them, but that takes time and can be hard to do if that code is used by many other people. And besides, `age` is a nice thing to have in `user`, right?
+Ми можемо спробувати знайти всі такі місця та виправити їх, але це вимагає часу, і це може бути важко зробити, якщо цей код використовується багатьма іншими людьми. І, крім того, `age` -- це гарна властивість для `user`, правильно?
 
-Let's keep it.
+Залишмо його.
 
-Adding a getter for `age` solves the problem:
+Додавання гетера для `age` розв’язує проблему:
 
 ```js run no-beautify
 function User(name, birthday) {
@@ -225,7 +225,7 @@ function User(name, birthday) {
   this.birthday = birthday;
 
 *!*
-  // age is calculated from the current date and birthday
+  // вік розраховується з поточної дати та дня народження
   Object.defineProperty(this, "age", {
     get() {
       let todayYear = new Date().getFullYear();
@@ -235,10 +235,10 @@ function User(name, birthday) {
 */!*
 }
 
-let john = new User("John", new Date(1992, 6, 1));
+let john = new User("Іван", new Date(1992, 6, 1));
 
-alert( john.birthday ); // birthday is available
-alert( john.age );      // ...as well as the age
+alert( john.birthday ); // день народження доступний
+alert( john.age );      // ...так само, як і вік
 ```
 
-Now the old code works too and we've got a nice additional property.
+Тепер старий код теж працює, і у нас є гарна додаткова властивість.
