@@ -3,116 +3,116 @@ libs:
 
 ---
 
-# Function binding
+# Прив’язка контексту до функції
 
-When passing object methods as callbacks, for instance to `setTimeout`, there's a known problem: "losing `this`".
+Передаючи методи об’єкту в якості колбеків, наприклад в `setTimeout`, існує відома проблема: "втрата `this`".
 
-In this chapter we'll see the ways to fix it.
+В цьому розділі ми розглянемо способи як це можливо виправити.
 
-## Losing "this"
+## Втрата "this"
 
-We've already seen examples of losing `this`. Once a method is passed somewhere separately from the object -- `this` is lost.
+Ми вже розглядали приклади втрати `this`. Якщо метод передавався окремо від об’єкта -- `this` втрачається.
 
-Here's how it may happen with `setTimeout`:
+В прикладі наведено як це відбувається з `setTimeout`:
 
 ```js run
 let user = {
-  firstName: "John",
+  firstName: "Іван",
   sayHi() {
-    alert(`Hello, ${this.firstName}!`);
+    alert(`Привіт, ${this.firstName}!`);
   }
 };
 
 *!*
-setTimeout(user.sayHi, 1000); // Hello, undefined!
+setTimeout(user.sayHi, 1000); // Привіт, undefined!
 */!*
 ```
 
-As we can see, the output shows not "John" as `this.firstName`, but `undefined`!
+Як ми можемо спостерігати, модальне вікно браузера відображає не "Іван" як `this.firstName`, а `undefined`!
 
-That's because `setTimeout` got the function `user.sayHi`, separately from the object. The last line can be rewritten as:
+Це тому що `setTimeout` отримав функцію `user.sayHi` окремо від об’єкта. Останній рядок бути переписаний наступним чином:
 
 ```js
 let f = user.sayHi;
-setTimeout(f, 1000); // lost user context
+setTimeout(f, 1000); // втрата контексту об’єкта user
 ```
 
-The method `setTimeout` in-browser is a little special: it sets `this=window` for the function call (for Node.js, `this` becomes the timer object, but doesn't really matter here). So for `this.firstName` it tries to get `window.firstName`, which does not exist. In other similar cases, usually `this` just becomes `undefined`.
+Метод `setTimeout` в браузері трохи особливий: він встановлює `this=window` під час виклику функції (для Node.js, `this` стане об’єкт таймеру, але це не дуже важливо у цьому випадку). Таким чином для `this.firstName` метод намагається отримати `window.firstName`, що не існує. В інших схожих випадках, зазвичай `this` просто стає `undefined`.
 
-The task is quite typical -- we want to pass an object method somewhere else (here -- to the scheduler) where it will be called. How to make sure that it will be called in the right context?
+Задача досить типова -- ми хочемо передати метод об’єкту деінде (в цьому випадку -- в планувальник) де він буде викликаний. Як бути впевненими в тому, що він буде викликаний з правильним контекстом?
 
-## Solution 1: a wrapper
+## Рішення 1: обгортка
 
-The simplest solution is to use a wrapping function:
+Найпростіше рішення - використати функцію обгортку:
 
 ```js run
 let user = {
-  firstName: "John",
+  firstName: "Іван",
   sayHi() {
-    alert(`Hello, ${this.firstName}!`);
+    alert(`Привіт, ${this.firstName}!`);
   }
 };
 
 *!*
 setTimeout(function() {
-  user.sayHi(); // Hello, John!
+  user.sayHi(); // Привіт, Іван!
 }, 1000);
 */!*
 ```
 
-Now it works, because it receives `user` from the outer lexical environment, and then calls the method normally.
+Тепер це працює, тому що ми отримали `user` з зовнішнього лексичного оточення, і потім викликали метод.
 
-The same, but shorter:
+Аналогічний запис, тільки коротший:
 
 ```js
-setTimeout(() => user.sayHi(), 1000); // Hello, John!
+setTimeout(() => user.sayHi(), 1000); // Привіт, Іван!
 ```
 
-Looks fine, but a slight vulnerability appears in our code structure.
+Виглядає чудово, але з’являється легка вразливість в структурі нашого коду.
 
-What if before `setTimeout` triggers (there's one second delay!) `user` changes value? Then, suddenly, it will call the wrong object!
+Що якщо перед спрацюванням `setTimeout` (з однією секундою затримки!) `user` змінить значення? Тоді, неочікувано, він викличе неправильний об’єкт!
 
 
 ```js run
 let user = {
-  firstName: "John",
+  firstName: "Іван",
   sayHi() {
-    alert(`Hello, ${this.firstName}!`);
+    alert(`Привіт, ${this.firstName}!`);
   }
 };
 
 setTimeout(() => user.sayHi(), 1000);
 
-// ...the value of user changes within 1 second
+// ...значення user змінюється впродовж 1 секунди
 user = {
-  sayHi() { alert("Another user in setTimeout!"); }
+  sayHi() { alert("Інший user в setTimeout!"); }
 };
 
-// Another user in setTimeout!
+// Інший user в setTimeout!
 ```
 
-The next solution guarantees that such thing won't happen.
+Наступне рішення гарантує, що така ситуація не трапиться.
 
-## Solution 2: bind
+## Рішення 2: прив’язка
 
-Functions provide a built-in method [bind](mdn:js/Function/bind) that allows to fix `this`.
+Функції надають нам вбудований метод [bind](mdn:js/Function/bind), що дозволяє зберегти правильний `this`.
 
-The basic syntax is:
+Основний синтаксис:
 
 ```js
-// more complex syntax will come a little later
+// більш складний синтаксис буде трохи пізніше
 let boundFunc = func.bind(context);
 ```
 
-The result of `func.bind(context)` is a special function-like "exotic object", that is callable as function and transparently passes the call to `func` setting `this=context`.
+Результатом `func.bind(context)` буде певний "екзотичний об’єкт", який може бути викликаний як функція та передає виклику `func` встановлений контекст `this=context`.
 
-In other words, calling `boundFunc` is like `func` with fixed `this`.
+Іншими словами, виклик `boundFunc` це як виклик `func` з виправленим `this`.
 
-For instance, here `funcUser` passes a call to `func` with `this=user`:
+Наприклад, тут `funcUser` передає виклик `func` з `this=user`:
 
-```js run  
+```js run
 let user = {
-  firstName: "John"
+  firstName: "Іван"
 };
 
 function func() {
@@ -121,39 +121,39 @@ function func() {
 
 *!*
 let funcUser = func.bind(user);
-funcUser(); // John  
+funcUser(); // Іван
 */!*
 ```
 
-Here `func.bind(user)` as a "bound variant" of `func`, with fixed `this=user`.
+Тут `func.bind(user)` як "прив’язаний варіант" функції `func`, з виправленим `this=user`.
 
-All arguments are passed to the original `func` "as is", for instance:
+Всі аргументи передаються початковій функції `func` "як є", наприклад:
 
-```js run  
+```js run
 let user = {
-  firstName: "John"
+  firstName: "Іван"
 };
 
 function func(phrase) {
   alert(phrase + ', ' + this.firstName);
 }
 
-// bind this to user
+// прив’язка до user
 let funcUser = func.bind(user);
 
 *!*
-funcUser("Hello"); // Hello, John (argument "Hello" is passed, and this=user)
+funcUser("Привіт"); // Привіт, Іван (переданий аргумент "Привіт" та this=user)
 */!*
 ```
 
-Now let's try with an object method:
+Тепер спробуємо з методом об’єкту:
 
 
 ```js run
 let user = {
-  firstName: "John",
+  firstName: "Іван",
   sayHi() {
-    alert(`Hello, ${this.firstName}!`);
+    alert(`Привіт, ${this.firstName}!`);
   }
 };
 
@@ -161,25 +161,25 @@ let user = {
 let sayHi = user.sayHi.bind(user); // (*)
 */!*
 
-// can run it without an object
-sayHi(); // Hello, John!
+// можемо викликати без об’єкту
+sayHi(); // Привіт, Іван!
 
-setTimeout(sayHi, 1000); // Hello, John!
+setTimeout(sayHi, 1000); // Привіт, Іван!
 
-// even if the value of user changes within 1 second
-// sayHi uses the pre-bound value which is reference to the old user object
+// навіть якщо значення user зміниться впродовж 1 секунди
+// sayHi використовує прив’язане значення, яке посилається на старий об’єкт user
 user = {
-  sayHi() { alert("Another user in setTimeout!"); }
+  sayHi() { alert("Інший user в setTimeout!"); }
 };
 ```
 
-In the line `(*)` we take the method `user.sayHi` and bind it to `user`. The `sayHi` is a "bound" function, that can be called alone or passed to `setTimeout` -- doesn't matter, the context will be right.
+В строчці `(*)` ми взяли метод `user.sayHi` та прив’язали його до `user`. `sayHi` є "прив’язаною" функцією, що може бути викликана окремо або передана до `setTimeout` -- не важливо, контекст буде правильний.
 
-Here we can see that arguments are passed "as is", only `this` is fixed by `bind`:
+В цьому прикладі ми можемо бачити що аргументи передані "як є", тільки `this` виправлено за допомогою `bind`:
 
 ```js run
 let user = {
-  firstName: "John",
+  firstName: "Іван",
   say(phrase) {
     alert(`${phrase}, ${this.firstName}!`);
   }
@@ -187,12 +187,12 @@ let user = {
 
 let say = user.say.bind(user);
 
-say("Hello"); // Hello, John ("Hello" argument is passed to say)
-say("Bye"); // Bye, John ("Bye" is passed to say)
+say("Привіт"); // Привіт, Іван (Аргумент "Привіт" переданий функції say)
+say("Бувай"); // Бувай, Іван ("Бувай" передане функції say)
 ```
 
-````smart header="Convenience method: `bindAll`"
-If an object has many methods and we plan to actively pass it around, then we could bind them all in a loop:
+````smart header="Зручний метод: `bindAll`"
+Якщо об’єкт містить багато методів та ми плануємо активно їх передавати, тоді ми можемо прив’язати їх всіх за допомогою циклу:
 
 ```js
 for (let key in user) {
@@ -202,24 +202,24 @@ for (let key in user) {
 }
 ```
 
-JavaScript libraries also provide functions for convenient mass binding , e.g. [_.bindAll(object, methodNames)](http://lodash.com/docs#bindAll) in lodash.
+JavaScript бібліотеки також пропонуються функції для зручної масової прив’язки, наприклад [_.bindAll(object, methodNames)](http://lodash.com/docs#bindAll) в бібліотеці lodash.
 ````
 
-## Partial functions
+## Часткове застосування
 
-Until now we have only been talking about binding `this`. Let's take it a step further.
+До цього моменту ми говорили тільки про прив’язку `this`. Зробимо крок далі.
 
-We can bind not only `this`, but also arguments. That's rarely done, but sometimes can be handy.
+Ми можемо прив’язати не тільки `this`, а також аргументи. Це робиться рідко, проте може бути інколи дуже зручним.
 
-The full syntax of `bind`:
+Повний синтаксис `bind`:
 
 ```js
 let bound = func.bind(context, [arg1], [arg2], ...);
 ```
 
-It allows to bind context as `this` and starting arguments of the function.
+Це дозволяє прив’язати context як `this` та початкові аргументи функції.
 
-For instance, we have a multiplication function `mul(a, b)`:
+Наприклад, ми маємо функцію множення `mul(a, b)`:
 
 ```js
 function mul(a, b) {
@@ -227,7 +227,7 @@ function mul(a, b) {
 }
 ```
 
-Let's use `bind` to create a function `double` on its base:
+Використаємо `bind` щоб створити функцію `double` на її основі:
 
 ```js run
 function mul(a, b) {
@@ -243,13 +243,13 @@ alert( double(4) ); // = mul(2, 4) = 8
 alert( double(5) ); // = mul(2, 5) = 10
 ```
 
-The call to `mul.bind(null, 2)` creates a new function `double` that passes calls to `mul`, fixing `null` as the context and `2` as the first argument. Further arguments are passed "as is".
+Виклик `mul.bind(null, 2)` створює нову функцію `double` що передає виклик `mul`, встановлючи `null` як контекст та `2` як перший аргумент. Подальші аргументи передаються "як є".
 
-That's called [partial function application](https://en.wikipedia.org/wiki/Partial_application) -- we create a new function by fixing some parameters of the existing one.
+Це називається [часткове застосування](https://en.wikipedia.org/wiki/Partial_application) -- ми створюємо нову функцію виправляючи деякі параметри існуючої.
 
-Please note that we actually don't use `this` here. But `bind` requires it, so we must put in something like `null`.
+Зверніть увагу, що ми не використовували `this` в цьому прикладі. Проте `bind` вимагає цього, тому ми маємо передати щось як заглушку -- `null`.
 
-The function `triple` in the code below triples the value:
+Функція `triple` в коді нижче потроює значення:
 
 ```js run
 function mul(a, b) {
@@ -265,23 +265,23 @@ alert( triple(4) ); // = mul(3, 4) = 12
 alert( triple(5) ); // = mul(3, 5) = 15
 ```
 
-Why do we usually make a partial function?
+Чому ми використовуємо часткове застосування?
 
-The benefit is that we can create an independent function with a readable name (`double`, `triple`). We can use it and not provide the first argument every time as it's fixed with `bind`.
+Перевагою цього є те, що ми можемо створити незалежну функцію з читабельним ім’ям (`double`, `triple`). Ми можемо використовувати її та не передавати перший аргумент кожен раз, оскільки це замість нас виконує `bind`.
 
-In other cases, partial application is useful when we have a very generic function and want a less universal variant of it for convenience.
+В інших випадках, часткове застосування є корисним, коли ми маємо дуже загальну функцію та хочемо менш універсальний її варіант для зручності.
 
-For instance, we have a function `send(from, to, text)`. Then, inside a `user` object we may want to use a partial variant of it: `sendTo(to, text)` that sends from the current user.
+Наприклад, у нас є функція `send(from, to, text)`. Тоді, в середині об’єкту `user` ми можемо захотіти використати її частковий варіант: `sendTo(to, text)`, яка відправляє текст від поточного користувача.
 
-## Going partial without context
+## Використання часткового застосування без контексту
 
-What if we'd like to fix some arguments, but not the context `this`? For example, for an object method.
+Що якщо ми хочемо виправити деякі аргументи, але не контекст `this`? Наприклад, для методу об’єкта.
 
-The native `bind` does not allow that. We can't just omit the context and jump to arguments.
+Вбудований метод `bind` не дозволяє цього. Ми можемо просто опустити контекст та перейти до аргументів.
 
-Fortunately, a function `partial` for binding only arguments can be easily implemented.
+На щастя, функція `partial` для прив’язування тільки аргументів може бути реалізована дуже просто.
 
-Like this:
+Як тут:
 
 ```js run
 *!*
@@ -292,37 +292,37 @@ function partial(func, ...argsBound) {
 }
 */!*
 
-// Usage:
+// Використання:
 let user = {
-  firstName: "John",
+  firstName: "Іван",
   say(time, phrase) {
     alert(`[${time}] ${this.firstName}: ${phrase}!`);
   }
 };
 
-// add a partial method with fixed time
+// та метод partial з виправленим часом
 user.sayNow = partial(user.say, new Date().getHours() + ':' + new Date().getMinutes());
 
-user.sayNow("Hello");
+user.sayNow("Привіт");
 // Something like:
-// [10:00] John: Hello!
+// [10:00] Іван: Привіт!
 ```
 
-The result of `partial(func[, arg1, arg2...])` call is a wrapper `(*)` that calls `func` with:
-- Same `this` as it gets (for `user.sayNow` call it's `user`)
-- Then gives it `...argsBound` -- arguments from the `partial` call (`"10:00"`)
-- Then gives it `...args` -- arguments given to the wrapper (`"Hello"`)
+Результатом виклику `partial(func[, arg1, arg2...])` є обгортка `(*)` що викликає `func` з:
+- Те ж `this` яке воно отримує (для виклику `user.sayNow` це `user`)
+- Передає йому `...argsBound` -- аргументи з виклику `partial` (`"10:00"`)
+- Потім передає йому `...args` -- аргументи отримані з обгортки (`"Hello"`)
 
-So easy to do it with the spread syntax, right?
+Як бачите, це легко робиться за допомогою оператору розширення, чи не так?
 
-Also there's a ready [_.partial](https://lodash.com/docs#partial) implementation from lodash library.
+Також існує реалізація [_.partial](https://lodash.com/docs#partial) в бібліотеці lodash.
 
-## Summary
+## Підсумки
 
-Method `func.bind(context, ...args)` returns a "bound variant" of function `func` that fixes the context `this` and first arguments if given.
+Метод `func.bind(context, ...args)` повертає a "прив’язаний варіант" функції `func` який виправляє контекст `this` та аргументи, якщо вони передані.
 
-Usually we apply `bind` to fix `this` for an object method, so that we can pass it somewhere. For example, to `setTimeout`.
+Зазвичай ми застосовуємо `bind`, щоб виправити `this` для методу об’єкта та передати його деінде. Наприклад, в `setTimeout`.
 
-When we fix some arguments of an existing function, the resulting (less universal) function is called *partially applied* or *partial*.
+Коли ми виправляємо деякі аргументи існуючої функції, в результаті ми отримуємо (менш універсальну) функцію, яка називається *частково застосованою* або *частковою*.
 
-Partials are convenient when we don't want to repeat the same argument over and over again. Like if we have a `send(from, to)` function, and `from` should always be the same for our task, we can get a partial and go on with it.
+Часткові функції зручні, коли ми не хочемо повторно передавати одні й ті ж самі аргументи знову і знову. Наприклад, якщо ми маємо функцію `send(from, to)` та аргумент `from` постійно буде однаковим для нашої поточної задачі, ми можемо зробити частково застосовану функцію та використовувати її.
