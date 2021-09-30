@@ -34,7 +34,7 @@ setTimeout(user.sayHi, 1000); // Привіт, undefined!
 
 ```js
 let f = user.sayHi;
-setTimeout(f, 1000); // втрата контексту об`єкта user
+setTimeout(f, 1000); // втрата контексту об’єкта user
 ```
 
 Метод `setTimeout` в браузері трохи особливий: він встановлює `this=window` під час виклику функції (для Node.js, `this` стане об’єкт таймеру, але це не дуже важливо у цьому випадку). Таким чином для `this.firstName` метод намагається отримати `window.firstName`, що не існує. В інших схожих випадках, зазвичай `this` просто стає `undefined`.
