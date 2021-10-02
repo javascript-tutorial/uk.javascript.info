@@ -1,22 +1,22 @@
 
-# Class basic syntax
+# Базовий синтаксис класу
 
 ```quote author="Wikipedia"
-In object-oriented programming, a *class* is an extensible program-code-template for creating objects, providing initial values for state (member variables) and implementations of behavior (member functions or methods).
+У об'єктно-орієнтованому програмуванні, *клас* -- це спеціальна конструкція, яка використовується для групування пов'язаних змінних та функцій. При цьому, згідно з термінологією ООП, глобальні змінні класу (члени-змінні) називаються полями даних (також властивостями або атрибутами), а члени-функції називають методами класу.
 ```
 
-In practice, we often need to create many objects of the same kind, like users, or goods or whatever.
+На практиці ми часто повинні створювати багато об'єктів того ж виду, як наприклад користувачі, або товари або що завгодно.
 
-As we already know from the chapter <info:constructor-new>, `new function` can help with that.
+Як ми вже знаємо з розділу <info:constructor-new>, `new function` може допомогти з цим.
 
-But in the modern JavaScript, there's a more advanced "class" construct, that introduces great new features which are useful for object-oriented programming.
+Але в сучасному JavaScript існує більш просунута конструкція "клас", яка вводить нові чудові функції, які корисні для об'єктно-орієнтованого програмування.
 
-## The "class" syntax
+## Синтаксис "class"
 
-The basic syntax is:
+Основний синтаксис:
 ```js
 class MyClass {
-  // class methods
+  // методи класу
   constructor() { ... }
   method1() { ... }
   method2() { ... }
@@ -25,11 +25,11 @@ class MyClass {
 }
 ```
 
-Then use `new MyClass()` to create a new object with all the listed methods.
+Потім використовуйте `new MyClass()`, щоб створити новий об'єкт з усіма перерахованими методами.
 
-The `constructor()` method is called automatically by `new`, so we can initialize the object there.
+Метод `constructor()` викликається автоматично за допомогою `new`, в ньому ми можемо ініціалізувати об'єкт.
 
-For example:
+Наприклад:
 
 ```js run
 class User {
@@ -44,33 +44,32 @@ class User {
 
 }
 
-// Usage:
-let user = new User("John");
+// Використання:
+let user = new User("Іван");
 user.sayHi();
 ```
+Коли `new User("John")` викликається:
+1. Створюється новий об'єкт.
+2. `constructor` запускається з даними аргументом і присвоює його `this.name`.
 
-When `new User("John")` is called:
-1. A new object is created.
-2. The `constructor` runs with the given argument and assigns it to `this.name`.
-
-...Then we can call object methods, such as `user.sayHi()`.
+...Тоді ми можемо викликати методи об'єкту, такі як `user.sayHi()`.
 
 
 ```warn header="No comma between class methods"
-A common pitfall for novice developers is to put a comma between class methods, which would result in a syntax error.
+Часта помилка для розробників-початківців полягає в тому, щоб поставити кому між методами класу, що призведе до помилки синтаксису.
 
-The notation here is not to be confused with object literals. Within the class, no commas are required.
+Позначення тут не слід плутати з літералами об'єктів. У межах класу не треба ставити кому.
 ```
 
-## What is a class?
+## Що таке клас?
 
-So, what exactly is a `class`? That's not an entirely new language-level entity, as one might think.
+Отже, що саме -- `class`? Це не цілком нова ступінь мови програмування, як можна подумати.
 
-Let's unveil any magic and see what a class really is. That'll help in understanding many complex aspects.
+Давайте розкриємо будь-яку магію і подивимося, що дійсно таке клас. Це допоможе в розумінні багатьох складних аспектів.
 
-In JavaScript, a class is a kind of function.
+У JavaScript клас є своєрідною функцією.
 
-Here, take a look:
+Погляньте на це:
 
 ```js run
 class User {
@@ -78,24 +77,24 @@ class User {
   sayHi() { alert(this.name); }
 }
 
-// proof: User is a function
+// доказ: User -- це функція
 *!*
 alert(typeof User); // function
 */!*
 ```
 
-What `class User {...}` construct really does is:
+Що конструкція `class User {...}` дійсно робить:
 
-1. Creates a function named `User`, that becomes the result of the class declaration. The function code is taken from the `constructor` method (assumed empty if we don't write such method).
-2. Stores class methods, such as `sayHi`, in `User.prototype`.
+1. Створює функцію, що називається `User` та стає результатом декларації класу. Код функції береться з методу `constructor` (він береться порожнім, якщо ми не написали такий метод).
+2. Зберігає методи класу, такі як `sayHi`, `User.prototype`.
 
-After `new User` object is created, when we call its method, it's taken from the prototype, just as described in the chapter <info:function-prototype>. So the object has access to class methods.
+Після того, як `new User` створився, коли ми викликаємо його метод, він береться з прототипу, як описано в розділі <info:function-prototype>. Таким чином, об'єкт має доступ до методів класу.
 
-We can illustrate the result of `class User` declaration as:
+Ми можемо проілюструвати результат оголошення `class User` як:
 
 ![](class-user.svg)
 
-Here's the code to introspect it:
+Ось код, щоб проаналізувати це:
 
 ```js run
 class User {
@@ -103,50 +102,50 @@ class User {
   sayHi() { alert(this.name); }
 }
 
-// class is a function
+// клас -- це функція
 alert(typeof User); // function
 
-// ...or, more precisely, the constructor method
+// ...або, точніше, метод конструктора
 alert(User === User.prototype.constructor); // true
 
-// The methods are in User.prototype, e.g:
-alert(User.prototype.sayHi); // the code of the sayHi method
+// Методи знаходяться в User.prototype, наприклад:
+alert(User.prototype.sayHi); // код sayHi методу
 
-// there are exactly two methods in the prototype
+// у прототипі існує рівно два методи
 alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 ```
 
-## Not just a syntactic sugar
+## Не просто синтаксичний цукор
 
-Sometimes people say that `class` is a "syntactic sugar" (syntax that is designed to make things easier to read, but doesn't introduce anything new), because we could actually declare the same without `class` keyword at all:
+Іноді люди кажуть, що `class` -- це "синтаксичний цукор" (синтаксис, який призначений для того, щоб зробити речі легше для читаня, але не вводить нічого нового), тому що ми могли б фактично оголосити те ж саме взагалі без ключового слова `class`:
 
 ```js run
-// rewriting class User in pure functions
+// переписування класу User в чистих функціях
 
-// 1. Create constructor function
+// 1. Створити функцію конструктора
 function User(name) {
   this.name = name;
 }
-// a function prototype has "constructor" property by default,
-// so we don't need to create it
+// прототип функції має властивість "constructor" за замовчуванням,
+// тому нам не потрібно його створювати
 
-// 2. Add the method to prototype
+// 2. Додайти метод до прототипу
 User.prototype.sayHi = function() {
   alert(this.name);
 };
 
-// Usage:
-let user = new User("John");
+// Використання:
+let user = new User("Іван");
 user.sayHi();
 ```
 
-The result of this definition is about the same. So, there are indeed reasons why `class` can be considered a syntactic sugar to define a constructor together with its prototype methods.
+Результат цього оголошення дуже схожий. Отже, існують дійсно причини, чому `class` можна вважати синтаксичним цукром для того, щоб визначити конструктор разом із методами прототипу.
 
-Still, there are important differences.
+Тим не менш, існують важливі відмінності.
 
-1. First, a function created by `class` is labelled by a special internal property `[[IsClassConstructor]]: true`. So it's not entirely the same as creating it manually.
+1. По-перше, функція, створена за допомогою `class`, позначена спеціальною внутрішньою власністю `[[IsClassConstructor]]: true`. Так що це не зовсім те ж саме, що і створити її вручну.
 
-    The language checks for that property in a variety of places. For example, unlike a regular function, it must be called with `new`:
+    Мовна перевіряє цю власність у різних місцях. Наприклад, на відміну від звичайної функції, її треба викликати з `new`:
 
     ```js run
     class User {
@@ -157,7 +156,7 @@ Still, there are important differences.
     User(); // Error: Class constructor User cannot be invoked without 'new'
     ```
 
-    Also, a string representation of a class constructor in most JavaScript engines starts with the "class..."
+    Також, представлення конструктора класу у вигляді рядку у більшості рущіїв JavaScript починається з "class..."
 
     ```js run
     class User {
@@ -166,17 +165,17 @@ Still, there are important differences.
 
     alert(User); // class User { ... }
     ```
-    There are other differences, we'll see them soon.
+    Є також інші відмінності, ми побачимо їх найближчим часом.
 
-2. Class methods are non-enumerable.
-    A class definition sets `enumerable` flag to `false` for all methods in the `"prototype"`.
+2. Методи класу неперелічувані.
+    Оголошення класу встановлює `enumerable` прапор у `false` для всіх методів в `"prototype"`.
 
-    That's good, because if we `for..in` over an object, we usually don't want its class methods.
+    Це добре, тому що коли ми проходимо через об’экт за допомогою `for..in`, ми зазвичай не хочемо мати справу з методами класу.
 
-3. Classes always `use strict`.
-    All code inside the class construct is automatically in strict mode.
+3. Класс завжди `use strict`.
+    Весь код всередині конструкції класу автоматично знаходиться в строгому режимі.
 
-Besides, `class` syntax brings many other features that we'll explore later.
+Крім того, синтаксис `class` приносить багато інших функцій, які ми досліджуємо пізніше.
 
 ## Class Expression
 
