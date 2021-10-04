@@ -48,6 +48,7 @@ class User {
 let user = new User("Іван");
 user.sayHi();
 ```
+
 Коли `new User("John")` викликається:
 1. Створюється новий об’єкт.
 2. `constructor` запускається з даними аргументом і присвоює його `this.name`.
