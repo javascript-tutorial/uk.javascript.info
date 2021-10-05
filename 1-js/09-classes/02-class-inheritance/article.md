@@ -1,13 +1,13 @@
 
-# Class inheritance
+# Наслідування класу
 
-Class inheritance is a way for one class to extend another class.
+Наслідування класу -- це спосіб для одного класу, щоб розширити інший клас.
 
-So we can create new functionality on top of the existing.
+Таким чином, ми можемо створити нову функціональність на основі існуючої.
 
-## The "extends" keyword
+## Ключове слово "extends"
 
-Let's say we have class `Animal`:
+Скажімо, у нас є клас `Animal`:
 
 ```js
 class Animal {
@@ -17,47 +17,47 @@ class Animal {
   }
   run(speed) {
     this.speed = speed;
-    alert(`${this.name} runs with speed ${this.speed}.`);
+    alert(`${this.name} біжить зі швидкістю ${this.speed}.`);
   }
   stop() {
     this.speed = 0;
-    alert(`${this.name} stands still.`);
+    alert(`${this.name} стоїть.`);
   }
 }
 
-let animal = new Animal("My animal");
+let animal = new Animal("Моя тварина");
 ```
 
-Here's how we can represent `animal` object and `Animal` class graphically:
+Ось як ми можемо представляти об'єкт `animal` і клас `Animal` графічно:
 
 ![](rabbit-animal-independent-animal.svg)
 
-...And we would like to create another `class Rabbit`.
+...І ми хотіли б створити інший `class Rabbit`.
 
-As rabbits are animals, `Rabbit` class should be based on `Animal`, have access to animal methods, so that rabbits can do what "generic" animals can do.
+Так як кролики є тваринами, клас `Rabbit` повинен базуватися на `Animal`, мати доступ до методів тварин, щоб кролики могли робити те, що можуть робити "загальні" тварини.
 
-The syntax to extend another class is: `class Child extends Parent`.
+Синтаксис, щоб розширити інший клас: `class Child extends Parent`.
 
-Let's create `class Rabbit` that inherits from `Animal`:
+Давайте створимо `class Rabbit`, які успадковують від `Animal`:
 
 ```js
 *!*
 class Rabbit extends Animal {
 */!*
   hide() {
-    alert(`${this.name} hides!`);
+    alert(`${this.name} ховається!`);
   }
 }
 
-let rabbit = new Rabbit("White Rabbit");
+let rabbit = new Rabbit("Білий Кролик");
 
-rabbit.run(5); // White Rabbit runs with speed 5.
-rabbit.hide(); // White Rabbit hides!
+rabbit.run(5); // Білий Кролик біжить зі швидкістю 5.
+rabbit.hide(); // Білий Кролик ховається!
 ```
 
-Object of `Rabbit` class have access both to `Rabbit` methods, such as `rabbit.hide()`, and also to `Animal` methods, such as `rabbit.run()`.
+Об'єкт класу `Rabbit` має доступ і до методів `Rabbit`, таких як `rabbit.hide()`, і до методів `Animal`.
 
-Internally, `extends` keyword works using the good old prototype mechanics. It sets `Rabbit.prototype.[[Prototype]]` to `Animal.prototype`. So, if a method is not found in `Rabbit.prototype`, JavaScript takes it from `Animal.prototype`.
+Внутрішньо, ключове слово `extends` працює за допомогою хорошої старої механіки прототипу. Він встановлює в `Rabbit.prototype.[[Prototype]]` значення `Animal.prototype`. Отже, якщо метод не знайдено в `Rabbit.prototype`, JavaScript бере його з `Animal.prototype`.
 
 ![](animal-rabbit-extends.svg)
 
