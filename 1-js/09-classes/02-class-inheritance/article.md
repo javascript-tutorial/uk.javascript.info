@@ -61,17 +61,17 @@ rabbit.hide(); // Білий Кролик ховається!
 
 ![](animal-rabbit-extends.svg)
 
-For instance, to find `rabbit.run` method, the engine checks (bottom-up on the picture):
-1. The `rabbit` object (has no `run`).
-2. Its prototype, that is `Rabbit.prototype` (has `hide`, but not `run`).
-3. Its prototype, that is (due to `extends`) `Animal.prototype`, that finally has the `run` method.
+Наприклад, для пошуку методу `rabbit.run`, рушій перевіряє (знизу вгору на рисунку):
+1. Об'єкт `rabbit` (не має `run`).
+2. Його прототип, тобто `Rabbit.prototype` (має `hide`, але не має `run`).
+3. Його прототип, тобто (завдяки `extends`) `Animal.prototype`, що, нарешті, має метод `run`.
 
-As we can recall from the chapter <info:native-prototypes>, JavaScript itself uses prototypal inheritance for built-in objects. E.g. `Date.prototype.[[Prototype]]` is `Object.prototype`. That's why dates have access to generic object methods.
+Як ми можемо згадати з розділу <info:native-prototypes>, сам JavaScript використовує прототипне наслідування для вбудованих об'єктів. Наприклад, `Date.prototype.[[Prototype]]` -- це `Object.prototype`. Ось чому дати мають доступ до загальних методів об'єкта.
 
-````smart header="Any expression is allowed after `extends`"
-Class syntax allows to specify not just a class, but any expression after `extends`.
+````smart header="Будь-який вираз допускається після `extends`"
+Синтаксис класу дозволяє вказати не лише клас, але будь-який вираз після `extends`.
 
-For instance, a function call that generates the parent class:
+Наприклад, виклик функції, який генерує батьківський клас:
 
 ```js run
 function f(phrase) {
@@ -81,27 +81,27 @@ function f(phrase) {
 }
 
 *!*
-class User extends f("Hello") {}
+class User extends f("Привіт") {}
 */!*
 
-new User().sayHi(); // Hello
+new User().sayHi(); // Привіт
 ```
-Here `class User` inherits from the result of `f("Hello")`.
+Тут `class User` успадковує від результату `f("Привіт")`.
 
-That may be useful for advanced programming patterns when we use functions to generate classes depending on many conditions and can inherit from them.
+Це може бути корисним для просунутих паттернів програмування, коли ми використовуємо функції для створення класів залежно від багатьох умов і можемо успадкуватися від них.
 ````
 
-## Overriding a method
+## Перевизначення методу
 
-Now let's move forward and override a method. By default, all methods that are not specified in `class Rabbit` are taken directly "as is" from `class Animal`.
+Тепер давайте рухатися вперед і перевизначимо метод. За замовчуванням всі методи, які не вказані в `class Rabbit`, беруться безпосередньо "як є" від `class Animal`.
 
-But if we specify our own method in `Rabbit`, such as `stop()` then it will be used instead:
+Але якщо ми вкажемо наш власний метод в `Rabbit`, наприклад, `stop()`, то він буде використовуватися замість методу з `class Animal`:
 
 ```js
 class Rabbit extends Animal {
   stop() {
-    // ...now this will be used for rabbit.stop()
-    // instead of stop() from class Animal
+    // ...тепер це буде використано для rabbit.stop()
+    // замість stop() з класу Animal
   }
 }
 ```
