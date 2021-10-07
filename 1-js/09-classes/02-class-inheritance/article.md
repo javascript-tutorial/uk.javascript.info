@@ -106,14 +106,14 @@ class Rabbit extends Animal {
 }
 ```
 
-Usually we don't want to totally replace a parent method, but rather to build on top of it to tweak or extend its functionality. We do something in our method, but call the parent method before/after it or in the process.
+Зазвичай ми не хочемо повністю замінити батьківський метод, але, скоріше, побудувати метод на його основі, щоб налаштувати або розширити функціональність. Ми робимо щось у нашому методі, але викликаемо батьківський метод до/після нього або в процесі.
 
-Classes provide `"super"` keyword for that.
+Класи забезпечують ключове слово `"super"` для цього.
 
-- `super.method(...)` to call a parent method.
-- `super(...)` to call a parent constructor (inside our constructor only).
+- `super.method(...)`, щоб викликати батьківський метод.
+- `super(...)`, щоб викликати батьківський конструктор (лише в нашому конструкторі).
 
-For instance, let our rabbit autohide when stopped:
+Наприклад, нехай наш кролик автоматично ховається, коли зупиняється:
 
 ```js run
 class Animal {
@@ -125,50 +125,50 @@ class Animal {
 
   run(speed) {
     this.speed = speed;
-    alert(`${this.name} runs with speed ${this.speed}.`);
+    alert(`${this.name} біжить зі швидкістю ${this.speed}.`);
   }
 
   stop() {
     this.speed = 0;
-    alert(`${this.name} stands still.`);
+    alert(`${this.name} стоїть.`);
   }
 
 }
 
 class Rabbit extends Animal {
   hide() {
-    alert(`${this.name} hides!`);
+    alert(`${this.name} ховається!`);
   }
 
 *!*
   stop() {
-    super.stop(); // call parent stop
-    this.hide(); // and then hide
+    super.stop(); // викликає батьківський stop
+    this.hide(); // а потім ховається
   }
 */!*
 }
 
-let rabbit = new Rabbit("White Rabbit");
+let rabbit = new Rabbit("Білий Кролик");
 
-rabbit.run(5); // White Rabbit runs with speed 5.
-rabbit.stop(); // White Rabbit stands still. White Rabbit hides!
+rabbit.run(5); // Білий Кролик біжить зі швидкістю 5.
+rabbit.stop(); // Білий Кролик стоїть. Білий Кролик ховається!
 ```
 
-Now `Rabbit` has the `stop` method that calls the parent `super.stop()` in the process.
+Тепер "Кролик" має метод "Стоп", який називає батька "Super.Stop" () "у процесі.
 
-````smart header="Arrow functions have no `super`"
-As was mentioned in the chapter <info:arrow-functions>, arrow functions do not have `super`.
+````smart header="Стрілочні функції не мають `super`"
+Як зазначалося в розділі <info:arrow-functions>, стрілочні функції не мають `super`.
 
-If accessed, it's taken from the outer function. For instance:
+Якщо `super` доступний, то він береться із зовнішньої функції. Наприклад:
 ```js
 class Rabbit extends Animal {
   stop() {
-    setTimeout(() => super.stop(), 1000); // call parent stop after 1sec
+    setTimeout(() => super.stop(), 1000); // викликає батьківський stop після 1 сек
   }
 }
 ```
 
-The `super` in the arrow function is the same as in `stop()`, so it works as intended. If we specified a "regular" function here, there would be an error:
+`super` у стрілочної функції такий же, як у `stop()`, тому він працює як передбачається. Якщо ми вказали "звичайну" функцію тут, то буде помилка:
 
 ```js
 // Unexpected super
@@ -177,17 +177,17 @@ setTimeout(function() { super.stop() }, 1000);
 ````
 
 
-## Overriding constructor
+## Перевизначення конструктора
 
-With constructors it gets a little bit tricky.
+З конструкторами трохи складніше.
 
-Until now, `Rabbit` did not have its own `constructor`.
+До цих пір `Rabbit` не мав власного конструктора.
 
-According to the [specification](https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), if a class extends another class and has no `constructor`, then the following "empty" `constructor` is generated:
+Згідно із [специфікацією](https:///tc39.github.io/ecma262/#secuntime-semantics-classdefinutionevaluation), якщо клас розширює ще один клас і не має конструктора, то автоматично створюється "порожній" конструктор:
 
 ```js
 class Rabbit extends Animal {
-  // generated for extending classes without own constructors
+  // генерується для класів-нащадків без власних конструкторів
 *!*
   constructor(...args) {
     super(...args);
@@ -196,9 +196,9 @@ class Rabbit extends Animal {
 }
 ```
 
-As we can see, it basically calls the parent `constructor` passing it all the arguments. That happens if we don't write a constructor of our own.
+Як ми бачимо, він в основному викликає батьківський конструктор та передає йому всі аргументи. Це відбувається, якщо ми не напишемо для нашого класу свій власний конструктор.
 
-Now let's add a custom constructor to `Rabbit`. It will specify the `earLength` in addition to `name`:
+Тепер додамо індивідуальний конструктор до `Rabbit`. Він буде визначати `earLength` на додачу до `name`:
 
 ```js run
 class Animal {
@@ -223,31 +223,31 @@ class Rabbit extends Animal {
 }
 
 *!*
-// Doesn't work!
-let rabbit = new Rabbit("White Rabbit", 10); // Error: this is not defined.
+// Не працює!
+let rabbit = new Rabbit("Білий Кролик", 10); // Error: this is not defined.
 */!*
 ```
 
-Whoops! We've got an error. Now we can't create rabbits. What went wrong?
+Упс! У нас є помилка. Тепер ми не можемо створювати кроликів. Що пішло не так?
 
-The short answer is:
+Коротка відповідь:
 
-- **Constructors in inheriting classes must call `super(...)`, and (!) do it before using `this`.**
+- **Конструктори в класі, що наслідується, повинні викликати `super(...)` і (!) зробити це перед використанням `this`.**
 
-...But why? What's going on here? Indeed, the requirement seems strange.
+...Але чому? Що тут відбувається? Дійсно, ця вимога здається дивною.
 
-Of course, there's an explanation. Let's get into details, so you'll really understand what's going on.
+Звичайно, є пояснення. Давайте поглибимося в деталі, щоб ви дійсно зрозуміли, що відбувається.
 
-In JavaScript, there's a distinction between a constructor function of an inheriting class (so-called "derived constructor") and other functions. A derived constructor has a special internal property `[[ConstructorKind]]:"derived"`. That's a special internal label.
+У JavaScript існує відмінність між функцією-конструктором успадковуючого класу (так званого "похідного конструктора") та іншими функціями. Похідний конструктор має особливу внутрішню власність `[[ConstructorKind]]:"derived"`. Це особлива внутрішня позначка.
 
-That label affects its behavior with `new`.
+Ця позначка впливає на поведінку функції-конструктора з `new`.
 
-- When a regular function is executed with `new`, it creates an empty object and assigns it to `this`.
-- But when a derived constructor runs, it doesn't do this. It expects the parent constructor to do this job.
+- Коли звичайна функція виконується з ключовим словом `new`, воно створює порожній об'єкт і присвоює його `this`.
+- Але коли працює похідний конструктор, він не робить цього. Він очікує, що батьківський конструктор виконує цю роботу.
 
-So a derived constructor must call `super` in order to execute its parent (base) constructor, otherwise the object for `this` won't be created. And we'll get an error.
+Таким чином, похідний конструктор повинен викликати `super`, щоб виконати його батьківський (базовий) конструктор, інакше об'єкт для `this` не буде створено. І ми отримаємо помилку.
 
-For the `Rabbit` constructor to work, it needs to call `super()` before using `this`, like here:
+Для роботи конструктора `Rabbit` він повинен викликати `super()` перед використанням `this`, як тут:
 
 ```js run
 class Animal {
@@ -273,34 +273,34 @@ class Rabbit extends Animal {
 }
 
 *!*
-// now fine
-let rabbit = new Rabbit("White Rabbit", 10);
-alert(rabbit.name); // White Rabbit
+// тепер добре
+let rabbit = new Rabbit("Білий Кролик", 10);
+alert(rabbit.name); // Білий Кролик
 alert(rabbit.earLength); // 10
 */!*
 ```
 
 
 
-### Overriding class fields: a tricky note
+### Перевизначення поля класу: складна примітка
 
-```warn header="Advanced note"
-This note assumes you have a certain experience with classes, maybe in other programming languages.
+```warn header="Просунута примітка"
+Ця примітка передбачає, що у вас є певний досвід роботи з класами, можливо, на інших мовах програмування.
 
-It provides better insight into the language and also explains the behavior that might be a source of bugs (but not very often).
+Це забезпечує краще розуміння мови, а також пояснює поведінку, яка може бути джерелом помилок (але не дуже часто).
 
-If you find it difficult to understand, just go on, continue reading, then return to it some time later.
+Якщо вам важко зрозуміти цю секцію, просто продовжуйте читати далі, а потім можете повернутися до неї через деякий час.
 ```
 
-We can override not only methods, but also class fields.
+Ми можемо перевизначити не тільки методи, а й поля класу.
 
-Although, there's a tricky behavior when we access an overridden field in parent constructor, quite different from most other programming languages.
+Хоча, що існує складна поведінка, коли ми отримуємо доступ до перевизначеного поля в батьківському конструкторі, яка сильно відрізняється від більшості інших мов програмування.
 
-Consider this example:
+Розглянемо цей приклад:
 
 ```js run
 class Animal {
-  name = 'animal';
+  name = 'тварина';
 
   constructor() {
     alert(this.name); // (*)
@@ -308,73 +308,73 @@ class Animal {
 }
 
 class Rabbit extends Animal {
-  name = 'rabbit';
+  name = 'кролик';
 }
 
-new Animal(); // animal
+new Animal(); // тварина
 *!*
-new Rabbit(); // animal
+new Rabbit(); // тварина
 */!*
 ```
 
-Here, class `Rabbit` extends `Animal` and overrides `name` field with its own value.
+Тут клас `Rabbit` наслідує клас `Animal` і перевизначає поле `name` власним значенням.
 
-There's no own constructor in `Rabbit`, so `Animal` constructor is called.
+Немає власного конструктора в `Rabbit`, тому викликається конструктор `Animal`.
 
-What's interesting is that in both cases: `new Animal()` and `new Rabbit()`, the `alert` in the line `(*)` shows `animal`.
+Цікаво, що в обох випадках: `new Animal()` і `new Rabbit()`, `alert` в рядку `(*)` показує `animal`.
 
-**In other words, parent constructor always uses its own field value, not the overridden one.**
+**Іншими словами, батьківський конструктор завжди використовує власне значення поля, а не перевизначене.**
 
-What's odd about it?
+Що в цьому дивного?
 
-If it's not clear yet, please compare with methods.
+Якщо це ще не зрозуміло, будь ласка, порівняйте з методами.
 
-Here's the same code, but instead of `this.name` field we call `this.showName()` method:
+Ось той самий код, але замість поля `this.name` ми викликаємо метод `this.showName()`.
 
 ```js run
 class Animal {
-  showName() {  // instead of this.name = 'animal'
-    alert('animal');
+  showName() {  // замість this.name = 'тварина'
+    alert('тварина');
   }
 
   constructor() {
-    this.showName(); // instead of alert(this.name);
+    this.showName(); // замість alert(this.name);
   }
 }
 
 class Rabbit extends Animal {
   showName() {
-    alert('rabbit');
+    alert('кролик');
   }
 }
 
-new Animal(); // animal
+new Animal(); // тварина
 *!*
-new Rabbit(); // rabbit
+new Rabbit(); // кролик
 */!*
 ```
 
-Please note: now the output is different.
+Будь ласка, зверніть увагу: тепер вивід відрізняється.
 
-And that's what we naturally expect. When the parent constructor is called in the derived class, it uses the overridden method.
+І це те, що ми, дійсно, очікуємо. Коли батьківський конструктор викликається в похідному класі, він використовує перевизначений метод.
 
-...But for class fields it's not so. As said, the parent constructor always uses the parent field.
+...Але для полів класу це не так. Як сказано, батьківський конструктор завжди використовує батьківське поле.
 
-Why is there the difference?
+Чому існує різниця?
 
-Well, the reason is in the field initialization order. The class field is initialized:
-- Before constructor for the base class (that doesn't extend anything),
-- Immediately after `super()` for the derived class.
+Ну, причина полягає у порядку ініціалізації поля. Поле класу ініціалізується:
+- До конструктора для базового класу (котрий нічого не наслідує),
+- Відразу після `super()` для похідного класу.
 
-In our case, `Rabbit` is the derived class. There's no `constructor()` in it. As said previously, that's the same as if there was an empty constructor with only `super(...args)`.
+У нашому випадку `Rabbit` -- це похідний клас. У ньому немає конструктора. Як сказано раніше, це те ж саме, якби там був порожній конструктор лише з `super(...args)`.
 
-So, `new Rabbit()` calls `super()`, thus executing the parent constructor, and (per the rule for derived classes) only after that its class fields are initialized. At the time of the parent constructor execution, there are no `Rabbit` class fields yet, that's why `Animal` fields are used.
+Отже, `new Rabbit()` викликає `super()`, таким чином, виконуючи батьківський конструктор, і (за правилом для похідних класів) лише після того ініціалізує свої поля класу. На момент виконання батьківського конструктора, ще немає полів класу `Rabbit`, тому використовуються класу `Animal`.
 
-This subtle difference between fields and methods is specific to JavaScript
+Ця тонка різниця між полями та методами є специфічною для JavaScript
 
-Luckily, this behavior only reveals itself if an overridden field is used in the parent constructor. Then it may be difficult to understand what's going on, so we're explaining it here.
+На щастя, ця поведінка виявляє себе лише якщо у перевизначене поле використовується у батьківському конструкторі. Тоді важко зрозуміти, що відбувається, тому ми пояснюємо це тут.
 
-If it becomes a problem, one can fix it by using methods or getters/setters instead of fields.
+Якщо це стає проблемою, її можна вирішити за допомогою методів або геттерів/сеттерів, а не полів.
 
 
 ## Super: internals, [[HomeObject]]
