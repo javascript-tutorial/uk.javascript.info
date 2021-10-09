@@ -531,26 +531,26 @@ longEar.eat();  // Довговухий кролик їсть.
 */!*
 ```
 
-It works as intended, due to `[[HomeObject]]` mechanics. A method, such as `longEar.eat`, knows its `[[HomeObject]]` and takes the parent method from its prototype. Without any use of `this`.
+Код в прикладі працює як очікувалося, завдяки механіці `[[HomeObject]]`. Метод, такий як `longEar.eat`, знає `[[HomeObject]]` і приймає батьківський метод від свого прототипу. Без будь-якого використання `this`.
 
-### Methods are not "free"
+### Методи не "вільні"
 
-As we've known before, generally functions are "free", not bound to objects in JavaScript. So they can be copied between objects and called with another `this`.
+Як ми знаємо раніше, взагалі функції "вільні", тобто не пов'язані з об'єктами в JavaScript. Таким чином, їх можна скопіювати між об'єктами і викликати з іншим - `this`.
 
-The very existence of `[[HomeObject]]` violates that principle, because methods remember their objects. `[[HomeObject]]` can't be changed, so this bond is forever.
+Саме існування `[[HomeObject]]` порушує цей принцип, оскільки методи запам'ятовують їх об'єкти. `[[HomeObject]]` не можна змінити, тому цей зв'язок назавжди.
 
-The only place in the language where `[[HomeObject]]` is used -- is `super`. So, if a method does not use `super`, then we can still consider it free and copy between objects. But with `super` things may go wrong.
+Єдине місце в мові, де `[[HomeObject]]` використовується - це `super`. Отже, якщо метод не використовує `super`, то ми можемо все одно враховувати його вільним та копіювати між об'єктами. Але з `super` речі можуть піти не так.
 
-Here's the demo of a wrong `super` result after copying:
+Ось результату демонстрації неправильного використання `super` після копіювання:
 
 ```js run
 let animal = {
   sayHi() {
-    alert(`I'm an animal`);
+    alert(`Я тварина`);
   }
 };
 
-// rabbit inherits from animal
+// кролик наслідується від тварини
 let rabbit = {
   __proto__: animal,
   sayHi() {
@@ -560,11 +560,11 @@ let rabbit = {
 
 let plant = {
   sayHi() {
-    alert("I'm a plant");
+    alert("Я рослина");
   }
 };
 
-// tree inherits from plant
+// дерево наслідується від рослини
 let tree = {
   __proto__: plant,
 *!*
@@ -573,32 +573,32 @@ let tree = {
 };
 
 *!*
-tree.sayHi();  // I'm an animal (?!?)
+tree.sayHi();  // Я тварина (?!?)
 */!*
 ```
 
-A call to `tree.sayHi()` shows "I'm an animal". Definitely wrong.
+Виклик до `tree.sayHi()` показує "я тварина". Безумовно, це неправильно.
 
-The reason is simple:
-- In the line `(*)`, the method `tree.sayHi` was copied from `rabbit`. Maybe we just wanted to avoid code duplication?
-- Its `[[HomeObject]]` is `rabbit`, as it was created in `rabbit`. There's no way to change `[[HomeObject]]`.
-- The code of `tree.sayHi()` has `super.sayHi()` inside. It goes up from `rabbit` and takes the method from `animal`.
+Причина проста:
+- У рядку `(*)`, метод `tree.sayHi` був скопійований з `rabbit`. Можливо, ми просто хотіли уникнути дублювання коду?
+- Його `[[homeobject]]` -- це `rablit`, так як метод було створено в `rabbit`. Немає можливості змінити `[[HomeObject]]`.
+- Код `tree.sayHi()` має `super.sayHi()` всередині. Він йде в гору з `rabbit` і бере метод від `animal`.
 
-Here's the diagram of what happens:
+Ось діаграма того, що відбувається:
 
 ![](super-homeobject-wrong.svg)
 
-### Methods, not function properties
+### Методи, а не функціональні властивості
 
-`[[HomeObject]]` is defined for methods both in classes and in plain objects. But for objects, methods must be specified exactly as `method()`, not as `"method: function()"`.
+`[[Homeobject]]` визначається для методів як у класах, так і у звичайних об'єктах. Але для об'єктів, методи повинні бути визначені саме як `method()`, не як `"method: function()"`.
 
-The difference may be non-essential for us, but it's important for JavaScript.
+Різниця може бути несуттєвою для нас, але це важливо для JavaScript.
 
-In the example below a non-method syntax is used for comparison. `[[HomeObject]]` property is not set and the inheritance doesn't work:
+У прикладі нижче для порівняння використовується синтаксис не-методу. `[[Homeobject]]` властивість не встановлюється, а наслідування не працює:
 
 ```js run
 let animal = {
-  eat: function() { // intentionally writing like this instead of eat() {...
+  eat: function() { // навмисно напишемо це так замість eat() {...
     // ...
   }
 };
@@ -611,21 +611,21 @@ let rabbit = {
 };
 
 *!*
-rabbit.eat();  // Error calling super (because there's no [[HomeObject]])
+rabbit.eat();  // Помилка виклику super (тому що немає [[HomeObject]])
 */!*
 ```
 
-## Summary
+## Підсумки
 
-1. To extend a class: `class Child extends Parent`:
-    - That means `Child.prototype.__proto__` will be `Parent.prototype`, so methods are inherited.
-2. When overriding a constructor:
-    - We must call parent constructor as `super()` in `Child` constructor before using `this`.
-3. When overriding another method:
-    - We can use `super.method()` in a `Child` method to call `Parent` method.
-4. Internals:
-    - Methods remember their class/object in the internal `[[HomeObject]]` property. That's how `super` resolves parent methods.
-    - So it's not safe to copy a method with `super` from one object to another.
+1. Щоб розширити клас треба використовувати синтакс: `class Child extends Parent`:
+    - Це означає `Child.prototype.__proto__` буде `Parent.prototype`, таким чином методи успадковуються.
+2. При перевизначенні конструктора:
+    - Ми повинні викликати батьківський конструктор `super()` в `Child` конструкторі перед використанням `this`.
+3. При перевизначенні іншого методу:
+    - Ми можемо використовувати `super.method()` в методі `Child`, щоб викликати за батьківський метод.
+4. Внутрішні деталі:
+    - Методи запам'ятовують їх клас/об'єкт у внутрішній властивості `[[HomeObject]]`. Ось як `super` знаходить батьківські методи.
+    - Так що це не безпечно копіювати метод з `супер` від одного об'єкта до іншого.
 
-Also:
-- Arrow functions don't have their own `this` or `super`, so they transparently fit into the surrounding context.
+Також:
+- Стрілочні функції не мають власного `this` або `super`, тому вони прозоро вписуються в навколишній контекст.
