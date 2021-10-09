@@ -377,68 +377,68 @@ new Rabbit(); // кролик
 Якщо це стає проблемою, її можна вирішити за допомогою методів або геттерів/сеттерів, а не полів.
 
 
-## Super: internals, [[HomeObject]]
+## Super: властивості, [[HomeObject]]
 
-```warn header="Advanced information"
-If you're reading the tutorial for the first time - this section may be skipped.
+```warn header="Просунута примітка"
+Якщо ви читаєте підручник вперше - цей розділ можете пропустити.
 
-It's about the internal mechanisms behind inheritance and `super`.
+В ньому йде мова про внутрішній механізм наслідування та `super`.
 ```
 
-Let's get a little deeper under the hood of `super`. We'll see some interesting things along the way.
+Давайте подивимося трохи глибше під капот `super`. Ми побачимо деякі цікаві речі.
 
-First to say, from all that we've learned till now, it's impossible for `super` to work at all!
+Перш за все, з усього, що ми дізналися дотепер, `super` взагалі неможе працювати!
 
-Yeah, indeed, let's ask ourselves, how it should technically work? When an object method runs, it gets the current object as `this`. If we call `super.method()` then, the engine needs to get the `method` from the prototype of the current object. But how?
+Так, дійсно, давайте задамося питанням, як він повинен технічно працювати? Коли метод об'єкта запускається, він отримує поточний об'єкт як `this`. Якщо ми викликаємо `super.method()`, рушій повинен отримати `method` від прототипу поточного об'єкта. Але як?
 
-The task may seem simple, but it isn't. The engine knows the current object `this`, so it could get the parent `method` as `this.__proto__.method`. Unfortunately, such a "naive" solution won't work.
+Завдання може здатися простим, але це не так. Рушій знає поточний об'єкт `this`, тому він міг би отримати батьківський `method` як `this.__proto__.method`. На жаль, таке "нативне" рішення не буде працювати.
 
-Let's demonstrate the problem. Without classes, using plain objects for the sake of simplicity.
+Давайте демонструємо проблему. Без класів, використовуючи прості об'єкти заради наглядності.
 
-You may skip this part and go below to the `[[HomeObject]]` subsection if you don't want to know the details. That won't harm. Or read on if you're interested in understanding things in-depth.
+Ви можете пропустити цю частину та перейти нижче до розділу `[[HomeObject]]` якщо ви не хочете знати деталі. Це не завдасть шкоди вашому загальному розумінню. Або читайте, якщо ви зацікавлені в розумінні поглиблених речей.
 
-In the example below, `rabbit.__proto__ = animal`. Now let's try: in `rabbit.eat()` we'll call `animal.eat()`, using `this.__proto__`:
+У прикладі нижче, `rabbit.__proto__ = animal`. Тепер давайте спробуємо: у `rabbit.eat()` ми викличемо `animal.eat()`, використовуючи `this.__proto__`:
 
 ```js run
 let animal = {
-  name: "Animal",
+  name: "Тварина",
   eat() {
-    alert(`${this.name} eats.`);
+    alert(`${this.name} їсть.`);
   }
 };
 
 let rabbit = {
   __proto__: animal,
-  name: "Rabbit",
+  name: "Кролик",
   eat() {
 *!*
-    // that's how super.eat() could presumably work
+    // ось як super.eat() міг би, мабуть, працювати
     this.__proto__.eat.call(this); // (*)
 */!*
   }
 };
 
-rabbit.eat(); // Rabbit eats.
+rabbit.eat(); // Кролик їсть.
 ```
 
-At the line `(*)` we take `eat` from the prototype (`animal`) and call it in the context of the current object. Please note that `.call(this)` is important here, because a simple `this.__proto__.eat()` would execute parent `eat` in the context of the prototype, not the current object.
+На лінії `(*)` ми беремо `eat` з прототипу (`animal`) і викликаємо його в контексті поточного об'єкта. Зверніть увагу, що `.call(this)` є важливим тут, тому що простий `this.__proto__.eat()` буде виконувати батьківський `eat` в контексті прототипу, а не поточного об'єкта.
 
-And in the code above it actually works as intended: we have the correct `alert`.
+І в коді вище, це насправді працює, як це передбачено: у нас є правильний `alert`.
 
-Now let's add one more object to the chain. We'll see how things break:
+Тепер давайте додамо ще один об'єкт до ланцюга наслідування. Ми побачимо, як все зламається:
 
 ```js run
 let animal = {
-  name: "Animal",
+  name: "Тварина",
   eat() {
-    alert(`${this.name} eats.`);
+    alert(`${this.name} їсть.`);
   }
 };
 
 let rabbit = {
   __proto__: animal,
   eat() {
-    // ...bounce around rabbit-style and call parent (animal) method
+    // ...робимо щось специфічне для кролика і викликаємо батьківський (animal) метод
     this.__proto__.eat.call(this); // (*)
   }
 };
@@ -446,7 +446,7 @@ let rabbit = {
 let longEar = {
   __proto__: rabbit,
   eat() {
-    // ...do something with long ears and call parent (rabbit) method
+    // ...зробимо щось, що пов’язане з довгими вухами, і викликаємо батьківський (rabbit) метод
     this.__proto__.eat.call(this); // (**)
   }
 };
@@ -456,61 +456,62 @@ longEar.eat(); // Error: Maximum call stack size exceeded
 */!*
 ```
 
-The code doesn't work anymore! We can see the error trying to call `longEar.eat()`.
+Код більше не працює! Ми бачимо помилку, намагаючись викликати `longEar.eat()`.
 
-It may be not that obvious, but if we trace `longEar.eat()` call, then we can see why. In both lines `(*)` and `(**)` the value of `this` is the current object (`longEar`). That's essential: all object methods get the current object as `this`, not a prototype or something.
+Це може бути не таким очевидним, але якщо ми відстежимо виклик `longEar.eat()`, то ми можемо зрозуміти, чому так відбувається. В обох рядках `(*)` і `(**)` значення `this` є поточним об'єктом (`longEar`). Це важливо: всі методи об'єкта отримують поточний об'єкт, як `this`, а не прототип або щось інше.
 
 So, in both lines `(*)` and `(**)` the value of `this.__proto__` is exactly the same: `rabbit`. They both call `rabbit.eat` without going up the chain in the endless loop.
+Отже, в обох рядках `(*)` і `(**)` значення `this.__proto__` точно таке ж саме: `rabbit`. Вони обидва викликають `rabbit.eat`. Не піднімаючись ланцюзі наслідування та перебуваючи в нескінченній петлі.
 
-Here's the picture of what happens:
+Ось картина того, що відбувається:
 
 ![](this-super-loop.svg)
 
-1. Inside `longEar.eat()`, the line `(**)` calls `rabbit.eat` providing it with `this=longEar`.
+1. Всередині `longEar.eat()`, рядок `(**)` викликає `rabbit.eat` надаючи йому `this=longEar`.
     ```js
-    // inside longEar.eat() we have this = longEar
+    // всередині longEar.eat() у нас є this = longEar
     this.__proto__.eat.call(this) // (**)
-    // becomes
+    // стає
     longEar.__proto__.eat.call(this)
-    // that is
+    // тобто те саме, що
     rabbit.eat.call(this);
     ```
-2. Then in the line `(*)` of `rabbit.eat`, we'd like to pass the call even higher in the chain, but `this=longEar`, so `this.__proto__.eat` is again `rabbit.eat`!
+2. Тоді в рядку `(*)` в ` rabbit.eat`, ми хотіли б передати виклик ще вище в ланцюгу наслідування, але `this=longEar`, тому `this.__proto__.eat` знову `rabbit.eat`!
 
     ```js
-    // inside rabbit.eat() we also have this = longEar
+    // всередині rabbit.eat() у нас також є this = longEar
     this.__proto__.eat.call(this) // (*)
-    // becomes
+    // стає
     longEar.__proto__.eat.call(this)
-    // or (again)
+    // або (знову)
     rabbit.eat.call(this);
     ```
 
-3. ...So `rabbit.eat` calls itself in the endless loop, because it can't ascend any further.
+3. ...Отже, `rabbit.eat` викликає себе в нескінченній петлі, тому що він не може піднятися вище.
 
-The problem can't be solved by using `this` alone.
+Проблема не може бути вирішена лише за допомогою `this`.
 
 ### `[[HomeObject]]`
 
-To provide the solution, JavaScript adds one more special internal property for functions: `[[HomeObject]]`.
+Щоб забезпечити рішення, JavaScript додає ще одну спеціальну внутрішню власність для функцій: `[[HomeObject]]`.
 
-When a function is specified as a class or object method, its `[[HomeObject]]` property becomes that object.
+Коли функція вказана як метод класу або об'єкта, її властивість `[[HomeObject]]` стає цим об'єктом.
 
-Then `super` uses it to resolve the parent prototype and its methods.
+Тоді `super` використовує цю властивість для знаходження батьківського прототипу та його методів.
 
-Let's see how it works, first with plain objects:
+Давайте подивимося, як це працює, спочатку з простими об'єктами:
 
 ```js run
 let animal = {
-  name: "Animal",
+  name: "Тварина",
   eat() {         // animal.eat.[[HomeObject]] == animal
-    alert(`${this.name} eats.`);
+    alert(`${this.name} їсть.`);
   }
 };
 
 let rabbit = {
   __proto__: animal,
-  name: "Rabbit",
+  name: "Кролик",
   eat() {         // rabbit.eat.[[HomeObject]] == rabbit
     super.eat();
   }
@@ -518,15 +519,15 @@ let rabbit = {
 
 let longEar = {
   __proto__: rabbit,
-  name: "Long Ear",
+  name: "Довговухий кролик",
   eat() {         // longEar.eat.[[HomeObject]] == longEar
     super.eat();
   }
 };
 
 *!*
-// works correctly
-longEar.eat();  // Long Ear eats.
+// працює правильно
+longEar.eat();  // Довговухий кролик їсть.
 */!*
 ```
 
