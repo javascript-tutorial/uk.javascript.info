@@ -301,11 +301,19 @@ function pow(x, n) {
 
 Ось декілька добре відомих засобів для перевірки:
 
+<<<<<<< HEAD
 - [JSLint](http://www.jslint.com/) -- один з перших лінтерів.
 - [JSHint](http://www.jshint.com/) -- має більше налаштувань ніж JSLint.
 - [ESLint](http://eslint.org/) -- напевно, найсучасніший лінтер.
 
 Всі вони роблять свою справу. Автор використовує [ESLint](http://eslint.org/).
+=======
+- [JSLint](https://www.jslint.com/) -- one of the first linters.
+- [JSHint](https://jshint.com/) -- more settings than JSLint.
+- [ESLint](https://eslint.org/) -- probably the newest one.
+
+All of them can do the job. The author uses [ESLint](https://eslint.org/).
+>>>>>>> 193319c963b9ba86ac7d9590f7261a36ecdcc4d2
 
 Більшість лінтерів інтегровані в популярні редактори: просто увімкніть відповідний плаґін в редакторі і налаштуйте стиль.
 
@@ -335,7 +343,11 @@ function pow(x, n) {
 
 Директива `"extends"` означає, що конфігурація базується на наборі налаштувань "eslint:recommended". Після цього, ви вказуєте ваші власні.
 
+<<<<<<< HEAD
 Крім того, можна завантажити набори правил з мережі та розширити їх. Дивіться <http://eslint.org/docs/user-guide/getting-started> для отримання більш детальної інструкції зі встановлення.
+=======
+It is also possible to download style rule sets from the web and extend them instead. See <https://eslint.org/docs/user-guide/getting-started> for more details about installation.
+>>>>>>> 193319c963b9ba86ac7d9590f7261a36ecdcc4d2
 
 Також, деякі середовища розробки (IDE) мають вбудовані засоби первірки коду, що є зручним, але не таким гнучким в налаштуванні рішенням, як ESLint.
 
