@@ -48,11 +48,7 @@ john.sayHi(); // Привіт друже!
 2. JavaScript дозволяє отримати доступ до методів та властивостей рядків, чисел, булеанів та символів.
 3. Для цього створюється спеціальний "об’єкт обгортка" з додатковою функціональністю, та потім він знищується.
 
-<<<<<<< HEAD
-Для кожного примітиву створюється своя "обгортка": `String`, `Number`, `Boolean` та `Symbol`. Отже, вони містять різні набори методів.
-=======
-The "object wrappers" are different for each primitive type and are called: `String`, `Number`, `Boolean`, `Symbol` and `BigInt`. Thus, they provide different sets of methods.
->>>>>>> 193319c963b9ba86ac7d9590f7261a36ecdcc4d2
+Для кожного примітиву створюється своя "обгортка": `String`, `Number`, `Boolean`, `Symbol` та `BigInt`. Отже, вони містять різні набори методів.
 
 Наприклад: існує такий метод для рядка, як [str.toUpperCase()](https://developer.mozilla.org/uk/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase), який поверне рядок `str` з великими літерами. 
 
