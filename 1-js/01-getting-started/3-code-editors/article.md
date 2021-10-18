@@ -31,10 +31,17 @@ IDE завантажує проект (який може мати багато �
 
 Ось ці варіанти заслуговують вашої уваги:
 
+<<<<<<< HEAD
 - [Atom](https://atom.io/) (багатоплатформний, безкоштовний).
 - [Sublime Text](http://www.sublimetext.com) (багатоплатформний, випробувальний термін).
 - [Notepad++](https://notepad-plus-plus.org/) (Windows, безкоштовний).
 - [Vim](http://www.vim.org/) та [Emacs](https://www.gnu.org/software/emacs/) також хороші, якщо знати, як ними користуватися.
+=======
+- [Atom](https://atom.io/) (cross-platform, free).
+- [Sublime Text](http://www.sublimetext.com) (cross-platform, shareware).
+- [Notepad++](https://notepad-plus-plus.org/) (Windows, free).
+- [Vim](http://www.vim.org/) and [Emacs](https://www.gnu.org/software/emacs/) are also cool if you know how to use them.
+>>>>>>> eda333d423db8ade41f75d2e2d30ea06c7d997ef
 
 ## Не будемо сперечатися
 

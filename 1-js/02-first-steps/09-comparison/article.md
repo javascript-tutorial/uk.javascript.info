@@ -4,10 +4,17 @@
 
 В JavaScript вони записуються ось так:
 
+<<<<<<< HEAD
 - Більше/менше: <code>a &gt; b</code>, <code>a &lt; b</code>.
 - Більше/менше або дорівнює: <code>a &gt;= b</code>, <code>a &lt;= b</code>.
 - Дорівнює: `a == b`. Зверніть увагу, для порівняння потрібно використовувати два знаки рівності `==`. Один знак рівності `a = b` означав б присвоєння.
 - Не дорівнює: в математиці позначається символом <code>&ne;</code>, проте в JavaScript записується як <code>a != b</code>.
+=======
+- Greater/less than: <code>a &gt; b</code>, <code>a &lt; b</code>.
+- Greater/less than or equals: <code>a &gt;= b</code>, <code>a &lt;= b</code>.
+- Equals: `a == b`, please note the double equality sign `==` means the equality test, while a single one `a = b` means an assignment.
+- Not equals: In maths the notation is <code>&ne;</code>, but in JavaScript it's written as <code>a != b</code>.
+>>>>>>> eda333d423db8ade41f75d2e2d30ea06c7d997ef
 
 В цьому розділі ми вивчимо різні типи порівнянь, узнаємо, як JavaScript їх виконує, та розглянемо важливі особливості.
 
