@@ -187,8 +187,13 @@ let user = {
 
 let say = user.say.bind(user);
 
+<<<<<<< HEAD
 say("Привіт"); // Привіт, Іван (Аргумент "Привіт" переданий функції say)
 say("Бувай"); // Бувай, Іван ("Бувай" передане функції say)
+=======
+say("Hello"); // Hello, John! ("Hello" argument is passed to say)
+say("Bye"); // Bye, John! ("Bye" is passed to say)
+>>>>>>> 6989312841d843f2350803ab552d9082437be569
 ```
 
 ````smart header="Зручний метод: `bindAll`"
