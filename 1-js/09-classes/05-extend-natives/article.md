@@ -1,12 +1,12 @@
 
-# Extending built-in classes
+# Розширення вбудованих класів
 
-Built-in classes like Array, Map and others are extendable also.
+Вбудовані класи, такі як Array, Map та інші, також розширюються.
 
-For instance, here `PowerArray` inherits from the native `Array`:
+Наприклад, ось тут `PowerArray` успадковується від вбудованого `Array`:
 
 ```js run
-// add one more method to it (can do more)
+// додамо до нього ще один метод (можна більше)
 class PowerArray extends Array {
   isEmpty() {
     return this.length === 0;
@@ -21,20 +21,20 @@ alert(filteredArr); // 10, 50
 alert(filteredArr.isEmpty()); // false
 ```
 
-Please note a very interesting thing. Built-in methods like `filter`, `map` and others -- return new objects of exactly the inherited type `PowerArray`. Their internal implementation uses the object's `constructor` property for that.
+Зверніть увагу на дуже цікаву річ. Вбудовані методи, такі як `filter`, `map` та інші, повертають нові об’єкти точно успадкованого типу `PowerArray`. Їхня внутрішня реалізація використовує для цього властивість об’єкта `constructor`.
 
-In the example above,
+У вищенаведеному прикладі,
 ```js
 arr.constructor === PowerArray
 ```
 
-When `arr.filter()` is called, it internally creates the new array of results using exactly `arr.constructor`, not basic `Array`. That's actually very cool, because we can keep using `PowerArray` methods further on the result.
+Коли викликається `arr.filter()`, він внутрішньо створює новий масив результатів, використовуючи саме `arr.constructor`, а не базовий `Array`. Насправді це дуже круто, тому що ми можемо продовжувати використовувати методи `PowerArray` і далі для отримання результату.
 
-Even more, we can customize that behavior.
+Щобільше, ми можемо налаштувати таку поведінку.
 
-We can add a special static getter `Symbol.species` to the class. If it exists, it should return the constructor that JavaScript will use internally to create new entities in `map`, `filter` and so on.
+Ми можемо додати до класу спеціальний статичний геттер `Symbol.species`. Якщо він існує, то повинен повернути конструктор, який JavaScript буде використовувати внутрішньо для створення нових об’єктів у `map`, `filter` тощо.
 
-If we'd like built-in methods like `map` or `filter` to return regular arrays, we can return `Array` in `Symbol.species`, like here:
+Якщо ж ми хочемо, щоб вбудовані методи, такі як `map` або `filter`, повертали звичайні масиви, ми можемо повернути `Array` у `Symbol.species`, як тут:
 
 ```js run
 class PowerArray extends Array {
@@ -43,7 +43,7 @@ class PowerArray extends Array {
   }
 
 *!*
-  // built-in methods will use this as the constructor
+  // вбудовані методи використовуватимуть це як конструктор
   static get [Symbol.species]() {
     return Array;
   }
@@ -53,37 +53,37 @@ class PowerArray extends Array {
 let arr = new PowerArray(1, 2, 5, 10, 50);
 alert(arr.isEmpty()); // false
 
-// filter creates new array using arr.constructor[Symbol.species] as constructor
+// filter створює новий масив, використовуючи arr.constructor[Symbol.species] як конструктор
 let filteredArr = arr.filter(item => item >= 10);
 
 *!*
-// filteredArr is not PowerArray, but Array
+// filteredArr - це не PowerArray, а Array
 */!*
 alert(filteredArr.isEmpty()); // Error: filteredArr.isEmpty is not a function
 ```
 
-As you can see, now `.filter` returns `Array`. So the extended functionality is not passed any further.
+Як бачите, тепер `.filter` повертає `Array`. Таким чином, розширена функціональність не передається далі.
 
 ```smart header="Other collections work similarly"
-Other collections, such as `Map` and `Set`, work alike. They also use `Symbol.species`.
+Інші колекції, такі як `Map` і `Set`, працюють однаково. Вони також використовують `Symbol.species`.
 ```
 
-## No static inheritance in built-ins
+## Відсутність статичного спадкування вбудованих класів
 
-Built-in objects have their own static methods, for instance `Object.keys`, `Array.isArray` etc.
+Вбудовані об’єкти мають власні статичні методи, наприклад `Object.keys`, `Array.isArray` тощо.
 
-As we already know, native classes extend each other. For instance, `Array` extends `Object`.
+Як ми вже знаємо, вбудовані класи розширюють один одного. Наприклад, `Array` розширює `Object`.
 
-Normally, when one class extends another, both static and non-static methods are inherited. That was thoroughly explained in the article [](info:static-properties-methods#statics-and-inheritance).
+Зазвичай, коли один клас розширює інший, успадковуються як статичні, так і нестатичні методи. Це детально описано в статті [](info:static-properties-methods#static-and-inheritance).
 
-But built-in classes are an exception. They don't inherit statics from each other.
+Але вбудовані класи є винятком. Вони не успадковують статику один від одного.
 
-For example, both `Array` and `Date` inherit from `Object`, so their instances have methods from `Object.prototype`. But `Array.[[Prototype]]` does not reference `Object`, so there's no, for instance, `Array.keys()` (or `Date.keys()`) static method.
+Наприклад, і `Array`, і `Date` успадковуються від `Object`, тому їхні екземпляри мають методи з `Object.prototype`. Але `Array.[[Prototype]]` не посилається на `Object`, тому не існує, наприклад, `Array.keys()` (або `Date.keys()`) статичного методу.
 
-Here's the picture structure for `Date` and `Object`:
+Ось структура зображення для `Date` та `Object`:
 
 ![](object-date-inheritance.svg)
 
-As you can see, there's no link between `Date` and `Object`. They are independent, only `Date.prototype` inherits from `Object.prototype`.
+Як бачите, немає зв’язку між `Date` і `Object`. Вони незалежні, лише `Date.prototype` успадковується від `Object.prototype`.
 
-That's an important difference of inheritance between built-in objects compared to what we get with `extends`.
+Це важлива відмінність успадкування між вбудованими об’єктами в порівнянні з тим, що ми отримуємо за допомогою `extends`.
