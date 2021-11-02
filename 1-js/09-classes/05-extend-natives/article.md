@@ -64,7 +64,7 @@ alert(filteredArr.isEmpty()); // Error: filteredArr.isEmpty is not a function
 
 Як бачите, тепер `.filter` повертає `Array`. Таким чином, розширена функціональність не передається далі.
 
-```smart header="Other collections work similarly"
+```smart header="Інші колекції працюють аналогічно"
 Інші колекції, такі як `Map` і `Set`, працюють однаково. Вони також використовують `Symbol.species`.
 ```
 
