@@ -171,7 +171,7 @@ chineseDictionary.bye = "再见";
 alert(Object.keys(chineseDictionary)); // hello,bye
 ```
 
-## Підсумок
+## Підсумки
 
 Сучасними методами встановлення та прямого доступу до прототипу є:
 
