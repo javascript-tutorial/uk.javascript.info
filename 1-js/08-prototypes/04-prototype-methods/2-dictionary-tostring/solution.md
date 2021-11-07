@@ -1,31 +1,31 @@
 
-The method can take all enumerable keys using `Object.keys` and output their list.
+Метод може взяти всі перелічувані ключі об’єкта за допомогою `Object.keys` та вивести їх перелік.
 
-To make `toString` non-enumerable, let's define it using a property descriptor. The syntax of `Object.create` allows us to provide an object with property descriptors as the second argument.
+Для того щоб зробити метод `toString` не перлічуваним, визначимо його використовуючи дескриптор властивості. Синтаксис `Object.create` дозволяє нам надати об’єкту дескриптори властивостей як другий аргумент.
 
 ```js run
 *!*
 let dictionary = Object.create(null, {
-  toString: { // define toString property
-    value() { // the value is a function
+  toString: { // визначаємо властивість toString
+    value() { // value є функцією
       return Object.keys(this).join();
     }
   }
 });
 */!*
 
-dictionary.apple = "Apple";
-dictionary.__proto__ = "test";
+dictionary.apple = "Яблуко";
+dictionary.__proto__ = "тест";
 
-// apple and __proto__ is in the loop
+// apple та __proto__ показуються в циклі
 for(let key in dictionary) {
-  alert(key); // "apple", then "__proto__"
+  alert(key); // "apple", потім "__proto__"
 }  
 
-// comma-separated list of properties by toString
+// метод toString повертає перелік властивостей через кому
 alert(dictionary); // "apple,__proto__"
 ```
 
-When we create a property using a descriptor, its flags are `false` by default. So in the code above, `dictionary.toString` is non-enumerable.
+Коли ми створюємо властивість використовуючи дескриптор, його опції мають значення `false` за замовчуванням. Тому в коді вище `dictionary.toString` є не перелічуваним.
 
-See the the chapter [](info:property-descriptors) for review.
+Продивіться розділ [](info:property-descriptors).

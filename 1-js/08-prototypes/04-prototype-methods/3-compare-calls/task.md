@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# The difference between calls
+# Різниця між викликами
 
-Let's create a new `rabbit` object:
+Створимо новий об’єкт `rabbit`:
 
 ```js
 function Rabbit(name) {
@@ -14,10 +14,10 @@ Rabbit.prototype.sayHi = function() {
   alert(this.name);
 };
 
-let rabbit = new Rabbit("Rabbit");
+let rabbit = new Rabbit("Кріль");
 ```
 
-These calls do the same thing or not?
+Чи виконують виклики нижче однакову дію чи ні?
 
 ```js
 rabbit.sayHi();
