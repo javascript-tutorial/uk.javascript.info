@@ -2,30 +2,30 @@ importance: 5
 
 ---
 
-# Add toString to the dictionary
+# Додайте toString до об’єкту-словника
 
-There's an object `dictionary`, created as `Object.create(null)`, to store any `key/value` pairs.
+Дано об’єкт `dictionary`, створений за допомогою `Object.create(null)`, щоб зберегти будь-які пари `ключ/значення`.
 
-Add method `dictionary.toString()` into it, that should return a comma-delimited list of keys. Your `toString` should not show up in `for..in` over the object.
+Додайте метод `dictionary.toString()` до об’єкта, який повертає перелік ключів через кому. Метод `toString` не повинен показуватися, якщо застосувати до об’єкта цикл `for..in`.
 
-Here's how it should work:
+Тут показано як це має працювати:
 
 ```js
 let dictionary = Object.create(null);
 
 *!*
-// your code to add dictionary.toString method
+// ваш код, щоб додати dictionary.toString метод
 */!*
 
-// add some data
-dictionary.apple = "Apple";
-dictionary.__proto__ = "test"; // __proto__ is a regular property key here
+// додаємо певні дані
+dictionary.apple = "Яблуко";
+dictionary.__proto__ = "тест"; // __proto__ тут є звичайною властивістю об’єкта
 
-// only apple and __proto__ are in the loop
+// тільки ключі apple та __proto__ показуються в циклі
 for(let key in dictionary) {
-  alert(key); // "apple", then "__proto__"
+  alert(key); // "apple", потім "__proto__"
 }  
 
-// your toString in action
+// ваш метод toString в дії
 alert(dictionary); // "apple,__proto__"
 ```
