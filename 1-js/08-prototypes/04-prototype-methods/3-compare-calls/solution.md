@@ -1,7 +1,7 @@
 
-The first call has `this == rabbit`, the other ones have `this` equal to `Rabbit.prototype`, because it's actually the object before the dot.
+Перший виклик має `this == rabbit`, інші мають `this` рівний `Rabbit.prototype`, тому що це об’єкт перед крапкою.
 
-So only the first call shows `Rabbit`, other ones show `undefined`:
+Таким чином тільки перший виклик покаже `Кріль`, інші покажуть `undefined`:
 
 ```js run
 function Rabbit(name) {
@@ -11,9 +11,9 @@ Rabbit.prototype.sayHi = function() {
   alert( this.name );
 }
 
-let rabbit = new Rabbit("Rabbit");
+let rabbit = new Rabbit("Кріль");
 
-rabbit.sayHi();                        // Rabbit
+rabbit.sayHi();                        // Кріль
 Rabbit.prototype.sayHi();              // undefined
 Object.getPrototypeOf(rabbit).sayHi(); // undefined
 rabbit.__proto__.sayHi();              // undefined
