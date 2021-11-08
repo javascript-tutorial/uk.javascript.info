@@ -73,7 +73,11 @@
 <script src="/path/to/script.js"></script>
 ```
 
+<<<<<<< HEAD
 Тут `/path/to/script.js` — абсолютний шлях до файлу скрипта з кореня сайту. Також можна вказати відносний шлях з поточної сторінки. Наприклад, `src="script.js"` означатиме, що файл `"script.js"` у поточній директорії.
+=======
+Here, `/path/to/script.js` is an absolute path to the script from the site root. One can also provide a relative path from the current page. For instance, `src="script.js"`, just like `src="./script.js"`, would mean a file `"script.js"` in the current folder.
+>>>>>>> 4541b7af7584014a676da731f6e8774da5e059f6
 
 Ми також можемо вказати повну URL-адресу. Наприклад:
 
