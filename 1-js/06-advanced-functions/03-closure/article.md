@@ -299,25 +299,25 @@ let counter = makeCounter();
 
 Якщо ми викликаємо `counter()` кілька разів, змінна `count` буде збільшена до `2`, `3` і так далі, в одному місці.
 
-```smart header="Closure"
-There is a general programming term "closure", that developers generally should know.
+```smart header="Замикання"
+У програмуванні існує загальний термін "замикання", який розробники зазвичай мають знати.
 
-A [closure](https://en.wikipedia.org/wiki/Closure_(computer_programming)) is a function that remembers its outer variables and can access them. In some languages, that's not possible, or a function should be written in a special way to make it happen. But as explained above, in JavaScript, all functions are naturally closures (there is only one exception, to be covered in <info:new-function>).
+[Замикання](https://uk.wikipedia.org/wiki/Замикання_(програмування)) -- це функція, яка запам’ятовує свої зовнішні змінні та може отримати до них доступ. У деяких мовах це зовсім неможливо, або функція має бути написана особливим чином. Але, як пояснювалося вище, в JavaScript замикання для функції -- це природньо і не потребує жодних зусиль (є лише один виняток, який ми розглянемо у <info:new-function>).
 
-That is: they automatically remember where they were created using a hidden `[[Environment]]` property, and then their code can access outer variables.
+Тобто: функції автоматично запам’ятовують, де вони були створені, використовуючи приховану властивість `[[Environment]]`, а потім їхній код може отримати доступ до зовнішніх змінних.
 
-When on an interview, a frontend developer gets a question about "what's a closure?", a valid answer would be a definition of the closure and an explanation that all functions in JavaScript are closures, and maybe a few more words about technical details: the `[[Environment]]` property and how Lexical Environments work.
+Коли під час співбесіди розробник отримує запитання "що таке замикання?", правильною відповіддю буде визначення замикання та пояснення, що всі функції в JavaScript є замиканнями, і, можливо, ще кілька слів про технічні деталі: властивість `[[Environment]]`, і як взагалі працюють лексичні середовища.
 ```
 
-## Garbage collection
+## Збирання сміття
 
-Usually, a Lexical Environment is removed from memory with all the variables after the function call finishes. That's because there are no references to it. As any JavaScript object, it's only kept in memory while it's reachable.
+Зазвичай після завершення виклику функції з пам’яті видаляється її лексичне середовище з усіма змінними. Це тому, що немає посилань на нього. Як і будь-який об’єкт JavaScript, він зберігається в пам’яті лише тоді, коли він досяжний.
 
-However, if there's a nested function that is still reachable after the end of a function, then it has `[[Environment]]` property that references the lexical environment.
+Однак, якщо є вкладена функція, яка все ще доступна після завершення виклику основної функції, то вона має властивість `[[Environment]]`, яка посилається на лексичне середовище, створене під час виклику.
 
-In that case the Lexical Environment is still reachable even after the completion of the function, so it stays alive.
+У цьому випадку лексичне середовище все ще доступне навіть після завершення функції, тому воно залишається "живим".
 
-For example:
+Наприклад:
 
 ```js
 function f() {
@@ -328,11 +328,11 @@ function f() {
   }
 }
 
-let g = f(); // g.[[Environment]] stores a reference to the Lexical Environment
-// of the corresponding f() call
+let g = f(); // g.[[Environment]] зберігає посилання на лексичне середовище
+// відповідного виклику f()
 ```
 
-Please note that if `f()` is called many times, and resulting functions are saved, then all corresponding Lexical Environment objects will also be retained in memory. In the code below, all 3 of them:
+Зверніть увагу, що якщо `f()` викликається багато разів, а отримані функції зберігаються, тоді всі відповідні об’єкти лексичного середовища також будуть збережені в пам’яті. У коді нижче збережені всі три:
 
 ```js
 function f() {
@@ -341,14 +341,14 @@ function f() {
   return function() { alert(value); };
 }
 
-// 3 functions in array, every one of them links to Lexical Environment
-// from the corresponding f() run
+// Три функції в масиві, кожна з яких пов’язана з лексичним середовищем
+// відповідного виклику f()
 let arr = [f(), f(), f()];
 ```
 
-A Lexical Environment object dies when it becomes unreachable (just like any other object). In other words, it exists only while there's at least one nested function referencing it.
+Об’єкт лексичного середовища "вмирає", коли стає недосяжним (як і будь-який інший об’єкт). Іншими словами, він існує лише тоді, коли на нього посилається принаймні одна вкладена функція.
 
-In the code below, after the nested function is removed, its enclosing Lexical Environment (and hence the `value`) is cleaned from memory:
+У наведеному нижче коді після видалення вкладеної функції, лексичне середовище, до якого вона мала доступ, також стирається з пам’яті:
 
 ```js
 function f() {
@@ -359,29 +359,29 @@ function f() {
   }
 }
 
-let g = f(); // while g function exists, the value stays in memory
+let g = f(); // поки функція g існує, значення залишається в пам’яті
 
-g = null; // ...and now the memory is cleaned up
+g = null; // ...і тепер пам’ять очищена
 ```
 
-### Real-life optimizations
+### Оптимізації в реальному житті
 
-As we've seen, in theory while a function is alive, all outer variables are also retained.
+Як ми бачили, теоретично, поки функція "жива", всі зовнішні змінні також зберігаються.
 
-But in practice, JavaScript engines try to optimize that. They analyze variable usage and if it's obvious from the code that an outer variable is not used -- it is removed.
+Але на практиці рушії JavaScript намагаються оптимізувати це. Вони аналізують використання змінних, і якщо з коду очевидно, що зовнішня змінна не використовується -- вона видаляється.
 
-**An important side effect in V8 (Chrome, Edge, Opera) is that such variable will become unavailable in debugging.**
+**Важливим побічним ефектом у рушію V8 (Chrome, Edge, Opera) є те, що така змінна стане недоступною під час налагодження.**
 
-Try running the example below in Chrome with the Developer Tools open.
+Спробуйте запустити наведений нижче приклад у Chrome із відкритими інструментами розробника.
 
-When it pauses, in the console type `alert(value)`.
+Коли він призупиняється на `debugger`, в консолі введіть `alert(value)`.
 
 ```js run
 function f() {
   let value = Math.random();
 
   function g() {
-    debugger; // in console: type alert(value); No such variable!
+    debugger; // в консолі введіть: alert(value); і ви побачите, що такої змінної немає!
   }
 
   return g;
@@ -391,18 +391,18 @@ let g = f();
 g();
 ```
 
-As you could see -- there is no such variable! In theory, it should be accessible, but the engine optimized it out.
+Як бачите, такої змінної немає! Теоретично вона повинна бути доступною, але рушій це оптимізував.
 
-That may lead to funny (if not such time-consuming) debugging issues. One of them -- we can see a same-named outer variable instead of the expected one:
+Це може призвести до смішних (якщо не таких трудомістких) проблем з налагодженням. Одна з них -- ми можемо побачити зовнішню змінну з такою ж назвою замість очікуваної:
 
 ```js run global
-let value = "Surprise!";
+let value = "Сюрприз!";
 
 function f() {
-  let value = "the closest value";
+  let value = "найближче значення";
 
   function g() {
-    debugger; // in console: type alert(value); Surprise!
+    debugger; // в консолі введіть: alert(value); Сюрприз!
   }
 
   return g;
@@ -412,6 +412,6 @@ let g = f();
 g();
 ```
 
-This feature of V8 is good to know. If you are debugging with Chrome/Edge/Opera, sooner or later you will meet it.
+Цю особливість V8 корисно знати. Якщо ви налагоджуєте свій код у Chrome/Edge/Opera, рано чи пізно ви її зустрінете.
 
-That is not a bug in the debugger, but rather a special feature of V8. Perhaps it will be changed sometime. You can always check for it by running the examples on this page.
+Це не помилка, а скоріше особливість V8. Можливо, колись це буде змінено. Ви завжди можете перевірити це, запустивши приклади на цій сторінці.
