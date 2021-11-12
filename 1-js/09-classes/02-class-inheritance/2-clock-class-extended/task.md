@@ -2,14 +2,14 @@ importance: 5
 
 ---
 
-# Extended clock
+# Покращений годинник
 
-We've got a `Clock` class. As of now, it prints the time every second.
+У нас є клас `Clock`. На даний момент він виводить час кожної секунди.
 
 
 [js src="source.view/clock.js"]
 
-Create a new class `ExtendedClock` that inherits from `Clock` and adds the parameter `precision` -- the number of `ms` between "ticks". Should be `1000` (1 second) by default.
+Створіть новий клас `ExtendedClock`, який успадковує від `Clock` і додає prection `precision` -- кількість `мс` між `цоканнями`.Повиненна бути `1000` (1 секунда) за замовчуванням.
 
-- Your code should be in the file `extended-clock.js`
-- Don't modify the original `clock.js`. Extend it.
+- Ваш код повинен бути у файлі `extended-clock.js`
+- Не змінюйте оригінал `clock.js`. Розширьте його.
