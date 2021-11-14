@@ -10,7 +10,7 @@ importance: 5
 let users = [
   { name: "Іван", age: 20, surname: "Іванов" },
   { name: "Петро", age: 18, surname: "Петров" },
-  { name: "Анна", age: 19, surname: "Хетеуей" }
+  { name: "Енн", age: 19, surname: "Гетевей" }
 ];
 ```
 
