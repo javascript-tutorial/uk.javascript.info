@@ -100,7 +100,7 @@ new User().sayHi(); // Привіт
 ```js
 class Rabbit extends Animal {
   stop() {
-    // ...тепер це буде використано для rabbit.stop()
+    // ...тепер цей метод буде використано для rabbit.stop()
     // замість stop() з класу Animal
   }
 }
