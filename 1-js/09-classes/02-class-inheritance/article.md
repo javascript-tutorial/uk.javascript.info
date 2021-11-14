@@ -183,7 +183,7 @@ setTimeout(function() { super.stop() }, 1000);
 
 До цього часу `Rabbit` не мав власного конструктора.
 
-Згідно із [специфікацією](https:///tc39.github.io/ecma262/#secuntime-semantics-classdefinutionevaluation), якщо клас розширює ще один клас і не має конструктора, то автоматично створюється "порожній" конструктор:
+Відповідно до [специфікації](https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), якщо клас розширює ще один клас і не має конструктора, то автоматично створюється "порожній" конструктор:
 
 ```js
 class Rabbit extends Animal {
