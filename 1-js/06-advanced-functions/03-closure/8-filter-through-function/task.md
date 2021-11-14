@@ -1,25 +1,25 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Filter through function
+# Функції фільтрації
 
-We have a built-in method `arr.filter(f)` for arrays. It filters all elements through the function `f`. If it returns `true`, then that element is returned in the resulting array.
+У нас є вбудований для масивів метод `arr.filter(f)`. Він фільтрує всі елементи через функцію `f`. Якщо вона повертає `true`, цей елемент повертається в отриманому масиві.
 
-Make a set of "ready to use" filters:
+Зробіть набір "готових до використання" фільтрів:
 
-- `inBetween(a, b)` -- between `a` and `b` or equal to them (inclusively).
-- `inArray([...])` -- in the given array.
+- `inBetween(a, b)` -- фільтрує елементи які більше `a` та менше `b`. Також має включати елементи, які дорівнюють їм.
+- `inArray([...])` -- фільтрує елементи включено у заданий масив.
 
-The usage must be like this:
+Використання має бути таким:
 
-- `arr.filter(inBetween(3,6))` -- selects only values between 3 and 6.
-- `arr.filter(inArray([1,2,3]))` -- selects only elements matching with one of the members of `[1,2,3]`.
+- `arr.filter(inBetween(3,6))` -- вибирає лише значення від 3 до 6.
+- `arr.filter(inArray([1,2,3]))` -- вибирає лише елементи, які включені у масив `[1,2,3]`.
 
-For instance:
+Наприклад:
 
 ```js
-/* .. your code for inBetween and inArray */
+/* .. ваш код для inBetween та inArray */
 let arr = [1, 2, 3, 4, 5, 6, 7];
 
 alert( arr.filter(inBetween(3, 6)) ); // 3,4,5,6

@@ -1,36 +1,36 @@
-importance: 5
+Важливість: 5
 
 ---
 
-# Sort by field
+# Сортувати за полем
 
-We've got an array of objects to sort:
+У нас є масив об’єктів для сортування:
 
 ```js
 let users = [
-  { name: "John", age: 20, surname: "Johnson" },
-  { name: "Pete", age: 18, surname: "Peterson" },
-  { name: "Ann", age: 19, surname: "Hathaway" }
+  { name: "Іван", age: 20, surname: "Іванов" },
+  { name: "Петро", age: 18, surname: "Петров" },
+  { name: "Анна", age: 19, surname: "Хетеуей" }
 ];
 ```
 
-The usual way to do that would be:
+Звичайний спосіб зробити це:
 
 ```js
-// by name (Ann, John, Pete)
+// За ім’ям (Анна, Іван, Петро)
 users.sort((a, b) => a.name > b.name ? 1 : -1);
 
-// by age (Pete, Ann, John)
+// За віком (Петро, Анна, Іван)
 users.sort((a, b) => a.age > b.age ? 1 : -1);
 ```
 
-Can we make it even less verbose, like this?
+Чи можемо ми зробити це ще менш багатослівним?
 
 ```js
 users.sort(byField('name'));
 users.sort(byField('age'));
 ```
 
-So, instead of writing a function, just put `byField(fieldName)`.
+Отже, замість того, щоб кожен раз писати функцію, ми будемо викликати функцію `byField(fieldName)`.
 
-Write the function `byField` that can be used for that.
+Напишіть функцію `byField` яка може бути використана для цього.

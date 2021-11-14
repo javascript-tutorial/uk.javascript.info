@@ -1,12 +1,12 @@
-importance: 5
+Важливість: 5
 
 ---
 
-# Counter object
+# Об’єкт лічильника
 
-Here a counter object is made with the help of the constructor function.
+Тут лічильник створюється за допомогою функції конструктора.
 
-Will it work? What will it show?
+Чи буде він працювати? Що він покаже?
 
 ```js
 function Counter() {

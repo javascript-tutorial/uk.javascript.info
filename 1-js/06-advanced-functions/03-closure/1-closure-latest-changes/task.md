@@ -1,23 +1,23 @@
-importance: 5
+Важливість: 5
 
 ---
 
-# Does a function pickup latest changes?
+# Чи побачить функція останні зміни?
 
-The function sayHi uses an external variable name. When the function runs, which value is it going to use?
+Функція `sayHi` використовує зовнішню змінну. Яке значення буде використано під час виконання функції?
 
 ```js
-let name = "John";
+let name = "Іван";
 
 function sayHi() {
-  alert("Hi, " + name);
+  alert("Привіт, " + name);
 }
 
-name = "Pete";
+name = "Петро";
 
-sayHi(); // what will it show: "John" or "Pete"?
+sayHi(); // що вона покаже "Іван" чи "Петро"?
 ```
 
-Such situations are common both in browser and server-side development. A function may be scheduled to execute later than it is created, for instance after a user action or a network request.
+Такі ситуації поширені як у браузері, так і в серверній розробці. Функцію можна запланувати на виконання пізніше, ніж вона створена, наприклад, після дії користувача або запиту мережі.
 
-So, the question is: does it pick up the latest changes?
+Отже, виникає питання: чи побачить функція останні зміни?
