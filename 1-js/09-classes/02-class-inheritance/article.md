@@ -28,7 +28,7 @@ class Animal {
 let animal = new Animal("Моя тварина");
 ```
 
-Ось як ми можемо представляти об'єкт `animal` і клас `Animal` графічно:
+Ось так можна графічно відобразити об’єкт `animal` і клас `Animal`:
 
 ![](rabbit-animal-independent-animal.svg)
 
