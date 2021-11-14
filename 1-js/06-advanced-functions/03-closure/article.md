@@ -255,7 +255,7 @@ alert( counter() ); // 2
 ![lexical environment lookup](lexical-environment-simple-lookup.svg)
 
 
-### 4 Етап. Повернення функції
+### 4 етап. Повернення функції
 
 Повернемося до прикладу з `makeCounter`.
 
