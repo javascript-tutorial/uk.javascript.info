@@ -57,7 +57,7 @@ rabbit.hide(); // Білий Кролик ховається!
 
 Об’єкт класу `Rabbit` має доступ і до методів `Rabbit`, таких як `rabbit.hide()`, і до методів `Animal`.
 
-Внутрішньо, ключове слово `extends` працює за допомогою хорошої старої механіки прототипу. Він встановлює в `Rabbit.prototype.[[Prototype]]` значення `Animal.prototype`. Отже, якщо метод не знайдено в `Rabbit.prototype`, JavaScript бере його з `Animal.prototype`.
+Внутрішньо, ключове слово `extends` працює за допомогою старої-доброї механіки прототипу. Він встановлює в `Rabbit.prototype.[[Prototype]]` значення `Animal.prototype`. Тому, якщо метод не знайдено в `Rabbit.prototype`, JavaScript бере його з `Animal.prototype`.
 
 ![](animal-rabbit-extends.svg)
 
