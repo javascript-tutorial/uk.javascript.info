@@ -2,8 +2,8 @@ importance: 5
 
 ---
 
-# Rewrite to class
+# Перепишіть клас
 
-The `Clock` class (see the sandbox) is written in functional style. Rewrite it in the "class" syntax.
+Клас `Clock` написано в функціональному стилі. Перепишіть його в синтаксис класу.
 
-P.S. The clock ticks in the console, open it to see.
+P.S. Годинник тікає у консолі, відкрийте її, щоб побачити.

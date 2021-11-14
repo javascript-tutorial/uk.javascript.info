@@ -1,6 +1,6 @@
-By definition, a factorial `n!` can be written as `n * (n-1)!`.
+За визначенням, факторіал `n!` може бути записаний як `n * (n-1)!`.
 
-In other words, the result of `factorial(n)` can be calculated as `n` multiplied by the result of `factorial(n-1)`. And the call for `n-1` can recursively descend lower, and lower, till `1`.
+Інакше кажучи, результат `factorial(n)` може бути розрахований, як `n` помножений на результат `factorial(n-1)`. І виклик до `n-1` може рекурсивно спускатися нижче та нижче, аж до `1`.
 
 ```js run
 function factorial(n) {
@@ -10,7 +10,7 @@ function factorial(n) {
 alert( factorial(5) ); // 120
 ```
 
-The basis of recursion is the value `1`. We can also make `0` the basis here, doesn't matter much, but gives one more recursive step:
+Базисом рекурсії є значення `1`. Ми також можемо зробити `0` базисом, це не має великого значення, але дає ще один рекурсивний крок:
 
 ```js run
 function factorial(n) {

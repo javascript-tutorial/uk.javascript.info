@@ -2,30 +2,30 @@ importance: 5
 
 ---
 
-# Fix a function that loses "this"
+# Виправте функцію, яка втратила 'this'
 
-The call to `askPassword()` in the code below should check the password and then call `user.loginOk/loginFail` depending on the answer.
+Виклик `askPassword()` в коді наведеному нижче повинен перевіряти пароль та викликати `user.loginOk/loginFail` в залежності від відповіді.
 
-But it leads to an error. Why?
+Але виконання коду призводить до помилки. Чому?
 
-Fix the highlighted line for everything to start working right (other lines are not to be changed).
+Виправте виділений рядок, щоб код запрацював правильно (інші рядки не мають бути змінені).
 
 ```js run
 function askPassword(ok, fail) {
-  let password = prompt("Password?", '');
+  let password = prompt("Пароль?", '');
   if (password == "rockstar") ok();
   else fail();
 }
 
 let user = {
-  name: 'John',
+  name: 'Іван',
 
   loginOk() {
-    alert(`${this.name} logged in`);
+    alert(`${this.name} увійшов`);
   },
 
   loginFail() {
-    alert(`${this.name} failed to log in`);
+    alert(`${this.name} виконав невдалу спробу входу`);
   },
 
 };

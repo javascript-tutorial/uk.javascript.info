@@ -23,7 +23,7 @@ describe("byField", function(){
       { name: "Іван", age: 20, surname: "Іванов"},
     ];
     let ageSortedAnswer = users.sort(byField("age"));
-    assert.deepEqual(ageSortedKey, ageSortedKey);
+    assert.deepEqual(ageSortedKey, ageSortedAnswer);
   });
 
   it("сортує користувачів за прізвищем", function(){
