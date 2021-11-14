@@ -28,7 +28,7 @@ describe("byField", function(){
 
   it("сортує користувачів за прізвищем", function(){
     let surnameSortedKey = [
-      { name: "Анна", age: 19, surname: "Хетеуей" },
+      { name: "Енн", age: 19, surname: "Гетевей" },
       { name: "Іван", age: 20, surname: "Іванов"},
       { name: "Петро", age: 18, surname: "Петров" },
     ];
