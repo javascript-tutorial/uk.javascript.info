@@ -23,5 +23,5 @@ class Rabbit extends Animal {
 *!*
 let rabbit = new Rabbit("Білий Кролик"); // зараз добре
 */!*
-alert(rabbit.name); // Білий Кролик
+alert(rabbit.name); // Білий кролик
 ```
