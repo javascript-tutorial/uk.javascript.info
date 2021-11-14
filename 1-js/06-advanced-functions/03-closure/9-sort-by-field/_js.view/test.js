@@ -19,7 +19,7 @@ describe("byField", function(){
   it("сортує користувачів за віком", function(){
     let ageSortedKey = [
       { name: "Петро", age: 18, surname: "Петров" },
-      { name: "Анна", age: 19, surname: "Хетеуей" },
+      { name: "Енн", age: 19, surname: "Гетевей" },
       { name: "Іван", age: 20, surname: "Іванов"},
     ];
     let ageSortedAnswer = users.sort(byField("age"));
