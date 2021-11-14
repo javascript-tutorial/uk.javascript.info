@@ -38,7 +38,7 @@ let animal = new Animal("Моя тварина");
 
 Синтаксис, щоб розширити інший клас: `class Child extends Parent`.
 
-Створімо `class Rabbit`, які успадковують від `Animal`:
+Створімо `class Rabbit`, який успадковується від `Animal`:
 
 ```js
 *!*
