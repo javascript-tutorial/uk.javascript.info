@@ -17,7 +17,7 @@ function makeWorker() {
   };
 }
 
-let name = "John";
+let name = "Іван";
 
 // створити функцію
 let work = makeWorker();
