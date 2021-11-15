@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Are counters independent?
+# Чи лічильники незалежні?
 
-Here we make two counters: `counter` and `counter2` using the same `makeCounter` function.
+Тут ми створюємо два лічильника: `counter` та `counter2` використовуючи однакову функцію `makeCounter`.
 
-Are they independent? What is the second counter going to show? `0,1` or `2,3` or something else?
+Вони незалежні? Що покаже другий лічильник? `0,1` чи `2,3` чи щось інше?
 
 ```js
 function makeCounter() {
