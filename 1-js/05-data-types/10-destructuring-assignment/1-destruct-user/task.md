@@ -2,32 +2,32 @@ importance: 5
 
 ---
 
-# Destructuring assignment
+# Деструктуроване присвоєння
 
-We have an object:
+У нас є об’єкт:
 
 ```js
 let user = {
-  name: "John",
+  name: "Джон",
   years: 30
 };
 ```
 
-Write the destructuring assignment that reads:
+Напишіть деструктуроване присвоєння, яке зчитує:
 
-- `name` property into the variable `name`.
-- `years` property into the variable `age`.
-- `isAdmin` property into the variable `isAdmin` (false, if no such property)
+- властивість `name` до змінної `name`.
+- властивість `years` до змінної `age`.
+- властивість `isAdmin` до змінної `isAdmin` (false, якщо така властівість відсутня)
 
-Here's an example of the values after your assignment:
+Ось приклад значень після вашого присвоєння:
 
 ```js
-let user = { name: "John", years: 30 };
+let user = { name: "Джон", years: 30 };
 
-// your code to the left side:
+// ваш код зліва:
 // ... = user
 
-alert( name ); // John
+alert( name ); // Джон
 alert( age ); // 30
 alert( isAdmin ); // false
 ```

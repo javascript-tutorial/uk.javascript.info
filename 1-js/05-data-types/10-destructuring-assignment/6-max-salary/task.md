@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# The maximal salary 
+# Максимальна зарплата 
 
-There is a `salaries` object:
+Є об’єкт `salaries`:
 
 ```js
 let salaries = {
@@ -14,9 +14,9 @@ let salaries = {
 };
 ```
 
-Create the function `topSalary(salaries)` that returns the name of the top-paid person.
+Створіть функцію `topSalary(salaries)` яка повертає ім’я найбільш високооплачуваної особи.
 
-- If `salaries` is empty, it should return `null`.
-- If there are multiple top-paid persons, return any of them.
+- Якщо об’єкт `salaries` пустий, функція повинна повернути `null`.
+- Якщо є кілька високооплачуваних осіб, поверніть будь-якого з них.
 
-P.S. Use `Object.entries` and destructuring to iterate over key/value pairs.
+P.S. Використовуйте `Object.entries` і деструктурування для перебору пар ключ/значення.
