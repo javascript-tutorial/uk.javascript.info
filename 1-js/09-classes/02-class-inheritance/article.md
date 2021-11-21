@@ -1,13 +1,13 @@
 
-# Class inheritance
+# Наслідування класу
 
-Class inheritance is a way for one class to extend another class.
+Наслідування класу -- це коли один клас розширює інший.
 
-So we can create new functionality on top of the existing.
+Таким чином, ми можемо створити нову функціональність на основі тої, що існує.
 
-## The "extends" keyword
+## Ключове слово "extends"
 
-Let's say we have class `Animal`:
+Скажімо, у нас є клас `Animal`:
 
 ```js
 class Animal {
@@ -17,61 +17,61 @@ class Animal {
   }
   run(speed) {
     this.speed = speed;
-    alert(`${this.name} runs with speed ${this.speed}.`);
+    alert(`${this.name} біжить зі швидкістю ${this.speed}.`);
   }
   stop() {
     this.speed = 0;
-    alert(`${this.name} stands still.`);
+    alert(`${this.name} стоїть.`);
   }
 }
 
-let animal = new Animal("My animal");
+let animal = new Animal("Моя тварина");
 ```
 
-Here's how we can represent `animal` object and `Animal` class graphically:
+Ось так можна графічно відобразити об’єкт `animal` і клас `Animal`:
 
 ![](rabbit-animal-independent-animal.svg)
 
-...And we would like to create another `class Rabbit`.
+...І ми хотіли б створити інший `class Rabbit`.
 
-As rabbits are animals, `Rabbit` class should be based on `Animal`, have access to animal methods, so that rabbits can do what "generic" animals can do.
+Оскільки кролики -- це тварини, клас `Rabbit` повинен базуватися на `Animal`, мати доступ до методів тварин, щоб кролики могли робити те, що можуть робити "загальні" тварини.
 
-The syntax to extend another class is: `class Child extends Parent`.
+Синтаксис, щоб розширити інший клас: `class Child extends Parent`.
 
-Let's create `class Rabbit` that inherits from `Animal`:
+Створімо `class Rabbit`, який успадковується від `Animal`:
 
 ```js
 *!*
 class Rabbit extends Animal {
 */!*
   hide() {
-    alert(`${this.name} hides!`);
+    alert(`${this.name} ховається!`);
   }
 }
 
-let rabbit = new Rabbit("White Rabbit");
+let rabbit = new Rabbit("Білий Кролик");
 
-rabbit.run(5); // White Rabbit runs with speed 5.
-rabbit.hide(); // White Rabbit hides!
+rabbit.run(5); // Білий Кролик біжить зі швидкістю 5.
+rabbit.hide(); // Білий Кролик ховається!
 ```
 
-Object of `Rabbit` class have access both to `Rabbit` methods, such as `rabbit.hide()`, and also to `Animal` methods, such as `rabbit.run()`.
+Об’єкт класу `Rabbit` має доступ і до методів `Rabbit`, таких як `rabbit.hide()`, і до методів `Animal`.
 
-Internally, `extends` keyword works using the good old prototype mechanics. It sets `Rabbit.prototype.[[Prototype]]` to `Animal.prototype`. So, if a method is not found in `Rabbit.prototype`, JavaScript takes it from `Animal.prototype`.
+Внутрішньо, ключове слово `extends` працює за допомогою старої-доброї механіки прототипу. Він встановлює в `Rabbit.prototype.[[Prototype]]` значення `Animal.prototype`. Тому, якщо метод не знайдено в `Rabbit.prototype`, JavaScript бере його з `Animal.prototype`.
 
 ![](animal-rabbit-extends.svg)
 
-For instance, to find `rabbit.run` method, the engine checks (bottom-up on the picture):
-1. The `rabbit` object (has no `run`).
-2. Its prototype, that is `Rabbit.prototype` (has `hide`, but not `run`).
-3. Its prototype, that is (due to `extends`) `Animal.prototype`, that finally has the `run` method.
+Наприклад, для пошуку методу `rabbit.run`, рушій перевіряє (знизу вгору на рисунку):
+1. Об’єкт `rabbit` (не має методу `run`).
+2. Прототип `Rabbit`, тобто `Rabbit.prototype` (має `hide`, але не має `run`).
+3. Прототип `Animal`, тобто `Animal.prototype` (завдяки `extends`), який, нарешті, має метод `run`.
 
-As we can recall from the chapter <info:native-prototypes>, JavaScript itself uses prototypal inheritance for built-in objects. E.g. `Date.prototype.[[Prototype]]` is `Object.prototype`. That's why dates have access to generic object methods.
+Як ми можемо згадати з розділу <info:native-prototypes>, сам JavaScript використовує прототипне наслідування для вбудованих об’єктів. Наприклад, `Date.prototype.[[Prototype]]` -- це `Object.prototype`. Ось чому дати мають доступ до загальних методів об’єкта.
 
-````smart header="Any expression is allowed after `extends`"
-Class syntax allows to specify not just a class, but any expression after `extends`.
+````smart header="Після слова `extends` допускається будь-який вираз"
+Синтаксис класу дозволяє вказати не лише клас, але будь-який вираз після `extends`.
 
-For instance, a function call that generates the parent class:
+Наприклад, виклик функції, який генерує батьківський клас:
 
 ```js run
 function f(phrase) {
@@ -81,39 +81,39 @@ function f(phrase) {
 }
 
 *!*
-class User extends f("Hello") {}
+class User extends f("Привіт") {}
 */!*
 
-new User().sayHi(); // Hello
+new User().sayHi(); // Привіт
 ```
-Here `class User` inherits from the result of `f("Hello")`.
+Тут `class User` успадковує від результату `f("Привіт")`.
 
-That may be useful for advanced programming patterns when we use functions to generate classes depending on many conditions and can inherit from them.
+Це може бути корисним для просунутих шаблонів програмування, коли ми використовуємо функції для створення класів залежно від багатьох умов і можемо успадкуватися від них.
 ````
 
-## Overriding a method
+## Перевизначення методу
 
-Now let's move forward and override a method. By default, all methods that are not specified in `class Rabbit` are taken directly "as is" from `class Animal`.
+Тепер рухаймося вперед і перевизначимо метод. Типово, всі методи, які не вказані в `class Rabbit`, беруться безпосередньо "як є" від класу `Animal`.
 
-But if we specify our own method in `Rabbit`, such as `stop()` then it will be used instead:
+Але якщо ми вкажемо наш власний метод в `Rabbit`, наприклад, `stop()`, то він буде використовуватися замість методу з класу `Animal`:
 
 ```js
 class Rabbit extends Animal {
   stop() {
-    // ...now this will be used for rabbit.stop()
-    // instead of stop() from class Animal
+    // ...тепер цей метод буде використано для rabbit.stop()
+    // замість stop() з класу Animal
   }
 }
 ```
 
-Usually we don't want to totally replace a parent method, but rather to build on top of it to tweak or extend its functionality. We do something in our method, but call the parent method before/after it or in the process.
+Зазвичай ми не хочемо повністю замінити батьківський метод, але, радше побудувати метод на його основі, щоб налаштувати або розширити функціональність. Ми робимо щось у нашому методі, але викликаємо батьківський метод до/після нього або в процесі.
 
-Classes provide `"super"` keyword for that.
+Для цього в класах використовують ключове слово `"super"`.
 
-- `super.method(...)` to call a parent method.
-- `super(...)` to call a parent constructor (inside our constructor only).
+- `super.method(...)`, щоб викликати батьківський метод.
+- `super(...)`, щоб викликати батьківський конструктор (лише в нашому конструкторі).
 
-For instance, let our rabbit autohide when stopped:
+Наприклад, нехай наш кролик автоматично ховається, коли зупиняється:
 
 ```js run
 class Animal {
@@ -125,50 +125,50 @@ class Animal {
 
   run(speed) {
     this.speed = speed;
-    alert(`${this.name} runs with speed ${this.speed}.`);
+    alert(`${this.name} біжить зі швидкістю ${this.speed}.`);
   }
 
   stop() {
     this.speed = 0;
-    alert(`${this.name} stands still.`);
+    alert(`${this.name} стоїть.`);
   }
 
 }
 
 class Rabbit extends Animal {
   hide() {
-    alert(`${this.name} hides!`);
+    alert(`${this.name} ховається!`);
   }
 
 *!*
   stop() {
-    super.stop(); // call parent stop
-    this.hide(); // and then hide
+    super.stop(); // викликає батьківський stop
+    this.hide(); // а потім ховається
   }
 */!*
 }
 
-let rabbit = new Rabbit("White Rabbit");
+let rabbit = new Rabbit("Білий Кролик");
 
-rabbit.run(5); // White Rabbit runs with speed 5.
-rabbit.stop(); // White Rabbit stands still. White Rabbit hides!
+rabbit.run(5); // Білий Кролик біжить зі швидкістю 5.
+rabbit.stop(); // Білий Кролик стоїть. Білий Кролик ховається!
 ```
 
-Now `Rabbit` has the `stop` method that calls the parent `super.stop()` in the process.
+Тепер `Кролик` має метод `stop`, який в процесі викликає батьківський `super.stop()`.
 
-````smart header="Arrow functions have no `super`"
-As was mentioned in the chapter <info:arrow-functions>, arrow functions do not have `super`.
+````smart header="Стрілкові функції не мають `super`"
+Як зазначалося в розділі <info:arrow-functions>, стрілкові функції не мають `super`.
 
-If accessed, it's taken from the outer function. For instance:
+Якщо `super` доступний, то він береться із зовнішньої функції. Наприклад:
 ```js
 class Rabbit extends Animal {
   stop() {
-    setTimeout(() => super.stop(), 1000); // call parent stop after 1sec
+    setTimeout(() => super.stop(), 1000); // викликає батьківський stop після 1 сек
   }
 }
 ```
 
-The `super` in the arrow function is the same as in `stop()`, so it works as intended. If we specified a "regular" function here, there would be an error:
+`super` у стрілкової функції такий самий, як у `stop()`, тому він працює як передбачається. Якщо ми вкажемо тут "звичайну" функцію, то виникне помилка:
 
 ```js
 // Unexpected super
@@ -177,17 +177,17 @@ setTimeout(function() { super.stop() }, 1000);
 ````
 
 
-## Overriding constructor
+## Перевизначення конструктора
 
-With constructors it gets a little bit tricky.
+З конструкторами трохи складніше.
 
-Until now, `Rabbit` did not have its own `constructor`.
+До цього часу `Rabbit` не мав власного конструктора.
 
-According to the [specification](https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), if a class extends another class and has no `constructor`, then the following "empty" `constructor` is generated:
+Відповідно до [специфікації](https://tc39.github.io/ecma262/#sec-runtime-semantics-classdefinitionevaluation), якщо клас розширює ще один клас і не має конструктора, то автоматично створюється "порожній" конструктор:
 
 ```js
 class Rabbit extends Animal {
-  // generated for extending classes without own constructors
+  // генерується для класів-нащадків без власних конструкторів
 *!*
   constructor(...args) {
     super(...args);
@@ -196,9 +196,9 @@ class Rabbit extends Animal {
 }
 ```
 
-As we can see, it basically calls the parent `constructor` passing it all the arguments. That happens if we don't write a constructor of our own.
+Як ми бачимо, він в основному викликає батьківський конструктор та передає йому всі аргументи. Це відбувається, якщо ми не напишемо для нашого класу свій власний конструктор.
 
-Now let's add a custom constructor to `Rabbit`. It will specify the `earLength` in addition to `name`:
+Тепер додамо індивідуальний конструктор до `Rabbit`. Він буде визначати `earLength` на додачу до `name`:
 
 ```js run
 class Animal {
@@ -223,31 +223,31 @@ class Rabbit extends Animal {
 }
 
 *!*
-// Doesn't work!
-let rabbit = new Rabbit("White Rabbit", 10); // Error: this is not defined.
+// Не працює!
+let rabbit = new Rabbit("Білий Кролик", 10); // Error: this is not defined.
 */!*
 ```
 
-Whoops! We've got an error. Now we can't create rabbits. What went wrong?
+Ой! Виникла помилка. Тепер ми не можемо створювати кроликів. Що пішло не так?
 
-The short answer is:
+Коротка відповідь:
 
-- **Constructors in inheriting classes must call `super(...)`, and (!) do it before using `this`.**
+- **Конструктори в класі, що наслідується, повинні викликати `super(...)` і (!) зробити це перед використанням `this`.**
 
-...But why? What's going on here? Indeed, the requirement seems strange.
+...Але чому? Що тут відбувається? Дійсно, ця вимога здається дивною.
 
-Of course, there's an explanation. Let's get into details, so you'll really understand what's going on.
+Звичайно, є пояснення. Поглибмося в деталі, щоб ви дійсно зрозуміли, що відбувається.
 
-In JavaScript, there's a distinction between a constructor function of an inheriting class (so-called "derived constructor") and other functions. A derived constructor has a special internal property `[[ConstructorKind]]:"derived"`. That's a special internal label.
+У JavaScript існує відмінність між функцією-конструктором класу, що успадковується (так званого "похідного конструктора"), та іншими функціями. Похідний конструктор має особливу внутрішню власність `[[ConstructorKind]]:"derived"`. Це особлива внутрішня позначка.
 
-That label affects its behavior with `new`.
+Ця позначка впливає на поведінку функції-конструктора з `new`.
 
-- When a regular function is executed with `new`, it creates an empty object and assigns it to `this`.
-- But when a derived constructor runs, it doesn't do this. It expects the parent constructor to do this job.
+- Коли звичайна функція виконується з ключовим словом `new`, воно створює порожній об'єкт і присвоює його `this`.
+- Але коли працює похідний конструктор, він не робить цього. Він очікує, що батьківський конструктор виконує цю роботу.
 
-So a derived constructor must call `super` in order to execute its parent (base) constructor, otherwise the object for `this` won't be created. And we'll get an error.
+Таким чином, похідний конструктор повинен викликати `super`, щоб виконати його батьківський (базовий) конструктор, інакше об'єкт для `this` не буде створено. І ми отримаємо помилку.
 
-For the `Rabbit` constructor to work, it needs to call `super()` before using `this`, like here:
+Для роботи конструктора `Rabbit` він повинен викликати `super()` перед використанням `this`, як тут:
 
 ```js run
 class Animal {
@@ -273,34 +273,34 @@ class Rabbit extends Animal {
 }
 
 *!*
-// now fine
-let rabbit = new Rabbit("White Rabbit", 10);
-alert(rabbit.name); // White Rabbit
+// тепер добре
+let rabbit = new Rabbit("Білий Кролик", 10);
+alert(rabbit.name); // Білий Кролик
 alert(rabbit.earLength); // 10
 */!*
 ```
 
 
 
-### Overriding class fields: a tricky note
+### Перевизначення поля класу: складна примітка
 
-```warn header="Advanced note"
-This note assumes you have a certain experience with classes, maybe in other programming languages.
+```warn header="Просунута примітка"
+Ця примітка передбачає, що у вас є певний досвід роботи з класами, можливо, на інших мовах програмування.
 
-It provides better insight into the language and also explains the behavior that might be a source of bugs (but not very often).
+Це забезпечує краще розуміння мови, а також пояснює поведінку, яка може бути джерелом помилок (але не дуже часто).
 
-If you find it difficult to understand, just go on, continue reading, then return to it some time later.
+Якщо вам важко зрозуміти цю секцію, просто продовжуйте читати далі, а потім можете повернутися до неї через деякий час.
 ```
 
-We can override not only methods, but also class fields.
+Ми можемо перевизначити не тільки методи, а й поля класу.
 
-Although, there's a tricky behavior when we access an overridden field in parent constructor, quite different from most other programming languages.
+Хоча, що існує складна поведінка, коли ми отримуємо доступ до перевизначеного поля в батьківському конструкторі, яка сильно відрізняється від більшості інших мов програмування.
 
-Consider this example:
+Розглянемо цей приклад:
 
 ```js run
 class Animal {
-  name = 'animal';
+  name = 'тварина';
 
   constructor() {
     alert(this.name); // (*)
@@ -308,137 +308,137 @@ class Animal {
 }
 
 class Rabbit extends Animal {
-  name = 'rabbit';
+  name = 'кролик';
 }
 
-new Animal(); // animal
+new Animal(); // тварина
 *!*
-new Rabbit(); // animal
+new Rabbit(); // тварина
 */!*
 ```
 
-Here, class `Rabbit` extends `Animal` and overrides `name` field with its own value.
+Тут клас `Rabbit` наслідує клас `Animal` і перевизначає поле `name` власним значенням.
 
-There's no own constructor in `Rabbit`, so `Animal` constructor is called.
+Немає власного конструктора в `Rabbit`, тому викликається конструктор `Animal`.
 
-What's interesting is that in both cases: `new Animal()` and `new Rabbit()`, the `alert` in the line `(*)` shows `animal`.
+Цікаво, що в обох випадках: `new Animal()` і `new Rabbit()`, `alert` в рядку `(*)` показує `animal`.
 
-**In other words, parent constructor always uses its own field value, not the overridden one.**
+**Іншими словами, батьківський конструктор завжди використовує власне значення поля, а не перевизначене.**
 
-What's odd about it?
+Що в цьому дивного?
 
-If it's not clear yet, please compare with methods.
+Якщо це ще не зрозуміло, будь ласка, порівняйте з методами.
 
-Here's the same code, but instead of `this.name` field we call `this.showName()` method:
+Ось той самий код, але замість поля `this.name` ми викликаємо метод `this.showName()`.
 
 ```js run
 class Animal {
-  showName() {  // instead of this.name = 'animal'
-    alert('animal');
+  showName() {  // замість this.name = 'тварина'
+    alert('тварина');
   }
 
   constructor() {
-    this.showName(); // instead of alert(this.name);
+    this.showName(); // замість alert(this.name);
   }
 }
 
 class Rabbit extends Animal {
   showName() {
-    alert('rabbit');
+    alert('кролик');
   }
 }
 
-new Animal(); // animal
+new Animal(); // тварина
 *!*
-new Rabbit(); // rabbit
+new Rabbit(); // кролик
 */!*
 ```
 
-Please note: now the output is different.
+Будь ласка, зверніть увагу: тепер вивід відрізняється.
 
-And that's what we naturally expect. When the parent constructor is called in the derived class, it uses the overridden method.
+І це те, що ми, дійсно, очікуємо. Коли батьківський конструктор викликається в похідному класі, він використовує перевизначений метод.
 
-...But for class fields it's not so. As said, the parent constructor always uses the parent field.
+...Але для полів класу це не так. Як сказано, батьківський конструктор завжди використовує батьківське поле.
 
-Why is there the difference?
+Чому існує різниця?
 
-Well, the reason is in the field initialization order. The class field is initialized:
-- Before constructor for the base class (that doesn't extend anything),
-- Immediately after `super()` for the derived class.
+Ну, причина полягає у порядку ініціалізації поля. Поле класу ініціалізується:
+- До конструктора для базового класу (котрий нічого не наслідує),
+- Відразу після `super()` для похідного класу.
 
-In our case, `Rabbit` is the derived class. There's no `constructor()` in it. As said previously, that's the same as if there was an empty constructor with only `super(...args)`.
+У нашому випадку `Rabbit` -- це похідний клас. У ньому немає конструктора. Як сказано раніше, це те ж саме, якби там був порожній конструктор лише з `super(...args)`.
 
-So, `new Rabbit()` calls `super()`, thus executing the parent constructor, and (per the rule for derived classes) only after that its class fields are initialized. At the time of the parent constructor execution, there are no `Rabbit` class fields yet, that's why `Animal` fields are used.
+Отже, `new Rabbit()` викликає `super()`, таким чином, виконуючи батьківський конструктор, і (за правилом для похідних класів) лише після того ініціалізує свої поля класу. На момент виконання батьківського конструктора, ще немає полів класу `Rabbit`, тому використовуються класу `Animal`.
 
-This subtle difference between fields and methods is specific to JavaScript
+Ця тонка різниця між полями та методами є специфічною для JavaScript
 
-Luckily, this behavior only reveals itself if an overridden field is used in the parent constructor. Then it may be difficult to understand what's going on, so we're explaining it here.
+На щастя, ця поведінка виявляє себе лише якщо у перевизначене поле використовується у батьківському конструкторі. Тоді важко зрозуміти, що відбувається, тому ми пояснюємо це тут.
 
-If it becomes a problem, one can fix it by using methods or getters/setters instead of fields.
+Якщо це стає проблемою, її можна вирішити за допомогою методів або геттерів/сеттерів, а не полів.
 
 
-## Super: internals, [[HomeObject]]
+## Super: властивості, [[HomeObject]]
 
-```warn header="Advanced information"
-If you're reading the tutorial for the first time - this section may be skipped.
+```warn header="Просунута примітка"
+Якщо ви читаєте підручник вперше - цей розділ можете пропустити.
 
-It's about the internal mechanisms behind inheritance and `super`.
+В ньому йде мова про внутрішній механізм наслідування та `super`.
 ```
 
-Let's get a little deeper under the hood of `super`. We'll see some interesting things along the way.
+Подивімося трохи глибше під капот `super`. Ми побачимо деякі цікаві речі.
 
-First to say, from all that we've learned till now, it's impossible for `super` to work at all!
+Перш за все, з усього, що ми дізналися дотепер, `super` взагалі не може працювати!
 
-Yeah, indeed, let's ask ourselves, how it should technically work? When an object method runs, it gets the current object as `this`. If we call `super.method()` then, the engine needs to get the `method` from the prototype of the current object. But how?
+Так, дійсно, поставмо собі питання, як він повинен технічно працювати? Коли метод об'єкта запускається, він отримує поточний об'єкт як `this`. Якщо ми викликаємо `super.method()`, рушій повинен отримати `method` від прототипу поточного об'єкта. Але як?
 
-The task may seem simple, but it isn't. The engine knows the current object `this`, so it could get the parent `method` as `this.__proto__.method`. Unfortunately, such a "naive" solution won't work.
+Завдання може здатися простим, але це не так. Рушій знає поточний об'єкт `this`, тому він міг би отримати батьківський `method` як `this.__proto__.method`. На жаль, таке "нативне" рішення не буде працювати.
 
-Let's demonstrate the problem. Without classes, using plain objects for the sake of simplicity.
+Продемонструймо проблему. Без класів, використовуючи прості об'єкти заради наочністі.
 
-You may skip this part and go below to the `[[HomeObject]]` subsection if you don't want to know the details. That won't harm. Or read on if you're interested in understanding things in-depth.
+Ви можете пропустити цю частину та перейти нижче до розділу `[[HomeObject]]` якщо ви не хочете знати деталі. Це не завдасть шкоди вашому загальному розумінню. Або читайте, якщо ви зацікавлені в розумінні поглиблених речей.
 
-In the example below, `rabbit.__proto__ = animal`. Now let's try: in `rabbit.eat()` we'll call `animal.eat()`, using `this.__proto__`:
+У прикладі нижче, `rabbit.__proto__ = animal`. Тепер спробуймо: у `rabbit.eat()` ми викличемо `animal.eat()`, використовуючи `this.__proto__`:
 
 ```js run
 let animal = {
-  name: "Animal",
+  name: "Тварина",
   eat() {
-    alert(`${this.name} eats.`);
+    alert(`${this.name} їсть.`);
   }
 };
 
 let rabbit = {
   __proto__: animal,
-  name: "Rabbit",
+  name: "Кролик",
   eat() {
 *!*
-    // that's how super.eat() could presumably work
+    // ось як super.eat() міг би, мабуть, працювати
     this.__proto__.eat.call(this); // (*)
 */!*
   }
 };
 
-rabbit.eat(); // Rabbit eats.
+rabbit.eat(); // Кролик їсть.
 ```
 
-At the line `(*)` we take `eat` from the prototype (`animal`) and call it in the context of the current object. Please note that `.call(this)` is important here, because a simple `this.__proto__.eat()` would execute parent `eat` in the context of the prototype, not the current object.
+На лінії `(*)` ми беремо `eat` з прототипу (`animal`) і викликаємо його в контексті поточного об'єкта. Зверніть увагу, що `.call(this)` є важливим тут, тому що простий `this.__proto__.eat()` буде виконувати батьківський `eat` в контексті прототипу, а не поточного об'єкта.
 
-And in the code above it actually works as intended: we have the correct `alert`.
+І в коді вище, це насправді працює, як це передбачено: у нас є правильний `alert`.
 
-Now let's add one more object to the chain. We'll see how things break:
+Тепер додаймо ще один об'єкт до ланцюга наслідування. Ми побачимо, як все зламається:
 
 ```js run
 let animal = {
-  name: "Animal",
+  name: "Тварина",
   eat() {
-    alert(`${this.name} eats.`);
+    alert(`${this.name} їсть.`);
   }
 };
 
 let rabbit = {
   __proto__: animal,
   eat() {
-    // ...bounce around rabbit-style and call parent (animal) method
+    // ...робимо щось специфічне для кролика і викликаємо батьківський (animal) метод
     this.__proto__.eat.call(this); // (*)
   }
 };
@@ -446,7 +446,7 @@ let rabbit = {
 let longEar = {
   __proto__: rabbit,
   eat() {
-    // ...do something with long ears and call parent (rabbit) method
+    // ...зробимо щось, що пов’язане з довгими вухами, і викликаємо батьківський (rabbit) метод
     this.__proto__.eat.call(this); // (**)
   }
 };
@@ -456,61 +456,61 @@ longEar.eat(); // Error: Maximum call stack size exceeded
 */!*
 ```
 
-The code doesn't work anymore! We can see the error trying to call `longEar.eat()`.
+Код більше не працює! Ми бачимо помилку, намагаючись викликати `longEar.eat()`.
 
-It may be not that obvious, but if we trace `longEar.eat()` call, then we can see why. In both lines `(*)` and `(**)` the value of `this` is the current object (`longEar`). That's essential: all object methods get the current object as `this`, not a prototype or something.
+Це може бути не таким очевидним, але якщо ми відстежимо виклик `longEar.eat()`, то ми можемо зрозуміти, чому так відбувається. В обох рядках `(*)` і `(**)` значення `this` є поточним об'єктом (`longEar`). Це важливо: всі методи об'єкта отримують поточний об'єкт, як `this`, а не прототип або щось інше.
 
-So, in both lines `(*)` and `(**)` the value of `this.__proto__` is exactly the same: `rabbit`. They both call `rabbit.eat` without going up the chain in the endless loop.
+Отже, в обох рядках `(*)` і `(**)` значення `this.__proto__` точно таке ж саме: `rabbit`. Вони обидва викликають `rabbit.eat`. Не піднімаючись ланцюзі наслідування та перебуваючи в нескінченній петлі.
 
-Here's the picture of what happens:
+Ось картина того, що відбувається:
 
 ![](this-super-loop.svg)
 
-1. Inside `longEar.eat()`, the line `(**)` calls `rabbit.eat` providing it with `this=longEar`.
+1. Всередині `longEar.eat()`, рядок `(**)` викликає `rabbit.eat` надаючи йому `this=longEar`.
     ```js
-    // inside longEar.eat() we have this = longEar
+    // всередині longEar.eat() у нас є this = longEar
     this.__proto__.eat.call(this) // (**)
-    // becomes
+    // стає
     longEar.__proto__.eat.call(this)
-    // that is
+    // тобто те саме, що
     rabbit.eat.call(this);
     ```
-2. Then in the line `(*)` of `rabbit.eat`, we'd like to pass the call even higher in the chain, but `this=longEar`, so `this.__proto__.eat` is again `rabbit.eat`!
+2. Тоді в рядку `(*)` в ` rabbit.eat`, ми хотіли б передати виклик ще вище в ланцюгу наслідування, але `this=longEar`, тому `this.__proto__.eat` знову `rabbit.eat`!
 
     ```js
-    // inside rabbit.eat() we also have this = longEar
+    // всередині rabbit.eat() у нас також є this = longEar
     this.__proto__.eat.call(this) // (*)
-    // becomes
+    // стає
     longEar.__proto__.eat.call(this)
-    // or (again)
+    // або (знову)
     rabbit.eat.call(this);
     ```
 
-3. ...So `rabbit.eat` calls itself in the endless loop, because it can't ascend any further.
+3. ...Отже, `rabbit.eat` викликає себе в нескінченній петлі, тому що він не може піднятися вище.
 
-The problem can't be solved by using `this` alone.
+Проблема не може бути вирішена лише за допомогою `this`.
 
 ### `[[HomeObject]]`
 
-To provide the solution, JavaScript adds one more special internal property for functions: `[[HomeObject]]`.
+Щоб забезпечити рішення, JavaScript додає ще одну спеціальну внутрішню власність для функцій: `[[HomeObject]]`.
 
-When a function is specified as a class or object method, its `[[HomeObject]]` property becomes that object.
+Коли функція вказана як метод класу або об'єкта, її властивість `[[HomeObject]]` стає цим об'єктом.
 
-Then `super` uses it to resolve the parent prototype and its methods.
+Тоді `super` використовує цю властивість для знаходження батьківського прототипу та його методів.
 
-Let's see how it works, first with plain objects:
+Подивімося, як це працює, спочатку з простими об'єктами:
 
 ```js run
 let animal = {
-  name: "Animal",
+  name: "Тварина",
   eat() {         // animal.eat.[[HomeObject]] == animal
-    alert(`${this.name} eats.`);
+    alert(`${this.name} їсть.`);
   }
 };
 
 let rabbit = {
   __proto__: animal,
-  name: "Rabbit",
+  name: "Кролик",
   eat() {         // rabbit.eat.[[HomeObject]] == rabbit
     super.eat();
   }
@@ -518,38 +518,38 @@ let rabbit = {
 
 let longEar = {
   __proto__: rabbit,
-  name: "Long Ear",
+  name: "Довговухий кролик",
   eat() {         // longEar.eat.[[HomeObject]] == longEar
     super.eat();
   }
 };
 
 *!*
-// works correctly
-longEar.eat();  // Long Ear eats.
+// працює правильно
+longEar.eat();  // Довговухий кролик їсть.
 */!*
 ```
 
-It works as intended, due to `[[HomeObject]]` mechanics. A method, such as `longEar.eat`, knows its `[[HomeObject]]` and takes the parent method from its prototype. Without any use of `this`.
+Код в прикладі працює як очікувалося, завдяки механіці `[[HomeObject]]`. Метод, такий як `longEar.eat`, знає `[[HomeObject]]` і приймає батьківський метод від свого прототипу. Без будь-якого використання `this`.
 
-### Methods are not "free"
+### Методи не "вільні"
 
-As we've known before, generally functions are "free", not bound to objects in JavaScript. So they can be copied between objects and called with another `this`.
+Як ми знаємо раніше, взагалі функції "вільні", тобто не пов'язані з об'єктами в JavaScript. Таким чином, їх можна скопіювати між об'єктами та викликати з іншим - `this`.
 
-The very existence of `[[HomeObject]]` violates that principle, because methods remember their objects. `[[HomeObject]]` can't be changed, so this bond is forever.
+Саме існування `[[HomeObject]]` порушує цей принцип, оскільки методи запам'ятовують їх об'єкти. `[[HomeObject]]` не можна змінити, тому цей зв'язок назавжди.
 
-The only place in the language where `[[HomeObject]]` is used -- is `super`. So, if a method does not use `super`, then we can still consider it free and copy between objects. But with `super` things may go wrong.
+Єдине місце в мові, де `[[HomeObject]]` використовується - це `super`. Отже, якщо метод не використовує `super`, то ми можемо все одно враховувати його вільним та копіювати між об'єктами. Але з `super` речі можуть піти не так.
 
-Here's the demo of a wrong `super` result after copying:
+Ось результату демонстрації неправильного використання `super` після копіювання:
 
 ```js run
 let animal = {
   sayHi() {
-    alert(`I'm an animal`);
+    alert(`Я тварина`);
   }
 };
 
-// rabbit inherits from animal
+// кролик наслідується від тварини
 let rabbit = {
   __proto__: animal,
   sayHi() {
@@ -559,11 +559,11 @@ let rabbit = {
 
 let plant = {
   sayHi() {
-    alert("I'm a plant");
+    alert("Я рослина");
   }
 };
 
-// tree inherits from plant
+// дерево наслідується від рослини
 let tree = {
   __proto__: plant,
 *!*
@@ -572,32 +572,32 @@ let tree = {
 };
 
 *!*
-tree.sayHi();  // I'm an animal (?!?)
+tree.sayHi();  // Я тварина (?!?)
 */!*
 ```
 
-A call to `tree.sayHi()` shows "I'm an animal". Definitely wrong.
+Виклик до `tree.sayHi()` показує "я тварина". Безумовно, це неправильно.
 
-The reason is simple:
-- In the line `(*)`, the method `tree.sayHi` was copied from `rabbit`. Maybe we just wanted to avoid code duplication?
-- Its `[[HomeObject]]` is `rabbit`, as it was created in `rabbit`. There's no way to change `[[HomeObject]]`.
-- The code of `tree.sayHi()` has `super.sayHi()` inside. It goes up from `rabbit` and takes the method from `animal`.
+Причина проста:
+- У рядку `(*)`, метод `tree.sayHi` був скопійований з `rabbit`. Можливо, ми просто хотіли уникнути дублювання коду?
+- Його `[[homeobject]]` -- це `rablit`, оскільки метод було створено в `rabbit`. Немає можливості змінити `[[HomeObject]]`.
+- Код `tree.sayHi()` має `super.sayHi()` всередині. Він йде в гору з `rabbit` і бере метод від `animal`.
 
-Here's the diagram of what happens:
+Ось діаграма того, що відбувається:
 
 ![](super-homeobject-wrong.svg)
 
-### Methods, not function properties
+### Методи, а не функціональні властивості
 
-`[[HomeObject]]` is defined for methods both in classes and in plain objects. But for objects, methods must be specified exactly as `method()`, not as `"method: function()"`.
+`[[Homeobject]]` визначається для методів як у класах, так і у звичайних об'єктах. Але для об'єктів, методи повинні бути визначені саме як `method()`, не як `"method: function()"`.
 
-The difference may be non-essential for us, but it's important for JavaScript.
+Різниця може бути несуттєвою для нас, але це важливо для JavaScript.
 
-In the example below a non-method syntax is used for comparison. `[[HomeObject]]` property is not set and the inheritance doesn't work:
+У прикладі нижче для порівняння використовується синтаксис не методу. `[[Homeobject]]` властивість не встановлюється, а наслідування не працює:
 
 ```js run
 let animal = {
-  eat: function() { // intentionally writing like this instead of eat() {...
+  eat: function() { // навмисно напишемо це так замість eat() {...
     // ...
   }
 };
@@ -610,21 +610,21 @@ let rabbit = {
 };
 
 *!*
-rabbit.eat();  // Error calling super (because there's no [[HomeObject]])
+rabbit.eat();  // Помилка виклику super (тому що немає [[HomeObject]])
 */!*
 ```
 
-## Summary
+## Підсумки
 
-1. To extend a class: `class Child extends Parent`:
-    - That means `Child.prototype.__proto__` will be `Parent.prototype`, so methods are inherited.
-2. When overriding a constructor:
-    - We must call parent constructor as `super()` in `Child` constructor before using `this`.
-3. When overriding another method:
-    - We can use `super.method()` in a `Child` method to call `Parent` method.
-4. Internals:
-    - Methods remember their class/object in the internal `[[HomeObject]]` property. That's how `super` resolves parent methods.
-    - So it's not safe to copy a method with `super` from one object to another.
+1. Щоб розширити клас треба використовувати синтакс: `class Child extends Parent`:
+    - Це означає `Child.prototype.__proto__` буде `Parent.prototype`, таким чином методи успадковуються.
+2. При перевизначенні конструктора:
+    - Ми повинні викликати батьківський конструктор `super()` в `Child` конструкторі перед використанням `this`.
+3. При перевизначенні іншого методу:
+    - Ми можемо використовувати `super.method()` в методі `Child`, щоб викликати за батьківський метод.
+4. Внутрішні деталі:
+    - Методи запам'ятовують їх клас/об'єкт у внутрішній властивості `[[HomeObject]]`. Ось як `super` знаходить батьківські методи.
+    - Так що це не безпечно копіювати метод з `супер` від одного об'єкта до іншого.
 
-Also:
-- Arrow functions don't have their own `this` or `super`, so they transparently fit into the surrounding context.
+Також:
+- Стрілочні функції не мають власного `this` або `super`, тому вони прозоро вписуються в навколишній контекст.

@@ -29,10 +29,10 @@ function throttle(func, ms) {
 }
 ```
 
-A call to `throttle(func, ms)` returns `wrapper`.
+Виклик `throttle(func, ms)` повертає `wrapper`.
 
-1. During the first call, the `wrapper` just runs `func` and sets the cooldown state (`isThrottled = true`).
-2. In this state all calls are memorized in `savedArgs/savedThis`. Please note that both the context and the arguments are equally important and should be memorized. We need them simultaneously to reproduce the call.
-3. After `ms` milliseconds pass, `setTimeout` triggers. The cooldown state is removed (`isThrottled = false`) and, if we had ignored calls, `wrapper` is executed with the last memorized arguments and context.
+1. Під час першого виклику `wrapper` просто викликає `func` і встановлює стан відпочинку (`isThrottled = true`).
+2. У цьому стані всі виклики запам’ятовуються в `savedArgs/savedThis`. Зверніть увагу, що як контекст, так і аргументи однаково важливі, і повинні бути запам’ятованими. Нам потрібні вони їх одночасно, щоб відтворити виклик.
+3. Після того, як `ms` мілісекунди проходять, `setTimeout` спрацьовує. Стан відпочинку знімається (`isThrottled = false`) і, якщо ми мали проігноровані виклики, `wrapper` виконується з останніми запам’ятовуваними аргументами та контекстом.
 
-The 3rd step runs not `func`, but `wrapper`, because we not only need to execute `func`, but once again enter the cooldown state and setup the timeout to reset it.
+3-й крок запускає не `func`, а `wrapper`, тому що ми не тільки повинні виконувати `func`, але й ще раз вводити стан відпочинку та налаштовувати тайм-аут, щоб скинути його.

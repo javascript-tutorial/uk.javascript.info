@@ -1,4 +1,4 @@
-The simple solution could be:
+Простим рішенням може бути:
 
 ```js run
 *!*
@@ -12,18 +12,18 @@ shuffle(arr);
 alert(arr);
 ```
 
-That somewhat works, because `Math.random() - 0.5` is a random number that may be positive or negative, so the sorting function reorders elements randomly.
+Це, звичайно, буде працювати, тому що `Math.random() - 0.5` віддає випадкове число, яке може бути позитивним або негативним, отже, функція сортування змінює порядок елементів випадковим чином.
 
-But because the sorting function is not meant to be used this way, not all permutations have the same probability.
+Але оскільки метод `sort` не призначений для використання в таких випадках, не всі можливі варіанти мають однакову ймовірність.
 
-For instance, consider the code below. It runs `shuffle` 1000000 times and counts appearances of all possible results:
+Наприклад, розглянемо код нижче. Він запускає `shuffle` 1000000 раз та підраховує ймовірність появи для всіх можливих варіантів `arr`:
 
 ```js run
 function shuffle(array) {
   array.sort(() => Math.random() - 0.5);
 }
 
-// counts of appearances for all possible permutations
+// підрахунок імовірностей для всіх можливих варіантів
 let count = {
   '123': 0,
   '132': 0,
@@ -39,13 +39,13 @@ for (let i = 0; i < 1000000; i++) {
   count[array.join('')]++;
 }
 
-// show counts of all possible permutations
+// показати кількість всіх можливих варіантів
 for (let key in count) {
   alert(`${key}: ${count[key]}`);
 }
 ```
 
-An example result (depends on JS engine):
+Результат прикладу (залежить від рушія JS):
 
 ```js
 123: 250706
@@ -56,30 +56,30 @@ An example result (depends on JS engine):
 321: 125223
 ```
 
-We can see the bias clearly: `123` and `213` appear much more often than others.
+Тепер ми чітко бачимо відхилення: `123` й `213` зʼявляються набагато частіше, ніж інші варіанти.
 
-The result of the code may vary between JavaScript engines, but we can already see that the approach is unreliable.
+Результати цього коду можуть варіюватися при запуску на різних движках JavaScript, але очевидно, що такий підхід не надійний.
 
-Why it doesn't work? Generally speaking, `sort` is a "black box": we throw an array and a comparison function into it and expect the array to be sorted. But due to the utter randomness of the comparison the black box goes mad, and how exactly it goes mad depends on the concrete implementation that differs between engines.
+Так чому це не працює? Якщо говорити простими словами, то `sort` це "чорний ящик": ми кидаємо в нього масив і функцію порівняння, чекаючи отримати відсортований масив. Але через абсолютну хаотичності порівнянь чорний ящик божеволіє, і як саме він божеволіє, залежить від конкретної його реалізації, яка різна в різних двигунах JavaScript.
 
-There are other good ways to do the task. For instance, there's a great algorithm called [Fisher-Yates shuffle](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle). The idea is to walk the array in the reverse order and swap each element with a random one before it:
+Є й інші хороші способи розвʼязувати цю задачу. Наприклад, є відмінний алгоритм під назвою [Тасування Фішера-Єйтса](https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle). Суть полягає в тому, щоб проходити по масиву у зворотному порядку і міняти місцями кожен елемент з випадковим елементом, який знаходиться перед ним.
 
 ```js
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
+    let j = Math.floor(Math.random() * (i + 1)); // випадковий індекс від 0 до i
 
-    // swap elements array[i] and array[j]
-    // we use "destructuring assignment" syntax to achieve that
-    // you'll find more details about that syntax in later chapters
-    // same can be written as:
+    // поміняти елементи місцями 
+    // ми використовуємо для цього синтаксис "деструктивне присвоєння" 
+    // докладніше про нього - в наступних розділах 
+    // те ж саме можна записати як:
     // let t = array[i]; array[i] = array[j]; array[j] = t
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
 ```
 
-Let's test it the same way:
+Перевіримо цю реалізацію на тому ж прикладі:
 
 ```js run
 function shuffle(array) {
@@ -89,7 +89,7 @@ function shuffle(array) {
   }
 }
 
-// counts of appearances for all possible permutations
+// підрахунок імовірності для всіх можливих варіантів
 let count = {
   '123': 0,
   '132': 0,
@@ -105,13 +105,13 @@ for (let i = 0; i < 1000000; i++) {
   count[array.join('')]++;
 }
 
-// show counts of all possible permutations
+// показати кількість всіх можливих варіантів
 for (let key in count) {
   alert(`${key}: ${count[key]}`);
 }
 ```
 
-The example output:
+Приклад виведення:
 
 ```js
 123: 166693
@@ -122,6 +122,6 @@ The example output:
 321: 166316
 ```
 
-Looks good now: all permutations appear with the same probability.
+Тепер все в порядку: всі варіанти зʼявляються з однаковою ймовірністю. 
 
-Also, performance-wise the Fisher-Yates algorithm is much better, there's no "sorting" overhead.
+Крім того, якщо подивитися з точки зору продуктивності, то алгоритм "Тасування Фішера-Єйтса" набагато швидший, оскільки в ньому немає зайвих витрат на сортування.

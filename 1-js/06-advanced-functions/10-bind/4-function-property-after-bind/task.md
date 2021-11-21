@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# Function property after bind
+# Властивість функції після прив’язки
 
-There's a value in the property of a function. Will it change after `bind`? Why, or why not?
+Функції присвоєна властивість зі значенням. Чи зміниться вона після `bind`? Чому?
 
 ```js run
 function sayHi() {
@@ -14,10 +14,10 @@ sayHi.test = 5;
 
 *!*
 let bound = sayHi.bind({
-  name: "John"
+  name: "Іван"
 });
 
-alert( bound.test ); // what will be the output? why?
+alert( bound.test ); // що виведе функція? Чому?
 */!*
 ```
 

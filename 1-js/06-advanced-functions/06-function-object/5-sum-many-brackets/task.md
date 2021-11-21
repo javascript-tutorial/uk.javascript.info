@@ -2,9 +2,9 @@ importance: 2
 
 ---
 
-# Sum with an arbitrary amount of brackets
+# Сума з довільною кількістю дужок
 
-Write function `sum` that would work like this:
+Напишіть функцію `sum`, яка б працювала так:
 
 ```js
 sum(1)(2) == 3; // 1 + 2
@@ -14,4 +14,4 @@ sum(6)(-1)(-2)(-3) == 0
 sum(0)(1)(2)(3)(4)(5) == 15
 ```
 
-P.S. Hint: you may need to setup custom object to primitive conversion for your function.
+P.S. Підказка: вам може знадобитися налаштувати кастомний об'єкт, щоб конвертувати примітиви для вашої функції.

@@ -2,21 +2,21 @@ importance: 5
 
 ---
 
-# Debounce decorator
+# Декоратор debounce
 
-The result of `debounce(f, ms)` decorator is a wrapper that suspends calls to `f` until there's `ms` milliseconds of inactivity (no calls, "cooldown period"), then invokes `f` once with the latest arguments.
+Результат `debounce(f, ms)` декоратору -- це обгортка, що призупиняє виклики до `f`, поки не пройде `ms` мілісекунд бездіяльності (без викликів, "cooldown period"), а потім викликає `f` один раз з останніми аргументами.
 
-In other words, `debounce` is like a secretary that accepts "phone calls", and waits until there's `ms` milliseconds of being quiet. And only then it transfers the latest call information to "the boss" (calls the actual `f`).
+Іншими словами, `debounce` -- це як секретар, який приймає "телефонні дзвінки", і чекає, поки не закінчаться `ms` мілісекунди тиші. І лише тоді він передає останню інформацію про виклик до "боса" (викликає фактичну `f`).
 
-For instance, we had a function `f` and replaced it with `f = debounce(f, 1000)`.
+Наприклад, у нас була функція `f` і замінили її на `f = debounce(f, 1000)`.
 
-Then if the wrapped function is called at 0ms, 200ms and 500ms, and then there are no calls, then the actual `f` will be only called once, at 1500ms. That is: after the cooldown period of 1000ms from the last call.
+Тоді, якщо загорнута функція викликається при 0 мс, 200 мс та 500 мс, а потім викликів немає, то фактична `f` буде викликатися лише один раз, при 1500 мс. Тобто: після закінчення періоду 1000 мс від останнього виклику.
 
 ![](debounce.svg)
 
-...And it will get the arguments of the very last call, other calls are ignored.
+...І вона отримає аргументи самого останнього виклику, а інші виклики будуть ігноруватися.
 
-Here's the code for it (uses the debounce decorator from the [Lodash library](https://lodash.com/docs/4.17.15#debounce)):
+Ось код для цього (використовує декоратор debounce з [Lodash library](https://lodash.com/docs/4.17.15#debounce)):
 
 ```js
 let f = _.debounce(alert, 1000);
@@ -24,28 +24,28 @@ let f = _.debounce(alert, 1000);
 f("a");
 setTimeout( () => f("b"), 200);
 setTimeout( () => f("c"), 500);
-// debounced function waits 1000ms after the last call and then runs: alert("c")
+// повернута з debounced функція чекає 1000 мс після останнього виклику, а потім запускає: alert("c")
 ```
 
-Now a practical example. Let's say, the user types something, and we'd like to send a request to the server when the input is finished.
+Тепер практичний приклад. Скажімо, користувач друкує щось, і ми хотіли б надіслати запит на сервер, коли ввід закінчиться.
 
-There's no point in sending the request for every character typed. Instead we'd like to wait, and then process the whole result.
+Немає сенсу надсилати запит на кожен набраний символ. Замість цього ми хотіли б почекати, а потім обробляти весь результат.
 
-In a web-browser, we can setup an event handler -- a function that's called on every change of an input field. Normally, an event handler is called very often, for every typed key. But if we `debounce` it by 1000ms, then it will be only called once, after 1000ms after the last input.
+У веббраузері ми можемо налаштувати обробник подій -- функцію, яка викликається при кожній зміні поля введення.Зазвичай, обробник подій викликається дуже часто, для кожного друкованого символу. Але якщо ми використаємо `debounce` на 1000 мс, то він буде викликатися лише один раз, через 1000 мс після останнього введення.
 
 ```online
 
-In this live example, the handler puts the result into a box below, try it:
+У цьому реальному прикладі обробник ставить результат у поле нижче, спробуйте це:
 
 [iframe border=1 src="debounce" height=200]
 
-See? The second input calls the debounced function, so its content is processed after 1000ms from the last input.
+Бачите? Другий ввід викликає функцію, що була повернута з `debounce`, тому цей вміст обробляється через 1000 мс з останнього введення.
 ```
 
-So, `debounce` is a great way to process a sequence of events: be it a sequence of key presses, mouse movements or something else.
+Отже, `debounce` -- це чудовий спосіб обробки послідовності подій: будь то послідовність натискання клавіш, рухів миші або щось інше.
 
-It waits the given time after the last call, and then runs its function, that can process the result.
+Він чекає певного часу після останнього дзвінка, а потім запускає свою функцію, яка може обробити результат.
 
-The task is to implement `debounce` decorator.
+Завдання полягає в тому, щоб реалізувати декоратор `debounce`.
 
-Hint: that's just a few lines if you think about it :)
+Підказка: Це лише кілька рядків, якщо ви думаєте про це :)

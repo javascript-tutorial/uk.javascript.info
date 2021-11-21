@@ -1,5 +1,5 @@
-The answer: **0,1.**
+Відповідь: **0,1.**
 
-Functions `counter` and `counter2` are created by different invocations of `makeCounter`.
+Функції `counter` і `counter2` створюються різними викликами `makeCounter`.
 
-So they have independent outer Lexical Environments, each one has its own `count`.
+Отже, вони мають незалежні зовнішні лексичні середовища, кожне з яких має свою власну змінну `count`.
