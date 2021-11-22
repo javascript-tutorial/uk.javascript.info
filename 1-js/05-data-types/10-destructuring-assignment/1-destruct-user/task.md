@@ -8,7 +8,7 @@ importance: 5
 
 ```js
 let user = {
-  name: "Джон",
+  name: "Іван",
   years: 30
 };
 ```
