@@ -1,7 +1,7 @@
 
 ```js run
 let user = {
-  name: "Джон",
+  name: "Іван",
   years: 30
 };
 
