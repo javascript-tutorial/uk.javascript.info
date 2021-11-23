@@ -1,5 +1,5 @@
 
-The notes are below the code:
+Примітки наведено під кодом:
 
 ```js run
 async function loadJson(url) { // (1)
@@ -17,11 +17,11 @@ loadJson('no-such-user.json')
   .catch(alert); // Error: 404 (4)
 ```
 
-Notes:
+Примітки:
 
-1. The function `loadJson` becomes `async`.
-2. All `.then` inside are replaced with `await`.
-3. We can `return response.json()` instead of awaiting for it, like this:
+1. Функція `loadJson` стає `async`-функцією.
+2. Усі `.then` всередині замінюються на `await`.
+3. Ми можемо зробити `return response.json()` замість того, щоб чекати його, наприклад:
 
     ```js
     if (response.status == 200) {
@@ -29,5 +29,5 @@ Notes:
     }
     ```
 
-    Then the outer code would have to `await` for that promise to resolve. In our case it doesn't matter.
-4. The error thrown from `loadJson` is handled by `.catch`. We can't use `await loadJson(…)` there, because we're not in an `async` function.
+    Тоді зовнішній код повинен був би чекати `await`, поки цей проміс буде виконано. У нашому випадку це не має значення.
+4. Помилка, викликана `loadJson`, обробляється `.catch`. Ми не можемо використовувати там `await loadJson(…)`, тому що ми не використовуємо `async`-функцію.
