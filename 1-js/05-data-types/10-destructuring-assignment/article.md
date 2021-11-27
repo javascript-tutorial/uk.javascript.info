@@ -17,7 +17,7 @@
 
 ```js
 // у нас є масив з іменем та прізвищем
-let arr = ["Джон", "Сміт"]
+let arr = ["Іван", "Петренко"]
 
 *!*
 // деструктуроване присвоєння
@@ -26,8 +26,8 @@ let arr = ["Джон", "Сміт"]
 let [firstName, surname] = arr;
 */!*
 
-alert(firstName); // Джон
-alert(surname);  // Сміт
+alert(firstName); // Іван
+alert(surname);  // Петренко
 ```
 
 Тепер ми можемо працювати зі змінними замість елементів масиву.
@@ -35,9 +35,9 @@ alert(surname);  // Сміт
 Це чудово виглядає в поєднанні зі `split` або іншими методами повернення масиву:
 
 ```js run
-let [firstName, surname] = "Джон Сміт".split(' ');
-alert(firstName); // Джон
-alert(surname);  // Сміт
+let [firstName, surname] = "Іван Петренко".split(' ');
+alert(firstName); // Іван
+alert(surname);  // Петренко
 ```
 
 Як бачите, синтаксис простий. Хоча є кілька особливих деталей. Давайте розглянемо більше прикладів, щоб краще це зрозуміти.
@@ -86,10 +86,10 @@ let [one, two, three] = new Set([1, 2, 3]);
 Наприклад, присвоїти властивості об’єкта:
 ```js run
 let user = {};
-[user.name, user.surname] = "Джон Сміт".split(' ');
+[user.name, user.surname] = "Іван Петренко".split(' ');
 
-alert(user.name); // Джон
-alert(user.surname); // Сміт
+alert(user.name); // Іван
+alert(user.surname); // Петренко
 ```
 
 ````
@@ -101,7 +101,7 @@ alert(user.surname); // Сміт
 
 ```js run
 let user = {
-  name: "Джон",
+  name: "Іван",
   age: 30
 };
 
@@ -109,7 +109,7 @@ let user = {
 *!*
 for (let [key, value] of Object.entries(user)) {
 */!*
-  alert(`${key}:${value}`); // name:Джон, потім age:30
+  alert(`${key}:${value}`); // name:Іван, потім age:30
 }
 ```
 
@@ -117,14 +117,14 @@ for (let [key, value] of Object.entries(user)) {
 
 ```js run
 let user = new Map();
-user.set("name", "Джон");
+user.set("name", "Іван");
 user.set("age", "30");
 
 *!*
 // Map ітерує як пари [key, value], що дуже зручно для деструктурування
 for (let [key, value] of user) {
 */!*
-  alert(`${key}:${value}`); // name:Джон, then age:30
+  alert(`${key}:${value}`); // name:Іван, then age:30
 }
 ```
 ````
