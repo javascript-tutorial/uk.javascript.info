@@ -110,12 +110,12 @@ recursion-pow.svg:
   recursive call until n==1: ''
 
 try-catch-flow.svg:
-  Begin: ''
-  No Errors: ''
-  An error occured in the code: ''
-  Ignore catch block: ''
-  Ignore the rest of try: ''
-  Execute catch block: ''
+  Begin: "Початок"
+  No Errors: "Помилка не виникає"
+  An error occured in the code: "Виникає помилка"
+  Ignore catch block: "Ігнорування catch блоку"
+  Ignore the rest of try: "Ігнорування решти try блоку"
+  Execute catch block: "Виконання catch блоку"
   'try {': ''
   '': ''
   '}': ''
