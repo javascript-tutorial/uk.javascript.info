@@ -254,7 +254,7 @@ alert(width);  // 100
 alert(height); // 200
 ```
 
-Властивості `options.title`,` options.width` та `options.height` призначені відповідним змінним.
+Властивості `options.title`, `options.width` та `options.height` призначені відповідним змінним.
 
 Порядок не має значення. Це теж працює:
 
