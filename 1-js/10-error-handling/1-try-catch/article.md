@@ -297,83 +297,83 @@ alert(error.name); // Error
 alert(error.message); // Щось трапилось o_O
 ```
 
-Let's see what kind of error `JSON.parse` generates:
+Подивімося на тип помилки, що згенерує `JSON.parse`:
 
 ```js run
 try {
-  JSON.parse("{ bad json o_O }");
+  JSON.parse("{ це не json o_O }");
 } catch (err) {
 *!*
   alert(err.name); // SyntaxError
 */!*
-  alert(err.message); // Unexpected token b in JSON at position 2
+  alert(err.message); // expected property name or '}' at line 1 column 3 of the JSON data
 }
 ```
 
-As we can see, that's a `SyntaxError`.
+Як бачимо, назва помилки `SyntaxError`.
 
-And in our case, the absence of `name` is an error, as users must have a `name`.
+В нашому випадку відсутність властивості `name` є помилкою, оскільки користувачам потрібна інформація з цього поля.
 
-So let's throw it:
+Тож давайте викинемо її:
 
 ```js run
-let json = '{ "age": 30 }'; // incomplete data
+let json = '{ "age": 30 }'; // неповні дані
 
 try {
 
-  let user = JSON.parse(json); // <-- no errors
+  let user = JSON.parse(json); // <-- немає помилки
 
   if (!user.name) {
 *!*
-    throw new SyntaxError("Incomplete data: no name"); // (*)
+    throw new SyntaxError("Неповні дані: відсутнє поле name"); // (*)
 */!*
   }
 
   alert( user.name );
 
 } catch (err) {
-  alert( "JSON Error: " + err.message ); // JSON Error: Incomplete data: no name
+  alert( "JSON Error: " + err.message ); // JSON Error: Неповні дані: відсутнє поле name
 }
 ```
 
-In the line `(*)`, the `throw` operator generates a `SyntaxError` with the given `message`, the same way as JavaScript would generate it itself. The execution of `try` immediately stops and the control flow jumps into `catch`.
+У рядку `(*)` оператор `throw` генерує `SyntaxError` із заданим значення поля `message`, таким же чином це зробив би JavaScript. Виконання коду в блоці `try` одразу припиняється і контроль передається в `catch`.
 
-Now `catch` became a single place for all error handling: both for `JSON.parse` and other cases.
+Тепер в блоці `catch` обробляються всі види помилок: від `JSON.parse` та інших випадків.
 
-## Rethrowing
+## Повторне викидання помилок
 
-In the example above we use `try...catch` to handle incorrect data. But is it possible that *another unexpected error* occurs within the `try {...}` block? Like a programming error (variable is not defined) or something else, not just this "incorrect data" thing.
+В наступному прикладі використаємо `try...catch`, щоб обробити неправильні дані. Але чи може всередині блоку `try {...}` виникнути *інша непередбачувана помилка*? Наприклад, це не просто "неправильні дані", а програміст помилився і забув визначити змінну чи ще щось?
 
-For example:
+Наприклад:
 
 ```js run
-let json = '{ "age": 30 }'; // incomplete data
+let json = '{ "age": 30 }'; // неповні дані
 
 try {
-  user = JSON.parse(json); // <-- forgot to put "let" before user
+  user = JSON.parse(json); // <-- не поставлено "let" перед user
 
   // ...
 } catch (err) {
   alert("JSON Error: " + err); // JSON Error: ReferenceError: user is not defined
-  // (no JSON Error actually)
+  // (але перехоплена помилка не пов'язана з JSON Error)
 }
 ```
 
-Of course, everything's possible! Programmers do make mistakes. Even in open-source utilities used by millions for decades -- suddenly a bug may be discovered that leads to terrible hacks.
+Звичайно таке можливо! Програмісти теж помиляються. Навіть програми з відкритим кодом, що використовуються десятиріччями можуть раптово виявитися вразливими.
 
-In our case, `try...catch` is placed to catch "incorrect data" errors. But by its nature, `catch` gets *all* errors from `try`. Here it gets an unexpected error, but still shows the same `"JSON Error"` message. That's wrong and also makes the code more difficult to debug.
+В нашому прикладі `try...catch` використовується для перехоплення помилок, що виникають у випадку неповних даних. Але `catch` перехоплює *всі* типи помилок, що виникають в `try`. Тут виникає непередбачувана помилка, але все одно в в повідомленні виводиться `"JSON Error"`. Це неправильна поведінка, що ускладнює налагодження.
 
-To avoid such problems, we can employ the "rethrowing" technique. The rule is simple:
+Щоб уникати таких проблем, ми можемо використовувати підхід "повторного викидання помилок". Правило просте:
 
-**Catch should only process errors that it knows and "rethrow" all others.**
+**Блок `catch` повинен оброблювати тільки відомі помилки та повторно генерувати всі інші типи помилок.**
 
-The "rethrowing" technique can be explained in more detail as:
+Розгляньмо підхід "повторного викидання" покроково:
 
-1. Catch gets all errors.
-2. In the `catch (err) {...}` block we analyze the error object `err`.
-3. If we don't know how to handle it, we do `throw err`.
+1. Конструкція `catch` перехоплює всі помилки.
+2. В блоці `catch (err) {...}` ми аналізуємо об'єкт помилки `err`.
+3. Якщо ми не знаємо як правильно обробити помилку, ми робимо `throw err`.
 
-Usually, we can check the error type using the `instanceof` operator:
+Зазвичай, тип помилки можна перевірити за допомогою оператора `instanceof`:
 
 ```js run
 try {
@@ -382,27 +382,27 @@ try {
 *!*
   if (err instanceof ReferenceError) {
 */!*
-    alert('ReferenceError'); // "ReferenceError" for accessing an undefined variable
+    alert('ReferenceError'); // "ReferenceError" помилка доступу до невизначеної змінної
   }
 }
 ```
 
-We can also get the error class name from `err.name` property. All native errors have it. Another option is to read `err.constructor.name`.
+Для визначення класу помилки можливо перевірити властивість `err.name`. Всі вбудовані помилки мають її. Також можна перевірити значення `err.constructor.name`.
 
-In the code below, we use rethrowing so that `catch` only handles `SyntaxError`:
+В коді нижче, щоб `catch` опрацьовував тільки `SyntaxError` ми "повторно викидаємо" помилки інших типів.
 
 ```js run
-let json = '{ "age": 30 }'; // incomplete data
+let json = '{ "age": 30 }'; // неповні дані
 try {
 
   let user = JSON.parse(json);
 
   if (!user.name) {
-    throw new SyntaxError("Incomplete data: no name");
+    throw new SyntaxError("Неповні дані: відсутнє поле name");
   }
 
 *!*
-  blabla(); // unexpected error
+  blabla(); // непередбачувана помилка
 */!*
 
   alert( user.name );
@@ -413,7 +413,7 @@ try {
   if (err instanceof SyntaxError) {
     alert( "JSON Error: " + err.message );
   } else {
-    throw err; // rethrow (*)
+    throw err; // повторне викидання (*)
   }
 */!*
 
