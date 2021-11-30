@@ -112,7 +112,7 @@ recursion-pow.svg:
 try-catch-flow.svg:
   Begin: "Початок"
   No Errors: "Помилка не виникає"
-  An error occured in the code: "Виникає помилка"
+  An error occured in the code: "Помилка виникає"
   Ignore catch block: "Ігнорування catch блоку"
   Ignore the rest of try: "Ігнорування решти try блоку"
   Execute catch block: "Виконання catch блоку"
