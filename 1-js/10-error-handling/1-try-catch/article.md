@@ -29,7 +29,7 @@ try {
 
 1. В першу чергу виконується код в блоці `try {...}`.
 2. Якщо не виникає помилок, то блок `catch (err)` ігнорується: виконання досягає кінця блоку `try` та продовжується поза `catch` блоком.
-3. Якщо виникає помилка, тоді виконання в `try` припиняється і виконання коду продовжується з початку `catch (err)` блоку. Змінна `err` (можна обрати інше ім'я) буде містити об'єкт помилки з додатковою інформацією.
+3. Якщо виникає помилка, тоді виконання в `try` припиняється і виконання коду продовжується з початку `catch (err)` блоку. Змінна `err` (можна обрати інше ім’я) буде містити об’єкт помилки з додатковою інформацією.
 
 ![](try-catch-flow.svg)
 
@@ -123,7 +123,7 @@ setTimeout(function() {
 
 ## Об’єкт помилки
 
-Коли виникає помилка, JavaScript генерує об’єкт, що містить інформацію про неї. Потім цей об'єкт передається як аргумент в `catch`:
+Коли виникає помилка, JavaScript генерує об’єкт, що містить інформацію про неї. Потім цей об’єкт передається як аргумент в `catch`:
 
 ```js
 try {
@@ -232,7 +232,7 @@ try {
 }
 ```
 
-В цьому випадку `catch` блок використано тільки для виведення повідомлення про помилку, але може бути використаним іншим чином: відправити новий запит, запропонувати користувачі інші опції, відправити інформацію про помилку для логування та ін. Будь-який спосіб використання краще, ніж раптове припинення роботи.
+У цьому разі `catch` блок використано тільки для виведення повідомлення про помилку, але може бути використаним іншим чином: відправити новий запит, запропонувати користувачі інші опції, відправити інформацію про помилку для логування та ін. Будь-який спосіб використання краще, ніж раптове припинення роботи.
 
 ## Створення та викидання власних типів помилок
 
@@ -255,7 +255,7 @@ try {
 }
 ```
 
-В такому випадку `JSON.parse` відпрацює без виключень, але відсутність поля `name` є помилкою з нашої точки зору.
+В такому разі `JSON.parse` відпрацює без виключень, але відсутність поля `name` є помилкою з нашої точки зору.
 
 Ми будемо використовувати оператор `throw` для об’єднання способів обробки помилок.
 
@@ -294,7 +294,7 @@ alert(error.name); // Error
 alert(error.message); // Щось трапилось o_O
 ```
 
-Подивімося на тип помилки згенерований функцією `JSON.parse`:
+Подивімося на тип помилки, згенерований функцією `JSON.parse`:
 
 ```js run
 try {
@@ -309,7 +309,7 @@ try {
 
 Як бачимо, назва помилки `SyntaxError`.
 
-В нашому випадку відсутність властивості `name` є помилкою, оскільки користувачам потрібна інформація з цього поля.
+У такому разі відсутність властивості `name` є помилкою, оскільки користувачам потрібна інформація з цього поля.
 
 Тож давайте викинемо її:
 
@@ -358,7 +358,7 @@ try {
 
 Звичайно таке можливо! Програмісти теж помиляються. Навіть програми з відкритим кодом, що використовуються десятиріччями можуть раптово виявитися вразливими.
 
-В нашому прикладі `try...catch` використовується для перехоплення помилок, що виникають у випадку неповних даних. Але `catch` перехоплює *всі* типи помилок, що виникають в `try`. Тут виникає непередбачувана помилка, але все одно в в повідомленні виводиться `"JSON Error"`. Це неправильна поведінка, що ускладнює налагодження.
+В нашому прикладі `try...catch` використовується для перехоплення помилок, що виникають у разі неповних даних. Але `catch` перехоплює *всі* типи помилок, що виникають в `try`. Тут виникає непередбачувана помилка, але все одно в в повідомленні виводиться `"JSON Error"`. Це неправильна поведінка, що ускладнює налагодження.
 
 Щоб уникати таких проблем, ми можемо використовувати підхід "повторного викидання помилок". Правило просте:
 
@@ -417,11 +417,11 @@ try {
 }
 ```
 
-The error throwing on line `(*)` from inside `catch` block "falls out" of `try...catch` and can be either caught by an outer `try...catch` construct (if it exists), or it kills the script.
+Помилка, що виникає в рядку `(*)`, не проходить перевірку в `catch` блоці і повторно викидається. Виключення, після повторної генерації, може знову бути перехопленим конструкцією `try...catch` (якщо вона існує) або призведе до аварійного припинення роботи скрипту.
 
-So the `catch` block actually handles only errors that it knows how to deal with and "skips" all others.
+Така поведінка `catch` блоку дає змогу перехоплювати тільки помилки, для яких передбачено правила обробки та "пропускати" решту типів помилок.
 
-The example below demonstrates how such errors can be caught by one more level of `try...catch`:
+Приклад нижче демонструє, як реалізувати перехоплення таких помилок ще одним рівнем `try...catch`:
 
 ```js run
 function readData() {
@@ -430,13 +430,13 @@ function readData() {
   try {
     // ...
 *!*
-    blabla(); // error!
+    blabla(); // помилка!
 */!*
   } catch (err) {
     // ...
     if (!(err instanceof SyntaxError)) {
 *!*
-      throw err; // rethrow (don't know how to deal with it)
+      throw err; // повторне викидання (обробка іншого типу помилок не передбачена)
 */!*
     }
   }
@@ -446,42 +446,42 @@ try {
   readData();
 } catch (err) {
 *!*
-  alert( "External catch got: " + err ); // caught it!
+  alert( "Зовнішнє перехоплення: " + err ); // перехоплено!
 */!*
 }
 ```
 
-Here `readData` only knows how to handle `SyntaxError`, while the outer `try...catch` knows how to handle everything.
+Функція `readData` дозволяє опрацьовувати тільки `SyntaxError` помилки, а зовнішній блок `try...catch` знає як опрацювати будь-який тип.
 
 ## try...catch...finally
 
-Wait, that's not all.
+Зачекайте, бо це ще не все.
 
-The `try...catch` construct may have one more code clause: `finally`.
+Конструкція `try...catch` дозволяє додати ще один блок: `finally`.
 
-If it exists, it runs in all cases:
+Якщо він існує, то виконується в будь-якому разі:
 
-- after `try`, if there were no errors,
-- after `catch`, if there were errors.
+- після `try`, якщо помилка не виникла,
+- після `catch`, якщо помилка була перехоплена.
 
-The extended syntax looks like this:
+Розширений синтаксис виглядає наступним чином:
 
 ```js
 *!*try*/!* {
-   ... try to execute the code ...
+   ... спроба виконати код ...
 } *!*catch*/!* (err) {
-   ... handle errors ...
+   ... обробка помилки ...
 } *!*finally*/!* {
-   ... execute always ...
+   ... завжди буде виконано ...
 }
 ```
 
-Try running this code:
+Спробуйте запустити цей код:
 
 ```js run
 try {
   alert( 'try' );
-  if (confirm('Make an error?')) BAD_CODE();
+  if (confirm('Помилка потрібна?')) BAD_CODE();
 } catch (err) {
   alert( 'catch' );
 } finally {
@@ -489,27 +489,27 @@ try {
 }
 ```
 
-The code has two ways of execution:
+Код має дві гілки для виконання:
 
-1. If you answer "Yes" to "Make an error?", then `try -> catch -> finally`.
-2. If you say "No", then `try -> finally`.
+1. Якщо відповісти "Гаразд" на "Помилка потрібна?", буде `try -> catch -> finally`.
+2. Якщо відповісти "Скасувати", тоді `try -> finally`.
 
-The `finally` clause is often used when we start doing something and want to finalize it in any case of outcome.
+Блок `finally` використовується, якщо ми почали виконувати якусь роботу і хочемо завершити її в будь-якому разі.
 
-For instance, we want to measure the time that a Fibonacci numbers function `fib(n)` takes. Naturally, we can start measuring before it runs and finish afterwards. But what if there's an error during the function call? In particular, the implementation of `fib(n)` in the code below returns an error for negative or non-integer numbers.
+Наприклад, ми хочемо виміряти час роботи функції, що рахує числа Фібоначчі. Для цього ми можемо почати вимірювання на початку виконання і закінчити після. А якщо протягом роботи функції виникне помилка? Зокрема, імплементація `fib(n)` нижче генерує виключення, якщо на вхід подано від’ємне або неціле число.
 
-The `finally` clause is a great place to finish the measurements no matter what.
+Конструкція `finally` відмінне місце для завершення вимірювання незалежно від результату.
 
-Here `finally` guarantees that the time will be measured correctly in both situations -- in case of a successful execution of `fib` and in case of an error in it:
+Блок `finally` гарантує, що час буде виміряно правильно як в ситуації успішного виконання, так і в разі помилки.
 
 ```js run
-let num = +prompt("Enter a positive integer number?", 35)
+let num = +prompt("Введіть додатне ціле число?", 35)
 
 let diff, result;
 
 function fib(n) {
   if (n < 0 || Math.trunc(n) != n) {
-    throw new Error("Must not be negative, and also an integer.");
+    throw new Error("Число не повинно бути від’ємним або дробовим.");
   }
   return n <= 1 ? n : fib(n - 1) + fib(n - 2);
 }
@@ -526,26 +526,26 @@ try {
 }
 */!*
 
-alert(result || "error occurred");
+alert(result || "виникла помилка");
 
-alert( `execution took ${diff}ms` );
+alert( `виконання тривало ${diff}мс` );
 ```
 
-You can check by running the code with entering `35` into `prompt` -- it executes normally, `finally` after `try`. And then enter `-1` -- there will be an immediate error, and the execution will take `0ms`. Both measurements are done correctly.
+Якщо після запуску коду ввести в число `35` -- скрипт буде виконано без помилок, блок `finally` після блоку `try`. Але якщо ввести `-1` -- одразу буде згенеровано помилку, а виконання код займе `0ms`. Обидва вимірювання будуть проведені правильно.
 
-In other words, the function may finish with `return` or `throw`, that doesn't matter. The `finally` clause executes in both cases.
+Інакше кажучи, функція може завершуватися через або `return`, або `throw`, але блок `finally` буде завжди виконано.
 
 
-```smart header="Variables are local inside `try...catch...finally`"
-Please note that `result` and `diff` variables in the code above are declared *before* `try...catch`.
+```smart header="Змінні визначені всередині `try...catch...finally` є локальними"
+Зверніть увагу, змінні `result` та `diff`, в коді вище, оголошено "перед" `try...catch`.
 
-Otherwise, if we declared `let` in `try` block, it would only be visible inside of it.
+Якщо ми оголосимо змінну за допомогою `let` в блоці `try` вона залишиться видимою тільки всередині цього блоку.
 ```
 
-````smart header="`finally` and `return`"
-The `finally` clause works for *any* exit from `try...catch`. That includes an explicit `return`.
+````smart header="`finally` та `return`"
+Частина `finally` виконається в *будь-якому* разі при виході з `try...catch`. Навіть якщо явно викликати `return`.
 
-In the example below, there's a `return` in `try`. In this case, `finally` is executed just before the control returns to the outer code.
+У прикладі нижче вихід з блоку `try` відбувається за допомогою `return`. Тоді блок `finally` буде виконано одразу перед поверненням виконання до зовнішнього коду.
 
 ```js run
 function func() {
@@ -564,7 +564,7 @@ function func() {
   }
 }
 
-alert( func() ); // first works alert from finally, and then this one
+alert( func() ); // спочатку спрацює alert з finally, а потім в цьому рядку
 ```
 ````
 
