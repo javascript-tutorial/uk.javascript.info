@@ -2,7 +2,7 @@ importance: 5
 
 ---
 
-# Finally or just the code?
+# Finally чи просто код?
 
 Порівняй два фрагменти коду.
 
