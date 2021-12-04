@@ -1,47 +1,48 @@
-The difference becomes obvious when we look at the code inside a function.
+Різниця стає очевидною, якщо ми подивимося на код всередині функції.
 
-The behavior is different if there's a "jump out" of `try...catch`.
+Поведінка відрізняється, якщо код може раптово вийти з `try...catch`.
 
-For instance, when there's a `return` inside `try...catch`. The `finally` clause works in case of *any* exit from `try...catch`, even via the `return` statement: right after `try...catch` is done, but before the calling code gets the control.
+Наприклад, якщо є `return` всередині `try...catch`. Блок `finally` спрацює для "будь-якого" виходу з `try...catch`, навіть за допомогою `return`. Одразу після виходу `try...catch`, але перед передачею контролю коду, що викликав.
 
 ```js run
 function f() {
   try {
-    alert('start');
+    alert('початок');
 *!*
-    return "result";
+    return "результат";
 */!*
   } catch (err) {
     /// ...
   } finally {
-    alert('cleanup!');
+    alert('очищення!');
   }
 }
 
-f(); // cleanup!
+f(); // очищення!
 ```
 
 ...Or when there's a `throw`, like here:
+...Або якщо є `throw`:
 
 ```js run
 function f() {
   try {
-    alert('start');
-    throw new Error("an error");
+    alert('початок');
+    throw new Error("помилка");
   } catch (err) {
     // ...
-    if("can't handle the error") {
+    if("не можу обробити помилку") {
 *!*
       throw err;
 */!*
     }
 
   } finally {
-    alert('cleanup!')
+    alert('очищення!')
   }
 }
 
-f(); // cleanup!
+f(); // очищення!
 ```
 
-It's `finally` that guarantees the cleanup here. If we just put the code at the end of `f`, it wouldn't run in these situations.
+`finally` гарантує очищення. Очищення не спрацює, якщо ми просто додамо код в кінці функції `f`.

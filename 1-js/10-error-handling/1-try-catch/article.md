@@ -570,34 +570,34 @@ alert( func() ); // спочатку спрацює alert з finally, а пот�
 
 ````smart header="`try...finally`"
 
-The `try...finally` construct, without `catch` clause, is also useful. We apply it when we don't want to handle errors here (let them fall through), but want to be sure that processes that we started are finalized.
+Конструкція `try...finally` може не мати `catch` частини, що також може стати у нагоді. Така конфігурація може бути використана, коли ми хочемо перехоплювати помилку, але потрібно завершити розпочаті задачі.
 
 ```js
 function func() {
-  // start doing something that needs completion (like measurements)
+  // розпочато задачу, що потребує завершення (наприклад вимірювання)
   try {
     // ...
   } finally {
-    // complete that thing even if all dies
+    // закінчити задачу навіть, якщо все раптово припинило роботу
   }
 }
 ```
-In the code above, an error inside `try` always falls out, because there's no `catch`. But `finally` works before the execution flow leaves the function.
+В коді вище помилка виникає всередині `try` та завжди передається вище в стеку викликів через відсутність `catch`, але `finally` виконається до того, як потік виконання вийде з функції.
 ````
 
-## Global catch
+## Глобальний catch
 
 ```warn header="Environment-specific"
-The information from this section is not a part of the core JavaScript.
+Інформація, що наведено в цій секції не є частиною мови JavaScript.
 ```
 
-Let's imagine we've got a fatal error outside of `try...catch`, and the script died. Like a programming error or some other terrible thing.
+Припустимо, через помилку програміста виключення трапилося поза блоком `try...catch` і призвело до припинення роботи скрипту.
 
-Is there a way to react on such occurrences? We may want to log the error, show something to the user (normally they don't see error messages), etc.
+Як ми можемо вчинити в такому випадку? Ми можемо логувати помилку, виводити повідомлення користувачу (переважно, користувачі не повинні бачити повідомлення про помилки) тощо.
 
-There is none in the specification, but environments usually provide it, because it's really useful. For instance, Node.js has [`process.on("uncaughtException")`](https://nodejs.org/api/process.html#process_event_uncaughtexception) for that. And in the browser we can assign a function to the special [window.onerror](mdn:api/GlobalEventHandlers/onerror) property, that will run in case of an uncaught error.
+Специфікація не згадує таку можливість, але оточення, зазвичай, надають таку можливість для зручності. Наприклад, Node.js дозволяє викликати [`process.on("uncaughtException")`](https://nodejs.org/api/process.html#process_event_uncaughtexception) для цього. В браузері можна присвоїти функцію спеціальній властивості [window.onerror](mdn:api/GlobalEventHandlers/onerror), що виконається, коли виникне помилка.
 
-The syntax:
+Синтаксис:
 
 ```js
 window.onerror = function(message, url, line, col, error) {
@@ -606,75 +606,74 @@ window.onerror = function(message, url, line, col, error) {
 ```
 
 `message`
-: Error message.
+: Повідомлення помилки.
 
 `url`
-: URL of the script where error happened.
+: URL скрипту, де трапилась помилка.
 
 `line`, `col`
-: Line and column numbers where error happened.
+: Номер рядку та колонки, де трапилась помилка.
 
 `error`
-: Error object.
+: Об’єкт помилки.
 
-For instance:
+Приклад:
 
 ```html run untrusted refresh height=1
 <script>
 *!*
   window.onerror = function(message, url, line, col, error) {
-    alert(`${message}\n At ${line}:${col} of ${url}`);
+    alert(`${message}\n Помилка трапилась в ${line}:${col} з ${url}`);
   };
 */!*
 
   function readData() {
-    badFunc(); // Whoops, something went wrong!
+    badFunc(); // Трапилась помилка!
   }
 
   readData();
 </script>
 ```
 
-The role of the global handler `window.onerror` is usually not to recover the script execution -- that's probably impossible in case of programming errors, but to send the error message to developers.
+Глобальний обробник `window.onerror` не передбачений для відновлювання роботи скрипту, а тільки відправлення повідомлення про помилку розробникам.
 
-There are also web-services that provide error-logging for such cases, like <https://errorception.com> or <http://www.muscula.com>.
+Для логування помилок в таких випадках існують спеціальні веб-сервіси: <https://errorception.com> чи <http://www.muscula.com>.
 
-They work like this:
+Вони працюють наступним чином:
 
-1. We register at the service and get a piece of JS (or a script URL) from them to insert on pages.
-2. That JS script sets a custom `window.onerror` function.
-3. When an error occurs, it sends a network request about it to the service.
-4. We can log in to the service web interface and see errors.
+1. Розробник реєструється в сервісі та отримує JS скрипт (чи URL скрипту), який потрібно додати на сторінку.
+2. Цей скрипт встановлює власну функцію в `window.onerror`.
+3. Коли трапляється помилка скрипт відправляє мережевий запит до цього сервісу.
+4. Розробник може зайти в сервіс та переглядати отримані помилки.
 
-## Summary
+## Підсумки
 
-The `try...catch` construct allows to handle runtime errors. It literally allows to "try" running the code and "catch" errors that may occur in it.
+Конструкція `try...catch` дозволяє обробляти помилки, що виникають протягом роботи скрипту. Це, в прямому сенсі, дозволяє "спробувати" виконати код та "перехопити" помилки, що можуть виникнути.
 
-The syntax is:
+Синтаксис:
 
 ```js
 try {
-  // run this code
+  // виконання коду
 } catch (err) {
-  // if an error happened, then jump here
-  // err is the error object
+  // якщо трапилась помилка,
+  // передати виконання в цей блок
 } finally {
-  // do in any case after try/catch
+  // завжди виконається після try/catch
 }
 ```
 
-There may be no `catch` section or no `finally`, so shorter constructs `try...catch` and `try...finally` are also valid.
+Також ми можемо пропустити секцію `catch` чи `finally`, тому скорочені конструкції `try...catch` та `try...finally` теж валідні.
 
-Error objects have following properties:
+Об’єкт помилки має наступні властивості:
+- `message` -- розбірливе повідомлення про помилку.
+- `name` -- рядок з іменем помилки (назва конструктора помилки).
+- `stack` (нестандартна, але широко-підтримувана) -- стек викликів на момент створення помилки.
 
-- `message` -- the human-readable error message.
-- `name` -- the string with error name (error constructor name).
-- `stack` (non-standard, but well-supported) -- the stack at the moment of error creation.
+Ми можемо пропустити отримання об’єкту помилки, якщо використати `catch {` замість `catch (err) {`.
 
-If an error object is not needed, we can omit it by using `catch {` instead of `catch (err) {`.
+Також ми можемо генерувати власні помилки за допомогою оператору `throw`. Технічно, будь-що можна передати аргументом в `throw`, але, зазвичай, використовується об'єкт успадкований від вбудованого класу `Error`. Більше про розширення помилок в наступному розділі.
 
-We can also generate our own errors using the `throw` operator. Technically, the argument of `throw` can be anything, but usually it's an error object inheriting from the built-in `Error` class. More on extending errors in the next chapter.
+*Повторне викидання* -- важливий шаблон в роботі з помилками: переважно блок `catch` знає як обробляти помилки певного типу, тому він повинен знову викидати невідомі типи помилок.
 
-*Rethrowing* is a very important pattern of error handling: a `catch` block usually expects and knows how to handle the particular error type, so it should rethrow errors it doesn't know.
-
-Even if we don't have `try...catch`, most environments allow us to setup a "global" error handler to catch errors that "fall out". In-browser, that's `window.onerror`.
+Навіть, якщо ми не використовуємо `try...catch`, більшість оточень дозволяють встановити "глобальний" обробник помилок. В браузерах це `window.onerror`.
