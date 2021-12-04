@@ -119,7 +119,7 @@ try-catch-flow.svg:
   'try {': ''
   '': ''
   '}': ''
-  // code...: ''
+  // code...: '// код...'
 
 statusbarButtonGlyphs.svg:
   '!': ''
