@@ -21,7 +21,6 @@ function f() {
 f(); // очищення!
 ```
 
-...Or when there's a `throw`, like here:
 ...Або якщо є `throw`:
 
 ```js run
