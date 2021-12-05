@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Error creating an instance
+# Помилка створення екземпляра
 
-Here's the code with `Rabbit` extending `Animal`.
+Ось код з `Rabbit` розширює `Animal`.
 
-Unfortunately, `Rabbit` objects can't be created. What's wrong? Fix it.
+На жаль, неможливо створити об’єкти `Rabbit`. Що не так? Полагодьте це.
 ```js run
 class Animal {
 
