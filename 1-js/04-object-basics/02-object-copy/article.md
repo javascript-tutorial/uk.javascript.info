@@ -133,7 +133,7 @@ clone.name = "Петро"; // змінемо його вміст
 alert( user.name ); // як і раніше Іван залишився в оригінальному об’єкті
 ```
 
-Також ми можемо використати метод [Object.assign](mdn:js/Object/assign) для цього.
+Також ми можемо використати метод [Object.assign](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) для цього.
 
 Його синтаксис:
 

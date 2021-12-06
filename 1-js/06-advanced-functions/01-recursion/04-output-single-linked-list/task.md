@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# Output a single-linked list
+# Вивести одинозв’язаний список
 
-Let's say we have a single-linked list (as described in the chapter <info:recursion>):
+Скажімо, у нас є одинозв’язаний список (як описано в розділі <info:recursion>):
 
 ```js
 let list = {
@@ -22,8 +22,8 @@ let list = {
 };
 ```
 
-Write a function `printList(list)` that outputs list items one-by-one.
+Напишіть функцію `printList(list)`, що виводить список елементів один за одним.
 
-Make two variants of the solution: using a loop and using recursion.
+Зробіть два варіанти рішення: з використанням циклу та з використанням рекурсії.
 
-What's better: with recursion or without it?
+Що краще: з рекурсією чи без неї?

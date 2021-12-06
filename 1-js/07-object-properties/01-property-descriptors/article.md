@@ -1,44 +1,44 @@
 
-# Property flags and descriptors
+# Прапори та дескриптори властивостей
 
-As we know, objects can store properties.
+Як відомо, об’єкти можуть зберігати властивості.
 
-Until now, a property was a simple "key-value" pair to us. But an object property is actually a more flexible and powerful thing.
+Дотепер, для нас властивість була простою парою "ключ-значення". Однак насправді, властивість об’єкта є гнучкішою та потужнішою.
 
-In this chapter we'll study additional configuration options, and in the next we'll see how to invisibly turn them into getter/setter functions.
+У цьому розділі ми вивчимо додаткові параметри конфігурації, а в наступному ми побачимо, як можна непомітно перетворити їх у функції -- гетери та сетери.
 
-## Property flags
+## Прапори властивостей
 
-Object properties, besides a **`value`**, have three special attributes (so-called "flags"):
+Властивості об’єкта, крім **`value`**, мають три спеціальні атрибути (так звані "прапори"):
 
-- **`writable`** -- if `true`, the value can be changed, otherwise it's read-only.
-- **`enumerable`** -- if `true`, then listed in loops, otherwise not listed.
-- **`configurable`** -- if `true`, the property can be deleted and these attributes can be modified, otherwise not.
+- **`writable`** -- якщо `true`, значення можна змінювати, інакше воно доступне лише для читання.
+- **`enumerable`** -- якщо `true`, то властивість враховується в циклах, в іншому випадку цикли його ігнорують.
+- **`configurable`** -- якщо `true`, властивість можна видалити, а ці атрибути можна змінювати, інакше цього робити не можна.
 
-We didn't see them yet, because generally they do not show up. When we create a property "the usual way", all of them are `true`. But we also can change them anytime.
+Ми ще не бачили цих атрибутів, тому що вони зазвичай не показуються. Коли ми створюємо властивість "звичайним способом", всі атрибути мають значення `true`. Але ми також можемо їх змінити в будь-який час.
 
-First, let's see how to get those flags.
+По-перше, подивімось, як отримати ці прапори.
 
-The method [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor) allows to query the *full* information about a property.
+Метод [Object.getOwnPropertyDescriptor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor) дозволяє отримати *повну* інформацію про властивість.
 
-The syntax is:
+Синтаксис:
 ```js
 let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName);
 ```
 
 `obj`
-: The object to get information from.
+: Об’єкт, з якого буде отримана інформація.
 
 `propertyName`
-: The name of the property.
+: Назва властивості.
 
-The returned value is a so-called "property descriptor" object: it contains the value and all the flags.
+Повернене значення -- це так званий об’єкт "дескриптор властивості": він містить значення та всі прапори.
 
-For instance:
+Наприклад:
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
@@ -46,7 +46,7 @@ let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
 alert( JSON.stringify(descriptor, null, 2 ) );
 /* property descriptor:
 {
-  "value": "John",
+  "value": "Іван",
   "writable": true,
   "enumerable": true,
   "configurable": true
@@ -54,30 +54,30 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 */
 ```
 
-To change the flags, we can use [Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty).
+Щоб змінити прапори, ми можемо використовувати [Object.defineProperty](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty).
 
-The syntax is:
+Синтаксис:
 
 ```js
 Object.defineProperty(obj, propertyName, descriptor)
 ```
 
 `obj`, `propertyName`
-: The object and its property to apply the descriptor.
+: Об’єкт і його властивість, щоб застосувати дескриптор.
 
 `descriptor`
-: Property descriptor object to apply.
+: Об’єкт дескриптора властивості, який буде застосовано.
 
-If the property exists, `defineProperty` updates its flags. Otherwise, it creates the property with the given value and flags; in that case, if a flag is not supplied, it is assumed `false`.
+Якщо властивість існує, `defineProperty` оновлює її прапори. В іншому випадку метод створює властивість з даним значенням та прапорами; у цьому випадку, якщо прапор не вказано, передбачається, що його значення `false`.
 
-For instance, here a property `name` is created with all falsy flags:
+Наприклад, тут властивість `name` створюється з усіма хибними прапорами:
 
 ```js run
 let user = {};
 
 *!*
 Object.defineProperty(user, "name", {
-  value: "John"
+  value: "Іван"
 });
 */!*
 
@@ -86,7 +86,7 @@ let descriptor = Object.getOwnPropertyDescriptor(user, 'name');
 alert( JSON.stringify(descriptor, null, 2 ) );
 /*
 {
-  "value": "John",
+  "value": "Іван",
 *!*
   "writable": false,
   "enumerable": false,
@@ -96,17 +96,17 @@ alert( JSON.stringify(descriptor, null, 2 ) );
  */
 ```
 
-Compare it with "normally created" `user.name` above: now all flags are falsy. If that's not what we want then we'd better set them to `true` in `descriptor`.
+Порівняйте це з попереднім прикладом "нормального створення" `user.name` вище: тепер всі прапори є хибними. Якщо це не те, що ми хочемо, тоді ми краще встановили їх значення в `true` у `descriptor`.
 
-Now let's see effects of the flags by example.
+Тепер розгляньмо ефекти від прапорів на прикладах.
 
-## Non-writable
+## Не для запису
 
-Let's make `user.name` non-writable (can't be reassigned) by changing `writable` flag:
+Зробімо `user.name` недоступним для запису (недоступним для переприсвоєння), змінюючи `writable` прапор:
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 Object.defineProperty(user, "name", {
@@ -116,57 +116,57 @@ Object.defineProperty(user, "name", {
 });
 
 *!*
-user.name = "Pete"; // Error: Cannot assign to read only property 'name'
+user.name = "Петро"; // Помилка: неможливо присвоїти доступну лише для читання властивість 'name'
 */!*
 ```
 
-Now no one can change the name of our user, unless they apply their own `defineProperty` to override ours.
+Тепер ніхто не може змінити ім’я нашого користувача, якщо тільки не оновить відповідний прапор викликавши `defineProperty`, щоб перекрити наші дескриптори.
 
 ```smart header="Errors appear only in strict mode"
-In the non-strict mode, no errors occur when writing to non-writable properties and such. But the operation still won't succeed. Flag-violating actions are just silently ignored in non-strict.
+В несуворому режимі (без `use strict`), під час запису значення до недоступних для запису властивостей не виникне помилки. Однак така операція все одно не змінить значення. Дії, що порушують прапори, просто мовчки ігноруються в несуворому режимі.
 ```
 
-Here's the same example, but the property is created from scratch:
+Ось той же приклад, але властивість створена "з нуля":
 
 ```js run
 let user = { };
 
 Object.defineProperty(user, "name", {
 *!*
-  value: "John",
-  // for new properties we need to explicitly list what's true
+  value: "Іван",
+  // для нових властивостей ми повинні явно вказати всі прапори, для яких значення true
   enumerable: true,
   configurable: true
 */!*
 });
 
-alert(user.name); // John
-user.name = "Pete"; // Error
+alert(user.name); // Іван
+user.name = "Петро"; // Помилка
 ```
 
-## Non-enumerable
+## Неперелічувана властивість
 
-Now let's add a custom `toString` to `user`.
+Тепер додаймо кастомний `toString` до `user`.
 
-Normally, a built-in `toString` for objects is non-enumerable, it does not show up in `for..in`. But if we add a `toString` of our own, then by default it shows up in `for..in`, like this:
+Зазвичай, вбудований `toString` для об’єктів неперелічуваний, тобто він не з’являється в `for..in`. Але якщо ми додамо свій власний `toString`, то за замовчуванням він з’являється в `for..in`:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   toString() {
     return this.name;
   }
 };
 
-// By default, both our properties are listed:
+// за замовчуванням, вказані обидві наші властивості:
 for (let key in user) alert(key); // name, toString
 ```
 
-If we don't like it, then we can set `enumerable:false`. Then it won't appear in a `for..in` loop, just like the built-in one:
+Якщо нам це не подобається, то ми можемо встановити `enumerable:false`. Тоді `toString` не з’явиться в `for..in` так само, як вбудований метод.
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   toString() {
     return this.name;
   }
@@ -179,24 +179,24 @@ Object.defineProperty(user, "toString", {
 });
 
 *!*
-// Now our toString disappears:
+// Тепер наш toString зникає:
 */!*
 for (let key in user) alert(key); // name
 ```
 
-Non-enumerable properties are also excluded from `Object.keys`:
+Неперелічувані властивості також виключаються з `Object.keys`:
 
 ```js
 alert(Object.keys(user)); // name
 ```
 
-## Non-configurable
+## Неналаштовувані властивості
 
-The non-configurable flag (`configurable:false`) is sometimes preset for built-in objects and properties.
+Прапор неналаштовуваної властивості (`configurable:false`) іноді встановлений для вбудованих об’єктів та властивостей.
 
-A non-configurable property can't be deleted, its attributes can't be modified.
+Неналаштовувана властивість не може бути видалена, її атрибути не можуть бути змінені.
 
-For instance, `Math.PI` is non-writable, non-enumerable and non-configurable:
+Наприклад, властивість `Math.PI` доступна тільки для читання, неперелічувана і неналаштовувана:
 
 ```js run
 let descriptor = Object.getOwnPropertyDescriptor(Math, 'PI');
@@ -211,47 +211,47 @@ alert( JSON.stringify(descriptor, null, 2 ) );
 }
 */
 ```
-So, a programmer is unable to change the value of `Math.PI` or overwrite it.
+Отже, програміст не може змінити значення `Math.PI` або перезаписати його.
 
 ```js run
-Math.PI = 3; // Error, because it has writable: false
+Math.PI = 3; // Помилка, тому що властивість має writable: false
 
-// delete Math.PI won't work either
+// видалення Math.PI також не буде працювати
 ```
 
-We also can't change `Math.PI` to be `writable` again:
+Ми також не можемо змінити властивість `Math.PI`, щоб вона знову була `writable`:
 
 ```js run
-// Error, because of configurable: false
+// Помилка, через configurable: false
 Object.defineProperty(Math, "PI", { writable: true });
 ```
 
-There's absolutely nothing we can do with `Math.PI`.
+Абсолютно нічого не можна зробити з `Math.PI`.
 
-Making a property non-configurable is a one-way road. We cannot change it back with `defineProperty`.
+Створення неналаштовуваної властивості -- це дорога в один кінець. Ми не можемо змінити цю властивість з `defineProperty`.
 
 **Please note: `configurable: false` prevents changes of property flags and its deletion, while allowing to change its value.**
 
-Here `user.name` is non-configurable, but we can still change it (as it's writable):
+Тут `user.name` неналаштовувана властивість, але ми все ще можемо змінити її (бо вона доступна для запису):
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 Object.defineProperty(user, "name", {
   configurable: false
 });
 
-user.name = "Pete"; // works fine
-delete user.name; // Error
+user.name = "Петро"; // працює добре
+delete user.name; // Помилка
 ```
 
-And here we make `user.name` a "forever sealed" constant, just like the built-in `Math.PI`:
+І ось ми робимо `user.name` "назавжди запечатаною" константою, як і вбудована `Math.PI`:
 
 ```js run
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 Object.defineProperty(user, "name", {
@@ -259,24 +259,24 @@ Object.defineProperty(user, "name", {
   configurable: false
 });
 
-// won't be able to change user.name or its flags
-// all this won't work:
+// тепер не можливо змінювати user.name чи її прапори
+// все це не буде працювати:
 user.name = "Pete";
 delete user.name;
-Object.defineProperty(user, "name", { value: "Pete" });
+Object.defineProperty(user, "name", { value: "Петро" });
 ```
 
 ```smart header="The only attribute change possible: writable true -> false"
-There's a minor exception about changing flags.
+Існує незначний виняток щодо зміни прапорів.
 
-We can change `writable: true` to `false` for a non-configurable property, thus preventing its value modification (to add another layer of protection). Not the other way around though.
+Ми можемо змінити `writable: true` на `false` для не неналаштовуваної властивості, таким чином, запобігаючи модифікації її значення (додає інший шар захисту). Навпаки такий підхід не працює.
 ```
 
 ## Object.defineProperties
 
-There's a method [Object.defineProperties(obj, descriptors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties) that allows to define many properties at once.
+Існує метод [Object.defineProperties(obj, descriptors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties), що дозволяє визначити багато властивостей відразу.
 
-The syntax is:
+Синтаксис:
 
 ```js
 Object.defineProperties(obj, {
@@ -286,29 +286,29 @@ Object.defineProperties(obj, {
 });
 ```
 
-For instance:
+Наприклад:
 
 ```js
 Object.defineProperties(user, {
-  name: { value: "John", writable: false },
-  surname: { value: "Smith", writable: false },
+  name: { value: "Іван", writable: false },
+  surname: { value: "Іванов", writable: false },
   // ...
 });
 ```
 
-So, we can set many properties at once.
+Отже, ми можемо одночасно встановити багато властивостей.
 
 ## Object.getOwnPropertyDescriptors
 
-To get all property descriptors at once, we can use the method [Object.getOwnPropertyDescriptors(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors).
+Щоб отримати всі дескриптори одночасно, ми можемо використовувати метод [Object.getOwnPropertyDescriptors(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors).
 
-Together with `Object.defineProperties` it can be used as a "flags-aware" way of cloning an object:
+Разом з `Object.defineProperties` цей метод може бути використаний як "прапорний" спосіб клонування об’єкта:
 
 ```js
 let clone = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
 ```
 
-Normally when we clone an object, we use an assignment to copy properties, like this:
+Зазвичай, коли ми клонуємо об’єкт, ми використовуємо присвоєння для копіювання властивостей:
 
 ```js
 for (let key in user) {
@@ -316,34 +316,34 @@ for (let key in user) {
 }
 ```
 
-...But that does not copy flags. So if we want a "better" clone then `Object.defineProperties` is preferred.
+...Але це не копіює прапори. Отже, якщо ми хочемо "кращого" клону, то `Object.defineProperties` є переважним.
 
-Another difference is that `for..in` ignores symbolic properties, but `Object.getOwnPropertyDescriptors` returns *all* property descriptors including symbolic ones.
+Інша відмінність полягає в тому, що `for..in` ігнорує символьні властивості, але `Object.getOwnPropertyDescriptors` повертає *всі* дескриптори властивостей, включаючи символьні.
 
-## Sealing an object globally
+## Глобальне запечатування об’єкта
 
-Property descriptors work at the level of individual properties.
+Дескриптори властивостей працюють на рівні окремих властивостей.
 
-There are also methods that limit access to the *whole* object:
+Існують також способи, які обмежують доступ до *всього* об’єкта:
 
 [Object.preventExtensions(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/preventExtensions)
-: Forbids the addition of new properties to the object.
+: Забороняє додавання нових властивостей до об’єкта.
 
 [Object.seal(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal)
-: Forbids adding/removing of properties. Sets `configurable: false` for all existing properties.
+: Забороняє додавання/видалення властивостей. Встановлює `configurable: false` для всіх властивостей, що існують.
 
 [Object.freeze(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
-: Forbids adding/removing/changing of properties. Sets `configurable: false, writable: false` for all existing properties.
+: Забороняє додавання/видалення/зміну властивостей. Встановлює `configurable: false, writable: false` для всіх властивостей, що існують.
 
-And also there are tests for them:
+А також для них є тести:
 
 [Object.isExtensible(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible)
-: Returns `false` if adding properties is forbidden, otherwise `true`.
+: Повертає `false`, якщо додавання властивостей заборонено, інакше `true`.
 
 [Object.isSealed(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed)
-: Returns `true` if adding/removing properties is forbidden, and all existing properties have `configurable: false`.
+: Повертає `true`, якщо додавання/видалення властивостей заборонено, і всі властивості, що існують, мають `configurable: false`.
 
 [Object.isFrozen(obj)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen)
-: Returns `true` if adding/removing/changing properties is forbidden, and all current properties are `configurable: false, writable: false`.
+: Повертає `true`, якщо додавання/видалення/зміна властивостей заборонена і всі поточні властивості є `configurable: false, writable: false`.
 
-These methods are rarely used in practice.
+Ці методи рідко використовуються на практиці.

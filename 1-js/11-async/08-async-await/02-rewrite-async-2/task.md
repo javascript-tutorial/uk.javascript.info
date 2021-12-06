@@ -1,9 +1,9 @@
 
-# Rewrite "rethrow" with async/await
+# Перепишіть "rethrow", використовуючи async/await
 
-Below you can find the "rethrow" example. Rewrite it using `async/await` instead of `.then/catch`.
+Нижче ви можете знайти приклад "rethrow". Перепишіть його, використовуючи `async/await` замість `.then/catch`.
 
-And get rid of the recursion in favour of a loop in `demoGithubUser`: with `async/await` that becomes easy to do.
+І позбудьтеся від рекурсії на користь циклу в `demoGithubUser`: за допомогою `async/await` це буде легко зробити.
 
 ```js run
 class HttpError extends Error {
@@ -25,18 +25,18 @@ function loadJson(url) {
     });
 }
 
-// Ask for a user name until github returns a valid user
+// Запитуйте ім’я користувача, поки github не поверне дійсного користувача
 function demoGithubUser() {
-  let name = prompt("Enter a name?", "iliakan");
+  let name = prompt("Введіть ім’я?", "iliakan");
 
   return loadJson(`https://api.github.com/users/${name}`)
     .then(user => {
-      alert(`Full name: ${user.name}.`);
+      alert(`Ім’я та прізвище: ${user.name}.`);
       return user;
     })
     .catch(err => {
       if (err instanceof HttpError && err.response.status == 404) {
-        alert("No such user, please reenter.");
+        alert("Такого користувача не існує, будь ласка, введіть ще раз.");
         return demoGithubUser();
       } else {
         throw err;

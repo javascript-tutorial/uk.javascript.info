@@ -1,5 +1,5 @@
-The answer is: **Pete**.
+Відповідь: **Петро**.
 
-A function gets outer variables as they are now, it uses the most recent values.
+Функція отримує зовнішні змінні такими, якими вони є зараз, тобто вона використовує останні значення.
 
-Old variable values are not saved anywhere. When a function wants a variable, it takes the current value from its own Lexical Environment or the outer one.
+Старі значення змінних ніде не зберігаються. Коли функція потребує змінної, вона бере поточне значення зі свого власного або зовнішнього лексичного середовища.

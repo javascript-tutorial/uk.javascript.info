@@ -100,6 +100,7 @@ Interested to see which characters belong to a property?
 - Не знаєте, як перекласти термін? [Словник «Веб-стандартів»](https://github.com/web-standards-ru/dictionary/blob/master/dictionary.md) допоможе (російською мовою)!
 - Назви компаній (Google), бібліотек (Jest) і абревіатури (DOM) не перекладаються.
 - Апостроф бажано писати знаком `’`, а не одинарною лапкою `'`. Проте, це правило не обов’язкове.
+- Власні назви перекладайте на український лад: `let userName = "John"` => `let userName = "Іван"`, `let userName = "Pete"` => `let userName = "Петро"`.
 
 ### Глосарій (словник)
 

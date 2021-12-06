@@ -1,12 +1,12 @@
-For the second parentheses to work, the first ones must return a function.
+Щоб другі дужки працювали, функція повинна повертати іншу функцію.
 
-Like this:
+Ось так:
 
 ```js run
 function sum(a) {
 
   return function(b) {
-    return a + b; // takes "a" from the outer lexical environment
+    return a + b; // Бере "a" із зовнішнього лексичного середовища
   };
 
 }

@@ -24,6 +24,15 @@
       ]
     },
     {
+      "login": "MykolaSopiha",
+      "name": "Mykola Sopiha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
+      "profile": "https://www.linkedin.com/in/m-sopiha/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
       "login": "stas-dolgachov",
       "name": "Stanislav",
       "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
@@ -31,15 +40,6 @@
       "contributions": [
         "translation",
         "review"
-      ]
-    },
-    {
-      "login": "MykolaSopiha",
-      "name": "Mykola Sopiha",
-      "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
-      "profile": "https://www.linkedin.com/in/m-sopiha/",
-      "contributions": [
-        "translation"
       ]
     },
     {
@@ -75,6 +75,15 @@
       "name": "hordiienko-tatiana",
       "avatar_url": "https://avatars.githubusercontent.com/u/49336627?v=4",
       "profile": "https://github.com/hordiienko-tatiana",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Nordtonito",
+      "name": "Vitaly Nesteruk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43732023?v=4",
+      "profile": "https://github.com/Nordtonito",
       "contributions": [
         "translation"
       ]
@@ -204,6 +213,15 @@
       "name": "Maria",
       "avatar_url": "https://avatars.githubusercontent.com/u/22173769?v=4",
       "profile": "https://github.com/MariaTar",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Vanchurick",
+      "name": "Ivan D",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43196449?v=4",
+      "profile": "https://github.com/Vanchurick",
       "contributions": [
         "translation"
       ]
