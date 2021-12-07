@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-24-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://javascript.info> з англійської на українську мову.
@@ -78,26 +78,27 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="https://github.com/hordiienko-tatiana"><img src="https://avatars.githubusercontent.com/u/49336627?v=4?s=70" width="70px;" alt=""/><br /><sub><b>hordiienko-tatiana</b></sub></a><br /><a href="#translation-hordiienko-tatiana" title="Translation">🌍</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://github.com/Nordtonito"><img src="https://avatars.githubusercontent.com/u/43732023?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Vitaly Nesteruk</b></sub></a><br /><a href="#translation-Nordtonito" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/alexgalkin"><img src="https://avatars0.githubusercontent.com/u/1190812?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Alex Galkin</b></sub></a><br /><a href="#translation-alexgalkin" title="Translation">🌍</a> <a href="#ideas-alexgalkin" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/vsemozhetbyt"><img src="https://avatars1.githubusercontent.com/u/10393198?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Vse Mozhe Buty</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3Avsemozhetbyt" title="Reviewed Pull Requests">👀</a> <a href="#ideas-vsemozhetbyt" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/Zim123"><img src="https://avatars2.githubusercontent.com/u/1306750?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Yuriy Ostapyuk</b></sub></a><br /><a href="#translation-Zim123" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/UkrainianCitizen"><img src="https://avatars2.githubusercontent.com/u/31314423?v=4?s=70" width="70px;" alt=""/><br /><sub><b>UkrainianCitizen</b></sub></a><br /><a href="#ideas-UkrainianCitizen" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3AUkrainianCitizen" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://alexandrtovmach.com"><img src="https://avatars0.githubusercontent.com/u/28801003?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Alexandr Tovmach</b></sub></a><br /><a href="#translation-alexandrtovmach" title="Translation">🌍</a></td>
     <td align="center"><a href="http://stepansuvorov.com/blog/"><img src="https://avatars1.githubusercontent.com/u/1526680?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Stepan Suvorov</b></sub></a><br /><a href="#translation-stevermeister" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/lobanov-oleh"><img src="https://avatars0.githubusercontent.com/u/53055773?v=4?s=70" width="70px;" alt=""/><br /><sub><b>lobanov-oleh</b></sub></a><br /><a href="#translation-lobanov-oleh" title="Translation">🌍</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://github.com/lobanov-oleh"><img src="https://avatars0.githubusercontent.com/u/53055773?v=4?s=70" width="70px;" alt=""/><br /><sub><b>lobanov-oleh</b></sub></a><br /><a href="#translation-lobanov-oleh" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/dDenysS"><img src="https://avatars0.githubusercontent.com/u/23075870?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Denys</b></sub></a><br /><a href="#translation-dDenysS" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/ArtemZununov"><img src="https://avatars1.githubusercontent.com/u/12086644?v=4?s=70" width="70px;" alt=""/><br /><sub><b>ArtemZununov</b></sub></a><br /><a href="#translation-ArtemZununov" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/hypeofpipe"><img src="https://avatars.githubusercontent.com/u/14982064?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Volodymyr V.</b></sub></a><br /><a href="#translation-hypeofpipe" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Tarkeasy"><img src="https://avatars.githubusercontent.com/u/36696571?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Taras Kulchytskyi</b></sub></a><br /><a href="#translation-Tarkeasy" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/VolodymyrSSS"><img src="https://avatars.githubusercontent.com/u/49289546?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Volodymyr Sych</b></sub></a><br /><a href="#translation-VolodymyrSSS" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Tuoris"><img src="https://avatars.githubusercontent.com/u/16479460?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Tuoris</b></sub></a><br /><a href="#translation-Tuoris" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/MariaTar"><img src="https://avatars.githubusercontent.com/u/22173769?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Maria</b></sub></a><br /><a href="#translation-MariaTar" title="Translation">🌍</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://github.com/MariaTar"><img src="https://avatars.githubusercontent.com/u/22173769?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Maria</b></sub></a><br /><a href="#translation-MariaTar" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Vanchurick"><img src="https://avatars.githubusercontent.com/u/43196449?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Ivan D</b></sub></a><br /><a href="#translation-Vanchurick" title="Translation">🌍</a></td>
-    <td align="center"><a href="https://github.com/Nordtonito"><img src="https://avatars.githubusercontent.com/u/43732023?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Vitaly Nesteruk</b></sub></a><br /><a href="#translation-Nordtonito" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/Purusah"><img src="https://avatars.githubusercontent.com/u/16886633?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Vladyslav Bohaichuk</b></sub></a><br /><a href="#translation-Purusah" title="Translation">🌍</a></td>
   </tr>
 </table>
 
