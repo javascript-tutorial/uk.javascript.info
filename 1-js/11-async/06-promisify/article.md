@@ -1,12 +1,12 @@
-# Promisification
+# Промісифікація
 
-"Promisification" is a long word for a simple transformation. It's the conversion of a function that accepts a callback into a function that returns a promise.
+"Промісифікація" -- це довге слово для простої трансформації. Це перетворення функції, яка приймає колбек та повертає проміс.
 
-Such transformations are often required in real-life, as many functions and libraries are callback-based. But promises are more convenient, so it makes sense to promisify them.
+Такі перетворення часто необхідні в реальному житті, оскільки багато функцій та бібліотеки засновані на колбеках, а використання промісів зручніше, тому є сенс «промісифікувати» їх.
 
-For better understanding, let's see an example.
+Для кращого розуміння розглянемо приклад.
 
-For instance, we have `loadScript(src, callback)` from the chapter <info:callbacks>.
+Ми візьмемо `loadScript(src, callback)` з розділу <info:callbacks>.
 
 ```js run
 function loadScript(src, callback) {
@@ -14,24 +14,24 @@ function loadScript(src, callback) {
   script.src = src;
 
   script.onload = () => callback(null, script);
-  script.onerror = () => callback(new Error(`Script load error for ${src}`));
+  script.onerror = () => callback(new Error(`Помилка завантаження скрипта ${src}`));
 
   document.head.append(script);
 }
 
-// usage:
+// використання:
 // loadScript('path/script.js', (err, script) => {...})
 ```
 
-The function loads a script with the given `src`, and then calls `callback(err)` in case of an error, or `callback(null, script)` in case of successful loading. That's a widespread agreement for using callbacks, we saw it before.
+Функція завантажує скрипт використовуючи аргумент `src`, а потім викликає `callback(err)` у випадку помилки чи `callback(null, script)` у випадку успішного завантаження. Це усім відоме використання колбеку, яке ми вже бачили.
 
-Let's promisify it. 
+Давайте промісифікуємо цю функцію. 
 
-We'll make a new function `loadScriptPromise(src)`, that does the same (loads the script), but returns a promise instead of using callbacks.
+Створимо нову функцію `loadScriptPromise(src)`, яка робить те саме (завантажує скрипт), але повертає проміс замість використання колбеку.
 
-In other words, we pass it only `src` (no `callback`) and get a promise in return, that resolves with `script` when the load is successful, and rejects with the error otherwise.
+Іншими словами, ми будемо передавати тільки `src` (не `callback`) і отримаємо проміс у відповіді, який поверне `script` коли завантаження успішне, і помилку, якщо ні.
 
-Here it is:
+Реалізація такої функції:
 ```js
 let loadScriptPromise = function(src) {
   return new Promise((resolve, reject) => {
@@ -42,23 +42,23 @@ let loadScriptPromise = function(src) {
   });
 };
 
-// usage:
+// використання:
 // loadScriptPromise('path/script.js').then(...)
 ```
 
-As we can see, the new function is a wrapper around the original `loadScript` function. It calls it providing its own callback that translates to promise `resolve/reject`.
+Як ви можете бачити, нова функція -- це обгортка оригінальної `loadScript` функції. Вона викликає власний колбек, який працює з функціями проміса `resolve/reject`.
 
-Now `loadScriptPromise` fits well in promise-based code. If we like promises more than callbacks (and soon we'll see more reasons for that), then we will use it instead.
+Як бачимо, функція `loadScriptPromise` добре вписується в асинхронну поведінку промісів.
 
-In practice we may need to promisify more than one function, so it makes sense to use a helper.
+На практиці нам, швидше за все, знадобиться промісифікувати не одну функцію, тому є сенс зробити для цього спеціальну «функцію-помічник».
 
-We'll call it `promisify(f)`: it accepts a to-promisify function `f` and returns a wrapper function.
+Ми назвемо її `promisify(f)` -- вона приймає функцію для промісифікації `f` та повертає функцію-обгортку.
 
 ```js
 function promisify(f) {
-  return function (...args) { // return a wrapper-function (*)
+  return function (...args) { // повертає функію-обгортку (*)
     return new Promise((resolve, reject) => {
-      function callback(err, result) { // our custom callback for f (**)
+      function callback(err, result) { // наш спеціальний колбек для f (**)
         if (err) {
           reject(err);
         } else {
@@ -66,41 +66,41 @@ function promisify(f) {
         }
       }
 
-      args.push(callback); // append our custom callback to the end of f arguments
+      args.push(callback); // додаємо колбек у кінець аргументів f
 
-      f.call(this, ...args); // call the original function
+      f.call(this, ...args); // викликаємо оригінальну функцію
     });
   };
 }
 
-// usage:
+// використання:
 let loadScriptPromise = promisify(loadScript);
 loadScriptPromise(...).then(...);
 ```
 
-The code may look a bit complex, but it's essentially the same that we wrote above, while promisifying `loadScript` function.
+Код може виглядати дещо складним, але по суті він такий самий, як ми написали вище, промісифікуючи функцію `loadScript`.
 
-A call to `promisify(f)` returns a wrapper around `f` `(*)`. That wrapper returns a promise and forwards the call to the original `f`, tracking the result in the custom callback `(**)`.
+Виклик функції `promisify(f)` поверне функцію-обгортку для `f` `(*)`. Ця обгортка повертає проміс і викликає оригінальну функцію `f`, відстежуючи результат у спеціальному зворотному виклику `(**)`.
 
-Here, `promisify` assumes that the original function expects a callback with exactly two arguments `(err, result)`. That's what we encounter most often. Then our custom callback is in exactly the right format, and `promisify` works great for such a case.
+В цьому випадку, `promisify` припускає, що оригінальна функція очікує колбек тільки з двома аргументами `(err, result)`. З таким результатом колбеку ви працюватимете найчастіше. В такому випадку наш колбек написаний і відпрацьовуватиме правильно.
 
-But what if the original `f` expects a callback with more arguments `callback(err, res1, res2, ...)`?
+Але що, якщо вихідна функція `f` очікує колбек з більшою кількістю аргументів `callback(err, res1, res2, ...)`?
 
-We can improve our helper. Let's make a more advanced version of `promisify`.
+Ми можемо покращити нашу функцію-помічник. Зробімо розширену версію `promisify`.
 
-- When called as `promisify(f)` it should work similar to the version above.
-- When called as `promisify(f, true)`, it should return the promise that resolves with the array of callback results. That's exactly for callbacks with many arguments.
+- Викличмо функцію `promisify(f)` з одним аргументом, то вона повинна працювати як і раніше.
+- Викличмо функцію `promisify(f, true)` з двома аргументами, яка повинна повернути проміс, який поверне масив результатів з колбеку. Те ж саме повинно відбуватись для колбеку з багатьма аргументами.
 
 ```js
-// promisify(f, true) to get array of results
+// promisify(f, true) повинна повернути масив результатів
 function promisify(f, manyArgs = false) {
   return function (...args) {
     return new Promise((resolve, reject) => {
-      function *!*callback(err, ...results*/!*) { // our custom callback for f
+      function *!*callback(err, ...results*/!*) { // наш спеціальний колбек для f
         if (err) {
           reject(err);
         } else {
-          // resolve with all callback results if manyArgs is specified
+          // повернемо для всі результати колбека, якщо задано значення manyArgs === true
           *!*resolve(manyArgs ? results : results[0]);*/!*
         }
       }
@@ -112,21 +112,21 @@ function promisify(f, manyArgs = false) {
   };
 }
 
-// usage:
+// використання:
 f = promisify(f, true);
 f(...).then(arrayOfResults => ..., err => ...);
 ```
 
-As you can see it's essentially the same as above, but `resolve` is called with only one or all arguments depending on whether `manyArgs` is truthy.
+Як ви можете бачити, це по суті те саме, що й вище, але `resolve` викликається лише з одним або з усіма аргументами залежно від того, чи є `manyArgs` істинним.
 
-For more exotic callback formats, like those without `err` at all: `callback(result)`, we can promisify such functions manually without using the helper.
+Для більш екзотичних форматів колбека, наприклад, без `err`: `callback(result)`, ми можемо промісифікувати функції без помічника, «вручну».
 
-There are also modules with a bit more flexible promisification functions, e.g. [es6-promisify](https://github.com/digitaldesignlabs/es6-promisify). In Node.js, there's a built-in `util.promisify` function for that.
+Існують також модулі з більш гнучкою промісифікацією, наприклад, [es6-promisify](https://github.com/digitaldesignlabs/es6-promisify) або вбудована функція `util.promisify` в Node.js.  
 
 ```smart
-Promisification is a great approach, especially when you use `async/await` (see the next chapter), but not a total replacement for callbacks.
+Промісифікація –- це чудовий підхід, особливо якщо ви будете використовувати `async/await` (дивіться наступний розділ), але вона не є повноцінно заміною будь-яких колбеків.
 
-Remember, a promise may have only one result, but a callback may technically be called many times.
+Пам'ятайте, проміс може мати лише один результат, але колбек технічно може викликатися скільки завгодно разів.
 
-So promisification is only meant for functions that call the callback once. Further calls will be ignored.
+Тому промісифікація використовується для функцій, що викликають колбек лише один раз. Наступні виклики колбека будуть проігноровані.
 ```
