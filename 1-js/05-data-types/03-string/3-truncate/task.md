@@ -2,16 +2,16 @@ importance: 5
 
 ---
 
-# Truncate the text
+# Урізання тексту
 
-Create a function `truncate(str, maxlength)` that checks the length of the `str` and, if it exceeds `maxlength` -- replaces the end of `str` with the ellipsis character `"…"`, to make its length equal to `maxlength`.
+Створіть функцію `truncate(str, maxlength)`, яка перевіряє довжину `str` і, якщо вона перевищує `maxlength` -- замінює кінець `str` символом трьох крапок `"…"`, щоб його довжина була рівною `maxlength`.
 
-The result of the function should be the truncated (if needed) string.
+Результатом функції повинен бути урізаний (якщо потребується) рядок.
 
-For instance:
+Наприклад:
 
 ```js
-truncate("What I'd like to tell on this topic is:", 20) = "What I'd like to te…"
+truncate("Що я хотів би розповісти на цю тему:", 20) = "Що я хотів би розпо…"
 
-truncate("Hi everyone!", 20) = "Hi everyone!"
+truncate("Всім привіт!", 20) = "Всім привіт!"
 ```

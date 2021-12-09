@@ -1,6 +1,6 @@
-The maximal length must be `maxlength`, so we need to cut it a little shorter, to give space for the ellipsis.
+Максимальна довжина має бути `maxlength`, тому нам потрібно обрізати її трохи коротше, щоб дати місце для символу трьох крапок.
 
-Note that there is actually a single Unicode character for an ellipsis. That's not three dots.
+Зауважте, що насправді існує один юнікодний символ для "трьох крапок". Це не три послідовні крапки.
 
 ```js run demo
 function truncate(str, maxlength) {

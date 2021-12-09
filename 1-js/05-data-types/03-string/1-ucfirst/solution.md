@@ -1,19 +1,19 @@
-We can't "replace" the first character, because strings in JavaScript are immutable.
+Ми не можемо "замінити" перший символ, оскільки рядки в JavaScript незмінні.
 
-But we can make a new string based on the existing one, with the uppercased first character:
+Але ми можемо створити новий рядок на основі існуючого, з першим символом у верхньому регістрі:
 
 ```js
 let newStr = str[0].toUpperCase() + str.slice(1);
 ```
 
-There's a small problem though. If `str` is empty, then `str[0]` is `undefined`, and as `undefined` doesn't have the `toUpperCase()` method, we'll get an error.
+Але є невелика проблема. Якщо `str` порожній, то `str[0]` є `undefined`, а оскільки `undefined` не має методу `toUpperCase()`, ми отримаємо помилку.
 
-There are two variants here:
+Тут є два варіанти:
 
-1. Use `str.charAt(0)`, as it always returns a string (maybe empty).
-2. Add a test for an empty string.
+1. Використати `str.charAt(0)`, оскільки він завжди повертає рядок (для порожнього рядка -- порожній).
+2. Додати перевірку на порожній рядок.
 
-Here's the 2nd variant:
+Ось 2-й варіант:
 
 ```js run demo
 function ucFirst(str) {
@@ -22,6 +22,6 @@ function ucFirst(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
 
-alert( ucFirst("john") ); // John
+alert( ucFirst("василь") ); // Василь
 ```
 
