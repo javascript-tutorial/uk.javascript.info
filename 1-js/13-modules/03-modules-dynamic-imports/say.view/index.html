@@ -2,9 +2,9 @@
 <script>
   async function load() {
     let say = await import('./say.js');
-    say.hi(); // Привіт!
-    say.bye(); // Бувай!
-    say.default(); // Модуль завантажений (export default)!
+    say.hi(); // Hello!
+    say.bye(); // Bye!
+    say.default(); // Module loaded (export default)!
   }
 </script>
-<button onclick="load()">Натисни мене</button>
+<button onclick="load()">Click me</button>
