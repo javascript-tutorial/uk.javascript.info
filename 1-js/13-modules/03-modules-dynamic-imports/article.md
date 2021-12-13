@@ -1,61 +1,61 @@
-# Динамічні імпорти
+# Dynamic imports
 
-Інструкції експорту і імпорту, які ми розглядали в попередньому розділі, називаються "статичними". Синтаксис у них дуже простий і строгий.
+Export and import statements that we covered in previous chapters are called "static". The syntax is very simple and strict.
 
-По-перше, ми не можемо динамічно задавати ніякі з параметрів `import`.
+First, we can't dynamically generate any parameters of `import`.
 
-Шлях до модуля має бути строковим примітивом і не може бути викликом функції. Ось так працювати не буде:
+The module path must be a primitive string, can't be a function call. This won't work:
 
 ```js
-import ... from *!*getModuleName()*/!*; // Помилка, має бути рядок
+import ... from *!*getModuleName()*/!*; // Error, only from "string" is allowed
 ```
 
-По-друге, ми не можемо робити імпорт залежно від умов або в процесі виконання:
+Second, we can't import conditionally or at run-time:
 
 ```js
 if(...) {
-  import ...; // Помилка, заборонено
+  import ...; // Error, not allowed!
 }
 
 {
-  import ...; // Помилка, ми не можемо ставити імпорт у блок
+  import ...; // Error, we can't put import in any block
 }
 ```
 
-Усе це результат того, що мета директив `import`/`export` - задати кістяк структури коду. Завдяки ним вона може бути проаналізована, модулі можуть бути зібрані в один файл спеціальними інструментами, а невживані експорти видалені. Це можливо тільки завдяки тому, що все статично.
+That's because `import`/`export` aim to provide a backbone for the code structure. That's a good thing, as code structure can be analyzed, modules can be gathered and bundled into one file by special tools, unused exports can be removed ("tree-shaken"). That's possible only because the structure of imports/exports is simple and fixed.
 
-Але як ми можемо імпортувати модуль динамічно, за запитом?
+But how can we import a module dynamically, on-demand?
 
-## Вираз import()
+## The import() expression
 
-Вираз `import(module)` завантажує модуль і повертає проміс, результатом якого стає об’єкт модуля, що містить усі його експорти.
+The `import(module)` expression loads the module and returns a promise that resolves into a module object that contains all its exports. It can be called from any place in the code.
 
-Використати його ми можемо динамічно у будь-якому місці коду, наприклад, так:
+We can use it dynamically in any place of the code, for instance:
 
 ```js
-let modulePath = prompt("Який модуль завантажити?");
+let modulePath = prompt("Which module to load?");
 
 import(modulePath)
-  .then(obj => <об’єкт модуля>)
-  .catch(err => <помилка завантаження, наприклад якщо немає такого модуля>)
+  .then(obj => <module object>)
+  .catch(err => <loading error, e.g. if no such module>)
 ```
 
-Чи якщо усередині асинхронної функції, то можна використати `let module = await import(modulePath)`.
+Or, we could use `let module = await import(modulePath)` if inside an async function.
 
-Наприклад, якщо у нас є такий модуль `say.js`:
+For instance, if we have the following module `say.js`:
 
 ```js
 // 📁 say.js
 export function hi() {
-  alert(`Привіт`);
+  alert(`Hello`);
 }
 
 export function bye() {
-  alert(`Бувай`);
+  alert(`Bye`);
 }
 ```
 
-...То динамічний імпорт може виглядати так:
+...Then dynamic import can be like this:
 
 ```js
 let {hi, bye} = await import('./say.js');
@@ -64,35 +64,35 @@ hi();
 bye();
 ```
 
-А якщо в `say.js` вказаний експорт за замовчуванням:
+Or, if `say.js` has the default export:
 
 ```js
 // 📁 say.js
 export default function() {
-  alert("Модуль завантажився (export default)!");
+  alert("Module loaded (export default)!");
 }
 ```
 
-...То для доступу до нього нам слід узяти властивість `default` об’єкту модуля:
+...Then, in order to access it, we can use `default` property of the module object:
 
 ```js
 let obj = await import('./say.js');
 let say = obj.default;
-// або одним рядком: let {default: say} = await import ('./say.js');
+// or, in one line: let {default: say} = await import('./say.js');
 
 say();
 ```
 
-Ось повний приклад:
+Here's the full example:
 
 [codetabs src="say" current="index.html"]
 
 ```smart
-Динамічний імпорт працює в звичайних скриптах, він не вимагає вказівки `script type="module"`.
+Dynamic imports work in regular scripts, they don't require `script type="module"`.
 ```
 
 ```smart
-Хоча `import()` і виглядає схожим на виклик функції, насправді це спеціальний синтаксис, так само, як, наприклад, `super()`.
+Although `import()` looks like a function call, it's a special syntax that just happens to use parentheses (similar to `super()`).
 
-Так що ми не можемо скопіювати `import` в іншу змінну або викликати за допомогою `.call/apply`. Це не функція.
+So we can't copy `import` to a variable or use `call/apply` with it. It's not a function.
 ```
