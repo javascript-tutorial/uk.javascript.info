@@ -78,7 +78,7 @@ export default function() {
 ```js
 let obj = await import('./say.js');
 let say = obj.default;
-// або одним рядком: let {default: say} = await import ('./say.js');
+// або одним рядком: let {default: say} = await import('./say.js');
 
 say();
 ```
