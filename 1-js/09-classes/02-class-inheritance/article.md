@@ -317,13 +317,21 @@ new Rabbit(); // тварина
 */!*
 ```
 
+<<<<<<< HEAD
 Тут клас `Rabbit` наслідує клас `Animal` і перевизначає поле `name` власним значенням.
+=======
+Here, class `Rabbit` extends `Animal` and overrides the `name` field with its own value.
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 
 Немає власного конструктора в `Rabbit`, тому викликається конструктор `Animal`.
 
 Цікаво, що в обох випадках: `new Animal()` і `new Rabbit()`, `alert` в рядку `(*)` показує `animal`.
 
+<<<<<<< HEAD
 **Іншими словами, батьківський конструктор завжди використовує власне значення поля, а не перевизначене.**
+=======
+**In other words, the parent constructor always uses its own field value, not the overridden one.**
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 
 Що в цьому дивного?
 
@@ -360,11 +368,19 @@ new Rabbit(); // кролик
 
 ...Але для полів класу це не так. Як сказано, батьківський конструктор завжди використовує батьківське поле.
 
+<<<<<<< HEAD
 Чому існує різниця?
 
 Ну, причина полягає у порядку ініціалізації поля. Поле класу ініціалізується:
 - До конструктора для базового класу (котрий нічого не наслідує),
 - Відразу після `super()` для похідного класу.
+=======
+Why is there a difference?
+
+Well, the reason is the field initialization order. The class field is initialized:
+- Before constructor for the base class (that doesn't extend anything),
+- Immediately after `super()` for the derived class.
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 
 У нашому випадку `Rabbit` -- це похідний клас. У ньому немає конструктора. Як сказано раніше, це те ж саме, якби там був порожній конструктор лише з `super(...args)`.
 

@@ -12,7 +12,13 @@ function sayHi() {
 
 Існує й інший синтаксис для створення функції, що називають [*Функціональним Виразом*](https://developer.mozilla.org/uk/docs/Web/JavaScript/Guide/Functions#Функціональні_вирази) (Function Expression).
 
+<<<<<<< HEAD
 Він виглядає так:
+=======
+It allows to create a new function in the middle of any expression.
+
+For example:
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 
 ```js
 let sayHi = function() {
@@ -20,9 +26,25 @@ let sayHi = function() {
 };
 ```
 
+<<<<<<< HEAD
 У коді вище функція створюється і явно присвоюється змінній, як і будь-яке інше значення. Не важливо яким чином була визначена функція, це лише значення, що збережене в змінній `sayHi`.
 
 Зміст обох прикладів коду однаковий: "створити функцію і покласти її значення в змінну `sayHi`".
+=======
+Here we can see a variable `sayHi` getting a value, the new function, created as `function() { alert("Hello"); }`.
+
+As the function creation happens in the context of the assignment expression (to the right side of `=`), this is a *Function Expression*.
+
+Please note, there's no name after the `function` keyword. Omitting a name is allowed for Function Expressions.
+
+Here we immediately assign it to the variable, so the meaning of these code samples is the same: "create a function and put it into the variable `sayHi`".
+
+In more advanced situations, that we'll come across later, a function may be created and immediately called or scheduled for a later execution, not stored anywhere, thus remaining anonymous.
+
+## Function is a value
+
+Let's reiterate: no matter how the function is created, a function is a value. Both examples above store a function is `sayHi` variable.
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 
 Ми навіть можемо вивести це значення використовуючи `alert`:
 
@@ -63,11 +85,19 @@ sayHi(); // Привіт    //     ось так теж спрацює (а чо�
 2. Рядок `(2)` копіює це значення в змінну `func`. Ще раз зауважте: після `sayHi` немає дужок. Якби вони там були, тоді `func = sayHi()` записав би *результат виклику* `sayHi()` у `func`,а не *саму функцію* `sayHi`.
 3. Тепер ми можемо викликати функцію двома шляхами: `sayHi()` або `func()`.
 
+<<<<<<< HEAD
 Зауважте, що ми могли також використати Функціональний Вираз у першому рядку, щоб визначити `sayHi`:
 
 ```js
 let sayHi = function() {
   alert( "Привіт" );
+=======
+We could also have used a Function Expression to declare `sayHi`, in the first line:
+
+```js
+let sayHi = function() { // (1) create
+  alert( "Hello" );
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 };
 
 let func = sayHi;
@@ -90,9 +120,15 @@ let sayHi = function() {
 }*!*;*/!*
 ```
 
+<<<<<<< HEAD
 Відповідь проста:
 - Нема потреби в `;` в кінці блоків коду та синтаксичних структур, що їх використовують, таких як: `if { ... }`, `for {  }`, `function f { }` тощо.
 - Функціональний Вираз використаний всередині інструкції: `let sayHi = ...;` як значення. Це не окремий блок коду, а скоріше частина присвоєння. Рекомендується завжди ставити крапку з комою `;` в кінці інструкції, не зважаючи чим є значення. Отже, вживання крапки з комою не пов'язано саме з Функціональним Виразом, а лише завершує інструкцію.
+=======
+The answer is simple: a Function Expression is created here as `function(…) {…}` inside the assignment statement: `let sayHi = …;`. The semicolon `;` is recommended at the end of the statement, it's not a part of the function syntax.
+
+The semicolon would be there for a simpler assignment, such as `let sayHi = 5;`, and it's also there for a function assignment.
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 ````
 
 ## Колбеки (функції зворотного виклику)

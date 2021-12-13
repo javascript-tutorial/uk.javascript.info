@@ -256,12 +256,21 @@ function go() {
 ```js run
 // Способи створення IIFE
 
+<<<<<<< HEAD
 (function() {
   alert("Дужки навколо функції");
 }*!*)*/!*();
 
 (function() {
   alert("Круглі дужки навколо всього");
+=======
+*!*(*/!*function() {
+  alert("Parentheses around the function");
+}*!*)*/!*();
+
+*!*(*/!*function() {
+  alert("Parentheses around the whole thing");
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 }()*!*)*/!*;
 
 *!*!*/!*function() {

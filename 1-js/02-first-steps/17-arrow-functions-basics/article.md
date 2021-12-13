@@ -5,10 +5,14 @@
 Це так звані "стрілкові функції", а виглядають вони ось так:
 
 ```js
-let func = (arg1, arg2, ..., argN) => expression
+let func = (arg1, arg2, ..., argN) => expression;
 ```
 
+<<<<<<< HEAD
 ...Цей код створить функцію `func` з аргументами `arg1..argN`, що обчислює `expression` з правого боку (використовуючи ці аргументи) та повертає його результат.
+=======
+This creates a function `func` that accepts arguments `arg1..argN`, then evaluates the `expression` on the right side with their use and returns its result.
+>>>>>>> c5358c59494b53efb832c81a5338e0a23b22c269
 
 Іншими словами, це приблизно те ж саме, що і:
 
