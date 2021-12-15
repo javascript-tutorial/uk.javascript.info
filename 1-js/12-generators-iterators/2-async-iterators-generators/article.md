@@ -1,15 +1,15 @@
 
-# Async iteration and generators
+# Асинхронні ітератори та генератори
 
-Asynchronous iteration allow us to iterate over data that comes asynchronously, on-demand. Like, for instance, when we download something chunk-by-chunk over a network. And asynchronous generators make it even more convenient.
+Асинхронні ітератори дозволяють нам перебирати дані, які надходять асинхронно, на вимогу. Наприклад, коли ми завантажуємо щось частинами через мережу. А асинхронні генератори роблять це ще зручніше.
 
-Let's see a simple example first, to grasp the syntax, and then review a real-life use case.
+Давайте спочатку розглянемо простий приклад, щоб зрозуміти синтаксис, а потім розглянемо реальний варіант використання.
 
-## Recall iterables
+## Пригадування ітераторів
 
-Let's recall the topic about iterables. 
+Згадаймо тему про ітератори.
 
-The idea is that we have an object, such as `range` here:
+Ідея полягає в тому, що ми маємо об’єкт, наприклад, `range` тут:
 ```js
 let range = {
   from: 1,
@@ -17,17 +17,17 @@ let range = {
 };
 ```
 
-...And we'd like to use `for..of` loop on it, such as `for(value of range)`, to get values from `1` to `5`.
+...І ми хотіли б використовувати для нього цикл `for..of`, наприклад, `for(value of range)`, щоб отримати значення від `1` до `5`.
 
-In other words, we want to add an *iteration ability* to the object.
+Іншими словами, ми хочемо додати до об’єкта *можливість ітерації*.
 
-That can be implemented using a special method with the name `Symbol.iterator`:
+Це можна реалізувати за допомогою спеціального методу з назвою `Symbol.iterator`:
 
-- This method is called in by the `for..of` construct when the loop is started, and it should return an object with the `next` method.
-- For each iteration, the `next()` method is invoked for the next value.
-- The `next()` should return a value in the form `{done: true/false, value:<loop value>}`, where `done:true` means the end of the loop.
+- Цей метод викликається конструкцією `for..of`, коли запускається цикл, і він повинен повернути об’єкт із методом `next`.
+- На кожній ітерації метод `next()` викликається для наступного значення.
+- `next()` має повертати значення у формі `{done: true/false, value:<loop value>}`, де `done:true` означає кінець циклу.
 
-Here's an implementation for the iterable `range`:
+Ось реалізація ітеративного `range`:
 
 ```js run
 let range = {
@@ -35,14 +35,14 @@ let range = {
   to: 5,
 
 *!*
-  [Symbol.iterator]() { // called once, in the beginning of for..of
+  [Symbol.iterator]() { // викликається один раз, на початку for..of
 */!*
     return {
       current: this.from,
       last: this.to,
 
 *!*
-      next() { // called every iteration, to get the next value
+      next() { // викликається кожну ітерацію, щоб отримати наступне значення
 */!*
         if (this.current <= this.last) {
           return { done: false, value: this.current++ };
@@ -55,29 +55,29 @@ let range = {
 };
 
 for(let value of range) {
-  alert(value); // 1 then 2, then 3, then 4, then 5
+  alert(value); // 1 потім 2, потім 3, потім 4, потім 5
 }
 ```
 
-If anything is unclear, please visit the chapter [](info:iterable), it gives all the details about regular iterables.
+Якщо щось незрозуміло, відвідайте розділ [](info:iterable), у ньому наведено всю інформацію про звичайні ітератори.
 
-## Async iterables
+## Асинхронні ітератори
 
-Asynchronous iteration is needed when values come asynchronously: after `setTimeout` or another kind of delay. 
+Асинхронна ітерація потрібна тоді, коли значення надходять асинхронно: після `setTimeout` або іншого виду затримки.
 
-The most common case is that the object needs to make a network request to deliver the next value, we'll see a real-life example of it a bit later.
+Найпоширеніший випадок полягає в тому, що об’єкту потрібно зробити мережевий запит для доставлення наступного значення. Реальний приклад цього ми побачимо трохи пізніше.
 
-To make an object iterable asynchronously:
+Щоб зробити об’єкт повторюваним асинхронно:
 
-1. Use `Symbol.asyncIterator` instead of `Symbol.iterator`.
-2. The `next()` method should return a promise (to be fulfilled with the next value).
-    - The `async` keyword handles it, we can simply make `async next()`.
-3. To iterate over such an object, we should use a `for await (let item of iterable)` loop.
-    - Note the `await` word.
+1. Використовуйте `Symbol.asyncIterator` замість `Symbol.iterator`.
+2. Метод `next()` повинен повертати проміс (що має виконуватися з наступним значенням).
+   - Ключове слово `async` обробляє це, ми можемо просто створити `async next()`.
+3. Щоб перебрати такий об’єкт, ми повинні використовувати цикл `for await (let item of iterable)`.
+   - Зверніть увагу на слово `await`.
 
-As a starting example, let's make an iterable `range` object, similar like the one before, but now it will return values asynchronously, one per second.
+Як початковий приклад, створімо ітеративний об’єкт `range`, подібний до попереднього, але тепер він повертатиме значення асинхронно, по одному в секунду.
 
-All we need to do is to perform a few replacements in the code above:
+Все, що нам потрібно зробити, це виконати кілька замін у коді вище:
 
 ```js run
 let range = {
@@ -96,7 +96,7 @@ let range = {
 */!*
 
 *!*
-        // note: we can use "await" inside the async next:
+        // примітка: ми можемо використати "await" всередині асинхронного next:
         await new Promise(resolve => setTimeout(resolve, 1000)); // (3)
 */!*
 
@@ -121,43 +121,43 @@ let range = {
 })()
 ```
 
-As we can see, the structure is similar to regular iterators:
+Як бачимо, структура схожа на звичайні ітератори:
 
-1. To make an object asynchronously iterable, it must have a method `Symbol.asyncIterator` `(1)`.
-2. This method must return the object with `next()` method returning a promise `(2)`.
-3. The `next()` method doesn't have to be `async`, it may be a regular method returning a promise, but `async` allows us to use `await`, so that's convenient. Here we just delay for a second `(3)`.
-4. To iterate, we use `for await(let value of range)` `(4)`, namely add "await" after "for". It calls `range[Symbol.asyncIterator]()` once, and then its `next()` for values.
+1. Щоб зробити об’єкт асинхронно ітераційним, він повинен мати метод `Symbol.asyncIterator` `(1)`.
+2. Цей метод повинен повертати об’єкт із методом `next()`, який повертає проміс `(2)`.
+3. Метод `next()` не повинен бути `async`, це може бути звичайний метод, що повертає проміс, але `async` дозволяє нам використовувати `await`, тому це зручно. Тут ми просто затримуємося на секунду `(3)`.
+4. Для ітерації ми використовуємо `for await(let value of range)` `(4)`, а саме додаємо "await" після "for". Він викликає `range[Symbol.asyncIterator]()` один раз, а потім його `next()` для значень.
 
-Here's a small table with the differences:
+Ось невелика таблиця з відмінностями:
 
-|       | Iterators | Async iterators |
+|       | Ітератори | Асинхронні ітератори |
 |-------|-----------|-----------------|
-| Object method to provide iterator | `Symbol.iterator` | `Symbol.asyncIterator` |
-| `next()` return value is              | any value         | `Promise`  |
-| to loop, use                          | `for..of`         | `for await..of` |
+| Метод для забезпечення ітератора | `Symbol.iterator` | `Symbol.asyncIterator` |
+| `next()` повертає              | будь-яке значення         | `Promise`  |
+| для циклу використовуйте                          | `for..of`         | `for await..of` |
 
-````warn header="The spread syntax `...` doesn't work asynchronously"
-Features that require regular, synchronous iterators, don't work with asynchronous ones.
+````warn header="Синтаксис оператора розширення `...` не працює асинхронно"
+Функції, що вимагають звичайні синхронні ітератори, не працюють з асинхронними.
 
-For instance, a spread syntax won't work:
+Наприклад, не буде працювати синтаксис розширення:
 ```js
-alert( [...range] ); // Error, no Symbol.iterator
+alert( [...range] ); // Помилка, немає Symbol.iterator
 ```
 
-That's natural, as it expects to find `Symbol.iterator`, not `Symbol.asyncIterator`.
+Це природно, оскільки він очікує знайти `Symbol.iterator`, а не `Symbol.asyncIterator`.
 
-It's also the case for `for..of`: the syntax without `await` needs `Symbol.iterator`.
+Це також стосується `for..of`: синтаксис без `await` потребує `Symbol.iterator`.
 ````
 
-## Recall generators
+## Пригадування генераторів
 
-Now let's recall generators, as they allow to make iteration code much shorter. Most of the time, when we'd like to make an iterable, we'll use generators.
+Тепер згадаймо генератори, оскільки вони дозволяють зробити ітеративний код значно коротшим. У більшості випадків, коли хочемо створити ітератор, ми використовуємо генератори.
 
-For sheer simplicity, omitting some important stuff, they are "functions that generate (yield) values". They are explained in detail in the chapter [](info:generators).
+Для простоти, опускаючи деякі важливі речі, це "функції, які генерують (yield) значення". Вони детально описані в главі [](info:generators).
 
-Generators are labelled with `function*` (note the star) and use `yield` to generate a value, then we can use `for..of` to loop over them.
+Генератори позначаються ярликом `function*` (зверніть увагу на зірочку) і використовують `yield`, щоб генерувати значення, тоді ми можемо використовувати `for..of`, щоб перейти до них.
 
-This example generates a sequence of values from `start` to `end`:
+Цей приклад генерує послідовність значень від `start` до `end`:
 
 ```js run
 function* generateSequence(start, end) {
@@ -167,11 +167,11 @@ function* generateSequence(start, end) {
 }
 
 for(let value of generateSequence(1, 5)) {
-  alert(value); // 1, then 2, then 3, then 4, then 5
+  alert(value); // 1, потім 2, потім 3, потім 4, потім 5
 }
 ```
 
-As we already know, to make an object iterable, we should add `Symbol.iterator` to it.
+Як ми вже знаємо, щоб зробити об’єкт ітеративним, ми повинні додати до нього `Symbol.iterator`.
 
 ```js
 let range = {
@@ -179,20 +179,20 @@ let range = {
   to: 5,
 *!*
   [Symbol.iterator]() {
-    return <object with next to make range iterable>
+    return <об’єкт з next, щоб зробити діапазон ітерабельним>
   }
 */!*
 }
 ```
 
-A common practice for `Symbol.iterator` is to return a generator, it makes the code shorter, as you can see:
+Звичайною практикою для `Symbol.iterator` є повернення генератора, це робить код коротшим, як ви можете бачити:
 
 ```js run
 let range = {
   from: 1,
   to: 5,
 
-  *[Symbol.iterator]() { // a shorthand for [Symbol.iterator]: function*()
+  *[Symbol.iterator]() { // скорочення для [Symbol.iterator]: function*()
     for(let value = this.from; value <= this.to; value++) {
       yield value;
     }
@@ -200,25 +200,25 @@ let range = {
 };
 
 for(let value of range) {
-  alert(value); // 1, then 2, then 3, then 4, then 5
+  alert(value); // 1, потім 2, потім 3, потім 4, потім 5
 }
 ```
 
-Please see the chapter [](info:generators) if you'd like more details.
+Будь ласка, перегляньте розділ [](info:generators), якщо вам потрібно більше деталей.
 
-In regular generators we can't use `await`. All values must come synchronously, as required by the `for..of` construct.
+У звичайних генераторах ми не можемо використовувати `await`. Усі значення мають надходити синхронно, як того вимагає конструкція `for..of`.
 
-What if we'd like to generate values asynchronously? From network requests, for instance. 
+Що, якщо ми хочемо генерувати значення асинхронно? З мережевих запитів, наприклад.
 
-Let's switch to asynchronous generators to make it possible.
+Перейдімо до асинхронних генераторів, щоб зробити це можливим.
 
-## Async generators (finally)
+## Асинхронні генератори (заключно)
 
-For most practical applications, when we'd like to make an object that asynchronously generates a sequence of values, we can use an asynchronous generator.
+Для більшості практичних застосувань, коли ми хочемо створити об’єкт, який асинхронно генерує послідовність значень, ми можемо використовувати асинхронний генератор.
 
-The syntax is simple: prepend `function*` with `async`. That makes the generator asynchronous.
+Синтаксис простий: додайте `async` перед `function*`. Це зробить генератор асинхронним.
 
-And then use `for await (...)` to iterate over it, like this:
+А потім скористайтеся `for await (...)`, щоб перебрати його, наприклад:
 
 ```js run
 *!*async*/!* function* generateSequence(start, end) {
@@ -226,7 +226,7 @@ And then use `for await (...)` to iterate over it, like this:
   for (let i = start; i <= end; i++) {
 
 *!*
-    // Wow, can use await!
+    // Ого, можемо використовувати await!
     await new Promise(resolve => setTimeout(resolve, 1000));
 */!*
 
@@ -239,47 +239,47 @@ And then use `for await (...)` to iterate over it, like this:
 
   let generator = generateSequence(1, 5);
   for *!*await*/!* (let value of generator) {
-    alert(value); // 1, then 2, then 3, then 4, then 5 (with delay between)
+    alert(value); // 1, потім 2, потім 3, потім 4, потім 5 (із затримкою між ними)
   }
 
 })();
 ```
 
-As the generator is asynchronous, we can use `await` inside it, rely on promises, perform network requests and so on.
+Оскільки генератор є асинхронним, ми можемо використовувати всередині нього `await`, проміси, виконувати мережеві запити тощо.
 
-````smart header="Under-the-hood difference"
-Technically, if you're an advanced reader who remembers the details about generators, there's an internal difference.
+````smart header="Різниця під капотом"
+Технічно, якщо ви досвідчений читач, який пам’ятає деталі про генератори, в них є і внутрішня різниця.
 
-For async generators, the `generator.next()` method is asynchronous, it returns promises.
+Для асинхронних генераторів метод `generator.next()` є асинхронним, він повертає проміси.
 
-In a regular generator we'd use `result = generator.next()` to get values. In an async generator, we should add `await`, like this:
+У звичайному генераторі ми використовуємо `result = generator.next()`, щоб отримати значення. В асинхронному генераторі ми повинні додати `await`, наприклад:
 
 ```js
 result = await generator.next(); // result = {value: ..., done: true/false}
 ```
-That's why async generators work with `for await...of`.
+Ось чому асинхронні генератори працюють з `for await...of`.
 ````
 
-### Async iterable range
+### Асинхронно ітераційний range
 
-Regular generators can be used as `Symbol.iterator` to make the iteration code shorter.
+Звичайні генератори можна використовувати як `Symbol.iterator`, щоб зробити код ітерації коротшим.
 
-Similar to that, async generators can be used as `Symbol.asyncIterator` to implement the asynchronous iteration.
+Подібно до цього, асинхронні генератори можна використовувати як `Symbol.asyncIterator` для реалізації асинхронної ітерації.
 
-For instance, we can make the `range` object generate values asynchronously, once per second, by replacing synchronous `Symbol.iterator` with asynchronous `Symbol.asyncIterator`:
+Наприклад, ми можемо змусити об’єкт `range` генерувати значення асинхронно, раз на секунду, замінивши синхронний `Symbol.iterator` на асинхронний `Symbol.asyncIterator`:
 
 ```js run
 let range = {
   from: 1,
   to: 5,
 
-  // this line is same as [Symbol.asyncIterator]: async function*() {
+  // цей рядок такий самий, як [Symbol.asyncIterator]: async function*() {
 *!*
   async *[Symbol.asyncIterator]() {
 */!*
     for(let value = this.from; value <= this.to; value++) {
 
-      // make a pause between values, wait for something  
+      // робимо паузу між значеннями, чекаємо будь-що
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       yield value;
@@ -290,47 +290,47 @@ let range = {
 (async () => {
 
   for *!*await*/!* (let value of range) {
-    alert(value); // 1, then 2, then 3, then 4, then 5
+    alert(value); // 1, потім 2, потім 3, потім 4, потім 5
   }
 
 })();
 ```
 
-Now values come with a delay of 1 second between them.
+Тепер значення надходять із затримкою в 1 секунду між ними.
 
 ```smart
-Technically, we can add both `Symbol.iterator` and `Symbol.asyncIterator` to the object, so it's both synchronously (`for..of`) and asynchronously (`for await..of`) iterable.
+Технічно ми можемо додати до об’єкта як `Symbol.iterator`, так і `Symbol.asyncIterator`, тому він ітерується як синхронно (`for..of`), так і асинхронно (`for await..of`).
 
-In practice though, that would be a weird thing to do.
+Але на практиці це було б дивно.
 ```
 
-## Real-life example: paginated data
+## Приклад із реальної практики: посторінкові дані
 
-So far we've seen basic examples, to gain understanding. Now let's review a real-life use case.
+Поки що ми бачили основні приклади, щоб зрозуміти. Тепер розгляньмо реальний випадок використання.
 
-There are many online services that deliver paginated data. For instance, when we need a list of users, a request returns a pre-defined count (e.g. 100 users) - "one page", and provides a URL to the next page.
+Існує багато онлайн-сервісів, які надають дані посторінково. Наприклад, коли нам потрібен список користувачів, запит повертає попередньо визначену кількість (наприклад, 100 користувачів) — "одну сторінку" та надає URL-адресу наступної сторінки.
 
-This pattern is very common. It's not about users, but just about anything. 
+Цей підхід дуже поширений. Мова йде не про користувачів, а про що завгодно.
 
-For instance, GitHub allows us to retrieve commits in the same, paginated fashion:
+Наприклад, GitHub дозволяє нам отримувати коміти таким же чином, розбитими на сторінки:
 
-- We should make a request to `fetch` in the form `https://api.github.com/repos/<repo>/commits`.
-- It responds with a JSON of 30 commits, and also provides a link to the next page in the `Link` header.
-- Then we can use that link for the next request, to get more commits, and so on.
+- Ми повинні зробити запит за допомогою `fetch` у вигляді `https://api.github.com/repos/<repo>/commits`.
+- У відповіді прийде JSON з 30 комітами, а також з посиланням на наступну сторінку в заголовку `Link`.
+- Тоді ми зможемо використати це посилання для наступного запиту, щоб отримати більше комітів чи т.п.
 
-For our code, we'd like to have a simpler way to get commits.
+Для нашого коду ми хотіли б мати простіший спосіб отримати коміти.
 
-Let's make a function `fetchCommits(repo)` that gets commits for us, making requests whenever needed. And let it care about all pagination stuff. For us it'll be a simple async iteration `for await..of`.
+Створімо функцію `fetchCommits(repo)`, яка отримує коміти для нас, надаючи запити, коли це необхідно. І нехай вона піклується про всі речі щодо розбиття на сторінки. Для нас це буде проста асинхронна ітерація `for await..of`.
 
-So the usage will be like this:
+Отже, використання буде таким:
 
 ```js
 for await (let commit of fetchCommits("username/repository")) {
-  // process commit
+  // опрацювання комітів
 }
 ```
 
-Here's such function, implemented as async generator:
+Ось така функція, реалізована як асинхронний генератор:
 
 ```js
 async function* fetchCommits(repo) {
@@ -338,36 +338,36 @@ async function* fetchCommits(repo) {
 
   while (url) {
     const response = await fetch(url, { // (1)
-      headers: {'User-Agent': 'Our script'}, // github needs any user-agent header
+      headers: {'User-Agent': 'Our script'}, // GitHub потребує будь-який заголовок user-agent
     });
 
-    const body = await response.json(); // (2) response is JSON (array of commits)
+    const body = await response.json(); // (2) відповідь у форматі JSON (масив комітів)
 
-    // (3) the URL of the next page is in the headers, extract it
+    // (3) URL-адреса наступної сторінки знаходиться в заголовках, витягуємо її
     let nextPage = response.headers.get('Link').match(/<(.*?)>; rel="next"/);
     nextPage = nextPage?.[1];
 
     url = nextPage;
 
-    for(let commit of body) { // (4) yield commits one by one, until the page ends
+    for(let commit of body) { // (4) повертає коміти один за одним, поки сторінка не закінчиться
       yield commit;
     }
   }
 }
 ```
 
-More explanations about how it works:
+Більше пояснень про те, як це працює:
 
-1. We use the browser [fetch](info:fetch) method to download the commits.
+1. Ми використовуємо метод браузера [fetch](info:fetch) для завантаження комітів.
 
-    - The initial URL is `https://api.github.com/repos/<repo>/commits`, and the next page will be in the `Link` header of the response.
-    - The `fetch` method allows us to supply authorization and other headers if needed -- here GitHub requires `User-Agent`.
-2. The commits are returned in JSON format.
-3. We should get the next page URL from the `Link` header of the response. It has a special format, so we use a regular expression for that (we will learn this feature in [Regular expressions](info:regular-expressions)).
-    - The next page URL may look like `https://api.github.com/repositories/93253246/commits?page=2`. It's generated by GitHub itself.
-4. Then we yield the received commits one by one, and when they finish, the next `while(url)` iteration will trigger, making one more request.
+   - Початкова URL-адреса — `https://api.github.com/repos/<repo>/commits`, а наступна сторінка буде в заголовку `Link` відповіді.
+   - Метод `fetch` дозволяє нам надати авторизацію та інші заголовки, якщо це необхідно – тут для GitHub потрібен `User-Agent`.
+2. Коміти повертаються у форматі JSON.
+3. Ми повинні отримати URL-адресу наступної сторінки із заголовка `Link` відповіді. Він має спеціальний формат, тому ми використовуємо для цього регулярний вираз (про цю функцію ми дізнаємося в [Регулярні вирази](info:regular-expressions)).
+   - URL-адреса наступної сторінки може виглядати так: `https://api.github.com/repositories/93253246/commits?page=2`. Вона створюється самим GitHub.
+4. Потім ми видаємо отримані коміти по черзі, і коли вони закінчаться, запуститься наступна ітерація `while(url)`, створюючи ще один запит.
 
-An example of use (shows commit authors in console):
+Приклад використання (показує авторів комітів в консолі):
 
 ```js run
 (async () => {
@@ -378,40 +378,40 @@ An example of use (shows commit authors in console):
 
     console.log(commit.author.login);
 
-    if (++count == 100) { // let's stop at 100 commits
+    if (++count == 100) { // зупинимося на 100 комітах
       break;
     }
   }
 
 })();
 
-// Note: If you are running this in an external sandbox, you'll need to paste here the function fetchCommits described above 
+// Примітка: Якщо ви запускаєте це у зовнішній пісочниці, вам потрібно буде вставити сюди функцію fetchCommits, описану вище
 ```
 
-That's just what we wanted. 
+Це саме те, чого ми хотіли.
 
-The internal mechanics of paginated requests is invisible from the outside. For us it's just an async generator that returns commits.
+Внутрішня механіка посторінкових запитів невидима ззовні. Для нас це просто асинхронний генератор, який повертає коміти.
 
-## Summary
+## Підсумки
 
-Regular iterators and generators work fine with the data that doesn't take time to generate.
+Звичайні ітератори та генератори відмінно працюють з даними, створення яких не потребує часу.
 
-When we expect the data to come asynchronously, with delays, their async counterparts can be used, and `for await..of` instead of `for..of`.
+Коли ми очікуємо, що дані будуть надходити асинхронно із затримками, можна використовувати їх асинхронні аналоги і `for await..of` замість `for..of`.
 
-Syntax differences between async and regular iterators:
+Синтаксичні відмінності між асинхронними та звичайними ітераторами:
 
-|       | Iterable | Async Iterable |
+|       | Ітератори | Асинхронні ітератори |
 |-------|-----------|-----------------|
-| Method to provide iterator | `Symbol.iterator` | `Symbol.asyncIterator` |
-| `next()` return value is          | `{value:…, done: true/false}`         | `Promise` that resolves to `{value:…, done: true/false}`  |
+| Метод для забезпечення ітератора | `Symbol.iterator` | `Symbol.asyncIterator` |
+| `next()` повертає          | `{value:…, done: true/false}`         | `Promise`, який завершується з `{value:…, done: true/false}`  |
 
-Syntax differences between async and regular generators:
+Синтаксичні відмінності між асинхронними та звичайними генераторами:
 
-|       | Generators | Async generators |
+|       | Генератори | Асинхронні генератори |
 |-------|-----------|-----------------|
-| Declaration | `function*` | `async function*` |
-| `next()` return value is          | `{value:…, done: true/false}`         | `Promise` that resolves to `{value:…, done: true/false}`  |
+| Оголошення | `function*` | `async function*` |
+| `next()` повертає          | `{value:…, done: true/false}`         | `Promise`, який завершується з `{value:…, done: true/false}`  |
 
-In web-development we often meet streams of data, when it flows chunk-by-chunk. For instance, downloading or uploading a big file.
+У веброзробці ми часто зустрічаємося з потоками даних, коли вони надходять по частинах. Наприклад, завантаження або вивантаження великого файлу.
 
-We can use async generators to process such data. It's also noteworthy that in some environments, like in browsers, there's also another API called Streams, that provides special interfaces to work with such streams, to transform the data and to pass it from one stream to another (e.g. download from one place and immediately send elsewhere).
+Ми можемо використовувати асинхронні генератори для обробки таких даних. Варто також зазначити, що в деяких середовищах, наприклад у браузерах, є також інший API під назвою Streams (потоки), який надає спеціальні інтерфейси для роботи з такими потоками, для трансформації даних і для їх передачі з одного потоку в інший (наприклад, завантаження з одного місця і негайне надсилання в інше місце).
