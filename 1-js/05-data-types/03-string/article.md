@@ -261,7 +261,7 @@ while (true) {
   let foundPos = str.indexOf(target, pos);
   if (foundPos == -1) break;
 
-  alert( `Знайтено тут: ${foundPos}` );
+  alert( `Знайдено тут: ${foundPos}` );
   pos = foundPos + 1; // продовжуємо з наступної позиції
 }
 ```
