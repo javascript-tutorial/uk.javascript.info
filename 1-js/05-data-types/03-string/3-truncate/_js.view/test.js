@@ -6,7 +6,7 @@ describe("truncate", function() {
     );
   });
 
-  it("Не змінює короткі рядки", function() {
+  it("не змінює короткі рядки", function() {
     assert.equal(
       truncate("Всім привіт!", 20),
       "Всім привіт!"
