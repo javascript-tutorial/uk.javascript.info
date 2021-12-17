@@ -172,7 +172,7 @@ alert( str.charAt(1000) ); // '' (пустий рядок)
 
 ```js run
 for (let char of "Hello") {
-  alert(char); // H,e,l,l,o (char — спочатку "H", потім "e", потім "l" і т. д.)
+  alert(char); // H,e,l,l,o (char — спочатку "H", потім "e", потім "l" тощо)
 }
 ```
 
