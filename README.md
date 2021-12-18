@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-26-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://javascript.info> з англійської на українську мову.
@@ -100,6 +100,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="https://github.com/Vanchurick"><img src="https://avatars.githubusercontent.com/u/43196449?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Ivan D</b></sub></a><br /><a href="#translation-Vanchurick" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Purusah"><img src="https://avatars.githubusercontent.com/u/16886633?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Vladyslav Bohaichuk</b></sub></a><br /><a href="#translation-Purusah" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/AntonBurchak"><img src="https://avatars.githubusercontent.com/u/47831897?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Anton Burchak</b></sub></a><br /><a href="#translation-AntonBurchak" title="Translation">🌍</a></td>
+    <td align="center"><a href="https://github.com/gingano"><img src="https://avatars.githubusercontent.com/u/47160813?v=4?s=70" width="70px;" alt=""/><br /><sub><b>gingano</b></sub></a><br /><a href="#translation-gingano" title="Translation">🌍</a></td>
   </tr>
 </table>
 
