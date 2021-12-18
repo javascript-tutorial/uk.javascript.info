@@ -1,4 +1,4 @@
-To make the search case-insensitive, let's bring the string to lower case and then search:
+Щоб зробити пошук нечутливим до регістру, давайте переведемо рядок у нижній регістр, а потім здійснимо пошук:
 
 ```js run demo
 function checkSpam(str) {
