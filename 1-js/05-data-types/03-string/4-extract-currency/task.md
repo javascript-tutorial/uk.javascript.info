@@ -2,13 +2,13 @@ importance: 4
 
 ---
 
-# Extract the money
+# Виділіть гроші
 
-We have a cost in the form `"$120"`. That is: the dollar sign goes first, and then the number.
+У нас є вартість у вигляді `"$120"`. Тобто: спочатку йде знак долара, а потім число.
 
-Create a function `extractCurrencyValue(str)` that would extract the numeric value from such string and return it. 
+Створіть функцію `extractCurrencyValue(str)`, яка витягне числове значення з такого рядка та поверне його.
 
-The example:
+Приклад:
 
 ```js
 alert( extractCurrencyValue('$120') === 120 ); // true
