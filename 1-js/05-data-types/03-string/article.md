@@ -1,23 +1,23 @@
-# Strings
+# Рядки
 
-In JavaScript, the textual data is stored as strings. There is no separate type for a single character.
+У JavaScript текстові дані зберігаються у вигляді рядків. Не існує окремого типу для одного символу.
 
-The internal format for strings is always [UTF-16](https://en.wikipedia.org/wiki/UTF-16), it is not tied to the page encoding.
+Внутрішній формат для рядків завжди [UTF-16](https://uk.wikipedia.org/wiki/UTF-16), він не привʼязаний до кодування сторінки.
 
-## Quotes
+## Лапки
 
-Let's recall the kinds of quotes.
+Згадаймо види лапок.
 
-Strings can be enclosed within either single quotes, double quotes or backticks:
+Рядки можуть бути включені в одинарні лапки, подвійні лапки або зворотні знаки:
 
 ```js
-let single = 'single-quoted';
-let double = "double-quoted";
+let single = 'одинарні-лапки';
+let double = "подвійні-лапки";
 
-let backticks = `backticks`;
+let backticks = `зворотні-лапки`;
 ```
 
-Single and double quotes are essentially the same. Backticks, however, allow us to embed any expression into the string, by wrapping it in `${…}`:
+Одинарні та подвійні лапки по суті однакові. Однак зворотні лапки дозволяють нам вставляти будь-який вираз у рядок, загортаючи його у `${…}`:
 
 ```js run
 function sum(a, b) {
@@ -27,250 +27,250 @@ function sum(a, b) {
 alert(`1 + 2 = ${sum(1, 2)}.`); // 1 + 2 = 3.
 ```
 
-Another advantage of using backticks is that they allow a string to span multiple lines:
+Ще однією перевагою використання зворотних лапок є те, що вони дозволяють рядку охоплювати кілька ліній:
 
 ```js run
-let guestList = `Guests:
- * John
- * Pete
- * Mary
+let guestList = `Гості:
+ * Іван
+ * Петро
+ * Марія
 `;
 
-alert(guestList); // a list of guests, multiple lines
+alert(guestList); // список гостей в кілька рядків
 ```
 
-Looks natural, right? But single or double quotes do not work this way.
+Виглядає природно, правда? Але одинарні або подвійні лапки так не працюють.
 
-If we use them and try to use multiple lines, there'll be an error:
+Якщо ми спробуємо їх використати в кілька рядків, буде помилка:
 
 ```js run
-let guestList = "Guests: // Error: Unexpected token ILLEGAL
-  * John";
+let guestList = "Гості: // Помилка: Unexpected token ILLEGAL
+  * Іван";
 ```
 
-Single and double quotes come from ancient times of language creation when the need for multiline strings was not taken into account. Backticks appeared much later and thus are more versatile.
+Одинарні та подвійні лапки беруть свій початок з давніх часів створення мови, коли не було потреби у багатолінійних рядках. Зворотні лапки зʼявилися набагато пізніше і тому є більш універсальними.
 
-Backticks also allow us to specify a "template function" before the first backtick. The syntax is: <code>func&#96;string&#96;</code>. The function `func` is called automatically, receives the string and embedded expressions and can process them. This is called "tagged templates". This feature makes it easier to implement custom templating, but is rarely used in practice. You can read more about it in the [manual](mdn:/JavaScript/Reference/Template_literals#Tagged_templates).
+Зворотні лапки також дозволяють нам задати "шаблонну функцію" перед першими зворотніми лапками. Синтаксис такий: <code>func&#96;string&#96;</code>. Функція `func` викликається автоматично, отримує рядок і вбудовані в неї вирази і може їх обробити. Це називається "теговим шаблоном". Ця функція полегшує реалізацію користувацької шаблонізації, але рідко використовується на практиці. Детальніше про це можна прочитати в [посібнику](mdn:/JavaScript/Reference/Template_literals#Tagged_templates).
 
-## Special characters
+## Спеціальні символи
 
-It is still possible to create multiline strings with single and double quotes by using a so-called "newline character", written as `\n`, which denotes a line break:
+Ще можна створити багатолінійні рядки з одинарними та подвійними лапками за допомогою так званого "символу нового рядка", записаного як `\n`, який позначає розрив рядка:
 
 ```js run
-let guestList = "Guests:\n * John\n * Pete\n * Mary";
+let guestList = "Гості:\n * Іван\n * Петро\n * Марія";
 
-alert(guestList); // a multiline list of guests
+alert(guestList); // список гостей в декілька рядків
 ```
 
-For example, these two lines are equal, just written differently:
+Наприклад, ці два рядки рівнозначні, просто написані по-різному:
 
 ```js run
-let str1 = "Hello\nWorld"; // two lines using a "newline symbol"
+let str1 = "Привіт\nСвіт"; // два рядки з використанням "символу нового рядка"
 
-// two lines using a normal newline and backticks
-let str2 = `Hello
-World`;
+// два рядки з використанням звичайного нового рядка та зворотних лапок
+let str2 = `Привіт
+Світ`;
 
 alert(str1 == str2); // true
 ```
 
-There are other, less common "special" characters.
+Є й інші, менш поширені "спеціальні" символи.
 
-Here's the full list:
+Ось повний список:
 
-| Character | Description |
+| Символ | Опис |
 |-----------|-------------|
-|`\n`|New line|
-|`\r`|In Windows text files a combination of two characters `\r\n` represents a new break, while on non-Windows OS it's just `\n`. That's for historical reasons, most Windows software also understands `\n`. |
-|`\'`, `\"`|Quotes|
-|`\\`|Backslash|
-|`\t`|Tab|
-|`\b`, `\f`, `\v`| Backspace, Form Feed, Vertical Tab -- kept for compatibility, not used nowadays. |
-|`\xXX`|Unicode character with the given hexadecimal Unicode `XX`, e.g. `'\x7A'` is the same as `'z'`.|
-|`\uXXXX`|A Unicode symbol with the hex code `XXXX` in UTF-16 encoding, for instance `\u00A9` -- is a Unicode for the copyright symbol `©`. It must be exactly 4 hex digits. |
-|`\u{X…XXXXXX}` (1 to 6 hex characters)|A Unicode symbol with the given UTF-32 encoding. Some rare characters are encoded with two Unicode symbols, taking 4 bytes. This way we can insert long codes. |
+|`\n`|Розрив рядка|
+|`\r`|У текстових файлах Windows комбінація двох символів `\r\n` являє собою розрив рядка, тоді як в інших ОС, це просто `\n`. Так склалось з історичних причин, більшість ПЗ під Windows також розуміє `\n`|
+|`\'`, `\"`|Лапки|
+|`\\`|Зворотний слеш|
+|`\t`|Знак табуляції|
+|`\b`, `\f`, `\v`| Backspace, Form Feed, Vertical Tab – зберігаються для зворотної сумісності, зараз не використовуються|
+|`\xXX`|Символ з шістнадцятковим юнікодним кодом `'\x7A'` -- це те ж саме що і `'z'`|
+|`\uXXXX`|Символ з шістнадцятковим юнікодним кодом `XXXX` в кодуванні UTF-16, наприклад `\u00A9` -- це юнікодний символ для знаку копірайту `©`. Шістнадцятковий код обовʼязково має складатись з 4 символів|
+|`\u{X…XXXXXX}` (від 1 до 6 шістнадцяткових символів)|Юнікодний символ в кодуванні UTF-32. Деякі рідкісні символи кодуються двома юнікодними символами, що займають 4 байти. Таким чином ми можемо вставляти довгі коди|
 
-Examples with Unicode:
+Приклади з Юнікодом:
 
 ```js run
 alert( "\u00A9" ); // ©
-alert( "\u{20331}" ); // 佫, a rare Chinese hieroglyph (long Unicode)
-alert( "\u{1F60D}" ); // 😍, a smiling face symbol (another long Unicode)
+alert( "\u{20331}" ); // 佫, рідкісний китайський ієрогліф (довгий юнікод)
+alert( "\u{1F60D}" ); // 😍, емодзі посмішки з очима в формі сердець (інший довгий юнікод)
 ```
 
-All special characters start with a backslash character `\`. It is also called an "escape character".
+Усі спеціальні символи починаються зі зворотного слеша `\`. Його також називають "символом екранування".
 
-We might also use it if we wanted to insert a quote into the string.
+Ми також можемо його використати, якщо хочемо вставити лапки в рядок.
 
-For instance:
+Наприклад:
 
 ```js run
-alert( 'I*!*\'*/!*m the Walrus!' ); // *!*I'm*/!* the Walrus!
+alert( 'Ім*!*\'*/!*я моє — Морж!' ); // *!*Ім'я*/!* моє — Морж!
 ```
 
-As you can see, we have to prepend the inner quote by the backslash `\'`, because otherwise it would indicate the string end.
+Як бачите, ми повинні "екранувати" лапку зворотним слешем `\'`, оскільки інакше це означало б кінець рядка.
 
-Of course, only the quotes that are the same as the enclosing ones need to be escaped. So, as a more elegant solution, we could switch to double quotes or backticks instead:
+Звісно, потрібно "екранувати" лише такі лапки, якими обрамлений рядок. Як елегантніше рішення, ми могли б замість цього скористатися подвійними або зворотними лапками:
 
 ```js run
-alert( `I'm the Walrus!` ); // I'm the Walrus!
+alert( `Ім'я моє — Морж!` ); // Ім'я моє — Морж!
 ```
 
-Note that the backslash `\` serves for the correct reading of the string by JavaScript, then disappears. The in-memory string has no `\`. You can clearly see that in `alert` from the examples above.
+Зверніть увагу, що зворотний слеш `\` в JavaScript служить для правильного зчитування рядка. Рядок в памʼяті не містить `\`. Ви можете чітко це побачити у `alert` з наведених вище прикладів.
 
-But what if we need to show an actual backslash `\` within the string?
+Але що, якщо нам потрібно показати зворотний слеш `\` всередині рядка?
 
-That's possible, but we need to double it like `\\`:
+Це можна зробити додаванням ще одного зворотного слеша `\\`:
 
 ```js run
-alert( `The backslash: \\` ); // The backslash: \
+alert( `Зворотний слеш: \\` ); // Зворотний слеш: \
 ```
 
-## String length
+## Довжина рядка
 
-The `length` property has the string length:
+Властивість `length` містить в собі довжину рядка:
 
 ```js run
-alert( `My\n`.length ); // 3
+alert( `Моє\n`.length ); // 4
 ```
 
-Note that `\n` is a single "special" character, so the length is indeed `3`.
+Зверніть увагу, що `\n` -- це один спеціальний символ, тому довжина рівна `4`.
 
-```warn header="`length` is a property"
-People with a background in some other languages sometimes mistype by calling `str.length()` instead of just `str.length`. That doesn't work.
+```warn header="`length` -- це властивість"
+Люди з досвідом роботи в інших мовах випадково намагаються викликати властивість, додаючи круглі дужки: вони пишуть `str.length()` замість `str.length`. Це не спрацює.
 
-Please note that `str.length` is a numeric property, not a function. There is no need to add parenthesis after it.
+Зверніть увагу, що `str.length` -- це числове значення, а не функція, додавати дужки не потрібно.
 ```
 
-## Accessing characters
+## Доступ до символів
 
-To get a character at position `pos`, use square brackets `[pos]` or call the method [str.charAt(pos)](mdn:js/String/charAt). The first character starts from the zero position:
+Отримати символ, котрий займає позицію `pos`, можна за допомогою квадратних дужок: `[pos]`, або викликати метод [str.charAt(pos)](mdn:js/String/charAt). Перший символ займає нульову позицію.
 
 ```js run
-let str = `Hello`;
+let str = `Привіт`;
 
-// the first character
-alert( str[0] ); // H
-alert( str.charAt(0) ); // H
+// перший символ
+alert( str[0] ); // П
+alert( str.charAt(0) ); // П
 
-// the last character
-alert( str[str.length - 1] ); // o
+// останній символ
+alert( str[str.length - 1] ); // т
 ```
 
-The square brackets are a modern way of getting a character, while `charAt` exists mostly for historical reasons.
+Квадратні дужки -- це сучасний спосіб отримати символ, тоді як `charAt` існує більше завдяки історичним причинам.
 
-The only difference between them is that if no character is found, `[]` returns `undefined`, and `charAt` returns an empty string:
+Різниця між ними лише в тому, що якщо символ з такою позицією відсутній, тоді `[]` поверне `undefined`, а `charAt` -- порожній рядок:
 
 ```js run
-let str = `Hello`;
+let str = `Привіт`;
 
 alert( str[1000] ); // undefined
-alert( str.charAt(1000) ); // '' (an empty string)
+alert( str.charAt(1000) ); // '' (порожній рядок)
 ```
 
-We can also iterate over characters using `for..of`:
+Ми також можемо перебрати рядок посимвольно, використовуючи `for..of`:
 
 ```js run
-for (let char of "Hello") {
-  alert(char); // H,e,l,l,o (char becomes "H", then "e", then "l" etc)
+for (let char of "Привіт") {
+  alert(char); // П,р,и,в,і,т (char — спочатку "П", потім "р", потім "и" і так далі)
 }
 ```
 
-## Strings are immutable
+## Рядки незмінні
 
-Strings can't be changed in JavaScript. It is impossible to change a character.
+В JavaScript рядки не можна змінювати. Змінити символ неможливо.
 
-Let's try it to show that it doesn't work:
-
-```js run
-let str = 'Hi';
-
-str[0] = 'h'; // error
-alert( str[0] ); // doesn't work
-```
-
-The usual workaround is to create a whole new string and assign it to `str` instead of the old one.
-
-For instance:
+Спробуємо показати на прикладі:
 
 ```js run
-let str = 'Hi';
+let str = 'Ой';
 
-str = 'h' + str[1]; // replace the string
-
-alert( str ); // hi
+str[0] = 'о'; // помилка
+alert( str[0] ); // не працює
 ```
 
-In the following sections we'll see more examples of this.
+Можна створити новий рядок замість старого, записавши його в ту саму змінну.
 
-## Changing the case
-
-Methods [toLowerCase()](mdn:js/String/toLowerCase) and [toUpperCase()](mdn:js/String/toUpperCase) change the case:
+Ось так:
 
 ```js run
-alert( 'Interface'.toUpperCase() ); // INTERFACE
-alert( 'Interface'.toLowerCase() ); // interface
+let str = 'Ой';
+
+str = 'о' + str[1]; // замінюємо рядок
+
+alert( str ); // ой
 ```
 
-Or, if we want a single character lowercased:
+В наступних розділах ми побачимо більше прикладів.
+
+## Зміна регістру
+
+Методи [toLowerCase()](mdn:js/String/toLowerCase) та [toUpperCase()](mdn:js/String/toUpperCase) змінюють регістр символів:
+
+```js run
+alert( 'Інтерфейс'.toUpperCase() ); // ІНТЕРФЕЙС
+alert( 'Інтерфейс'.toLowerCase() ); // інтерфейс
+```
+
+Або якщо ми хочемо перенести в нижній регістр конкретний символ:
 
 ```js
-alert( 'Interface'[0].toLowerCase() ); // 'i'
+alert( 'Інтерфейс'[0].toLowerCase() ); // 'і'
 ```
 
-## Searching for a substring
+## Пошук підрядка
 
-There are multiple ways to look for a substring within a string.
+Існує декілька способів для пошуку підрядка.
 
 ### str.indexOf
 
-The first method is [str.indexOf(substr, pos)](mdn:js/String/indexOf).
+Перший метод -- [str.indexOf(substr, pos)](mdn:js/String/indexOf).
 
-It looks for the `substr` in `str`, starting from the given position `pos`, and returns the position where the match was found or `-1` if nothing can be found.
+Він шукає підрядок `substr` в рядку `str`, починаючи з позиції `pos`, і повертає позицію, де знаходиться збіг, або `-1` якщо збігів не було знайдено.
 
-For instance:
+Наприклад:
 
 ```js run
-let str = 'Widget with id';
+let str = 'Віджет з ідентифікатором';
 
-alert( str.indexOf('Widget') ); // 0, because 'Widget' is found at the beginning
-alert( str.indexOf('widget') ); // -1, not found, the search is case-sensitive
+alert( str.indexOf('Віджет') ); // 0, тому що 'Віджет' було знайдено на початку
+alert( str.indexOf('віджет') ); // -1, збігів не знайдено, пошук чутливий до регістру
 
-alert( str.indexOf("id") ); // 1, "id" is found at the position 1 (..idget with id)
+alert( str.indexOf("ід") ); // 1, підрядок "ід" знайдено на позиції 1 (..іджет з ідентифікатором)
 ```
 
-The optional second parameter allows us to start searching from a given position.
+Необовʼязковий другий параметр `pos` дозволяє нам почати пошук із заданої позиції.
 
-For instance, the first occurrence of `"id"` is at position `1`. To look for the next occurrence, let's start the search from position `2`:
+Наприклад, перший збіг `"ід"` знаходиться на позиції `1`. Щоб знайти наступний збіг, почнемо пошук з позиції `2`:
 
 ```js run
-let str = 'Widget with id';
+let str = 'Віджет з ідентифікатором';
 
-alert( str.indexOf('id', 2) ) // 12
+alert( str.indexOf('ід', 2) ) // 9
 ```
 
-If we're interested in all occurrences, we can run `indexOf` in a loop. Every new call is made with the position after the previous match:
+Щоб знайти усі збіги, нам потрібно запустити `indexOf` в циклі. Кожен новий виклик здійснюється з позицією після попереднього збігу:
 
 ```js run
-let str = 'As sly as a fox, as strong as an ox';
+let str = 'Хитрий, як лисиця, сильний, як Як';
 
-let target = 'as'; // let's look for it
+let target = 'як'; // давайте знайдемо це
 
 let pos = 0;
 while (true) {
   let foundPos = str.indexOf(target, pos);
   if (foundPos == -1) break;
 
-  alert( `Found at ${foundPos}` );
-  pos = foundPos + 1; // continue the search from the next position
+  alert( `Знайдено тут: ${foundPos}` );
+  pos = foundPos + 1; // продовжуємо з наступної позиції
 }
 ```
 
-The same algorithm can be layed out shorter:
+Той самий алгоритм можна записати коротше:
 
 ```js run
-let str = "As sly as a fox, as strong as an ox";
-let target = "as";
+let str = "Хитрий, як лисиця, сильний, як Як";
+let target = "як";
 
 *!*
 let pos = -1;
@@ -281,232 +281,232 @@ while ((pos = str.indexOf(target, pos + 1)) != -1) {
 ```
 
 ```smart header="`str.lastIndexOf(substr, position)`"
-There is also a similar method [str.lastIndexOf(substr, position)](mdn:js/String/lastIndexOf) that searches from the end of a string to its beginning.
+Також є схожий метод [str.lastIndexOf(substr, position)](mdn:js/String/lastIndexOf), що виконує пошук від кінця рядка до його початку.
 
-It would list the occurrences in the reverse order.
+У ньому будуть перераховані збіги в зворотному порядку.
 ```
 
-There is a slight inconvenience with `indexOf` in the `if` test. We can't put it in the `if` like this:
+Існує незручність з `indexOf` в умові `if`. Ми не можемо помістити його в `if` таким чином:
 
 ```js run
-let str = "Widget with id";
+let str = "Віджет з ідентифікатором";
 
-if (str.indexOf("Widget")) {
-    alert("We found it"); // doesn't work!
+if (str.indexOf("Віджет")) {
+    alert("Є співпадіння"); // не працює
 }
 ```
 
-The `alert` in the example above doesn't show because `str.indexOf("Widget")` returns `0` (meaning that it found the match at the starting position). Right, but `if` considers `0` to be `false`.
+В прикладі вище `alert` не відображається, оскільки `str.indexOf("Віджет")` повертає `0` (це означає, що він знайшов збіг у початковій позиції). Це правильно, але `if` вважає, що `0` -- це `false`.
 
-So, we should actually check for `-1`, like this:
+Тому нам потрібно робити перевірку на `-1`, як тут:
 
 ```js run
-let str = "Widget with id";
+let str = "Віджет з ідентифікатором";
 
 *!*
-if (str.indexOf("Widget") != -1) {
+if (str.indexOf("Віджет") != -1) {
 */!*
-    alert("We found it"); // works now!
+    alert("Є співпадіння"); // тепер працює!
 }
 ```
 
-#### The bitwise NOT trick
+#### Трюк з побітовим НЕ
 
-One of the old tricks used here is the [bitwise NOT](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_NOT) `~` operator. It converts the number to a 32-bit integer (removes the decimal part if exists) and then reverses all bits in its binary representation.
+Один зі старих прийомів, який тут використовується, це [побітовий оператор НЕ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_NOT) -- `~`. Він перетворює число в 32-розрядне ціле число (вилучає десяткову частину, якщо вона є), а потім повертає всі біти в його двійковому представленні.
 
-In practice, that means a simple thing: for 32-bit integers `~n` equals `-(n+1)`.
+На практиці це означає просту річ: для 32-розрядних чисел значення `~n` рівне `-(n+1)`.
 
-For instance:
+Наприклад:
 
 ```js run
-alert( ~2 ); // -3, the same as -(2+1)
-alert( ~1 ); // -2, the same as -(1+1)
-alert( ~0 ); // -1, the same as -(0+1)
+alert( ~2 ); // -3, те саме що -(2+1)
+alert( ~1 ); // -2, те саме що -(1+1)
+alert( ~0 ); // -1, те саме що -(0+1)
 *!*
-alert( ~-1 ); // 0, the same as -(-1+1)
+alert( ~-1 ); // 0, те саме що -(-1+1)
 */!*
 ```
 
-As we can see, `~n` is zero only if `n == -1` (that's for any 32-bit signed integer `n`).
+Як ми можемо бачити, `~n` рівне 0 лише при `n == -1` (для будь якого 32-розрядного цілого числа `n`)
 
-So, the test `if ( ~str.indexOf("...") )` is truthy only if the result of `indexOf` is not `-1`. In other words, when there is a match.
+Відповідно, проходження перевірки `if ( ~str.indexOf("...") )` означає, що результат `indexOf` відрізняється від `-1`. Іншими словами, коли є збіг.
 
-People use it to shorten `indexOf` checks:
+Таку перевірку іноді використовують як компактний `indexOf`:
 
 ```js run
-let str = "Widget";
+let str = "Віджет";
 
-if (~str.indexOf("Widget")) {
-  alert( 'Found it!' ); // works
+if (~str.indexOf("Віджет")) {
+  alert( 'Є співпадіння!' ); // Працює
 }
 ```
 
-It is usually not recommended to use language features in a non-obvious way, but this particular trick is widely used in old code, so we should understand it.
+Зазвичай використовувати можливості мови неочевидним способом не рекомендується, але цей трюк широко використовується в старому коді, тому це важливо розуміти.
 
-Just remember: `if (~str.indexOf(...))` reads as "if found".
+Просто запамʼятайте: `if (~str.indexOf(...))` означає "якщо знайдено".
 
-To be precise though, as big numbers are truncated to 32 bits by `~` operator, there exist other numbers that give `0`, the smallest is `~4294967295=0`. That makes such check correct only if a string is not that long.
+Проте, якщо бути точніше, через те, що великі числа обрізаються до 32 бітів оператором `~`, існують числа, для яких результат також буде `0`, найменше таке число `~4294967295=0`. Тому така перевірка буде працювати для рядків невеликої довжини.
 
-Right now we can see this trick only in the old code, as modern JavaScript provides `.includes` method (see below).
+Зараз такий трюк ми можемо побачити лише в старому коді, тому що в сучасному JavaScript є метод `.includes`.
 
 ### includes, startsWith, endsWith
 
-The more modern method [str.includes(substr, pos)](mdn:js/String/includes) returns `true/false` depending on whether `str` contains `substr` within.
+Сучасніший метод [str.includes(substr, pos)](mdn:js/String/includes) повертає `true/false` в залежності від того чи є `substr` в рядку `str`.
 
-It's the right choice if we need to test for the match, but don't need its position:
-
-```js run
-alert( "Widget with id".includes("Widget") ); // true
-
-alert( "Hello".includes("Bye") ); // false
-```
-
-The optional second argument of `str.includes` is the position to start searching from:
+Цей метод доцільно використовувати, коли потрібно перевірити чи є збіг, але не потрібна позиція:
 
 ```js run
-alert( "Widget".includes("id") ); // true
-alert( "Widget".includes("id", 3) ); // false, from position 3 there is no "id"
+alert( "Віджет з ідентифікатором".includes("Віджет") ); // true
+
+alert( "Привіт".includes("Бувай") ); // false
 ```
 
-The methods [str.startsWith](mdn:js/String/startsWith) and [str.endsWith](mdn:js/String/endsWith) do exactly what they say:
+Необовʼязковий другий аргумент `pos` -- це позиція з якої почнеться пошук:
 
 ```js run
-alert( "Widget".startsWith("Wid") ); // true, "Widget" starts with "Wid"
-alert( "Widget".endsWith("get") ); // true, "Widget" ends with "get"
+alert( "Віджет".includes("ід") ); // true
+alert( "Віджет".includes("ід", 3) ); // false, починаючи з 3-го символа, підрядка "ід" немає
 ```
 
-## Getting a substring
+Відповідно, методи [str.startsWith](mdn:js/String/startsWith) та [str.endsWith](mdn:js/String/endsWith) перевіряють, чи починається і чи закінчується рядок певним підрядком.
 
-There are 3 methods in JavaScript to get a substring: `substring`, `substr` and `slice`.
+```js run
+alert( "Віджет".startsWith("Від") ); // true, "Віджет" починається з "Від"
+alert( "Віджет".endsWith("жет") ); // true, "Віджет" закінчується підрядком "жет"
+```
+
+## Отримання підрядка
+
+В JavaScript є 3 метода для отримання підрядка: `substring`, `substr` та `slice`.
 
 `str.slice(start [, end])`
-: Returns the part of the string from `start` to (but not including) `end`.
+: Повертає частину рядка починаючи від `start` до (але не включно) `end`.
 
-    For instance:
+    Наприклад:
 
     ```js run
     let str = "stringify";
-    alert( str.slice(0, 5) ); // 'strin', the substring from 0 to 5 (not including 5)
-    alert( str.slice(0, 1) ); // 's', from 0 to 1, but not including 1, so only character at 0
+    alert( str.slice(0, 5) ); // 'strin', підрядок від 0 до 5 (5 не включно)
+    alert( str.slice(0, 1) ); // 's', від 0 до 1, але 1 не включно, тому лише символ на позиції 0
     ```
 
-    If there is no second argument, then `slice` goes till the end of the string:
+    Якщо другий аргумент відсутній, тоді `slice` поверне символи до кінця рядка:
 
     ```js run
     let str = "st*!*ringify*/!*";
-    alert( str.slice(2) ); // 'ringify', from the 2nd position till the end
+    alert( str.slice(2) ); // 'ringify', з позиції 2 і до кінця
     ```
 
-    Negative values for `start/end` are also possible. They mean the position is counted from the string end:
+    Також для `start/end` можна задати відʼємне значення. Це означає, що позиція буде рахуватися з кінця рядка:
 
     ```js run
     let str = "strin*!*gif*/!*y";
 
-    // start at the 4th position from the right, end at the 1st from the right
+    // починаємо з 4-го символа справа, і закінчуємо на 1-му символі справа
     alert( str.slice(-4, -1) ); // 'gif'
     ```
 
 `str.substring(start [, end])`
-: Returns the part of the string *between* `start` and `end`.
+: Повертає частину рядка *між* `start` та `end`.
 
-    This is almost the same as `slice`, but it allows `start` to be greater than `end`.
+    Цей метод майже такий самий що і `slice`, але він дозволяє задати `start` більше ніж `end`.
 
-    For instance:
+    Наприклад:
 
     ```js run
     let str = "st*!*ring*/!*ify";
 
-    // these are same for substring
+    // для substring ці два приклади однакові
     alert( str.substring(2, 6) ); // "ring"
     alert( str.substring(6, 2) ); // "ring"
 
-    // ...but not for slice:
-    alert( str.slice(2, 6) ); // "ring" (the same)
-    alert( str.slice(6, 2) ); // "" (an empty string)
+    // ...але не для slice:
+    alert( str.slice(2, 6) ); // "ring" (те саме)
+    alert( str.slice(6, 2) ); // "" (порожній рядок)
 
     ```
 
-    Negative arguments are (unlike slice) not supported, they are treated as `0`.
+    Відʼємні аргументи (на відміну від slice) не підтримуються, вони інтерпретуються як `0`.
 
 `str.substr(start [, length])`
-: Returns the part of the string from `start`, with the given `length`.
+: Повертає частину рядка з позиції `start`, із заданою довжиною `length`.
 
-    In contrast with the previous methods, this one allows us to specify the `length` instead of the ending position:
+    На відміну від попередніх методів, цей дозволяє вказати довжину `length` замість кінцевої позиції:
 
     ```js run
     let str = "st*!*ring*/!*ify";
-    alert( str.substr(2, 4) ); // 'ring', from the 2nd position get 4 characters
+    alert( str.substr(2, 4) ); // 'ring', починаючи з позиції 2 отримуємо 4 символа
     ```
 
-    The first argument may be negative, to count from the end:
+    Перший аргумент може бути відʼємним, щоб рахувати з кінця:
 
     ```js run
     let str = "strin*!*gi*/!*fy";
-    alert( str.substr(-4, 2) ); // 'gi', from the 4th position get 2 characters
+    alert( str.substr(-4, 2) ); // 'gi', починаючи з позиції 4 з кінця отримуєму 2 символа
     ```
 
-Let's recap these methods to avoid any confusion:
+Давайте підсумуємо ці методи щоб не заплутатись:
 
-| method | selects... | negatives |
+| Метод | вибирає... | відʼємні значення |
 |--------|-----------|-----------|
-| `slice(start, end)` | from `start` to `end` (not including `end`) | allows negatives |
-| `substring(start, end)` | between `start` and `end` | negative values mean `0` |
-| `substr(start, length)` | from `start` get `length` characters | allows negative `start` |
+| `slice(start, end)` | від `start` до `end` (`end` не включно) | дозволяє відʼємні значення |
+| `substring(start, end)` | між `start` та `end` | відʼємні значення інтерпретуються як `0` |
+| `substr(start, length)` | `length` символів від `start` | дозволяє відʼємні значення `start` |
 
-```smart header="Which one to choose?"
-All of them can do the job. Formally, `substr` has a minor drawback: it is described not in the core JavaScript specification, but in Annex B, which covers browser-only features that exist mainly for historical reasons. So, non-browser environments may fail to support it. But in practice it works everywhere.
+```smart header="Який метод вибрати?"
+Усі вони можуть виконати задачу. Формально `substr` має незначний недолік: він описаний не в основній специфікації JavaScript, а в Annex B, який охоплює лише функції браузера, які існують переважно з історичних причин. Тому не браузерні середовища, можуть не підтримувати його. Але на практиці це працює всюди.
 
-Of the other two variants, `slice` is a little bit more flexible, it allows negative arguments and shorter to write. So, it's enough to remember solely `slice` of these three methods.
+З двох інших варіантів `slice` дещо гнучкіший, він допускає негативні аргументи та коротший в записі. Отже, достатньо запамʼятати лише `slice` з цих трьох методів.
 ```
 
-## Comparing strings
+## Порівняння рядків
 
-As we know from the chapter <info:comparison>, strings are compared character-by-character in alphabetical order.
+Як ми знаємо з розділу <info:comparison>, рядки порівнюються символ за символом в алфавітному порядку.
 
-Although, there are some oddities.
+Хоча, є деякі дивацтва.
 
-1. A lowercase letter is always greater than the uppercase:
+1. Літера в малому регістрі завжди більша за літеру у великому:
 
     ```js run
     alert( 'a' > 'Z' ); // true
     ```
 
-2. Letters with diacritical marks are "out of order":
+2. Літери з діакритичними знаками "не в порядку":
 
     ```js run
     alert( 'Österreich' > 'Zealand' ); // true
     ```
 
-    This may lead to strange results if we sort these country names. Usually people would expect `Zealand` to come after `Österreich` in the list.
+    Це може призвести до дивних результатів, якщо ми відсортуємо ці назви країн. Зазвичай люди очікують, що `Zealand` буде після `Österreich`.
 
-To understand what happens, let's review the internal representation of strings in JavaScript.
+Щоб зрозуміти, що відбувається, давайте розглянемо внутрішнє представлення рядків у JavaScript.
 
-All strings are encoded using [UTF-16](https://en.wikipedia.org/wiki/UTF-16). That is: each character has a corresponding numeric code. There are special methods that allow to get the character for the code and back.
+Усі рядки кодуються за допомогою [UTF-16](https://uk.wikipedia.org/wiki/UTF-16). Тобто: кожен символ має відповідний цифровий код. Існують спеціальні методи, які дозволяють отримати символ для коду і навпаки.
 
 `str.codePointAt(pos)`
-: Returns the code for the character at position `pos`:
+: Повертає код символу на позиції `pos`:
 
     ```js run
-    // different case letters have different codes
+    // літери в різному регістрі мають різні коди
     alert( "z".codePointAt(0) ); // 122
     alert( "Z".codePointAt(0) ); // 90
     ```
 
 `String.fromCodePoint(code)`
-: Creates a character by its numeric `code`
+: Створює символ за його кодом `code`
 
     ```js run
     alert( String.fromCodePoint(90) ); // Z
     ```
 
-    We can also add Unicode characters by their codes using `\u` followed by the hex code:
+    Ми також можемо додати юнікодні символи за їхніми кодами, використовуючи `\u`, за яким слідує шістнадцятковий код:
 
     ```js run
-    // 90 is 5a in hexadecimal system
+    // 90 – це 5a в шістнадцятковій системі числення
     alert( '\u005a' ); // Z
     ```
 
-Now let's see the characters with codes `65..220` (the latin alphabet and a little bit extra) by making a string of them:
+Тепер давайте подивимося на символи з кодами `65..220` (латинський алфавіт і трохи більше), створивши з них рядок:
 
 ```js run
 let str = '';
@@ -519,135 +519,135 @@ alert( str );
 // ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜ
 ```
 
-See? Capital characters go first, then a few special ones, then lowercase characters, and `Ö` near the end of the output.
+Бачите? Спочатку вводяться великі символи, потім кілька спеціальних, потім символи нижнього регістру та `Ö` ближче до кінця виводу.
 
-Now it becomes obvious why `a > Z`.
+Тепер стає очевидним, чому `a > Z`.
 
-The characters are compared by their numeric code. The greater code means that the character is greater. The code for `a` (97) is greater than the code for `Z` (90).
+Символи порівнюються за їх числовим кодом. Більший код означає, що символ більше. Код для `a` (97) більший за код для `Z` (90).
 
-- All lowercase letters go after uppercase letters because their codes are greater.
-- Some letters like `Ö` stand apart from the main alphabet. Here, its code is greater than anything from `a` to `z`.
+- Усі малі літери йдуть після великих, оскільки їхні коди більші.
+- Деякі літери, як-от `Ö`, стоять окремо від основного алфавіту. Тут його код більший за будь-що від `a` до `z`.
 
-### Correct comparisons [#correct-comparisons]
+### Правильне порівняння [#correct-comparisons]
 
-The "right" algorithm to do string comparisons is more complex than it may seem, because alphabets are different for different languages.
+«Правильний» алгоритм порівняння рядків є складнішим, ніж може здатися, тому що для різних мов – різні алфавіти.
 
-So, the browser needs to know the language to compare.
+Отже, браузеру потрібно знати, яку мову використовувати для порівняння.
 
-Luckily, all modern browsers (IE10- requires the additional library [Intl.js](https://github.com/andyearnshaw/Intl.js/)) support the internationalization standard [ECMA-402](http://www.ecma-international.org/ecma-402/1.0/ECMA-402.pdf).
+На щастя, усі сучасні браузери (IE10- вимагає додаткової бібліотеки [Intl.js](https://github.com/andyearnshaw/Intl.js/)) підтримують стандарт інтернаціоналізації [ECMA-402](http://www.ecma-international.org/ecma-402/1.0/ECMA-402.pdf).
 
-It provides a special method to compare strings in different languages, following their rules.
+Він забезпечує спеціальний метод для порівняння рядків різними мовами, дотримуючись їхніх правил.
 
-The call [str.localeCompare(str2)](mdn:js/String/localeCompare) returns an integer indicating whether `str` is less, equal or greater than `str2` according to the language rules:
+Виклик [str.localeCompare(str2)](mdn:js/String/localeCompare) повертає ціле число, яке вказує, чи є `str` меншим, рівним чи більшим за `str2` відповідно до правил мови:
 
-- Returns a negative number if `str` is less than `str2`.
-- Returns a positive number if `str` is greater than `str2`.
-- Returns `0` if they are equivalent.
+- Повертає відʼємне число, якщо `str` менше, ніж `str2`.
+- Повертає додатне число, якщо `str` більше, ніж `str2`.
+- Повертає `0`, якщо вони рівні.
 
-For instance:
+Наприклад:
 
 ```js run
 alert( 'Österreich'.localeCompare('Zealand') ); // -1
 ```
 
-This method actually has two additional arguments specified in [the documentation](mdn:js/String/localeCompare), which allows it to specify the language (by default taken from the environment, letter order depends on the language) and setup additional rules like case sensitivity or should `"a"` and `"á"` be treated as the same etc.
+Цей метод насправді має два додаткові аргументи, зазначені в [документації](mdn:js/String/localeCompare), що дозволяє йому вказати мову (типово взяту з середовища, порядок букв залежить від мови) і встановити додаткові правила, як-от чутливість до регістру або чи слід розглядати різницю між `"a"` та `"á"`.
 
-## Internals, Unicode
+## Як усе влаштовано, Юнікод
 
-```warn header="Advanced knowledge"
-The section goes deeper into string internals. This knowledge will be useful for you if you plan to deal with emoji, rare mathematical or hieroglyphic characters or other rare symbols.
+```warn header="Поглиблення в тему"
+Розділ заглиблюється у внутрішню частину рядків. Ці знання знадобляться вам, якщо ви плануєте мати справу з емодзі, рідкісними математичними чи ієрогліфічними символами чи іншими рідкісними символами.
 
-You can skip the section if you don't plan to support them.
+Ви можете пропустити розділ, якщо не плануєте підтримувати їх.
 ```
 
-### Surrogate pairs
+### Сурогатні пари
 
-All frequently used characters have 2-byte codes. Letters in most european languages, numbers, and even most hieroglyphs, have a 2-byte representation.
+Усі часто використовувані символи мають 2-байтові коди. Літери в більшості європейських мов, цифри і навіть більшість ієрогліфів мають 2-байтове представлення.
 
-But 2 bytes only allow 65536 combinations and that's not enough for every possible symbol. So rare symbols are encoded with a pair of 2-byte characters called "a surrogate pair".
+Але 2 байти – це лише 65536 комбінацій, і цього недостатньо для кожного можливого символу. Тому рідкісні символи кодуються парою 2-байтових символів, які називаються «сурогатною парою».
 
-The length of such symbols is `2`:
+Довжина таких символів – `2`:
 
 ```js run
-alert( '𝒳'.length ); // 2, MATHEMATICAL SCRIPT CAPITAL X
-alert( '😂'.length ); // 2, FACE WITH TEARS OF JOY
-alert( '𩷶'.length ); // 2, a rare Chinese hieroglyph
+alert( '𝒳'.length ); // 2, математичний символ "x" у верхньому регістрі
+alert( '😂'.length ); // 2, емодзі -- обличчя зі сльозами радості
+alert( '𩷶'.length ); // 2, рідкісний китайський ієрогліф
 ```
 
-Note that surrogate pairs did not exist at the time when JavaScript was created, and thus are not correctly processed by the language!
+Зауважте, що сурогатні пари не існували на момент створення JavaScript, і тому мова не обробляє їх належним чином!
 
-We actually have a single symbol in each of the strings above, but the `length` shows a length of `2`.
+Насправді ми маємо один символ у кожному з наведених вище рядків, але `length` показує довжину `2`.
 
-`String.fromCodePoint` and `str.codePointAt` are few rare methods that deal with surrogate pairs right. They recently appeared in the language. Before them, there were only [String.fromCharCode](mdn:js/String/fromCharCode) and [str.charCodeAt](mdn:js/String/charCodeAt). These methods are actually the same as `fromCodePoint/codePointAt`, but don't work with surrogate pairs.
+`String.fromCodePoint` і `str.codePointAt` – це кілька рідкісних методів, які правильно працюють із сурогатними парами. Вони зʼявились в мові нещодавно. До них були лише [String.fromCharCode](mdn:js/String/fromCharCode) і [str.charCodeAt](mdn:js/String/charCodeAt). Ці методи насправді такі ж, як `fromCodePoint/codePointAt`, але не працюють із сурогатними парами.
 
-Getting a symbol can be tricky, because surrogate pairs are treated as two characters:
+Отримати символ може бути складно, оскільки сурогатні пари розглядаються як два символи:
 
 ```js run
-alert( '𝒳'[0] ); // strange symbols...
-alert( '𝒳'[1] ); // ...pieces of the surrogate pair
+alert( '𝒳'[0] ); // дивні символи...
+alert( '𝒳'[1] ); // ...частини сурогатної пари
 ```
 
-Note that pieces of the surrogate pair have no meaning without each other. So the alerts in the example above actually display garbage.
+Зверніть увагу, що частини сурогатної пари не мають значення один без одного. Отже, сповіщення в прикладі вище насправді відображають сміття.
 
-Technically, surrogate pairs are also detectable by their codes: if a character has the code in the interval of `0xd800..0xdbff`, then it is the first part of the surrogate pair. The next character (second part) must have the code in interval `0xdc00..0xdfff`. These intervals are reserved exclusively for surrogate pairs by the standard.
+Технічно, сурогатні пари також можна виявити за їх кодами: якщо символ має код в інтервалі `0xd800..0xdbff`, то це перша частина сурогатної пари. Наступний символ (друга частина) повинен мати код в інтервалі `0xdc00..0xdfff`. За стандартом ці інтервали зарезервовані виключно для сурогатних пар.
 
-In the case above:
+У наведеному вище випадку:
 
 ```js run
-// charCodeAt is not surrogate-pair aware, so it gives codes for parts
+// charCodeAt не підтримує сурогатні пари, тому дає коди для частин
 
-alert( '𝒳'.charCodeAt(0).toString(16) ); // d835, between 0xd800 and 0xdbff
-alert( '𝒳'.charCodeAt(1).toString(16) ); // dcb3, between 0xdc00 and 0xdfff
+alert( '𝒳'.charCodeAt(0).toString(16) ); // d835, між 0xd800 та 0xdbff
+alert( '𝒳'.charCodeAt(1).toString(16) ); // dcb3, між 0xdc00 та 0xdfff
 ```
 
-You will find more ways to deal with surrogate pairs later in the chapter <info:iterable>. There are probably special libraries for that too, but nothing famous enough to suggest here.
+Більше способів роботи із сурогатними парами ви знайдете пізніше в розділі <info:iterable>. Для цього також є спеціальні бібліотеки, але немає достатньо відомої, щоб запропонувати її тут.
 
-### Diacritical marks and normalization
+### Діакритичні знаки та нормалізація
 
-In many languages there are symbols that are composed of the base character with a mark above/under it.
+У багатьох мовах є символи, які складаються з основного символу з позначкою над/під ним.
 
-For instance, the letter `a` can be the base character for: `àáâäãåā`. Most common "composite" character have their own code in the UTF-16 table. But not all of them, because there are too many possible combinations.
+Наприклад, буква `a` може бути базовим символом для: `àáâäãåā`. Найбільш поширені "складені" символи мають власний код у таблиці UTF-16. Але не всі, оскільки можливих комбінацій занадто багато.
 
-To support arbitrary compositions, UTF-16 allows us to use several Unicode characters: the base character followed by one or many "mark" characters that "decorate" it.
+Для підтримки довільних композицій UTF-16 дозволяє нам використовувати кілька юнікодних символів: основний символ, за яким слідує один або багато символів «позначок», які «прикрашають» його.
 
-For instance, if we have `S` followed by the special "dot above" character (code `\u0307`), it is shown as Ṡ.
+Наприклад, якщо у нас є `S`, за яким слідує спеціальний символ "крапка зверху" (код `\u0307`), він відображається як Ṡ.
 
 ```js run
 alert( 'S\u0307' ); // Ṡ
 ```
 
-If we need an additional mark above the letter (or below it) -- no problem, just add the necessary mark character.
+Якщо нам потрібна додаткова позначка над літерою (або під нею) -- не проблема, просто додайте потрібний символ позначки.
 
-For instance, if we append a character "dot below" (code `\u0323`), then we'll have "S with dots above and below": `Ṩ`.
+Наприклад, якщо ми додамо символ "крапка внизу" (код `\u0323`), то матимемо "S з крапками зверху і знизу": `Ṩ`.
 
-For example:
+Наприклад:
 
 ```js run
 alert( 'S\u0307\u0323' ); // Ṩ
 ```
 
-This provides great flexibility, but also an interesting problem: two characters may visually look the same, but be represented with different Unicode compositions.
+Це забезпечує велику гнучкість, але також є цікава проблема: два символи візуально можуть виглядати однаково, але представлені різними юнікодними композиціями.
 
-For instance:
+Наприклад:
 
 ```js run
-let s1 = 'S\u0307\u0323'; // Ṩ, S + dot above + dot below
-let s2 = 'S\u0323\u0307'; // Ṩ, S + dot below + dot above
+let s1 = 'S\u0307\u0323'; // Ṩ, S + крапка зверху + крапка знизу
+let s2 = 'S\u0323\u0307'; // Ṩ, S + крапка знизу + крапка зверху
 
 alert( `s1: ${s1}, s2: ${s2}` );
 
-alert( s1 == s2 ); // false though the characters look identical (?!)
+alert( s1 == s2 ); // false, хоча на вигляд символи однакові (?!)
 ```
 
-To solve this, there exists a "Unicode normalization" algorithm that brings each string to the single "normal" form.
+Щоб вирішити це, існує алгоритм "юнікодної нормалізації", який приводить кожен рядок до єдиної "нормальної" форми.
 
-It is implemented by [str.normalize()](mdn:js/String/normalize).
+Це реалізовано за допомогою [str.normalize()](mdn:js/String/normalize).
 
 ```js run
 alert( "S\u0307\u0323".normalize() == "S\u0323\u0307".normalize() ); // true
 ```
 
-It's funny that in our situation `normalize()` actually brings together a sequence of 3 characters to one: `\u1e68` (S with two dots).
+Цікаво, що в нашій ситуації `normalize()` насправді об’єднує послідовність з 3 символів в один: `\u1e68` (S з двома крапками).
 
 ```js run
 alert( "S\u0307\u0323".normalize().length ); // 1
@@ -655,25 +655,25 @@ alert( "S\u0307\u0323".normalize().length ); // 1
 alert( "S\u0307\u0323".normalize() == "\u1e68" ); // true
 ```
 
-In reality, this is not always the case. The reason being that the symbol `Ṩ` is "common enough", so UTF-16 creators included it in the main table and gave it the code.
+Насправді це не завжди так. Причина в тому, що символ `Ṩ` є "досить поширеним", тому розробники UTF-16 включили його в основну таблицю і присвоїли йому код.
 
-If you want to learn more about normalization rules and variants -- they are described in the appendix of the Unicode standard: [Unicode Normalization Forms](http://www.unicode.org/reports/tr15/), but for most practical purposes the information from this section is enough.
+Якщо ви хочете дізнатися більше про правила та варіанти нормалізації -- вони описані в додатку до стандарту Unicode: [Unicode Normalization Forms](http://www.unicode.org/reports/tr15/), але для більшості практичних для цілей інформації з цього розділу достатньо.
 
-## Summary
+## Підсумки
 
-- There are 3 types of quotes. Backticks allow a string to span multiple lines and embed expressions `${…}`.
-- Strings in JavaScript are encoded using UTF-16.
-- We can use special characters like `\n` and insert letters by their Unicode using `\u...`.
-- To get a character, use: `[]`.
-- To get a substring, use: `slice` or `substring`.
-- To lowercase/uppercase a string, use: `toLowerCase/toUpperCase`.
-- To look for a substring, use: `indexOf`, or `includes/startsWith/endsWith` for simple checks.
-- To compare strings according to the language, use: `localeCompare`, otherwise they are compared by character codes.
+- Є 3 види лапок. Зворотні лапки дозволяють рядку охоплювати кілька ліній і вбудовувати вирази `${…}`.
+- Рядки в JavaScript кодуються за допомогою UTF-16.
+- Ми можемо використовувати спеціальні символи, такі як `\n`, і вставляти літери за допомогою їхнього юнікоду за допомогою `\u...`.
+- Щоб отримати символ, використовуйте: `[]`.
+- Щоб отримати підрядок, використовуйте: `slice` або `substring`.
+- Щоб перевести рядок у нижній/верхній регістри, використовуйте: `toLowerCase/toUpperCase`.
+- Щоб знайти підрядок, використовуйте: `indexOf`, або `includes/startsWith/endsWith` для простих перевірок.
+- Щоб порівняти рядки з урахуванням правил мови, використовуйте: `localeCompare`, інакше вони порівнюються за кодами символів.
 
-There are several other helpful methods in strings:
+Є кілька інших корисних методів у рядках:
 
-- `str.trim()` -- removes ("trims") spaces from the beginning and end of the string.
-- `str.repeat(n)` -- repeats the string `n` times.
-- ...and more to be found in the [manual](mdn:js/String).
+- `str.trim()` -- видаляє ("обрізає") пробіли з початку та кінця рядка.
+- `str.repeat(n)` -- повторює рядок `n` разів.
+- ...та багато іншого можна знайти в [посібнику](mdn:js/String).
 
-Strings also have methods for doing search/replace with regular expressions. But that's big topic, so it's explained in a separate tutorial section <info:regular-expressions>.
+Рядки також мають методи пошуку/заміни регулярними виразами. Але це велика тема, тому пояснюється в окремому розділі <info:regular-expressions>.
