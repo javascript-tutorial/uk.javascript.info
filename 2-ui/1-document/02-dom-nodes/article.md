@@ -4,99 +4,99 @@ libs:
 
 ---
 
-# DOM tree
+# DOM дерево
 
-The backbone of an HTML document is tags.
+Основа HTML-документа -- це теги.
 
-According to the Document Object Model (DOM), every HTML tag is an object. Nested tags are  "children" of the enclosing one. The text inside a tag is an object as well.
+Відповідно до моделі об'єкта документа (DOM), кожен HTML-тег є об'єктом. Вкладені теги -- це "діти" всередині батьківського елементу. Текст всередині тегу також є об'єктом.
 
-All these objects are accessible using JavaScript, and we can use them to modify the page.
+Всі ці об'єкти доступні за допомогою JavaScript, і ми можемо використовувати їх, щоб змінити сторінку.
 
-For example, `document.body` is the object representing the `<body>` tag.
+Наприклад, `document.body` це об'єкт, що представляє тег `<body>`.
 
-Running this code will make the `<body>` red for 3 seconds:
+Запуск цього коду зробить `<body>` червоним протягом 3 секунд:
 
 ```js run
-document.body.style.background = 'red'; // make the background red
+document.body.style.background = 'red'; // зробити фон червоним
 
-setTimeout(() => document.body.style.background = '', 3000); // return back
+setTimeout(() => document.body.style.background = '', 3000); // поверне назад
 ```
 
-Here we used `style.background` to change the background color of `document.body`, but there are many other properties, such as:
+Тут ми використовували `style.background`, щоб змінити фоновий колір `document.body`, але тут є багато інших властивостей, таких як.
 
-- `innerHTML` -- HTML contents of the node.
-- `offsetWidth` -- the node width (in pixels)
-- ...and so on.
+- `innerHTML` -- вміст HTML вузла.
+- `offsetWidth` -- ширина вузла (у пікселях)
+- ...і так далі.
 
-Soon we'll learn more ways to manipulate the DOM, but first we need to know about its structure.
+Незабаром ми дізнаємося більше способів маніпулювати домом, але спочатку потрібно знати його структуру.
 
-## An example of the DOM
+## Приклад DOM
 
-Let's start with the following simple document:
+Почнемо з наступного простого документа:
 
 ```html run no-beautify
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>About elk</title>
+  <title>Про лосів</title>
 </head>
 <body>
-  The truth about elk.
+  Правда про лосів.
 </body>
 </html>
 ```
 
-The DOM represents HTML as a tree structure of tags. Here's how it looks:
+DOM представляє HTML як структуру дерева тегів. Ось як це виглядає:
 
 <div class="domtree"></div>
 
 <script>
-let node1 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  "},{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"About elk"}]},{"name":"#text","nodeType":3,"content":"\n"}]},{"name":"#text","nodeType":3,"content":"\n"},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  The truth about elk.\n\n\n"}]}]}
+let node1 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  "},{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Про лосів"}]},{"name":"#text","nodeType":3,"content":"\n"}]},{"name":"#text","nodeType":3,"content":"\n"},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  Правда про лосів.\n\n\n"}]}]}
 
 drawHtmlTree(node1, 'div.domtree', 690, 320);
 </script>
 
 ```online
-On the picture above, you can click on element nodes and their children will open/collapse.
+На зображенні вище, ви можете натиснути на вузли елементів, а їхні діти будуть відкриватися і закриватися.
 ```
 
-Every tree node is an object.
+Кожен дерев'яний вузол є об'єктом.
 
-Tags are *element nodes* (or just elements) and form the tree structure: `<html>` is at the root, then `<head>` and `<body>` are its children, etc.
+Теги є *вузлами-елементами* (або просто елементи) і утворюють структуру дерева: `<html>` знаходиться в корені, `<head>` `<body>` - це його дочірні вузли тощо.
 
-The text inside elements forms *text nodes*, labelled as `#text`. A text node contains only a string. It may not have children and is always a leaf of the tree.
+Текст всередині елементів утворює *текстові-вузли*, позначені як `#text`. Текстовий вузол містить лише рядок. У нього може не буди нащадків і завжди він завжди є листом дерева.
 
-For instance, the `<title>` tag has the text `"About elk"`.
+Наприклад, тег `<title>` має текст `"Про лосів"`.
 
-Please note the special characters in text nodes:
+Зверніть увагу на спеціальні символи в текстових вузлах:
 
-- a newline: `↵` (in JavaScript known as `\n`)
-- a space: `␣`
+- новий рядок: `↵` (в JavaScript відомий як `\n`)
+- пробіл: `␣`
 
-Spaces and newlines are totally valid characters, like letters and digits. They form text nodes and become a part of the DOM. So, for instance, in the example above the `<head>` tag contains some spaces before `<title>`, and that text becomes a `#text` node (it contains a newline and some spaces only).
+Пробіли та нові рядки є абсолютно діючими символами, як букви та цифри. Вони утворюють текстові вузли і стають частиною DOM. Отже, наприклад, у прикладі вище тег `<head>` містить деякі пробіли перед`<title>`, і цей текст стає `#text` вузлом (він містить лише новий ряд та деякілька пробілів).
 
-There are only two top-level exclusions:
-1. Spaces and newlines before `<head>` are ignored for historical reasons.
-2. If we put something after `</body>`, then that is automatically moved inside the `body`, at the end, as the HTML spec requires that all content must be inside `<body>`. So there can't be any spaces after `</body>`.
+Є лише два винятки з цього правила:
+1. Пробіли та нові лінії до `<head>` ігноруються з історичних причин.
+2. Якщо ми щось помістимо після `<body>`, то це цось автоматично переміщується всередині `body`, в кінці, оскільки специфікація HTML вимагає, що весь вміст повинен бути всередині `<body>`. Отже, після `<body>` не може бути пробілів.
 
-In other cases everything's straightforward -- if there are spaces (just like any character) in the document, then they become text nodes in the DOM, and if we remove them, then there won't be any.
+В інших випадках все просто -- якщо є пробіли (так само, як будь-який символ) у документі, то вони стають текстовими вузлами в DOM, і якщо ми їх видалимо, то текстових вузлів там не буде.
 
-Here are no space-only text nodes:
+Тут немає текстових вузлів з пробілами:
 
 ```html no-beautify
 <!DOCTYPE HTML>
-<html><head><title>About elk</title></head><body>The truth about elk.</body></html>
+<html><head><title>Про оленів</title></head><body>Правда про оленів.</body></html>
 ```
 
 <div class="domtree"></div>
 
 <script>
-let node2 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"About elk"}]}]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"The truth about elk."}]}]}
+let node2 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Про оленів"}]}]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Правда про оленів."}]}]}
 
 drawHtmlTree(node2, 'div.domtree', 690, 210);
 </script>
 
-```smart header="Spaces at string start/end and space-only text nodes are usually hidden in tools"
+```smart header="Пробіли у рядку на початку/в кінці і тільки вузли, що містять лише пробіли, як правило, приховані в інструментах розробки"
 Browser tools (to be covered soon) that work with DOM usually do not show spaces at the start/end of the text and empty text nodes (line-breaks) between tags.
 
 Developer tools save screen space this way.
