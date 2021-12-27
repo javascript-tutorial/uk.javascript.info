@@ -54,7 +54,11 @@ alert( rabbit.eats ); // true (**)
 alert( rabbit.jumps ); // true
 ```
 
+<<<<<<< HEAD
 В позначеному рядку `(*)`, об’єкт `animal` визначається як прототип для об’єкта `rabbit`.
+=======
+Here the line `(*)` sets `animal` to be the prototype of `rabbit`.
+>>>>>>> 3c934b5a46a76861255e3a4f29da6fd54ab05c8c
 
 І коли `alert` намагається прочитати властивість `rabbit.eats` (рядок позначено `(**)`), а її там немає, то JavaScript йде за посиланням `[[Prototype]]` та знаходить її в об’єкті `animal` (дивіться знизу вверх):
 
@@ -287,7 +291,11 @@ for(let prop in rabbit) alert(prop); // jumps, потім eats
 */!*
 ```
 
+<<<<<<< HEAD
 Якщо це не те, що нам потрібно, і ми б хотіли виключити отримання успадкованих значень, існує вбудований метод [obj.hasOwnProperty(key)](mdn:js/Object/hasOwnProperty), який повертає `true` якщо `obj` має тільки власні (не успадковані) властивості.
+=======
+If that's not what we want, and we'd like to exclude inherited properties, there's a built-in method [obj.hasOwnProperty(key)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty): it returns `true` if `obj` has its own (not inherited) property named `key`.
+>>>>>>> 3c934b5a46a76861255e3a4f29da6fd54ab05c8c
 
 Отже, ми можемо відфільтрувати успадковані властивості (чи щось зробити з ними інше):
 

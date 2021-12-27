@@ -34,7 +34,11 @@ let sayHi = function() {
 
 ## Функція -- це значення
 
+<<<<<<< HEAD
 Повторімо: немає значення, яким чином створено функцію, функція -- це завжди значення. В обох прикладах вище, функція зберігається в змінній `sayHi`.
+=======
+Let's reiterate: no matter how the function is created, a function is a value. Both examples above store a function in the `sayHi` variable.
+>>>>>>> 3c934b5a46a76861255e3a4f29da6fd54ab05c8c
 
 Ми навіть можемо вивести це значення, використовуючи `alert`:
 

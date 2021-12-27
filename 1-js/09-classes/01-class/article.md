@@ -118,7 +118,11 @@ alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
 
 ## Не просто синтаксичний цукор
 
+<<<<<<< HEAD
 Іноді люди кажуть, що `class` -- це "синтаксичний цукор" (синтаксис, який призначений для того, щоб зробити речі легше для читання, але не вводить нічого нового), тому що ми могли б фактично оголосити те ж саме взагалі без ключового слова `class`:
+=======
+Sometimes people say that `class` is a "syntactic sugar" (syntax that is designed to make things easier to read, but doesn't introduce anything new), because we could actually declare the same thing without using the `class` keyword at all:
+>>>>>>> 3c934b5a46a76861255e3a4f29da6fd54ab05c8c
 
 ```js run
 // переписування класу User в чистих функціях

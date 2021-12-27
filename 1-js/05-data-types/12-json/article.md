@@ -27,7 +27,11 @@ alert(user); // {name: "Іван", age: 30}
 
 ## JSON.stringify
 
+<<<<<<< HEAD
 [JSON](http://uk.wikipedia.org/wiki/json) (JavaScript Object Notation) -- це загальний формат, який представляє значення та об’єкти. Він описується у [RFC 4627](http://tools.ietf.org/html/rfc4627) стандарті. Спочатку він був зроблений для JavaScript, але багато інших мов мають бібліотеки, щоб обробляють його також. Тому легко використовувати JSON для обміну даними, коли клієнт використовує JavaScript, а сервер написаний на Ruby/PHP/Java/що завгодно.
+=======
+The [JSON](http://en.wikipedia.org/wiki/JSON) (JavaScript Object Notation) is a general format to represent values and objects. It is described as in [RFC 4627](https://tools.ietf.org/html/rfc4627) standard. Initially it was made for JavaScript, but many other languages have libraries to handle it as well.  So it's easy to use JSON for data exchange when the client uses JavaScript and the server is written on Ruby/PHP/Java/Whatever.
+>>>>>>> 3c934b5a46a76861255e3a4f29da6fd54ab05c8c
 
 JavaScript надає методи:
 

@@ -161,7 +161,11 @@ for (let key in user) alert(key); // name, age (дані ключі не є си
 alert( "Прямий доступ: " + user[id] );
 ```
 
+<<<<<<< HEAD
 [Object.keys(user)](mdn:js/Object/keys) також ігнорує їх. Це частина загального принципу "приховування символьних властивостей". Якщо інший скрипт або бібліотека спробує перебрати наш об’єкт за допомогою цикла, він несподівано не отримає доступ до символьних властивостей.
+=======
+[Object.keys(user)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) also ignores them. That's a part of the general "hiding symbolic properties" principle. If another script or a library loops over our object, it won't unexpectedly access a symbolic property.
+>>>>>>> 3c934b5a46a76861255e3a4f29da6fd54ab05c8c
 
 А ось, [Object.assign](mdn:js/Object/assign) копіює властивості рядка та символу:
 
