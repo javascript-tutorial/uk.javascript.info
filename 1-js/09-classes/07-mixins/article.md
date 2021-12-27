@@ -1,38 +1,38 @@
-# Mixins
+# Міксини
 
-In JavaScript we can only inherit from a single object. There can be only one `[[Prototype]]` for an object. And a class may extend only one other class.
+В JavaScript ми можемо успадкуватися лише від одного об’єкта. Може бути лише один `[[Prototype]]` для об’єкта. І клас може розширювати лише один інший клас.
 
-But sometimes that feels limiting. For instance, we have a class `StreetSweeper` and a class `Bicycle`, and want to make their mix: a `StreetSweepingBicycle`.
+Але іноді це викликає обмеження. Наприклад, у нас є клас `StreetSweeper` і клас `Bicycle`, і ми хочемо зробити їхню суміш: `StreetSweepingBicycle`.
 
-Or we have a class `User` and a class `EventEmitter` that implements event generation, and we'd like to add the functionality of `EventEmitter` to `User`, so that our users can emit events.
+Або у нас є клас `User` та клас `EventEmitter`, який реалізує генерацію подій, і ми хотіли б додати функціональність `Eventemitter` до `User`, щоб наші користувачі могли генерувати події.
 
-There's a concept that can help here, called "mixins".
+Є концепція, яка може допомогти тут, називається "міксини" (mixins).
 
-As defined in Wikipedia, a [mixin](https://en.wikipedia.org/wiki/Mixin) is a class containing methods that can be used by other classes without a need to inherit from it.
+Як визначено у Вікіпедії, [mixin](https://en.wikipedia.org/wiki/Mixin) -- це клас, що містить методи, які можуть бути використані іншими класами без необхідності успадкуватися від нього.
 
-In other words, a *mixin* provides methods that implement a certain behavior, but we do not use it alone, we use it to add the behavior to other classes.
+Іншими словами, *міксин* забезпечує методи, які реалізують певну поведінку, але ми не використовуємо його самостійно, ми використовуємо його, щоб додати цю поведінку до інших класів.
 
-## A mixin example
+## Приклад міксину
 
-The simplest way to implement a mixin in JavaScript is to make an object with useful methods, so that we can easily merge them into a prototype of any class.
+Найпростіший спосіб реалізації міксинів в JavaScript є створення об’єкта з корисними методами, щоб ми могли легко об’єднати їх у прототип будь-якого класу.
 
-For instance here the mixin `sayHiMixin` is used to add some "speech" for `User`:
+Наприклад, тут використовується міксин `sayHiMixin`, щоб додати можливість "говорити" для класу `User`:
 
 ```js run
 *!*
-// mixin
+// міксин
 */!*
 let sayHiMixin = {
   sayHi() {
-    alert(`Hello ${this.name}`);
+    alert(`Привіт, ${this.name}`);
   },
   sayBye() {
-    alert(`Bye ${this.name}`);
+    alert(`До побачення, ${this.name}`);
   }
 };
 
 *!*
-// usage:
+// використання:
 */!*
 class User {
   constructor(name) {
@@ -40,14 +40,14 @@ class User {
   }
 }
 
-// copy the methods
+// копіюємо методи
 Object.assign(User.prototype, sayHiMixin);
 
-// now User can say hi
-new User("Dude").sayHi(); // Hello Dude!
+// тепер User може сказати привіт
+new User("Іван").sayHi(); // Привіт, Іван!
 ```
 
-There's no inheritance, but a simple method copying. So `User` may inherit from another class and also include the mixin to "mix-in" the additional methods, like this:
+Тут немає наслідування, а простий метод копіювання. Таким чином, `User`  може успадкуватися від іншого класу, а також включати міксини, що "домішують" додаткові методи, наприклад:
 
 ```js
 class User extends Person {
@@ -57,9 +57,9 @@ class User extends Person {
 Object.assign(User.prototype, sayHiMixin);
 ```
 
-Mixins can make use of inheritance inside themselves.
+Міксини можуть використовувати наслідування всередині себе.
 
-For instance, here `sayHiMixin` inherits from `sayMixin`:
+Наприклад, тут `sayHiMixin` успадковується від `sayMixin`:
 
 ```js run
 let sayMixin = {
@@ -69,16 +69,16 @@ let sayMixin = {
 };
 
 let sayHiMixin = {
-  __proto__: sayMixin, // (or we could use Object.setPrototypeOf to set the prototype here)
+  __proto__: sayMixin, // (або ми б могли тут використовувати Object.setPrototypeOf для встановлення прототипу)
 
   sayHi() {
     *!*
-    // call parent method
+    // виклик батьківського методу
     */!*
-    super.say(`Hello ${this.name}`); // (*)
+    super.say(`Привіт, ${this.name}`); // (*)
   },
   sayBye() {
-    super.say(`Bye ${this.name}`); // (*)
+    super.say(`До побачення, ${this.name}`); // (*)
   }
 };
 
@@ -88,43 +88,43 @@ class User {
   }
 }
 
-// copy the methods
+// копіюємо методи
 Object.assign(User.prototype, sayHiMixin);
 
-// now User can say hi
-new User("Dude").sayHi(); // Hello Dude!
+// тепер User може сказати привіт
+new User("Іван").sayHi(); // Привіт, Іван!
 ```
 
-Please note that the call to the parent method `super.say()` from `sayHiMixin` (at lines labelled with `(*)`) looks for the method in the prototype of that mixin, not the class.
+Зверніть увагу, що виклик батьківського методу `super.say()` з `sayHiMixin` (на лініях, позначених `(*)`), шукає метод у прототипі цього міксину, а не класу.
 
-Here's the diagram (see the right part):
+Ось діаграма (див. праву частину):
 
 ![](mixin-inheritance.svg)
 
-That's because methods `sayHi` and `sayBye` were initially created in `sayHiMixin`. So even though they got copied, their `[[HomeObject]]` internal property references `sayHiMixin`, as shown in the picture above.
+Це тому, що методи `sayHi` і `sayBye` були спочатку створені в `sayHiMixin`. Таким чином, хоча вони були скопійовані, але їх внутрішня власність `[[HomeObject]]` посилається на `sayHiMixin`, як показано на малюнку вище.
 
-As `super` looks for parent methods in `[[HomeObject]].[[Prototype]]`, that means it searches `sayHiMixin.[[Prototype]]`, not `User.[[Prototype]]`.
+Оскільки `super` шукає батьківські методи в `[[HomeObject]].[[Prototype]]`, то це означає, що воно шукає `sayHiMixin.[[Prototype]]`, а не `User.[[Prototype]]`.
 
 ## EventMixin
 
-Now let's make a mixin for real life.
+Тепер зробімо міксин для реального життя.
 
-An important feature of many browser objects (for instance) is that they can generate events. Events are a great way to "broadcast information" to anyone who wants it. So let's make a mixin that allows us to easily add event-related functions to any class/object.
+Важливою особливістю багатьох об’єктів браузера (для прикладу) є те, що вони можуть створювати події. Події -- це чудовий спосіб "транслювати інформацію" будь-кому, хто хоче її приймати. Отже, зробімо міксин, який дозволяє нам легко додавати функції, що пов’язані з подіями для будь-якого класу/об’єкта.
 
-- The mixin will provide a method `.trigger(name, [...data])` to "generate an event" when something important happens to it. The `name` argument is a name of the event, optionally followed by additional arguments with event data.
-- Also the method `.on(name, handler)` that adds `handler` function as the listener to events with the given name. It will be called when an event with the given `name` triggers, and get the arguments from the `.trigger` call.
-- ...And the method `.off(name, handler)` that removes the `handler` listener.
+- Міксин забезпечить метод `.trigger(name, [...data])`, щоб "генерувати подію", коли щось відбувається з ним. Аргумент `name` -- це назва події, за бажанням можуть передаватися додаткові аргументи з даними про подію.
+- Також метод `.on(name, handler)`, що додає функцію `handler` як слухача до подій з даною назвою. Вона буде викликатися, коли подія з даним «ім’ям», і отримати аргументи з дзвінка `.trigger`.
+- ...і метод `.off(name, handler)`, що видаляє слухач `handler`.
 
-After adding the mixin, an object `user` will be able to generate an event `"login"` when the visitor logs in. And another object, say, `calendar` may want to listen for such events to load the calendar for the logged-in person.
+Після додавання міксину, об’єкт `user` зможе генерувати подію `"login"`, коли відвідувач входить у систему. А інший об’єкт, скажімо, `calendar`, можливо захоче слухати такі події, щоб завантажити календар для зареєстрованої людини.
 
-Or, a `menu` can generate the event `"select"` when a menu item is selected, and other objects may assign handlers to react on that event. And so on.
+Або `menu` може генерувати подію `"select"`, коли вибрано пункт меню, а інші об’єкти можуть призначати обробники, щоб реагувати на цю подію. І так далі.
 
-Here's the code:
+Ось код:
 
 ```js run
 let eventMixin = {
   /**
-   * Subscribe to event, usage:
+   * Підписатися на подію, використання:
    *  menu.on('select', function(item) { ... }
   */
   on(eventName, handler) {
@@ -136,7 +136,7 @@ let eventMixin = {
   },
 
   /**
-   * Cancel the subscription, usage:
+   * Скасувати підписку, використання:
    *  menu.off('select', handler)
    */
   off(eventName, handler) {
@@ -150,59 +150,59 @@ let eventMixin = {
   },
 
   /**
-   * Generate an event with the given name and data
+   * Створити подію з вказаною назвою та даними
    *  this.trigger('select', data1, data2);
    */
   trigger(eventName, ...args) {
     if (!this._eventHandlers?.[eventName]) {
-      return; // no handlers for that event name
+      return; // немає обробників для події з цією назвою
     }
 
-    // call the handlers
+    // виклик обробників
     this._eventHandlers[eventName].forEach(handler => handler.apply(this, args));
   }
 };
 ```
 
 
-- `.on(eventName, handler)` -- assigns function `handler` to run when the event with that name occurs. Technically, there's an `_eventHandlers` property that stores an array of handlers for each event name, and it just adds it to the list.
-- `.off(eventName, handler)` -- removes the function from the handlers list.
-- `.trigger(eventName, ...args)` -- generates the event: all handlers from `_eventHandlers[eventName]` are called, with a list of arguments `...args`.
+- `.on(eventName, handler)` -- призначає функцію `handler`, яку треба викликати, коли відбувається подія з цією назвою. Технічно, існує `_eventHandlers` властивість, яка зберігає масив оброблювачів для кожного імені події, і цей метод просто додає його в список.
+- `.off(eventname, handler)` -- видаляє функцію зі списку обробників.
+- `.trigger(eventName, ...args)` -- генерує подію: всі обробники з `_eventHandlers[eventName]` викликаються, зі списком аргументів `...args`.
 
-Usage:
+Використання:
 
 ```js run
-// Make a class
+// Створимо клас
 class Menu {
   choose(value) {
     this.trigger("select", value);
   }
 }
-// Add the mixin with event-related methods
+// Додамо міксин з методами, що пов’язані з подіями
 Object.assign(Menu.prototype, eventMixin);
 
 let menu = new Menu();
 
-// add a handler, to be called on selection:
+// додамо обробник, який буде викликатися при події "select":
 *!*
-menu.on("select", value => alert(`Value selected: ${value}`));
+menu.on("select", value => alert(`Вибрано значення: ${value}`));
 */!*
 
-// triggers the event => the handler above runs and shows:
-// Value selected: 123
+// викликає подію => обробник вище запускається і показує:
+// Вибрано значення: 123
 menu.choose("123");
 ```
 
-Now, if we'd like any code to react to a menu selection, we can listen for it with `menu.on(...)`.
+Тепер, якщо ми б хотіли, щоб будь-який код реагував на вибір меню, то ми можемо слухати цю подію за допомогою `menu.on(...)`.
 
-And `eventMixin` mixin makes it easy to add such behavior to as many classes as we'd like, without interfering with the inheritance chain.
+І міксин `eventMixin` дозволяє легко додавати таку поведінку до багатьох класів так, як ми хотіли, не використовуючи ланцюжок наслідування.
 
-## Summary
+## Висновки
 
-*Mixin* -- is a generic object-oriented programming term: a class that contains methods for other classes.
+*Міксин* -- це загальний термін об’єктноорієнтованого програмування: клас, який містить методи для інших класів.
 
-Some other languages allow multiple inheritance. JavaScript does not support multiple inheritance, but mixins can be implemented by copying methods into prototype.
+Деякі інші мови дозволяють багаторазове наслідування. JavaScript його не підтримує, але міксини можуть бути реалізовані шляхом копіювання методів у прототип.
 
-We can use mixins as a way to augment a class by adding multiple behaviors, like event-handling as we have seen above.
+Ми можемо використовувати міксини як спосіб збільшення класу, додаючи додаткову поведінку, наприклад, обробка подій, як ми бачили вище.
 
-Mixins may become a point of conflict if they accidentally overwrite existing class methods. So generally one should think well about the naming methods of a mixin, to minimize the probability of that happening.
+Міксини можуть стати причиною конфлікту, якщо вони випадково перезаписують методи класу, що існують. Тому, як правило, слід добре подумати про іменування методів міксину, щоб мінімізувати ймовірність цього.
