@@ -1,169 +1,169 @@
 
-# Modules, introduction
+# Вступ до модулів
 
-As our application grows bigger, we want to split it into multiple files, so called "modules". A module may contain a class or a library of functions for a specific purpose.
+Оскільки наш застосунок з часом збільшується, ми захочемо розділити його на кілька файлів, так звані «модулі». Модуль може містити клас або бібліотеку функцій для певної мети.
 
-For a long time, JavaScript existed without a language-level module syntax. That wasn't a problem, because initially scripts were small and simple, so there was no need.
+Досить тривалий час JavaScript існував без синтаксису модуля на мовному рівні. Це не було проблемою, тому що спочатку скрипти були невеликими й простими.
 
-But eventually scripts became more and more complex, so the community invented a variety of ways to organize code into modules, special libraries to load modules on demand.
+Але з часом скрипти ставали все складнішими, тому спільнота винайшла різноманітні способи організувати код у модулі. З’явилися бібліотеки для динамічного завантаження модулів.
 
-To name some (for historical reasons):
+Наприклад:
 
-- [AMD](https://en.wikipedia.org/wiki/Asynchronous_module_definition) -- one of the most ancient module systems, initially implemented by the library [require.js](http://requirejs.org/).
-- [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1) -- the module system created for Node.js server.
-- [UMD](https://github.com/umdjs/umd) -- one more module system, suggested as a universal one, compatible with AMD and CommonJS.
+- [AMD](https://en.wikipedia.org/wiki/Asynchronous_module_definition) -- одна з найстаріших модульних систем, спочатку реалізована бібліотекою [require.js](http://requirejs.org/).
+- [CommonJS](http://wiki.commonjs.org/wiki/Modules/1.1) -- модульна система, створена для сервера Node.js.
+- [UMD](https://github.com/umdjs/umd) -- ще одна модульна система, пропонується як універсальна, сумісна з AMD і CommonJS.
 
-Now all these slowly become a part of history, but we still can find them in old scripts.
+Тепер усі вони поступово стають частиною історії, хоча їх можна знайти в старих скриптах.
 
-The language-level module system appeared in the standard in 2015, gradually evolved since then, and is now supported by all major browsers and in Node.js. So we'll study the modern JavaScript modules from now on.
+Система модулів на рівні мови з’явилася у стандарті JavaScript у 2015 році та поступово еволюціонувала. На цей час вона підтримується більшістю браузерів та Node.js. Далі ми вивчатимемо саме її.
 
-## What is a module?
+## Що таке модуль?
 
-A module is just a file. One script is one module. As simple as that.
+Модуль -- це файл. Один скрипт -- це один модуль.
 
-Modules can load each other and use special directives `export` and `import` to interchange functionality, call functions of one module from another one:
+Модулі можуть завантажувати один одного та використовувати директиви `export` та `import`, щоб обмінюватися функціональністю, викликати функції одного модуля з іншого:
 
-- `export` keyword labels variables and functions that should be accessible from outside the current module.
-- `import` allows the import of functionality from other modules.
+- `export` відзначає змінні та функції, які мають бути доступні поза поточним модулем.
+- `import` дозволяє імпортувати функціональність з інших модулів.
 
-For instance, if we have a file `sayHi.js` exporting a function:
+Наприклад, якщо ми маємо файл `sayHi.js`, який експортує функцію:
 
 ```js
 // 📁 sayHi.js
 export function sayHi(user) {
-  alert(`Hello, ${user}!`);
+  alert(`Привіт, ${user}!`);
 }
 ```
 
-...Then another file may import and use it:
+...Тоді інший файл може імпортувати її та використовувати:
 
 ```js
 // 📁 main.js
 import {sayHi} from './sayHi.js';
 
-alert(sayHi); // function...
-sayHi('John'); // Hello, John!
+alert(sayHi); // функція...
+sayHi('Іван'); // Привіт, Іван!
 ```
 
-The `import` directive loads the module by path `./sayHi.js` relative to the current file, and assigns exported function `sayHi` to the corresponding variable.
+Директива `import` завантажує модуль за шляхом `./sayHi.js` до поточного файлу та записує експортовану функцію `sayHi` у відповідну змінну.
 
-Let's run the example in-browser.
+Запустимо приклад у браузері.
 
-As modules support special keywords and features, we must tell the browser that a script should be treated as a module, by using the attribute `<script type="module">`.
+Оскільки модулі підтримують ряд спеціальних ключових слів, таким чином вони мають ряд особливостей. Необхідно явно сказати браузеру, що скрипт є модулем, з допомогою атрибута `<script type="module">`.
 
-Like this:
+Ось так:
 
 [codetabs src="say" height="140" current="index.html"]
 
-The browser automatically fetches and evaluates the imported module (and its imports if needed), and then runs the script.
+Браузер автоматично завантажить та запустить імпортований модуль (і ті, що він імпортує, якщо треба), а потім запустить скрипт.
 
-```warn header="Modules work only via HTTP(s), not locally"
-If you try to open a web-page locally, via `file://` protocol, you'll find that `import/export` directives don't work. Use a local web-server, such as [static-server](https://www.npmjs.com/package/static-server#getting-started) or use the "live server" capability of your editor, such as VS Code [Live Server Extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) to test modules.
+```warn header="Модулі працюють тільки через HTTP(s), не локально"
+Якщо ви спробуєте відкрити веб-сторінку локально через `file://` протокол, то ви побачите, що директиви `import/export` не працюють. Використовуйте локальний веб-сервер, такий як [static-server](https://www.npmjs.com/package/static-server#getting-started) або скористайтеся можливістю "живого сервера" вашого редактора, наприклад, VS Code [Live Server Extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) для тестування модулів.
 ```
 
-## Core module features
+## Основні можливості модулів
 
-What's different in modules, compared to "regular" scripts?
+Чим модулі відрізняються від «звичайних» скриптів?
 
-There are core features, valid both for browser and server-side JavaScript.
+Є основні можливості та особливості, що працюють як у браузері, так і на сервері.
 
-### Always "use strict"
+### Завжди "use strict"
 
-Modules always work in strict mode. E.g. assigning to an undeclared variable will give an error.
+Модулі завжди працюють в строгому режимі. Наприклад, присвоєння до неоголошеної змінної викликає помилку.
 
 ```html run
 <script type="module">
-  a = 5; // error
+  a = 5; // помилка
 </script>
 ```
 
-### Module-level scope
+### Своя область видимості змінних
 
-Each module has its own top-level scope. In other words, top-level variables and functions from a module are not seen in other scripts.
+Кожен модуль має власну область видимості. Іншими словами, змінні та функції, оголошені в модулі, не доступні в інших скриптах.
 
-In the example below, two scripts are imported, and `hello.js` tries to use `user` variable declared in `user.js`. It fails, because it's a separate module (you'll see the error in the console):
+В прикладі нижче ми бачимо два імпортованих скрипта. Скрипт з файлу `hello.js` намагається використати змінну `user`, яка оголошена в `user.js`. В наступному коді ми отримаємо помилку:
 
 [codetabs src="scopes" height="140" current="index.html"]
 
-Modules should `export` what they want to be accessible from outside and `import` what they need.
+Модулі повинні "експортувати" те, що вони віддають на ззовні, і "імпортувати" те, що їм потрібно.
 
-- `user.js` should export the `user` variable.
-- `hello.js` should import it from `user.js` module.
+- `user.js` повинен експортувати змінну `user`.
+- `hello.js` повинен імпортувати змінну з `user.js` модуля.
 
-In other words, with modules we use import/export instead of relying on global variables.
+Іншими словами, використовуючи модулі ми користуємось import/export замість використання глобальних змінних.
 
-This is the correct variant:
+Правильний варіант:
 
 [codetabs src="scopes-working" height="140" current="hello.js"]
 
-In the browser, if we talk about HTML pages, independent top-level scope also exists for each `<script type="module">`.
+У браузері також існує незалежна область видимості для кожного скрипту `<script type="module">`.
 
-Here are two scripts on the same page, both `type="module"`. They don't see each other's top-level variables:
+На цій сторінці ми маємо два скрипти `type="module"`. Вони не бачать змінні верхнього рівня один одного:
 
 ```html run
 <script type="module">
-  // The variable is only visible in this module script
-  let user = "John";
+  // Змінна доступна тільки в цьому модулі
+  let user = "Іван";
 </script>
 
 <script type="module">
   *!*
-  alert(user); // Error: user is not defined
+  alert(user); // Помилка: змінна user не оголошена
   */!*
 </script>
 ```
 
 ```smart
-In the browser, we can make a variable window-level global by explicitly assigning it to a `window` property, e.g. `window.user = "John"`. 
+В браузері є можливість створити глобальну змінну рівня вікна браузера шляхом явного призначення її до об’єкту `window`, наприклад: `window.user = "Іван"`. 
 
-Then all scripts will see it, both with `type="module"` and without it. 
+Тоді всі скрипти типу `type="module"` і без нього будуть "бачити" змінну user. 
 
-That said, making such global variables is frowned upon. Please try to avoid them.
+Тим не менш, створення таких глобальних змінних неприйнятно. Будь ласка, намагайтеся уникати їх.
 ```
 
-### A module code is evaluated only the first time when imported
+### Код у модулі виконується лише один раз під час імпорту
 
-If the same module is imported into multiple other modules, its code is executed only once, upon the first import. Then its exports are given to all further importers.
+Якщо один і той же модуль використовується в декількох місцях, його код виконається тільки один раз, після чого експортована функціональність передається всім імпортерам.
 
-The one-time evaluation has important consequences, that we should be aware of. 
+Розуміння одноразового обчислення і послідовності імпорту є важливою основою для розуміння роботи модулів.
 
-Let's see a couple of examples.
+Давайте подивимося приклади.
 
-First, if executing a module code brings side-effects, like showing a message, then importing it multiple times will trigger it only once -- the first time:
+По-перше, якщо при запуску модуля виникають побічні ефекти, наприклад, видається повідомлення, то імпорт модуля в декількох місцях покаже його тільки один раз -- при першому імпорті:
 
 ```js
 // 📁 alert.js
-alert("Module is evaluated!");
+alert("Модуль виконано!");
 ```
 
 ```js
-// Import the same module from different files
+// Імпорт одного і того ж модуля у різних файлах
 
 // 📁 1.js
-import `./alert.js`; // Module is evaluated!
+import `./alert.js`; // Модуль виконано!
 
 // 📁 2.js
-import `./alert.js`; // (shows nothing)
+import `./alert.js`; // (нічого не покаже)
 ```
 
-The second import shows nothing, because the module has already been evaluated.
+Другий імпорт нічого не покаже, тому що цей модуль вже був виконаний.
 
-There's a rule: top-level module code should be used for initialization, creation of module-specific internal data structures. If we need to make something callable multiple times - we should export it as a function, like we did with `sayHi` above.
+Існує правило: високорівневий код модуля повинен бути використаний для ініціалізації чи створення специфічних для модулів внутрішніх структур даних, а якщо ми хочемо, щоби щось можна було використовувати багато разів, то експортуємо це як функцію, подібну на ту, яку ми створили в `sayHi` вище.
 
-Now, let's consider a deeper example.
+Тепер більш ускладнений приклад.
 
-Let's say, a module exports an object:
+Уявімо, що модуль експортує об’єкт:
 
 ```js
 // 📁 admin.js
 export let admin = {
-  name: "John"
+  name: "Іван"
 };
 ```
 
-If this module is imported from multiple files, the module is only evaluated the first time, `admin` object is created, and then passed to all further importers.
+Якщо модуль імпортується в кількох файлах, код модуля буде виконано лише один раз, об’єкт `admin` буде створено і надалі буде переданий всім імпортерам.
 
-All importers get exactly the one and only `admin` object:
+Всі імпортери отримають один-єдиний об’єкт `admin`:
 
 ```js
 // 📁 1.js
@@ -175,25 +175,25 @@ import {admin} from './admin.js';
 alert(admin.name); // Pete
 
 *!*
-// Both 1.js and 2.js reference the same admin object
-// Changes made in 1.js are visible in 2.js
+// Обидва файли, 1.js і 2.js, імпортують той самий об’єкт 
+// Зміни, зроблені в 1.js, з’являться в 2.js
 */!*
 ```
 
-As you can see, when `1.js` changes the `name` property in the imported `admin`, then `2.js` can see the new `admin.name`.
+Як ви бачите, коли `1.js` змінює значення властивості `name` об’єкту `admin`, тоді інші модулі теж побачать ці зміни.
 
-That's exactly because the module is executed only once. Exports are generated, and then they are shared between importers, so if something changes the `admin` object, other modules will see that.
+Ще раз зауважимо -- модуль виконується лише один раз. Генерується експорт і після цього передається всім імпортерам, тому, якщо щось зміниться в об’єкті `admin`, то інші модулі теж побачать ці зміни.
 
-**Such behavior is actually very convenient, because it allows us to *configure* modules.**
+**Така поведінка дозволяє *конфігурувати* модулі під час першого імпорту. Ми можемо встановити його властивості один раз, і в подальших імпортах він буде налаштованим.**
 
-In other words, a module can provide a generic functionality that needs a setup. E.g. authentication needs credentials. Then it can export a configuration object expecting the outer code to assign to it.
+Іншими словами, модуль може забезпечити загальну функціональність, яка потребує налаштування. Наприклад для аутентифікації підготувати облікові дані. Потім він може експортувати об’єкт конфігурації, очікуючи, що зовнішній код буде посилатися на нього.
 
-Here's the classical pattern:
-1. A module exports some means of configuration, e.g. a configuration object.
-2. On the first import we initialize it, write to its properties. The top-level application script may do that.
-3. Further imports use the module.
+Класичний шаблон використання:
+1. Модуль експортує деякі значення конфігурації, наприклад, об’єкт конфігурації.
+2. При першому імпорті ми його ініціалізуємо, записуємо в його властивості. Це може зробити скрипт програми верхнього рівня.
+3. Подальші імпорти використовують цей модуль.
 
-For instance, the `admin.js` module may provide certain functionality (e.g. authentication), but expect the credentials to come into the `config` object from outside:
+Наприклад, модуль `admin.js` може забезпечувати певну функціональність (наприклад, аутентифікацію), але очікуймо, що облікові дані надходять в об’єкт `config` ззовні:
 
 ```js
 // 📁 admin.js
@@ -204,9 +204,9 @@ export function sayHi() {
 }
 ```
 
-Here, `admin.js` exports the `config` object (initially empty, but may have default properties too).
+В цьому прикладі, `admin.js` експортує `config` об’єкт (спочатку порожній, але також може мати властивості за замовчуванням).
 
-Then in `init.js`, the first script of our app, we import `config` from it and set `config.user`:
+Потім у `init.js`, першому скрипту нашої програми, ми імпортуємо `config` об’єкт і записуємо дані для ініціалізації  `config.user`:
 
 ```js
 // 📁 init.js
@@ -214,9 +214,9 @@ import {config} from './admin.js';
 config.user = "Pete";
 ```
 
-...Now the module `admin.js` is configured. 
+...Тепер модуль `admin.js` налаштовано. 
 
-Further importers can call it, and it correctly shows the current user:
+Інші модулі можуть імпортувати його, і він правильно показує поточного користувача:
 
 ```js
 // 📁 another.js
@@ -228,24 +228,24 @@ sayHi(); // Ready to serve, *!*Pete*/!*!
 
 ### import.meta
 
-The object `import.meta` contains the information about the current module.
+Об’єкт `import.meta` містить інформацію про поточний модуль.
 
-Its content depends on the environment. In the browser, it contains the URL of the script, or a current webpage URL if inside HTML:
+Вміст залежить від оточення. У браузері він містить посилання на скрипт або посилання на поточну вебсторінку, якщо модуль вбудований в HTML:
 
 ```html run height=0
 <script type="module">
   alert(import.meta.url); // script URL
-  // for an inline script - the URL of the current HTML-page
+  // посилання на html сторінку для вбудованого скрипту
 </script>
 ```
 
-### In a module, "this" is undefined
+### У модулі «this» не визначено
 
-That's kind of a minor feature, but for completeness we should mention it.
+Це незначна особливість, але для повноти картини треба згадати про це. 
 
-In a module, top-level `this` is undefined.
+У модулі на верхньому рівні `this` не визначено (undefined).
 
-Compare it to non-module scripts, where `this` is a global object:
+Порівняємо з не-модульними скриптами, там `this` -- глобальний об’єкт:
 
 ```html run height=0
 <script>
@@ -257,66 +257,66 @@ Compare it to non-module scripts, where `this` is a global object:
 </script>
 ```
 
-## Browser-specific features
+## Особливості у браузерах
 
-There are also several browser-specific differences of scripts with `type="module"` compared to regular ones.
+Є кілька інших, саме браузерних особливостей скриптів пов’язаних з `type="module"`.
 
-You may want to skip this section for now if you're reading for the first time, or if you don't use JavaScript in a browser.
+Якщо ви читаєте матеріал вперше або якщо не збираєтеся використовувати модулі в браузерах, то зараз можете пропустити цю секцію.
 
-### Module scripts are deferred
+### Модулі є відкладеними (deferred)
 
-Module scripts are *always* deferred, same effect as `defer` attribute (described in the chapter [](info:script-async-defer)), for both external and inline scripts.
+Модулі *завжди* виконуються у відкладеному (deferred) режимі, так само як скрипти з атрибутом `defer` (описаний у розділі [](info:script-async-defer)). Це вірно і для зовнішніх та вбудованих скриптів-модулів.
 
-In other words:
-- downloading external module scripts `<script type="module" src="...">` doesn't block HTML processing, they load in parallel with other resources.
-- module scripts wait until the HTML document is fully ready (even if they are tiny and load faster than HTML), and then run.
-- relative order of scripts is maintained: scripts that go first in the document, execute first.
+Інакше кажучи:
+- завантажування зовнішніх модулів, таких як `<script type="module" src="...">`, не блокують обробку HTML, вони завантажуються в паралельному режимі з іншими ресурсами.
+- модулі, навіть якщо завантажилися швидко, очікують на повне завантаження HTML документа, і тільки потім виконуються.
+- зберігається відносний порядок скриптів: скрипти, що йдуть раніше у документі, виконуються раніше.
 
-As a side-effect, module scripts always "see" the fully loaded HTML-page, including HTML elements below them.
+Як побічний ефект, модулі завжди бачать повністю завантажену HTML-сторінку, включаючи елементи під ними.
 
-For instance:
+Наприклад:
 
 ```html run
 <script type="module">
 *!*
-  alert(typeof button); // object: the script can 'see' the button below
+  alert(typeof button); // object: скрипт може 'бачити' кнопку під ним
 */!*
-  // as modules are deferred, the script runs after the whole page is loaded
+  // оскільки модулі є відкладеними, то скрипт почне виконуватись тільки після повного завантаження сторінки
 </script>
 
-Compare to regular script below:
+Порівняйте зі звичайним скриптом нижче:
 
 <script>
 *!*
-  alert(typeof button); // button is undefined, the script can't see elements below
+  alert(typeof button); // Помилка: кнопка не визначена, скрипт не бачить під ним елементи
 */!*
-  // regular scripts run immediately, before the rest of the page is processed
+  // звичайні скрипти запускаються відразу, не чекаючи повного завантаження сторінки
 </script>
 
 <button id="button">Button</button>
 ```
 
-Please note: the second script actually runs before the first! So we'll see `undefined` first, and then `object`.
+Будь ласка, зверніть увагу: другий скрипт виконається раніше ніж перший! Тому ми побачимо спочатку `undefined`, а потім `object`.
 
-That's because modules are deferred, so we wait for the document to be processed. The regular script runs immediately, so we see its output first.
+Це тому, що модулі починають виконуватися після повного завантаження сторінки. Звичайні скрипти запускаються відразу, тому повідомлення зі звичайного скрипту ми бачимо першим.
 
-When using modules, we should be aware that the HTML page shows up as it loads, and JavaScript modules run after that, so the user may see the page before the JavaScript application is ready. Some functionality may not work yet. We should put "loading indicators", or otherwise ensure that the visitor won't be confused by that.
+При використанні модулів нам варто мати на увазі, що HTML-сторінка буде показана браузером до того, як виконаються модулі та JavaScript-програма буде готовий до роботи. Деякі функції можуть ще не працювати. Нам слід розмістити «індикатор завантаження» або ще щось, щоб не збентежити цим відвідувача.
 
-### Async works on inline scripts
+### Атрибут async працює у вбудованих скриптах
 
-For non-module scripts, the `async` attribute only works on external scripts. Async scripts run immediately when ready, independently of other scripts or the HTML document.
+Для немодульних скриптів атрибут `async` працює лише на зовнішніх скриптах. Скрипти з ним запускаються відразу по готовності, вони не чекають на інші скрипти або HTML-документ.
 
-For module scripts, it works on inline scripts as well.
+`Async` також працює у вбудованих сценаріях для модулів.
 
-For example, the inline script below has `async`, so it doesn't wait for anything.
+Наприклад, у скрипті нижче є `async`, тому він виконається одразу після завантаження, не чекаючи інших скриптів.
 
-It performs the import (fetches `./analytics.js`) and runs when ready, even if the HTML document is not finished yet, or if other scripts are still pending.
+Скрипт виконає імпорт (завантажить `./analytics.js`) і відразу запуститься, навіть, якщо HTML документ ще не завантажився чи якщо інші скрипти все ще завантажуються.
 
-That's good for functionality that doesn't depend on anything, like counters, ads, document-level event listeners.
+Це дуже корисно, коли модуль ні з чим не пов’язаний, наприклад, для лічильників, реклами, обробників подій.
 
 ```html
-<!-- all dependencies are fetched (analytics.js), and the script runs -->
-<!-- doesn't wait for the document or other <script> tags -->
+<!-- завантажуються залежності (analytics.js) і скрипт запускається -->
+<!-- не чекаючи завантаження документу чи інших тегів <script> -->
 <script *!*async*/!* type="module">
   import {counter} from './analytics.js';
 
@@ -324,95 +324,95 @@ That's good for functionality that doesn't depend on anything, like counters, ad
 </script>
 ```
 
-### External scripts
+### Зовнішні скрипти
 
-External scripts that have `type="module"` are different in two aspects:
+Зовнішні скрипти з атрибутом `type="module"` мають дві відмінності:
 
-1. External scripts with the same `src` run only once:
+1. Зовнішні скрипти з однаковим атрибутом `src` запускаються лише один раз:
     ```html
-    <!-- the script my.js is fetched and executed only once -->
+    <!-- скрипт my.js завантажиться і виконається тільки раз -->
     <script type="module" src="my.js"></script>
     <script type="module" src="my.js"></script>
     ```
 
-2. External scripts that are fetched from another origin (e.g. another site) require [CORS](mdn:Web/HTTP/CORS) headers, as described in the chapter <info:fetch-crossorigin>. In other words, if a module script is fetched from another origin, the remote server must supply a header `Access-Control-Allow-Origin` allowing the fetch.
+2. Зовнішній скрипт, який завантажується з іншого домену (наприклад, іншого сайту), вимагає зазначення заголовків [CORS](mdn:Web/HTTP/CORS), як описано у главі <info:fetch-crossorigin>. Іншими словами, якщо модульний скрипт завантажується з іншого домену, віддалений сервер повинен встановити заголовок `Access-Control-Allow-Origin`, що означає, що завантажити скрипт дозволено.
     ```html
-    <!-- another-site.com must supply Access-Control-Allow-Origin -->
-    <!-- otherwise, the script won't execute -->
+    <!-- another-site.com повинен вказати заголовок Access-Control-Allow-Origin -->
+    <!-- інакше, скрипт не виконається -->
     <script type="module" src="*!*http://another-site.com/their.js*/!*"></script>
     ```
 
-    That ensures better security by default.
+   Це забезпечує кращу безпеку за промовчанням.
 
-### No "bare" modules allowed
+### Не допускаються «голі» модулі
 
-In the browser, `import` must get either a relative or absolute URL. Modules without any path are called "bare" modules. Such modules are not allowed in `import`.
+У браузері `import` має містити відносний або абсолютний шлях до модуля. Модулі без вказаного шляху до нього називаються «голими» (bare). Вони не дозволені в імпорті.
 
-For instance, this `import` is invalid:
+Наприклад, даний `import` неправильний:
 ```js
-import {sayHi} from 'sayHi'; // Error, "bare" module
-// the module must have a path, e.g. './sayHi.js' or wherever the module is
+import {sayHi} from 'sayHi'; // Помилка, "голий" модуль
+// імпорт модуля повинен мати шлях до нього, наприклад, './sayHi.js' чи 'C:/test/sayHi.js' (абсолютний шлях до модуля)
 ```
 
-Certain environments, like Node.js or bundle tools allow bare modules, without any path, as they have their own ways for finding modules and hooks to fine-tune them. But browsers do not support bare modules yet.
+Інші оточення, наприклад Node.js, допускають використання «голих» модулів, без шляхів, тому що в них є свої правила, як працювати з такими модулями та де їх шукати. Але браузери поки не підтримують голі модулі.
 
-### Compatibility, "nomodule"
+### Сумісність, "nomodule"
 
-Old browsers do not understand `type="module"`. Scripts of an unknown type are just ignored. For them, it's possible to provide a fallback using the `nomodule` attribute:
+Старі браузери не розуміють атрибут `type="module"`. Скрипти з невідомим типом атрибутів просто ігноруються. Ми можемо зробити для них "резервний" скрипт за допомогою атрибуту `nomodule`:
 
 ```html run
 <script type="module">
-  alert("Runs in modern browsers");
+  alert("Працює у сучасних браузерах");
 </script>
 
 <script nomodule>
-  alert("Modern browsers know both type=module and nomodule, so skip this")
-  alert("Old browsers ignore script with unknown type=module, but execute this.");
+  alert("Сучасні браузери розуміють обидва атрибути: type=module і nomodule, тому пропускають цей тег script)
+  alert("Старі браузери ігнорують скрипти з невідомим атрибутом type=module, але виконують цей.");
 </script>
 ```
 
-## Build tools
+## Інструменти збирання
 
-In real-life, browser modules are rarely used in their "raw" form. Usually, we bundle them together with a special tool such as [Webpack](https://webpack.js.org/) and deploy to the production server.
+У реальному житті модулі в браузерах рідко використовуються у «сирому» вигляді. Зазвичай ми об’єднуємо модулі разом, використовуючи спеціальний інструмент, наприклад [Webpack](https://webpack.js.org/) і після викладаємо код на робочий сервер.
 
-One of the benefits of using bundlers -- they give more control over how modules are resolved, allowing bare modules and much more, like CSS/HTML modules.
+Одна з переваг використання збирача -- він надає більший контроль над тим, як модулі шукаються, дозволяє використовувати голі модулі та інші "власні" налаштування, наприклад CSS/HTML-модулі.
 
-Build tools do the following:
+Збирач робить таке:
 
-1. Take a "main" module, the one intended to be put in `<script type="module">` in HTML.
-2. Analyze its dependencies: imports and then imports of imports etc.
-3. Build a single file with all modules (or multiple files, that's tunable), replacing native `import` calls with bundler functions, so that it works. "Special" module types like HTML/CSS modules are also supported.
-4. In the process, other transformations and optimizations may be applied:
-    - Unreachable code removed.
-    - Unused exports removed ("tree-shaking").
-    - Development-specific statements like `console` and `debugger` removed.
-    - Modern, bleeding-edge JavaScript syntax may be transformed to older one with similar functionality using [Babel](https://babeljs.io/).
-    - The resulting file is minified (spaces removed, variables replaced with shorter names, etc).
+1. Бере «основний» модуль, який ми збираємося помістити в <script type="module"> HTML.
+2. Аналізує залежності (імпорт, імпорти імпортів тощо)
+3. Збирає один файл з усіма модулями (або кілька файлів, це можна налаштувати), перезаписує вбудований import функцією імпорту від збирача, щоб усе працювало. Спеціальні типи модулів, такі як HTML/CSS теж підтримуються.
+4. У процесі можуть відбуватися й інші трансформації та оптимізації коду:
+    - Недосяжний код видаляється (код, що ніколи не виконається).
+    - Експорти, що не використовуються, видаляються ("tree-shaking").
+    - Специфічні оператори для розробки, такі як `console` та `debugger`, видаляються.
+    - Сучасний синтаксис JavaScript також може бути трансформований на попередній стандарт, зі схожою функціональністю, наприклад, за допомогою [Babel](https://babeljs.io/).
+    - Отриманий файл можна мінімізувати (видалити пробіли, замінити назви змінних на більш короткі й т.д.).
 
-If we use bundle tools, then as scripts are bundled together into a single file (or few files), `import/export` statements inside those scripts are replaced by special bundler functions. So the resulting "bundled" script does not contain any `import/export`, it doesn't require `type="module"`, and we can put it into a regular script:
+Якщо ми використовуємо інструменти збирання, вони об’єднують модулі разом в один або кілька файлів, і замінюють `import/export` на свої виклики. Тому підсумкове збирання можна підключати й без атрибута `type="module"`, а як звичайний скрипт:
 
 ```html
-<!-- Assuming we got bundle.js from a tool like Webpack -->
+<!-- Припустимо, що ми зібрали bundle.js, використовуючи, наприклад, утиліту Webpack -->
 <script src="bundle.js"></script>
 ```
 
-That said, native modules are also usable. So we won't be using Webpack here: you can configure it later.
+Хоча і «як є» модулі теж можна використовувати, а збирач налаштувати пізніше за необхідності.
 
-## Summary
+## Підсумки
 
-To summarize, the core concepts are:
+Підіб’ємо підсумки:
 
-1. A module is a file. To make `import/export` work, browsers need `<script type="module">`. Modules have several differences:
-    - Deferred by default.
-    - Async works on inline scripts.
-    - To load external scripts from another origin (domain/protocol/port), CORS headers are needed.
-    - Duplicate external scripts are ignored.
-2. Modules have their own, local top-level scope and interchange functionality via `import/export`.
-3. Modules always `use strict`.
-4. Module code is executed only once. Exports are created once and shared between importers.
+1. Модуль -- це файл. Щоб працював `import/export`, потрібно для браузерів вказувати атрибут `<script type="module">`. Модулі мають ряд особливостей:
+    - Відкладене (deferred) виконання за замовчуванням.
+    - Атрибут async працює у вбудованих скриптах.
+    - Для завантаження зовнішніх модулів з іншого джерела повинні бути встановлені заголовки CORS.
+    - Зовнішні скрипти, що дублюються, ігноруються.
+2. Модулі мають свою область видимості, обмінюватися функціональністю можна через `import/export`.
+3. Директива `use strict` завжди ввімкнена в модулі.
+4. Код у модулях виконується лише один раз. Функціональність, що експортується, створюється один раз і передається всім імпортерам.
 
-When we use modules, each module implements the functionality and exports it. Then we use `import` to directly import it where it's needed. The browser loads and evaluates the scripts automatically.
+Коли ми використовуємо модулі, кожен модуль реалізує свою функціональність та експортує її. Потім ми використовуємо `import`, щоб безпосередньо імпортувати її туди, куди потрібно. Браузер завантажує та аналізує скрипти автоматично.
 
-In production, people often use bundlers such as [Webpack](https://webpack.js.org) to bundle modules together for performance and other reasons.
+У реальному житті часто використовується збирач [Webpack](https://webpack.js.org), щоб поєднати модулі: для продуктивності та інших «плюшок».
 
-In the next chapter we'll see more examples of modules, and how things can be exported/imported.
+У наступному розділі ми побачимо більше прикладів та варіантів імпорту/експорту.
