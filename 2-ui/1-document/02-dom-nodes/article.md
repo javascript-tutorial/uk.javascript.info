@@ -233,17 +233,18 @@ drawHtmlTree(node6, 'div.domtree', 690, 500);
 
 ![](inspect.svg)
 
-At the right part of the tools there are the following subtabs:
-- **Styles** -- we can see CSS applied to the current element rule by rule, including built-in rules (gray). Almost everything can be edited in-place, including the dimensions/margins/paddings of the box below.
-- **Computed** -- to see CSS applied to the element by property: for each property we can see a rule that gives it (including CSS inheritance and such).
-- **Event Listeners** -- to see event listeners attached to DOM elements (we'll cover them in the next part of the tutorial).
-- ...and so on.
+У правій частині інструментів є наступні підвкладки:
+- **Styles** -- ми можемо бачити CSS правила, які застосовано до поточного елемента, включаючи вбудовані правила (сірі). Майже все можна відредагувати на місці, включаючи розміри/марджини/паддінги вікна нижче.
+- **Computed** -- для перегляду CSS, що застосовується до елемента за власністю: для кожної власності ми можемо побачити правило, яке дає це (включаючи спадщину CSS та така).
+- **Event Listeners** -- щоб побачити слухачів подій, прикріплених до елементів DOM (ми розглянемо їх у наступній частині підручника).
+- ...і так далі.
 
-The best way to study them is to click around. Most values are editable in-place.
+Найкращий спосіб вивчити їх -- натиснути. Більшість значень редагуються на місці.
 
-## Interaction with console
+## Взаємодія з консоллю
 
 As we work the DOM, we also may want to apply JavaScript to it. Like: get a node and run some code to modify it, to see the result. Here are few tips to travel between the Elements tab and the console.
+Коли ми працюємо з DOM, ми також можемо застосувати до нього JavaScript. Наприклад: отримайте вузол і запустіть якийсь код, щоб змінити його так, щоб побачити результат. Ось декілька порад подорожувати між вкладкою "Елементи" та консоллю.
 
 For the start:
 
