@@ -269,16 +269,17 @@ That's for debugging purposes of course. From the next chapter on we'll access a
 
 The browser developer tools are a great help in development: we can explore the DOM, try things and see what goes wrong.
 
-## Summary
+## Висновки
 
-An HTML/XML document is represented inside the browser as the DOM tree.
+HTML/XML документ представляється всередині браузера, як дерево DOM.
 
-- Tags become element nodes and form the structure.
-- Text becomes text nodes.
-- ...etc, everything in HTML has its place in DOM, even comments.
+- Теги стають вузлами-елементами і утворюють структуру.
+- Текст стає текстовими вузлами.
+- ...і т.д., все, що є в HTML, представлено в DOM, навіть коментарі.
 
-We can use developer tools to inspect DOM and modify it manually.
+Ми можемо використовувати інструменти розробника, щоб перевіряти DOM та змінювати його вручну.
 
 Here we covered the basics, the most used and important actions to start with. There's an extensive documentation about Chrome Developer Tools at <https://developers.google.com/web/tools/chrome-devtools>. The best way to learn the tools is to click here and there, read menus: most options are obvious. Later, when you know them in general, read the docs and pick up the rest.
+Тут ми охопили основи, найбільш часто використовувані та важливі дії, для початку. Існує велика документація про інструменти розробника Chrome на <https://developers.google.com/web/tools/chrome-devtools>. Найкращий спосіб дізнатися більше про інструменти, щоб натиснути тут, і там, читати меню: більшість варіантів очевидні. Пізніше, коли ви загалом розберетеся з ними, читайте документи і забрати решта.
 
-DOM nodes have properties and methods that allow us to travel between them, modify them, move around the page, and more. We'll get down to them in the next chapters.
+Вузли DOM мають властивості та методи, які дозволяють нам подорожувати між ними, змінюють їх, переміщуватися по цій сторінці та багато іншого. Ми розберемо їх у наступних розділах.
