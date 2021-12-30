@@ -1,66 +1,66 @@
-# Proxy and Reflect
+# Proxy та Reflect
 
-A `Proxy` object wraps another object and intercepts operations, like reading/writing properties and others, optionally handling them on its own, or transparently allowing the object to handle them.
+Об’єкт `Proxy` обгортає інший об’єкт і перехоплює операції, такі як читання/запис властивостей та інші, за бажанням обробляючи їх самостійно, або прозоро дозволяючи об’єкту обробляти їх.
 
-Proxies are used in many libraries and some browser frameworks. We'll see many practical applications in this article.
+Проксі використовуються в багатьох бібліотеках і деяких фреймворках браузера. У цій главі ми побачимо багато випадків розв’язання реальних задач.
 
 ## Proxy
 
-The syntax:
+Синтаксис:
 
 ```js
 let proxy = new Proxy(target, handler)
 ```
 
-- `target` -- is an object to wrap, can be anything, including functions.
-- `handler` -- proxy configuration: an object with "traps", methods that intercept operations. - e.g. `get` trap for reading a property of `target`, `set` trap for writing a property into `target`, and so on.
+- `target` -- об’єкт для обгортання, може бути будь-чим, включаючи функції.
+- `handler` -- конфігурація проксі: об’єкт з "пастками" ("traps"), методами, які перехоплюють операції, наприклад, пастка `get` - для зчитування властивості `target`, пастка `set` - для запису властивості в `target` і так далі.
 
-For operations on `proxy`, if there's a corresponding trap in `handler`, then it runs, and the proxy has a chance to handle it, otherwise the operation is performed on `target`.
+Для операцій над `proxy`, якщо в `handler` є відповідна пастка, то вона спрацьовує, і проксі має шанс обробити її, інакше операція виконується над `target`.
 
-As a starting example, let's create a proxy without any traps:
+Як початковий приклад, створімо проксі без пасток:
 
 ```js run
 let target = {};
-let proxy = new Proxy(target, {}); // empty handler
+let proxy = new Proxy(target, {}); // порожній handler
 
-proxy.test = 5; // writing to proxy (1)
-alert(target.test); // 5, the property appeared in target!
+proxy.test = 5; // записуємо в проксі (1)
+alert(target.test); // 5, властивість з’явилоася у target!
 
-alert(proxy.test); // 5, we can read it from proxy too (2)
+alert(proxy.test); // 5, ми також можемо зчитати її з проксі (2)
 
-for(let key in proxy) alert(key); // test, iteration works (3)
+for(let key in proxy) alert(key); // test, ітерація працює (3)
 ```
 
-As there are no traps, all operations on `proxy` are forwarded to `target`.
+Оскільки пасток немає, усі операції на `proxy` перенаправляються до `target`.
 
-1. A writing operation `proxy.test=` sets the value on `target`.
-2. A reading operation `proxy.test` returns the value from `target`.
-3. Iteration over `proxy` returns values from `target`.
+1. Операція запису `proxy.test=` встановлює значення для `target`.
+2. Операція зчитування `proxy.test` повертає значення з `target`.
+3. Ітерація по `proxy` повертає значення з `target`.
 
-As we can see, without any traps, `proxy` is a transparent wrapper around `target`.
+Як бачимо, без пасток `proxy` є прозорою обгорткою навколо `target`.
 
 ![](proxy.svg)
 
-`Proxy` is a special "exotic object". It doesn't have own properties. With an empty `handler` it transparently forwards operations to `target`.
+`Proxy` -- це особливий "екзотичний об’єкт". Він не має своїх властивостей. З порожнім `handler` він прозоро перенаправляє операції до `target`.
 
-To activate more capabilities, let's add traps.
+Щоб активувати більше можливостей, давайте додамо пастки.
 
-What can we intercept with them?
+Що саме ми можемо ними перехопити?
 
-For most operations on objects, there's a so-called "internal method" in the JavaScript specification that describes how it works at the lowest level. For instance `[[Get]]`, the internal method to read a property, `[[Set]]`, the internal method to write a property, and so on. These methods are only used in the specification, we can't call them directly by name.
+Для більшості операцій над об’єктами в специфікації JavaScript є так званий "внутрішній метод", який на найнижчому рівні описує, як його виконувати. Наприклад, `[[Get]]`, внутрішній метод для зчитування властивості, `[[Set]]`, внутрішній метод для запису властивості тощо. Ці методи використовуються лише в специфікації, ми не можемо називати їх безпосередньо по імені.
 
-Proxy traps intercept invocations of these methods. They are listed in the [Proxy specification](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots) and in the table below.
+Пастки проксі перехоплюють виклики цих методів. Вони перераховані в [специфікації Proxy](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots) і в таблиці нижче.
 
-For every internal method, there's a trap in this table: the name of the method that we can add to the `handler` parameter of `new Proxy` to intercept the operation:
+Для кожного внутрішнього методу в цій таблиці є пастка: ім’я методу, яке ми можемо додати до параметра `handler` нового проксі, щоб перехопити операцію:
 
-| Internal Method | Handler Method | Triggers when... |
+| Внутрішній Метод | Метод Пастки | Викликається, коли... |
 |-----------------|----------------|-------------|
-| `[[Get]]` | `get` | reading a property |
-| `[[Set]]` | `set` | writing to a property |
-| `[[HasProperty]]` | `has` | `in` operator |
-| `[[Delete]]` | `deleteProperty` | `delete` operator |
-| `[[Call]]` | `apply` | function call |
-| `[[Construct]]` | `construct` | `new` operator |
+| `[[Get]]` | `get` | зчитування значення |
+| `[[Set]]` | `set` | запис значення |
+| `[[HasProperty]]` | `has` | оператор `in` |
+| `[[Delete]]` | `deleteProperty` | оператор `delete` |
+| `[[Call]]` | `apply` | виклик функції |
+| `[[Construct]]` | `construct` | оператор `new` |
 | `[[GetPrototypeOf]]` | `getPrototypeOf` | [Object.getPrototypeOf](mdn:/JavaScript/Reference/Global_Objects/Object/getPrototypeOf) |
 | `[[SetPrototypeOf]]` | `setPrototypeOf` | [Object.setPrototypeOf](mdn:/JavaScript/Reference/Global_Objects/Object/setPrototypeOf) |
 | `[[IsExtensible]]` | `isExtensible` | [Object.isExtensible](mdn:/JavaScript/Reference/Global_Objects/Object/isExtensible) |
@@ -69,41 +69,41 @@ For every internal method, there's a trap in this table: the name of the method 
 | `[[GetOwnProperty]]` | `getOwnPropertyDescriptor` | [Object.getOwnPropertyDescriptor](mdn:/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor), `for..in`, `Object.keys/values/entries` |
 | `[[OwnPropertyKeys]]` | `ownKeys` | [Object.getOwnPropertyNames](mdn:/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames), [Object.getOwnPropertySymbols](mdn:/JavaScript/Reference/Global_Objects/Object/getOwnPropertySymbols), `for..in`, `Object.keys/values/entries` |
 
-```warn header="Invariants"
-JavaScript enforces some invariants -- conditions that must be fulfilled by internal methods and traps.
+```warn header="Інваріанти"
+JavaScript встановлює деякі інваріанти -- умови, які повинні виконуватися внутрішніми методами та пастками.
 
-Most of them are for return values:
-- `[[Set]]` must return `true` if the value was written successfully, otherwise `false`.
-- `[[Delete]]` must return `true` if the value was deleted successfully, otherwise `false`.
-- ...and so on, we'll see more in examples below.
+Більшість із них стосуються значень, що повертаються:
+- `[[Set]]` має повертати `true`, якщо значення було записано успішно, інакше `false`.
+- `[[Delete]]` має повертати `true`, якщо значення було успішно видалено, інакше `false`.
+- ...і так далі, ми побачимо більше у прикладах нижче.
 
-There are some other invariants, like:
-- `[[GetPrototypeOf]]`, applied to the proxy object must return the same value as `[[GetPrototypeOf]]` applied to the proxy object's target object. In other words, reading prototype of a proxy must always return the prototype of the target object.
+Є й інші інваріанти, наприклад:
+- `[[GetPrototypeOf]]`, застосований до об’єкта проксі, має повертати те саме значення, що й `[[GetPrototypeOf]]`, застосоване до цільового об’єкта проксі. Іншими словами, зчитування прототипу проксі завжди має повертати прототип цільового об’єкта.
 
-Traps can intercept these operations, but they must follow these rules.
+Пастки можуть перехопити ці операції, але вони повинні дотримуватися цих правил.
 
-Invariants ensure correct and consistent behavior of language features. The full invariants list is in [the specification](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots). You probably won't violate them if you're not doing something weird.
+Інваріанти забезпечують правильну та послідовну поведінку функцій мови. Повний список інваріантів знаходиться в [специфікації](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots). Ви, мабуть, не порушите їх, якщо не робитимете щось дивне.
 ```
 
-Let's see how that works in practical examples.
+Подивімося, як це працює на практичних прикладах.
 
-## Default value with "get" trap
+## Значення за замовчуванням із пасткою "get"
 
-The most common traps are for reading/writing properties.
+Найпоширеніші пастки призначені для зчитування/запису властивостей.
 
-To intercept reading, the `handler` should have a method `get(target, property, receiver)`.
+Щоб перехопити зчитування, `handler` повинен мати метод `get(target, property, receiver)`.
 
-It triggers when a property is read, with following arguments:
+Він запускається, коли властивість зчитується, з такими аргументами:
 
-- `target` -- is the target object, the one passed as the first argument to `new Proxy`,
-- `property` -- property name,
-- `receiver` -- if the target property is a getter, then `receiver` is the object that's going to be used as `this` in its call. Usually that's the `proxy` object itself (or an object that inherits from it, if we inherit from proxy). Right now we don't need this argument, so it will be explained in more detail later.
+- `target` -- це цільовий об’єкт, який передається як перший аргумент до `new Proxy`,
+- `property` -- назва властивості,
+- `receiver` -- якщо цільова властивість є геттером, тоді `receiver` є об’єктом, який буде використовуватися як `this` у його виклику. Зазвичай це сам об’єкт `proxy` (або об’єкт, який успадковується від нього, якщо ми успадковуємо від проксі). Наразі цей аргумент нам не потрібен, тому детальніше роз’яснимо його пізніше.
 
-Let's use `get` to implement default values for an object.
+Використаймо `get` для реалізації значень за замовчуванням для об’єкта.
 
-We'll make a numeric array that returns `0` for nonexistent values.
+Ми створимо числовий масив, який повертає `0` для неіснуючих значень.
 
-Usually when one tries to get a non-existing array item, they get `undefined`, but we'll wrap a regular array into the proxy that traps reading and returns `0` if there's no such property:
+Зазвичай, коли хтось намагається отримати неіснуючий елемент масиву, він отримує значення `undefined`, але ми обернемо звичайний масив у проксі, який перехоплює зчитування і повертає `0`, якщо такої властивості немає:
 
 ```js run
 let numbers = [0, 1, 2];
@@ -113,22 +113,22 @@ numbers = new Proxy(numbers, {
     if (prop in target) {
       return target[prop];
     } else {
-      return 0; // default value
+      return 0; // значення за замовчуванням
     }
   }
 });
 
 *!*
 alert( numbers[1] ); // 1
-alert( numbers[123] ); // 0 (no such item)
+alert( numbers[123] ); // 0 (немає такого елемента)
 */!*
 ```
 
-As we can see, it's quite easy to do with a `get` trap.
+Як ми бачимо, це досить легко зробити за допомогою пастки `get`.
 
-We can use `Proxy` to implement any logic for "default" values.
+Ми можемо використовувати `Proxy` для реалізації будь-якої логіки для значень "за замовчуванням".
 
-Imagine we have a dictionary, with phrases and their translations:
+Уявіть, що у нас є словник із фразами та їх перекладами:
 
 ```js run
 let dictionary = {
@@ -140,9 +140,9 @@ alert( dictionary['Hello'] ); // Hola
 alert( dictionary['Welcome'] ); // undefined
 ```
 
-Right now, if there's no phrase, reading from `dictionary` returns `undefined`. But in practice, leaving a phrase untranslated is usually better than `undefined`. So let's make it return an untranslated phrase in that case instead of `undefined`.
+Прямо зараз, якщо фрази немає, зчитування з `dictionary` повертає значення `undefined`. Але на практиці, як правило, краще залишити фразу неперекладеною, ніж `undefined`. Тож давайте змусимо його повертати неперекладену фразу в цьому випадку замість `undefined`.
 
-To achieve that, we'll wrap `dictionary` in a proxy that intercepts reading operations:
+Щоб досягти цього, ми обгорнемо `dictionary` у проксі, який перехоплює операції зчитування:
 
 ```js run
 let dictionary = {
@@ -152,58 +152,58 @@ let dictionary = {
 
 dictionary = new Proxy(dictionary, {
 *!*
-  get(target, phrase) { // intercept reading a property from dictionary
+  get(target, phrase) { // перехоплює зчитування властивості з dictionary
 */!*
-    if (phrase in target) { // if we have it in the dictionary
-      return target[phrase]; // return the translation
+    if (phrase in target) { // якщо ми маємо таку в словнику
+      return target[phrase]; // повертаємо переклад
     } else {
-      // otherwise, return the non-translated phrase
+      // інакше повертаємо неперекладену фразу
       return phrase;
     }
   }
 });
 
-// Look up arbitrary phrases in the dictionary!
-// At worst, they're not translated.
+// Знайдіть у словнику довільні фрази!
+// У гіршому випадку вони будуть не перекладені.
 alert( dictionary['Hello'] ); // Hola
 *!*
-alert( dictionary['Welcome to Proxy']); // Welcome to Proxy (no translation)
+alert( dictionary['Welcome to Proxy']); // Welcome to Proxy (немає перекладу)
 */!*
 ```
 
 ````smart
-Please note how the proxy overwrites the variable:
+Зверніть увагу, як проксі перезаписує змінну:
 
 ```js
 dictionary = new Proxy(dictionary, ...);
 ```
 
-The proxy should totally replace the target object everywhere. No one should ever reference the target object after it got proxied. Otherwise it's easy to mess up.
+Проксі повинен повністю замінити цільовий об’єкт скрізь. Ніхто ніколи не повинен посилатися на цільовий об’єкт після того, як він був проксійований. Інакше легко заплутатися.
 ````
 
-## Validation with "set" trap
+## Валідація з пасткою "set".
 
-Let's say we want an array exclusively for numbers. If a value of another type is added, there should be an error.
+Скажімо, нам потрібен масив виключно для чисел. Якщо додано значення іншого типу, має бути помилка.
 
-The `set` trap triggers when a property is written.
+Пастка `set` запускається, коли властивість записується.
 
 `set(target, property, value, receiver)`:
 
-- `target` -- is the target object, the one passed as the first argument to `new Proxy`,
-- `property` -- property name,
-- `value` -- property value,
-- `receiver` -- similar to `get` trap, matters only for setter properties.
+- `target` -- це цільовий об’єкт, який передається як перший аргумент до `new Proxy`,
+- `property` -- назва властивості,
+- `value` -- значення властивості,
+- `receiver` -- аналогічно пастці `get`, має значення лише для властивостей сеттера.
 
-The `set` trap should return `true` if setting is successful, and `false` otherwise (triggers `TypeError`).
+Пастка `set` повинна повертати `true`, якщо налаштування є успішними, і `false` в іншому випадку (викликає `TypeError`).
 
-Let's use it to validate new values:
+Використаймо його для перевірки нових значень:
 
 ```js run
 let numbers = [];
 
 numbers = new Proxy(numbers, { // (*)
 *!*
-  set(target, prop, val) { // to intercept property writing
+  set(target, prop, val) { // для перехоплення запису властивості
 */!*
     if (typeof val == 'number') {
       target[prop] = val;
@@ -214,48 +214,48 @@ numbers = new Proxy(numbers, { // (*)
   }
 });
 
-numbers.push(1); // added successfully
-numbers.push(2); // added successfully
-alert("Length is: " + numbers.length); // 2
+numbers.push(1); // додано успішно
+numbers.push(2); // додано успішно
+alert("Довжина: " + numbers.length); // 2
 
 *!*
-numbers.push("test"); // TypeError ('set' on proxy returned false)
+numbers.push("test"); // TypeError ('set' на проксі повернула false)
 */!*
 
-alert("This line is never reached (error in the line above)");
+alert("Цей рядок ніколи не буде досягнуто (помилка в рядку вище)");
 ```
 
-Please note: the built-in functionality of arrays is still working! Values are added by `push`. The `length` property auto-increases when values are added. Our proxy doesn't break anything.
+Зверніть увагу: вбудований функціонал масивів все ще працює! Значення додаються за допомогою `push`. Властивість `length` автоматично збільшується, коли додаються значення. Наш проксі нічого не порушує.
 
-We don't have to override value-adding array methods like `push` and `unshift`, and so on, to add checks in there, because internally they use the `[[Set]]` operation that's intercepted by the proxy.
+Нам не потрібно перевизначати методи масиву, що додають значення, такі як `push` та `unshift` тощо, щоб додати туди перевірки, оскільки всередині вони використовують операцію `[[Set]]`, яку перехоплює проксі.
 
-So the code is clean and concise.
+Отже, код чистий і лаконічний.
 
-```warn header="Don't forget to return `true`"
-As said above, there are invariants to be held.
+```warn header="Не забувайте повернути `true`"
+Як було сказано вище, існують інваріанти, яких слід дотримуватися.
 
-For `set`, it must return `true` for a successful write.
+Для `set` повинно повернутися `true` у випадку успішного запису.
 
-If we forget to do it or return any falsy value, the operation triggers `TypeError`.
+Якщо ми забудемо це зробити або повернемо будь-яке помилкове значення, операція призведе до `TypeError`.
 ```
 
-## Iteration with "ownKeys" and "getOwnPropertyDescriptor"
+## Перебір за допомогою "ownKeys" і "getOwnPropertyDescriptor"
 
-`Object.keys`, `for..in` loop and most other methods that iterate over object properties use `[[OwnPropertyKeys]]` internal method (intercepted by `ownKeys` trap) to get a list of properties.
+`Object.keys`, цикл `for..in` та більшість інших методів, які перебирають властивості об’єкта, використовують внутрішній метод `[[OwnPropertyKeys]]` (перехоплюється пасткою `ownKeys`), щоб отримати список властивостей.
 
-Such methods differ in details:
-- `Object.getOwnPropertyNames(obj)` returns non-symbol keys.
-- `Object.getOwnPropertySymbols(obj)` returns symbol keys.
-- `Object.keys/values()` returns non-symbol keys/values with `enumerable` flag (property flags were explained in the article <info:property-descriptors>).
-- `for..in` loops over non-symbol keys with `enumerable` flag, and also prototype keys.
+Такі методи відрізняються в деталях:
+- `Object.getOwnPropertyNames(obj)` повертає несимвольні ключі.
+- `Object.getOwnPropertySymbols(obj)` повертає символьні ключі.
+- `Object.keys/values()` повертає несимвольні ключі/значення з прапором `enumerable` (прапори властивостей були пояснені в статті <info:property-descriptors>).
+- `for..in` перебирає ключі без символів з прапором `enumerable`, а також ключі прототипів.
 
-...But all of them start with that list.
+...Але всі вони починаються з цього списку.
 
-In the example below we use `ownKeys` trap to make `for..in` loop over `user`, and also `Object.keys` and `Object.values`, to skip properties starting with an underscore `_`:
+У наведеному нижче прикладі ми використовуємо пастку `ownKeys`, щоб зробити цикл `for..in` над `user`, а також `Object.keys` і `Object.values`, щоб пропустити властивості, які починаються з символу підкреслення `_`:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   age: 30,
   _password: "***"
 };
@@ -268,17 +268,17 @@ user = new Proxy(user, {
   }
 });
 
-// "ownKeys" filters out _password
-for(let key in user) alert(key); // name, then: age
+// "ownKeys" виключив _password
+for(let key in user) alert(key); // name, потім: age
 
-// same effect on these methods:
+// аналогічний ефект для цих методів:
 alert( Object.keys(user) ); // name,age
-alert( Object.values(user) ); // John,30
+alert( Object.values(user) ); // Іван,30
 ```
 
-So far, it works.
+Поки що це працює.
 
-Although, if we return a key that doesn't exist in the object, `Object.keys` won't list it:
+Хоча, якщо ми повернемо ключ, якого не існує в об’єкті, `Object.keys` не виведе його в списку:
 
 ```js run
 let user = { };
@@ -291,28 +291,28 @@ user = new Proxy(user, {
   }
 });
 
-alert( Object.keys(user) ); // <empty>
+alert( Object.keys(user) ); // <пусто>
 ```
 
-Why? The reason is simple: `Object.keys` returns only properties with the `enumerable` flag. To check for it, it calls the internal method `[[GetOwnProperty]]` for every property to get [its descriptor](info:property-descriptors). And here, as there's no property, its descriptor is empty, no `enumerable` flag, so it's skipped.
+Чому? Причина проста: `Object.keys` повертає лише властивості з прапором `enumerable`. Щоб перевірити це, він викликає внутрішній метод `[[GetOwnProperty]]` для кожної властивості, щоб отримати [її дескриптор](info:property-descriptors). І тут, оскільки властивості немає, її дескриптор порожній, немає прапора `enumerable`, тому вона пропускається.
 
-For `Object.keys` to return a property, we need it to either exist in the object, with the `enumerable` flag, or we can intercept calls to `[[GetOwnProperty]]` (the trap `getOwnPropertyDescriptor` does it), and return a descriptor with `enumerable: true`.
+Щоб `Object.keys` повертав властивість, нам потрібно, щоб вона існувала в об’єкті з прапором `enumerable`, або ми можемо перехоплювати виклики `[[GetOwnProperty]]` (це робить пастка `getOwnPropertyDescriptor`) , і повертати дескриптор із `enumerable: true`.
 
-Here's an example of that:
+Ось приклад цього:
 
 ```js run
 let user = { };
 
 user = new Proxy(user, {
-  ownKeys(target) { // called once to get a list of properties
+  ownKeys(target) { // викликається один раз, щоб отримати список властивостей
     return ['a', 'b', 'c'];
   },
 
-  getOwnPropertyDescriptor(target, prop) { // called for every property
+  getOwnPropertyDescriptor(target, prop) { // викликається для кожного значення
     return {
       enumerable: true,
       configurable: true
-      /* ...other flags, probable "value:..." */
+      /* ...інші прапори, ймовірне "значення:..." */
     };
   }
 
@@ -321,32 +321,32 @@ user = new Proxy(user, {
 alert( Object.keys(user) ); // a, b, c
 ```
 
-Let's note once again: we only need to intercept `[[GetOwnProperty]]` if the property is absent in the object.
+Зауважимо ще раз: нам потрібно перехоплювати `[[GetOwnProperty]]` лише тоді, коли властивість відсутня в об’єкті.
 
-## Protected properties with "deleteProperty" and other traps
+## Захищені властивості з "deleteProperty" та іншими пастками
 
-There's a widespread convention that properties and methods prefixed by an underscore `_` are internal. They shouldn't be accessed from outside the object.
+Існує поширена домовленість, що властивості та методи з префіксом підкреслення `_` є внутрішніми. До них не слід звертатися ззовні об’єкта.
 
-Technically that's possible though:
+Але технічно це можливо:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   _password: "secret"
 };
 
 alert(user._password); // secret
 ```
 
-Let's use proxies to prevent any access to properties starting with `_`.
+Використаймо проксі, щоб запобігти будь-якому доступу до властивостей, які починаються з `_`.
 
-We'll need the traps:
-- `get` to throw an error when reading such property,
-- `set` to throw an error when writing,
-- `deleteProperty` to throw an error when deleting,
-- `ownKeys` to exclude properties starting with `_` from `for..in` and methods like `Object.keys`.
+Нам знадобляться пастки:
+- `get`, щоб прокидати помилку під час читання такої властивості,
+- `set`, щоб прокидати помилку під час запису,
+- `deleteProperty`, щоб прокидати помилку під час видалення,
+- `ownKeys` для виключення властивостей, що починаються з `_`, із `for..in` та методів, таких як `Object.keys`.
 
-Here's the code:
+Ось код:
 
 ```js run
 let user = {
@@ -359,58 +359,58 @@ user = new Proxy(user, {
   get(target, prop) {
 */!*
     if (prop.startsWith('_')) {
-      throw new Error("Access denied");
+      throw new Error("Доступ заборонено");
     }
     let value = target[prop];
     return (typeof value === 'function') ? value.bind(target) : value; // (*)
   },
 *!*
-  set(target, prop, val) { // to intercept property writing
+  set(target, prop, val) { // для перехоплення запису властивості
 */!*
     if (prop.startsWith('_')) {
-      throw new Error("Access denied");
+      throw new Error("Доступ заборонено");
     } else {
       target[prop] = val;
       return true;
     }
   },
 *!*
-  deleteProperty(target, prop) { // to intercept property deletion
+  deleteProperty(target, prop) { // для перехоплення видалення властивості
 */!*
     if (prop.startsWith('_')) {
-      throw new Error("Access denied");
+      throw new Error("Доступ заборонено");
     } else {
       delete target[prop];
       return true;
     }
   },
 *!*
-  ownKeys(target) { // to intercept property list
+  ownKeys(target) { // для перехоплення перебору властивостей
 */!*
     return Object.keys(target).filter(key => !key.startsWith('_'));
   }
 });
 
-// "get" doesn't allow to read _password
+// "get" не дозволяє прочитати _password
 try {
-  alert(user._password); // Error: Access denied
+  alert(user._password); // Error: Доступ заборонено
 } catch(e) { alert(e.message); }
 
-// "set" doesn't allow to write _password
+// "set" не дозволяє записати _password
 try {
-  user._password = "test"; // Error: Access denied
+  user._password = "test"; // Error: Доступ заборонено
 } catch(e) { alert(e.message); }
 
-// "deleteProperty" doesn't allow to delete _password
+// "deleteProperty" не дозволяє видалити _password
 try {
-  delete user._password; // Error: Access denied
+  delete user._password; // Error: Доступ заборонено
 } catch(e) { alert(e.message); }
 
-// "ownKeys" filters out _password
+// "ownKeys" виключає _password з перебору
 for(let key in user) alert(key); // name
 ```
 
-Please note the important detail in the `get` trap, in the line `(*)`:
+Будь ласка, зверніть увагу на важливу деталь у пастці `get`, у рядку `(*)`:
 
 ```js
 get(target, prop) {
@@ -422,42 +422,42 @@ get(target, prop) {
 }
 ```
 
-Why do we need a function to call `value.bind(target)`?
+Чому нам потрібна функція для виклику `value.bind(target)`?
 
-The reason is that object methods, such as `user.checkPassword()`, must be able to access `_password`:
+Причина в тому, що методи об’єкта, такі як `user.checkPassword()`, повинні мати можливість отримати доступ до `_password`:
 
 ```js
 user = {
   // ...
   checkPassword(value) {
-    // object method must be able to read _password
+    // метод об’єкта повинен мати можливість зчитати _password
     return value === this._password;
   }
 }
 ```
 
 
-A call to `user.checkPassword()` gets proxied `user` as `this` (the object before dot becomes `this`), so when it tries to access `this._password`, the `get` trap activates (it triggers on any property read) and throws an error.
+Виклик `user.checkPassword()` отримує проксійований `user` як `this` (об’єкт перед крапкою стає `this`), тому, коли він намагається отримати доступ до `this._password`, активується пастка `get` (вона запускається на будь-якому зчитуванні властивості) і видає помилку.
 
-So we bind the context of object methods to the original object, `target`, in the line `(*)`. Then their future calls will use `target` as `this`, without any traps.
+Отже, ми прив’язуємо контекст методів об’єкта до вихідного об’єкта, `target`, у рядку `(*)`. Тоді їхні майбутні виклики використовуватимуть `target` як `this`, без жодних пасток.
 
-That solution usually works, but isn't ideal, as a method may pass the unproxied object somewhere else, and then we'll get messed up: where's the original object, and where's the proxied one?
+Це рішення зазвичай працює, але не є ідеальним, оскільки метод може передати непроксійований об’єкт кудись ще, і тоді ми заплутаємося: де вихідний об’єкт, а де проксійований?
 
-Besides, an object may be proxied multiple times (multiple proxies may add different "tweaks" to the object), and if we pass an unwrapped object to a method, there may be unexpected consequences.
+Крім того, об’єкт може бути проксійований кілька разів (кілька проксі можуть додавати різні "налаштування" до об’єкта), і якщо ми передаємо розгорнутий об’єкт до методу, можуть виникнути несподівані наслідки.
 
-So, such a proxy shouldn't be used everywhere.
+Отже, такий проксі не варто використовувати всюди.
 
-```smart header="Private properties of a class"
-Modern JavaScript engines natively support private properties in classes, prefixed with `#`. They are described in the article <info:private-protected-properties-methods>. No proxies required.
+```smart header="Приватні властивості класу"
+Сучасні інтерпретатори JavaScript підтримують приватні властивості в класах із префіксом `#`. Вони описані в статті <info:private-protected-properties-methods>. Проксі для цього не потрібні.
 
-Such properties have their own issues though. In particular, they are not inherited.
+Однак такі властивості мають свої проблеми. Зокрема, вони не передаються у спадок.
 ```
 
-## "In range" with "has" trap
+## "В діапазоні" з пасткою "has"
 
-Let's see more examples.
+Подивімося більше прикладів.
 
-We have a range object:
+У нас є об’єкт діапазону:
 
 ```js
 let range = {
@@ -466,16 +466,16 @@ let range = {
 };
 ```
 
-We'd like to use the `in` operator to check that a number is in `range`.
+Ми хотіли б використовувати оператор `in`, щоб перевірити, чи знаходиться число в `range`.
 
-The `has` trap intercepts `in` calls.
+Пастка `has` перехоплює виклики `in`.
 
 `has(target, property)`
 
-- `target` -- is the target object, passed as the first argument to `new Proxy`,
-- `property` -- property name
+- `target` -- це цільовий об’єкт, який передається як перший аргумент до `new Proxy`,
+- `property` -- назва властивості
 
-Here's the demo:
+Ось демо:
 
 ```js run
 let range = {
@@ -497,45 +497,45 @@ alert(50 in range); // false
 */!*
 ```
 
-Nice syntactic sugar, isn't it? And very simple to implement.
+Чудовий синтаксичний цукор, чи не так? І дуже простий у реалізації.
 
-## Wrapping functions: "apply" [#proxy-apply]
+## Обгортання функцій: "apply" [#proxy-apply]
 
-We can wrap a proxy around a function as well.
+Ми також можемо обгорнути проксі навколо функції.
 
-The `apply(target, thisArg, args)` trap handles calling a proxy as function:
+Пастка `apply(target, thisArg, args)` обробляє виклик проксі як функцію:
 
-- `target` is the target object (function is an object in JavaScript),
-- `thisArg` is the value of `this`.
-- `args` is a list of arguments.
+- `target` -- це цільовий об’єкт (функція - це об’єкт в JavaScript),
+- `thisArg` -- це значенням `this`.
+- `args` -- це список аргументів.
 
-For example, let's recall `delay(f, ms)` decorator, that we did in the article <info:call-apply-decorators>.
+Наприклад, згадаймо декоратор `delay(f, ms)`, який ми робили у главі <info:call-apply-decorators>.
 
-In that article we did it without proxies. A call to `delay(f, ms)` returned a function that forwards all calls to `f` after `ms` milliseconds.
+У цій главі ми зробили це без проксі. Виклик до `delay(f, ms)` повернув функцію, яка перенаправляє всі виклики до `f` через `ms` мілісекунд.
 
-Here's the previous, function-based implementation:
+Ось попередня реалізація на основі функцій:
 
 ```js run
 function delay(f, ms) {
-  // return a wrapper that passes the call to f after the timeout
+  // повертає обгортку, яка передає виклик до f після тайм-ауту
   return function() { // (*)
     setTimeout(() => f.apply(this, arguments), ms);
   };
 }
 
 function sayHi(user) {
-  alert(`Hello, ${user}!`);
+  alert(`Привіт, ${user}!`);
 }
 
-// after this wrapping, calls to sayHi will be delayed for 3 seconds
+// після цього обгортання виклики sayHi будуть відкладені на 3 секунди
 sayHi = delay(sayHi, 3000);
 
-sayHi("John"); // Hello, John! (after 3 seconds)
+sayHi("Іван"); // Привіт, Іван! (через 3 секунди)
 ```
 
-As we've seen already, that mostly works. The wrapper function `(*)` performs the call after the timeout.
+Як ми вже бачили, це переважно працює. Функція-обгортка `(*)` виконує виклик після тайм-ауту.
 
-But a wrapper function does not forward property read/write operations or anything else. After the wrapping, the access is lost to properties of the original functions, such as `name`, `length` and others:
+Але функція-обгортка не перенаправляє операції зчитування/запису властивостей або щось інше. Після обгортання втрачається доступ до властивостей оригінальних функцій, таких як `name`, `length` та інших:
 
 ```js run
 function delay(f, ms) {
@@ -545,23 +545,23 @@ function delay(f, ms) {
 }
 
 function sayHi(user) {
-  alert(`Hello, ${user}!`);
+  alert(`Привіт, ${user}!`);
 }
 
 *!*
-alert(sayHi.length); // 1 (function length is the arguments count in its declaration)
+alert(sayHi.length); // 1 (length функції — це кількість аргументів у її оголошенні)
 */!*
 
 sayHi = delay(sayHi, 3000);
 
 *!*
-alert(sayHi.length); // 0 (in the wrapper declaration, there are zero arguments)
+alert(sayHi.length); // 0 (в оголошенні обгортки нуль аргументів)
 */!*
 ```
 
-`Proxy` is much more powerful, as it forwards everything to the target object.
+`Proxy` набагато потужніші, оскільки вони перенаправляють все до цільового об’єкта.
 
-Let's use `Proxy` instead of a wrapping function:
+Використаймо `Proxy` замість функції-обгортки:
 
 ```js run
 function delay(f, ms) {
@@ -573,35 +573,35 @@ function delay(f, ms) {
 }
 
 function sayHi(user) {
-  alert(`Hello, ${user}!`);
+  alert(`Привіт, ${user}!`);
 }
 
 sayHi = delay(sayHi, 3000);
 
 *!*
-alert(sayHi.length); // 1 (*) proxy forwards "get length" operation to the target
+alert(sayHi.length); // 1 (*) проксі перенаправляє операцію "get length" до цілі
 */!*
 
-sayHi("John"); // Hello, John! (after 3 seconds)
+sayHi("John"); // Привіт, Іван! (через 3 секунди)
 ```
 
-The result is the same, but now not only calls, but all operations on the proxy are forwarded to the original function. So `sayHi.length` is returned correctly after the wrapping in the line `(*)`.
+Результат той самий, але тепер не тільки виклики, а й усі операції на проксі пересилаються до оригінальної функцію. Отже, `sayHi.length` повертає правильне значення після обгортання в рядку `(*)`.
 
-We've got a "richer" wrapper.
+У нас є "багатша" обгортка.
 
-Other traps exist: the full list is in the beginning of this article. Their usage pattern is similar to the above.
+Існують й інші пастки: повний список на початку цієї статті. Схема їх використання схожа на описану вище.
 
 ## Reflect
 
-`Reflect` is a built-in object that simplifies creation of `Proxy`.
+`Reflect` -- це вбудований об’єкт, який спрощує створення `Proxy`.
 
-It was said previously that internal methods, such as `[[Get]]`, `[[Set]]` and others are specification-only, they can't be called directly.
+Раніше було сказано, що внутрішні методи, такі як `[[Get]]`, `[[Set]]` та інші, призначені лише для специфікації, вони не можуть бути викликані безпосередньо.
 
-The `Reflect` object makes that somewhat possible. Its methods are minimal wrappers around the internal methods.
+Об’єкт `Reflect` робить це певним чином можливим. Його методи -- мінімальні обгортки навколо внутрішніх методів.
 
-Here are examples of operations and `Reflect` calls that do the same:
+Ось приклади операцій і викликів `Reflect`, які роблять те саме:
 
-| Operation |  `Reflect` call | Internal method |
+| Операція |  Виклик `Reflect` | Внутрішній метод |
 |-----------------|----------------|-------------|
 | `obj[prop]` | `Reflect.get(obj, prop)` | `[[Get]]` |
 | `obj[prop] = value` | `Reflect.set(obj, prop, value)` | `[[Set]]` |
@@ -609,27 +609,27 @@ Here are examples of operations and `Reflect` calls that do the same:
 | `new F(value)` | `Reflect.construct(F, value)` | `[[Construct]]` |
 | ... | ... | ... |
 
-For example:
+Наприклад:
 
 ```js run
 let user = {};
 
-Reflect.set(user, 'name', 'John');
+Reflect.set(user, 'name', 'Іван');
 
-alert(user.name); // John
+alert(user.name); // Іван
 ```
 
-In particular, `Reflect` allows us to call operators (`new`, `delete`...) as functions (`Reflect.construct`, `Reflect.deleteProperty`, ...). That's an interesting capability, but here another thing is important.
+Зокрема, `Reflect` дозволяє нам викликати оператори (`new`, `delete`...) як функції (`Reflect.construct`, `Reflect.deleteProperty`, ...). Це цікава здатність, але тут важливо інше.
 
-**For every internal method, trappable by `Proxy`, there's a corresponding method in `Reflect`, with the same name and arguments as the `Proxy` trap.**
+**Для кожного внутрішнього методу, перехопленого `Proxy`, є відповідний метод у `Reflect` з тими ж іменами та аргументами, що й пастка `Proxy`.**
 
-So we can use `Reflect` to forward an operation to the original object.
+Таким чином, ми можемо використовувати `Reflect` для пересилання операції до оригінального об’єкта.
 
-In this example, both traps `get` and `set` transparently (as if they didn't exist) forward reading/writing operations to the object, showing a message:
+У цьому прикладі обидві пастки `get` і `set` прозоро (наче їх не існує) перенаправляють операції зчитування/запису до об’єкта, показуючи повідомлення:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
 };
 
 user = new Proxy(user, {
@@ -647,30 +647,30 @@ user = new Proxy(user, {
   }
 });
 
-let name = user.name; // shows "GET name"
-user.name = "Pete"; // shows "SET name=Pete"
+let name = user.name; // показує "GET name"
+user.name = "Петро"; // показує "SET name=Петро"
 ```
 
-Here:
+Тут:
 
-- `Reflect.get` reads an object property.
-- `Reflect.set` writes an object property and returns `true` if successful, `false` otherwise.
+- `Reflect.get` зчитує властивість об’єкта.
+- `Reflect.set` записує властивість об’єкта і повертає `true` у разі успіху, інакше `false`.
 
-That is, everything's simple: if a trap wants to forward the call to the object, it's enough to call `Reflect.<method>` with the same arguments.
+Тобто все просто: якщо пастка хоче перенаправити виклик до об’єкта, достатньо викликати `Reflect.<method>` з тими ж аргументами.
 
-In most cases we can do the same without `Reflect`, for instance, reading a property `Reflect.get(target, prop, receiver)` can be replaced by `target[prop]`. There are important nuances though.
+У більшості випадків ми можемо зробити те ж саме без `Reflect`, наприклад, зчитування властивості `Reflect.get(target, prop, receiver)` можна замінити на `target[prop]`. Але є важливі нюанси.
 
-### Proxying a getter
+### Проксі для геттера
 
-Let's see an example that demonstrates why `Reflect.get` is better. And we'll also see why `get/set` have the third argument `receiver`, that we didn't use before.
+Подивімося на приклад, який демонструє, чому `Reflect.get` краще. І ми також побачимо, чому `get/set` має третій аргумент `receiver`, який ми раніше не використовували.
 
-We have an object `user` with `_name` property and a getter for it.
+У нас є об’єкт `user` з властивістю `_name` і геттер для нього.
 
-Here's a proxy around it:
+Ось проксі навколо нього:
 
 ```js run
 let user = {
-  _name: "Guest",
+  _name: "Гість",
   get name() {
     return this._name;
   }
@@ -684,18 +684,18 @@ let userProxy = new Proxy(user, {
 });
 */!*
 
-alert(userProxy.name); // Guest
+alert(userProxy.name); // Гість
 ```
 
-The `get` trap is "transparent" here, it returns the original property, and doesn't do anything else. That's enough for our example.
+Пастка `get` тут є "прозорою", вона повертає оригінальну властивість і більше нічого не робить. Цього достатньо для нашого прикладу.
 
-Everything seems to be all right. But let's make the example a little bit more complex.
+Начебто все гаразд. Але зробімо приклад трохи складнішим.
 
-After inheriting another object `admin` from `user`, we can observe the incorrect behavior:
+Після успадкування іншого об’єкта `admin` від `user` ми можемо спостерігати неправильну поведінку:
 
 ```js run
 let user = {
-  _name: "Guest",
+  _name: "Гість",
   get name() {
     return this._name;
   }
@@ -710,39 +710,39 @@ let userProxy = new Proxy(user, {
 *!*
 let admin = {
   __proto__: userProxy,
-  _name: "Admin"
+  _name: "Адмін"
 };
 
-// Expected: Admin
-alert(admin.name); // outputs: Guest (?!?)
+// Очікується: Адмін
+alert(admin.name); // виводиться: Гість (?!?)
 */!*
 ```
 
-Reading `admin.name` should return `"Admin"`, not `"Guest"`!
+Зчитування `admin.name` має повертати `"Адмін"`, а не `"Гість"`!
 
-What's the matter? Maybe we did something wrong with the inheritance?
+Що трапилось? Можливо ми зробили щось не так з успадкуванням?
 
-But if we remove the proxy, then everything will work as expected.
+Але якщо ми видалимо проксі, то все буде працювати, як очікувалося.
 
-The problem is actually in the proxy, in the line `(*)`.
+Проблема насправді в проксі, у рядку `(*)`.
 
-1. When we read `admin.name`, as `admin` object doesn't have such own property, the search goes to its prototype.
-2. The prototype is `userProxy`.
-3. When reading `name` property from the proxy, its `get` trap triggers and returns it from the original object as `target[prop]` in the line `(*)`.
+1. Коли ми читаємо `admin.name`, оскільки об’єкт `admin` не має такої своєї властивості, пошук переходить до його прототипу.
+2. Прототипом є `userProxy`.
+3. Під час зчитування властивості `name` з проксі спрацьовує пастка `get` і повертає її з вихідного об’єкта як `target[prop]` у рядку `(*)`.
 
-    A call to `target[prop]`, when `prop` is a getter, runs its code in the context `this=target`. So the result is `this._name` from the original object `target`, that is: from `user`.
+   Виклик `target[prop]`, коли `prop` є геттером, запускає його код у контексті `this=target`. Таким чином, результатом є `this._name` з оригінального об’єкта `target`, тобто: від `user`.
 
-To fix such situations, we need `receiver`, the third argument of `get` trap. It keeps the correct `this` to be passed to a getter. In our case that's `admin`.
+Щоб виправити такі ситуації, нам потрібен `receiver`, третій аргумент пастки `get`. У ньому зберігається правильний `this` для передачі гетеру. У нашому випадку це `admin`.
 
-How to pass the context for a getter? For a regular function we could use `call/apply`, but that's a getter, it's not "called", just accessed.
+Як передати контекст для геттера? Для звичайної функції ми можемо використовувати `call/apply`, але це геттер, він не "викликається", а лише доступний.
 
-`Reflect.get` can do that. Everything will work right if we use it.
+`Reflect.get` може це зробити. Все буде працювати правильно, якщо ми цим скористаємося.
 
-Here's the corrected variant:
+Ось виправлений варіант:
 
 ```js run
 let user = {
-  _name: "Guest",
+  _name: "Гість",
   get name() {
     return this._name;
   }
@@ -759,17 +759,17 @@ let userProxy = new Proxy(user, {
 
 let admin = {
   __proto__: userProxy,
-  _name: "Admin"
+  _name: "Адмін"
 };
 
 *!*
-alert(admin.name); // Admin
+alert(admin.name); // Адмін
 */!*
 ```
 
-Now `receiver` that keeps a reference to the correct `this` (that is `admin`), is passed to the getter using `Reflect.get` in the line `(*)`.
+Тепер `receiver`, який зберігає посилання на правильний `this` (тобто `admin`), передається до геттера за допомогою `Reflect.get` у рядку `(*)`.
 
-We can rewrite the trap even shorter:
+Ми можемо переписати пастку ще коротше:
 
 ```js
 get(target, prop, receiver) {
@@ -778,25 +778,25 @@ get(target, prop, receiver) {
 ```
 
 
-`Reflect` calls are named exactly the same way as traps and accept the same arguments. They were specifically designed this way.
+Виклики `Reflect` називаються точно так само, як і пастки, і приймають ті ж самі аргументи. Вони були спеціально розроблені таким чином.
 
-So, `return Reflect...` provides a safe no-brainer to forward the operation and make sure we don't forget anything related to that.
+Тож, `return Reflect...` забезпечує безпечну та просту переадресацію операції та оберігає від того, що ми забудемо щось, що пов’язане з цим.
 
-## Proxy limitations
+## Обмеження проксі
 
-Proxies provide a unique way to alter or tweak the behavior of the existing objects at the lowest level. Still, it's not perfect. There are limitations.
+Проксі надають унікальний спосіб змінити або налаштувати поведінку існуючих об’єктів на найнижчому рівні. Все-таки це не ідеально. Існують обмеження.
 
-### Built-in objects: Internal slots
+### Вбудовані об’єкти: внутрішні слоти
 
-Many built-in objects, for example `Map`, `Set`, `Date`, `Promise` and others make use of so-called "internal slots".
+Багато вбудованих об’єктів, наприклад `Map`, `Set`, `Date`, `Promise` та інші, використовують так звані "внутрішні слоти".
 
-These are like properties, but reserved for internal, specification-only purposes. For instance, `Map` stores items in the internal slot `[[MapData]]`. Built-in methods access them directly, not via `[[Get]]/[[Set]]` internal methods. So `Proxy` can't intercept that.
+Це подібні властивості, але зарезервовані для внутрішніх цілей, призначених лише для специфікації. Наприклад, `Map` зберігає елементи у внутрішньому слоті `[[MapData]]`. Вбудовані методи отримують доступ до них безпосередньо, а не через внутрішні методи `[[Get]]/[[Set]]`. Тому `Proxy` не може перехопити це.
 
-Why care? They're internal anyway!
+Чому це має значення? Вони ж все одно внутрішні!
 
-Well, here's the issue. After a built-in object like that gets proxied, the proxy doesn't have these internal slots, so built-in methods will fail.
+Ну, є одна проблема. Після того, як такий вбудований об’єкт проксіюється, проксі не має цих внутрішніх слотів, тому виклики вбудованих методів призведуть до помилок.
 
-For example:
+Наприклад:
 
 ```js run
 let map = new Map();
@@ -804,13 +804,13 @@ let map = new Map();
 let proxy = new Proxy(map, {});
 
 *!*
-proxy.set('test', 1); // Error
+proxy.set('test', 1); // Помилка
 */!*
 ```
 
-Internally, a `Map` stores all data in its `[[MapData]]` internal slot. The proxy doesn't have such a slot. The [built-in method `Map.prototype.set`](https://tc39.es/ecma262/#sec-map.prototype.set) method tries to access the internal property `this.[[MapData]]`, but because `this=proxy`, can't find it in `proxy` and just fails.
+Всередині `Map` зберігає всі дані у своєму внутрішньому слоті `[[MapData]]`. Проксі не має такого слота. [Вбудований метод `Map.prototype.set`](https://tc39.es/ecma262/#sec-map.prototype.set) намагається отримати доступ до внутрішньої властивості `this.[[MapData]]`, але, оскільки `this=proxy`, не може знайти його в `proxy` і просто завершується з помилкою.
 
-Fortunately, there's a way to fix it:
+На щастя, є спосіб виправити це:
 
 ```js run
 let map = new Map();
@@ -825,28 +825,28 @@ let proxy = new Proxy(map, {
 });
 
 proxy.set('test', 1);
-alert(proxy.get('test')); // 1 (works!)
+alert(proxy.get('test')); // 1 (працює!)
 ```
 
-Now it works fine, because `get` trap binds function properties, such as `map.set`, to the target object (`map`) itself.
+Тепер все працює нормально, тому що пастка `get` пов’язує властивості функції, такі як `map.set`, із самим цільовим об’єктом (`map`).
 
-Unlike the previous example, the value of `this` inside `proxy.set(...)` will be not `proxy`, but the original `map`. So when the internal implementation of `set` tries to access `this.[[MapData]]` internal slot, it succeeds.
+На відміну від попереднього прикладу, значення `this` всередині `proxy.set(...)` буде не `proxy`, а оригінальним `map`. Тому, коли внутрішня реалізація `set` намагатиметься отримати доступ до `this.[[MapData]]` внутрішнього слота, операція завершиться успішно.
 
-```smart header="`Array` has no internal slots"
-A notable exception: built-in `Array` doesn't use internal slots. That's for historical reasons, as it appeared so long ago.
+```smart header="`Array` не має внутрішніх слотів"
+Помітний виняток: вбудований `Array` не використовує внутрішні слоти. Так склалося з історичних причин, оскільки масиви з’явилися дуже давно.
 
-So there's no such problem when proxying an array.
+Саме тому вищевказана проблема не виникає при проксіюванні масиву.
 ```
 
-### Private fields
+### Приватні поля
 
-A similar thing happens with private class fields.
+Подібне відбувається з полями приватного класу.
 
-For example, `getName()` method accesses the private `#name` property and breaks after proxying:
+Наприклад, метод `getName()` отримує доступ до приватної властивості `#name` і перестає працювати після проксіювання:
 
 ```js run
 class User {
-  #name = "Guest";
+  #name = "Гість";
 
   getName() {
     return this.#name;
@@ -858,19 +858,19 @@ let user = new User();
 user = new Proxy(user, {});
 
 *!*
-alert(user.getName()); // Error
+alert(user.getName()); // Помилка
 */!*
 ```
 
-The reason is that private fields are implemented using internal slots. JavaScript does not use `[[Get]]/[[Set]]` when accessing them.
+Причина в тому, що приватні поля реалізуються за допомогою внутрішніх слотів. JavaScript не використовує `[[Get]]/[[Set]]` під час доступу до них.
 
-In the call `getName()` the value of `this` is the proxied `user`, and it doesn't have the slot with private fields.
+У виклику `getName()` значенням `this` є проксійований `user`, і він не має слота з приватними полями.
 
-Once again, the solution with binding the method makes it work:
+Знову ж таки, рішення з прив’язкою методу змушує його працювати:
 
 ```js run
 class User {
-  #name = "Guest";
+  #name = "Гість";
 
   getName() {
     return this.#name;
@@ -886,16 +886,16 @@ user = new Proxy(user, {
   }
 });
 
-alert(user.getName()); // Guest
+alert(user.getName()); // Гість
 ```
 
-That said, the solution has drawbacks, as explained previously: it exposes the original object to the method, potentially allowing it to be passed further and breaking other proxied functionality.
+Проте це рішення має недоліки, як пояснювалося раніше: воно відкриває вихідний об’єкт методу, потенційно дозволяючи його передавати далі та порушуючи інші функціональні можливості проксі.
 
-### Proxy != target
+### Проксі != цільовий об’єкт
 
-The proxy and the original object are different objects. That's natural, right?
+Проксі та оригінальний об’єкт – це різні об’єкти. Це природно, правда?
 
-So if we use the original object as a key, and then proxy it, then the proxy can't be found:
+Отже, якщо ми використовуємо оригінальний об’єкт як ключ, а потім проксіюємо його, то проксі не буде знайдено:
 
 ```js run
 let allUsers = new Set();
@@ -907,7 +907,7 @@ class User {
   }
 }
 
-let user = new User("John");
+let user = new User("Іван");
 
 alert(allUsers.has(user)); // true
 
@@ -918,58 +918,58 @@ alert(allUsers.has(user)); // false
 */!*
 ```
 
-As we can see, after proxying we can't find `user` in the set `allUsers`, because the proxy is a different object.
+Як бачимо, після проксіювання ми не можемо знайти `user` у наборі `allUsers`, оскільки проксі є іншим об’єктом.
 
-```warn header="Proxies can't intercept a strict equality test `===`"
-Proxies can intercept many operators, such as `new` (with `construct`), `in` (with `has`), `delete` (with `deleteProperty`) and so on.
+```warn header="Проксі не можуть перехопити перевірку на сувору рівність `===`"
+Проксі можуть перехоплювати багато операторів, таких як `new` (з `construct`), `in` (з `has`), `delete` (з `deleteProperty`) тощо.
 
-But there's no way to intercept a strict equality test for objects. An object is strictly equal to itself only, and no other value.
+Але немає способу перехопити перевірку на сувору рівність для об’єктів. Об’єкт суворо рівний тільки самому собі, і жодному іншому значенню.
 
-So all operations and built-in classes that compare objects for equality will differentiate between the object and the proxy. No transparent replacement here.
+Таким чином, усі операції та вбудовані класи, які порівнюють об’єкти на рівність, відрізнятимуть об’єкт від проксі. Тут немає прозорої заміни.
 ```
 
-## Revocable proxies
+## Проксі, що відкликаються
 
-A *revocable* proxy is a proxy that can be disabled.
+Проксі, що *відкликаються* (revocable) — це проксі, що можна вимкнути.
 
-Let's say we have a resource, and would like to close access to it any moment.
+Скажімо, у нас є ресурс, і ми хочемо закрити доступ до нього в будь-який момент.
 
-What we can do is to wrap it into a revocable proxy, without any traps. Such a proxy will forward operations to object, and we can disable it at any moment.
+Що ми можемо зробити, так це обгорнути його у проксі, що відкликається, без будь-яких пасток. Такий проксі буде пересилати операції на об’єкт, і ми можемо вимкнути його в будь-який момент.
 
-The syntax is:
+Синтаксис такий:
 
 ```js
 let {proxy, revoke} = Proxy.revocable(target, handler)
 ```
 
-The call returns an object with the `proxy` and `revoke` function to disable it.
+Виклик повертає об’єкт із функціями `proxy` та `revoke`, щоб вимкнути його.
 
-Here's an example:
+Ось приклад:
 
 ```js run
 let object = {
-  data: "Valuable data"
+  data: "Важливі дані"
 };
 
 let {proxy, revoke} = Proxy.revocable(object, {});
 
-// pass the proxy somewhere instead of object...
-alert(proxy.data); // Valuable data
+// передати проксі десь замість об’єкта...
+alert(proxy.data); // Важливі дані
 
-// later in our code
+// пізніше в нашому коді
 revoke();
 
-// the proxy isn't working any more (revoked)
-alert(proxy.data); // Error
+// проксі більше не працює (відкликано)
+alert(proxy.data); // Помилка
 ```
 
-A call to `revoke()` removes all internal references to the target object from the proxy, so they are no longer connected. 
+Виклик `revoke()` видаляє всі внутрішні посилання на цільовий об’єкт із проксі, тому вони більше не пов’язані.
 
-Initially, `revoke` is separate from `proxy`, so that we can pass `proxy` around while leaving `revoke` in the current scope.
+Спочатку `revoke` існує окремо від `proxy`, тому ми можемо передавати `proxy` скрізь, залишаючи `revoke` у поточній області.
 
-We can also bind `revoke` method to proxy by setting `proxy.revoke = revoke`.
+Ми також можемо прив’язати метод `revoke` до проксі, встановивши `proxy.revoke = revoke`.
 
-Another option is to create a `WeakMap` that has `proxy` as the key and the corresponding `revoke` as the value, that allows to easily find `revoke` for a proxy:
+Інший варіант -- створити `WeakMap`, який має `proxy` як ключ і відповідне значення `revoke` як значення, що дозволяє легко знайти `revoke` для проксі:
 
 ```js run
 *!*
@@ -977,58 +977,58 @@ let revokes = new WeakMap();
 */!*
 
 let object = {
-  data: "Valuable data"
+  data: "Важливі дані"
 };
 
 let {proxy, revoke} = Proxy.revocable(object, {});
 
 revokes.set(proxy, revoke);
 
-// ..somewhere else in our code..
+// ..ще десь у нашому коді..
 revoke = revokes.get(proxy);
 revoke();
 
-alert(proxy.data); // Error (revoked)
+alert(proxy.data); // Помилка (відкликано)
 ```
 
-We use `WeakMap` instead of `Map` here because it won't block garbage collection. If a proxy object becomes "unreachable" (e.g. no variable references it any more), `WeakMap` allows it to be wiped from memory together with its `revoke` that we won't need any more.
+Тут ми використовуємо `WeakMap` замість `Map`, оскільки він не блокує збір сміття. Якщо об’єкт проксі стає "недоступним" (наприклад, жодна змінна більше не посилається на нього), `WeakMap` дозволяє стерти його з пам’яті разом із його `revoke`, що нам більше не знадобиться.
 
-## References
+## Посилання
 
-- Specification: [Proxy](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots).
+– Специфікація: [Proxy](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots).
 - MDN: [Proxy](mdn:/JavaScript/Reference/Global_Objects/Proxy).
 
-## Summary
+## Підсумки
 
-`Proxy` is a wrapper around an object, that forwards operations on it to the object, optionally trapping some of them.
+`Проксі` -- це обгортка навколо об’єкта, яка перенаправляє операції над нею до об’єкта, маючи можливість перехоплювати деякі з них.
 
-It can wrap any kind of object, including classes and functions.
+Проксіювати можна будь-який тип об’єкта, включаючи класи та функції.
 
-The syntax is:
+Синтаксис такий:
 
 ```js
 let proxy = new Proxy(target, {
-  /* traps */
+  /* пастки */
 });
 ```
 
-...Then we should use `proxy` everywhere instead of `target`. A proxy doesn't have its own properties or methods. It traps an operation if the trap is provided, otherwise forwards it to `target` object.
+...Тоді ми повинні використовувати `proxy` скрізь замість `target`. Проксі не має своїх властивостей чи методів. Він перехоплює операцію, якщо пастка передбачена, в іншому випадку пересилає її до цільового об’єкта.
 
-We can trap:
-- Reading (`get`), writing (`set`), deleting (`deleteProperty`) a property (even a non-existing one).
-- Calling a function (`apply` trap).
-- The `new` operator (`construct` trap).
-- Many other operations (the full list is at the beginning of the article and in the [docs](mdn:/JavaScript/Reference/Global_Objects/Proxy)).
+Ми можемо захопити:
+- Зчитування (`get`), запис (`set`), видалення (`deleteProperty`) властивості (навіть неіснуючої).
+- Виклик функції (пастка `apply`).
+- Оператор `new` (пастка `construct`).
+- Багато інших операцій (повний список на початку статті та в [документації](mdn:/JavaScript/Reference/Global_Objects/Proxy)).
 
-That allows us to create "virtual" properties and methods, implement default values, observable objects, function decorators and so much more.
+Це дозволяє нам створювати "віртуальні" властивості та методи, реалізовувати значення за замовчуванням, спостережувані об’єкти, декоратори функцій та багато іншого.
 
-We can also wrap an object multiple times in different proxies, decorating it with various aspects of functionality.
+Ми також можемо обгорнути об’єкт кілька разів у різні проксі, прикрашаючи його різними аспектами функціональності.
 
-The [Reflect](mdn:/JavaScript/Reference/Global_Objects/Reflect) API is designed to complement [Proxy](mdn:/JavaScript/Reference/Global_Objects/Proxy). For any `Proxy` trap, there's a `Reflect` call with same arguments. We should use those to forward calls to target objects.
+[Reflect](mdn:/JavaScript/Reference/Global_Objects/Reflect) API розроблено для доповнення [Proxy](mdn:/JavaScript/Reference/Global_Objects/Proxy). Для будь-якої пастки `Proxy` є виклик `Reflect` з тими самими аргументами. Ми повинні використовувати їх для переадресації викликів цільовим об’єктам.
 
-Proxies have some limitations:
+Проксі мають деякі обмеження:
 
-- Built-in objects have "internal slots", access to those can't be proxied. See the workaround above.
-- The same holds true for private class fields, as they are internally implemented using slots. So proxied method calls must have the target object as `this` to access them.
-- Object equality tests `===` can't be intercepted.
-- Performance: benchmarks depend on an engine, but generally accessing a property using a simplest proxy takes a few times longer. In practice that only matters for some "bottleneck" objects though.
+- Вбудовані об’єкти мають "внутрішні слоти", доступ до них не може бути проксійованим. Перегляньте обхідний шлях вище.
+- Те ж саме стосується полів приватного класу, оскільки вони внутрішньо реалізовані за допомогою слотів. Тому виклики методів через проксі повинні мати цільовий об’єкт як `this` для доступу до них.
+- Перевірки об’єктів на сувору рівність `===` не можуть бути перехоплені.
+- Продуктивність: контрольні показники залежать від інтерпретатора, але зазвичай доступ до властивості за допомогою найпростішого проксі займає в кілька разів більше часу. На практиці це має значення лише для деяких "особливо навантажених" об’єктів.
