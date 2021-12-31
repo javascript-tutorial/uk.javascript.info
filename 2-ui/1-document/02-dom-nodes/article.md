@@ -243,31 +243,30 @@ drawHtmlTree(node6, 'div.domtree', 690, 500);
 
 ## Взаємодія з консоллю
 
-As we work the DOM, we also may want to apply JavaScript to it. Like: get a node and run some code to modify it, to see the result. Here are few tips to travel between the Elements tab and the console.
-Коли ми працюємо з DOM, ми також можемо застосувати до нього JavaScript. Наприклад: отримайте вузол і запустіть якийсь код, щоб змінити його так, щоб побачити результат. Ось декілька порад подорожувати між вкладкою "Елементи" та консоллю.
+Коли ми працюємо з DOM, ми також можемо застосувати до нього JavaScript. Наприклад, отримайти вузол і запустити якийсь код, щоб змінити його так, щоб побачити результат. Ось декілька порад, щоб подорожувати між вкладкою "Елементи" та консоллю.
 
-For the start:
+Для початку:
 
-1. Select the first `<li>` in the Elements tab.
-2. Press `key:Esc` -- it will open console right below the Elements tab.
+1. Виберіть першу `<li>` на вкладці елементів.
+2. Натисніть `key:Esc` -- це відкриє консоль прямо під вкладкою "Елементи".
 
-Now the last selected element is available as `$0`, the previously selected is `$1` etc.
+Тепер останній вибраний елемент доступний як `$0`, раніше вибраний -- `$1`, тощо.
 
-We can run commands on them. For instance, `$0.style.background = 'red'` makes the selected list item red, like this:
+Ми можемо запустити команди на них. Наприклад, `$0.style.background = 'red'` робить вибраний список елементів червоним, наприклад:
 
 ![](domconsole0.svg)
 
-That's how to get a node from Elements in Console.
+Ось як отримати вузол з елементів у консолі.
 
-There's also a road back. If there's a variable referencing a DOM node, then we can use the command `inspect(node)` in Console to see it in the Elements pane.
+Також існує зворотній шлях. Якщо є змінна, що посилається на вузол DOM, то ми можемо використовувати команду `inspect(node)` у консолі, щоб побачити його в панелі елементів.
 
-Or we can just output the DOM node in the console and explore "in-place", like `document.body` below:
+Або ми можемо просто вивести вузол DOM в консолі та дослідити його "на місці", як і `document.body` нижче:
 
 ![](domconsole1.svg)
 
-That's for debugging purposes of course. From the next chapter on we'll access and modify DOM using JavaScript.
+Звичайно, це для використовується з метою налагодження. З наступної глави ми будемо отримувати доступ та змінювати DOM за допомогою JavaScript.
 
-The browser developer tools are a great help in development: we can explore the DOM, try things and see what goes wrong.
+Інструменти розробника браузера -- є дуже корисними у розробці: ми можемо досліджувати DOM, спробувати різні речі і дивитися, що йде не так.
 
 ## Висновки
 
@@ -279,7 +278,6 @@ HTML/XML документ представляється всередині бр
 
 Ми можемо використовувати інструменти розробника, щоб перевіряти DOM та змінювати його вручну.
 
-Here we covered the basics, the most used and important actions to start with. There's an extensive documentation about Chrome Developer Tools at <https://developers.google.com/web/tools/chrome-devtools>. The best way to learn the tools is to click here and there, read menus: most options are obvious. Later, when you know them in general, read the docs and pick up the rest.
-Тут ми охопили основи, найбільш часто використовувані та важливі дії, для початку. Існує велика документація про інструменти розробника Chrome на <https://developers.google.com/web/tools/chrome-devtools>. Найкращий спосіб дізнатися більше про інструменти, щоб натиснути тут, і там, читати меню: більшість варіантів очевидні. Пізніше, коли ви загалом розберетеся з ними, читайте документи і забрати решта.
+Тут для початку ми охопили основи та важливі дії, які найбільш часто використовуються. Існує велика документація про інструменти розробника Chrome на <https://developers.google.com/web/tools/chrome-devtools>. Найкращий спосіб дізнатися більше про інструменти розробника -- це відкрити їх та ознайомитися з ними: більшість можливостей очевидні. Пізніше, коли ви загалом розберетеся з ними, читайте документацію, щоб дослідити решту функціоналу.
 
 Вузли DOM мають властивості та методи, які дозволяють нам подорожувати між ними, змінюють їх, переміщуватися по цій сторінці та багато іншого. Ми розберемо їх у наступних розділах.
