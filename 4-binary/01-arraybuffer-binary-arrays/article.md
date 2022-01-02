@@ -152,31 +152,31 @@ let arr16 = new Uint16Array(arr8.buffer);
 Це логічно, оскільки, `Int8Array` не є масивом окремих значення, а всього-на-всього представленням `ArrayBuffer`.
 ```
 
-### Out-of-bounds behavior
+### Вихід за область допустимих значень
 
-What if we attempt to write an out-of-bounds value into a typed array? There will be no error. But extra bits are cut-off.
+Що буде у випадку спроби записати значення, що не вміщується в область допустимих значень? Це не призведе до помилки, але зайві біти значення буде відкинуто.
 
-For instance, let's try to put 256 into `Uint8Array`. In binary form, 256 is `100000000` (9 bits), but `Uint8Array` only provides 8 bits per value, that makes the available range from 0 to 255.
+Наприклад, запишімо 256 в `Uint8Array`. В бінарному форматі 256 це `100000000` (9 біт), але `Uint8Array` дозволяє тільки 8 біт для одного значення, тобто значення від 0 до 255.
 
-For bigger numbers, only the rightmost (less significant) 8 bits are stored, and the rest is cut off:
+Для більших чисел тільки праві (найменш важливі) 8 біт буде збережено, а решту буде обрізано.
 
 ![](8bit-integer-256.svg)
 
-So we'll get zero.
+Тому ми отримає нуль.
 
-For 257, the binary form is `100000001` (9 bits), the rightmost 8 get stored, so we'll have `1` in the array:
+257 в бінарному форматі буде `100000001` (9 біт), праві 8 біт буде збережено, тому значення в масиві буде 1:
 
 ![](8bit-integer-257.svg)
 
-In other words, the number modulo 2<sup>8</sup> is saved.
+Інакше кажучи, буде збережено тільки число за модулем 2<sup>8</sup>.
 
-Here's the demo:
+Приклад:
 
 ```js run
 let uint8array = new Uint8Array(16);
 
 let num = 256;
-alert(num.toString(2)); // 100000000 (binary representation)
+alert(num.toString(2)); // 100000000 (бінарна форма)
 
 uint8array[0] = 256;
 uint8array[1] = 257;
@@ -185,7 +185,7 @@ alert(uint8array[0]); // 0
 alert(uint8array[1]); // 1
 ```
 
-`Uint8ClampedArray` is special in this aspect, its behavior is different. It saves 255 for any number that is greater than 255, and 0 for any negative number. That behavior is useful for image processing.
+`Uint8ClampedArray` є особливим в цьому сенсі, його поведінка відрізняється. Буде збережено 255 для усіх чисел, що більше ніж 255 та 0 для від’ємних чисел. Така поведінка буде в нагоді при обробці зображень.
 
 ## TypedArray methods
 
