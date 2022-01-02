@@ -1,70 +1,70 @@
-# ArrayBuffer, binary arrays
+# ArrayBuffer, бінарні масиви
 
-In web-development we meet binary data mostly while dealing with files (create, upload, download). Another typical use case is image processing.
+У веб-розробці ми маємо справу з бінарними даними переважно при роботі з файлами (створення, вивантаження та завантаження). Іншим частим випадком є обробка зображень.
 
-That's all possible in JavaScript, and binary operations are high-performant.
+Все це є можливим в JavaScript, ба більше, бінарні операції ще й високопродуктивні.
 
-Although, there's a bit of confusion, because there are many classes. To name a few:
-- `ArrayBuffer`, `Uint8Array`, `DataView`, `Blob`, `File`, etc.
+Хоча й велика кількість різних класів може спантеличити. Деякі з них:
+- `ArrayBuffer`, `Uint8Array`, `DataView`, `Blob`, `File` тощо.
 
-Binary data in JavaScript is implemented in a non-standard way, compared to other languages. But when we sort things out, everything becomes fairly simple.
+Бінарні дані в JavaScript реалізовано не так, як це переважно роблять в інших мовах програмування. Але якщо трошки розібратися, все виявиться досить простим.
 
-**The basic binary object is `ArrayBuffer` -- a reference to a fixed-length contiguous memory area.**
+**Базовим об’єктом для роботи з бінарними даними є `ArrayBuffer` -- посилання на неперервну область пам’яті фіксованої довжини.**
 
-We create it like this:
+Масив створюється наступним чином:
 ```js run
-let buffer = new ArrayBuffer(16); // create a buffer of length 16
+let buffer = new ArrayBuffer(16); // створити буфер з довжиною 16
 alert(buffer.byteLength); // 16
 ```
 
-This allocates a contiguous memory area of 16 bytes and pre-fills it with zeroes.
+Це виділяє неперервну область пам’яті з довжиною 16 байт та заповнює нулями.
 
-```warn header="`ArrayBuffer` is not an array of something"
-Let's eliminate a possible source of confusion. `ArrayBuffer` has nothing in common with `Array`:
-- It has a fixed length, we can't increase or decrease it.
-- It takes exactly that much space in the memory.
-- To access individual bytes, another "view" object is needed, not `buffer[index]`.
+```warn header="`ArrayBuffer` не є масивом"
+Позбудьмося можливого джерела непорозумінь. `ArrayBuffer` не має нічого спільного з `Array`:
+- Він має фіксовану довжину, що не може бути збільшена чи зменшена.
+- Він займає саме стільки місця, скільки виділено при створенні.
+- Для доступу до окремих байтів нам знадобиться окремий об’єкт представлення, `buffer[index]` не спрацює.
 ```
 
-`ArrayBuffer` is a memory area. What's stored in it? It has no clue. Just a raw sequence of bytes.
+`ArrayBuffer` - область пам’яті. Що там зберігається? Інформації про це немає. Просто послідовність байтів.
 
-**To manipulate an `ArrayBuffer`, we need to use a "view" object.**
+**Для роботи з `ArrayBuffer` нам потрібен спеціальний об’єкт "представлення".**
 
-A view object does not store anything on it's own. It's the "eyeglasses" that give an interpretation of the bytes stored in the `ArrayBuffer`.
+Власне об’єкт представлення не зберігає ніяких даних. Це "вікно", що надає певну інтерпретацію "сирих" байтів всередині `ArrayBuffer`.
 
-For instance:
+Наприклад:
 
-- **`Uint8Array`** -- treats each byte in `ArrayBuffer` as a separate number, with possible values from 0 to 255 (a byte is 8-bit, so it can hold only that much). Such value is called a "8-bit unsigned integer".
-- **`Uint16Array`** -- treats every 2 bytes as an integer, with possible values from 0 to 65535. That's called a "16-bit unsigned integer".
-- **`Uint32Array`** -- treats every 4 bytes as an integer, with possible values from 0 to 4294967295. That's called a "32-bit unsigned integer".
-- **`Float64Array`** -- treats every 8 bytes as a floating point number with possible values from <code>5.0x10<sup>-324</sup></code> to <code>1.8x10<sup>308</sup></code>.
+- **`Uint8Array`** -- представляє кожен байт в `ArrayBuffer` окремим число зі областю значень від 0 до 255 (байт складається з 8 біт, тому тільки такі значення можливі). Такі значення називаються "8-бітові беззнакові цілі числа".
+- **`Uint16Array`** -- представляє кожні 2 байти цілим числом з областю значень від 0 до 65535. Має назву "16-бітові беззнакові цілі числа".
+- **`Uint32Array`** -- представляє кожні 4 байти цілим числом з областю значень від 0 до 4294967295. Має назву "32-бітові беззнакові цілі числа".
+- **`Float64Array`** -- представляє кожні 8 байт числом з плаваючою комою з областю значень від <code>5.0x10<sup>-324</sup></code> до <code>1.8x10<sup>308</sup></code>.
 
-So, the binary data in an `ArrayBuffer` of 16 bytes can be interpreted as 16 "tiny numbers", or 8 bigger numbers (2 bytes each), or 4 even bigger (4 bytes each), or 2 floating-point values with high precision (8 bytes each).
+Отже, бінарні дані в 16 байтному `ArrayBuffer` можна представити як 16 "коротких чисел" або 8 більших чисел (2 байти кожне), або 4 ще більших (4 байти кожне), або 2 числа з плаваючою комою високої точності (8 байти кожне).
 
 ![](arraybuffer-views.svg)
 
-`ArrayBuffer` is the core object, the root of everything, the raw binary data.
+`ArrayBuffer` - головний об’єкт представлення даних, проста послідовність байтів.
 
-But if we're going to write into it, or iterate over it, basically for almost any operation – we must use a view, e.g:
+Якщо нам знадобиться щось туди записати, перебрати їх або для будь-якої іншої операції - нам знадобиться об’єкт представлення:
 
 ```js run
-let buffer = new ArrayBuffer(16); // create a buffer of length 16
+let buffer = new ArrayBuffer(16); // створення буферу з довжиною 16
 
 *!*
-let view = new Uint32Array(buffer); // treat buffer as a sequence of 32-bit integers
+let view = new Uint32Array(buffer); // представлення буферу послідовністю 32-бітових цілих чисел
 
-alert(Uint32Array.BYTES_PER_ELEMENT); // 4 bytes per integer
+alert(Uint32Array.BYTES_PER_ELEMENT); // 4 байти на кожне число
 */!*
 
-alert(view.length); // 4, it stores that many integers
-alert(view.byteLength); // 16, the size in bytes
+alert(view.length); // 4, стільки чисел вміщає буфер
+alert(view.byteLength); // 16, розмір в байтах
 
-// let's write a value
+// запишімо туди значення
 view[0] = 123456;
 
-// iterate over values
+// перебрати всі значення
 for(let num of view) {
-  alert(num); // 123456, then 0, 0, 0 (4 values total)
+  alert(num); // 123456, потім 0, 0, 0 (всього 4 значення)
 }
 
 ```
