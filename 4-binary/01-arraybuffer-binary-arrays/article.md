@@ -187,23 +187,23 @@ alert(uint8array[1]); // 1
 
 `Uint8ClampedArray` є особливим в цьому сенсі, його поведінка відрізняється. Буде збережено 255 для усіх чисел, що більше ніж 255 та 0 для від’ємних чисел. Така поведінка буде в нагоді при обробці зображень.
 
-## TypedArray methods
+## Методи TypedArray
 
-`TypedArray` has regular `Array` methods, with notable exceptions.
+Методи `TypedArray` в цілому збігаються з методами звичайного `Array`, але є деякі відмінності.
 
-We can iterate, `map`, `slice`, `find`, `reduce` etc.
+Ми можемо його перебирати `map`, `slice`, `find`, `reduce` тощо.
 
-There are few things we can't do though:
+Але є речі, що ми не можемо зробити:
 
-- No `splice` -- we can't "delete" a value, because typed arrays are views on a buffer, and these are fixed, contiguous areas of memory. All we can do is to assign a zero.
-- No `concat` method.
+- Немає методу `splice` -- ми не можемо "видалити" значення. В основі типізованих масивів лежить буфер, що є неперервною областю пам’яті фіксованої довжини, а типізовані масиви є всього-на-всього їх представленням. Ми можемо тільки присвоїти нульове значення.
+- Немає методу `concat`.
 
-There are two additional methods:
+Існує 2 додаткових методи:
 
-- `arr.set(fromArr, [offset])` copies all elements from `fromArr` to the `arr`, starting at position `offset` (0 by default).
-- `arr.subarray([begin, end])` creates a new view of the same type from `begin` to `end` (exclusive). That's similar to `slice` method (that's also supported), but doesn't copy anything -- just creates a new view, to operate on the given piece of data.
+- `arr.set(fromArr, [offset])` копіює всі елементи, що починаються з `offset` (типово з 0) з `fromArr` в `arr`.
+- `arr.subarray([begin, end])` створює нове представлення такого ж типу починаючи з `begin` до `end` (не включно). Це схоже на метод `slice` (також підтримується), але значення не буде скопійовано -- тільки створюється нове представлення для роботи з тими самими даними.
 
-These methods allow us to copy typed arrays, mix them, create new arrays from existing ones, and so on.
+Ці методи дають змогу копіювати типізовані масиви, змішувати їх, створювати нові ґрунтуючись на попередніх і так далі.
 
 
 
