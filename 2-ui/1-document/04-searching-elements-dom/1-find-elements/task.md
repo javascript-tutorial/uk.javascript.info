@@ -2,17 +2,17 @@ importance: 4
 
 ---
 
-# Search for elements
+# Пошук елементів
 
-Here's the document with the table and form.
+Ось документ із таблицею та формою.
 
-How to find?...
+Як знайти?...
 
-1. The table with `id="age-table"`.
-2. All `label` elements inside that table (there should be 3 of them).
-3. The first `td` in that table (with the word "Age").
-4. The `form` with `name="search"`.
-5. The first `input` in that form.
-6. The last `input` in that form.
+1. Таблиця з `id="age-table"`.
+2. Усі елементи `label` всередині цієї таблиці (їх має бути 3).
+3. Перший `td` у цій таблиці (зі словом "Age").
+4. `form` з `name="search"`.
+5. Перший `input` у цій формі.
+6. Останній `input` у цій формі.
 
-Open the page [table.html](table.html) in a separate window and make use of browser tools for that.
+Відкрийте сторінку [table.html](table.html) в окремому вікні та скористайтеся для цього інструментами браузера.

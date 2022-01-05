@@ -1,13 +1,13 @@
 
 # Observable
 
-Create a function `makeObservable(target)` that "makes the object observable" by returning a proxy.
+Створіть функцію `makeObservable(target)`, яка "робить об’єкт доступним для спостереження", повертаючи проксі.
 
-Here's how it should work:
+Ось як це має працювати:
 
 ```js run
 function makeObservable(target) {
-  /* your code */
+  /* ваш код */
 }
 
 let user = {};
@@ -17,11 +17,11 @@ user.observe((key, value) => {
   alert(`SET ${key}=${value}`);
 });
 
-user.name = "John"; // alerts: SET name=John
+user.name = "Іван"; // сповіщає: SET name=Іван
 ```
 
-In other words, an object returned by `makeObservable` is just like the original one, but also has the method `observe(handler)` that sets `handler` function to be called on any property change.
+Іншими словами, об’єкт, повернутий `makeObservable`, такий же, як оригінальний, але також має метод `observe(handler)`, який встановлює функцію `handler` для виклику при будь-якій зміні властивості.
 
-Whenever a property changes, `handler(key, value)` is called with the name and value of the property.
+Щоразу, коли властивість змінюється, викликається `handler(key, value)` з назвою та значенням властивості.
 
-P.S. In this task, please only take care about writing to a property. Other operations can be implemented in a similar way.
+P.S. У цьому завданні подбайте лише про запис у властивість. Подібним чином можна реалізувати й інші операції.
