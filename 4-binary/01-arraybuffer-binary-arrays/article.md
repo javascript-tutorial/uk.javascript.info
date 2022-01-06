@@ -209,42 +209,42 @@ alert(uint8array[1]); // 1
 
 ## DataView
 
-[DataView](mdn:/JavaScript/Reference/Global_Objects/DataView) is a special super-flexible "untyped" view over `ArrayBuffer`. It allows to access the data on any offset in any format.
+[DataView](mdn:/JavaScript/Reference/Global_Objects/DataView) спеціальне надзвичайно гнучке "не типізоване" представлення `ArrayBuffer`. Це дозволяє отримати доступ до даних з будь-яким зміщенням та в будь-якому форматі.
 
-- For typed arrays, the constructor dictates what the format is. The whole array is supposed to be uniform. The i-th number is `arr[i]`.
-- With `DataView` we access the data with methods like `.getUint8(i)` or `.getUint16(i)`. We choose the format at method call time instead of the construction time.
+- Для типізованого масиву конструктор визначає формат даних. Увесь масив повинен складатися зі значень одного типу. Доступ до i-го елементу виконується за допомогою `arr[i]`.
+- З `DataView` доступ до даних відбувається за допомогою методів на кшталт `.getUint8(i)` чи `.getUint16(i)`. Тепер можна обирати формат даних під час виклику методу, а не конструктора.
 
-The syntax:
+Синтаксис:
 
 ```js
 new DataView(buffer, [byteOffset], [byteLength])
 ```
 
-- **`buffer`** -- the underlying `ArrayBuffer`. Unlike typed arrays, `DataView` doesn't create a buffer on its own. We need to have it ready.
-- **`byteOffset`** -- the starting byte position of the view (by default 0).
-- **`byteLength`** -- the byte length of the view (by default till the end of `buffer`).
+- **`buffer`** -- базовий `ArrayBuffer`. На відміну від типізованих масивів `DataView` не створює новий буфер. Його потрібно створити завчасно.
+- **`byteOffset`** -- початкова позиція представлення (типове значення 0).
+- **`byteLength`** -- довжина представлення в байтах (типове значення дорівнює кінцю `buffer`).
 
-For instance, here we extract numbers in different formats from the same buffer:
+На приклад, тут ми дістаємо числа в різному форматі з одного й того ж самого буферу:
 
 ```js run
-// binary array of 4 bytes, all have the maximal value 255
+// бінарний масив довжиною 4 байти, всі числа мають максимальне значення 255
 let buffer = new Uint8Array([255, 255, 255, 255]).buffer;
 
 let dataView = new DataView(buffer);
 
-// get 8-bit number at offset 0
+// отримати 8-бітове число за зміщенням 0
 alert( dataView.getUint8(0) ); // 255
 
-// now get 16-bit number at offset 0, it consists of 2 bytes, together interpreted as 65535
-alert( dataView.getUint16(0) ); // 65535 (biggest 16-bit unsigned int)
+// тепер отримати 16-бітове число за зміщенням 0, воно складається з 2 байт, що разом представляється як 65535
+alert( dataView.getUint16(0) ); // 65535 (найбільше 16-бітове беззнакове ціле число)
 
-// get 32-bit number at offset 0
-alert( dataView.getUint32(0) ); // 4294967295 (biggest 32-bit unsigned int)
+// отримати 32-бітове число за зміщенням 0
+alert( dataView.getUint32(0) ); // 4294967295 (найбільше 32-бітове беззнакове ціле число)
 
-dataView.setUint32(0, 0); // set 4-byte number to zero, thus setting all bytes to 0
+dataView.setUint32(0, 0); // встановити 4-байтове число в нуль, тобто запити всі байти як 0
 ```
 
-`DataView` is great when we store mixed-format data in the same buffer. For example, when we store a sequence of pairs (16-bit integer, 32-bit float), `DataView` allows to access them easily.
+`DataView` зручне для використання, коли ми зберігаємо дані різного формату в одному буфері. На приклад, коли ми зберігаємо послідовність пар (16-бітове ціле число, 32-бітове число з плаваючою комою), `DataView` дозволяє легко отримати до них доступ.
 
 ## Summary
 
