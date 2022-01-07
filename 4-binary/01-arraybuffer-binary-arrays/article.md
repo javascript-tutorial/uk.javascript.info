@@ -143,7 +143,7 @@ let arr16 = new Uint16Array(arr8.buffer);
 
 - `Uint8Array`, `Uint16Array`, `Uint32Array` -- для цілих беззнакових чисел з довжиною 8, 16 або 32 біт.
   - `Uint8ClampedArray` -- для 8-бітових беззнакових цілих чисел, що "обрізаються" при присвоєнні (пояснення нижче).
-- `Int8Array`, `Int16Array`, `Int32Array` -- для цілих чисел зі знаком (можуть мати від'ємні значення).
+- `Int8Array`, `Int16Array`, `Int32Array` -- для цілих чисел зі знаком (можуть мати від’ємні значення).
 - `Float32Array`, `Float64Array` -- для чисел з плаваючою комою зі знаком довжиною 32 або 64 біти.
 
 ```warn header="Не існує `int8` або подібних типів для значень"
@@ -246,27 +246,27 @@ dataView.setUint32(0, 0); // встановити 4-байтове число в
 
 `DataView` зручне для використання, коли ми зберігаємо дані різного формату в одному буфері. На приклад, коли ми зберігаємо послідовність пар (16-бітове ціле число, 32-бітове число з плаваючою комою), `DataView` дозволяє легко отримати до них доступ.
 
-## Summary
+## Підсумки
 
-`ArrayBuffer` is the core object, a reference to the fixed-length contiguous memory area.
+`ArrayBuffer` - головний об’єкт, що є посиланням на неперервну область пам’яті фіксованої довжини.
 
-To do almost any operation on `ArrayBuffer`, we need a view.
+Для більшості операцій з `ArrayBuffer` нам потрібне представлення.
 
-- It can be a `TypedArray`:
-    - `Uint8Array`, `Uint16Array`, `Uint32Array` -- for unsigned integers of 8, 16, and 32 bits.
-    - `Uint8ClampedArray` -- for 8-bit integers, "clamps" them on assignment.
-    - `Int8Array`, `Int16Array`, `Int32Array` -- for signed integer numbers (can be negative).
-    - `Float32Array`, `Float64Array` -- for signed floating-point numbers of 32 and 64 bits.
-- Or a `DataView` -- the view that uses methods to specify a format, e.g. `getUint8(offset)`.
+- Це може бути `TypedArray`:
+    - `Uint8Array`, `Uint16Array`, `Uint32Array` -- для беззнакових цілих чисел довжиною 8, 16 та 32 біти.
+    - `Uint8ClampedArray` -- для 8-бітових цілих чисел, при присвоєнні відбувається "обрізання" значень.
+    - `Int8Array`, `Int16Array`, `Int32Array` -- для цілих чисел зі знаком (можуть бути від’ємними).
+    - `Float32Array`, `Float64Array` -- для чисел з плаваючою комою зі знаком довжиною 32 та 64 біти.
+- Чи `DataView` -- представлення, яке дозволяє вибрати формат даних за допомогою методів як `getUint8(offset)`.
 
-In most cases we create and operate directly on typed arrays, leaving `ArrayBuffer` under cover, as a "common denominator". We can access it as `.buffer` and make another view if needed.
+В більшості випадків ми маємо справу безпосередньо з типізованими масивами, `ArrayBuffer` залишається прихованим. Якщо необхідно, можливо отримати доступ до буферу за допомогою `.buffer` та створити нове представлення.
 
-There are also two additional terms, that are used in descriptions of methods that operate on binary data:
-- `ArrayBufferView` is an umbrella term for all these kinds of views.
-- `BufferSource` is an umbrella term for `ArrayBuffer` or `ArrayBufferView`.
+Також для опису методів, що дозволяють працювати з бінарними даними існує два додаткових терміни:
+- `ArrayBufferView` - загальна назва представлень всіх типів.
+- `BufferSource` - термін, що означає `ArrayBuffer` або `ArrayBufferView`.
 
-We'll see these terms in the next chapters. `BufferSource` is one of the most common terms, as it means "any kind of binary data" -- an `ArrayBuffer` or a view over it.
+Ці терміни також будуть використані в наступній частині. `BufferSource` дуже використовується для позначення "будь-яких бінарних даних" -- `ArrayBuffer` чи його представлення.
 
-Here's a cheatsheet:
+Ось підказка:
 
 ![](arraybuffer-view-buffersource.svg)
