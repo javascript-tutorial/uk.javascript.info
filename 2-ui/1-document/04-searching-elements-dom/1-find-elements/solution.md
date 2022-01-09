@@ -1,35 +1,35 @@
-There are many ways to do it.
+Є багато способів зробити це.
 
-Here are some of them:
+Ось деякі з них:
 
 ```js
-// 1. The table with `id="age-table"`.
+// 1. Таблиця з `id="age-table"`.
 let table = document.getElementById('age-table')
 
-// 2. All label elements inside that table
+// 2. Всі елементи label всередині цієї таблиці
 table.getElementsByTagName('label')
-// or
+// або
 document.querySelectorAll('#age-table label')
 
-// 3. The first td in that table (with the word "Age")
+// 3. Перший td в цій таблиці (зі словом "Age")
 table.rows[0].cells[0]
-// or
+// або
 table.getElementsByTagName('td')[0]
-// or
+// або
 table.querySelector('td')
 
-// 4. The form with the name "search"
-// assuming there's only one element with name="search" in the document
+// 4. форма з іменем "search"
+// припускаємо, що в документі є лише один елемент з name="search".
 let form = document.getElementsByName('search')[0]
-// or, form specifically
+// або безпосередньо форма
 document.querySelector('form[name="search"]')
 
-// 5. The first input in that form.
+// 5. Перший input у цій формі.
 form.getElementsByTagName('input')[0]
-// or
+// або
 form.querySelector('input')
 
-// 6. The last input in that form
-let inputs = form.querySelectorAll('input') // find all inputs
-inputs[inputs.length-1] // take the last one
+// 6. Останній input у цій формі
+let inputs = form.querySelectorAll('input') // знайти всі input
+inputs[inputs.length-1] // взяти останній
 ```

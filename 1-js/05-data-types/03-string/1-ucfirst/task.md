@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Uppercase the first character
+# Переведіть перший символ у верхній регістр
 
-Write a function `ucFirst(str)` that returns the string `str` with the uppercased first character, for instance:
+Напишіть функцію `ucFirst(str)`, яка повертає рядок `str` з першим символом у верхньому регістрі, наприклад:
 
 ```js
-ucFirst("john") == "John";
+ucFirst("василь") == "Василь";
 ```
 

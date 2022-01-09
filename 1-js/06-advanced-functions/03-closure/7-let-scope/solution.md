@@ -1,6 +1,6 @@
-The result is: **error**.
+Результатом буде **помилка**.
 
-Try running it:
+Спробуйте запустити це:
 
 ```js run
 let x = 1;
@@ -15,20 +15,20 @@ function func() {
 func();
 ```
 
-In this example we can observe the peculiar difference between a "non-existing" and "uninitialized" variable.
+У цьому прикладі ми можемо спостерігати особливу різницю між "неіснуючою" та "неініціалізованою" змінною.
 
-As you may have read in the article [](info:closure), a variable starts in the "uninitialized" state from the moment when the execution enters a code block (or a function). And it stays uninitalized until the corresponding `let` statement.
+Як ви могли прочитати в статті [](info:closure), змінна перебуває у "неініціалізованому" стані з моменту, коли виконання входить в кодовий блок (чи у функцію). І вона залишається неініціалізованою до відповідного `let`.
 
-In other words, a variable technically exists, but can't be used before `let`.
+Інакше кажучи, змінна технічно існує, але не може бути використана раніше `let`.
 
-The code above demonstrates it.
+Наведений нижче код це демонструє.
 
 ```js
 function func() {
 *!*
-  // the local variable x is known to the engine from the beginning of the function,
-  // but "uninitialized" (unusable) until let ("dead zone")
-  // hence the error
+  // локальна змінна `x` відома рушію з початку функції,
+  // але вона "неініціалізова" (непридатна) до let ("мертва зона")
+  // звідси помилка
 */!*
 
   console.log(x); // ReferenceError: Cannot access 'x' before initialization
@@ -37,4 +37,4 @@ function func() {
 }
 ```
 
-This zone of temporary unusability of a variable (from the beginning of the code block till `let`) is sometimes called the "dead zone".
+Цю зону тимчасової непридатності змінної (від початку блоку коду до `let`) іноді називають "мертвою зоною".

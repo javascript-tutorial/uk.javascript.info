@@ -1,9 +1,9 @@
 describe("ucFirst", function() {
-  it('Uppercases the first symbol', function() {
+  it('Перетворює перший символ у верхній регістр', function() {
     assert.strictEqual(ucFirst("john"), "John");
   });
 
-  it("Doesn't die on an empty string", function() {
+  it('Не вмирає на порожніх рядках', function() {
     assert.strictEqual(ucFirst(""), "");
   });
 });

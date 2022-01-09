@@ -1,36 +1,36 @@
 describe("byField", function(){
 
   let users = [
-    { name: "John", age: 20, surname: "Johnson" },
-    { name: "Pete", age: 18, surname: "Peterson" },
-    { name: "Ann", age: 19, surname: "Hathaway" },
+    { name: "Іван", age: 20, surname: "Іванов" },
+    { name: "Петро", age: 18, surname: "Петров" },
+    { name: "Енн", age: 19, surname: "Гетевей" },
   ];
 
-  it("sorts users by name", function(){
+  it("сортує користувачів за іменами", function(){
     let nameSortedKey = [
-      { name: "Ann", age: 19, surname: "Hathaway" },
-      { name: "John", age: 20, surname: "Johnson"},
-      { name: "Pete", age: 18, surname: "Peterson" },
+      { name: "Енн", age: 19, surname: "Гетевей" },
+      { name: "Іван", age: 20, surname: "Іванов"},
+      { name: "Петро", age: 18, surname: "Петров" },
     ];
     let nameSortedAnswer = users.sort(byField("name"));
     assert.deepEqual(nameSortedKey, nameSortedAnswer);
   });
 
-  it("sorts users by age", function(){
+  it("сортує користувачів за віком", function(){
     let ageSortedKey = [
-      { name: "Pete", age: 18, surname: "Peterson" },
-      { name: "Ann", age: 19, surname: "Hathaway" },
-      { name: "John", age: 20, surname: "Johnson"},
+      { name: "Петро", age: 18, surname: "Петров" },
+      { name: "Енн", age: 19, surname: "Гетевей" },
+      { name: "Іван", age: 20, surname: "Іванов"},
     ];
     let ageSortedAnswer = users.sort(byField("age"));
     assert.deepEqual(ageSortedKey, ageSortedAnswer);
   });
 
-  it("sorts users by surname", function(){
+  it("сортує користувачів за прізвищем", function(){
     let surnameSortedKey = [
-      { name: "Ann", age: 19, surname: "Hathaway" },
-      { name: "John", age: 20, surname: "Johnson"},
-      { name: "Pete", age: 18, surname: "Peterson" },
+      { name: "Енн", age: 19, surname: "Гетевей" },
+      { name: "Іван", age: 20, surname: "Іванов"},
+      { name: "Петро", age: 18, surname: "Петров" },
     ];
     let surnameSortedAnswer = users.sort(byField("surname"));
     assert.deepEqual(surnameSortedAnswer, surnameSortedKey);

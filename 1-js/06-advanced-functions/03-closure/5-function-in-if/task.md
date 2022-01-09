@@ -1,13 +1,13 @@
 
-# Function in if
+# Функція у if
 
-Look at the code. What will be the result of the call at the last line?
+Подивіться на код. Яким буде результат виклику на останньому рядку?
 
 ```js run
-let phrase = "Hello";
+let phrase = "Привіт";
 
 if (true) {
-  let user = "John";
+  let user = "Іван";
 
   function sayHi() {
     alert(`${phrase}, ${user}`);
