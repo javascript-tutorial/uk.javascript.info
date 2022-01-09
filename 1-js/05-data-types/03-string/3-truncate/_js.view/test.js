@@ -1,15 +1,15 @@
 describe("truncate", function() {
-  it("truncate the long string to the given length (including the ellipsis)", function() {
+  it("урізає довгий рядок до заданої довжини (включаючи три крапки)", function() {
     assert.equal(
-      truncate("What I'd like to tell on this topic is:", 20),
-      "What I'd like to te…"
+      truncate("Що я хотів би розповісти на цю тему:", 20),
+      "Що я хотів би розпо…"
     );
   });
 
-  it("doesn't change short strings", function() {
+  it("не змінює короткі рядки", function() {
     assert.equal(
-      truncate("Hi everyone!", 20),
-      "Hi everyone!"
+      truncate("Всім привіт!", 20),
+      "Всім привіт!"
     );
   });
 

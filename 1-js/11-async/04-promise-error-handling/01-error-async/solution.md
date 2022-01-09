@@ -1,4 +1,4 @@
-The answer is: **no, it won't**:
+Відповідь: **ні, не виконається**:
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -8,6 +8,6 @@ new Promise(function(resolve, reject) {
 }).catch(alert);
 ```
 
-As said in the chapter, there's an "implicit `try..catch`" around the function code. So all synchronous errors are handled.
+Як було написано в розділі, тут присутній "прихований `try..catch`" навколо коду функції. Тому обробляються усі синхронні помилки.
 
-But here the error is generated not while the executor is running, but later. So the promise can't handle it. 
+У цьому прикладі помилка генерується не по ходу виконання коду, а пізніше. Тому проміс не може обробити її.

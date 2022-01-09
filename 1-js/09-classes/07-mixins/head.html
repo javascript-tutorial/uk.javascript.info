@@ -2,7 +2,7 @@
 let eventMixin = {
 
   /**
-   * Subscribe to event, usage:
+   * Підписуємося на подію, використання:
    *  menu.on('select', function(item) { ... }
   */
   on(eventName, handler) {
@@ -14,7 +14,7 @@ let eventMixin = {
   },
 
   /**
-   * Cancel the subscription, usage:
+   * Скасовуємо підписку, використання:
    *  menu.off('select', handler)
    */
   off(eventName, handler) {
@@ -28,15 +28,15 @@ let eventMixin = {
   },
 
   /**
-   * Generate the event and attach the data to it
+   * Створимо подію та додамо дані до неї
    *  this.trigger('select', data1, data2);
    */
   trigger(eventName, ...args) {
     if (!this._eventHandlers || !this._eventHandlers[eventName]) {
-      return; // no handlers for that event name
+      return; // немає обробників для цієї назви подій
     }
 
-    // call the handlers
+    // викликаємо обробники
     this._eventHandlers[eventName].forEach(handler => handler.apply(this, args));
   }
 };

@@ -1,21 +1,21 @@
 
-# Error handling with promises
+# Проміси: обробка помилок
 
-Promise chains are great at error handling. When a promise rejects, the control jumps to the closest rejection handler. That's very convenient in practice.
+Ланцюги промісів чудово підходять для обробки помилок. Якщо проміс завершує своє виконання з помилкою, то управління переходить в найближчий обробник помилок. На практиці, це дуже зручно.
 
-For instance, in the code below the URL to `fetch` is wrong (no such site) and `.catch` handles the error:
+Наприклад, в наведеному нижче прикладі для `fetch` вказане неправильне посилання (такого сайту не існує), і `.catch` перехоплює помилку:
 
 ```js run
 *!*
-fetch('https://no-such-server.blabla') // rejects
+fetch('https://no-such-server.blabla') // помилка
 */!*
   .then(response => response.json())
-  .catch(err => alert(err)) // TypeError: failed to fetch (the text may vary)
+  .catch(err => alert(err)) // TypeError: failed to fetch (текст може відрізнятися)
 ```
 
-As you can see, the `.catch` doesn't have to be immediate. It may appear after one or maybe several `.then`.
+Як можна побачити, `.catch` не обов’язково повинен бути відразу після помилки, він може бути далі, після одного або навіть декількох `.then`.
 
-Or, maybe, everything is all right with the site, but the response is not valid JSON. The easiest way to catch all errors is to append `.catch` to the end of chain:
+Або, можливо, з сервером все гаразд, але у відповіді ми отримуємо некоректний JSON. Найлегший шлях перехопити усі помилки - це додати `.catch` в кінець ланцюжка:
 
 ```js run
 fetch('/article/promise-chaining/user.json')
@@ -38,167 +38,167 @@ fetch('/article/promise-chaining/user.json')
 */!*
 ```
 
-Normally, such `.catch` doesn't trigger at all. But if any of the promises above rejects (a network problem or invalid json or whatever), then it would catch it.
+Якщо все гаразд, то такий `.catch` взагалі не виконається. Але якщо будь-який з промісів буде відхилений (проблеми з мережею або некоректний json-рядок, або що завгодно інше), то помилка буде перехоплена.
 
-## Implicit try..catch
+## Неявний try..catch
 
-The code of a promise executor and promise handlers has an "invisible `try..catch`" around it. If an exception happens, it gets caught and treated as a rejection.
+Навколо функції проміса та обробників знаходиться "невидимий `try..catch`". Якщо відбувається виключення, то воно перехоплюється, і проміс вважається відхиленим з цією помилкою.
 
-For instance, this code:
-
-```js run
-new Promise((resolve, reject) => {
-*!*
-  throw new Error("Whoops!");
-*/!*
-}).catch(alert); // Error: Whoops!
-```
-
-...Works exactly the same as this:
+Наприклад, цей код:
 
 ```js run
 new Promise((resolve, reject) => {
 *!*
-  reject(new Error("Whoops!"));
+  throw new Error("Помилка!");
 */!*
-}).catch(alert); // Error: Whoops!
+}).catch(alert); // Error: Помилка!
 ```
 
-The "invisible `try..catch`" around the executor automatically catches the error and turns it into rejected promise.
+...Працює так само, як і цей:
 
-This happens not only in the executor function, but in its handlers as well. If we `throw` inside a `.then` handler, that means a rejected promise, so the control jumps to the nearest error handler.
+```js run
+new Promise((resolve, reject) => {
+*!*
+  reject(new Error("Помилка!"));
+*/!*
+}).catch(alert); // Error: Помилка!
+```
 
-Here's an example:
+"Невидимий `try..catch`" навколо промісу автоматично перехоплює помилку і перетворює її на відхилений проміс.
+
+Це працює не лише у функції проміса, але і в обробниках. Якщо ми створимо виключення (`throw`) в обробнику (`.then`), то проміс вважатиметься відхиленим, і управління перейде до найближчого обробника помилок.
+
+Приклад:
 
 ```js run
 new Promise((resolve, reject) => {
   resolve("ok");
 }).then((result) => {
 *!*
-  throw new Error("Whoops!"); // rejects the promise
+  throw new Error("Помилка!"); // генеруємо помилку
 */!*
-}).catch(alert); // Error: Whoops!
+}).catch(alert); // Error: Помилка!
 ```
 
-This happens for all errors, not just those caused by the `throw` statement. For example, a programming error:
+Це відбувається для всіх помилок, не тільки для тих що викликані через оператор `throw`. Наприклад, програмна помилка:
 
 ```js run
 new Promise((resolve, reject) => {
   resolve("ok");
 }).then((result) => {
 *!*
-  blabla(); // no such function
+  blabla(); // викликаємо неіснуючу функцію
 */!*
 }).catch(alert); // ReferenceError: blabla is not defined
 ```
 
-The final `.catch` not only catches explicit rejections, but also accidental errors in the handlers above.
+Фінальний `.catch` перехоплює як проміси, в яких викликаний `reject`, так і випадкові помилки в обробниках.
 
-## Rethrowing
+## Прокидання помилок
 
-As we already noticed, `.catch` at the end of the chain is similar to `try..catch`. We may have as many `.then` handlers as we want, and then use a single `.catch` at the end to handle errors in all of them.
+Як ми вже помітили `.catch` поводиться як `try..catch`. Ми можемо мати стільки обробників `.then`, скільки ми хочемо, і потім використати один `.catch` у кінці, щоб перехопити помилки з усіх обробників.
 
-In a regular `try..catch` we can analyze the error and maybe rethrow it if it can't be handled. The same thing is possible for promises.
+У звичайному `try..catch` ми можемо проаналізувати помилку і повторно прокинути далі, якщо не можемо її обробити. Те ж саме можливе для промісів.
 
-If we `throw` inside `.catch`, then the control goes to the next closest error handler. And if we handle the error and finish normally, then it continues to the next closest successful `.then` handler.
+Якщо ми прокинемо (`throw`) помилку усередині блоку `.catch`, тоді управління перейде до наступного найближчого обробника помилок. А якщо ми обробимо помилку і завершимо роботу обробника нормально, то продовжить роботу найближчий успішний обробник `.then`.
 
-In the example below the `.catch` successfully handles the error:
+У прикладі нижче `.catch` успішно перехоплює та обробляє помилку:
 
 ```js run
 // the execution: catch -> then
 new Promise((resolve, reject) => {
 
-  throw new Error("Whoops!");
+  throw new Error("Помилка!");
 
 }).catch(function(error) {
 
-  alert("The error is handled, continue normally");
+  alert("Помилка оброблена, продовжуємо роботу");
 
-}).then(() => alert("Next successful handler runs"));
+}).then(() => alert("Управління переходить до наступного обробника then"));
 ```
 
-Here the `.catch` block finishes normally. So the next successful `.then` handler is called.
+Тут блок `.catch` завершується нормально. Тому викликається наступний успішний обробник `.then`.
 
-In the example below we see the other situation with `.catch`. The handler `(*)` catches the error and just can't handle it (e.g. it only knows how to handle `URIError`), so it throws it again:
+У прикладі нижче ми бачимо іншу ситуацію з блоком `.catch`. Обробник `(*)` перехоплює помилку і не може обробити її (наприклад, він знає як обробити тільки `URIError`), тому помилка прокидається далі:
 
 ```js run
 // the execution: catch -> catch
 new Promise((resolve, reject) => {
 
-  throw new Error("Whoops!");
+  throw new Error("Помилка!");
 
 }).catch(function(error) { // (*)
 
   if (error instanceof URIError) {
-    // handle it
+    // обробляємо помилку
   } else {
-    alert("Can't handle such error");
+    alert("Не можу обробити цю помилку");
 
 *!*
-    throw error; // throwing this or another error jumps to the next catch
+    throw error; // прокидуємо цю або іншу помилку в наступний catch
 */!*
   }
 
 }).then(function() {
-  /* doesn't run here */
+  /* не виконається */
 }).catch(error => { // (**)
 
-  alert(`The unknown error has occurred: ${error}`);
-  // don't return anything => execution goes the normal way
+  alert(`Невідома помилка: ${error}`);
+  // нічого не повертаємо => виконання продовжується в нормальному режимі
 
 });
 ```
 
-The execution jumps from the first `.catch` `(*)` to the next one `(**)` down the chain.
+Управління переходить від першого блоку `.catch` `(*)` до наступного `(**)`, вниз по ланцюжку.
 
-## Unhandled rejections
+## Необроблені помилки
 
-What happens when an error is not handled? For instance, we forgot to append `.catch` to the end of the chain, like here:
+Що станеться, якщо помилка не буде оброблена? Наприклад, ми просто забули додати `.catch` в кінець ланцюжка, як тут:
 
 ```js untrusted run refresh
 new Promise(function() {
-  noSuchFunction(); // Error here (no such function)
+  noSuchFunction(); // Помилка (немає такої функції)
 })
   .then(() => {
-    // successful promise handlers, one or more
-  }); // without .catch at the end!
+    // обробники .then, один або більше
+  }); // без .catch в самому кінці!
 ```
 
-In case of an error, the promise becomes rejected, and the execution should jump to the closest rejection handler. But there is none. So the error gets "stuck". There's no code to handle it.
+У разі помилки виконання повинне перейти до найближчого обробника помилок. Але в прикладі вище немає ніякого обробника. Тому помилка як би "застряє", її нікому обробити.
 
-In practice, just like with regular unhandled errors in code, it means that something has gone terribly wrong.
+На практиці, як і при звичайних необроблених помилках в коді, це означає, що щось пішло сильно не так.
 
-What happens when a regular error occurs and is not caught by `try..catch`? The script dies with a message in the console. A similar thing happens with unhandled promise rejections.
+Що відбувається, коли звичайна помилка не перехоплена `try..catch`? Скрипт помирає з повідомленням в консолі. Схоже відбувається і у разі необробленої помилки промиса.
 
-The JavaScript engine tracks such rejections and generates a global error in that case. You can see it in the console if you run the example above.
+JavaScript-рушій відстежує такі ситуації і генерує в цьому випадку глобальну помилку. Ви можете побачити її в консолі, якщо запустите приклад вище.
 
-In the browser we can catch such errors using the event `unhandledrejection`:
+У браузері ми можемо впіймати такі помилки, використовуючи подію `unhandledrejection`:
 
 ```js run
 *!*
 window.addEventListener('unhandledrejection', function(event) {
-  // the event object has two special properties:
-  alert(event.promise); // [object Promise] - the promise that generated the error
-  alert(event.reason); // Error: Whoops! - the unhandled error object
+  // об’єкт події має дві спеціальні властивості:
+  alert(event.promise); // [object Promise] - проміс, який згенерував помилку
+  alert(event.reason); // Error: Whoops! - об’єкт помилки, яка не була оброблена
 });
 */!*
 
 new Promise(function() {
-  throw new Error("Whoops!");
-}); // no catch to handle the error
+  throw new Error("Помилка!");
+}); // немає обробника помилок
 ```
 
-The event is the part of the [HTML standard](https://html.spec.whatwg.org/multipage/webappapis.html#unhandled-promise-rejections).
+Ця подія є частиною [стандарту HTML](https://html.spec.whatwg.org/multipage/webappapis.html#unhandled-promise-rejections).
 
-If an error occurs, and there's no `.catch`, the `unhandledrejection` handler triggers, and gets the `event` object with the information about the error, so we can do something.
+Якщо відбувається помилка, і відсутній її обробник, то генерується подія `unhandledrejection`, і відповідний об’єкт `event` містить інформацію про помилку.
 
-Usually such errors are unrecoverable, so our best way out is to inform the user about the problem and probably report the incident to the server.
+Зазвичай такі помилки невідворотні, тому краще всього - інформувати користувача про проблему і, можливо, відправити інформацію про помилку на сервер.
 
-In non-browser environments like Node.js there are other ways to track unhandled errors.
+У не-браузерных середовищах, таких як Node.js, є інші способи відстежування необроблених помилок.
 
-## Summary
+## Підсумки
 
-- `.catch` handles errors in promises of all kinds: be it a `reject()` call, or an error thrown in a handler.
-- We should place `.catch` exactly in places where we want to handle errors and know how to handle them. The handler should analyze errors (custom error classes help) and rethrow unknown ones (maybe they are programming mistakes).
-- It's ok not to use `.catch` at all, if there's no way to recover from an error.
-- In any case we should have the `unhandledrejection` event handler (for browsers, and analogs for other environments) to track unhandled errors and inform the user (and probably our server) about them, so that our app never "just dies".
+- `.catch` перехоплює усі види помилок в промісах: будь то виклик `reject()` або помилка, кинута в обробнику за допомогою `throw`.
+- Необхідно розміщувати `.catch` там, де ми хочемо обробити помилки і знаємо, як це зробити. Обробник може проаналізувати помилку (можуть бути корисні призначені для користувача класи помилок) і прокинути її, якщо нічого не знає про неї (можливо, це програмна помилка).
+- Можна і зовсім не використовувати `.catch`, якщо немає нормального способу відновитися після помилки.
+- У будь-якому випадку нам слід використовувати обробник події `unhandledrejection` (для браузерів і аналог для іншого оточення), щоб відстежувати необроблені помилки і інформувати про них користувача (і, можливо, наш сервер), завдяки чому наш застосунок ніколи не буде "просто помирати".

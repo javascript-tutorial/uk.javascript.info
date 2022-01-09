@@ -27,12 +27,12 @@ alert(user); // {name: "Іван", age: 30}
 
 ## JSON.stringify
 
-[JSON](http://uk.wikipedia.org/wiki/json) (JavaScript Object Notation) -- це загальний формат, який представляє значення та об’єкти. Він описується у [RFC 4627](http://tools.ietf.org/html/rfc4627) стандарті. Спочатку він був зроблений для JavaScript, але багато інших мов мають бібліотеки, щоб обробляють його також. Тому легко використовувати JSON для обміну даними, коли клієнт використовує JavaScript, а сервер написаний на Ruby/PHP/Java/що завгодно.
+[JSON](https://uk.wikipedia.org/wiki/JSON) (JavaScript Object Notation) -- це загальний формат, який представляє значення та об’єкти. Він описується у [стандарті RFC 4627](https://datatracker.ietf.org/doc/html/rfc4627). Спочатку він був розроблений для JavaScript, але багато інших мов мають бібліотеки, щоб обробляють його також. Тому легко використовувати JSON для обміну даними, коли клієнт використовує JavaScript, а сервер написаний на Ruby/PHP/Java тощо.
 
 JavaScript надає методи:
 
-- `JSON.stringify` для перетворити об’єктів в JSON.
-- `JSON.parse` для перетворення JSON назад в об’єкт.
+- `JSON.stringify` для перетворення об’єктів в JSON (у вигляді тексту).
+- `JSON.parse` для перетворення JSON-тексту назад в об’єкт.
 
 Наприклад, тут ми викликаємо `JSON.stringify` з об’єктом `student`:
 ```js run
@@ -164,11 +164,11 @@ meetup.place = room;      // meetup посилається на room
 room.occupiedBy = meetup; // room посилається на meetup
 
 *!*
-JSON.stringify(meetup); // Error: Converting circular structure to JSON
+JSON.stringify(meetup); // Помилка: Конвертування циклічних структур в JSON
 */!*
 ```
 
-Тут перетворення не вдається із-за циклічного посилання: `room.occupiedBy` посилається на `meetup`, і `metup.place` посилається на `room`:
+Тут перетворення не вдається через циклічні посилання: `room.occupiedBy`, яке посилається на `meetup`, і `metup.place`, яке посилається на `room`:
 
 ![](json-meetup.svg)
 
@@ -202,18 +202,18 @@ let room = {
 };
 
 let meetup = {
-  title: "Conference",
-  participants: [{name: "John"}, {name: "Alice"}],
+  title: "Конференція",
+  participants: [{name: "Іван"}, {name: "Аліна"}],
   place: room // meetup посилається на room
 };
 
 room.occupiedBy = meetup; // room посилається на meetup
 
 alert( JSON.stringify(meetup, *!*['title', 'participants']*/!*) );
-// {"title":"Conference","participants":[{},{}]}
+// {"title":"Конференція","participants":[{},{}]}
 ```
 
-Тут ми, мабуть, занадто суворі. Список властивостей застосовується до всієї структури об’єкта. Отже, об’єкти в `participants` є порожніми, тому що `name` не в списку.
+Тут ми, мабуть, занадто суворі. Список властивостей застосовується до всієї структури об’єкта. Отже, об’єкти в `participants` будуть порожніми, тому що `name` не в списку.
 
 Включімо в список кожної власності, крім `room.occupiedBy`, що призведе до циклічного посилання:
 
@@ -224,7 +224,7 @@ let room = {
 
 let meetup = {
   title: "Конференція",
-  participants: [{name: "Іван"}, {name: "Аліса"}],
+  participants: [{name: "Іван"}, {name: "Аліна"}],
   place: room // meetup посилається на room
 };
 
@@ -234,7 +234,7 @@ alert( JSON.stringify(meetup, *!*['title', 'participants', 'place', 'name', 'num
 /*
 {
   "title":"Конференція",
-  "participants":[{"name":"Іван"},{"name":"Аліса"}],
+  "participants":[{"name":"Іван"},{"name":"Аліна"}],
   "place":{"number":23}
 }
 */
@@ -255,7 +255,7 @@ let room = {
 
 let meetup = {
   title: "Конференція",
-  participants: [{name: "Іван"}, {name: "Аліса"}],
+  participants: [{name: "Іван"}, {name: "Аліна"}],
   place: room // meetup посилається на room
 };
 
@@ -273,7 +273,7 @@ participants: [object Object],[object Object]
 0:            [object Object]
 name:         Іван
 1:            [object Object]
-name:         Аліса
+name:         Аліна
 place:        [object Object]
 number:       23
 occupiedBy: [object Object]
@@ -335,7 +335,7 @@ alert(JSON.stringify(user, null, 2));
 
 ## Спеціальний "toJSON"
 
-Подібно до `tostring` для перетворення в рядки, об’єкт може надати метод `toJSON` для перетворення в JSON. `Json.stringify` автоматично викликає його, він доступний.
+Подібно до методу `toString` (для перетворення об’єкта в рядок), об’єкт також має метод `toJSON` для його перетворення в JSON. Функція `Json.stringify` автоматично викликає цей метод.
 
 Наприклад:
 
@@ -362,7 +362,7 @@ alert( JSON.stringify(meetup) );
 */
 ```
 
-Тут ми бачимо, що `date` `(1)` став рядком. Це тому, що всі дати мають вбудований метод `toJSON`, який повертає такий вид рядка.
+Тут ми бачимо, що `date` `(1)` став рядком. Це тому, що всі дати мають вбудований метод `toJSON`, який повертає такий рядок в такому вигляді.
 
 Тепер додаймо спеціальний `toJSON` для нашого об’єкта `room` `(2)`:
 
@@ -396,7 +396,7 @@ alert( JSON.stringify(meetup) );
 */
 ```
 
-Як ми бачимо, `toJSON` використовується як для прямого виклику `JSON.stringify(room)`, а також коли властивість `room` вкладена в іншому закодованому об’єкті.
+Як бачимо, `toJSON` використовується як для прямого виклику `JSON.stringify(room)`, а також коли властивість `room` вкладена в іншому закодованому об’єкті.
 
 
 ## JSON.parse

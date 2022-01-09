@@ -1,26 +1,26 @@
 
 # FormData
 
-This chapter is about sending HTML forms: with or without files, with additional fields and so on.
+У цьому розділі йдеться про відправлення HTML-форм: з файлами та без, з додатковими полями й так далі.
 
-[FormData](https://xhr.spec.whatwg.org/#interface-formdata) objects can help with that. As you might have guessed, it's the object to represent HTML form data.
+Об’єкти [FormData](https://xhr.spec.whatwg.org/#interface-formdata) допоможуть нам із цим. Як ви, напевно, здогадалися за назвою, це об’єкт, що представляє дані HTML форми.
 
-The constructor is:
+Конструктор:
 ```js
 let formData = new FormData([form]);
 ```
 
-If HTML `form` element is provided, it automatically captures its fields.
+Якщо передати в конструктор елемент HTML-форми `form`, то об’єкт, що створюється, автоматично прочитає з неї поля.
 
-The special thing about `FormData` is that network methods, such as `fetch`, can accept a `FormData` object as a body. It's encoded and sent out with `Content-Type: multipart/form-data`.
+Його особливість полягає в тому, що методи для роботи з мережею, наприклад, `fetch`, дозволяють вказати об’єкт `FormData` у властивості тіла запиту `body`.
 
-From the server point of view, that looks like a usual form submission.
+Тобто для сервера це виглядає як звичайне надсилання форми.
 
-## Sending a simple form
+## Надсилання простої форми
 
-Let's send a simple form first.
+Давайте спочатку надішлемо просту форму.
 
-As you can see, that's almost one-liner:
+Як ви бачите, код дуже компактний:
 
 ```html run autorun
 <form id="formElem">
@@ -47,43 +47,43 @@ As you can see, that's almost one-liner:
 </script>
 ```
 
-In this example, the server code is not presented, as it's beyond our scope. The server accepts the POST request and replies "User saved".
+У цьому прикладі серверний код не представлений, він за рамками цієї статті, він приймає POST-запит із даними форми та відповідає повідомленням «Користувач збережений».
 
-## FormData Methods
+## Методи об’єкта FormData
 
-We can modify fields in `FormData` with methods:
+За допомогою наведених нижче методів ми можемо змінювати поля в об’єкті `FormData`:
 
-- `formData.append(name, value)` - add a form field with the given `name` and `value`,
-- `formData.append(name, blob, fileName)` - add a field as if it were `<input type="file">`, the third argument `fileName` sets file name (not form field name), as it were a name of the file in user's filesystem,
-- `formData.delete(name)` - remove the field with the given `name`,
-- `formData.get(name)` - get the value of the field with the given `name`,
-- `formData.has(name)` - if there exists a field with the given `name`, returns `true`, otherwise `false`
+- `formData.append(name, value)` - додає до об’єкта поле з іменем `name` і значенням `value`,
+- `formData.append(name, blob, fileName)` - додає поле так, ніби це `<input type="file">`, третій аргумент `fileName` встановлює ім’я файлу (не ім’я поля форми), ніби це ім’я з файлової системи користувача,
+- `formData.delete(name)` - видаляє поле по заданому `name`,
+- `formData.get(name)` - дістає значення поля по заданому `name`,
+- `formData.has(name)` - перевіряє чи існує поле по заданому `name`, повертає `true`, інакше `false`
 
-A form is technically allowed to have many fields with the same `name`, so multiple calls to `append` add more same-named fields.
+Технічно форма може мати багато полів з тим самим ім’ям `name`, тому кілька викликів `append` додадуть кілька полів з однаковими іменами.
 
-There's also method `set`, with the same syntax as `append`. The difference is that `.set` removes all fields with the given `name`, and then appends a new field. So it makes sure there's only one field with such `name`, the rest is just like `append`:
+Ще існує метод `set`, його синтаксис такий самий, як у `append`. Різниця в тому, що `.set` видаляє всі наявні поля з ім'ям `name` і тільки потім додає нове. Тобто цей метод гарантує, що існуватиме лише одне поле з ім'ям `name`, у всьому іншому він аналогічний `.append`:
 
 - `formData.set(name, value)`,
 - `formData.set(name, blob, fileName)`.
 
-Also we can iterate over formData fields using `for..of` loop:
+Поля об’єкта `formData` можна перебирати, використовуючи цикл `for..of`:
 
 ```js run
 let formData = new FormData();
 formData.append('key1', 'value1');
 formData.append('key2', 'value2');
 
-// List key/value pairs
+// Список пар ключ/значення
 for(let [name, value] of formData) {
   alert(`${name} = ${value}`); // key1 = value1, then key2 = value2
 }
 ```
 
-## Sending a form with a file
+## Надсилання форми з файлом
 
-The form is always sent as `Content-Type: multipart/form-data`, this encoding allows to send files. So, `<input type="file">` fields are sent also, similar to a usual form submission.
+Об’єкти `FormData` завжди посилаються із заголовком `Content-Type: multipart/form-data`, цей спосіб кодування дозволяє надсилати файли. Таким чином, поля `<input type="file">` теж відправляються, як і при використанні разі звичайної форми.
 
-Here's an example with such form:
+Приклад такої форми:
 
 ```html run autorun
 <form id="formElem">
@@ -110,15 +110,15 @@ Here's an example with such form:
 </script>
 ```
 
-## Sending a form with Blob data
+## Надсилання форми з даними Blob
 
-As we've seen in the chapter <info:fetch>, it's easy to send dynamically generated binary data e.g. an image, as `Blob`. We can supply it directly as `fetch` parameter `body`.
+Раніше у главі <info:fetch> ми бачили, що дуже легко відправити динамічно згенеровані бінарні дані у форматі `Blob`. Ми можемо явно передати їх до параметра `body` запиту `fetch`.
 
-In practice though, it's often convenient to send an image not separately, but as a part of the form, with additional fields, such as "name" and other metadata.
+Але на практиці буває зручніше відправляти зображення не окремо, а у складі форми, додавши додаткові поля для імені та інші метадані.
 
-Also, servers are usually more suited to accept multipart-encoded forms, rather than raw binary data.
+Крім того, сервери часто налаштовані на приймання саме форм, а не просто бінарних даних.
 
-This example submits an image from `<canvas>`, along with some other fields, as a form, using `FormData`:
+У прикладі нижче надсилається зображення з `<canvas>` і ще кілька полів, як форма, використовуючи `FormData`:
 
 ```html run autorun height="90"
 <body style="margin:0">
@@ -154,36 +154,36 @@ This example submits an image from `<canvas>`, along with some other fields, as 
 </body>
 ```
 
-Please note how the image `Blob` is added:
+Будь ласка, зверніть увагу на те, як додається зображення `Blob`:
 
 ```js
 formData.append("image", imageBlob, "image.png");
 ```
 
-That's same as if there were `<input type="file" name="image">` in the form, and the visitor submitted a file named `"image.png"` (3rd argument) with the data `imageBlob` (2nd argument) from their filesystem.
+Це як би у формі був елемент `<input type="file" name="image">` і користувач прикріпив би файл з ім’ям `"image.png"` (3й аргумент) та даними `imageBlob` (2й аргумент) зі своєї файлової системи.
 
-The server reads form data and the file, as if it were a regular form submission.
+Сервер прочитає і дані і файл, так само, якби це була звичайна відправка форми.
 
-## Summary
+## Підсумки
 
-[FormData](https://xhr.spec.whatwg.org/#interface-formdata) objects are used to capture HTML form and submit it using `fetch` or another network method.
+Об’єкти [FormData](https://xhr.spec.whatwg.org/#interface-formdata) використовуються, щоб взяти дані з HTML-форми та відправити їх за допомогою `fetch` або іншого методу для роботи з мережею.
 
-We can either create `new FormData(form)` from an HTML form, or create an object without a form at all, and then append fields with methods:
+Ми можемо створити такий об’єкт з даними, передавши в конструктор HTML-форму -- `new FormData(form)`, або ж можна створити об’єкт взагалі без форми і потім додати до нього поля за допомогою методів:
 
 - `formData.append(name, value)`
 - `formData.append(name, blob, fileName)`
 - `formData.set(name, value)`
 - `formData.set(name, blob, fileName)`
 
-Let's note two peculiarities here:
+Зазначимо дві особливості:
 
-1. The `set` method removes fields with the same name, `append` doesn't. That's the only difference between them.
-2. To send a file, 3-argument syntax is needed, the last argument is a file name, that normally is taken from user filesystem for `<input type="file">`.
+1. Метод `set` видаляє поля з таким самим іменем, а `append` -- ні. У цьому їхня єдина відмінність.
+2. Щоб надіслати файл, потрібно використовувати синтаксис з трьома аргументами, як третій вказується ім’я файлу, яке зазвичай, при `<input type="file">`, береться з файлової системи.
 
-Other methods are:
+Другие методы:
 
 - `formData.delete(name)`
 - `formData.get(name)`
 - `formData.has(name)`
 
-That's it!
+От і все!
