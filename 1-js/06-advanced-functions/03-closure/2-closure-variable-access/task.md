@@ -2,28 +2,28 @@ importance: 5
 
 ---
 
-# Which variables are available?
+# Які змінні доступні?
 
-The function `makeWorker` below makes another function and returns it. That new function can be called from somewhere else.
+Функція `makeWorker` створює іншу функцію і повертає її. Цю нову функцію можна викликати ще звідкись.
 
-Will it have access to the outer variables from its creation place, or the invocation place, or both?
+Чи матиме вона доступ до зовнішніх змінних з місця створення, з місця виклику, чи з обох?
 
 ```js
 function makeWorker() {
-  let name = "Pete";
+  let name = "Петро";
 
   return function() {
     alert(name);
   };
 }
 
-let name = "John";
+let name = "Іван";
 
-// create a function
+// створити функцію
 let work = makeWorker();
 
-// call it
-work(); // what will it show?
+// викликати її
+work(); // Що вона покаже?
 ```
 
-Which value it will show? "Pete" or "John"?
+Яке значення вона покаже? "Петро" чи "Іван"?

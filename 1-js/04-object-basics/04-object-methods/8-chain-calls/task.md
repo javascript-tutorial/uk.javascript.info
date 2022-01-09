@@ -28,12 +28,14 @@ ladder.up();
 ladder.up();
 ladder.down();
 ladder.showStep(); // 1
+ladder.down();
+ladder.showStep(); // 0
 ```
 
 Змініть код `up`, `down` і `showStep` так, щоб зробити доступним ланцюг викликів, наприклад:
 
 ```js
-ladder.up().up().down().showStep(); // 1
+ladder.up().up().down().showStep().down().showStep(); // shows 1 then 0
 ```
 
 Такий підхід широко використовується в бібліотеках JavaScript.

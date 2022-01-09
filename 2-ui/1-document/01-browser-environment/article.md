@@ -1,113 +1,113 @@
-# Browser environment, specs
+# Браузерне середовище, специфікації
 
-The JavaScript language was initially created for web browsers. Since then it has evolved and become a language with many uses and platforms.
+Мова програмування JavaScript була створена для веббраузерів. З того часу вона розвинулася і стала мовою з багатьма варіантами використанням та платформами.
 
-A platform may be a browser, or a web-server or another *host*, even a "smart" coffee machine, if it can run JavaScript. Each of them provides platform-specific functionality. The JavaScript specification calls that a *host environment*.
+Платформою може бути браузер, або вебсервер або інший *хост*, навіть "розумна" кавоварка, якщо вона може запустити JavaScript. Кожна з них забезпечує специфічну для платформи функціональність. Специфікація JavaScript називає це *середовищем*.
 
-A host environment provides own objects and functions additional to the language core. Web browsers give a means to control web pages. Node.js provides server-side features, and so on.
+Середовище забезпечує власні об’єкти та додаткові функції до ядра мови. Веббраузери дають засоби для керування вебсторінками. Node.js забезпечує функції сервера і так далі.
 
-Here's a bird's-eye view of what we have when JavaScript runs in a web browser:
+Ось погляд в загальних рисах на те, що ми маємо, коли JavaScript працює в веббраузері:
 
 ![](windowObjects.svg)
 
-There's a "root" object called `window`. It has two roles:
+Є "корінний" об’єкт, що називається `window`. Він має дві ролі:
 
-1. First, it is a global object for JavaScript code, as described in the chapter <info:global-object>.
-2. Second, it represents the "browser window" and provides methods to control it.
+1. По-перше, це глобальний об’єкт для коду JavaScript, як описано в розділі <info:global-object>.
+2. По-друге, він являє собою "вікно браузера" та надає способи для керування ним.
 
-For instance, here we use it as a global object:
+Наприклад, тут ми використовуємо його як глобальний об’єкт:
 
 ```js run
 function sayHi() {
-  alert("Hello");
+  alert("Здрастуйте");
 }
 
-// global functions are methods of the global object:
+// глобальні функції є методами глобального об’єкта:
 window.sayHi();
 ```
 
-And here we use it as a browser window, to see the window height:
+А тут ми використовуємо його як вікно браузера, щоб побачити висоту вікна:
 
 ```js run
-alert(window.innerHeight); // inner window height
+alert(window.innerHeight); // внутрішня висота вікна
 ```
 
-There are more window-specific methods and properties, we'll cover them later.
+Існує набагато більше методів та властивостей вікна, ми їх розглянемо пізніше.
 
 ## DOM (Document Object Model)
 
-Document Object Model, or DOM for short, represents all page content as objects that can be modified.
+Document Object Model, або скорочено DOM -- представляє весь контент сторінки як об’єкти, які можуть бути змінені.
 
-The `document` object is the main "entry point" to the page. We can change or create anything on the page using it.
+Об’єкт `document` -- це головна "точка входу" до сторінки. Ми можемо змінити або створити що-небудь на сторінці, використовуючи цей об’єкт.
 
-For instance:
+Наприклад
 ```js run
-// change the background color to red
+// змінити колір фону на червоний
 document.body.style.background = "red";
 
-// change it back after 1 second
+// повернути його назад після 1 секунди
 setTimeout(() => document.body.style.background = "", 1000);
 ```
 
-Here we used `document.body.style`, but there's much, much more. Properties and methods are described in the specification: [DOM Living Standard](https://dom.spec.whatwg.org).
+Тут ми використовували `document.body.style`, але там набагато, набагато більше властивостей. Властивості та методи описані у специфікації: [DOM Living Standard](https://dom.spec.whatwg.org).
 
-```smart header="DOM is not only for browsers"
-The DOM specification explains the structure of a document and provides objects to manipulate it. There are non-browser instruments that use DOM too.
+```smart header="DOM -- не лише для браузерів"
+Специфікація DOM описує структуру документа та надає об’єкти, щоб керувати ним. Є також інші інструменти окрім браузерів, які також використовують DOM.
 
-For instance, server-side scripts that download HTML pages and process them can also use DOM. They may support only a part of the specification though.
+Наприклад, скрипти сервера, які завантажують HTML-сторінки та обробляють їх також можуть використовувати DOM. Хоча, вони можуть підтримувати лише частину специфікації.
 ```
 
-```smart header="CSSOM for styling"
-There's also a separate specification, [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom-1/) for CSS rules and stylesheets, that explains how they are represented as objects, and how to read and write them.
+```smart header="CSSOM для стилю"
+Також є окрема специфікація, [CSS Object Model (CSSOM)](https://www.w3.org/TR/cssom-1/) для правил CSS та таблиць стилів, що пояснює, як стилі повинні бути представлені у вигляді об’єктів, як читати та писати їх.
 
-CSSOM is used together with DOM when we modify style rules for the document. In practice though, CSSOM is rarely required, because we rarely need to modify CSS rules from JavaScript (usually we just add/remove CSS classes, not modify their CSS rules), but that's also possible.
+CSSOM використовується разом з DOM, коли ми змінюємо правила стилів для документа. Хоча на практиці, ми рідко використовуємо CSSOM, тому що рідко змінюємо CSS-правила через JavaScript (зазвичай ми просто додаємо/видаляємо CSS-класи, не змінюючи їх CSS-правила), але це також можливо.
 ```
 
 ## BOM (Browser Object Model)
 
-The Browser Object Model (BOM) represents additional objects provided by the browser (host environment) for working with everything except the document.
+Модель об’єкта браузера (BOM) являє собою додаткові об’єкти, надані браузером (хост-середовищем) для роботи з усім, крім документа.
 
-For instance:
+Наприклад:
 
-- The [navigator](mdn:api/Window/navigator) object provides background information about the browser and the operating system. There are many properties, but the two most widely known are: `navigator.userAgent` -- about the current browser, and `navigator.platform` -- about the platform (can help to differ between Windows/Linux/Mac etc).
-- The [location](mdn:api/Window/location) object allows us to read the current URL and can redirect the browser to a new one.
+- Об’єкт [navigator](mdn:api/Window/navigator) забезпечує інформацію про браузер та операційну систему. Існує багато його властивостей, але два найбільш широко відомих: `navigator.userAgent` -- інформація про поточний браузер, та `navigator.platform` -- про платформу (може допомогти визначити на якій платформі відкрито браузер -- Windows/Linux/Mac тощо).
+- Об’єкт [location](mdn:api/Window/location) дозволяє нам прочитати поточну URL-адресу і може перенаправити веббраузер на нову адресу.
 
-Here's how we can use the `location` object:
+Ось як ми можемо використовувати об’єкт `location`:
 
 ```js run
-alert(location.href); // shows current URL
-if (confirm("Go to Wikipedia?")) {
-  location.href = "https://wikipedia.org"; // redirect the browser to another URL
+alert(location.href); // показує поточний URL-адрес
+if (confirm("Перейти на сайт Wikipedia?")) {
+  location.href = "https://wikipedia.org"; // перенаправляє браузер на іншу URL-адресу
 }
 ```
 
-Functions `alert/confirm/prompt` are also a part of BOM: they are directly not related to the document, but represent pure browser methods of communicating with the user.
+Функції `alert/confirm/prompt` також є частиною BOM: вони безпосередньо не пов’язані з документом, але являють собою чисті методи взаємодії з користувачем.
 
-```smart header="Specifications"
-BOM is the part of the general [HTML specification](https://html.spec.whatwg.org).
+```smart header="Специфікації"
+BOM -- це частина загальної [HTML-специфікації](https://html.spec.whatwg.org).
 
-Yes, you heard that right. The HTML spec at <https://html.spec.whatwg.org> is not only about the "HTML language" (tags, attributes), but also covers a bunch of objects, methods and browser-specific DOM extensions. That's "HTML in broad terms". Also, some parts have additional specs listed at <https://spec.whatwg.org>.
+Так, ви правильно почули. Специфікація HTML на <https://html.spec.whatwg.org> -- це не тільки про "мову HTML" (теги, атрибути). Вона також охоплює купу об’єктів, методів та специфічних для браузера розширень DOM. Це "HTML в широкому сенсі". Крім того, деякі частини мають додаткові специфікації, перераховані на <https://spec.whatwg.org>.
 ```
 
-## Summary
+## Підсумки
 
-Talking about standards, we have:
+Говорячи про стандарти, ми маємо:
 
-DOM specification
-: Describes the document structure, manipulations and events, see <https://dom.spec.whatwg.org>.
+Специфікацію DOM
+: Описує структуру документа, маніпуляції та події, див. <https://dom.spec.whatwg.org>.
 
-CSSOM specification
-: Describes stylesheets and style rules, manipulations with them and their binding to documents, see <https://www.w3.org/TR/cssom-1/>.
+Специфікацію CSSOM
+: Описує таблиці стилів і правила стилів, маніпуляції з ними і їх зв’язування з документами, див. <https://www.w3.org/TR/cssom-1/>.
 
-HTML specification
-: Describes the HTML language (e.g. tags) and also the BOM (browser object model) -- various browser functions: `setTimeout`, `alert`, `location` and so on, see <https://html.spec.whatwg.org>. It takes the DOM specification and extends it with many additional properties and methods.
+Специфікацію HTML
+: Описує мову HTML (наприклад, теги), а також BOM (модель об’єкта браузера) -- різні функції браузера: `setTimeout`, `alert`, `location` і так далі, див. <https://html.spec.whatwg.org>. Вона приймає специфікацію DOM та розширює її багатьма додатковими властивостями та методами.
 
-Additionally, some classes are described separately at <https://spec.whatwg.org/>.
+Крім того, деякі класи описуються окремо на <https://spec.whatwg.org/>.
 
-Please note these links, as there's so much stuff to learn it's impossible to cover and remember everything.
+Буль ласка, збережіть ці посилання, оскільки у них подано багато цікавої інформації для вивчення, яку неможливо цілком розглянути і все запам’ятати.
 
-When you'd like to read about a property or a method, the Mozilla manual at <https://developer.mozilla.org/en-US/search> is also a nice resource, but the corresponding spec may be better: it's more complex and longer to read, but will make your fundamental knowledge sound and complete.
+Коли ви хочете прочитати про властивість або метод, керівництво Mozilla на <https://developer.mozilla.org/en-US/> також є хорошим ресурсом, але відповідна специфікація може бути кращим ресурсом: вона складніша і її довше читати, але вона зробить ваші знання фундаментальними та повними.
 
-To find something, it's often convenient to use an internet search "WHATWG [term]" or "MDN [term]", e.g <https://google.com?q=whatwg+localstorage>, <https://google.com?q=mdn+localstorage>.
+Щоб щось знайти в Інтернеті, часто зручно використовувати пошук в форматі "WHATWG [запит]" або "MDN [запит]", наприклад, <https://google.com?q=whatwg+localstorage>, <https://google.com?q=mdn+localstorage>.
 
-Now we'll get down to learning DOM, because the document plays the central role in the UI.
+Тепер перейдімо до вивчення DOM, тому що документ відіграє центральну роль в інтерфейсі користувача.

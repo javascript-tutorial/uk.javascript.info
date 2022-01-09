@@ -1,6 +1,6 @@
-# Error in setTimeout
+# Помилка в setTimeout
 
-What do you think? Will the `.catch` trigger? Explain your answer.
+Що ви думаєте? Чи виконається `.catch`? Поясніть свою відповідь.
 
 ```js
 new Promise(function(resolve, reject) {

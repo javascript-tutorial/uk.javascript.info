@@ -9,7 +9,7 @@ let router = new Router();
 
 router.post('/user', async (ctx) => {
   ctx.body = {
-    message: "User saved"
+    message: "Користувач збережений"
   };
 });
 
@@ -34,7 +34,7 @@ router.post('/image-form', async (ctx) => {
   });
 
   ctx.body = {
-    message: `Image saved, firstName: ${fields.firstName}, Image size:${files[0].length}, fileName: ${files[0].filename}`
+    message: `Зображення збережене, ім’я: ${fields.firstName}, Розмір зображення:${files[0].length}, ім’я файлу: ${files[0].filename}`
   };
 });
 
@@ -61,7 +61,7 @@ router.post('/user-avatar', async (ctx) => {
   });
 
   ctx.body = {
-    message: `User with picture, firstName: ${fields.firstName}, picture size:${files[0].length}`
+    message: `Користувач з картиною, ім’я: ${fields.firstName}, розмір зображення:${files[0].length}`
   };
 });
 

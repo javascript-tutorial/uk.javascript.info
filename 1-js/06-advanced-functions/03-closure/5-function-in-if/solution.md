@@ -1,3 +1,3 @@
-The result is **an error**.
+Результатом буде **помилка**.
 
-The function `sayHi` is declared inside the `if`, so it only lives inside it. There is no `sayHi` outside.
+Функція `sayHi` оголошується всередині `if`, тому вона доступна тільки всередині нього. Зовні функції `sayHi` не існує.
