@@ -143,7 +143,6 @@ drawHtmlTree(node4, 'div.domtree', 690, 360);
 </script>
 
 ````warn header="Таблиці завжди мають `<tbody>`"
-An interesting "special case" is tables. By DOM specification they must have `<tbody>` tag, but HTML text may omit it. Then the browser creates `<tbody>` in the DOM automatically.
 Цікавий "особливий випадок" -- це таблиці. Згідно DOM специфікації вони повинні мати тег `<tbody>`, але текст HTML може це пропустити. Тоді браузер створює `<tbody>` у DOM автоматично.
 
 Наприклад, HTML:
