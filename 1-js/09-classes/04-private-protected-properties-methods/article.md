@@ -1,95 +1,95 @@
 
-# Private and protected properties and methods
+# Приватні та захищені властивості та методи
 
-One of the most important principles of object oriented programming -- delimiting internal interface from the external one.
+Один з найважливіших принципів об’єктно-орієнтованого програмування -- розділення внутрішнього інтерфейсу від зовнішнього.
 
-That is "a must" practice in developing anything more complex than a "hello world" app.
+Це обов’язкова практика у розробці вcього, що складніше, ніж додаток "hello world".
 
-To understand this, let's break away from development and turn our eyes into the real world.
+Щоб зрозуміти це, відійдімо від розробки та поглянемо на реальний світ.
 
-Usually, devices that we're using are quite complex. But delimiting the internal interface from the external one allows to use them without problems.
+Зазвичай пристрої, які ми використовуємо, є досить складними. Але вони розмежовують внутрішній та зовнішній інтерфейс, що дозволяє використовувати їх без проблем.
 
-## A real-life example
+## Приклад з реального життя
 
-For instance, a coffee machine. Simple from outside: a button, a display, a few holes...And, surely, the result -- great coffee! :)
+Візьмемо до прикладу кавоварка. Проста ззовні: кнопка, дисплей, кілька отворів ... і, безумовно, результат -- чудова кава!:)
 
 ![](coffee.jpg)
 
-But inside... (a picture from the repair manual)
+Але всередині... (малюнок з інструкції з ремонту)
 
 ![](coffee-inside.jpg)
 
-A lot of details. But we can use it without knowing anything.
+Багато деталей. Але ми можемо використовувати її, не знаючи нічого.
 
-Coffee machines are quite reliable, aren't they? We can use one for years, and only if something goes wrong -- bring it for repairs.
+Кавові машини досить надійні, чи не так? Ми можемо використовувати її один рік, і тільки якщо щось піде не так -- віднести її в ремонт.
 
-The secret of reliability and simplicity of a coffee machine -- all details are well-tuned and *hidden* inside.
+Секрет надійності та простоти кавоварки -- всі деталі добре налаштовані і *приховані* всередині.
 
-If we remove the protective cover from the coffee machine, then using it will be much more complex (where to press?), and dangerous (it can electrocute).
+Якщо ми видалимо захисне покриття з кавоварки, то використовувати її буде набагато складніше (де натискати?), і небезпечніше (вона може вдарити електричним струмом).
 
-As we'll see, in programming objects are like coffee machines.
+Як ми побачимо, об’єкти у програмуванні подібні до кавоварок.
 
-But in order to hide inner details, we'll use not a protective cover, but rather special syntax of the language and conventions.
+Але для того, щоб приховати внутрішні деталі, ми не будемо використовувати захисну кришку, а особливий синтаксис мови та конвенції.
 
-## Internal and external interface
+## Внутрішній та зовнішній інтерфейс
 
-In object-oriented programming, properties and methods are split into two groups:
+У об’єктно-орієнтованому програмуванні, властивості та методи розділені на дві групи:
 
-- *Internal interface* -- methods and properties, accessible from other methods of the class, but not from the outside.
-- *External interface* -- methods and properties, accessible also from outside the class.
+- *Внутрішній інтерфейс* -- методи та властивості, доступні в інших методах класу, але не ззовні.
+- *Зовнішній інтерфейс* -- методи та властивості, доступні також ззовні класу.
 
-If we continue the analogy with the coffee machine -- what's hidden inside: a boiler tube, heating element, and so on -- is its internal interface.
+Якщо ми продовжимо аналогію з кавоваркою -- те, що приховано всередині: трубка кип’ятильника, нагрівальний елемент і так далі -- це його внутрішній інтерфейс.
 
-An internal interface is used for the object to work, its details use each other. For instance, a boiler tube is attached to the heating element.
+Внутрішній інтерфейс використовується об’єктом для роботи, його деталі використовують один одного. Наприклад, до нагрівального елемента прикріплюється трубка кип’ятильника.
 
-But from the outside a coffee machine is closed by the protective cover, so that no one can reach those. Details are hidden and inaccessible. We can use its features via the external interface.
+Але ззовні кавоварка закрита захисним покриттям так, що ніхто не може добратися до її нутрощів. Деталі приховані та недоступні. Ми можемо використовувати її функціонал за допомогою зовнішнього інтерфейсу.
 
-So, all we need to use an object is to know its external interface. We may be completely unaware how it works inside, and that's great.
+Отже, все, що нам потрібно для використання об’єкту, -- це знати його зовнішній інтерфейс. Ми можемо повністю не знати, як він працює всередині, і це чудово.
 
-That was a general introduction.
+Це було загальне введення.
 
-In JavaScript, there are two types of object fields (properties and methods):
+У JavaScript існує два типи полів об’єктів (властивостей та методів):
 
-- Public: accessible from anywhere. They comprise the external interface. Until now we were only using public properties and methods.
-- Private: accessible only from inside the class. These are for the internal interface.
+- Публічні: доступні з будь-якого місця. Вони складають зовнішній інтерфейс. Досі ми використовували лише публічні властивості та методи.
+- Приватні: доступний тільки зсередини класу. Вони для внутрішнього інтерфейсу.
 
-In many other languages there also exist "protected" fields: accessible only from inside the class and those extending it (like private, but plus access from inheriting classes). They are also useful for the internal interface. They are in a sense more widespread than private ones, because we usually want inheriting classes to gain access to them.
+В багатьох інших мовах існують також "захищені" поля: доступні лише зсередини свого класу, а також тих, які його наслідують (як приватні, але плюс доступ з класів, що наслідуються). Вони також корисні для внутрішнього інтерфейсу. В певному сенсі вони більш широко поширені ніж приватні тому, що ми зазвичай хочемо завдяки наслідуванню отримати доступ до них.
 
-Protected fields are not implemented in JavaScript on the language level, but in practice they are very convenient, so they are emulated.
+Захищені поля не реалізовані в JavaScript на рівні мови, але на практиці вони дуже зручні, тому вони емулюються.
 
-Now we'll make a coffee machine in JavaScript with all these types of properties. A coffee machine has a lot of details, we won't model them to stay simple (though we could).
+Тепер ми зробимо кавоварку в JavaScript з усіма цими типами властивостей. Кавоварка має багато деталей, ми не будемо моделювати їх для простоти прикладу (хоча ми можемо).
 
-## Protecting "waterAmount"
+## Захищена властивість "waterAmount"
 
-Let's make a simple coffee machine class first:
+Давайте спочатку зробимо простий клас для кавоварки:
 
 ```js run
 class CoffeeMachine {
-  waterAmount = 0; // the amount of water inside
+  waterAmount = 0; // кількість води всередині
 
   constructor(power) {
     this.power = power;
-    alert( `Created a coffee-machine, power: ${power}` );
+    alert( `Створено кавоварку, потужність: ${power}` );
   }
 
 }
 
-// create the coffee machine
+// створюємо кавоварку
 let coffeeMachine = new CoffeeMachine(100);
 
-// add water
+// додаємо воду
 coffeeMachine.waterAmount = 200;
 ```
 
-Right now the properties `waterAmount` and `power` are public. We can easily get/set them from the outside to any value.
+Прямо зараз властивості `waterAmount` та `power` публічні. Ми можемо легко отримати/встановити їм будь-яке значення ззовні.
 
-Let's change `waterAmount` property to protected to have more control over it. For instance, we don't want anyone to set it below zero.
+Замінімо властивість `waterAmount` на захищену, щоб мати більше контролю над нею. Наприклад, ми не хочемо, щоб хтось встановив це значення нижче нуля.
 
-**Protected properties are usually prefixed with an underscore `_`.**
+**Захищені властивості зазвичай починають з підкресленням `_`.**
 
-That is not enforced on the language level, but there's a well-known convention between programmers that such properties and methods should not be accessed from the outside.
+Це не синтаксис на рівні мови, а лише відома конвенція між програмістами, що такі властивості та методи не повинні бути доступними ззовні.
 
-So our property will be called `_waterAmount`:
+Тому наша властивість буде називатися `_waterAmount`:
 
 ```js run
 class CoffeeMachine {
@@ -112,22 +112,22 @@ class CoffeeMachine {
 
 }
 
-// create the coffee machine
+// створюємо кавоварку
 let coffeeMachine = new CoffeeMachine(100);
 
-// add water
-coffeeMachine.waterAmount = -10; // _waterAmount will become 0, not -10
+// додаємо воду
+coffeeMachine.waterAmount = -10; // _waterAmount буде 0, а не -10
 ```
 
-Now the access is under control, so setting the water amount below zero becomes impossible.
+Тепер доступ знаходиться під контролем, тому встановлення кількості води нижче нуля стає неможливим.
 
-## Read-only "power"
+## Властивість тільки для читання "power"
 
-For `power` property, let's make it read-only. It sometimes happens that a property must be set at creation time only, and then never modified.
+Зробімо властивість `power` доступною лише для читання. Іноді трапляється, що властивість повинна бути встановлена тільки при створенні, а потім ніколи не змінюватися.
 
-That's exactly the case for a coffee machine: power never changes.
+Для кавоварки це саме так: потужність ніколи не змінюється.
 
-To do so, we only need to make getter, but not the setter:
+Щоб це зробити, потрібно зробити лише гетер, без сетеру:
 
 ```js run
 class CoffeeMachine {
@@ -143,18 +143,18 @@ class CoffeeMachine {
 
 }
 
-// create the coffee machine
+// створюємо кавоварку
 let coffeeMachine = new CoffeeMachine(100);
 
-alert(`Power is: ${coffeeMachine.power}W`); // Power is: 100W
+alert(`Потужність: ${coffeeMachine.power} Вт`); // Потужність: 100 Вт
 
-coffeeMachine.power = 25; // Error (no setter)
+coffeeMachine.power = 25; // Помилка (немає сетера)
 ```
 
-````smart header="Getter/setter functions"
-Here we used getter/setter syntax.
+````smart header="Функції гетери/сетери"
+Тут ми використовували синтаксис гетерів/сетерів.
 
-But most of the time `get.../set...` functions are preferred, like this:
+Але більшості випадків `get.../set...` функції є кращими, наприклад:
 
 ```js
 class CoffeeMachine {
@@ -173,26 +173,26 @@ class CoffeeMachine {
 new CoffeeMachine().setWaterAmount(100);
 ```
 
-That looks a bit longer, but functions are more flexible. They can accept multiple arguments (even if we don't need them right now).
+Це виглядає трохи довше, але функції більш гнучкі. Вони можуть приймати кілька аргументів (навіть якщо ми нам вони не потрібні прямо зараз).
 
-On the other hand, get/set syntax is shorter, so ultimately there's no strict rule, it's up to you to decide.
+З іншого боку, get/set синтаксис коротше, тому, в кінцевому підсумку, немає жорсткого правила, рішення залежить від вас.
 ````
 
-```smart header="Protected fields are inherited"
-If we inherit `class MegaMachine extends CoffeeMachine`, then nothing prevents us from accessing `this._waterAmount` or `this._power` from the methods of the new class.
+```smart header="Захищені поля успадковуються"
+Якщо ми успадкуємо `class MegaMachine extends CoffeeMachine`, то потім ніщо не завадить нам мати доступ до `this._waterAmount` або `this._power` з методів нового класу.
 
-So protected fields are naturally inheritable. Unlike private ones that we'll see below.
+Тобто захищені поля успадковуються. На відміну від приватних, які ми побачимо нижче.
 ```
 
-## Private "#waterLimit"
+## Приватна властивість "#waterLimit"
 
 [recent browser=none]
 
-There's a finished JavaScript proposal, almost in the standard, that provides language-level support for private properties and methods.
+В JavaScript є закінчена пропозиція, майже у стандарті, що забезпечує підтримку приватних властивостей та методів на рівні мови.
 
-Privates should start with `#`. They are only accessible from inside the class.
+Приватні властивості і методи повинні починатися з `#`. Вони доступні лише з класу.
 
-For instance, here's a private `#waterLimit` property and the water-checking private method `#fixWaterAmount`:
+Наприклад, ось приватна властивість `#waterLimit` та приватний метод, що перевіряє кількість води `#fixWaterAmount`:
 
 ```js run
 class CoffeeMachine {
@@ -216,17 +216,17 @@ class CoffeeMachine {
 let coffeeMachine = new CoffeeMachine();
 
 *!*
-// can't access privates from outside of the class
-coffeeMachine.#fixWaterAmount(123); // Error
-coffeeMachine.#waterLimit = 1000; // Error
+// не можна отримати доступ до приватних властивостей і методів ззовні класу
+coffeeMachine.#fixWaterAmount(123); // Помилка
+coffeeMachine.#waterLimit = 1000; // Помилка
 */!*
 ```
 
-On the language level, `#` is a special sign that the field is private. We can't access it from outside or from inheriting classes.
+На рівні мови, `#` -- це особливий знак того, що поле є приватним. Ми не можемо отримати доступ до нього ззовні або з наслідуваних класів.
 
-Private fields do not conflict with public ones. We can have both private `#waterAmount` and public `waterAmount` fields at the same time.
+Приватні поля не конфліктують з публічним. Ми можемо мати як приватне `#waterAmount` та і публічне `waterAmount` поле одночасно.
 
-For instance, let's make `waterAmount` an accessor for `#waterAmount`:
+Наприклад, зробімо аксесор `waterAmount` для `#wateramount`:
 
 ```js run
 class CoffeeMachine {
@@ -246,77 +246,77 @@ class CoffeeMachine {
 let machine = new CoffeeMachine();
 
 machine.waterAmount = 100;
-alert(machine.#waterAmount); // Error
+alert(machine.#waterAmount); // Помилка
 ```
 
-Unlike protected ones, private fields are enforced by the language itself. That's a good thing.
+На відміну від захищених, приватні поля забезпечуються самою мовою. Це добре.
 
-But if we inherit from `CoffeeMachine`, then we'll have no direct access to `#waterAmount`. We'll need to rely on `waterAmount` getter/setter:
+Але якщо ми наслідуємося від `CoffeeMachine`, то ми не матимемо прямого доступу до `#waterAmount`. Ми повинні будемо покладатися на `wateramount` гетер/сетер:
 
 ```js
 class MegaCoffeeMachine extends CoffeeMachine {
   method() {
 *!*
-    alert( this.#waterAmount ); // Error: can only access from CoffeeMachine
+    alert( this.#waterAmount ); // Помилка: можна отримати доступ лише до CoffeeMachine
 */!*
   }
 }
 ```
 
-In many scenarios such limitation is too severe. If we extend a `CoffeeMachine`, we may have legitimate reasons to access its internals. That's why protected fields are used more often, even though they are not supported by the language syntax.
+У багатьох сценаріях таке обмеження занадто важке. Якщо ми розширимо `CoffeeMachine`, ми можемо мати виправдані причини доступу до своїх внутрішніх методів і властивостей. Ось чому захищені поля використовуються частіше, навіть якщо вони не підтримуються синтаксисом мови.
 
-````warn header="Private fields are not available as this[name]"
-Private fields are special.
+````warn header="Приватні поля недоступні через this[name]"
+Приватні поля особливі.
 
-As we know, usually we can access fields using `this[name]`:
+Як відомо, зазвичай ми можемо отримати доступ до поля, використовуючи `this[name]`:
 
 ```js
 class User {
   ...
   sayHi() {
-    let fieldName = "name";
-    alert(`Hello, ${*!*this[fieldName]*/!*}`);
+    let fieldName = "ім’я";
+    alert(`Привіт, ${*!*this[fieldName]*/!*}`);
   }
 }
 ```
 
-With private fields that's impossible: `this['#name']` doesn't work. That's a syntax limitation to ensure privacy.
+З приватними полями це неможливо: `this['#name']` не працює. Це обмеження синтаксису зроблено для забезпечення конфіденційності.
 ````
 
-## Summary
+## Підсумки
 
-In terms of OOP, delimiting of the internal interface from the external one is called [encapsulation](https://en.wikipedia.org/wiki/Encapsulation_(computer_programming)).
+З точки зору ООП, відокремлення внутрішнього інтерфейсу від зовнішнього називається [інкапсуляція](https://uk.wikipedia.org/wiki/Інкапсуляція_(програмування)).
 
-It gives the following benefits:
+Це дає наступні переваги:
 
-Protection for users, so that they don't shoot themselves in the foot
-: Imagine, there's a team of developers using a coffee machine. It was made by the "Best CoffeeMachine" company, and works fine, but a protective cover was removed. So the internal interface is exposed.
+Захист для користувачів, щоб вони не вистрелили собі в ногу
+: Уявіть, що є команда розробників, які використовують кавоварку. Вона була зроблена компанією "Best CoffeeMachine", і добре працює, але захисне покриття було видалено. Таким чином, внутрішній інтерфейс викритий.
 
-    All developers are civilized -- they use the coffee machine as intended. But one of them, John, decided that he's the smartest one, and made some tweaks in the coffee machine internals. So the coffee machine failed two days later.
+    Всі розробники цивілізовані -- вони використовують кавову машину, як це передбачено. Але один з них, Іван, вирішив, що він найрозумніший, і зробив деякі налаштування в нутрощах кавоварки. Через це кавоварка зламалася через два дні.
 
-    That's surely not John's fault, but rather the person who removed the protective cover and let John do his manipulations.
+    Це, безумовно, не вина Івана, а скоріше особи, яка зняла захисну кришку, і дозволила Івану виконувати свої маніпуляції.
 
-    The same in programming. If a user of a class will change things not intended to be changed from the outside -- the consequences are unpredictable.
+    Те ж саме і в програмі. Якщо користувач класу ззовні змінить речі, які не повинні бути змінені -- наслідки непередбачувані.
 
-Supportable
-: The situation in programming is more complex than with a real-life coffee machine, because we don't just buy it once. The code constantly undergoes development and improvement.
+Підтримка
+: Ситуація в програмуванні складніша, ніж з реальною кавоваркою, тому що ми не просто купуємо щось раз. Код постійно зазнає розробки та вдосконалення.
 
-    **If we strictly delimit the internal interface, then the developer of the class can freely change its internal properties and methods, even without informing the users.**
+    **Якщо ми суворо відокремимо внутрішній інтерфейс, то розробник класу може вільно змінювати свої внутрішні властивості та методи, навіть не повідомляючи користувачів.**
 
-    If you're a developer of such class, it's great to know that private methods can be safely renamed, their parameters can be changed, and even removed, because no external code depends on them.
+    Якщо ви розробник такого класу, це чудово знати, що приватні методи можуть бути безпечно перейменовані, а їх параметри можуть бути змінені та навіть видалені, оскільки зовнішній код від них не залежить.
 
-    For users, when a new version comes out, it may be a total overhaul internally, but still simple to upgrade if the external interface is the same.
+    Для користувачів, коли з’явиться нова версія, вона може бути повністю перероблена в середині, але версію все ще просто оновити, якщо зовнішній інтерфейс однаковий.
 
-Hiding complexity
-: People adore using things that are simple. At least from outside. What's inside is a different thing.
+Прихована складність
+: Люди обожнюють, використовуючи речі, які є простими. Принаймні ззовні. Що всередині -- це вже інша річ.
 
-    Programmers are not an exception.
+    Програмісти не є винятком.
 
-    **It's always convenient when implementation details are hidden, and a simple, well-documented external interface is available.**
+    **Завжди зручно, коли деталі реалізації приховані, а простий, добре документований зовнішній інтерфейс -- доступний.**
 
-To hide an internal interface we use either protected or private properties:
+Щоб приховати внутрішній інтерфейс, ми використовуємо захищені або приватні властивості:
 
-- Protected fields start with `_`. That's a well-known convention, not enforced at the language level. Programmers should only access a field starting with `_` from its class and classes inheriting from it.
-- Private fields start with `#`. JavaScript makes sure we can only access those from inside the class.
+- Захищені поля починаються з `_`. Це відома конвенція, яка не підкріплена на рівні мови. Програмісти повинні отримувати доступ до поля, що починається з `_`, лише з його класу та класів, успадковуваних від нього.
+- Приватні поля починаються з `#`. JavaScript гарантує, що ми можемо отримати доступ до них лише з середини класу.
 
-Right now, private fields are not well-supported among browsers, but can be polyfilled.
+Зараз, приватні поля не дуже добре підтримуються браузерами, але можна використовувати поліфіл.
