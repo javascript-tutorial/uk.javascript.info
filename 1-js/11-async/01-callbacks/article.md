@@ -1,68 +1,68 @@
 
 
-# Introduction: callbacks
+# Введення: колбеки
 
-```warn header="We use browser methods in examples here"
-To demonstrate the use of callbacks, promises and other abstract concepts, we'll be using some browser methods: specifically, loading scripts and performing simple document manipulations.
+```warn header="У прикладах ми використовуємо методи браузера"
+Щоб продемонструвати використання колбеків, промісів та інших абстрактних понять, ми будемо використовувати деякі методи браузера: зокрема, завантажувати скрипти та виконувати прості маніпуляції з документом.
 
-If you're not familiar with these methods, and their usage in the examples is confusing, you may want to read a few chapters from the [next part](/document) of the tutorial.
+Якщо ви не знайомі з цими методами, і їх використання в прикладах викликає заплутаність, ви можете прочитати кілька розділів з [наступної частини](/document) підручника.
 
-Although, we'll try to make things clear anyway. There won't be anything really complex browser-wise.
+Хоча ми все одно спробуємо все прояснити. У браузері не буде нічого складного.
 ```
 
-Many functions are provided by JavaScript host environments that allow you to schedule *asynchronous* actions. In other words, actions that we initiate now, but they finish later.
+Багато функцій надаються середовищами хостингу JavaScript, які дозволяють планувати *асинхронні* дії. Тобто дії, які ми починаємо зараз, але закінчуємо пізніше.
 
-For instance, one such function is the `setTimeout` function.
+Наприклад, однією з таких функцій є `setTimeout`.
 
-There are other real-world examples of asynchronous actions, e.g. loading scripts and modules (we'll cover them in later chapters).
+Є й інші реальні приклади асинхронних дій, наприклад завантаження скриптів і модулів (ми розглянемо їх у наступних розділах).
 
-Take a look at the function `loadScript(src)`, that loads a script with the given `src`:
+Розгляньмо функцію `loadScript(src)`, яка завантажує скрипт із заданим `src`:
 
 ```js
 function loadScript(src) {
-  // creates a <script> tag and append it to the page
-  // this causes the script with given src to start loading and run when complete
+  // створює тег <script> і додає його до сторінки
+  // це призводить до того, що скрипт із заданим src починає завантажуватися, після завершення чого запускається
   let script = document.createElement('script');
   script.src = src;
   document.head.append(script);
 }
 ```
 
-It inserts into the document a new, dynamically created, tag `<script src="…">` with the given `src`. The browser automatically starts loading it and executes when complete.
+Вона вставляє в документ новий, динамічно створений тег `<script src="…">` із заданим `src`. Браузер автоматично почне завантажувати його, після завершення чого запустить.
 
-We can use this function like this:
+Ми можемо використовувати цю функцію таким чином:
 
 ```js
-// load and execute the script at the given path
+// завантажує та виконує скрипт за заданим шляхом
 loadScript('/my/script.js');
 ```
 
-The script is executed "asynchronously", as it starts loading now, but runs later, when the function has already finished.
+Скрипт виконується "асинхронно", оскільки він починає завантажуватися зараз, але запускається пізніше, коли функція вже завершить виконання.
 
-If there's any code below `loadScript(…)`, it doesn't wait until the script loading finishes.
+Якщо нижче `loadScript(...)` буде будь-який код, він не чекатиме, доки завершиться завантаження скрипту.
 
 ```js
 loadScript('/my/script.js');
-// the code below loadScript
-// doesn't wait for the script loading to finish
+// код нижче loadScript
+// не чекає завершення завантаження скрипту
 // ...
 ```
 
-Let's say we need to use the new script as soon as it loads. It declares new functions, and we want to run them.
+Скажімо, нам потрібно використовувати новий скрипт, як тільки він завантажиться. Він оголошує нові функції, і ми хочемо їх запустити.
 
-But if we do that immediately after the `loadScript(…)` call, that wouldn't work:
+Але якщо ми зробимо це відразу після виклику `loadScript(...)`, це не спрацює:
 
 ```js
-loadScript('/my/script.js'); // the script has "function newFunction() {…}"
+loadScript('/my/script.js'); // скрипт містить "function newFunction() {…}"
 
 *!*
-newFunction(); // no such function!
+newFunction(); // немає такої функції!
 */!*
 ```
 
-Naturally, the browser probably didn't have time to load the script. As of now, the `loadScript` function doesn't provide a way to track the load completion. The script loads and eventually runs, that's all. But we'd like to know when it happens, to use new functions and variables from that script.
+Природно, браузер, ймовірно, не встиг завантажити скрипт. На даний момент функція `loadScript` не надає можливості відстежувати завершення завантаження. Скрипт завантажується та зрештою запускається, ось і все. Але ми хотіли б знати, коли це станеться, використовувати нові функції та змінні з цього скрипту.
 
-Let's add a `callback` function as a second argument to `loadScript` that should execute when the script loads:
+Додаймо `callback`-функцію як другий аргумент до `loadScript`, яка має виконуватися, коли скрипт завантажується:
 
 ```js
 function loadScript(src, *!*callback*/!*) {
@@ -77,19 +77,19 @@ function loadScript(src, *!*callback*/!*) {
 }
 ```
 
-Now if we want to call new functions from the script, we should write that in the callback:
+Тепер, якщо ми хочемо викликати нові функції зі скрипту, то повинні написати це у колбеку:
 
 ```js
 loadScript('/my/script.js', function() {
-  // the callback runs after the script is loaded
-  newFunction(); // so now it works
+  // колбек запускається після завантаження скрипту
+  newFunction(); // тож тепер все працює
   ...
 });
 ```
 
-That's the idea: the second argument is a function (usually anonymous) that runs when the action is completed.
+Ідея така: другий аргумент -- це функція (зазвичай анонімна), яка запускається після завершення дії.
 
-Here's a runnable example with a real script:
+Ось приклад із реальним скриптом, який можна виконати:
 
 ```js run
 function loadScript(src, callback) {
@@ -102,38 +102,38 @@ function loadScript(src, callback) {
 *!*
 loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', script => {
   alert(`Cool, the script ${script.src} is loaded`);
-  alert( _ ); // function declared in the loaded script
+  alert( _ ); // функція, що оголошена в завантаженому скрипті
 });
 */!*
 ```
 
-That's called a "callback-based" style of asynchronous programming. A function that does something asynchronously should provide a `callback` argument where we put the function to run after it's complete.
+Такий стиль називається "асинхронним програмуванням на основі колбеків" ("callback-based"). Функція, яка виконує щось асинхронно, повинна містити аргумент `callback`, де ми запускаємо функцію після завершення асинхронної дії.
 
-Here we did it in `loadScript`, but of course it's a general approach.
+Тут ми зробили це в `loadScript`, але, звичайно, це поширений підхід.
 
-## Callback in callback
+## Колбек у колбеку
 
-How can we load two scripts sequentially: the first one, and then the second one after it?
+Як ми можемо завантажити два скрипти послідовно: перший, а потім другий після нього?
 
-The natural solution would be to put the second `loadScript` call inside the callback, like this:
+Природним рішенням було б помістити другий виклик `loadScript` усередину колбека, наприклад:
 
 ```js
 loadScript('/my/script.js', function(script) {
 
-  alert(`Cool, the ${script.src} is loaded, let's load one more`);
+  alert(`Круто, ${script.src} завантажився, завантажмо ще один`);
 
 *!*
   loadScript('/my/script2.js', function(script) {
-    alert(`Cool, the second script is loaded`);
+    alert(`Круто, другий скрипт завантажився`);
   });
 */!*
 
 });
 ```
 
-After the outer `loadScript` is complete, the callback initiates the inner one.
+Після завершення зовнішньої функції `loadScript` колбек ініціює внутрішню.
 
-What if we want one more script...?
+А якщо ми хочемо завантажити ще один скрипт...?
 
 ```js
 loadScript('/my/script.js', function(script) {
@@ -142,7 +142,7 @@ loadScript('/my/script.js', function(script) {
 
 *!*
     loadScript('/my/script3.js', function(script) {
-      // ...continue after all scripts are loaded
+      // ...продовжується після завантаження всіх скриптів
     });
 */!*
 
@@ -151,13 +151,13 @@ loadScript('/my/script.js', function(script) {
 });
 ```
 
-So, every new action is inside a callback. That's fine for few actions, but not good for many, so we'll see other variants soon.
+Отже, кожна нова дія знаходиться всередині колбека. Це добре для кількох дій, але погано для багатьох, тому незабаром ми побачимо інші варіанти.
 
-## Handling errors
+## Обробка помилок
 
-In the above examples we didn't consider errors. What if the script loading fails? Our callback should be able to react on that.
+У вищенаведених прикладах ми не врахували помилки. Що робити, якщо завантажити скрипт не вдається? Наш колбек повинен мати можливість реагувати на це.
 
-Here's an improved version of `loadScript` that tracks loading errors:
+Ось покращена версія `loadScript`, яка відстежує помилки завантаження:
 
 ```js
 function loadScript(src, callback) {
@@ -166,39 +166,39 @@ function loadScript(src, callback) {
 
 *!*
   script.onload = () => callback(null, script);
-  script.onerror = () => callback(new Error(`Script load error for ${src}`));
+  script.onerror = () => callback(new Error(`Помилка завантаження скрипту для ${src}`));
 */!*
 
   document.head.append(script);
 }
 ```
 
-It calls `callback(null, script)` for successful load and `callback(error)` otherwise.
+Так код викликає `callback(null, script)` для успішного завантаження та `callback(error)` в іншому випадку.
 
-The usage:
+Використання:
 ```js
 loadScript('/my/script.js', function(error, script) {
   if (error) {
-    // handle error
+    // обробляємо помилку
   } else {
-    // script loaded successfully
+    // скрипт успішно завантажено
   }
 });
 ```
 
-Once again, the recipe that we used for `loadScript` is actually quite common. It's called the "error-first callback" style.
+Знову ж таки, рецепт, який ми використовували для `loadScript`, насправді досить поширений. Такий стиль називається "колбек з першим аргументом-помилкою" ("error-first callback").
 
-The convention is:
-1. The first argument of the `callback` is reserved for an error if it occurs. Then `callback(err)` is called.
-2. The second argument (and the next ones if needed) are for the successful result. Then `callback(null, result1, result2…)` is called.
+Домовленість така:
+1. Перший аргумент `callback` зарезервовано для помилки, якщо вона виникає. В такому випадку викликається `callback(err)`.
+2. Другий аргумент (і наступні, якщо потрібно) -- для успішного результату. В такому випадку викликається `callback(null, result1, result2…)`.
 
-So the single `callback` function is used both for reporting errors and passing back results.
+Таким чином, єдина `callback`-функція використовується як для повідомлення про помилки, так і для повернення результатів.
 
-## Pyramid of Doom
+## Пекельна піраміда
 
-From the first look, it's a viable way of asynchronous coding. And indeed it is. For one or maybe two nested calls it looks fine.
+З першого погляду це життєздатний спосіб асинхронного кодування. І це дійсно так. Для одного або, можливо, двох вкладених викликів це виглядає добре.
 
-But for multiple asynchronous actions that follow one after another we'll have code like this:
+Але для кількох асинхронних дій, які слідують одна за одною, ми матимемо такий код:
 
 ```js
 loadScript('1.js', function(error, script) {
@@ -217,7 +217,7 @@ loadScript('1.js', function(error, script) {
             handleError(error);
           } else {
   *!*
-            // ...continue after all scripts are loaded (*)
+            // ...продовжується після завантаження всіх скриптів (*)
   */!*
           }
         });
@@ -228,14 +228,14 @@ loadScript('1.js', function(error, script) {
 });
 ```
 
-In the code above:
-1. We load `1.js`, then if there's no error.
-2. We load `2.js`, then if there's no error.
-3. We load `3.js`, then if there's no error -- do something else `(*)`.
+У коді вище:
+1. Завантажуємо `1.js`, продовжуємо, якщо немає помилки.
+2. Завантажуємо `2.js`, продовжуємо, якщо немає помилки.
+3. Ми завантажуємо `3.js`, продовжуємо, якщо немає помилки -- робимо щось інше `(*)`.
 
-As calls become more nested, the code becomes deeper and increasingly more difficult to manage, especially if we have real code instead of `...` that may include more loops, conditional statements and so on.
+Оскільки виклики стають більш вкладеними, код стає глибшим і його стає все важче підтримувати, особливо якщо замість `...` у нас є реальний код, який може включати більше циклів, умовних операторів тощо.
 
-That's sometimes called "callback hell" or "pyramid of doom."
+Це іноді називають "пеклом колбеків" ("callback hell") або "пекельною пірамідою" ("pyramid of doom").
 
 <!--
 loadScript('1.js', function(error, script) {
@@ -263,11 +263,11 @@ loadScript('1.js', function(error, script) {
 
 ![](callback-hell.svg)
 
-The "pyramid" of nested calls grows to the right with every asynchronous action. Soon it spirals out of control.
+"Піраміда" вкладених викликів зростає вправо з кожною асинхронною дією. Незабаром це виходить з-під контролю.
 
-So this way of coding isn't very good.
+Так що цей спосіб кодування не дуже хороший.
 
-We can try to alleviate the problem by making every action a standalone function, like this:
+Ми можемо спробувати зменшити проблему, зробивши кожну дію окремою функцією, наприклад:
 
 ```js
 loadScript('1.js', step1);
@@ -294,17 +294,17 @@ function step3(error, script) {
   if (error) {
     handleError(error);
   } else {
-    // ...continue after all scripts are loaded (*)
+    // ...продовжується після завантаження всіх скриптів (*)
   }
 }
 ```
 
-See? It does the same, and there's no deep nesting now because we made every action a separate top-level function.
+Бачите? Код робить те саме, і тепер немає глибокого вкладення, тому що ми зробили кожну дію окремою функцією верхнього рівня.
 
-It works, but the code looks like a torn apart spreadsheet. It's difficult to read, and you probably noticed that one needs to eye-jump between pieces while reading it. That's inconvenient, especially if the reader is not familiar with the code and doesn't know where to eye-jump.
+Це працює, але код виглядає розірваним на частини. Його важко читати, і ви, напевно, помітили, що під час читання потрібно стрибати між частинами. Це незручно, особливо якщо читач не знайомий з кодом і не знає, що за чим слідує.
 
-Also, the functions named `step*` are all of single use, they are created only to avoid the "pyramid of doom." No one is going to reuse them outside of the action chain. So there's a bit of namespace cluttering here.
+Крім того, всі функції під назвою `step*` призначені для одноразового використання, вони створені лише для того, щоб уникнути "пекельної піраміди". Ніхто не збирається використовувати їх повторно за межами ланцюжка дій. Таким чином, тут є деяке нагромадження в просторі імен.
 
-We'd like to have something better.
+Ми б хотіли мати щось краще.
 
-Luckily, there are other ways to avoid such pyramids. One of the best ways is to use "promises," described in the next chapter.
+На щастя, є й інші способи уникнути таких пірамід. Один із найкращих способів -- використовувати "проміси", що описані в наступному розділі.
