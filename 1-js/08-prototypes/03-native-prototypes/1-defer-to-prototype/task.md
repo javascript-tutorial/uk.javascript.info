@@ -2,16 +2,16 @@ importance: 5
 
 ---
 
-# Add method "f.defer(ms)" to functions
+# Додайте метод "f.defer(ms)" до функцій
 
-Add to the prototype of all functions the method `defer(ms)`, that runs the function after `ms` milliseconds.
+Додайте до прототипу всіх функцій метод `defer(ms)`, що запускає функцію після `ms` мілісекунд.
 
-After you do it, such code should work:
+Після цього цей код повинен працювати:
 
 ```js
 function f() {
-  alert("Hello!");
+  alert("Привіт!");
 }
 
-f.defer(1000); // shows "Hello!" after 1 second
+f.defer(1000); // показує "Привіт!" через 1 секунду
 ```
