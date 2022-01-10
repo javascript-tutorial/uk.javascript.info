@@ -1,13 +1,13 @@
 function concat(arrays) {
-  // sum of individual array lengths
+  // сума довжин всіх масивів
   let totalLength = arrays.reduce((acc, value) => acc + value.length, 0);
 
   if (!arrays.length) return null;
 
   let result = new Uint8Array(totalLength);
 
-  // for each array - copy it over result
-  // next array is copied right after the previous one
+  // копіюємо кожний масив в result
+  // наступний масив буде скопійовано одразу після попереднього
   let length = 0;
   for(let array of arrays) {
     result.set(array, length);
