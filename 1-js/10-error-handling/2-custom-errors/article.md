@@ -1,42 +1,42 @@
-# Custom errors, extending Error
+# Нестандартні помилки, розширення Error
 
-When we develop something, we often need our own error classes to reflect specific things that may go wrong in our tasks. For errors in network operations we may need `HttpError`, for database operations `DbError`, for searching operations `NotFoundError` and so on.
+Коли ми щось розробляємо, нам часто потрібні власні класи помилок, щоб відображати конкретні речі, які можуть піти не так у наших програмах. Для помилок у мережевих операціях нам може знадобитися `HttpError`, для операцій з базою даних `DbError`, для пошуку операцій `NotFoundError` тощо.
 
-Our errors should support basic error properties like `message`, `name` and, preferably, `stack`. But they also may have other properties of their own, e.g. `HttpError` objects may have a `statusCode` property with a value like `404` or `403` or `500`.
+Наші помилки повинні підтримувати основні властивості помилок, такі як `message`, `name` і, бажано, `stack`. Але вони також можуть мати інші властивості, наприклад, об’єкти `HttpError` можуть мати властивість `statusCode` зі значенням, як-от `404`, `403` або `500`.
 
-JavaScript allows to use `throw` with any argument, so technically our custom error classes don't need to inherit from `Error`. But if we inherit, then it becomes possible to use `obj instanceof Error` to identify error objects. So it's better to inherit from it.
+JavaScript дозволяє використовувати `throw` з будь-яким аргументом, тому технічно наші спеціальні класи помилок не повинні успадковуватись від `Error`. Але якщо ми успадкуємо, то стає можливим використовувати `obj instanceof Error` для ідентифікації об’єктів помилки. Тому краще успадкувати від нього.
 
-As the application grows, our own errors naturally form a hierarchy. For instance, `HttpTimeoutError` may inherit from `HttpError`, and so on.
+У міру розвитку програми наші власні помилки, природньо, утворюють ієрархію. Наприклад, `HttpTimeoutError` може успадковуватися від `HttpError` тощо.
 
-## Extending Error
+## Розширення Error
 
-As an example, let's consider a function `readUser(json)` that should read JSON with user data.
+Як приклад, давайте розглянемо функцію `readUser(json)`, яка повинна читати JSON з даними користувача.
 
-Here's an example of how a valid `json` may look:
+Ось приклад того, як може виглядати дійсний `json`:
 ```js
-let json = `{ "name": "John", "age": 30 }`;
+let json = `{ "name": "Іван", "age": 30 }`;
 ```
 
-Internally, we'll use `JSON.parse`. If it receives malformed `json`, then it throws `SyntaxError`. But even if `json` is syntactically correct, that doesn't mean that it's a valid user, right? It may miss the necessary data. For instance, it may not have `name` and `age` properties that are essential for our users.
+Всередині ми будемо використовувати `JSON.parse`. Якщо він отримує неправильний `json`, він викидає `SyntaxError`. Але навіть якщо `json` синтаксично правильний, це не означає, що це дійсний користувач, чи не так? У ньому може не бути необхідних нам даних. Наприклад, він може не мати властивостей `name` та `age`, які є важливими для наших користувачів.
 
-Our function `readUser(json)` will not only read JSON, but check ("validate") the data. If there are no required fields, or the format is wrong, then that's an error. And that's not a `SyntaxError`, because the data is syntactically correct, but another kind of error. We'll call it `ValidationError` and create a class for it. An error of that kind should also carry the information about the offending field.
+Наша функція `readUser(json)` не тільки читатиме JSON, але й перевірятеме ("валідуватиме") дані. Якщо немає обов’язкових полів або формат неправильний, це помилка. І це не `SyntaxError`, оскільки дані синтаксично правильні, а інший тип помилки. Ми назвемо його `ValidationError` і створимо для нього окремий клас. Подібна помилка також повинна містити інформацію про поле, що порушує правила.
 
-Our `ValidationError` class should inherit from the `Error` class.
+Наш клас `ValidationError` має успадковуватись від класу `Error`.
 
-The `Error` class is built-in, but here's its approximate code so we can understand what we're extending:
+Клас `Error` є вбудованим, але ось його приблизний код, щоб ми могли зрозуміти, що ми розширюємо:
 
 ```js
-// The "pseudocode" for the built-in Error class defined by JavaScript itself
+// "Псевдокод" для вбудованого класу Error, визначеного самим JavaScript
 class Error {
   constructor(message) {
     this.message = message;
-    this.name = "Error"; // (different names for different built-in error classes)
-    this.stack = <call stack>; // non-standard, but most environments support it
+    this.name = "Error"; // (різні назви для різних вбудованих класів помилок)
+    this.stack = <call stack>; // нестандартна властивість, але більшість середовищ її підтримує
   }
 }
 ```
 
-Now let's inherit `ValidationError` from it and try it in action:
+Тепер давайте успадкуємо від нього наш `ValidationError` і спробуємо його в дії:
 
 ```js run untrusted
 *!*
@@ -49,23 +49,23 @@ class ValidationError extends Error {
 }
 
 function test() {
-  throw new ValidationError("Whoops!");
+  throw new ValidationError("Упс!");
 }
 
 try {
   test();
 } catch(err) {
-  alert(err.message); // Whoops!
+  alert(err.message); // Упс!
   alert(err.name); // ValidationError
-  alert(err.stack); // a list of nested calls with line numbers for each
+  alert(err.stack); // список вкладених викликів з номерами рядків для кожного
 }
 ```
 
-Please note: in the line `(1)` we call the parent constructor. JavaScript requires us to call `super` in the child constructor, so that's obligatory. The parent constructor sets the `message` property.
+Зверніть увагу: у рядку `(1)` ми викликаємо батьківський конструктор. JavaScript вимагає від нас викликати `super` у дочірньому конструкторі, це обов’язково. Батьківський конструктор встановлює властивість `message`.
 
-The parent constructor also sets the `name` property to `"Error"`, so in the line `(2)` we reset it to the right value.
+Батьківський конструктор також встановлює для властивості `name` значення `"Error"`, тому в рядку `(2)` ми скидаємо його до потрібного значення.
 
-Let's try to use it in `readUser(json)`:
+Давайте спробуємо використати його в `readUser(json)`:
 
 ```js run
 class ValidationError extends Error {
@@ -89,7 +89,7 @@ function readUser(json) {
   return user;
 }
 
-// Working example with try..catch
+// Робочий приклад із try..catch
 
 try {
   let user = readUser('{ "age": 25 }');
@@ -101,31 +101,31 @@ try {
   } else if (err instanceof SyntaxError) { // (*)
     alert("JSON Syntax Error: " + err.message);
   } else {
-    throw err; // unknown error, rethrow it (**)
+    throw err; // невідома помилка, прокинемо її далі (**)
   }
 }
 ```
 
-The `try..catch` block in the code above handles both our `ValidationError` and the built-in `SyntaxError` from `JSON.parse`.
+Блок `try..catch` у коді вище обробляє як нашу `ValidationError`, так і вбудовану `SyntaxError` з `JSON.parse`.
 
-Please take a look at how we use `instanceof` to check for the specific error type in the line `(*)`.
+Будь ласка, подивіться, як ми використовуємо `instanceof` для перевірки певного типу помилки в рядку `(*)`.
 
-We could also look at `err.name`, like this:
+Ми також можемо використати `err.name`, ось так:
 
 ```js
 // ...
-// instead of (err instanceof SyntaxError)
+// замість (err instanceof SyntaxError)
 } else if (err.name == "SyntaxError") { // (*)
 // ...
 ```
 
-The `instanceof` version is much better, because in the future we are going to extend `ValidationError`, make subtypes of it, like `PropertyRequiredError`. And `instanceof` check will continue to work for new inheriting classes. So that's future-proof.
+Версія з `instanceof` набагато краща, тому що в майбутньому ми можемо розширити `ValidationError`, щоб створювати його підтипи, наприклад, `PropertyRequiredError`. І перевірка `instanceof` буде також працювати для нових спадкових класів. Так що це рішення залишиться надійним і далі.
 
-Also it's important that if `catch` meets an unknown error, then it rethrows it in the line `(**)`. The `catch` block only knows how to handle validation and syntax errors, other kinds (caused by a typo in the code or other unknown reasons) should fall through.
+Також важливо, що якщо `catch` зустрічає невідому помилку, він повторно викидає її в рядок `(**)`. Наш блок `catch` знає лише, як обробляти помилки перевірки правильності даних та синтаксису, інші типи (спричинені помилкою в коді або іншими невідомими причинами) потрібно прокинути далі.
 
-## Further inheritance
+## Подальше наслідування
 
-The `ValidationError` class is very generic. Many things may go wrong. The property may be absent or it may be in a wrong format (like a string value for `age` instead of a number). Let's make a more concrete class `PropertyRequiredError`, exactly for absent properties. It will carry additional information about the property that's missing.
+Клас `ValidationError` дуже загальний. Багато чого може піти не так. Властивість може бути відсутня або її значення має неправильний тип (наприклад, рядок у `age` замість числа). Давайте створимо більш конкретний клас `PropertyRequiredError`, саме для відсутніх властивостей. Він міститиме додаткову інформацію про властивість, якої немає.
 
 ```js run
 class ValidationError extends Error {
@@ -159,7 +159,7 @@ function readUser(json) {
   return user;
 }
 
-// Working example with try..catch
+// Робочий приклад із try..catch
 
 try {
   let user = readUser('{ "age": 25 }');
@@ -173,18 +173,18 @@ try {
   } else if (err instanceof SyntaxError) {
     alert("JSON Syntax Error: " + err.message);
   } else {
-    throw err; // unknown error, rethrow it
+    throw err; // невідома помилка, прокинути далі
   }
 }
 ```
 
-The new class `PropertyRequiredError` is easy to use: we only need to pass the property name: `new PropertyRequiredError(property)`. The human-readable `message` is generated by the constructor.
+Новий клас `PropertyRequiredError` простий у використанні: нам потрібно лише передати ім’я властивості: `new PropertyRequiredError(property)`. Повідомлення `message` у зрозумілому вигляді генерується його конструктором.
 
-Please note that `this.name` in `PropertyRequiredError` constructor is again assigned manually. That may become a bit tedious -- to assign `this.name = <class name>` in every custom error class. We can avoid it by making our own "basic error" class that assigns `this.name = this.constructor.name`. And then inherit all our custom errors from it.
+Зверніть увагу, що `this.name` у конструкторі `PropertyRequiredError` знову призначається вручну. Це може набриднути -- призначати `this.name = <ім’я класу>` у кожному спеціальному класі помилок. Ми можемо уникнути цього, створивши наш власний клас "базова помилка", який призначає `this.name = this.constructor.name`. А потім успадковувати всі наші власні помилки від нього.
 
-Let's call it `MyError`.
+Назвемо його `MyError`.
 
-Here's the code with `MyError` and other custom error classes, simplified:
+Ось спрощений код із `MyError` та іншими класами помилок:
 
 ```js run
 class MyError extends Error {
@@ -205,51 +205,51 @@ class PropertyRequiredError extends ValidationError {
   }
 }
 
-// name is correct
+// правильна name
 alert( new PropertyRequiredError("field").name ); // PropertyRequiredError
 ```
 
-Now custom errors are much shorter, especially `ValidationError`, as we got rid of the `"this.name = ..."` line in the constructor.
+Тепер наші помилки набагато коротші, особливо `ValidationError`, оскільки ми позбулися рядка `"this.name = ..."` у конструкторі.
 
-## Wrapping exceptions
+## Обгортання винятків
 
-The purpose of the function `readUser` in the code above is "to read the user data". There may occur different kinds of errors in the process. Right now we have `SyntaxError` and `ValidationError`, but in the future `readUser` function may grow and probably generate other kinds of errors.
+Метою функції `readUser` у коді вище є "читати дані користувача". У процесі можуть виникати різного роду помилки. Зараз ми маємо `SyntaxError` і `ValidationError`, але в майбутньому функції `readUser` може бути розширино і, ймовірно, вона генеруватиме інші види помилок.
 
-The code which calls `readUser` should handle these errors. Right now it uses multiple `if`s in the `catch` block, that check the class and handle known errors and rethrow the unknown ones.
+Тому код, який викликає `readUser`, повинен обробляти ці помилки. Зараз він використовує кілька `if` у блоці `catch`, які перевіряють клас, обробляють відомі помилки та прокидують далі невідомі.
 
-The scheme is like this:
+Схема така:
 
 ```js
 try {
   ...
-  readUser()  // the potential error source
+  readUser()  // потенційне джерело помилки
   ...
 } catch (err) {
   if (err instanceof ValidationError) {
-    // handle validation errors
+    // обробити помилки перевірки даних
   } else if (err instanceof SyntaxError) {
-    // handle syntax errors
+    // обробити синтаксичні помилки
   } else {
-    throw err; // unknown error, rethrow it
+    throw err; // невідома помилка, прокинути далі
   }
 }
 ```
 
-In the code above we can see two types of errors, but there can be more.
+У коді вище ми бачимо два типи помилок, але їх може бути більше.
 
-If the `readUser` function generates several kinds of errors, then we should ask ourselves: do we really want to check for all error types one-by-one every time?
+Якщо функція `readUser` генерує кілька типів помилок, тоді ми повинні запитати себе: чи дійсно ми хочемо щоразу перевіряти всі типи помилок одну за одною?
 
-Often the answer is "No": we'd like to be "one level above all that". We just want to know if there was a "data reading error" -- why exactly it happened is often irrelevant (the error message describes it). Or, even better, we'd like to have a way to get the error details, but only if we need to.
+Часто відповідь "ні": ми б хотіли бути "на один рівень вище всього цього". Ми просто хочемо знати, чи сталася "помилка читання даних" -- чому саме це сталося, часто не має значення (це описує повідомлення про помилку). Або, ще краще, ми хотіли б мати спосіб отримати деталі помилки, але лише за необхідності.
 
-The technique that we describe here is called "wrapping exceptions".
+Техніка, яку ми тут описуємо, називається "обгортання винятків".
 
-1. We'll make a new class `ReadError` to represent a generic "data reading" error.
-2. The function `readUser` will catch data reading errors that occur inside it, such as `ValidationError` and `SyntaxError`, and generate a `ReadError` instead.
-3. The `ReadError` object will keep the reference to the original error in its `cause` property.
+1. Ми створимо новий клас `ReadError`, щоб представляти загальну помилку "читання даних".
+2. Функція `readUser` буде ловити помилки читання даних, які виникають всередині неї, наприклад, `ValidationError` і `SyntaxError`, і натомість генеруватиме `ReadError`.
+3. Об’єкт `ReadError` зберігатиме посилання на вихідну помилку у своїй властивості `cause`.
 
-Then the code that calls `readUser` will only have to check for `ReadError`, not for every kind of data reading errors. And if it needs more details of an error, it can check its `cause` property.
+Тоді код, який викликає `readUser`, повинен буде перевіряти лише `ReadError`, а не всі види помилок читання даних. І якщо йому потрібні додаткові відомості про помилку, він може перевірити її властивість `cause`.
 
-Here's the code that defines `ReadError` and demonstrates its use in `readUser` and `try..catch`:
+Ось код, який визначає `ReadError` та демонструє його використання в `readUser` та `try..catch`:
 
 ```js run
 class ReadError extends Error {
@@ -317,14 +317,14 @@ try {
 }
 ```
 
-In the code above, `readUser` works exactly as described -- catches syntax and validation errors and throws `ReadError` errors instead (unknown errors are rethrown as usual).
+У наведеному вище коді `readUser` працює, як описано -- ловить синтаксичні помилки та помилки перевірки даних та замість цього кидає помилки `ReadError` (невідомі помилки прокидуються далі, як і раніше).
 
-So the outer code checks `instanceof ReadError` and that's it. No need to list all possible error types.
+Отже, зовнішній код перевіряє `instanceof ReadError` і все. Немає необхідності перевіряти всі можливі типи помилок.
 
-The approach is called "wrapping exceptions", because we take "low level" exceptions and "wrap" them into `ReadError` that is more abstract. It is widely used in object-oriented programming.
+Цей підхід називається "обгортання винятків", тому що ми беремо винятки "низького рівня" і "загортаємо" їх у `ReadError`, що є більш абстрактним. Такий підхід широко використовується в об’єктно-орієнтованому програмуванні.
 
-## Summary
+## Підсумки
 
-- We can inherit from `Error` and other built-in error classes normally. We just need to take care of the `name` property and don't forget to call `super`.
-- We can use `instanceof` to check for particular errors. It also works with inheritance. But sometimes we have an error object coming from a 3rd-party library and there's no easy way to get its class. Then `name` property can be used for such checks.
-- Wrapping exceptions is a widespread technique: a function handles low-level exceptions and creates higher-level errors instead of various low-level ones. Low-level exceptions sometimes become properties of that object like `err.cause` in the examples above, but that's not strictly required.
+- Зазвичай класи своїх помилок ми можемо успадковувати від `Error` та інших вбудованих класів. Нам просто потрібно подбати про властивість `name` і не забути викликати `super`.
+- Ми можемо використовувати `instanceof` для перевірки певних помилок. Це також працює зі спадковістю. Але іноді ми маємо об’єкт помилки, який надходить із бібліотеки від сторонніх розробників, і немає простого способу отримати його клас. Тоді для таких перевірок можна використовувати властивість `name`.
+- Обгортання винятків є широко поширеною технікою: функція обробляє винятки низького рівня і створює помилки вищого рівня замість різноманітних низькорівневих. Винятки низького рівня іноді стають властивостями цього об’єкта, наприклад, `err.cause`, як у наведених вище прикладах, але це не є суворо обов’язковим.
