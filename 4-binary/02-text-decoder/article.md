@@ -22,7 +22,7 @@ let str = decoder.decode([input], [options]);
 
 - **`input`** -- `BufferSource` буфер для декодування.
 - **`options`** -- необов’язковий об’єкт:
-  - **`stream`** -- значення `true`, якщо потрібно декодувати потік (stream), тоді `decoder` буде викликано повторно декілька разів для отримання вхідних даних частинами. В такому випадку символи, що складають з декількох байт можуть бути випадково розділеними між частинами. Ця опціям дозволяє `TextDecoder` запам’ятати "незакінчені" символи для декодування разом з наступною частиною.
+  - **`stream`** -- значення `true`, якщо потрібно декодувати потік (stream), тоді `decoder` буде викликано повторно декілька разів для отримання вхідних даних частинами. В такому випадку символи, що складають з декількох байт можуть бути випадково розділеними між частинами. Ця опція дозволяє `TextDecoder` запам’ятати "незакінчені" символи для декодування разом з наступною частиною.
 
 Наприклад:
 
@@ -54,19 +54,19 @@ alert( new TextDecoder().decode(binaryString) ); // Hello
 
 ## TextEncoder
 
-[TextEncoder](https://encoding.spec.whatwg.org/#interface-textencoder) does the reverse thing -- converts a string into bytes.
+[TextEncoder](https://encoding.spec.whatwg.org/#interface-textencoder) працює зворотнім чином -- перетворює рядок в байти.
 
-The syntax is:
+Синтаксис:
 
 ```js
 let encoder = new TextEncoder();
 ```
 
-The only encoding it supports is "utf-8".
+Підтримується тільки кодування "utf-8".
 
-It has two methods:
-- **`encode(str)`** -- returns `Uint8Array` from a string.
-- **`encodeInto(str, destination)`** -- encodes `str` into `destination` that must be `Uint8Array`.
+Він має два методи:
+- **`encode(str)`** -- повертає `Uint8Array` створений з рядку.
+- **`encodeInto(str, destination)`** -- `str` буде закодовано та записано в `destination`. Параметр `destination` повинен мати тип `Uint8Array`.
 
 ```js run
 let encoder = new TextEncoder();
