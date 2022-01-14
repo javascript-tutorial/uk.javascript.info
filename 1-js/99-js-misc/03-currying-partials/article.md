@@ -3,21 +3,21 @@ libs:
 
 ---
 
-# Currying
+# Каррінг
 
-[Currying](https://en.wikipedia.org/wiki/Currying) is an advanced technique of working with functions. It's used not only in JavaScript, but in other languages as well.
+[Каррінг](https://en.wikipedia.org/wiki/Currying) просунута техніка для роботи з функціями. Вона використовується не лише в JavaScript, але і в інших мовах програмування.
 
-Currying is a transformation of functions that translates a function from callable as `f(a, b, c)` into callable as `f(a)(b)(c)`.
+Каррінг це трансформація функцій таким чином, щоб вони приймали аргументи не як `f(a, b, c)`, а як `f(a)(b)(c)`. 
 
-Currying doesn't call a function. It just transforms it.
+Каррінг не викликає функцію. Він просто трансформує її.
 
-Let's see an example first, to better understand what we're talking about, and then practical applications.
+Давайте спочатку подивимося на приклад, щоб краще зрозуміти, про що мова, а потім на практичне застосування каррінгу.
 
-We'll create a helper function `curry(f)` that performs currying for a two-argument `f`. In other words, `curry(f)` for two-argument `f(a, b)` translates it into a function that runs as `f(a)(b)`:
+Створимо допоміжну функцію `curry(f)`, яка виконує каррінг функції `f` з двома аргументами. Іншими словами, `curry(f)` для функції `f(a, b)` трансформує її в `f(a)(b)`.
 
 ```js run
 *!*
-function curry(f) { // curry(f) does the currying transform
+function curry(f) { // curry(f) виконує каррінг
   return function(a) {
     return function(b) {
       return f(a, b);
@@ -26,7 +26,7 @@ function curry(f) { // curry(f) does the currying transform
 }
 */!*
 
-// usage
+// використання
 function sum(a, b) {
   return a + b;
 }
@@ -36,30 +36,30 @@ let curriedSum = curry(sum);
 alert( curriedSum(1)(2) ); // 3
 ```
 
-As you can see, the implementation is straightforward: it's just two wrappers.
+Як ви бачите, реалізація доволі проста: це дві обгортки.
 
-- The result of `curry(func)` is a wrapper `function(a)`.
-- When it is called like `curriedSum(1)`, the argument is saved in the Lexical Environment, and a new wrapper is returned `function(b)`.
-- Then this wrapper is called with `2` as an argument, and it passes the call to the original `sum`.
+- Результат `curry(func)` - обгортка `function(a)`.
+- Коли функція викликається як `sum(1)`, аргумент зберігається в лексичному середовищі і повертається нова обгортка `function(b)`.
+- Далі вже ця обгортка викликається з аргументом 2 і передає виклик до оригінальної функції `sum`.
 
-More advanced implementations of currying, such as [_.curry](https://lodash.com/docs#curry) from lodash library, return a wrapper that allows a function to be called both normally and partially:
+Більш просунуті реалізації каррінгу, як наприклад [_.curry](https://lodash.com/docs#curry) із бібліотеки lodash, повертають обгортку, яка дозволяє запустити функцію як звичайним способом, так і частково:
 
 ```js run
 function sum(a, b) {
   return a + b;
 }
 
-let curriedSum = _.curry(sum); // using _.curry from lodash library
+let curriedSum = _.curry(sum); // використовуємо _.curry із бібліотеки lodash
 
-alert( curriedSum(1, 2) ); // 3, still callable normally
-alert( curriedSum(1)(2) ); // 3, called partially
+alert( curriedSum(1, 2) ); // 3, можна викликати як зазвичай
+alert( curriedSum(1)(2) ); // 3, а можна частково
 ```
 
-## Currying? What for?
+## Каррінг? Навіщо?
 
-To understand the benefits we need a worthy real-life example.
+Щоб зрозуміти користь від каррінгу, нам безперечно потрібний приклад з реального життя.
 
-For instance, we have the logging function `log(date, importance, message)` that formats and outputs the information. In real projects such functions have many useful features like sending logs over the network, here we'll just use `alert`:
+Наприклад, у нас є функція логування `log(date, importance, message)`, яка форматує і виводить інформацію. У реальних проектах у таких функцій є багато корисних можливостей, наприклад, посилати інформацію по мережі, тут для простоти використаний `alert`:
 
 ```js
 function log(date, importance, message) {
@@ -67,37 +67,37 @@ function log(date, importance, message) {
 }
 ```
 
-Let's curry it!
+А зараз давайте застосуємо каррінг!
 
 ```js
 log = _.curry(log);
 ```
 
-After that `log` works normally:
+Після цього `log` продовжує працювати нормально:
 
 ```js
 log(new Date(), "DEBUG", "some debug"); // log(a, b, c)
 ```
 
-...But also works in the curried form:
+...Але також працює варіант з каррінгом:
 
 ```js
 log(new Date())("DEBUG")("some debug"); // log(a)(b)(c)
 ```
 
-Now we can easily make a convenience function for current logs:
+Давайте зробимо зручну функцію для логів з поточним часом:
 
 ```js
-// logNow will be the partial of log with fixed first argument
+// logNow буде частковим застосуванням функції log з фіксованим першим аргументом
 let logNow = log(new Date());
 
-// use it
+// використаємо її
 logNow("INFO", "message"); // [HH:mm] INFO message
 ```
 
-Now `logNow` is `log` with fixed first argument, in other words "partially applied function" or "partial" for short.
+Тепер `logNow` - це `log` з фіксованим першим аргументом, інакше кажучи, "частково застосована" або "часткова" функція.
 
-We can go further and make a convenience function for current debug logs:
+Ми можемо піти далі і зробити зручну функцію для саме налагоджувальних логів з поточним часом:
 
 ```js
 let debugNow = logNow("DEBUG");
@@ -105,15 +105,15 @@ let debugNow = logNow("DEBUG");
 debugNow("message"); // [HH:mm] DEBUG message
 ```
 
-So:
-1. We didn't lose anything after currying: `log` is still callable normally.
-2. We can easily generate partial functions such as for today's logs.
+Отже:
+1. Ми нічого не втратили після каррінгу: `log` все так само можна викликати нормально.
+2. Ми можемо легко створювати частково застосовані функції, як зробили для логів з поточним часом.
 
-## Advanced curry implementation
+## Просунута реалізація каррінгу
 
-In case you'd like to get in to the details, here's the "advanced" curry implementation for multi-argument functions that we could use above.
+У разі, якщо вам цікаві деталі, ось "просунута" реалізація каррінгу для функцій з множиною аргументів, яку ми могли б використати вище.
 
-It's pretty short:
+Вона дуже коротка:
 
 ```js
 function curry(func) {
@@ -131,7 +131,7 @@ function curry(func) {
 }
 ```
 
-Usage examples:
+Приклад використання:
 
 ```js
 function sum(a, b, c) {
@@ -140,17 +140,17 @@ function sum(a, b, c) {
 
 let curriedSum = curry(sum);
 
-alert( curriedSum(1, 2, 3) ); // 6, still callable normally
-alert( curriedSum(1)(2,3) ); // 6, currying of 1st arg
-alert( curriedSum(1)(2)(3) ); // 6, full currying
+alert( curriedSum(1, 2, 3) ); // 6, все ще можна викликати нормально
+alert( curriedSum(1)(2,3) ); // 6, каррінг першого аргументу
+alert( curriedSum(1)(2)(3) ); // 6, повний каррінг
 ```
 
-The new `curry` may look complicated, but it's actually easy to understand.
+Нова функція `curry` виглядає складною, але насправді її легко зрозуміти.
 
-The result of `curry(func)` call is the wrapper `curried` that looks like this:
+Результат виклику `curry(func)` - це обгортка `curried`, яка виглядає так:
 
 ```js
-// func is the function to transform
+// func - функція, яку ми трансформуємо
 function curried(...args) {
   if (args.length >= func.length) { // (1)
     return func.apply(this, args);
@@ -162,27 +162,37 @@ function curried(...args) {
 };
 ```
 
-When we run it, there are two `if` execution branches:
+Коли ми запускаємо її, є дві гілки виконання `if`:
 
-1. If passed `args` count is the same or more than the original function has in its definition (`func.length`) , then just pass the call to it using `func.apply`. 
-2. Otherwise, get a partial: we don't call `func` just yet. Instead, another wrapper is returned, that will re-apply `curried` providing previous arguments together with the new ones. 
+1. Якщо кількість переданих `args` дорівнює або більше, ніж вказано у визначенні початковій функції `(func.length)`, то викликаємо її за допомогою `func.apply`.
+2. Часткове застосування: інакше `func` не викликається відразу. Замість цього, повертається інша обгортка `pass`, яка знову застосує `curried`, передавши попередні аргументи разом з новими.  
 
-Then, if we call it, again, we'll get either a new partial (if not enough arguments) or, finally, the result.
+Потім при новому виклику ми знову отримаємо або нове часткове застосування (якщо аргументів недостатньо) або, нарешті, результат.
 
-```smart header="Fixed-length functions only"
-The currying requires the function to have a fixed number of arguments.
+Наприклад, давайте подивимося, що станеться у разі `sum(a, b, c)`. У неї три аргументи, так що `sum.length = 3`.
 
-A function that uses rest parameters, such as `f(...args)`, can't be curried this way.
+Для виклику `curried(1)(2)(3)`:
+
+1. Перший виклик `curried(1)` запам'ятовує `1` у своєму лексичному середовищі і повертає обгортку `pass`.
+2. Обгортка pass викликається з `(2)`: вона бере попередні аргументи (`1`), об'єднує їх з тим, що отримала сама `(2)` і викликає `curried(1, 2)` з усіма аргументами. Оскільки число аргументів все ще менше за `3-x`, `curry` повертає `pass`.
+3. Обгортка `pass` викликається знову з `(3)`. Для наступного виклику `pass(3)` бере попередні аргументи `(1, 2)` і додає до них `3`, викликаючи `curried(1, 2, 3)` - нарешті 3 аргументи, і вони передаються оригінальній функції.
+
+Якщо все ще не зрозуміло, просто розпишіть послідовність викликів на папері.
+
+```smart header="Тільки функції з фіксованою кількістю аргументів"
+Для каррінгу потрібна функція з фіксованою кількістю аргументів.
+
+З функцію, яка використовує залишкові параметри, типу `f(...args)`, каррінгу не підлягає.
 ```
 
-```smart header="A little more than currying"
-By definition, currying should convert `sum(a, b, c)` into `sum(a)(b)(c)`.
+```smart header="Трохи більше, ніж каррінг"
+За визначенням, каррінг повинен перетворювати `sum(a, b, c)` на `sum(a)(b)(c)`.
 
-But most implementations of currying in JavaScript are advanced, as described: they also keep the function callable in the multi-argument variant.
+Але, як було описано, більшість реалізацій каррінгу в JavaScript більш просунута: вони також залишають варіант виклику функції з декількома аргументами.
 ```
 
 ## Summary
 
-*Currying* is a transform that makes `f(a,b,c)` callable as `f(a)(b)(c)`. JavaScript implementations usually both keep the function callable normally and return the partial if the arguments count is not enough.
+*Каррінг* - це трансформація, яка перетворює виклик `f(a, b, c)` на `f(a)(b)(c)`. У JavaScript реалізація зазвичай дозволяє викликати функцію обома варіантами: або нормально, або повертає частково застосовану функцію, якщо кількість аргументів недостатньо.
 
-Currying allows us to easily get partials. As we've seen in the logging example, after currying the three argument universal function `log(date, importance, message)` gives us partials when called with one argument (like `log(date)`) or two arguments (like `log(date, importance)`).  
+Каррінг дозволяє легко отримувати часткові функції. Як ми бачили в прикладах з логами: універсальна функція `log(date, importance, message)` після каррінгу повертає нам частково застосовану функцію, коли викликається з одним аргументом, як `log(date)` або двома аргументами, як `log(date, importance)`. 
