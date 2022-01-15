@@ -1,13 +1,13 @@
 
-# Promises chaining
+# Ланцюжок промісів
 
-Let's return to the problem mentioned in the chapter <info:callbacks>: we have a sequence of asynchronous tasks to be performed one after another — for instance, loading scripts. How can we code it well?
+Повернемося до проблеми, згаданої в розділі [Введення: колбеки](info:callbacks): у нас є послідовність асинхронних задач, які потрібно виконувати одну за одною — наприклад, завантаження скриптів. Як ми можемо це добре закодувати?
 
-Promises provide a couple of recipes to do that.
+Проміси надають кілька способів вирішення подібних задач.
 
-In this chapter we cover promise chaining.
+У цьому розділі ми розглянемо ланцюжок промісів.
 
-It looks like this:
+Він виглядає наступним чином:
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -32,25 +32,25 @@ new Promise(function(resolve, reject) {
 });
 ```
 
-The idea is that the result is passed through the chain of `.then` handlers.
+Ідея полягає в тому, що результат передається через ланцюжок `.then` обробників.
 
-Here the flow is:
-1. The initial promise resolves in 1 second `(*)`,
-2. Then the `.then` handler is called `(**)`, which in turn creates a new promise (resolved with `2` value).
-3. The next `then` `(***)` gets the result of the previous one, processes it (doubles) and passes it to the next handler.
-4. ...and so on.
+Ось потік виконання:
+1. Початковий проміс успішно виконується через 1 секунду `(*)`,
+2. Далі викликається обробник `.then` `(**)`, який у свою чергу, створює новий проміс (вирішується зі значенням `2`).
+3. Наступний `then` `(***)` приймає результат попереднього, оброблює його (подвоює) та передає до наступного обробника.
+4. ...і так далі.
 
-As the result is passed along the chain of handlers, we can see a sequence of `alert` calls: `1` -> `2` -> `4`.
+Коли результат передається по ланцюжку обробників, ми бачимо послідовність викликів `alert`: `1` -> `2` -> `4`.
 
 ![](promise-then-chain.svg)
 
-The whole thing works, because every call to a `.then` returns a new promise, so that we can call the next `.then` on it.
+Усе це працює тому, що кожний виклик `.then` повертає новий проміс, тому ми можемо викликати наступний `.then` на ньому.
 
-When a handler returns a value, it becomes the result of that promise, so the next `.then` is called with it.
+Коли обробник повертає значення, воно стає результатом того промісу, тому наступний `.then` викликається з цим значенням.
 
-**A classic newbie error: technically we can also add many `.then` to a single promise. This is not chaining.**
+**Класична помилка новачка: технічно ми також можемо додати багато `.then` до одного промісу. Та це не ланцюжок.**
 
-For example:
+Наприклад:
 ```js run
 let promise = new Promise(function(resolve, reject) {
   setTimeout(() => resolve(1), 1000);
@@ -72,23 +72,23 @@ promise.then(function(result) {
 });
 ```
 
-What we did here is just several handlers to one promise. They don't pass the result to each other; instead they process it independently.
+Те, що ми зробили тут, — це додали лише кілька обробників до одного промісу. Вони не передають результат один одному; натомість вони обробляють його самостійно.
 
-Here's the picture (compare it with the chaining above):
+Ось малюнок (порівняйте його з ланцюжком вище):
 
 ![](promise-then-many.svg)
 
-All `.then` on the same promise get the same result -- the result of that promise. So in the code above all `alert` show the same: `1`.
+Усі `.then` на одному й тому самому промісі отримують той самий результат - результат цього промісу. Тож у коді вище усі `alert` показують те саме: `1`.
 
-In practice we rarely need multiple handlers for one promise. Chaining is used much more often.
+На практиці нам рідко потрібні кілька обробників для одного промісу. Набагато частіше використовується ланцюжок.
 
-## Returning promises
+## Повертаємо проміси
 
-A handler, used in `.then(handler)` may create and return a promise.
+Обробник, використанний в `.then(handler)` може створити й повернути проміс.
 
-In that case further handlers wait until it settles, and then get its result.
+У цьому випадку інші обробники чекають, поки він виконається, а потім отримають його результат.
 
-For instance:
+Наприклад:
 
 ```js run
 new Promise(function(resolve, reject) {
@@ -120,15 +120,15 @@ new Promise(function(resolve, reject) {
 });
 ```
 
-Here the first `.then` shows `1` and returns `new Promise(…)` in the line `(*)`. After one second it resolves, and the result (the argument of `resolve`, here it's `result * 2`) is passed on to handler of the second `.then`. That handler is in the line `(**)`, it shows `2` and does the same thing.
+Тут перший `.then` показує `1` і повертає `new Promise(…)` у рядку `(*)`. Через одну секунду він вирішується, а результат (аргумент `resolve`, тут це `результат * 2`) передається обробнику другого `.then`. Цей обробник знаходиться в рядку `(**)`, він показує `2` і робить те ж саме.
 
-So the output is the same as in the previous example: 1 -> 2 -> 4, but now with 1 second delay between `alert` calls.
+Отже, результат такий же, як і в попередньому прикладі: 1 -> 2 -> 4, але тепер із затримкою в 1 секунду між викликами `alert`.
 
-Returning promises allows us to build chains of asynchronous actions.
+Повернення промісів дозволяє нам будувати ланцюжки асинхронних дій.
 
-## Example: loadScript
+## Приклад: loadScript
 
-Let's use this feature with the promisified `loadScript`, defined in the [previous chapter](info:promise-basics#loadscript), to load scripts one by one, in sequence:
+Давайте використовувати цю можливість з промісифікацією `loadScript`, визначеною у [попередньому розділі](info:promise-basics#loadscript), щоб завантажувати скрипти один за одним, у послідовності:
 
 ```js run
 loadScript("/article/promise-chaining/one.js")
@@ -139,22 +139,22 @@ loadScript("/article/promise-chaining/one.js")
     return loadScript("/article/promise-chaining/three.js");
   })
   .then(function(script) {
-    // use functions declared in scripts
-    // to show that they indeed loaded
+    // викличемо функції, оголошені в скриптах
+    // щоб показати, що вони дійсно завантажені
     one();
     two();
     three();
   });
 ```
 
-This code can be made bit shorter with arrow functions:
+Цей код можна зробити трохи коротшим за допомогою стрілкових функцій:
 
 ```js run
 loadScript("/article/promise-chaining/one.js")
   .then(script => loadScript("/article/promise-chaining/two.js"))
   .then(script => loadScript("/article/promise-chaining/three.js"))
   .then(script => {
-    // scripts are loaded, we can use functions declared there
+    // скрипти завантажені, ми можемо використовувати оголошені там функції
     one();
     two();
     three();
@@ -162,17 +162,17 @@ loadScript("/article/promise-chaining/one.js")
 ```
 
 
-Here each `loadScript` call returns a promise, and the next `.then` runs when it resolves. Then it initiates the loading of the next script. So scripts are loaded one after another.
+Тут кожен виклик `loadScript` повертає проміс, а наступний `.then` запускається, коли він виконується. Потім він ініціює завантаження наступного сценарію. Таким чином, скрипти завантажуються один за одним.
 
-We can add more asynchronous actions to the chain. Please note that the code is still "flat" — it grows down, not to the right. There are no signs of the "pyramid of doom".
+Ми можемо додати більше асинхронних дій до ланцюжка. Зверніть увагу, що код все ще "плоский" — він росте вниз, а не вправо. Немає жодних ознак "піраміди приреченості".
 
-Technically, we could add `.then` directly to each `loadScript`, like this:
+Технічно ми можемо додати `.then` безпосередньо до кожного `loadScript`, наприклад:
 
 ```js run
 loadScript("/article/promise-chaining/one.js").then(script1 => {
   loadScript("/article/promise-chaining/two.js").then(script2 => {
     loadScript("/article/promise-chaining/three.js").then(script3 => {
-      // this function has access to variables script1, script2 and script3
+      // ця функція має доступ до змінних script1, script2 і script3
       one();
       two();
       three();
@@ -181,19 +181,19 @@ loadScript("/article/promise-chaining/one.js").then(script1 => {
 });
 ```
 
-This code does the same: loads 3 scripts in sequence. But it "grows to the right". So we have the same problem as with callbacks.
+Цей код робить те ж саме: завантажує 3 скрипти послідовно. Але він "росте вправо". Тож у нас та ж проблема, що й з колбеками.
 
-People who start to use promises sometimes don't know about chaining, so they write it this way. Generally, chaining is preferred.
+Люди, які починають використовувати проміси, іноді не знають про ланцюжок, тому пишуть це так. Як правило, перевага віддається ланцюжкам.
 
-Sometimes it's ok to write `.then` directly, because the nested function has access to the outer scope. In the example above the most nested callback has access to all variables `script1`, `script2`, `script3`. But that's an exception rather than a rule.
+Іноді нормально писати `.then` відразу, оскільки вкладена функція має доступ до зовнішньої області видимості. У наведеному вище прикладі найбільш вкладений колбек має доступ до всіх змінних `script1`, `script2`, `script3`. Але це швидше виняток, ніж правило.
 
 
 ````smart header="Thenables"
-To be precise, a handler may return not exactly a promise, but a so-called "thenable" object - an arbitrary object that has a method `.then`. It will be treated the same way as a promise.
+Якщо бути точним, обробник може повернути не зовсім проміс, а так званий об’єкт "thenable" - довільний об’єкт, який має метод `.then`. Це буде розглядатися так само, як проміс.
 
-The idea is that 3rd-party libraries may implement "promise-compatible" objects of their own. They can have an extended set of methods, but also be compatible with native promises, because they implement `.then`.
+Ідея полягає в тому, що сторонні бібліотеки можуть реалізовувати власні промісо-сумісні об’єкти. Вони можуть мати розширений набір методів, але також можуть бути сумісні з нативними промісами, оскільки вони реалізують `.then`.
 
-Here's an example of a thenable object:
+Ось приклад такого об’єкта:
 
 ```js run
 class Thenable {
@@ -202,7 +202,7 @@ class Thenable {
   }
   then(resolve, reject) {
     alert(resolve); // function() { native code }
-    // resolve with this.num*2 after the 1 second
+    // буде успішно виконано з аргументом this.num*2 через 1 секунду
     setTimeout(() => resolve(this.num * 2), 1000); // (**)
   }
 }
@@ -213,70 +213,70 @@ new Promise(resolve => resolve(1))
     return new Thenable(result); // (*)
 */!*
   })
-  .then(alert); // shows 2 after 1000ms
+  .then(alert); // показує 2 через 1000 мс
 ```
 
-JavaScript checks the object returned by the `.then` handler in line `(*)`: if it has a callable method named `then`, then it calls that method providing native functions `resolve`, `reject` as arguments (similar to an executor) and waits until one of them is called. In the example above `resolve(2)` is called after 1 second `(**)`. Then the result is passed further down the chain.
+JavaScript перевіряє об’єкт, повернутий обробником `.then` у рядку `(*)`: якщо він має викликаний метод з ім’ям `then`, тоді він викликає цей метод, та надає власні функції `resolve`, `reject` як аргументи (подібно виконавцю) і чекає, поки один з них не буде викликаний. У наведеному вище прикладі `resolve(2)` викликається через 1 секунду `(**)`. Потім результат передається далі по ланцюжку.
 
-This feature allows us to integrate custom objects with promise chains without having to inherit from `Promise`.
+Ця функція дозволяє нам інтегрувати власні об’єкти з ланцюжками промісів без успадкування від `Promise`.
 ````
 
 
-## Bigger example: fetch
+## Більш складний приклад: fetch
 
-In frontend programming promises are often used for network requests. So let's see an extended example of that.
+У інтерфейсному програмуванні проміси часто використовуються для мережевих запитів. Тож давайте подивимося на розширений приклад цього.
 
-We'll use the [fetch](info:fetch) method to load the information about the user from the remote server. It has a lot of optional parameters covered in [separate chapters](info:fetch), but the basic syntax is quite simple:
+Ми будемо використовувати метод [fetch](info:fetch), щоб завантажити інформацію про користувача з віддаленого сервера. Він має багато опціональних параметрів, які розглядаються в [окремих розділах](info:fetch), але основний синтаксис досить простий:
 
 ```js
 let promise = fetch(url);
 ```
 
-This makes a network request to the `url` and returns a promise. The promise resolves with a `response` object when the remote server responds with headers, but *before the full response is downloaded*.
+Зазначений код робить мережевий запит до `url` і повертає проміс. Проміс розв’язується за допомогою об’єкта `response`, коли віддалений сервер відповідає заголовками, але *до завантаження повної відповіді*.
 
-To read the full response, we should call the method `response.text()`: it returns a promise that resolves when the full text is downloaded from the remote server, with that text as a result.
+Щоб прочитати повну відповідь, ми повинні викликати метод `response.text()`: він повертає проміс, який виконується, коли повний текст завантажується з віддаленого сервера, і містить цей текст як результат.
 
-The code below makes a request to `user.json` and loads its text from the server:
+Наведений нижче код робить запит до `user.json` і завантажує його текст із сервера:
 
 ```js run
 fetch('/article/promise-chaining/user.json')
-  // .then below runs when the remote server responds
+  // .then нижче запускається, коли віддалений сервер відповідає
   .then(function(response) {
-    // response.text() returns a new promise that resolves with the full response text
-    // when it loads
+    // response.text() повертає новий проміс, який вирішується з повним текстом відповіді,
+    // коли він завантажується
     return response.text();
   })
   .then(function(text) {
-    // ...and here's the content of the remote file
+    // ...а ось вміст віддаленого файлу
     alert(text); // {"name": "iliakan", "isAdmin": true}
   });
 ```
 
-The `response` object returned from `fetch` also includes the method `response.json()` that reads the remote data and parses it as JSON. In our case that's even more convenient, so let's switch to it.
+Об’єкт `response`, повернутий із `fetch`, також включає метод `response.json()`, який зчитує віддалені дані у форматі JSON. У нашому випадку це ще зручніше, тож перейдемо до нього.
 
-We'll also use arrow functions for brevity:
+Ми також будемо використовувати стрілкові функції для стислості:
 
 ```js run
-// same as above, but response.json() parses the remote content as JSON
+// те саме, що й вище, але response.json() зчитує віддалений контент у форматі JSON
 fetch('/article/promise-chaining/user.json')
   .then(response => response.json())
-  .then(user => alert(user.name)); // iliakan, got user name
+  .then(user => alert(user.name)); // iliakan, отримали ім’я користувача
 ```
 
-Now let's do something with the loaded user.
+Тепер давайте зробимо щось із завантаженим користувачем.
 
-For instance, we can make one more request to GitHub, load the user profile and show the avatar:
+Наприклад, ми можемо зробити ще один запит до GitHub, завантажити профіль користувача та показати аватар:
 
 ```js run
-// Make a request for user.json
+// Запитуємо user.json
 fetch('/article/promise-chaining/user.json')
-  // Load it as json
+  // Завантажуємо дані у форматі json
   .then(response => response.json())
-  // Make a request to GitHub
+  // Робимо запит до GitHub
   .then(user => fetch(`https://api.github.com/users/${user.name}`))
-  // Load the response as json
+  // Завантажуємо відповідь у форматі json
   .then(response => response.json())
-  // Show the avatar image (githubUser.avatar_url) for 3 seconds (maybe animate it)
+  // Показуємо аватар (githubUser.avatar_url) протягом 3 секунд (можливо, з анімацією)
   .then(githubUser => {
     let img = document.createElement('img');
     img.src = githubUser.avatar_url;
@@ -287,13 +287,13 @@ fetch('/article/promise-chaining/user.json')
   });
 ```
 
-The code works; see comments about the details. However, there's a potential problem in it, a typical error for those who begin to use promises.
+Код працює; дивіться коментарі щодо деталей. Однак у цьому є потенційна проблема, типова помилка для тих, хто починає використовувати проміси.
 
-Look at the line `(*)`: how can we do something *after* the avatar has finished showing and gets removed? For instance, we'd like to show a form for editing that user or something else. As of now, there's no way.
+Подивіться на рядок `(*)`: як ми можемо щось зробити *після* того, як аватар закінчить відображатися і видалиться? Наприклад, ми хотіли б показати форму для редагування цього користувача чи щось інше. Поки що такої можливості немає.
 
-To make the chain extendable, we need to return a promise that resolves when the avatar finishes showing.
+Щоб ланцюжок міг розширюватися, нам потрібно повернути проміс, який розв’язується, коли аватар закінчує відображатися.
 
-Like this:
+Ось так:
 
 ```js run
 fetch('/article/promise-chaining/user.json')
@@ -315,15 +315,15 @@ fetch('/article/promise-chaining/user.json')
 */!*
     }, 3000);
   }))
-  // triggers after 3 seconds
-  .then(githubUser => alert(`Finished showing ${githubUser.name}`));
+  // спрацьовує через 3 секунди
+  .then(githubUser => alert(`Завершили показ ${githubUser.name}`));
 ```
 
-That is, the `.then` handler in line `(*)` now returns `new Promise`, that becomes settled only after the call of `resolve(githubUser)` in `setTimeout` `(**)`. The next `.then` in the chain will wait for that.
+Тобто обробник `.then` у рядку `(*)` тепер повертає `new Promise`, який перейде у стан "виконаний" лише після виклику `resolve(githubUser)` у `setTimeout` `(**)`. Наступний `.then` в ланцюжку буде чекати цього.
 
-As a good practice, an asynchronous action should always return a promise. That makes it possible to plan actions after it; even if we don't plan to extend the chain now, we may need it later.
+Як хороша практика, асинхронна дія завжди повинна повертати проміс. Це дає можливість планувати дії після нього; навіть якщо ми не плануємо розширювати ланцюжок зараз, можливо, це нам знадобиться пізніше.
 
-Finally, we can split the code into reusable functions:
+Нарешті, ми можемо розділити код на функції, що можуть бути перевикористані:
 
 ```js run
 function loadJson(url) {
@@ -349,18 +349,18 @@ function showAvatar(githubUser) {
   });
 }
 
-// Use them:
+// Використаємо їх:
 loadJson('/article/promise-chaining/user.json')
   .then(user => loadGithubUser(user.name))
   .then(showAvatar)
-  .then(githubUser => alert(`Finished showing ${githubUser.name}`));
+  .then(githubUser => alert(`Завершили показ ${githubUser.name}`));
   // ...
 ```
 
-## Summary
+## Підсумок
 
-If a `.then` (or `catch/finally`, doesn't matter) handler returns a promise, the rest of the chain waits until it settles. When it does, its result (or error) is passed further.
+Якщо обробник `.then` (або `catch/finally`, не має різниці) повертає проміс, решта ланцюжка чекає, доки він виконається. Коли це відбувається, його результат (або помилка) передається далі.
 
-Here's a full picture:
+Ось повна картина:
 
 ![](promise-handler-variants.svg)
