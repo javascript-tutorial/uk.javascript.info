@@ -54,7 +54,7 @@ alert( document.body.constructor.name ); // HTMLBodyElement
 alert( document.body ); // [object HTMLBodyElement]
 ```
 
-We also can use `instanceof` to check the inheritance:
+Ми також можемо використовувати `instanceof`, щоб перевірити наслідування:
 
 ```js run
 alert( document.body instanceof HTMLBodyElement ); // true
@@ -64,38 +64,38 @@ alert( document.body instanceof Node ); // true
 alert( document.body instanceof EventTarget ); // true
 ```
 
-As we can see, DOM nodes are regular JavaScript objects. They use prototype-based classes for inheritance.
+Як ми бачимо, вузли DOM є звичайними об'єктами JavaScript. Вони використовують класи з прототипів для наслідування.
 
-That's also easy to see by outputting an element with `console.dir(elem)` in a browser. There in the console you can see `HTMLElement.prototype`, `Element.prototype` and so on.
+Це також легко бачити, якщо вивести елемент за допомогою `console.dir(elem)` у браузері. Там в консолі ви можете побачити `HTMLElement.prototype`, `Element.prototype` і так далі.
 
-```smart header="`console.dir(elem)` versus `console.log(elem)`"
-Most browsers support two commands in their developer tools: `console.log` and `console.dir`. They output their arguments to the console. For JavaScript objects these commands usually do the same.
+```smart header="`console.dir(elem)` проти `console.log(elem)`"
+Більшість браузерів підтримують дві команди у своїх інструментах розробника: `console.log` та `console.dir`. Вони виводять свої аргументи в консоль. Для об'єктів JavaScript ці команди зазвичай роблять те ж саме.
 
-But for DOM elements they are different:
+Але для DOM елементів вони різні:
 
-- `console.log(elem)` shows the element DOM tree.
-- `console.dir(elem)` shows the element as a DOM object, good to explore its properties.
+- `console.log(elem)` показує елемент DOM дерева.
+- `console.dir(elem)` показує елемент як об'єкт DOM, це добре для того, щоб вивчити його властивості.
 
-Try it on `document.body`.
+Спробуйте це на `document.body`.
 ```
 
-````smart header="IDL in the spec"
-In the specification, DOM classes aren't described by using JavaScript, but a special [Interface description language](https://en.wikipedia.org/wiki/Interface_description_language) (IDL), that is usually easy to understand.
+````smart header="Специфікація IDL"
+У специфікації, класи DOM описані не за допомогою JavaScript, а спеціальною [мовою опису інтерфейсу](https://uk.wikipedia.org/wiki/Мова_опису_інтерфейсів)(IDL), яку зазвичай легко зрозуміти.
 
-In IDL all properties are prepended with their types. For instance, `DOMString`, `boolean` and so on.
+У IDL всі властивості призводять до їх типів. Наприклад, `DOMString`,` boolean` тощо.
 
-Here's an excerpt from it, with comments:
+Ось витяг з цієї специфікації, з коментарями:
 
 ```js
 // Define HTMLInputElement
 *!*
-// The colon ":" means that HTMLInputElement inherits from HTMLElement
+// Колонка ":" означає, що HTMLInputElement наслідується від HTMLElement
 */!*
 interface HTMLInputElement: HTMLElement {
   // here go properties and methods of <input> elements
 
 *!*
-  // "DOMString" means that the value of a property is a string
+  // "DOMString" означає, що значенням властивості є рядок
 */!*
   attribute DOMString accept;
   attribute DOMString alt;
@@ -103,12 +103,12 @@ interface HTMLInputElement: HTMLElement {
   attribute DOMString value;
 
 *!*
-  // boolean value property (true/false)
+  // бульова властивість (true/false)
   attribute boolean autofocus;
 */!*
   ...
 *!*
-  // now the method: "void" means that the method returns no value
+  // тепер метод: "void" означає, що метод не повертає значення
 */!*
   void select();
   ...
@@ -116,60 +116,60 @@ interface HTMLInputElement: HTMLElement {
 ```
 ````
 
-## The "nodeType" property
+## Властивість "nodeType" 
 
-The `nodeType` property provides one more, "old-fashioned" way to get the "type" of a DOM node.
+Властивість `nodeType` надає ще один, "старомодний" спосіб отримати "тип" DOM вузла.
 
-It has a numeric value:
-- `elem.nodeType == 1` for element nodes,
-- `elem.nodeType == 3` for text nodes,
-- `elem.nodeType == 9` for the document object,
-- there are few other values in [the specification](https://dom.spec.whatwg.org/#node).
+Він має числове значення:
+- `elem.nodeType == 1` для вузлів-елементів,
+- `elem.nodeType == 3` для текстових вузлів,
+- `elem.nodeType == 9` для об'єкта документа,
+- є кілька інших значень у [специфікації](https://dom.spec.whatwg.org/#node).
 
-For instance:
+Наприклад:
 
 ```html run
 <body>
   <script>
   let elem = document.body;
 
-  // let's examine what it is?
-  alert(elem.nodeType); // 1 => element
+  // перевіримо, що це таке?
+  alert(elem.nodeType); // 1 => елемент
 
-  // and the first child is...
-  alert(elem.firstChild.nodeType); // 3 => text
+  // і перший дочірній елемент ...
+  alert(elem.firstChild.nodeType); // 3 => текст
 
-  // for the document object, the type is 9
+  // для об'єкта документа тип -- 9
   alert( document.nodeType ); // 9
   </script>
 </body>
 ```
 
-In modern scripts, we can use `instanceof` and other class-based tests to see the node type, but sometimes `nodeType` may be simpler. We can only read `nodeType`, not change it.
+У сучасних скриптах ми можемо використовувати `instanceof` та інші тести на основі класів, щоб побачити тип вузла, але іноді використовувати `nodeType` простіше. Ми можемо лише читати `nodeType`, а не змінювати його.
 
-## Tag: nodeName and tagName
+## Тег: nodeName та tagName
 
-Given a DOM node, we can read its tag name from `nodeName` or `tagName` properties:
+Маючи вузол DOM, ми можемо прочитати назву тегів з `nodeName` або `tagName` властивостей:
 
-For instance:
+Наприклад:
 
 ```js run
 alert( document.body.nodeName ); // BODY
 alert( document.body.tagName ); // BODY
 ```
 
-Is there any difference between `tagName` and `nodeName`?
+Чи існує різниця між `tagName` і `nodeName`?
 
-Sure, the difference is reflected in their names, but is indeed a bit subtle.
+Звичайно, різниця відображається у їх іменах, але вдійсності є трохи тонкою.
 
-- The `tagName` property exists only for `Element` nodes.
-- The `nodeName` is defined for any `Node`:
-    - for elements it means the same as `tagName`.
-    - for other node types (text, comment, etc.) it has a string with the node type.
+- Властивість `tagName` існує лише для `Element` вузлів.
+- `nodeName` визначається для будь-якого `Node`:
+    - для елементів це означає те ж саме, що і `tagName`.
+    - для інших типів вузлів (текст, коментар тощо) він має рядок з типом вузла.
 
-In other words, `tagName` is only supported by element nodes (as it originates from `Element` class), while `nodeName` can say something about other node types.
+Іншими словами, `tagName` підтримується лише вузлами елементів (оскільки вони походять від класу `Element`), а `nodeName` може сказати щось про інші типи вузлів.
 
-For instance, let's compare `tagName` and `nodeName` for the `document` and a comment node:
+Наприклад, давайте порівнюємо `tagName` and `nodeName` для вузла-документа та  коментаря:
 
 
 ```html run
