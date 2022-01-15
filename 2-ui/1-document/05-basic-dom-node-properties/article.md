@@ -1,54 +1,54 @@
-# Node properties: type, tag and contents
+# Властивості вузлів: тип, тег та вміст
 
-Let's get a more in-depth look at DOM nodes.
+Давайте тепер більш уважно подивимося на вузли DOM.
 
-In this chapter we'll see more into what they are and learn their most used properties.
+У цьому розділі ми більше розглянемо те, чим вони являються та вивчаємо їх найбільш використані властивості.
 
-## DOM node classes
+## Класи DOM вузлів
 
-Different DOM nodes may have different properties. For instance, an element node corresponding to tag `<a>` has link-related properties, and the one corresponding to `<input>` has input-related properties and so on. Text nodes are not the same as element nodes. But there are also common properties and methods between all of them, because all classes of DOM nodes form a single hierarchy.
+Різні вузли DOM можуть мати різні властивості. Наприклад, вузол-елемент, що відповідає тегу `<a>`, має властивості, які пов'язані з посиланням, а той вузол-елемент, що відповідає `<input>` має властивості, пов'язані з полем введенням, тощо.Текстові вузли не такі, як вузли елементів. Але існують також загальні властивості та методи між усіма з усіма, оскільки всі класи вузлів DOM утворюють єдину ієрархію.
 
-Each DOM node belongs to the corresponding built-in class.
+Кожен вузол DOM належить до відповідного вбудованого класу.
 
-The root of the hierarchy is [EventTarget](https://dom.spec.whatwg.org/#eventtarget), that is inherited by  [Node](http://dom.spec.whatwg.org/#interface-node), and other DOM nodes inherit from it.
+Коренем ієрархії є [EventTarget](https://dom.spec.whatwg.org/#eventtarget), від нього успадковується [Node](http://dom.spec.whatwg.org/#interface-node), а інші вузли DOM успадкують вже від нього.
 
-Here's the picture, explanations to follow:
+Ось рисунок, на якому слідує пояснення:
 
 ![](dom-class-hierarchy.svg)
 
-The classes are:
+Класи:
 
-- [EventTarget](https://dom.spec.whatwg.org/#eventtarget) -- is the root "abstract" class. Objects of that class are never created. It serves as a base, so that all DOM nodes support so-called "events", we'll study them later.
-- [Node](http://dom.spec.whatwg.org/#interface-node) -- is also an "abstract" class, serving as a base  for DOM nodes. It provides the core tree functionality: `parentNode`, `nextSibling`, `childNodes` and so on (they are getters). Objects of `Node` class are never created. But there are concrete node classes that inherit from it, namely: `Text` for text nodes, `Element` for element nodes and more exotic ones like `Comment` for comment nodes.
-- [Element](http://dom.spec.whatwg.org/#interface-element) -- is a base class for DOM elements. It provides element-level navigation like `nextElementSibling`, `children` and searching methods like `getElementsByTagName`, `querySelector`. A browser supports not only HTML, but also XML and SVG. The `Element` class serves as a base for more specific classes: `SVGElement`, `XMLElement` and `HTMLElement`.
-- [HTMLElement](https://html.spec.whatwg.org/multipage/dom.html#htmlelement) -- is finally the basic class for all HTML elements. It is inherited by concrete HTML elements:
-    - [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement) -- the class for `<input>` elements,
-    - [HTMLBodyElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlbodyelement) -- the class for `<body>` elements,
-    - [HTMLAnchorElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlanchorelement) -- the class for `<a>` elements,
-    - ...and so on.
+- [EventTarget](https://dom.spec.whatwg.org/#eventtarget) -- це кореневий "абстрактний" клас. Об'єкти цього класу ніколи не створюються. Він служить основою, тому всі вузли DOM підтримують так звані "події", які ми розглянемо пізніше.
+- [Node](http://dom.spec.whatwg.org/#interface-node) -- це також "абстрактний" клас, що служить базою для вузлів DOM. Він забезпечує основну функціональність дерева: `parentNode`, `nextSibling`, `childNodes` і так далі (це гетери). Об'єкти класу `Node` ніколи не створюються. Але є конкретні класи вузлів, які успадковуються від нього, а саме: `Text` для текстових вузлів, `Element` для вузлів-елементів та більш екзотичні, такі як `Comment` для вузлів-коментарів.
+- [Element](http://dom.spec.whatwg.org/#interface-element) -- це базовий клас для елементів DOM. Він забезпечує навігацію на рівні елементів, таку як `nextElementSibling`, `children` та пошукові методи, такі як `getElementsByTagName`, `querySelector`. Браузер підтримує не тільки HTML, але й XML та SVG. Клас `Element` служить базою для більш конкретних класів: `SVGElement`, `XMLElement` та `HTMLElement`..
+- [HTMLElement](https://html.spec.whatwg.org/multipage/dom.html#htmlelement) -- це, нарешті, основний клас для всіх елементів HTML. Він успадковується конкретними елементами HTML:
+    - [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement) -- це клас для `<input>` елементів,
+    - [HTMLBodyElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlbodyelement) -- це клас для `<body>` елементів,
+    - [HTMLAnchorElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlanchorelement) -- це клас для `<a>` елементів,
+    - ...і так далі.
 
-There are many other tags with their own classes that may have specific properties and methods, while some elements, such as `<span>`, `<section>`, `<article>` do not have any specific properties, so they are instances of `HTMLElement` class.
+Є багато інших тегів з власними класами, які можуть мати певні властивості та методи, а деякі елементи, такі як `<span>`, `<section>`, `<article>` не мають конкретних властивостей, тому вони є екземплярами класу `HTMLElement`.
 
-So, the full set of properties and methods of a given node comes as the result of the inheritance.
+Отже, повний набір властивостей та методів даного вузла надходить як результат наслідування.
 
-For example, let's consider the DOM object for an `<input>` element. It belongs to [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement) class.
+Наприклад, давайте розглянемо об'єкт DOM для елемента `<input>`. Він належить до класу [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement).
 
-It gets properties and methods as a superposition of (listed in inheritance order):
+Він отримує властивості та методи як накладення (перераховано в порядоку наслідування):
 
-- `HTMLInputElement` -- this class provides input-specific properties,
-- `HTMLElement` -- it provides common HTML element methods (and getters/setters),
-- `Element` -- provides generic element methods,
-- `Node` -- provides common DOM node properties,
-- `EventTarget` -- gives the support for events (to be covered),
-- ...and finally it inherits from `Object`, so "plain object" methods like `hasOwnProperty` are also available.
+- `HTMLInputElement` -- цей клас забезпечує специфічні властивості введення,
+- `HTMLElement` -- цей клас забезпечує загальні методи HTML-елементів (і гетери/сетери),
+- `Element` -- забезпечує загальні методи елемента,
+- `Node` -- забезпечує спільні властивості DOM вузлів,
+- `EventTarget` -- дає підтримку подій (будуть розглянуті),
+- ... і, нарешті, цей клас наслідує `Object`, тому "прості методи об'єкта" такими є, наприклад, `hasOwnProperty` також доступні.
 
-To see the DOM node class name, we can recall that an object usually has the `constructor` property. It references the class constructor, and `constructor.name` is its name:
+Щоб побачити назву класу DOM вузла, ми можемо згадати, що об'єкт, як правило, має властивість `constructor`. Вона посилається на конструктор класу, а `constructor.name` - це його назва:
 
 ```js run
 alert( document.body.constructor.name ); // HTMLBodyElement
 ```
 
-...Or we can just `toString` it:
+...Або ми можемо просто викликати `toString`:
 
 ```js run
 alert( document.body ); // [object HTMLBodyElement]
