@@ -1,59 +1,59 @@
 
-# Reference Type
+# Посилальний Тип
 
-```warn header="In-depth language feature"
-This article covers an advanced topic, to understand certain edge-cases better.
+```warn header="Поглиблений функціонал мови"
+Ця стаття охоплює складну тему, щоб краще зрозуміти певні крайні випадки.
 
-It's not important. Many experienced developers live fine without knowing it. Read on if you want to know how things work under the hood.
+Це не є важливим. Багато досвідчених розробників живуть добре, не знаючи цього. Прочитайте, якщо ви хочете знати, як певні речі працюють під капотом.
 ```
 
-A dynamically evaluated method call can lose `this`.
+Динамічно оцінений виклик методу може втратити `this`.
 
-For instance:
+Наприклад:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   hi() { alert(this.name); },
-  bye() { alert("Bye"); }
+  bye() { alert("До побачення"); }
 };
 
-user.hi(); // works
+user.hi(); // працює
 
-// now let's call user.hi or user.bye depending on the name
+// тепер викличмо user.hi або user.bye залежно від назви
 *!*
-(user.name == "John" ? user.hi : user.bye)(); // Error!
+(user.name == "John" ? user.hi : user.bye)(); // Помилка!
 */!*
 ```
 
-On the last line there is a conditional operator that chooses either `user.hi` or `user.bye`. In this case the result is `user.hi`.
+На останньому рядку є умовний оператор, який вибирає або `user.hi` або `user.bye`. У цьому випадку результат -- `user.hi`.
 
-Then the method is immediately called with parentheses `()`. But it doesn't work correctly!
+Потім метод негайно викликається за допомогою дужок `()`. Але це працює неправильно!
 
-As you can see, the call results in an error, because the value of `"this"` inside the call becomes `undefined`.
+Як ви бачите, виклик призводить до помилки, тому що значення `"this"` всередині виклику стає `undefined`.
 
-This works (object dot method):
+Це працює (метод об’єкта через крапку):
 ```js
 user.hi();
 ```
 
-This doesn't (evaluated method):
+Це ні (динамічно оцінений метод):
 ```js
-(user.name == "John" ? user.hi : user.bye)(); // Error!
+(user.name == "John" ? user.hi : user.bye)(); // Помилка!
 ```
 
-Why? If we want to understand why it happens, let's get under the hood of how `obj.method()` call works.
+Чому? Якщо ми хочемо зрозуміти, чому це трапляється, загляньмо під капот, як працює виклик `obj.method()`.
 
-## Reference type explained
+## Пояснення Посилального Типу
 
-Looking closely, we may notice two operations in `obj.method()` statement:
+Дивлячись уважно, ми можемо помітити дві операції в інструкції `obj.method()`:
 
-1. First, the dot `'.'` retrieves the property `obj.method`.
-2. Then parentheses `()` execute it.
+1. По-перше, крапка `'.'` витягує властивість `obj.method`.
+2. Потім дужки `()` виконуйте її.
 
-So, how does the information about `this` get passed from the first part to the second one?
+Отже, як інформація про `this` передається з першої частини до другої?
 
-If we put these operations on separate lines, then `this` will be lost for sure:
+Якщо ми поставимо ці операції на окремі рядки, то `this` напевно буде втрачено:
 
 ```js run
 let user = {
@@ -62,47 +62,47 @@ let user = {
 }
 
 *!*
-// split getting and calling the method in two lines
+// розділимо отримання та виклик методу на два рядки
 let hi = user.hi;
-hi(); // Error, because this is undefined
+hi(); // Помилка, тому що this -- це undefined
 */!*
 ```
 
-Here `hi = user.hi` puts the function into the variable, and then on the last line it is completely standalone, and so there's no `this`.
+Тут `hi = user.hi` поміщає функцію в змінну, а потім на останньому рядку, ця змінна повністю автономна, і тому не має `this`.
 
-**To make `user.hi()` calls work, JavaScript uses a trick -- the dot `'.'` returns not a function, but a value of the special [Reference Type](https://tc39.github.io/ecma262/#sec-reference-specification-type).**
+**Щоб зробити виклик `user.hi()` робочим, JavaScript використовує трюк -- крапка `'.'` повертає не функцію, а значення спеціального [посилальний типу](https://tc39.github.io/ecma262/#sec-reference-specification-type).**
 
-The Reference Type is a "specification type". We can't explicitly use it, but it is used internally by the language.
+Посилальний тип -- це "тип специфікації". Ми не можемо явно використовувати його, але він використовується всередині мови.
 
-The value of Reference Type is a three-value combination `(base, name, strict)`, where:
+Значення посилального типу -- це комбінація трьох значення `(base, name, strict)`, де:
 
-- `base` is the object.
-- `name` is the property name.
-- `strict` is true if `use strict` is in effect.
+- `base` -- це об’єкт.
+- `name` -- це назва властивості.
+- `strict` -- це true якщо діє `use strict`.
 
-The result of a property access `user.hi` is not a function, but a value of Reference Type. For `user.hi` in strict mode it is:
+Результат доступу до властивості `user.hi` є не функцією, а значенням посилального типу. Для `user.hi` у суворому режимі це:
 
 ```js
-// Reference Type value
+// Значення посилального типу
 (user, "hi", true)
 ```
 
-When parentheses `()` are called on the Reference Type, they receive the full information about the object and its method, and can set the right `this` (`=user` in this case).
+Коли дужки `()` викликаються з посилальним типом, вони отримують повну інформацію про об’єкт та його метод, і можуть встановити правильний `this` (` =user` у даному випадку).
 
-Reference type is a special "intermediary" internal type, with the purpose to pass information from dot `.` to calling parentheses `()`.
+Посилальний тип -- це особливий "посередницький" внутрішній тип, який використовується з метою передачі інформації від крапки `.` до дужок виклику `()`.
 
-Any other operation like assignment `hi = user.hi` discards the reference type as a whole, takes the value of `user.hi` (a function) and passes it on. So any further operation "loses" `this`.
+Будь-яка інша операція, наприклад присвоєння `hi = user.hi` в цілому відкидає посилальний тип та приймає значення `user.hi` (функції) і передає його. Отже, будь-яка подальша операція "втрачає" `this`.
 
-So, as the result, the value of `this` is only passed the right way if the function is called directly using a dot `obj.method()` or square brackets `obj['method']()` syntax (they do the same here). There are various ways to solve this problem such as [func.bind()](/bind#solution-2-bind).
+Отже, як результат, значення `this` передається правильно тільки тоді, якщо функція викликається безпосередньо за допомогою крапки `obj.method()` або синтаксису квадратних дужок `obj['method']()` (вони роблять одне й те ж саме). Існують різні способи розв’язання цієї проблеми, як [func.bind()](/bind#solution-2-bind).
 
-## Summary
+## Підсумки
 
-Reference Type is an internal type of the language.
+Посилальний тип -- це внутрішній тип мови.
 
-Reading a property, such as with dot `.` in `obj.method()` returns not exactly the property value, but a special "reference type" value that stores both the property value and the object it was taken from.
+Читання властивості, наприклад, крапкою `.` в `obj.method()` повертає не саме значення властивості, але спеціальне значення "посилального типу", яке зберігає як значення властивості, так і об’єкт, з якою він був взятий.
 
-That's for the subsequent method call `()` to get the object and set `this` to it.
+Це використовується для подальшого виклику методу за допомогою `()`, щоб отримати об’єкт і встановити `this` до цього.
 
-For all other operations, the reference type automatically becomes the property value (a function in our case).
+Для всіх інших операцій, посилальний тип автоматично стає значенням властивості (функцією у нашому випадку).
 
-The whole mechanics is hidden from our eyes. It only matters in subtle cases, such as when a method is obtained dynamically from the object, using an expression.
+Вся ця механіка прихована від наших очей. Це лише важливо в тонких випадках, наприклад, коли метод отримується динамічно з об’єкта, використовуючи вираз.

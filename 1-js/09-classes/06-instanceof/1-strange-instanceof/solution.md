@@ -1,7 +1,7 @@
-Yeah, looks strange indeed.
+Так, виглядає справді дивно.
 
-But `instanceof` does not care about the function, but rather about its `prototype`, that it matches against the prototype chain.
+Але `instanceof` нема діла до функції, все залежить від її властивості `prototype`, значення якої порівнюється з ланцюжком прототипів.
 
-And here `a.__proto__ == B.prototype`, so `instanceof` returns `true`.
+І тут `a.__proto__ == B.prototype`, тому `instanceof` повертає `true`.
 
-So, by the logic of `instanceof`, the `prototype` actually defines the type, not the constructor function.
+Отже, за логікою `instanceof`, властивість `prototype` насправді визначає тип, а не сама функція-конструктор.

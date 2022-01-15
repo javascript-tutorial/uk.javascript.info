@@ -4,154 +4,154 @@ libs:
 
 ---
 
-# DOM tree
+# DOM дерево
 
-The backbone of an HTML document is tags.
+Теги -- основа HTML-документа це .
 
-According to the Document Object Model (DOM), every HTML tag is an object. Nested tags are  "children" of the enclosing one. The text inside a tag is an object as well.
+Відповідно до об’єктної моделі документа (DOM), кожен HTML-тег є об’єктом. Вкладені теги -- це "діти" всередині батьківського елементу. Текст всередині тегу також є об’єктом.
 
-All these objects are accessible using JavaScript, and we can use them to modify the page.
+Всі ці об’єкти доступні за допомогою JavaScript, і ми можемо використовувати їх, щоб змінити сторінку.
 
-For example, `document.body` is the object representing the `<body>` tag.
+Наприклад, `document.body` це об’єкт, що представляє тег `<body>`.
 
-Running this code will make the `<body>` red for 3 seconds:
+Запуск цього коду зробить `<body>` червоним протягом 3 секунд:
 
 ```js run
-document.body.style.background = 'red'; // make the background red
+document.body.style.background = 'red'; // зробити фон червоним
 
-setTimeout(() => document.body.style.background = '', 3000); // return back
+setTimeout(() => document.body.style.background = '', 3000); // повернути назад
 ```
 
-Here we used `style.background` to change the background color of `document.body`, but there are many other properties, such as:
+Тут ми використовували `style.background`, щоб змінити фоновий колір `document.body`, але тут є багато інших властивостей, таких як.
 
-- `innerHTML` -- HTML contents of the node.
-- `offsetWidth` -- the node width (in pixels)
-- ...and so on.
+- `innerHTML` -- вміст HTML вузла.
+- `offsetWidth` -- ширина вузла (у пікселях)
+- ...і так далі.
 
-Soon we'll learn more ways to manipulate the DOM, but first we need to know about its structure.
+Незабаром ми дізнаємося більше способів маніпулювати домом, але спочатку потрібно знати його структуру.
 
-## An example of the DOM
+## Приклад DOM
 
-Let's start with the following simple document:
+Почнемо з наступного простого документа:
 
 ```html run no-beautify
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>About elk</title>
+  <title>Про лосів</title>
 </head>
 <body>
-  The truth about elk.
+  Правда про лосів.
 </body>
 </html>
 ```
 
-The DOM represents HTML as a tree structure of tags. Here's how it looks:
+DOM представляє HTML як структуру дерева тегів. Ось як це виглядає:
 
 <div class="domtree"></div>
 
 <script>
-let node1 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  "},{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"About elk"}]},{"name":"#text","nodeType":3,"content":"\n"}]},{"name":"#text","nodeType":3,"content":"\n"},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  The truth about elk.\n"}]}]}
+let node1 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  "},{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Про лосів"}]},{"name":"#text","nodeType":3,"content":"\n"}]},{"name":"#text","nodeType":3,"content":"\n"},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  Правда про лосів.\n\n\n"}]}]}
 
 drawHtmlTree(node1, 'div.domtree', 690, 320);
 </script>
 
 ```online
-On the picture above, you can click on element nodes and their children will open/collapse.
+На зображенні вище, ви можете натиснути на вузли-елементи, а їхні діти будуть відкриватися і закриватися.
 ```
 
-Every tree node is an object.
+Кожен вузол дерева є об’єктом.
 
-Tags are *element nodes* (or just elements) and form the tree structure: `<html>` is at the root, then `<head>` and `<body>` are its children, etc.
+Теги є *вузлами-елементами* (або просто елементами), вони утворюють структуру дерева: `<html>` знаходиться в корені, `<head>` `<body>` - це його дочірні вузли тощо.
 
-The text inside elements forms *text nodes*, labelled as `#text`. A text node contains only a string. It may not have children and is always a leaf of the tree.
+Текст всередині елементів утворює *текстові вузли*, позначені як `#text`. Текстовий вузол містить лише рядок. У нього може не буди нащадків і завжди він завжди є листом дерева.
 
-For instance, the `<title>` tag has the text `"About elk"`.
+Наприклад, тег `<title>` має текст `"Про лосів"`.
 
-Please note the special characters in text nodes:
+Зверніть увагу на спеціальні символи в текстових вузлах:
 
-- a newline: `↵` (in JavaScript known as `\n`)
-- a space: `␣`
+- новий рядок: `↵` (в JavaScript відомий як `\n`)
+- пробіл: `␣`
 
-Spaces and newlines are totally valid characters, like letters and digits. They form text nodes and become a part of the DOM. So, for instance, in the example above the `<head>` tag contains some spaces before `<title>`, and that text becomes a `#text` node (it contains a newline and some spaces only).
+Пробіли та нові рядки є абсолютно діючими символами, як букви та цифри. Вони утворюють текстові вузли і стають частиною DOM. Отже, наприклад, наведений вище тег `<head>` містить деякі пробіли перед `<title>`, і цей текст стає `#text` вузлом (він містить лише символ нового рядку та деякілька пробілів).
 
-There are only two top-level exclusions:
-1. Spaces and newlines before `<head>` are ignored for historical reasons.
-2. If we put something after `</body>`, then that is automatically moved inside the `body`, at the end, as the HTML spec requires that all content must be inside `<body>`. So there can't be any spaces after `</body>`.
+Є лише два винятки з цього правила:
+1. Пробіли та нові лінії до `<head>` ігноруються з історичних причин.
+2. Якщо ми щось помістимо після `<body>`, то це цось автоматично переміщується всередині `body`, в кінці, оскільки специфікація HTML вимагає, що весь вміст повинен бути всередині `<body>`. Отже, після `<body>` не може бути пробілів.
 
-In other cases everything's straightforward -- if there are spaces (just like any character) in the document, then they become text nodes in the DOM, and if we remove them, then there won't be any.
+В інших випадках все просто -- якщо є пробіли (так само, як будь-який символ) у документі, то вони стають текстовими вузлами в DOM, і якщо ми видалимо ці пробіли, то текстових вузлів там не буде.
 
-Here are no space-only text nodes:
+Тут немає текстових вузлів з пробілами:
 
 ```html no-beautify
 <!DOCTYPE HTML>
-<html><head><title>About elk</title></head><body>The truth about elk.</body></html>
+<html><head><title>Про оленів</title></head><body>Правда про оленів.</body></html>
 ```
 
 <div class="domtree"></div>
 
 <script>
-let node2 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"About elk"}]}]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"The truth about elk."}]}]}
+let node2 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[{"name":"TITLE","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Про оленів"}]}]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Правда про оленів."}]}]}
 
 drawHtmlTree(node2, 'div.domtree', 690, 210);
 </script>
 
-```smart header="Spaces at string start/end and space-only text nodes are usually hidden in tools"
-Browser tools (to be covered soon) that work with DOM usually do not show spaces at the start/end of the text and empty text nodes (line-breaks) between tags.
+```smart header="Пробіли у рядку на початку/в кінці і ті вузли, що містять тільки пробіли, як правило, приховані в інструментах розробки"
+Інструменти браузера (будуть розглянуті скоро), що працюють з DOM, як правило, не показують пробіли на початку/кінці тексту та порожні тексти (переноси рядків) між тегами.
 
-Developer tools save screen space this way.
+Інструменти розробника таким чином зберігають екранний простір.
 
-On further DOM pictures we'll sometimes omit them when they are irrelevant. Such spaces usually do not affect how the document is displayed.
+На подальших рисунках DOM ми іноді опускаємо їх, коли вони не мають значення. Такі пробіли зазвичай не впливають на те, як відображається документ.
 ```
 
-## Autocorrection
+## Автокорекція
 
-If the browser encounters malformed HTML, it automatically corrects it when making the DOM.
+Якщо браузер зтикається з невалідним HTML, він автоматично виправляє його при створенні DOM.
 
-For instance, the top tag is always `<html>`. Even if it doesn't exist in the document, it will exist in the DOM, because the browser will create it. The same goes for `<body>`.
+Наприклад, верхній тег завжди `<html>`. Навіть якщо він не існує в документі, він буде існувати в DOM, тому що браузер створить його. Те ж саме стосується `<body>`.
 
-As an example, if the HTML file is the single word `"Hello"`, the browser will wrap it into `<html>` and `<body>`, and add the required `<head>`, and the DOM will be:
+Як приклад, якщо файл HTML містить єдине слово `"Привіт"`, браузер оберне його в `<html>` і `<body>`, та додасть необхідний `<head>`, а DOM буде виглядати наступним чином:
 
 
 <div class="domtree"></div>
 
 <script>
-let node3 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Hello"}]}]}
+let node3 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Привіт"}]}]}
 
 drawHtmlTree(node3, 'div.domtree', 690, 150);
 </script>
 
-While generating the DOM, browsers automatically process errors in the document, close tags and so on.
+Під час створення DOM, браузери автоматично обробляють помилки у документі, закривають теги тощо.
 
-A document with unclosed tags:
+Документ з відкритими тегами:
 
 ```html no-beautify
-<p>Hello
-<li>Mom
-<li>and
-<li>Dad
+<p>Привіт
+<li>Мама
+<li>і
+<li>Тато
 ```
 
-...will become a normal DOM as the browser reads tags and restores the missing parts:
+...стане нормальним DOM, оскільки браузер читає теги та відновлює відсутні частини:
 
 <div class="domtree"></div>
 
 <script>
-let node4 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[]},{"name":"BODY","nodeType":1,"children":[{"name":"P","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Hello"}]},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Mom"}]},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"and"}]},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Dad"}]}]}]}
+let node4 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[]},{"name":"BODY","nodeType":1,"children":[{"name":"P","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Привіт"}]},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Мама"}]},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"і"}]},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Тато"}]}]}]}
 
 drawHtmlTree(node4, 'div.domtree', 690, 360);
 </script>
 
-````warn header="Tables always have `<tbody>`"
-An interesting "special case" is tables. By DOM specification they must have `<tbody>` tag, but HTML text may omit it. Then the browser creates `<tbody>` in the DOM automatically.
+````warn header="Таблиці завжди мають `<tbody>`"
+Цікавий "особливий випадок" -- це таблиці. Згідно DOM специфікації вони повинні мати тег `<tbody>`, але текст HTML може це пропустити. Тоді браузер створює `<tbody>` у DOM автоматично.
 
-For the HTML:
+Наприклад, HTML:
 
 ```html no-beautify
 <table id="table"><tr><td>1</td></tr></table>
 ```
 
-DOM-structure will be:
+DOM-структура:
 <div class="domtree"></div>
 
 <script>
@@ -160,26 +160,26 @@ let node5 = {"name":"TABLE","nodeType":1,"children":[{"name":"TBODY","nodeType":
 drawHtmlTree(node5,  'div.domtree', 600, 200);
 </script>
 
-You see? The `<tbody>` appeared out of nowhere. We should keep this in mind while working with tables to avoid surprises.
+Розумієте? Тег `<tbody>` з’явився з нізвідки. Ми повинні мати це на увазі під час роботи з таблицями, щоб уникати сюрпризів.
 ````
 
-## Other node types
+## Інші типи вузлів
 
-There are some other node types besides elements and text nodes.
+Окрім елементів та текстових вузлів є деякі інщі типи вузлів.
 
-For example, comments:
+Наприклад, коментарі:
 
 ```html
 <!DOCTYPE HTML>
 <html>
 <body>
-  The truth about elk.
+  Правда про оленів.
   <ol>
-    <li>An elk is a smart</li>
+    <li>Олень -- це розумний</li>
 *!*
     <!-- comment -->
 */!*
-    <li>...and cunning animal!</li>
+    <li>...та хитрий звір!</li>
   </ol>
 </body>
 </html>
@@ -188,95 +188,95 @@ For example, comments:
 <div class="domtree"></div>
 
 <script>
-let node6 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  The truth about elk.\n  "},{"name":"OL","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n    "},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"An elk is a smart"}]},{"name":"#text","nodeType":3,"content":"\n    "},{"name":"#comment","nodeType":8,"content":"comment"},{"name":"#text","nodeType":3,"content":"\n    "},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"...and cunning animal!"}]},{"name":"#text","nodeType":3,"content":"\n  "}]},{"name":"#text","nodeType":3,"content":"\n\n\n"}]}]};
+let node6 = {"name":"HTML","nodeType":1,"children":[{"name":"HEAD","nodeType":1,"children":[]},{"name":"BODY","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n  Правда про оленів.\n  "},{"name":"OL","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"\n    "},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"Олень -- це розумний"}]},{"name":"#text","nodeType":3,"content":"\n    "},{"name":"#comment","nodeType":8,"content":"comment"},{"name":"#text","nodeType":3,"content":"\n    "},{"name":"LI","nodeType":1,"children":[{"name":"#text","nodeType":3,"content":"...і хитрий звір!"}]},{"name":"#text","nodeType":3,"content":"\n  "}]},{"name":"#text","nodeType":3,"content":"\n\n\n"}]}]};
 
 drawHtmlTree(node6, 'div.domtree', 690, 500);
 </script>
 
-We can see here a new tree node type -- *comment node*, labeled as `#comment`, between two text nodes.
+Тут ми бачимо новий тип вузла дерева -- *вузол-коментар*, позначений як `#comment`, між двома текстовими вузлами.
 
-We may think -- why is a comment added to the DOM? It doesn't affect the visual representation in any way. But there's a rule -- if something's in HTML, then it also must be in the DOM tree.
+Ми могли подумати -- чому коментар додається до DOM? Це не впливає на візуальне уявлення. Але є правило - якщо щось є в HTML, то воно також повинно бути в DOM дереві.
 
-**Everything in HTML, even comments, becomes a part of the DOM.**
+**Все в HTML, навіть коментарі, стає частиною DOM.**
 
-Even the `<!DOCTYPE...>` directive at the very beginning of HTML is also a DOM node. It's in the DOM tree right before `<html>`. Few people know about that. We are not going to touch that node, we even don't draw it on diagrams, but it's there.
+Навіть директива `<!DOCTYPE...>` на самому початку HTML також є вузлом DOM. Вона є DOM дереві прямо перед `<html>`. Мало хто знає про це. Ми не збираємося звертатися до цього вузла, ми навіть не малюємо його на діаграмах, але він там є.
 
-The `document` object that represents the whole document is, formally, a DOM node as well.
+Об’єкт `document`, який представляє весь документ, формально, також є вузлом DOM.
 
-There are [12 node types](https://dom.spec.whatwg.org/#node). In practice we usually work with 4 of them:
+Існує [12 типів вузлів](https://dom.spec.whatwg.org/#node). На практиці ми зазвичай працюємо з 4-ма з них:
 
-1. `document` -- the "entry point" into DOM.
-2. element nodes -- HTML-tags, the tree building blocks.
-3. text nodes -- contain text.
-4. comments -- sometimes we can put information there, it won't be shown, but JS can read it from the DOM.
+1. `document` -- "пункт входу" в DOM.
+2. вузли-елементи -- HTML-теги, будівельні блоки дерев.
+3. текстові вузли -- містять текст.
+4. коментарі -- іноді ми можемо записати туди інформацію, вона не буде показана, але JS може читати її з DOM.
 
-## See it for yourself
+## Поекспериментуйте самі
 
-To see the DOM structure in real-time, try [Live DOM Viewer](http://software.hixie.ch/utilities/js/live-dom-viewer/). Just type in the document, and it will show up as a DOM at an instant.
+Щоб побачити структуру DOM у режимі реального часу, спробуйте [Live Dom Viewer](http://software.hixie.ch/utilities/js/live-dom-viewer/). Просто введіть документ, і внизу відразу з’явиться його DOM.
 
-Another way to explore the DOM is to use the browser developer tools. Actually, that's what we use when developing.
+Іншим способом вивчення DOM є використання інструментів розробника браузера. Взагалі, це те, що ми використовуємо при розробці.
 
-To do so, open the web page [elk.html](elk.html), turn on the browser developer tools and switch to the Elements tab.
+Для цього відкрийте веб-сторінку [elk.html](elk.html), увімкніть інструменти розробника в браузері та перейдіть на вкладку "Elements".
 
-It should look like this:
+Це повинно виглядати так:
 
 ![](elk.svg)
 
-You can see the DOM, click on elements, see their details and so on.
+Ви можете побачити DOM, натиснути на елементи, переглянути їхні деталі і так далі.
 
-Please note that the DOM structure in developer tools is simplified. Text nodes are shown just as text. And there are no "blank" (space only) text nodes at all. That's fine, because most of the time we are interested in element nodes.
+Зверніть увагу, що структура DOM в інструментах розробника спрощується. Текстові вузли показані так само, як текст. І взагалі немає "порожніх" (тільки пробіли) текстових вузлів. Це добре, тому що більшу частину часу ми зацікавлені в вузлах-елементах.
 
-Clicking the <span class="devtools" style="background-position:-328px -124px"></span> button in the left-upper corner allows us to choose a node from the webpage using a mouse (or other pointer devices) and "inspect" it (scroll to it in the Elements tab). This works great when we have a huge HTML page (and corresponding huge DOM) and would like to see the place of a particular element in it.
+Якщо натиснути кнопку <span class="devtools" style="background-position:-328px -124px"></span> у лівому верхньому куті, то можна буде вибрати вузол з веб-сторінки за допомогою миші (або інших пристроїв покажчика) і "проінспектувати" його (прокрутити до нього на вкладці "Elements"). Це чудово працює, коли у нас є величезна HTML-сторінка (і відповідний величезний дом) і хотілося б побачити місце конкретного елемента в ньому.
 
-Another way to do it would be just right-clicking on a webpage and selecting "Inspect" in the context menu.
+Інший спосіб зробити це -- просто натиснувши праву клавіщу миші на веб-сторінці та вибирати "Inspect" у контекстному меню.
 
 ![](inspect.svg)
 
-At the right part of the tools there are the following subtabs:
-- **Styles** -- we can see CSS applied to the current element rule by rule, including built-in rules (gray). Almost everything can be edited in-place, including the dimensions/margins/paddings of the box below.
-- **Computed** -- to see CSS applied to the element by property: for each property we can see a rule that gives it (including CSS inheritance and such).
-- **Event Listeners** -- to see event listeners attached to DOM elements (we'll cover them in the next part of the tutorial).
-- ...and so on.
+У правій частині інструментів є наступні підвкладки:
+- **Styles** -- ми можемо бачити CSS правила, які застосовано до поточного елемента, включаючи вбудовані правила (показані сірим). Майже все можна відредагувати на місці, включаючи розміри/марджини/паддінги внизу вікна.
+- **Computed** -- для перегляду CSS, що застосовується до елемента за властивістю: для кожної властивості ми можемо побачити правило, яке це дає (включаючи наслідування CSS та ін.).
+- **Event Listeners** -- щоб побачити слухачів подій, що прикріплені до елементів DOM (ми розглянемо їх у наступній частині підручника).
+- ...і так далі.
 
-The best way to study them is to click around. Most values are editable in-place.
+Найкращий спосіб вивчити все це -- поекспериментувати. Більшість значень можна редагувати на місці.
 
-## Interaction with console
+## Взаємодія з консоллю
 
-As we work the DOM, we also may want to apply JavaScript to it. Like: get a node and run some code to modify it, to see the result. Here are few tips to travel between the Elements tab and the console.
+Коли ми працюємо з DOM, ми також можемо застосувати до нього JavaScript. Наприклад, отримайти вузол і запустити якийсь код, щоб змінити його так, щоб побачити результат. Ось декілька порад, щоб переміщатися між вкладкою "Elements" та консоллю.
 
-For the start:
+Для початку:
 
-1. Select the first `<li>` in the Elements tab.
-2. Press `key:Esc` -- it will open console right below the Elements tab.
+1. Виберіть першу `<li>` на вкладці елементів.
+2. Натисніть `key:Esc` -- це відкриє консоль прямо під вкладкою "Елементи".
 
-Now the last selected element is available as `$0`, the previously selected is `$1` etc.
+Тепер останній вибраний елемент доступний як `$0`, раніше вибраний -- `$1`, тощо.
 
-We can run commands on them. For instance, `$0.style.background = 'red'` makes the selected list item red, like this:
+Ми можемо запустити команди на них. Наприклад, `$0.style.background = 'red'` робить вибраний список елементів червоним, наприклад:
 
 ![](domconsole0.svg)
 
-That's how to get a node from Elements in Console.
+Ось як отримати вузол з елементів у консолі.
 
-There's also a road back. If there's a variable referencing a DOM node, then we can use the command `inspect(node)` in Console to see it in the Elements pane.
+Також існує зворотній шлях. Якщо є змінна, що посилається на вузол DOM, то ми можемо використовувати команду `inspect(node)` у консолі, щоб побачити його в панелі елементів.
 
-Or we can just output the DOM node in the console and explore "in-place", like `document.body` below:
+Або ми можемо просто вивести вузол DOM в консолі та дослідити його "на місці", як і `document.body` нижче:
 
 ![](domconsole1.svg)
 
-That's for debugging purposes of course. From the next chapter on we'll access and modify DOM using JavaScript.
+Звичайно, це використовується з метою відлагодження. З наступної глави ми будемо отримувати доступ та змінювати DOM за допомогою JavaScript.
 
-The browser developer tools are a great help in development: we can explore the DOM, try things and see what goes wrong.
+Інструменти розробника браузера -- є дуже корисними у розробці: ми можемо досліджувати DOM, випробовувати різні речі і дивитися, що йде не так.
 
-## Summary
+## Підсумки
 
-An HTML/XML document is represented inside the browser as the DOM tree.
+HTML/XML документ представляється всередині браузера, як дерево DOM.
 
-- Tags become element nodes and form the structure.
-- Text becomes text nodes.
-- ...etc, everything in HTML has its place in DOM, even comments.
+- Теги стають вузлами-елементами і утворюють структуру.
+- Текст стає текстовими вузлами.
+- ...і т.д., все, що є в HTML, представлено в DOM, навіть коментарі.
 
-We can use developer tools to inspect DOM and modify it manually.
+Ми можемо використовувати інструменти розробника, щоб перевіряти DOM та змінювати його вручну.
 
-Here we covered the basics, the most used and important actions to start with. There's an extensive documentation about Chrome Developer Tools at <https://developers.google.com/web/tools/chrome-devtools>. The best way to learn the tools is to click here and there, read menus: most options are obvious. Later, when you know them in general, read the docs and pick up the rest.
+Тут для початку ми охопили основи та дії, які найбільш часто використовуються. Існує велика документація про інструменти розробника Chrome на <https://developers.google.com/web/tools/chrome-devtools>. Найкращий спосіб дізнатися більше про інструменти розробника -- це відкрити їх та ознайомитися з ними: більшість можливостей очевидні. Пізніше, коли ви загалом розберетеся з ними, читайте документацію, щоб дослідити решту функціоналу.
 
-DOM nodes have properties and methods that allow us to travel between them, modify them, move around the page, and more. We'll get down to them in the next chapters.
+Вузли DOM мають властивості та методи, які дозволяють нам переміщуватися між ними, змінювати їх, переміщуватися по сторінці та багато іншого. Ми розберемо їх у наступних розділах.

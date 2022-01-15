@@ -1,33 +1,33 @@
 
-# Accessing array[-1]
+# Доступ до масиву[-1]
 
-In some programming languages, we can access array elements using negative indexes, counted from the end.
+У деяких мовах програмування ми можемо отримати доступ до елементів масиву за допомогою негативних індексів, відрахованих з кінця.
 
-Like this:
+Наприклад ось так:
 
 ```js
 let array = [1, 2, 3];
 
-array[-1]; // 3, the last element
-array[-2]; // 2, one step from the end
-array[-3]; // 1, two steps from the end
+array[-1]; // 3, останній елемент
+array[-2]; // 2, за крок від кінця
+array[-3]; // 1, за два кроки від кінця
 ```
 
-In other words, `array[-N]` is the same as `array[array.length - N]`.
+Іншими словами, `array[-N]` це те саме, що `array[array.length - N]`.
 
-Create a proxy to implement that behavior.
+Створіть проксі для реалізації такої поведінки.
 
-That's how it should work:
+Ось як це має працювати:
 
 ```js
 let array = [1, 2, 3];
 
 array = new Proxy(array, {
-  /* your code */
+  /* ваш код */
 });
 
 alert( array[-1] ); // 3
 alert( array[-2] ); // 2
 
-// Other array functionality should be kept "as is"
+// Іншу функціональність масиву слід зберегти "як є"
 ```

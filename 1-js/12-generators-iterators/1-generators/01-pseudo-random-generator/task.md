@@ -1,29 +1,29 @@
 
-# Pseudo-random generator
+# Псевдовипадковий генератор
 
-There are many areas where we need random data.
+Є багато областей, де нам потрібні випадкові дані.
 
-One of them is testing. We may need random data: text, numbers, etc. to test things out well.
+Одна з них – тестування. Нам можуть знадобитися випадкові дані: текст, числа тощо, щоб добре все перевірити.
 
-In JavaScript, we could use `Math.random()`. But if something goes wrong, we'd like to be able to repeat the test, using exactly the same data.
+У JavaScript ми можемо використовувати `Math.random()`. Але якщо щось піде не так, ми хотіли б мати можливість повторити тест, використовуючи точно ті самі дані.
 
-For that, so called "seeded pseudo-random generators" are used. They take a "seed", the first value, and then generate the next ones using a formula so that the same seed yields the same sequence, and hence the whole flow is easily reproducible. We only need to remember the seed to repeat it.
+Для цього використовуються так звані "сіяні псевдовипадкові генератори". Вони беруть "зерно", перше значення, а потім генерують наступні за допомогою формули, так що те саме насіння дає ту саму послідовність, а отже, весь потік легко відтворюється. Нам потрібно лише згадати зерно, щоб повторити його.
 
-An example of such formula, that generates somewhat uniformly distributed values:
+Приклад такої формули, яка генерує рівномірно розподілені значення:
 
 ```
 next = previous * 16807 % 2147483647
 ```
 
-If we use `1` as the seed, the values will be:
+Якщо ми використаємо `1` як зерно, то значення будуть такими:
 1. `16807`
 2. `282475249`
 3. `1622650073`
 4. ...and so on...
 
-The task is to create a generator function `pseudoRandom(seed)` that takes `seed` and creates the generator with this formula.
+Завдання полягає в тому, щоб створити функцію-генератор `pseudoRandom(seed)`, яка приймає `seed` і створює генератор з цією формулою.
 
-Usage example:
+Приклад використання:
 
 ```js
 let generator = pseudoRandom(1);

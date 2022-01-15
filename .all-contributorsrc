@@ -225,6 +225,33 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Purusah",
+      "name": "Vladyslav Bohaichuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16886633?v=4",
+      "profile": "https://github.com/Purusah",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "AntonBurchak",
+      "name": "Anton Burchak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47831897?v=4",
+      "profile": "https://github.com/AntonBurchak",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "gingano",
+      "name": "gingano",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47160813?v=4",
+      "profile": "https://github.com/gingano",
+      "contributions": [
+        "translation"
+      ]
     }
   ]
 }

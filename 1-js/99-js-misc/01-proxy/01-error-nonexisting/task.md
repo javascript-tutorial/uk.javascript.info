@@ -1,32 +1,32 @@
-# Error on reading non-existent property
+# Помилка під час зчитування неіснуючої властивості
 
-Usually, an attempt to read a non-existent property returns `undefined`.
+Зазвичай при спробі прочитати неіснуючу властивість повертається `undefined`.
 
-Create a proxy that throws an error for an attempt to read of a non-existent property instead.
+Створіть проксі, що видає помилку при спробі зчитування неіснуючої властивості.
 
-That can help to detect programming mistakes early.
+Це може допомогти виявити помилки програмування раніше.
 
-Write a function `wrap(target)` that takes an object `target` and return a proxy that adds this functionality aspect.
+Напишіть функцію `wrap(target)`, яка приймає об’єкт `target` і повертає проксі, що додає цей аспект функціональності.
 
-That's how it should work:
+Ось як це має працювати:
 
 ```js
 let user = {
-  name: "John"
+  name: "Іван"
 };
 
 function wrap(target) {
   return new Proxy(target, {
 *!*
-      /* your code */
+      /* ваш код */
 */!*
   });
 }
 
 user = wrap(user);
 
-alert(user.name); // John
+alert(user.name); // Іван
 *!*
-alert(user.age); // ReferenceError: Property doesn't exist: "age"
+alert(user.age); // ReferenceError: Властивість не існує: "age"
 */!*
 ```

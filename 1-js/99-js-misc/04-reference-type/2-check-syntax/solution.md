@@ -1,37 +1,37 @@
-**Error**!
+**Помилка**!
 
-Try it:
+Спробуйте:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   go: function() { alert(this.name) }
 }
 
-(user.go)() // error!
+(user.go)() // помилка!
 ```
 
-The error message in most browsers does not give us much of a clue about what went wrong.
+Повідомлення про помилку в більшості браузерів не дає нам велику кількість підказок про те, що пішло не так.
 
-**The error appears because a semicolon is missing after `user = {...}`.**
+**Помилка з'являється, оскільки крапка з комою відсутня після `user = {...}`.**
 
-JavaScript does not auto-insert a semicolon before a bracket `(user.go)()`, so it reads the code like:
+JavaScript не вставляэ автоматично крапку з комою перед дужками `(user.go)()` тому, що він читає код, як:
 
 ```js no-beautify
 let user = { go:... }(user.go)()
 ```
 
-Then we can also see that such a joint expression is syntactically a call of the object `{ go: ... }` as a function with the argument `(user.go)`. And that also happens on the same line with `let user`, so the `user` object has not yet even been defined, hence the error.
+Тоді ми також можемо побачити, що такий спільний вираз синтаксично є викликом об'єкта `{ go: ... }` як функція з аргументом `(user.go)`. І це також відбувається на тій же лінії, з `let user`, тому, оскільки об'єкт `user` ще не визначений, виникає помилка.
 
-If we insert the semicolon, all is fine:
+Якщо ми вставляємо крапку з комою, все добре:
 
 ```js run
 let user = {
-  name: "John",
+  name: "Іван",
   go: function() { alert(this.name) }
 }*!*;*/!*
 
-(user.go)() // John
+(user.go)() // Іван
 ```
 
-Please note that parentheses around `(user.go)` do nothing here. Usually they setup the order of operations, but here the dot `.` works first anyway, so there's no effect. Only the semicolon thing matters.
+Зверніть увагу, що дужки навколо `(user.go)` нічого не роблять тут. Зазвичай вони встановлюють порядок операцій, але тут крапка спрацьовує спочатку в будь-якому випадку, тому немає ефекту. Тільки грає роль лише крапка з комою вкінці.
