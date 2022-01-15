@@ -198,13 +198,13 @@ alert( document.body.tagName ); // BODY
 ```
 
 
-## innerHTML: the contents
+## innerHTML: вміст
 
-The [innerHTML](https://w3c.github.io/DOM-Parsing/#the-innerhtml-mixin) property allows to get the HTML inside the element as a string.
+Властивість [innerHTML](https://w3c.github.io/dom-parsing/#the-innerhtml-mixin) дозволяє отримати HTML всередині елемента як рядок.
 
-We can also modify it. So it's one of the most powerful ways to change the page.
+Ми також можемо це змінити. Отже, це один з найпотужніших способів зміни сторінку.
 
-The example shows the contents of `document.body` and then replaces it completely:
+На прикладі показано вміст `document.body` який потім повністю замінюється.
 
 ```html run
 <body>
@@ -212,88 +212,89 @@ The example shows the contents of `document.body` and then replaces it completel
   <div>A div</div>
 
   <script>
-    alert( document.body.innerHTML ); // read the current contents
-    document.body.innerHTML = 'The new BODY!'; // replace it
+    alert( document.body.innerHTML ); // читаємо поточний вміст
+    document.body.innerHTML = 'Новий BODY!'; // замінюємо його
   </script>
 
 </body>
 ```
 
-We can try to insert invalid HTML, the browser will fix our errors:
+Ми можемо спробувати вставити невалідний HTML, браузер виправить наші помилки:
 
 ```html run
 <body>
 
   <script>
-    document.body.innerHTML = '<b>test'; // forgot to close the tag
-    alert( document.body.innerHTML ); // <b>test</b> (fixed)
+    document.body.innerHTML = '<b>test'; // забули закрити тег
+    alert( document.body.innerHTML ); // <b>test</b> (виправлено)
   </script>
 
 </body>
 ```
 
-```smart header="Scripts don't execute"
-If `innerHTML` inserts a `<script>` tag into the document -- it becomes a part of HTML, but doesn't execute.
+```smart header="Скрипти не виконуються"
+Якщо `innerHTML` вставляє тег `<script>` у документ - він стає частиною HTML, але не виконується.
 ```
 
-### Beware: "innerHTML+=" does a full overwrite
+### Остерігайтеся: "innerHTML+=" робить повний перезапис
 
-We can append HTML to an element by using `elem.innerHTML+="more html"`.
+Ми можемо додати HTML до елемента за допомогою `elem.innerHTML+="more html"`.
 
-Like this:
+Як наприклад:
 
 ```js
-chatDiv.innerHTML += "<div>Hello<img src='smile.gif'/> !</div>";
-chatDiv.innerHTML += "How goes?";
+chatDiv.innerHTML += "<div>Привіт<img src='smile.gif'/> !</div>";
+chatDiv.innerHTML += "Як справи?";
 ```
 
-But we should be very careful about doing it, because what's going on is *not* an addition, but a full overwrite.
+Але ми повинні бути дуже обережними щодо цього, тому що те, що відбувається -- це *не* додавання, але повний перезапис.
 
-Technically, these two lines do the same:
+Технічно ці два рядки роблять те ж саме:
 
 ```js
 elem.innerHTML += "...";
-// is a shorter way to write:
+// коротший спосіб записати:
 *!*
 elem.innerHTML = elem.innerHTML + "..."
 */!*
 ```
 
-In other words, `innerHTML+=` does this:
+Іншими словами, `innerHTML+=` робить наступне:
 
 1. The old contents is removed.
-2. The new `innerHTML` is written instead (a concatenation of the old and the new one).
+1. Старий вміст видаляється.
+2. Замість нього написано новий `innerHTML` (конкатенація старого та нового).
 
-**As the content is "zeroed-out" and rewritten from the scratch, all images and other resources will be reloaded**.
+**Оскільки вміст є "нульовим" та переписаним з нуля, всі зображення та інші ресурси будуть перезавантажені**.
 
-In the `chatDiv` example above the line `chatDiv.innerHTML+="How goes?"` re-creates the HTML content and reloads `smile.gif` (hope it's cached). If `chatDiv` has a lot of other text and images, then the reload becomes clearly visible.
+У прикладі `chatDiv` вище рядок `chatDiv.innerHTML+="How goes?"` заново створює вміст HTML та перезавантажує зображення `smile.gif` (сподіваюся, що воно закешоване). Якщо `chatDiv` має багато іншого тексту та зображень, то перезавантаження стає чітко видно.
 
-There are other side-effects as well. For instance, if the existing text was selected with the mouse, then most browsers will remove the selection upon rewriting `innerHTML`. And if there was an `<input>` with a text entered by the visitor, then the text will be removed. And so on.
+Також є й інші побічні ефекти. Наприклад, якщо існуючий текст був виділений за допомогою миші, то більшість браузерів видалять виділений текст при перезаписування `innerHTML`. І якщо був `<input>` з текстом, який вводиться відвідувачем, то текст буде видалено. І так далі.
 
-Luckily, there are other ways to add HTML besides `innerHTML`, and we'll study them soon.
+На щастя, є й інші способи додати HTML, крім `innerHTML`, і ми скоро вивчимо їх.
 
-## outerHTML: full HTML of the element
+## outerHTML: повний HTML елемента
 
-The `outerHTML` property contains the full HTML of the element. That's like `innerHTML` plus the element itself.
+Властивість `outerHTML` містить повний HTML елемента. Це як `innerHTML` плюс сам елемент.
 
-Here's an example:
+Ось приклад:
 
 ```html run
-<div id="elem">Hello <b>World</b></div>
+<div id="elem">Привіт <b>Світ</b></div>
 
 <script>
-  alert(elem.outerHTML); // <div id="elem">Hello <b>World</b></div>
+  alert(elem.outerHTML); // <div id="elem">Привіт <b>Світ</b></div>
 </script>
 ```
 
-**Beware: unlike `innerHTML`, writing to `outerHTML` does not change the element. Instead, it replaces it in the DOM.**
+**Остерігайтеся: на відміну від `innerHTML`, написання до `outerHTML` не змінює елемент. Замість цього він замінює його в DOM.**
 
-Yeah, sounds strange, and strange it is, that's why we make a separate note about it here. Take a look.
+Так, це звучить дивно, так воно і є, ось тому ми робимо окрему примітку про це тут. Поглянь.
 
-Consider the example:
+Розглянемо приклад:
 
 ```html run
-<div>Hello, world!</div>
+<div>Привіт, світ!</div>
 
 <script>
   let div = document.querySelector('div');
@@ -301,115 +302,115 @@ Consider the example:
 *!*
   // replace div.outerHTML with <p>...</p>
 */!*
-  div.outerHTML = '<p>A new element</p>'; // (*)
+  div.outerHTML = '<p>Новий елемент</p>'; // (*)
 
 *!*
-  // Wow! 'div' is still the same!
+  // Ого! 'div' все ще те ж саме!
 */!*
-  alert(div.outerHTML); // <div>Hello, world!</div> (**)
+  alert(div.outerHTML); // <div>Привіт, світ!</div> (**)
 </script>
 ```
 
-Looks really odd, right?
+Виглядає дуже дивно, вірно?
 
-In the line `(*)` we replaced `div` with `<p>A new element</p>`. In the outer document (the DOM) we can see the new content instead of the `<div>`. But, as we can see in line `(**)`, the value of the old `div` variable hasn't changed!
+У рядку `(*)` ми замінили `div` на `<p>Новий елемент</p>`. У зовнішньому документі (DOM) ми можемо побачити новий вміст замість `<div>`. Але, як ми можемо бачити в рядку `(**)`, значення старого `div` не змінилося!
 
-The `outerHTML` assignment does not modify the DOM element (the object referenced by, in this case, the variable 'div'), but removes it from the DOM and inserts the new HTML in its place.
+Присвоєння `outerHTML` не змінює елемент DOM (об'єкт, на який посилається, у цьому випадку змінний 'div'), але його видаляє з DOM та вставляє новий HTML у своєму місці.
 
-So what happened in `div.outerHTML=...` is:
-- `div` was removed from the document.
-- Another piece of HTML `<p>A new element</p>` was inserted in its place.
-- `div` still has its old value. The new HTML wasn't saved to any variable.
+Отже, в `div.outerHTML=...` сталося наступне:
+- `div` був видалений з документа.
+- Інший шматок HTML `<p>Новий елемент</p>` був вставлений на його місце.
+- `div` ще має своє старе значення. Новий HTML не був збережений для будь-якої змінної.
 
-It's so easy to make an error here: modify `div.outerHTML` and then continue to work with `div` as if it had the new content in it. But it doesn't. Such thing is correct for `innerHTML`, but not for `outerHTML`.
+Тут так легко зробити помилку: змініть `div.outerHTML`, а потім продовжуйте працювати з `div` так, наче від має новий вміст у собі. Але це не так. Така річ є правильною для `innerHTML`, але не для `outerHTML`.
 
-We can write to `elem.outerHTML`, but should keep in mind that it doesn't change the element we're writing to ('elem'). It puts the new HTML in its place instead. We can get references to the new elements by querying the DOM.
+Ми можемо записати в `elem.outerHTML`, але слід пам'ятати, що це не змінює елемент, в який ми пишемо ('elem'). Це вставить замість цього новий HTML. Ми можемо отримати посилання на нові елементи, запитуючи DOM.
 
-## nodeValue/data: text node content
+## nodeValue/data: вміст тексту вузла
 
-The `innerHTML` property is only valid for element nodes.
+Властивість `innerHTML` існує лише для вузлів-елементів.
 
-Other node types, such as text nodes, have their counterpart: `nodeValue` and `data` properties. These two are almost the same for practical use, there are only minor specification differences. So we'll use `data`, because it's shorter.
+Інші типи вузлів, такі як текстові вузли, мають свій аналог: `nodeValue` і `data` властивості. Ці дві властивості майже однакові для практичного використання, є лише незначні відмінності в специфікації. Таким чином, ми будемо використовувати `data`, тому що це коротше.
 
-An example of reading the content of a text node and a comment:
+Приклад читання вмісту текстового вузла та коментаря:
 
 ```html run height="50"
 <body>
-  Hello
-  <!-- Comment -->
+  Привіт
+  <!-- Коментар -->
   <script>
     let text = document.body.firstChild;
 *!*
-    alert(text.data); // Hello
+    alert(text.data); // Привіт
 */!*
 
     let comment = text.nextSibling;
 *!*
-    alert(comment.data); // Comment
+    alert(comment.data); // Коментар
 */!*
   </script>
 </body>
 ```
 
-For text nodes we can imagine a reason to read or modify them, but why comments?
+Для текстових вузлів ми можемо уявити собі причину читати або змінити їх, але чому коментарі?
 
-Sometimes developers embed information or template instructions into HTML in them, like this:
+Іноді розробники вбудовують інформацію або інструкції в шаблон HTML, як наприклад:
 
 ```html
 <!-- if isAdmin -->
-  <div>Welcome, Admin!</div>
+  <div>Ласкаво просимо, Адмін!</div>
 <!-- /if -->
 ```
 
-...Then JavaScript can read it from `data` property and process embedded instructions.
+...Тоді JavaScript може прочитати його з `data` властивості та обробити вбудовані інструкції.
 
-## textContent: pure text
+## textContent: чистий текст
 
-The `textContent` provides access to the *text* inside the element: only text, minus all `<tags>`.
+`textContent` надає доступ до *тексту* всередині елемента: тільки текст, мінус всі `<теги>`.
 
-For instance:
+Наприклад:
 
 ```html run
 <div id="news">
-  <h1>Headline!</h1>
-  <p>Martians attack people!</p>
+  <h1>Заголовок!</h1>
+  <p>Марсіанці нападають на людей!</p>
 </div>
 
 <script>
-  // Headline! Martians attack people!
+  // Заголовок! Марсіанці нападають на людей!
   alert(news.textContent);
 </script>
 ```
 
-As we can see, only text is returned, as if all `<tags>` were cut out, but the text in them remained.
+Як ми бачимо, повертається лише текст, як ніби всі `<tags>` були вирізані, але текст у них залишився.
 
-In practice, reading such text is rarely needed.
+На практиці читання такого тексту рідко потрібне.
 
-**Writing to `textContent` is much more useful, because it allows to write text the "safe way".**
+**Запис в `textContent` набагато корисніше, тому що це дозволяє записати текст "безпечним способом".**
 
-Let's say we have an arbitrary string, for instance entered by a user, and want to show it.
+Скажімо, у нас є довільний рядок, наприклад той, що ввів користувач, і який він хочете показати.
 
-- With `innerHTML` we'll have it inserted "as HTML", with all HTML tags.
-- With `textContent` we'll have it inserted "as text", all symbols are treated literally.
+- З `innerHTML` ми його вставили "як HTML", з усіма HTML-тегами.
+- З `textContent` ми вставимо це "як текст", всі символи обробляються буквально.
 
-Compare the two:
+Порівняйте ці два підходи:
 
 ```html run
 <div id="elem1"></div>
 <div id="elem2"></div>
 
 <script>
-  let name = prompt("What's your name?", "<b>Winnie-the-Pooh!</b>");
+  let name = prompt("Як вас звати?", "<b>Вінні Пух!</b>");
 
   elem1.innerHTML = name;
   elem2.textContent = name;
 </script>
 ```
 
-1. The first `<div>` gets the name "as HTML": all tags become tags, so we see the bold name.
-2. The second `<div>` gets the name "as text", so we literally see `<b>Winnie-the-Pooh!</b>`.
+1. Перший `<div>` отримує назву "як HTML": всі теги стають тегами, тому ми бачимо назву жирним шрифтом.
+2. Другий `<div>` отримує назву "як текст", тому ми буквально бачимо `<b>Вінні Пух!</b>`.
 
-In most cases, we expect the text from a user, and want to treat it as text. We don't want unexpected HTML in our site. An assignment to `textContent` does exactly that.
+У більшості випадків ми очікуємо отримати текст від користувача, і хочем працювати з ним як з текстом. Ми не хочемо несподіваного HTML на нашому сайті. Присвоєння в `textContent` робить саме це.
 
 ## The "hidden" property
 
