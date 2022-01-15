@@ -176,25 +176,25 @@ alert( document.body.tagName ); // BODY
 <body><!-- comment -->
 
   <script>
-    // for comment
-    alert( document.body.firstChild.tagName ); // undefined (not an element)
+    // для коментаря
+    alert( document.body.firstChild.tagName ); // undefined (не елемент)
     alert( document.body.firstChild.nodeName ); // #comment
 
-    // for document
-    alert( document.tagName ); // undefined (not an element)
+    // для документа
+    alert( document.tagName ); // undefined (не елемент)
     alert( document.nodeName ); // #document
   </script>
 </body>
 ```
 
-If we only deal with elements, then we can use both `tagName` and `nodeName` - there's no difference.
+Якщо ми маємо справу лише з елементами, то ми можемо використовувати як `tagName`, так і `nodeName` -- немає ніякої різниці.
 
-```smart header="The tag name is always uppercase except in XML mode"
-The browser has two modes of processing documents: HTML and XML. Usually the HTML-mode is used for webpages. XML-mode is enabled when the browser receives an XML-document with the header: `Content-Type: application/xml+xhtml`.
+```smart header="Назва тегів завжди написана великими літерами, за винятком режиму XML"
+Браузер має два режиму обробки документів: HTML та XML. Зазвичай HTML-режим використовується для веб-сторінок. XML-режим вмикається, коли браузер отримує XML-документ за допомогою заголовка: `Content-Type: application/xml+xhtml`.
 
-In HTML mode `tagName/nodeName` is always uppercased: it's `BODY` either for `<body>` or `<BoDy>`.
+У режимі HTML `tagName/nodeName` завжди пишуться великими літерами: це `BODY` як для `<body>`, так і для `<BoDy>`.
 
-In XML mode the case is kept "as is". Nowadays XML mode is rarely used.
+У режимі XML регістр літер зберігається "як є". В даний час XML режим рідко використовується.
 ```
 
 
