@@ -1,56 +1,56 @@
 # Blob
 
-`ArrayBuffer` and views are a part of ECMA standard, a part of JavaScript.
+`ArrayBuffer` разом з об’єктами представлень, як частина JavaScript, описані в ECMA стандарті.
 
-In the browser, there are additional higher-level objects, described in [File API](https://www.w3.org/TR/FileAPI/), in particular `Blob`.
+Також в браузерах специфікацією [File API](https://www.w3.org/TR/FileAPI/) визначено додаткові високорівневі об’єкти для роботи з даними, зокрема `Blob`.
 
-`Blob` consists of an optional string `type` (a MIME-type usually), plus `blobParts` -- a sequence of other `Blob` objects, strings and `BufferSource`.
+`Blob` складається з необов’язкового рядку `type` (зазвичай MIME тип) та `blobParts` -- послідовності інших `Blob` об’єктів, рядків та `BufferSource`.
 
 ![](blob.svg)
 
-The constructor syntax is:
+Приклад синтаксису конструктору:
 
 ```js
 new Blob(blobParts, options);
 ```
 
-- **`blobParts`** is an array of `Blob`/`BufferSource`/`String` values.
-- **`options`** optional object:
-  - **`type`** -- `Blob` type, usually MIME-type, e.g. `image/png`,
-  - **`endings`** -- whether to transform end-of-line to make the `Blob` correspond to current OS newlines (`\r\n` or `\n`). By default `"transparent"` (do nothing), but also can be `"native"` (transform).
+- **`blobParts`** масив, що може містити значення типу `Blob`/`BufferSource`/`String`.
+- **`options`** необов’язковий об’єкт з властивостями:
+  - **`type`** -- рядок, що дозволяє додати тип для `Blob`, переважно використовується MIME тип, наприклад, `image/png`,
+  - **`endings`** -- визначає чи потрібно привести всі символи нового рядку, при створенні `Blob`, у відповідність до формату поточної операційної система (`\r\n` або `\n`). Типове значення `"transparent"` (не вносити змін), але якщо потрібно внести зміни, то необхідно вказати `"native"`.
 
-For example:
+Наприклад:
 
 ```js
-// create Blob from a string
+// створення Blob з рядку
 let blob = new Blob(["<html>…</html>"], {type: 'text/html'});
-// please note: the first argument must be an array [...]
+// зверніть увагу: першим аргументом повинен бути масив [...]
 ```
 
 ```js
-// create Blob from a typed array and strings
-let hello = new Uint8Array([72, 101, 108, 108, 111]); // "Hello" in binary form
+// створення Blob з типізованого масиву і рядку
+let hello = new Uint8Array([72, 101, 108, 108, 111]); // "Hello" в бінарному форматі
 
 let blob = new Blob([hello, ' ', 'world'], {type: 'text/plain'});
 ```
 
 
-We can extract `Blob` slices with:
+Отримати зріз з `Blob` можна наступним чином:
 
 ```js
 blob.slice([byteStart], [byteEnd], [contentType]);
 ```
 
-- **`byteStart`** -- the starting byte, by default 0.
-- **`byteEnd`** -- the last byte (exclusive, by default till the end).
-- **`contentType`** -- the `type` of the new blob, by default the same as the source.
+- **`byteStart`** -- початковий байт, типове значення 0.
+- **`byteEnd`** -- останній байт (не включно, типово до кінця).
+- **`contentType`** -- визначає `type` нового об’єкту, типове значення буде таким же, як у початкових даних.
 
-The arguments are similar to `array.slice`, negative numbers are allowed too.
+Аргументи такі ж самі, як у `array.slice`, від’ємні числа теж можна використовувати.
 
-```smart header="`Blob` objects are immutable"
-We can't change data directly in a `Blob`, but we can slice parts of a `Blob`, create new `Blob` objects from them, mix them into a new `Blob` and so on.
+```smart header="`Blob` об’єкти незмінні"
+Дані в `Blob` не можуть бути зміненими, але ми можемо зробити зріз з їх частини, створити новий `Blob` з них, змішати їх в новий `Blob` і так далі.
 
-This behavior is similar to JavaScript strings: we can't change a character in a string, but we can make a new corrected string.
+Поведінка відповідає рядкам в JavaScript, ми не можемо змінити якийсь символ в рядку, але ми можемо створити новий.
 ```
 
 ## Blob as URL
