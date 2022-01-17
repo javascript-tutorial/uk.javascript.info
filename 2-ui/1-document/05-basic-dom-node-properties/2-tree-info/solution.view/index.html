@@ -3,36 +3,36 @@
 <body>
 
   <ul>
-    <li>Animals
+    <li>Тварини
       <ul>
-        <li>Mammals
+        <li>Ссавці
           <ul>
-            <li>Cows</li>
-            <li>Donkeys</li>
-            <li>Dogs</li>
-            <li>Tigers</li>
+            <li>Корів</li>
+            <li>Осли</li>
+            <li>Собаки</li>
+            <li>Тигер</li>
           </ul>
         </li>
-        <li>Other
+        <li>Інші
           <ul>
-            <li>Snakes</li>
-            <li>Birds</li>
-            <li>Lizards</li>
+            <li>Змії</li>
+            <li>Птахи</li>
+            <li>Ящірки</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>Fishes
+    <li>Риби
       <ul>
-        <li>Aquarium
+        <li>Акваріум
           <ul>
-            <li>Guppy</li>
-            <li>Angelfish</li>
+            <li>Гуппі</li>
+            <li>Ангельський</li>
           </ul>
         </li>
-        <li>Sea
+        <li>Море
           <ul>
-            <li>Sea trout</li>
+            <li>Морська форель</li>
           </ul>
         </li>
       </ul>
@@ -41,12 +41,12 @@
 
   <script>
     for (let li of document.querySelectorAll('li')) {
-      // get the title from the text node
+      // отримайємо назву з текстового вузла
       let title = li.firstChild.data;
 
-      title = title.trim(); // remove extra spaces from ends
+      title = title.trim(); // видалимо додаткові пробіли з кінця
 
-      // get the descendants count
+      // отримаємо кількість нащадків
       let count = li.getElementsByTagName('li').length;
 
       alert(title + ': ' + count);

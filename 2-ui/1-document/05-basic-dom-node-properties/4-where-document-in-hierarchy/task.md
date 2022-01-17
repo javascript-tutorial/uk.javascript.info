@@ -2,10 +2,10 @@ importance: 4
 
 ---
 
-# Where's the "document" in the hierarchy?
+# Де "document" в ієрархії?
 
-Which class does the `document` belong to?
+До якого класу належить `document`?
 
-What's its place in the DOM hierarchy?
+Де його місце в ієрархії DOM?
 
-Does it inherit from `Node` or `Element`, or maybe `HTMLElement`?
+Він успадковує від `Node` чи `Element`, або, можливо, `HTMLElement`?

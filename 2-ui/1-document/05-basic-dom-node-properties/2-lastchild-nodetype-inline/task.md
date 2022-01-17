@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# What's in the nodeType?
+# Що в nodeType?
 
-What does the script show?
+Що показує скрипт?
 
 ```html
 <html>

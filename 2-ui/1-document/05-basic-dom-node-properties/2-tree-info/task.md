@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# Count descendants
+# Підраховувати нащадків
 
-There's a tree structured as nested `ul/li`.
+Є дерево, що структуровано як вкладені `ul/li`.
 
-Write the code that for each `<li>` shows:
+Напишіть код, який для кожного `<li>`, який показує:
 
-1. What's the text inside it (without the subtree)
-2. The number of nested `<li>` -- all descendants, including the deeply nested ones.
+1. Який текст всередині нього (без піддерева)
+2. Кількість вкладених `<li>` -- всіх нащадків, включаючи глибоко вкладені.
 
 [demo src="solution"]
