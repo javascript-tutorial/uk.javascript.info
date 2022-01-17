@@ -261,7 +261,6 @@ elem.innerHTML = elem.innerHTML + "..."
 
 Іншими словами, `innerHTML+=` робить наступне:
 
-1. The old contents is removed.
 1. Старий вміст видаляється.
 2. Замість нього написано новий `innerHTML` (конкатенація старого та нового).
 
