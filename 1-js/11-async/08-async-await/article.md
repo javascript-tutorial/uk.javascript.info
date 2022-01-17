@@ -136,7 +136,11 @@ console.log(user);
 
 Якщо ми не використовуємо модулі або повинні підтримувати [старіші браузери](https://caniuse.com/mdn-javascript_operators_await_top_level), існує універсальний рецепт: загорнути код в анонімну асинхронну функцію.
 
+<<<<<<< HEAD
 Наприклад:
+=======
+Like this:
+>>>>>>> a6fdfda09570a8ce47bb0b83cd7a32a33869cfad
 
 ```js
 (async () => {
