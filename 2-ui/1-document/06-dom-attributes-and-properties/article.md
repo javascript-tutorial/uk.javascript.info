@@ -1,74 +1,74 @@
-# Attributes and properties
+# Атрибути та властивості
 
-When the browser loads the page, it "reads" (another word: "parses") the HTML and generates DOM objects from it. For element nodes, most standard HTML attributes automatically become properties of DOM objects.
+Коли браузер завантажує сторінку, він "читає" (іншими словами: "парсить") HTML і генерує об'єкти з нього. Для вузлів-елементів, найбільш стандартні атрибути HTML автоматично стають властивостями об'єктів DOM.
 
-For instance, if the tag is `<body id="page">`, then the DOM object has `body.id="page"`.
+Наприклад, якщо тег є `<body id="page">`, то об'єкт DOM має `body.id="page"`.
 
-But the attribute-property mapping is not one-to-one! In this chapter we'll pay attention to separate these two notions, to see how to work with them, when they are the same, and when they are different.
+Але відображення атрибутів через власності не відбувається один-в-один! У цьому розділі ми звернемо увагу на те, що слід відокремити ці два поняття, щоб побачити, як працювати з ними, коли вони однакові, і коли вони різні.
 
-## DOM properties
+## DOM властивості
 
-We've already seen built-in DOM properties. There are a lot. But technically no one limits us, and if there aren't enough, we can add our own.
+Ми вже бачили вбудовані властивості DOM. Їх багато. Але технічно ніхто не обмежує нас, і якщо цього недостатньо, то ми можемо додати наші власні.
 
-DOM nodes are regular JavaScript objects. We can alter them.
+Дом вузли є звичайними об'єктами JavaScript. Ми можемо змінити їх.
 
-For instance, let's create a new property in `document.body`:
+Наприклад, давайте створимо нову властивість `document.body`:
 
 ```js run
 document.body.myData = {
-  name: 'Caesar',
-  title: 'Imperator'
+  name: 'Цезар',
+  title: 'Імператор'
 };
 
-alert(document.body.myData.title); // Imperator
+alert(document.body.myData.title); // Імператор
 ```
 
-We can add a method as well:
+Ми також можемо додати спосіб:
 
 ```js run
 document.body.sayTagName = function() {
   alert(this.tagName);
 };
 
-document.body.sayTagName(); // BODY (the value of "this" in the method is document.body)
+document.body.sayTagName(); // BODY (значення "this" У методі є document.body)
 ```
 
-We can also modify built-in prototypes like `Element.prototype` and add new methods to all elements:
+Ми також можемо змінювати вбудовані прототипи, такі як `Element.prototype` і додати нові методи для всіх елементів:
 
 ```js run
 Element.prototype.sayHi = function() {
-  alert(`Hello, I'm ${this.tagName}`);
+  alert(`Привіт, Я ${this.tagName}`);
 };
 
-document.documentElement.sayHi(); // Hello, I'm HTML
-document.body.sayHi(); // Hello, I'm BODY
+document.documentElement.sayHi(); // Привіт, Я HTML
+document.body.sayHi(); // Привіт, Я BODY
 ```
 
-So, DOM properties and methods behave just like those of regular JavaScript objects:
+Отже, властивості та методи DOM поводяться в звичайних об'єктах JavaScript:
 
-- They can have any value.
-- They are case-sensitive (write `elem.nodeType`, not `elem.NoDeTyPe`).
+- Вони можуть мати будь-яке значення.
+- Вони чутливі до регістру (пишіть `elem.nodeType`, не `elem.NoDeTyPe`).
 
-## HTML attributes
+## HTML атрибути
 
-In HTML, tags may have attributes. When the browser parses the HTML to create DOM objects for tags, it recognizes *standard* attributes and creates DOM properties from them.
+У HTML, теги можуть мати атрибути. Коли браузер аналізує HTML для створення об'єктів DOM для тегів, він розпізнає *стандартні* атрибути та створює властивості в DOM.
 
-So when an element has `id` or another *standard* attribute, the corresponding property gets created. But that doesn't happen if the attribute is non-standard.
+Отже, коли елемент має `id` або інший *стандартний* атрибут, створюється відповідна властивість. Але це не відбувається, якщо атрибут нестандартний.
 
-For instance:
+Наприклад:
 ```html run
 <body id="test" something="non-standard">
   <script>
     alert(document.body.id); // test
 *!*
-    // non-standard attribute does not yield a property
+    // нестандартний атрибут не дає властивості
     alert(document.body.something); // undefined
 */!*
   </script>
 </body>
 ```
 
-Please note that a standard attribute for one element can be unknown for another one. For instance, `"type"` is standard for `<input>` ([HTMLInputElement](https://html.spec.whatwg.org/#htmlinputelement)), but not for `<body>` ([HTMLBodyElement](https://html.spec.whatwg.org/#htmlbodyelement)). Standard attributes are described in the specification for the corresponding element class.
+Зверніть увагу, що стандартний атрибут для одного елемента може бути невідомим для іншого. Наприклад, `"type"` -- це стандартний для `<input>` ([HTMLInputElement](https://html.spec.whatwg.org/#htmlinputelement)), але не для `<body>` ([HTMLBodyElement](https://html.spec.whatwg.org/#htmlbodyelement)). Стандартні атрибути описані у специфікації для відповідного класу елемента.
 
 Here we can see it:
 ```html run
@@ -77,68 +77,68 @@ Here we can see it:
   <script>
     alert(input.type); // text
 *!*
-    alert(body.type); // undefined: DOM property not created, because it's non-standard
+    alert(body.type); // undefined: DOM властивість не створена, тому що вона нестандартна
 */!*
   </script>
 </body>
 ```
 
-So, if an attribute is non-standard, there won't be a DOM-property for it. Is there a way to access such attributes?
+Отже, якщо атрибут є нестандартним, то для нього не буде DOM властивості. Чи є спосіб доступу до таких атрибутів?
 
-Sure. All attributes are accessible by using the following methods:
+Звичайно. Всі атрибути доступні за допомогою наступних методів:
 
-- `elem.hasAttribute(name)` -- checks for existence.
-- `elem.getAttribute(name)` -- gets the value.
-- `elem.setAttribute(name, value)` -- sets the value.
-- `elem.removeAttribute(name)` -- removes the attribute.
+- `elem.hasAttribute(name)` -- перевіряє наявність.
+- `elem.getAttribute(name)` -- отримує значення.
+- `elem.setAttribute(name, value)` -- встановлює значення.
+- `elem.removeAttribute(name)` -- видаляє атрибут.
 
-These methods operate exactly with what's written in HTML.
+Ці методи працюють саме з тим, що написано в HTML.
 
-Also one can read all attributes using `elem.attributes`: a collection of objects that belong to a built-in [Attr](https://dom.spec.whatwg.org/#attr) class, with `name` and `value` properties.
+Також можна прочитати всі атрибути, використовуючи `elem.attributes`: колекція об'єктів, що належать до вбудованого [Attr](https://dom.spec.whatwg.org/#attr), з `name` і `value` властивості.
 
-Here's a demo of reading a non-standard property:
+Ось демонстрація читання нестандартної власності:
 
 ```html run
 <body something="non-standard">
   <script>
 *!*
-    alert(document.body.getAttribute('something')); // non-standard
+    alert(document.body.getAttribute('something')); // нестандартна
 */!*
   </script>
 </body>
 ```
 
-HTML attributes have the following features:
+Атрибути HTML мають такі функції:
 
-- Their name is case-insensitive (`id` is same as `ID`).
-- Their values are always strings.
+- Їх назва нечутлива до регістру (`id` -- це те саме, що й `id`).
+- Їхні значення завжди є рядками.
 
-Here's an extended demo of working with attributes:
+Ось розширена демонстрація роботи з атрибутами:
 
 ```html run
 <body>
   <div id="elem" about="Elephant"></div>
 
   <script>
-    alert( elem.getAttribute('About') ); // (1) 'Elephant', reading
+    alert( elem.getAttribute('About') ); // (1) 'Elephant', читання
 
-    elem.setAttribute('Test', 123); // (2), writing
+    elem.setAttribute('Test', 123); // (2), запис
 
-    alert( elem.outerHTML ); // (3), see if the attribute is in HTML (yes)
+    alert( elem.outerHTML ); // (3), дивимося чи атрибут знаходиться в HTML (так)
 
-    for (let attr of elem.attributes) { // (4) list all
+    for (let attr of elem.attributes) { // (4) перелічуємо всі
       alert( `${attr.name} = ${attr.value}` );
     }
   </script>
 </body>
 ```
 
-Please note:
+Будь ласка, зверніть увагу:
 
-1. `getAttribute('About')` -- the first letter is uppercase here, and in HTML it's all lowercase. But that doesn't matter: attribute names are case-insensitive.
-2. We can assign anything to an attribute, but it becomes a string. So here we have `"123"` as the value.
-3. All attributes including ones that we set are visible in `outerHTML`.
-4. The `attributes` collection is iterable and has all the attributes of the element (standard and non-standard) as objects with `name` and `value` properties.
+1. `getAttribute('About')` -- перша буква тут є великою, а в HTML це всі з малої літери. Але це не має значення: імена атрибутів -- нечутливі до регістру.
+2. Ми можемо призначити будь-що атрибуту, але це стане рядком. Отже, ми маємо `"123"` як значення.
+3. Всі атрибути, включаючи ті, які ми встановлюємо, видно в `outerHTML`.
+4. Колекція `attributes` є ітерованою і має всі атрибути елемента (стандартні та нестандартні) як об'єкти з `name` і `value` властивостями.
 
 ## Property-attribute synchronization
 
