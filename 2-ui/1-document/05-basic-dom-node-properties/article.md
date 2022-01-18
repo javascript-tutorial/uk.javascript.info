@@ -82,17 +82,17 @@ alert( document.body instanceof EventTarget ); // true
 ````smart header="Специфікація IDL"
 У специфікації, класи DOM описані не за допомогою JavaScript, а спеціальною [мовою опису інтерфейсу](https://uk.wikipedia.org/wiki/Мова_опису_інтерфейсів)(IDL), яку зазвичай легко зрозуміти.
 
-У IDL всі властивості призводять до їх типів. Наприклад, `DOMString`,` boolean` тощо.
+У IDL всі властивості призводять до їх типів. Наприклад, `DOMString`, `boolean` тощо.
 
 Ось витяг з цієї специфікації, з коментарями:
 
 ```js
 // Define HTMLInputElement
 *!*
-// Колонка ":" означає, що HTMLInputElement наслідується від HTMLElement
+// Двакрапка ":" означає, що HTMLInputElement наслідується від HTMLElement
 */!*
 interface HTMLInputElement: HTMLElement {
-  // here go properties and methods of <input> elements
+  // тут визначаються всі властивості та методи елементів <input>
 
 *!*
   // "DOMString" означає, що значенням властивості є рядок
@@ -103,7 +103,7 @@ interface HTMLInputElement: HTMLElement {
   attribute DOMString value;
 
 *!*
-  // бульова властивість (true/false)
+  // булева властивість (true/false)
   attribute boolean autofocus;
 */!*
   ...
@@ -145,11 +145,11 @@ interface HTMLInputElement: HTMLElement {
 </body>
 ```
 
-У сучасних скриптах ми можемо використовувати `instanceof` та інші тести на основі класів, щоб побачити тип вузла, але іноді використовувати `nodeType` простіше. Ми можемо лише читати `nodeType`, а не змінювати його.
+У сучасних скриптах, щоб побачити тип вузла, ми можемо використовувати `instanceof` та інші тести на основі класів, але іноді використовувати `nodeType` простіше. Ми можемо лише читати `nodeType`, а не змінювати його.
 
 ## Тег: nodeName та tagName
 
-Маючи вузол DOM, ми можемо прочитати назву тегів з `nodeName` або `tagName` властивостей:
+Маючи вузол DOM, ми можемо прочитати назву тега з властивостей `nodeName` або `tagName`:
 
 Наприклад:
 
