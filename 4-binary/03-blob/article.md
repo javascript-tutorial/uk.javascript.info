@@ -113,26 +113,26 @@ blob:https://javascript.info/1e67e00e-860d-40a5-89ae-6ab0cbee6273
 
 В попередньому прикладі, з HTML посиланням на яке можна клікнути, ми не викликаємо `URL.revokeObjectURL(link.href)`, бо це зробить `Blob` не доступним. Після видалення посилання на `Blob` з відображення, URL більше не спрацює.
 
-## Blob to base64
+## Blob в base64
 
-An alternative to `URL.createObjectURL` is to convert a `Blob` into a base64-encoded string.
+Іншим способом отримати доступ до `Blob`, замість `URL.createObjectURL`, є перетворення `Blob` в base64 закодований рядок.
 
-That encoding represents binary data as a string of ultra-safe "readable" characters with ASCII-codes from 0 to 64. And what's more important -- we can use this encoding in "data-urls".
+Це кодування дозволяє представити дані як рядок ASCII символів від 0 до 64. І, що найважливіше, ми можемо використовувати це кодування в "data-urls".
 
-A [data url](mdn:/http/Data_URIs) has the form `data:[<mediatype>][;base64],<data>`. We can use such urls everywhere, on par with "regular" urls.
+[Data url](mdn:/http/Data_URIs) має формат `data:[<mediatype>][;base64],<data>`. Ми можемо використовувати такі посилання будь-де, як і "звичайні".
 
-For instance, here's a smiley:
+На приклад, смайлик:
 
 ```html
 <img src="data:image/png;base64,R0lGODlhDAAMAKIFAF5LAP/zxAAAANyuAP/gaP///wAAAAAAACH5BAEAAAUALAAAAAAMAAwAAAMlWLPcGjDKFYi9lxKBOaGcF35DhWHamZUW0K4mAbiwWtuf0uxFAgA7">
 ```
 
-The browser will decode the string and show the image: <img src="data:image/png;base64,R0lGODlhDAAMAKIFAF5LAP/zxAAAANyuAP/gaP///wAAAAAAACH5BAEAAAUALAAAAAAMAAwAAAMlWLPcGjDKFYi9lxKBOaGcF35DhWHamZUW0K4mAbiwWtuf0uxFAgA7">
+Браузер розкодує рядок та покаже зображення: <img src="data:image/png;base64,R0lGODlhDAAMAKIFAF5LAP/zxAAAANyuAP/gaP///wAAAAAAACH5BAEAAAUALAAAAAAMAAwAAAMlWLPcGjDKFYi9lxKBOaGcF35DhWHamZUW0K4mAbiwWtuf0uxFAgA7">
 
 
-To transform a `Blob` into base64, we'll use the built-in `FileReader` object. It can read data from Blobs in multiple formats. In the [next chapter](info:file) we'll cover it more in-depth.
+Для перетворення `Blob` в base64 ми будемо використовувати вбудований об’єкт `FileReader`. Він може читати дані з `Blob` в різних форматах. В наступному розділі [next chapter](info:file) ми глибше з ним познайомимось.
 
-Here's the demo of downloading a blob, now via base-64:
+Демонстрація завантаження `Blob` за допомогою base64:
 
 ```js run
 let link = document.createElement('a');
@@ -142,7 +142,7 @@ let blob = new Blob(['Hello, world!'], {type: 'text/plain'});
 
 *!*
 let reader = new FileReader();
-reader.readAsDataURL(blob); // converts the blob to base64 and calls onload
+reader.readAsDataURL(blob); // перетворить Blob в base64 та викличе onload
 */!*
 
 reader.onload = function() {
@@ -151,13 +151,13 @@ reader.onload = function() {
 };
 ```
 
-Both ways of making a URL of a `Blob` are usable. But usually `URL.createObjectURL(blob)` is simpler and faster.
+Обидва способи створення URL з `Blob` доступні для використання. Але, переважно, `URL.createObjectURL(blob)` простіше та швидше.
 
-```compare title-plus="URL.createObjectURL(blob)" title-minus="Blob to data url"
-+ We need to revoke them if care about memory.
-+ Direct access to blob, no "encoding/decoding"
-- No need to revoke anything.
-- Performance and memory losses on big `Blob` objects for encoding.
+```compare title-plus="URL.createObjectURL(blob)" title-minus="Blob в data url"
++ Необхідно видаляти посилання на об’єкт для звільнення пам’яті.
++ Безпосередній доступ до `Blob` без проміжного "закодування/розкодування".
+- Немає потреби звільняти посилання на об’єкти.
+- Втрати швидкодії та навантаження на пам’ять у разі кодування великих `Blob` об’єктів.
 ```
 
 ## Image to blob
