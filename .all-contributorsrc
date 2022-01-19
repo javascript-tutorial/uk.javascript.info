@@ -252,6 +252,15 @@
         "ideas",
         "review"
       ]
+    },
+    {
+      "login": "OlhaBrozhenets",
+      "name": "Olha Brozhenets",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40391635?v=4",
+      "profile": "https://github.com/OlhaBrozhenets",
+      "contributions": [
+        "translation"
+      ]
     }
   ]
 }
