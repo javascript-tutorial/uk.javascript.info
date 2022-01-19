@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-# Tree menu
+# Деревоподібне меню
 
-Create a tree that shows/hides node children on click:
+Створіть дерево, яке показує/приховує дочірні вузли при кліці:
 
 [iframe border=1 src="solution"]
 
-Requirements:
+Вимоги:
 
-- Only one event handler (use delegation)
-- A click outside the node title (on an empty space) should not do anything.
+- Тільки один обробник подій (використовуйте делегування)
+- Клік поза заголовком вузла (на порожньому місці) не має нічого робити. 
