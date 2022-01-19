@@ -2,12 +2,12 @@ importance: 5
 
 ---
 
-# Hide messages with delegation
+# Приховайте повідомлення за допомогою делегування
 
-There's a list of messages with removal buttons `[x]`. Make the buttons work.
+Є список повідомлень із кнопками видалення `[x]`. Примусьте кнопки працювати.
 
-Like this:
+В результаті має працювати наступним чином:
 
 [iframe src="solution" height=420]
 
-P.S. Should be only one event listener on the container, use event delegation.
+P.S. У контейнері має бути лише один прослуховувач подій, використовуйте делегування.
