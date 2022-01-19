@@ -13,31 +13,31 @@ Each `<th>` has the type in the attribute, like this:
   <thead>
     <tr>
 *!*
-      <th data-type="number">Age</th>
-      <th data-type="string">Name</th>
+      <th data-type="number">Вік</th>
+      <th data-type="string">Ім'я</th>
 */!*
     </tr>
   </thead>
   <tbody>
     <tr>
       <td>5</td>
-      <td>John</td>
+      <td>Іван</td>
     </tr>
     <tr>
-      <td>10</td>
-      <td>Ann</td>
+      <td>12</td>
+      <td>Ганна</td>
     </tr>
     ...
   </tbody>
 </table>
 ```
 
-In the example above the first column has numbers, and the second one -- strings. The sorting function should handle sort according to the type.
+У наведеному вище прикладі перший стовпець містить числа, а другий — рядки. Функція сортування повинна обробляти сортування відповідно до типу.
 
-Only `"string"` and `"number"` types should be supported.
+Повинні підтримуватися лише типи `"string"` та `"number"`.
 
-The working example:
+Робочий приклад:
 
 [iframe border=1 src="solution" height=190]
 
-P.S. The table can be big, with any number of rows and columns.
+P.S. Таблиця може бути великою, з будь-якою кількістю рядків і стовпців.
