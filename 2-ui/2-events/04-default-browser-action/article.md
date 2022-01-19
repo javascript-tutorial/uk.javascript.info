@@ -1,43 +1,43 @@
-# Browser default actions
+# Дії браузера за замовчуванням
 
-Many events automatically lead to certain actions performed by the browser.
+Багато подій автоматично призводять до певних дій, які виконує браузер.
 
-For instance:
+Наприклад:
 
-- A click on a link - initiates navigation to its URL.
-- A click on a form submit button - initiates its submission to the server.
-- Pressing a mouse button over a text and moving it - selects the text.
+- Клік на посилання ініціює навігацію до його URL-адреси.
+- Клік на кнопку відправки форми ініціює її відправку на сервер.
+- Натискання кнопки миші на тексті і переміщення курсору – виділяє текст.
 
-If we handle an event in JavaScript, we may not want the corresponding browser action to happen, and want to implement another behavior instead.
+Якщо ми обробляємо подію в JavaScript, ми можемо не захотіти, щоб відбулась дія браузера за замовчуванням, і замість цього захочемо реалізувати іншу поведінку.
 
-## Preventing browser actions
+## Запобігання дії браузера
 
-There are two ways to tell the browser we don't want it to act:
+Є два способи запобігти діям браузера:
 
-- The main way is to use the `event` object. There's a method `event.preventDefault()`.
-- If the handler is assigned using `on<event>` (not by `addEventListener`), then returning `false` also works the same.
+- Основний спосіб - використовувати об'єкт `event`. Існує метод `event.preventDefault()`.
+- Якщо обробник призначено за допомогою `on<event>` (а не `addEventListener`), повернення `false` спрацює так само.
 
-In this HTML a click on a link doesn't lead to navigation, browser doesn't do anything:
+У цьому HTML після кліку на посилання навігація не відбувається, браузер нічого не робить:
 
 ```html autorun height=60 no-beautify
-<a href="/" onclick="return false">Click here</a>
-or
-<a href="/" onclick="event.preventDefault()">here</a>
+<a href="/" onclick="return false">Клікніть тут</a>
+чи
+<a href="/" onclick="event.preventDefault()">'тут'</a>
 ```
 
-In the next example we'll use this technique to create a JavaScript-powered menu.
+У наступному прикладі ми використаємо цю техніку для створення меню на основі JavaScript.
 
-```warn header="Returning `false` from a handler is an exception"
-The value returned by an event handler is usually ignored.
+```warn header="Повернення `false` з обробника є винятком"
+Значення, яке повертає обробник події, зазвичай ігнорується.
 
-The only exception is `return false` from a handler assigned using `on<event>`.
+Єдиним винятком є `return false` з обробника, призначеного за допомогою `on<event>`.
 
-In all other cases, `return` value is ignored. In particular, there's no sense in returning `true`.
+У всіх інших випадках значення "return" ігнорується. Зокрема, немає сенсу повертати "true".
 ```
 
-### Example: the menu
+### Приклад: меню
 
-Consider a site menu, like this:
+Розглянемо таке меню сайту:
 
 ```html
 <ul id="menu" class="menu">
@@ -47,116 +47,116 @@ Consider a site menu, like this:
 </ul>
 ```
 
-Here's how it looks with some CSS:
+Ось так це може виглядати в певними CSS-правилами:
 
 [iframe height=70 src="menu" link edit]
 
-Menu items are implemented as HTML-links `<a>`, not buttons `<button>`. There are several reasons to do so, for instance:
+Пункти меню реалізовані як HTML-посилання `<a>`, а не кнопки `<button>`. Для цього є кілька причин, наприклад:
 
-- Many people like to use "right click" -- "open in a new window". If we use `<button>` or `<span>`, that doesn't work.
-- Search engines follow `<a href="...">` links while indexing.
+- Багато людей люблять використовувати "клік правою кнопкою миші" як "відкрити в новому вікні". Якщо ми використаємо `<button>` або `<span>`, це не спрацює.
+- Під час індексації пошукові системи переходять за посиланнями `<a href="...">`. 
 
-So we use `<a>` in the markup. But normally we intend to handle clicks in JavaScript. So we should prevent the default browser action.
+Тому ми використовуємо `<a>` у розмітці. Але зазвичай ми маємо намір обробляти кліки в JavaScript. Тому ми повинні запобігати діям браузера за замовчуванням.
 
-Like here:
+Як тут:
 
 ```js
 menu.onclick = function(event) {
   if (event.target.nodeName != 'A') return;
 
   let href = event.target.getAttribute('href');
-  alert( href ); // ...can be loading from the server, UI generation etc
+  alert( href ); // ...може бути завантаження з сервера, генерація інтерфейсу користувача тощо
 
 *!*
-  return false; // prevent browser action (don't go to the URL)
+  return false; // запобігання діям браузера (перехід за URL-адресою не відбудеться)
 */!*
 };
 ```
 
-If we omit `return false`, then after our code executes the browser will do its "default action" -- navigating to the URL in `href`. And we don't need that here, as we're handling the click by ourselves.
+Якщо ми опустимо `return false`, то після виконання нашого коду браузер виконає свою "дію за замовчуванням" - перехід до URL-адреси в `href`. Тут нам це не потрібно, оскільки ми самі обробляємо клік.
 
-By the way, using event delegation here makes our menu very flexible. We can add nested lists and style them using CSS to "slide down".
+До речі, використання тут делегування подій робить наше меню дуже гнучким. Ми можемо додавати вкладені списки та стилізувати їх за допомогою CSS.
 
-````smart header="Follow-up events"
-Certain events flow one into another. If we prevent the first event, there will be no second.
+````smart header="Подальші події"
+Певні події перетікають одна в іншу. Якщо запобігти першій події, то не буде і другої.
 
-For instance, `mousedown` on an `<input>` field leads to focusing in it, and the `focus` event. If we prevent the `mousedown` event, there's no focus.
+Наприклад, `mousedown` на полі `<input>` призводить до фокусування в ньому та події `focus`. Якщо ми запобіжимо події `mousedown`, фокус не відбудеться.
 
-Try to click on the first `<input>` below -- the `focus` event happens. But if you click the second one, there's no focus.
+Спробуйте клікнути на першому `<input>` нижче - відбувається подія `focus`. Але якщо натиснути другий, фокуса не буде.
 
 ```html run autorun
-<input value="Focus works" onfocus="this.value=''">
-<input *!*onmousedown="return false"*/!* onfocus="this.value=''" value="Click me">
+<input value="Фокус працює" onfocus="this.value=''">
+<input *!*onmousedown="return false"*/!* onfocus="this.value=''" value="Клікни мене">
 ```
 
-That's because the browser action is canceled on `mousedown`. The focusing is still possible if we use another way to enter the input. For instance, the `key:Tab` key to switch from the 1st input into the 2nd. But not with the mouse click any more.
+Це тому, що дія браузера скасовується під час `mousedown`. Фокусування все ще можливе, якщо ми використаємо інший спосіб введення вхідних даних. Наприклад, клавіша `key:Tab` для перемикання з 1-го входу на 2-й. Але вже не за допомогою кліку.
 ````
 
-## The "passive" handler option
+## Опція «пасивного» обробника
 
-The optional `passive: true` option of `addEventListener` signals the browser that the handler is not going to call `preventDefault()`.
+Необов’язковий параметр `passive: true` для `addEventListener` сигналізує браузеру, що обробник не збирається викликати `preventDefault()`.
 
-Why that may be needed?
+Чому це може знадобитися?
 
-There are some events like `touchmove` on mobile devices (when the user moves their finger across the screen), that cause scrolling by default, but that scrolling can be prevented using `preventDefault()` in the handler.
+На мобільних пристроях є деякі події, наприклад `touchmove` (коли користувач переміщує палець по екрану), які за замовчуванням викликають прокручування, але цьому прокручування можна запобігти за допомогою `preventDefault()` в обробнику.
 
-So when the browser detects such event, it has first to process all handlers, and then if `preventDefault` is not called anywhere, it can proceed with scrolling. That may cause unnecessary delays and "jitters" in the UI.
+Тому, коли браузер виявляє таку подію, він повинен спочатку опрацювати всі обробники, а потім, якщо `preventDefault` ніде не викликано, він може продовжити прокручування. Це може призвести до непотрібних затримок та миготіння в інтерфейсі користувача.
 
-The `passive: true` options tells the browser that the handler is not going to cancel scrolling. Then browser scrolls immediately providing a maximally fluent experience, and the event is handled by the way.
+Параметр `passive: true` повідомляє браузеру, що обробник не збирається скасовувати прокручування. Тоді браузер відразу починає його, забезпечуючи максимально плавний користувацький досвід, попутно обробляючи подію.
 
-For some browsers (Firefox, Chrome), `passive` is `true` by default for `touchstart` and `touchmove` events.
+Для деяких браузерів (Firefox, Chrome) параметр «passive» має значення «true» за замовчуванням для таких подій як «touchstart» або «touchmove».
 
 
 ## event.defaultPrevented
 
-The property `event.defaultPrevented` is `true` if the default action was prevented, and `false` otherwise.
+Властивість `event.defaultPrevented` має значення `true`, якщо дію за замовчуванням було скасовано, і `false` в іншому випадку.
 
-There's an interesting use case for it.
+Є цікавий варіант використання.
 
-You remember in the chapter <info:bubbling-and-capturing> we talked about `event.stopPropagation()` and why stopping bubbling is bad?
+Пам’ятаєте, в розділі <info:bubbling-and-capturing> ми говорили про `event.stopPropagation()` і чому припинення спливання – це погано?
 
-Sometimes we can use `event.defaultPrevented` instead, to signal other event handlers that the event was handled.
+Іноді замість цього ми можемо використовувати `event.defaultPrevented`, щоб повідомити іншим обробникам, що подія була оброблена.
 
-Let's see a practical example.
+Розглянемо практичний приклад.
 
-By default the browser on `contextmenu` event (right mouse click) shows a context menu with standard options. We can prevent it and show our own, like this:
+За замовчуванням браузер під час події `contextmenu` (клік правою кнопкою миші) показує контекстне меню зі стандартними параметрами. Ми можемо запобігти цьому і показати своє, ось так: 
 
 ```html autorun height=50 no-beautify run
-<button>Right-click shows browser context menu</button>
+<button>Правий клік показує контекстне меню браузера</button>
 
-<button *!*oncontextmenu="alert('Draw our menu'); return false"*/!*>
-  Right-click shows our context menu
+<button *!*oncontextmenu="alert('Малюємо наше меню'); return false"*/!*>
+  Правий клік показує наше власне контекстне меню
 </button>
 ```
 
-Now, in addition to that context menu we'd like to implement document-wide context menu.
+Тепер, на додаток до цього контекстного меню, ми хотіли б реалізувати контекстне меню всього документа.
 
-Upon right click, the closest context menu should show up.
+Після кліку правою кнопкою миші має з’явитися найближче контекстне меню.
 
 ```html autorun height=80 no-beautify run
-<p>Right-click here for the document context menu</p>
-<button id="elem">Right-click here for the button context menu</button>
+<p>Правий клік, щоб відкрити контекстне меню документа</p>
+<button id="elem">Правий клік, щоб відкрити контекстне меню кнопки</button>
 
 <script>
   elem.oncontextmenu = function(event) {
     event.preventDefault();
-    alert("Button context menu");
+    alert("Контекстне меню кнопки");
   };
 
   document.oncontextmenu = function(event) {
     event.preventDefault();
-    alert("Document context menu");
+    alert("Контекстне меню документа");
   };
 </script>
 ```
 
-The problem is that when we click on `elem`, we get two menus: the button-level and (the event bubbles up) the document-level menu.
+Проблема полягає в тому, що коли ми клікаємо на `elem`, ми отримуємо два меню: на рівні кнопки та (подія спливає) на рівні документа.
 
-How to fix it? One of solutions is to think like: "When we handle right-click in the button handler, let's stop its bubbling" and use `event.stopPropagation()`:
+Як це виправити? Одне з рішень полягає в тому, щоб подумати так: «Коли ми обробляємо правий клік в обробнику кнопки, давайте зупинимо спливання події» та використовуємо `event.stopPropagation()`:
 
 ```html autorun height=80 no-beautify run
-<p>Right-click for the document menu</p>
-<button id="elem">Right-click for the button menu (fixed with event.stopPropagation)</button>
+<p>Правий клік, щоб відкрити меню документа</p>
+<button id="elem">Правий клік, щоб відкрити меню кнопки (виправлено за допомогою event.stopPropagation)</button>
 
 <script>
   elem.oncontextmenu = function(event) {
@@ -164,29 +164,29 @@ How to fix it? One of solutions is to think like: "When we handle right-click in
 *!*
     event.stopPropagation();
 */!*
-    alert("Button context menu");
+    alert("Контекстне меню кнопки");
   };
 
   document.oncontextmenu = function(event) {
     event.preventDefault();
-    alert("Document context menu");
+    alert("Контекстне меню документа");
   };
 </script>
 ```
 
-Now the button-level menu works as intended. But the price is high. We forever deny access to information about right-clicks for any outer code, including counters that gather statistics and so on. That's quite unwise.
+Тепер меню на рівні кнопки працює, як задумано. Але якою ціною? Ми назавжди забороняємо доступ до інформації про клік правою кнопкою миші для будь-якого зовнішнього коду, включаючи лічильники, які збирають статистику тощо. Це зовсім нерозумно.
 
-An alternative solution would be to check in the `document` handler if the default action was prevented? If it is so, then the event was handled, and we don't need to react on it.
+Альтернативним рішенням було б перевірити в обробнику `document`, чи запобігли дії за замовчуванням? Якщо це так, значить, подія була оброблена, і нам не потрібно на це реагувати.
 
 
 ```html autorun height=80 no-beautify run
-<p>Right-click for the document menu (added a check for event.defaultPrevented)</p>
-<button id="elem">Right-click for the button menu</button>
+<p>Правий клік, щоб відкрити контекстне меню документа (додано перевірку для event.defaultPrevented)</p>
+<button id="elem">Правий клік, щоб відкрити меню кнопки </button>
 
 <script>
   elem.oncontextmenu = function(event) {
     event.preventDefault();
-    alert("Button context menu");
+    alert("Контекстне меню кнопки");
   };
 
   document.oncontextmenu = function(event) {
@@ -195,50 +195,50 @@ An alternative solution would be to check in the `document` handler if the defau
 */!*
 
     event.preventDefault();
-    alert("Document context menu");
+    alert("Контекстне меню документа");
   };
 </script>
 ```
 
-Now everything also works correctly. If we have nested elements, and each of them has a context menu of its own, that would also work. Just make sure to check for `event.defaultPrevented` in each `contextmenu` handler.
+Тепер теж все працює коректно. Якщо ми маємо вкладені елементи, і кожен з них має власне контекстне меню, це також спрацює. Просто не забудьте перевірити наявність `event.defaultPrevented` у кожному обробнику `contextmenu`. 
 
-```smart header="event.stopPropagation() and event.preventDefault()"
-As we can clearly see, `event.stopPropagation()` and `event.preventDefault()` (also known as `return false`) are two different things. They are not related to each other.
+```smart header="event.stopPropagation() та event.preventDefault()"
+Як ми чітко бачимо, `event.stopPropagation()` та `event.preventDefault()` (також відомий як `return false`) - два різні методи. Вони не пов’язані один з одним.
 ```
 
-```smart header="Nested context menus architecture"
-There are also alternative ways to implement nested context menus. One of them is to have a single global object with a handler for `document.oncontextmenu`, and also methods that allow us to store other handlers in it.
+```smart header="Архітектура вкладених контекстних меню"
+Існують також альтернативні способи реалізації вкладених контекстних меню. Один з них — мати єдиний глобальний об’єкт з обробником для `document.oncontextmenu`, а також методами, які дозволяють нам зберігати в ньому інші обробники.
 
-The object will catch any right-click, look through stored handlers and run the appropriate one.
+Об’єкт буде ловити будь-який клік правою кнопкою миші, переглядати збережені обробники та запускати відповідний.
 
-But then each piece of code that wants a context menu should know about that object and use its help instead of the own `contextmenu` handler.
+Але тоді кожен фрагмент коду, якому буде потрібно контекстне меню, повинен знати про цей об’єкт і використовувати його замість власного обробника `contextmenu`.
 ```
 
-## Summary
+## Підсумки
 
-There are many default browser actions:
+Існує багато дій браузера за замовчуванням:
 
-- `mousedown` -- starts the selection (move the mouse to select).
-- `click` on `<input type="checkbox">` -- checks/unchecks the `input`.
-- `submit` -- clicking an `<input type="submit">` or hitting `key:Enter` inside a form field causes this event to happen, and the browser submits the form after it.
-- `keydown` -- pressing a key may lead to adding a character into a field, or other actions.
-- `contextmenu` -- the event happens on a right-click, the action is to show the browser context menu.
-- ...there are more...
+- `mousedown` -- розпочинає виділення (якщо перемістити курсор).
+- `click` на `<input type="checkbox">` -- додає/знімає прапорець з `input`.
+- `submit` -- браузер надсилає форму на сервер після кліку на `<input type="submit">` або натискання `key:Enter` всередині поля форми.
+- `keydown` -- натискання клавіші може призвести до додавання символу в поле або інших дій.
+- `contextmenu` -- подія відбувається при правому кліку та полягає в тому, щоб показати контекстне меню браузера.
+- ...та багато інших...
 
-All the default actions can be prevented if we want to handle the event exclusively by JavaScript.
+Усім діям за замовчуванням можна запобігти, якщо ми хочемо обробляти подію виключно за допомогою JavaScript.
 
-To prevent a default action -- use either `event.preventDefault()` or  `return false`. The second method works only for handlers assigned with `on<event>`.
+Щоб запобігти дії за замовчуванням, використовуйте `event.preventDefault()` або `return false`. Другий метод працює лише для обробників, призначених за допомогою `on<event>`.
 
-The `passive: true` option of `addEventListener` tells the browser that the action is not going to be prevented. That's useful for some mobile events, like `touchstart` and `touchmove`, to tell the browser that it should not wait for all handlers to finish before scrolling.
+Параметр `passive: true` для `addEventListener` повідомляє браузеру, що дію не буде скасовано. Це корисно для деяких мобільних подій, таких як `touchstart` і `touchmove`, щоб повідомити браузеру, що він не повинен чекати закінчення роботи обробників, перш ніж разпочати прокрутку. 
 
-If the default action was prevented, the value of `event.defaultPrevented` becomes `true`, otherwise it's `false`.
+Якщо дію за замовчуванням було скасовано, значення `event.defaultPrevented` стає `true`, інакше `false`.
 
-```warn header="Stay semantic, don't abuse"
-Technically, by preventing default actions and adding JavaScript we can customize the behavior of any elements. For instance, we can make a link `<a>` work like a button, and a button `<button>` behave as a link (redirect to another URL or so).
+```warn header="Зберігайте семантику, не зловживайте"
+Технічно, запобігаючи дії за замовчуванням і додаючи JavaScript, ми можемо налаштувати поведінку будь-яких елементів. Наприклад, ми можемо зробити так, щоб посилання `<a>` працювало як кнопка, а кнопка `<button>` вела себе як посилання (переспрямовувала на іншу URL-адресу або щось подібне). 
 
-But we should generally keep the semantic meaning of HTML elements. For instance, `<a>` should perform navigation, not a button.
+Але загалом ми повинні зберігати семантичне значення елементів HTML. Наприклад, не кнопка, а тег `<a>` має виконувати навігацію.
 
-Besides being "just a good thing", that makes your HTML better in terms of accessibility.
+Окрім того, що це «просто добре», це робить ваш HTML кращим з точки зору доступності.
 
-Also if we consider the example with `<a>`, then please note: a browser allows us to open such links in a new window (by right-clicking them and other means). And people like that. But if we make a button behave as a link using JavaScript and even look like a link using CSS, then `<a>`-specific browser features still won't work for it.
+Крім того, якщо ми розглянемо приклад із `<a>`, то зверніть увагу: браузер дозволяє нам відкривати такі посилання в новому вікні (клікаючи їх правою кнопкою миші або іншими способами). І людям таке подобається. Але якщо ми робимо кнопку, яка веде себе як посилання за допомогою JavaScript, і навіть виглядає як посилання за допомогою CSS, - специфічні функції браузера все одно не працюватимуть для неї.
 ```

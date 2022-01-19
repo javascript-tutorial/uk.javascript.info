@@ -1,5 +1,5 @@
-That's a great use of the event delegation pattern.
+Це чудове використання шаблону делегування подій.
 
-In real life instead of asking we can send a "logging" request to the server that saves the information about where the visitor left. Or we can load the content and show it right in the page (if allowable).
+У реальному житті замість того, щоб запитувати, ми можемо надіслати запит на «реєстрацію» на сервер, який зберігає інформацію про те, куди пішов відвідувач. Або ми можемо завантажити вміст і показати його прямо на сторінці (якщо це дозволено).
 
-All we need is to catch the `contents.onclick` and use `confirm` to ask the user. A good idea would be to use `link.getAttribute('href')` instead of `link.href` for the URL. See the solution for details.
+Все, що нам потрібно, це зловити `contents.onclick` і використати `confirm`, щоб запитати користувача. Хорошою ідеєю було б використовувати `link.getAttribute('href')` замість `link.href` для URL-адреси. Подробиці дивіться у рішенні.
