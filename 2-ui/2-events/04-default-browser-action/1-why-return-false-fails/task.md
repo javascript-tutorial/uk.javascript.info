@@ -2,9 +2,9 @@ importance: 3
 
 ---
 
-# Why "return false" doesn't work?
+# Чому "return false" не працює?
 
-Why in the code below `return false` doesn't work at all?
+Чому в коді нижче `return false` взагалі не працює?
 
 ```html autorun run
 <script>
@@ -14,9 +14,9 @@ Why in the code below `return false` doesn't work at all?
   }
 </script>
 
-<a href="https://w3.org" onclick="handler()">the browser will go to w3.org</a>
+<a href="https://w3.org" onclick="handler()">браузер перейде на w3.org</a>
 ```
 
-The browser follows the URL on click, but we don't want it.
+Браузер переходить за URL-адресою після кліку, але нам це не потрібно.
 
-How to fix?
+Як це виправити?
