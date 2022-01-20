@@ -2,18 +2,18 @@ importance: 3
 
 ---
 
-# Make external links orange
+# Зробіть зовнішні посилання помаранчевими
 
-Make all external links orange by altering their `style` property.
+Зробіть всі зовнішні посилання помаранчевими, змінюючи властивість `style`.
 
-A link is external if:
-- Its `href` has `://` in it
-- But doesn't start with `http://internal.com`.
+Посилання є зовнішнім, якщо:
+- В його `href` є `://`
+- Але не починається з `http://internal.com`.
 
-Example:
+Приклад:
 
 ```html run
-<a name="list">the list</a>
+<a name="list">список</a>
 <ul>
   <li><a href="http://google.com">http://google.com</a></li>
   <li><a href="/tutorial">/tutorial.html</a></li>
@@ -24,12 +24,12 @@ Example:
 </ul>
 
 <script>
-  // setting style for a single link
+  // налаштування style для одного посилання
   let link = document.querySelector('a');
   link.style.color = 'orange';
 </script>
 ```
 
-The result should be:
+Результат повинен бути:
 
 [iframe border=1 height=180 src="solution"]

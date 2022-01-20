@@ -2,15 +2,15 @@ importance: 5
 
 ---
 
-# Catch links in the element
+# Зловіть посилання
 
-Make all links inside the element with `id="contents"` ask the user if they really want to leave. And if they don't then don't follow.
+Зробіть так, щоб усі посилання всередині елемента з `id="contents"` запитали у користувача, чи дійсно він хоче вийти. І якщо ні, то не переходьте за посиланням.
 
-Like this:
+Ось таким чином:
 
 [iframe height=100 border=1 src="solution"]
 
-Details:
+Детальніше:
 
-- HTML inside the element may be loaded or regenerated dynamically at any time, so we can't find all links and put handlers on them. Use event delegation.
-- The content may have nested tags. Inside links too, like `<a href=".."><i>...</i></a>`.
+- HTML всередині елемента може бути завантажений або динамічно відновлений в будь-який час, тому ми не можемо знайти всі посилання та розмістити на них обробники. Використовуйте делегування подій.
+- Вміст може мати вкладені теги. Внутрішні посилання також, як-от `<a href=".."><i>...</i></a>`.
