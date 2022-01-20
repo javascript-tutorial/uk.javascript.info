@@ -1,3 +1,3 @@
-# Forms, controls
+# Форми та інтерактивні елементи
 
-Special properties and events for forms `<form>` and controls: `<input>`, `<select>` and other.
+Спеціальні властивості і події для форм `<form>` та інтерактивних елементів: `<input>`, `<select>` та інших.
