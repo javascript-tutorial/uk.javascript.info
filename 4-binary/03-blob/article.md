@@ -121,7 +121,7 @@ blob:https://javascript.info/1e67e00e-860d-40a5-89ae-6ab0cbee6273
 
 [Data url](mdn:/http/Data_URIs) має формат `data:[<mediatype>][;base64],<data>`. Ми можемо використовувати такі посилання будь-де, як і "звичайні".
 
-На приклад, смайлик:
+Наприклад, смайлик:
 
 ```html
 <img src="data:image/png;base64,R0lGODlhDAAMAKIFAF5LAP/zxAAAANyuAP/gaP///wAAAAAAACH5BAEAAAUALAAAAAAMAAwAAAMlWLPcGjDKFYi9lxKBOaGcF35DhWHamZUW0K4mAbiwWtuf0uxFAgA7">
@@ -160,52 +160,52 @@ reader.onload = function() {
 - Втрати швидкодії та навантаження на пам’ять у разі кодування великих `Blob` об’єктів.
 ```
 
-## Image to blob
+## Зображення в Blob
 
-We can create a `Blob` of an image, an image part, or even make a page screenshot. That's handy to upload it somewhere.
+Також ми можемо створити `Blob` із зображення, його частини чи навіть зі скріншоту сторінки. Це стане у нагоді при завантаженні його кудись.
 
-Image operations are done via `<canvas>` element:
+Робота з зображеннями відбувається за допомогою елементу `<canvas>`:
 
-1. Draw an image (or its part) on canvas using [canvas.drawImage](mdn:/api/CanvasRenderingContext2D/drawImage).
-2. Call canvas method [.toBlob(callback, format, quality)](mdn:/api/HTMLCanvasElement/toBlob) that creates a `Blob` and runs `callback` with it when done.
+1. [canvas.drawImage](mdn:/api/CanvasRenderingContext2D/drawImage) використовується для показу зображення.
+2. Виклик canvas методу [.toBlob(callback, format, quality)](mdn:/api/HTMLCanvasElement/toBlob) створює `Blob` та виконує `callback`, після закінчення.
 
-In the example below, an image is just copied, but we could cut from it, or transform it on canvas prior to making a blob:
+В наступному прикладі, зображення тільки копіюється, але, за потреби, ми можемо обрізати чи трансформувати його перед створенням `Blob`:
 
 ```js run
-// take any image
+// беремо будь-яке зображення
 let img = document.querySelector('img');
 
-// make <canvas> of the same size
+// створюємо <canvas> такого ж розміру
 let canvas = document.createElement('canvas');
 canvas.width = img.clientWidth;
 canvas.height = img.clientHeight;
 
 let context = canvas.getContext('2d');
 
-// copy image to it (this method allows to cut image)
+// копіюємо в нього зображення (цей метод дозволяє вирізати частину зображення)
 context.drawImage(img, 0, 0);
-// we can context.rotate(), and do many other things on canvas
+// наприклад, можна викликати context.rotate() або багато інших операцій
 
-// toBlob is async operation, callback is called when done
+// toBlob -- це асинхронна операція, передану функцію буде викликано після готовності
 canvas.toBlob(function(blob) {
-  // blob ready, download it
+  // Blob готовий, завантажуємо його
   let link = document.createElement('a');
   link.download = 'example.png';
 
   link.href = URL.createObjectURL(blob);
   link.click();
 
-  // delete the internal blob reference, to let the browser clear memory from it
+  // видаляємо внутрішнє посилання на Blob, щоб браузер міг звільнити пам’ять
   URL.revokeObjectURL(link.href);
 }, 'image/png');
 ```
 
-If we prefer `async/await` instead of callbacks:
+Якщо ви надаєте перевагу `async/await` синтаксису замість функцій зворотнього виклику:
 ```js
 let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'));
 ```
 
-For screenshotting a page, we can use a library such as <https://github.com/niklasvh/html2canvas>. What it does is just walks the page and draws it on `<canvas>`. Then we can get a `Blob` of it the same way as above.
+Для створення знімків екрану можна використовувати бібліотеку <https://github.com/niklasvh/html2canvas>. Вона просто обходить сторінку і малює її в `<canvas>`. Потім ми можемо отримати `Blob` як показано вище.
 
 ## From Blob to ArrayBuffer
 
