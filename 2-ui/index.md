@@ -1,3 +1,3 @@
-# Browser: Document, Events, Interfaces 
+# Браузер: документ, події, інтерфейси 
 
-Learning how to manage the browser page: add elements, manipulate their size and position, dynamically create interfaces and interact with the visitor.
+Навчимося керувати сторінкою браузера, а саме: додавати елементи, змінювати їх розмір і розташуванням, динамічно створювати інтерфейси та взаємодіяти з користувачем.

@@ -1,3 +1,3 @@
-# UI Events
+# Інтерфейсні події
 
-Here we cover most important user interface events and how to work with them.
+Тут ми розповідаємо про найважливіші події інтерфейсу та як з ними працювати.

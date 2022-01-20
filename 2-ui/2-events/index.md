@@ -1,3 +1,3 @@
-# Introduction to Events
+# Вступ до подій
 
-An introduction to browser events, event properties and handling patterns.
+Вступ до браузерних подій, їх властивостей і шаблонів обробки.
