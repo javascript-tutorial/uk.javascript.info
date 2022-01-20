@@ -8,17 +8,17 @@ Function.prototype.defer = function(ms) {
   }
 };
 
-// check it
+// перевіримо це
 function f(a, b) {
   alert( a + b );
 }
 
-f.defer(1000)(1, 2); // shows 3 after 1 sec
+f.defer(1000)(1, 2); // показує 3 після 1 сек
 ```
 
-Please note: we use `this` in `f.apply` to make our decoration work for object methods.
+Будь ласка, зверніть увагу: ми використовуємо `this` в `f.apply`, щоб наше декорування працювало для методів об’єкта.
 
-So if the wrapper function is called as an object method, then `this` is passed to the original method `f`.
+Отже, якщо функція-обгортка викликається як метод об’єкта, то `this` передається до оригінального методу `f`.
 
 ```js run
 Function.prototype.defer = function(ms) {
@@ -29,7 +29,7 @@ Function.prototype.defer = function(ms) {
 };
 
 let user = {
-  name: "John",
+  name: "Іван",
   sayHi() {
     alert(this.name);
   }

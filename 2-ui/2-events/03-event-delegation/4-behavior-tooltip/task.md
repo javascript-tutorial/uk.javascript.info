@@ -2,37 +2,37 @@ importance: 5
 
 ---
 
-# Tooltip behavior
+# Поведінка підказки
 
-Create JS-code for the tooltip behavior.
+Створіть JS-код для поведінки спливаючої підказки.
 
-When a mouse comes over an element with `data-tooltip`, the tooltip should appear over it, and when it's gone then hide.
+При наведенні миші на елемент з `data-tooltip`, підказка має з’явитися над ним і ховатися при переході на інший елемент.
 
-An example of annotated HTML:
+Приклад HTML з підказками:
 ```html
-<button data-tooltip="the tooltip is longer than the element">Short button</button>
-<button data-tooltip="HTML<br>tooltip">One more button</button>
+<button data-tooltip="підказка довша за елемент">Мала кнопка</button>
+<button data-tooltip="HTML<br>підказка">Ще одна кнопка</button>
 ```
 
-Should work like this:
+Повинно працювати так:
 
 [iframe src="solution" height=200 border=1]
 
-In this task we assume that all elements with `data-tooltip` have only text inside. No nested tags (yet).
+У цьому завданні ми припускаємо, що всі елементи з `data-tooltip` містять лише текст всередині. Немає вкладених тегів (поки що).
 
-Details:
+Деталі:
 
-- The distance between the element and the tooltip should be `5px`.
-- The tooltip should be centered relative to the element, if possible.
-- The tooltip should not cross window edges. Normally it should be above the element, but if the element is at the page top and there's no space for the tooltip, then below it.
-- The tooltip content is given in the `data-tooltip` attribute. It can be arbitrary HTML.
+- Відстань між елементом і підказкою має бути `5px`.
+- Підказка повинна бути відцентрована відносно елемента, якщо це можливо.
+- Підказка не повинна перетинати краї вікна. Зазвичай вона має бути над елементом, але якщо елемент знаходиться у верхній частині сторінки і немає місця для підказки, то під ним.
+- Вміст підказки вказується в атрибуті `data-tooltip`. Це може бути довільний HTML.
 
-You'll need two events here:
-- `mouseover` triggers when a pointer comes over an element.
-- `mouseout` triggers when a pointer leaves an element.
+Тут вам знадобляться дві події:
+- `mouseover` спрацьовує, коли курсор переходить на елемент.
+- `mouseout` спрацьовує, коли курсор покидає елемент.
 
-Please use event delegation: set up two handlers on `document` to track all "overs" and "outs" from elements with `data-tooltip` and manage tooltips from there.
+Будь ласка, використовуйте делегування подій: налаштуйте два обробники на `document`, щоб відстежувати всі "заходи" і "виходи" курсору на елементи з атрибутом `data-tooltip` і керувати підказками звідти.
 
-After the behavior is implemented, even people unfamiliar with JavaScript can add annotated elements.
+Після реалізації поведінки - люди, навіть не знайомі з JavaScript, зможуть додавати підказки до елементів.
 
-P.S. Only one tooltip may show up at a time.
+P.S. Одночасно може відображатися лише одна підказка.
