@@ -207,14 +207,14 @@ let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'))
 
 Для створення знімків екрану можна використовувати бібліотеку <https://github.com/niklasvh/html2canvas>. Вона просто обходить сторінку і малює її в `<canvas>`. Потім ми можемо отримати `Blob` як показано вище.
 
-## From Blob to ArrayBuffer
+## Blob в ArrayBuffer
 
-The `Blob` constructor allows to create a blob from almost anything, including any `BufferSource`.
+Конструктор `Blob` дозволяє створювати `Blob` майже з будь-чого, тим паче з `BufferSource`.
 
-But if we need to perform low-level processing, we can get the lowest-level `ArrayBuffer` from it using `FileReader`:
+Тому якщо нам потрібно низькорівнева обробка, ми можемо створити `ArrayBuffer` з `Blob` з використання `FileReader`:
 
 ```js
-// get arrayBuffer from blob
+// отримати ArrayBuffer з Blob
 let fileReader = new FileReader();
 
 *!*
