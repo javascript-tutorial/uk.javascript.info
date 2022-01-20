@@ -227,15 +227,15 @@ fileReader.onload = function(event) {
 ```
 
 
-## Summary
+## Підсумки
 
-While `ArrayBuffer`, `Uint8Array` and other `BufferSource` are "binary data", a [Blob](https://www.w3.org/TR/FileAPI/#dfn-Blob) represents "binary data with type".
+Якщо `ArrayBuffer`, `Uint8Array` та інші `BufferSource` представляють просто "бінарні дані", то [Blob](https://www.w3.org/TR/FileAPI/#dfn-Blob) є "типізованими бінарними даними".
 
-That makes Blobs convenient for upload/download operations, that are so common in the browser.
+Це робить `Blob` зручним для вивантаження/завантаження, що часто потрібно робити в браузері.
 
-Methods that perform web-requests, such as [XMLHttpRequest](info:xmlhttprequest), [fetch](info:fetch) and so on, can work with `Blob` natively, as well as with other binary types.
+Методи, що виконують запити, як-от [XMLHttpRequest](info:xmlhttprequest), [fetch](info:fetch) та інші, можуть безпосередньо працювати з `Blob`, як і з іншими типами бінарних даних.
 
-We can easily convert between `Blob` and low-level binary data types:
+Ми можемо легко трансформувати дані між `Blob` та іншими низькорівневими бінарними типами:
 
-- We can make a Blob from a typed array using `new Blob(...)` constructor.
-- We can get back `ArrayBuffer` from a Blob using `FileReader`, and then create a view over it for low-level binary processing.
+- Ми можемо створити `Blob` з типізованих масивів з використанням конструктору `new Blob(...)`.
+- Можна отримати `ArrayBuffer` з `Blob` з використанням `FileReader` і потім створити об’єкт представлення для обробки бінарних даних.
