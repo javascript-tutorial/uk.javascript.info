@@ -1,211 +1,211 @@
-# Mouse events
+# Події миші
 
-In this chapter we'll get into more details about mouse events and their properties.
+У цьому розділі ми докладніше розглянемо події миші та їх властивості.
 
-Please note: such events may come not only from "mouse devices", but are also from other devices, such as phones and tablets, where they are emulated for compatibility.
+Зверніть увагу: подібні події можуть надходити не тільки від миші, але й з інших пристроїв, таких як телефони та планшети, де вони емулюються для сумісності.
 
-## Mouse event types
+## Типи подій миші
 
-We've already seen some of these events:
+Ми вже бачили деякі з цих подій:
 
 `mousedown/mouseup`
-: Mouse button is clicked/released over an element.
+: Клікання/відпускання кнопки миші над елементом.
 
 `mouseover/mouseout`
-: Mouse pointer comes over/out from an element.
+: Курсор заходить/виходить з елемента.
 
 `mousemove`
-: Every mouse move over an element triggers that event.
+: Кожне переміщення миші над елементом викликає цю подію.
 
 `click`
-: Triggers after `mousedown` and then `mouseup` over the same element if the left mouse button was used.
+: Спрацьовує після `mousedown`, а потім `mouseup` над тим же елементом, якщо була використана ліва кнопка миші.
 
 `dblclick`
-: Triggers after two clicks on the same element within a short timeframe. Rarely used nowadays.
+: Спрацьовує після двох кліків на одному елементі за короткий проміжок часу. На сьогоднішній день рідко використовується.
 
 `contextmenu`
-: Triggers when the right mouse button is pressed. There are other ways to open a context menu, e.g. using a special keyboard key, it triggers in that case also, so it's not exactly the mouse event.
+: Спрацьовує при натисканні правої кнопки миші. Є й інші способи відкрити контекстне меню, напр. за допомогою спеціальної клавіші на клавіатурі, але це вже не зовсім подія миші.
 
-...There are several other events too, we'll cover them later.
+...Також існують кілька інших подій, про них ми розповімо пізніше.
 
-## Events order
+## Порядок подій
 
-As you can see from the list above, a user action may trigger multiple events.
+Як ви можете бачити зі списку вище, дія користувача може викликати безліч подій.
 
-For instance, a left-button click first triggers `mousedown`, when the button is pressed, then `mouseup` and `click` when it's released.
+Наприклад, клік лівою кнопкою спочатку ініціює `mousedown`, коли кнопку натиснуто, потім `mouseup` і `click`, коли її відпускають.
 
-In cases when a single action initiates multiple events, their order is fixed. That is, the handlers are called in the order `mousedown` -> `mouseup` -> `click`.
+У випадках, коли одна дія ініціює декілька подій, їх порядок фіксується. Тобто обробники викликаються в порядку `mousedown` -> `mouseup` -> `click`.
 
 ```online
-Click the button below and you'll see the events. Try double-click too.
+Клікніть кнопку нижче, і ви побачите події. Спробуйте також клікнути двічі.
 
-On the teststand below all mouse events are logged, and if there is more than a 1 second delay between them they are separated by a horizontal ruler.
+Всі події миші реєструються у тестовому вікні нижче, і якщо між ними є затримка більше 1 секунди, вони розділяються горизонтальною лінією.
 
-Also we can see the `button` property that allows to detect the mouse button, it's explained below.
+Також ми можемо побачити властивість `button`, яка дозволяє виявити яку саме кнопку миші клікнули, це пояснюється нижче.
 
 <input onmousedown="return logMouse(event)" onmouseup="return logMouse(event)" onclick="return logMouse(event)" oncontextmenu="return logMouse(event)" ondblclick="return logMouse(event)" value="Click me with the right or the left mouse button" type="button"> <input onclick="logClear('test')" value="Clear" type="button"> <form id="testform" name="testform"> <textarea style="font-size:12px;height:150px;width:360px;"></textarea></form>
 ```
 
-## Mouse button
+## Кнопка миші
 
-Click-related events always have the `button` property, which allows to get the exact mouse button.
+Події, пов’язані з кліками, завжди мають властивість `button`, що дозволяє отримати точну кнопку миші.
 
-We usually don't use it for `click` and `contextmenu` events, because the former happens only on left-click, and the latter -- only on right-click.
+Зазвичай ми не використовуємо її для подій `click` і `contextmenu`, оскільки перше відбувається лише при натисканні лівою кнопкою миші, а останнє -- лише при натисканні правою кнопкою миші.
 
-From the other hand, `mousedown` and `mouseup` handlers may need `event.button`, because these events trigger on any button, so `button` allows to distinguish between "right-mousedown" and "left-mousedown".
+З іншого боку, обробникам `mousedown` та `mouseup` може знадобитися `event.button`, тому що ці події запускаються на будь-якій кнопці, тому `button` дозволяє розрізняти "праву кнопку миші" та "ліву кнопку миші".
 
-The possible values of `event.button` are:
+Можливі значення `event.button`:
 
-| Button state | `event.button` |
+| Стан кнопки | `event.button` |
 |--------------|----------------|
-| Left button (primary) | 0 |
-| Middle button (auxiliary) | 1 |
-| Right button (secondary) | 2 |
-| X1 button (back) | 3 |
-| X2 button (forward) | 4 |
+| Ліва кнопка (основна) | 0 |
+| Середня кнопка (допоміжна) | 1 |
+| Права кнопка (другорядна) | 2 |
+| Кнопка X1 (назад) | 3 |
+| Кнопка X2 (вперед) | 4 |
 
-Most mouse devices only have the left and right buttons, so possible values are `0` or `2`. Touch devices also generate similar events when one taps on them.
+Більшість пристроїв мають лише ліву та праву кнопки, тому можливі значення `0` або `2`. Сенсорні пристрої також генерують подібні події, коли на них натискають.
 
-Also there's `event.buttons` property that has all currently pressed buttons as an integer, one bit per button. In practice this property is very rarely used, you can find details at [MDN](mdn:/api/MouseEvent/buttons) if you ever need it.
+Також є властивість `event.buttons`, яка містить усі натиснуті кнопки як ціле число, по одному біту на кнопку. На практиці ця властивість використовується дуже рідко, деталі можна знайти на сторінці [MDN](mdn:/api/MouseEvent/buttons), якщо вона вам колись знадобиться.
 
-```warn header="The outdated `event.which`"
-Old code may use `event.which` property that's an old non-standard way of getting a button, with possible values:
+```warn header="Застаріла властивість `event.which`"
+Старий код може використовувати властивість `event.which`, що є застарілим нестандартним способом отримання кнопки з можливими значеннями:
 
-- `event.which == 1` – left button,
-- `event.which == 2` – middle button,
-- `event.which == 3` – right button.
+- `event.which == 1` – ліва кнопка,
+- `event.which == 2` – середня кнопка,
+- `event.which == 3` – права кнопка.
 
-As of now, `event.which` is deprecated, we shouldn't use it.
+На даний момент властивість `event.which` застаріла, ми не повинні її використовувати.
 ```
 
-## Modifiers: shift, alt, ctrl and meta
+## Модифікатори: shift, alt, ctrl і meta
 
-All mouse events include the information about pressed modifier keys.
+Усі події миші містять інформацію про натиснуті клавіші-модифікатори.
 
-Event properties:
+Властивості події:
 
 - `shiftKey`: `key:Shift`
-- `altKey`: `key:Alt` (or `key:Opt` for Mac)
+- `altKey`: `key:Alt` (чи `key:Opt` для Mac)
 - `ctrlKey`: `key:Ctrl`
-- `metaKey`: `key:Cmd` for Mac
+- `metaKey`: `key:Cmd` для Mac
 
-They are `true` if the corresponding key was pressed during the event.
+Вони мають значення `true`, якщо відповідна клавіша була натиснута під час події.
 
-For instance, the button below only works on `key:Alt+Shift`+click:
+Наприклад, кнопка нижче працює лише на `key:Alt+Shift` + клік:
 
 ```html autorun height=60
-<button id="button">Alt+Shift+Click on me!</button>
+<button id="button">Alt+Shift+Клікни мене!</button>
 
 <script>
   button.onclick = function(event) {
 *!*
     if (event.altKey && event.shiftKey) {
 */!*
-      alert('Hooray!');
+      alert('Ура!');
     }
   };
 </script>
 ```
 
-```warn header="Attention: on Mac it's usually `Cmd` instead of `Ctrl`"
-On Windows and Linux there are modifier keys `key:Alt`, `key:Shift` and `key:Ctrl`. On Mac there's one more: `key:Cmd`, corresponding to the property `metaKey`.
+```warn header="Увага: на Mac зазвичай `Cmd` замість `Ctrl`"
+На Windows і Linux є клавіші-модифікатори `key:Alt`, `key:Shift` і `key:Ctrl`. На Mac є ще одна: `key:Cmd`, що відповідає властивості `metaKey`.
 
-In most applications, when Windows/Linux uses `key:Ctrl`, on Mac `key:Cmd` is used.
+У більшості застосунків, коли Windows/Linux використовує `key:Ctrl`, на Mac використовується `key:Command`.
 
-That is: where a Windows user presses `key:Ctrl+Enter` or `key:Ctrl+A`, a Mac user would press `key:Cmd+Enter` or `key:Cmd+A`, and so on.
+Тобто: коли користувач Windows натискає `key:Ctrl+Enter` або `key:Ctrl+A`, користувач Mac натискає `key:Cmd+Enter` або `key:Cmd+A`, і так далі.
 
-So if we want to support combinations like `key:Ctrl`+click, then for Mac it makes sense to use `key:Cmd`+click. That's more comfortable for Mac users.
+Отже, якщо ми хочемо підтримувати такі комбінації, як `key:Ctrl`+ клік, то для Mac має сенс використовувати `key:Cmd`+ клік. Це зручніше для користувачів Mac.
 
-Even if we'd like to force Mac users to `key:Ctrl`+click -- that's kind of difficult. The problem is: a left-click with `key:Ctrl` is interpreted as a *right-click* on MacOS, and it generates the `contextmenu` event, not `click` like Windows/Linux.
+Навіть якщо ми б хотіли змусити користувачів Mac застосувати `key:Ctrl`+ клік -- це трохи складно. Проблема полягає в тому, що клік лівою кнопкою миші за допомогою `key:Ctrl` інтерпретується як *клік правою кнопкою миші* у MacOS, і він генерує подію `contextmenu`, а не `click`, як Windows/Linux.
 
-So if we want users of all operating systems to feel comfortable, then together with `ctrlKey` we should check `metaKey`.
+Тож якщо ми хочемо, щоб користувачі всіх операційних систем відчували себе комфортно, то разом із `ctrlKey` ми повинні перевірити `metaKey`.
 
-For JS-code it means that we should check `if (event.ctrlKey || event.metaKey)`.
+Для JS-коду це означає, що ми повинні перевірити `if (event.ctrlKey || event.metaKey)`.
 ```
 
-```warn header="There are also mobile devices"
-Keyboard combinations are good as an addition to the workflow. So that if the visitor uses a keyboard -- they work. 
+```warn header="Є також мобільні пристрої"
+Комбінації клавіатури хороші як доповнення до робочого процесу. Так що якщо відвідувач використовує клавіатуру -- вони працюють.
 
-But if their device doesn't have it -- then there should be a way to live without modifier keys.
+Але якщо в їхньому пристрої цього немає -- то має бути спосіб жити без клавіш-модифікаторів.
 ```
 
-## Coordinates: clientX/Y, pageX/Y
+## Координати: clientX/Y, pageX/Y
 
-All mouse events provide coordinates in two flavours:
+Усі події миші надають координати у двох варіантах:
 
-1. Window-relative: `clientX` and `clientY`.
-2. Document-relative: `pageX` and `pageY`.
+1. Відносно Window: `clientX` та `clientY`.
+2. Відносно Document: `pageX` та `pageY`.
 
-We already covered the difference between them in the chapter <info:coordinates>.
+Ми вже розглянули різницю між ними у розділі <info:coordinates>.
 
-In short, document-relative coordinates `pageX/Y` are counted from the left-upper corner of the document, and do not change when the page is scrolled, while `clientX/Y` are counted from the current window left-upper corner. When the page is scrolled, they change.
+Коротше кажучи, відносні до документа координати `pageX/Y` відраховуються від лівого верхнього кута документа і не змінюються під час прокручування сторінки, тоді як `clientX/Y` відраховуються від лівого верхнього кута поточного вікна. Коли сторінка прокручується, вони змінюються.
 
-For instance, if we have a window of the size 500x500, and the mouse is in the left-upper corner, then `clientX` and `clientY` are `0`, no matter how the page is scrolled. 
+Наприклад, якщо у нас є вікно розміром 500x500, а миша знаходиться в лівому верхньому куті, то `clientX` і `clientY` дорівнюють `0`, незалежно від того, як прокручується сторінка.
 
-And if the mouse is in the center, then `clientX` and `clientY` are `250`, no matter what place in the document it is. They are similar to `position:fixed` in that aspect.
+А якщо миша знаходиться в центрі, то `clientX` і `clientY` дорівнюють `250`, незалежно від того, яке місце в документі це. У цьому аспекті вони схожі на `position:fixed`.
 
 ````online
-Move the mouse over the input field to see `clientX/clientY` (the example is in the `iframe`, so coordinates are relative to that `iframe`):
+Наведіть курсор миші на поле введення, щоб побачити `clientX/clientY` (приклад знаходиться в `iframe`, тому координати є відносно цього `iframe`):
 
 ```html autorun height=50
-<input onmousemove="this.value=event.clientX+':'+event.clientY" value="Mouse over me">
+<input onmousemove="this.value=event.clientX+':'+event.clientY" value="Наведіть курсор на мене">
 ```
 ````
 
-## Preventing selection on mousedown
+## Запобігання виділення при наведенні миші
 
-Double mouse click has a side-effect that may be disturbing in some interfaces: it selects text.
+Подвійний клік миші має побічний ефект, який може створювати незручності в деяких інтерфейсах: він виділяє текст.
 
-For instance, double-clicking on the text below selects it in addition to our handler:
+Наприклад, подвійний клік на тексті нижче виділяє його на додаток до нашого обробника:
 
 ```html autorun height=50
-<span ondblclick="alert('dblclick')">Double-click me</span>
+<span ondblclick="alert('dblclick')">Клікни мене двічі</span>
 ```
 
-If one presses the left mouse button and, without releasing it, moves the mouse, that also makes the selection, often unwanted.
+Якщо натиснути ліву кнопку миші і, не відпускаючи її, пересунути, це також додасть виділення, часто небажане.
 
-There are multiple ways to prevent the selection, that you can read in the chapter <info:selection-range>.
+Існує кілька способів запобігти виділенню, про які ви можете прочитати в розділі <info:selection-range>.
 
-In this particular case the most reasonable way is to prevent the browser action on `mousedown`. It prevents both these selections:
+У цьому конкретному випадку найрозумнішим способом є запобігання дії браузера на `mousedown`. Таким чином ми запобігнемо двом виділенням:
 
 ```html autorun height=50
-Before...
-<b ondblclick="alert('Click!')" *!*onmousedown="return false"*/!*>
-  Double-click me
+До...
+<b ondblclick="alert('Клік!')" *!*onmousedown="return false"*/!*>
+  Клікни мене двічі
 </b>
-...After
+...Після
 ```
 
-Now the bold element is not selected on double clicks, and pressing the left button on it won't start the selection.
+Тепер виділений жирним елемент не виділяється подвійними кліком, і натискання на ньому лівої кнопки не почне виділення.
 
-Please note: the text inside it is still selectable. However, the selection should start not on the text itself, but before or after it. Usually that's fine for users.
+Зверніть увагу: текст всередині нього все ще можна виділити. Однак виділення слід починати не з самого тексту, а до або після нього. Зазвичай, це нормально сприймається користувачами.
 
-````smart header="Preventing copying"
-If we want to disable selection to protect our page content from copy-pasting, then we can use another event: `oncopy`.
+````smart header="Запобігання копіювання"
+Якщо ми хочемо вимкнути виділення, щоб захистити вміст нашої сторінки від копіювання, ми можемо використовувати іншу подію: `oncopy`.
 
 ```html autorun height=80 no-beautify
-<div *!*oncopy="alert('Copying forbidden!');return false"*/!*>
-  Dear user,
-  The copying is forbidden for you.
-  If you know JS or HTML, then you can get everything from the page source though.
+<div *!*oncopy="alert('Копіювання заборонено!');return false"*/!*>
+  Шановний користувач,
+  Копіювання заборонено.
+  Якщо ви знаєте JS або HTML, ви можете отримати все з джерела сторінки.
 </div>
 ```
-If you try to copy a piece of text in the `<div>`, that won't work, because the default action `oncopy` is prevented.
+Якщо ви спробуєте скопіювати фрагмент тексту в `<div>`, це не спрацює, оскільки типову дію `oncopy` заборонено.
 
-Surely the user has access to HTML-source of the page, and can take the content from there, but not everyone knows how to do it.
+Безумовно, користувач має доступ до HTML-джерела сторінки, і може взяти звідти вміст, але не всі знають, як це зробити.
 ````
 
-## Summary
+## Підсумки
 
-Mouse events have the following properties:
+Події миші мають такі властивості:
 
-- Button: `button`.
-- Modifier keys (`true` if pressed): `altKey`, `ctrlKey`, `shiftKey` and `metaKey` (Mac).
-  - If you want to handle `key:Ctrl`, then don't forget Mac users, they usually use `key:Cmd`, so it's better to check `if (e.metaKey || e.ctrlKey)`.
+- Кнопка: `button`.
+- Клавіші-модифікатори (`true`, якщо їх натиснути): `altKey`, `ctrlKey`, `shiftKey` і `metaKey` (Mac).
+  - Якщо ви хочете працювати з `key:Ctrl`, то не забувайте про користувачів Mac, вони зазвичай використовують `key:Cmd`, тому краще перевірити `if (e.metaKey || e.ctrlKey)`.
 
-- Window-relative coordinates: `clientX/clientY`.
-- Document-relative coordinates: `pageX/pageY`.
+- Координати відносно Window: `clientX/clientY`.
+- Координати відносно Document: `pageX/pageY`.
 
-The default browser action of `mousedown` is text selection, if it's not good for the interface, then it should be prevented.
+Типова дія браузера `mousedown` -- виділення тексту, якщо в інтерфейсі воно швидше заважає, йому слід запобігти.
 
-In the next chapter we'll see more details about events that follow pointer movement and how to track element changes under it.
+У наступному розділі ми дізнаємось більше деталей про події, які слідують за рухом курсора, і про те, як відстежувати зміни елементів під ним.
