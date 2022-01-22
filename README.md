@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-28-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-29-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -111,6 +111,9 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="https://github.com/UkrainianCitizen"><img src="https://avatars2.githubusercontent.com/u/31314423?v=4?s=70" width="70px;" alt=""/><br /><sub><b>UkrainianCitizen</b></sub></a><br /><a href="#ideas-UkrainianCitizen" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/javascript-tutorial/uk.javascript.info/pulls?q=is%3Apr+reviewed-by%3AUkrainianCitizen" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/OlhaBrozhenets"><img src="https://avatars.githubusercontent.com/u/40391635?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Olha Brozhenets</b></sub></a><br /><a href="#translation-OlhaBrozhenets" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/Mouu9"><img src="https://avatars.githubusercontent.com/u/97622707?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Mouu9</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AMouu9" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/jeneg"><img src="https://avatars.githubusercontent.com/u/2821652?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Yevhenii Chubar</b></sub></a><br /><a href="#translation-jeneg" title="Translation">🌍</a></td>
   </tr>
 </table>
 
