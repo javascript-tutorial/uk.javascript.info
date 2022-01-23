@@ -133,7 +133,7 @@
 <script async src="https://google-analytics.com/analytics.js"></script>
 ```
 
-```smart header="The `async` атрибут лише для зовнішніх скриптів"
+```smart header="Атрибут `async` -- лише для зовнішніх скриптів"
 Як і `defer`, атрибут `async` ігнорується, якщо тег `<script>` не має `src`.
 ```
 
