@@ -106,7 +106,11 @@ alert(height ?? 100); // 0
 
 ## Пріоритет
 
+<<<<<<< HEAD
 Пріоритет оператора `??` приблизно такий самий, як `||`, тільки трохи нижчий. Він дорівнює `5` у [таблиці MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table), а пріоритет `||` -- `6`.
+=======
+The precedence of the `??` operator is the same as `||`. They both equal `4` in the [MDN table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence#Table).
+>>>>>>> bae0ef44d0208506f6e9b7f3421ee640ab41af2b
 
 Це означає, що, як і `||`, оператор об’єднання з null `??` оцінюється до `=` та `?`, але після більшості інших операцій, таких як `+`, `*`.
 

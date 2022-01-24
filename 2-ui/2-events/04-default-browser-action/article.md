@@ -17,7 +17,11 @@
 - Основний спосіб - використовувати об'єкт `event`. Існує метод `event.preventDefault()`.
 - Якщо обробник призначено за допомогою `on<event>` (а не `addEventListener`), повернення `false` спрацює так само.
 
+<<<<<<< HEAD
 У цьому HTML після кліку на посилання навігація не відбувається, браузер нічого не робить:
+=======
+In this HTML, a click on a link doesn't lead to navigation; the browser doesn't do anything:
+>>>>>>> bae0ef44d0208506f6e9b7f3421ee640ab41af2b
 
 ```html autorun height=60 no-beautify
 <a href="/" onclick="return false">Клікніть тут</a>
@@ -96,7 +100,11 @@ menu.onclick = function(event) {
 
 Необов’язковий параметр `passive: true` для `addEventListener` сигналізує браузеру, що обробник не збирається викликати `preventDefault()`.
 
+<<<<<<< HEAD
 Чому це може знадобитися?
+=======
+Why might that be needed?
+>>>>>>> bae0ef44d0208506f6e9b7f3421ee640ab41af2b
 
 На мобільних пристроях є деякі події, наприклад `touchmove` (коли користувач переміщує палець по екрану), які типово викликають прокручування, але цьому прокручуванню можна запобігти за допомогою `preventDefault()` в обробнику.
 
