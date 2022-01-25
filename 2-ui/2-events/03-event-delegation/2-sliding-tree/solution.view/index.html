@@ -17,36 +17,36 @@
 <body>
 
   <ul class="tree" id="tree">
-    <li>Animals
+    <li>Тварини
       <ul>
-        <li>Mammals
+        <li>Ссавці
           <ul>
-            <li>Cows</li>
-            <li>Donkeys</li>
-            <li>Dogs</li>
-            <li>Tigers</li>
+            <li>Корови</li>
+            <li>Осли</li>
+            <li>Собаки</li>
+            <li>Тигри</li>
           </ul>
         </li>
-        <li>Other
+        <li>Інші
           <ul>
-            <li>Snakes</li>
-            <li>Birds</li>
-            <li>Lizards</li>
+            <li>Змії</li>
+            <li>Птахи</li>
+            <li>Ящірки</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>Fishes
+    <li>Риби
       <ul>
-        <li>Aquarium
+        <li>Акваріумні
           <ul>
-            <li>Guppy</li>
-            <li>Angelfish</li>
+            <li>Гуппі</li>
+            <li>Риба-янгол</li>
           </ul>
         </li>
-        <li>Sea
+        <li>Морські
           <ul>
-            <li>Sea trout</li>
+            <li>Морська форель</li>
           </ul>
         </li>
       </ul>
@@ -54,15 +54,15 @@
   </ul>
 
   <script>
-    // move all text into <span>
-    // they occupy exactly the place necessary for the text,
+    // помістіть кожен текстовий вузол у елемент <span>
+    // він займає саме те місце, яке необхідне для тексту,
     for (let li of tree.querySelectorAll('li')) {
       let span = document.createElement('span');
       li.prepend(span);
-      span.append(span.nextSibling); // move the text node into span
+      span.append(span.nextSibling); // поміщаємо текстовий вузол у span
     }
 
-    // catch clicks on whole tree
+    // ловимо кліки на всьому дереві
     tree.onclick = function(event) {
 
       if (event.target.tagName != 'SPAN') {
@@ -70,7 +70,7 @@
       }
 
       let childrenContainer = event.target.parentNode.querySelector('ul');
-      if (!childrenContainer) return; // no children
+      if (!childrenContainer) return; // дітей немає
 
       childrenContainer.hidden = !childrenContainer.hidden;
     }

@@ -1,22 +1,22 @@
 
-Here's the explanations.
+Ось пояснення.
 
-1. That's a regular object method call.
+1. Це звичайний виклик методу об'єкта.
 
-2. The same, parentheses do not change the order of operations here, the dot is first anyway.
+2. Те ж саме, дужки не змінюють порядок операцій тут, крапка спрацьовує спочатку в будь-якому випадку.
 
-3. Here we have a more complex call `(expression)()`. The call works as if it were split into two lines:
+3. Тут у нас є більш складний виклик `(вираз)()`. Виклик працює так, ніби він був розділений на два рядки:
 
     ```js no-beautify
-    f = obj.go; // calculate the expression
-    f();        // call what we have
+    f = obj.go; // обчислити вираз
+    f();        // викликати те, що ми маємо
     ```
 
-    Here `f()` is executed as a function, without `this`.
+    Тут `f()` виконується як функція, без `this`.
 
-4. The similar thing as `(3)`, to the left of the parentheses `()` we have an expression.
+4. Ми маємо вираз подібну річ, як в `(3)`, ліворуч від дужок `()`.
 
-To explain the behavior of `(3)` and `(4)` we need to recall that property accessors (dot or square brackets) return a value of the Reference Type.  
+Щоб пояснити поведінку `(3)` та `(4)`, ми повинні нагадати, що аксесори властивостей (крапка або квадратні дужки) повертають значення посисального типу.
 
-Any operation on it except a method call (like assignment `=` or `||`) turns it into an ordinary value, which does not carry the information allowing to set `this`.
+Будь-яка операція на цьому, крім виклику методу (наприклад, присвоєння `=` або `||`) перетворює його в звичайне значення, яке не носить інформацію, яка дозволяє встановити `this`.
 

@@ -1,1 +1,1 @@
-# Objects: the basics
+# Об’єкти: основи

@@ -1,3 +1,3 @@
-# Object properties configuration
+# Властивості об’єкта, їх конфігурація
 
-In this section we return to objects and study their properties even more in-depth.
+В цьому розділі ми повернемося до об’єктів та вивчимо їхні властивості більше детально.
