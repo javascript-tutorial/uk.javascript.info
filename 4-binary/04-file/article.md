@@ -1,27 +1,27 @@
-# File and FileReader
+# File та FileReader
 
-A [File](https://www.w3.org/TR/FileAPI/#dfn-file) object inherits from `Blob` and is extended with filesystem-related capabilities.
+Об’єкт [File](https://www.w3.org/TR/FileAPI/#dfn-file) наслідується від `Blob` та надає додаткові можливості для роботи з файловою системою.
 
-There are two ways to obtain it.
+Є два способи отримати його екземпляр.
 
-First, there's a constructor, similar to `Blob`:
+По-перше, можна скористатися конструктором, схожим на `Blob`:
 
 ```js
 new File(fileParts, fileName, [options])
 ```
 
-- **`fileParts`** -- is an array of Blob/BufferSource/String values.
-- **`fileName`** -- file name string.
-- **`options`** -- optional object:
-    - **`lastModified`** -- the timestamp (integer date) of last modification.
+- **`fileParts`** -- масив значень, що можуть мати тип Blob/BufferSource/String.
+- **`fileName`** -- рядок з іменем файлу.
+- **`options`** -- необов’язковий об’єкт з властивостями:
+    - **`lastModified`** -- відмітка часу (ціле число) останньої зміни.
 
-Second, more often we get a file from `<input type="file">` or drag'n'drop or other browser interfaces. In that case, the file gets this information from OS.
+По-друге, частіше ми отримуємо файл із `<input type="file">`, перетягуванням чи іншим способом. У такому випадку інформацію про файл заповнює ОС.
 
-As `File` inherits from `Blob`, `File` objects have the same properties, plus:
-- `name` -- the file name,
-- `lastModified` -- the timestamp of last modification.
+Оскільки клас `File` наслідує `Blob`, екземпляри `File` мають такі самі властивості і ще додаткові:
+- `name` -- ім’я файлу,
+- `lastModified` -- відмітка часу останньої зміни.
 
-That's how we can get a `File` object from `<input type="file">`:
+Щоб отримати об’єкт `File` з `<input type="file">` потрібно:
 
 ```html run
 <input type="file" onchange="showFile(this)">
@@ -30,14 +30,14 @@ That's how we can get a `File` object from `<input type="file">`:
 function showFile(input) {
   let file = input.files[0];
 
-  alert(`File name: ${file.name}`); // e.g my.png
-  alert(`Last modified: ${file.lastModified}`); // e.g 1552830408824
+  alert(`Ім’я файлу: ${file.name}`); // наприклад my.png
+  alert(`Дата останньої зміни: ${file.lastModified}`); // наприклад 1552830408824
 }
 </script>
 ```
 
 ```smart
-The input may select multiple files, so `input.files` is an array-like object with them. Here we have only one file, so we just take `input.files[0]`.
+Компонент введення (input) дозволяє обрати декілька файлів разом, які будуть доступні в об'єкті `input.files`. Оскільки тут ми завантажуємо один файл, то можемо скористатися `input.files[0]`.
 ```
 
 ## FileReader
