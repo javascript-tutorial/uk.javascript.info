@@ -27,7 +27,7 @@
 
 <body style="height:2000px">
 
-  Click on a field to move the ball there.
+  Натисніть поле, щоб перемістити м’яч.
   <br>
 
 
@@ -39,29 +39,29 @@
   <script>
     field.onclick = function(event) {
 
-      // window-relative field coordinates
+      // координати поля щодо вікна браузера
       let fieldCoords = this.getBoundingClientRect();
 
-      // the ball has position:absolute, the field: position:relative
-      // so ball coordinates are relative to the field inner left-upper corner
+      // м’яч має абсолютне позиціювання (position:absolute), поле - відносне (position:relative)
+      // таким чином, координати м’яча розраховуються щодо внутрішнього, верхнього лівого кута поля.
       let ballCoords = {
         top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,
         left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2
       };
 
-      // prevent crossing the top field boundary
+      // забороняємо перетинати верхню межу поля
       if (ballCoords.top < 0) ballCoords.top = 0;
 
-      // prevent crossing the left field boundary
+      // забороняємо перетинати ліву межу поля
       if (ballCoords.left < 0) ballCoords.left = 0;
 
 
-      // // prevent crossing the right field boundary
+      // забороняємо перетинати праву межу поля
       if (ballCoords.left + ball.clientWidth > field.clientWidth) {
         ballCoords.left = field.clientWidth - ball.clientWidth;
       }
 
-      // prevent crossing the bottom field boundary
+      // забороняємо перетинати нижню межу поля
       if (ballCoords.top + ball.clientHeight > field.clientHeight) {
         ballCoords.top = field.clientHeight - ball.clientHeight;
       }

@@ -1,12 +1,12 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Hide self
+# Сховати себе
 
-Create a button that hides itself on click.
+Створіть кнопку, яка при натисненні на неї зникне.
 
 ```online
-Like this:
-<input type="button" onclick="this.hidden=true" value="Click to hide">
+Наприклад:
+<input type="button" onclick="this.hidden=true" value="Сховати">
 ```

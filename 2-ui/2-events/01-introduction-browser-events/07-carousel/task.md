@@ -1,13 +1,13 @@
-importance: 4
+важливість: 4
 
 ---
 
-# Carousel
+# Карусель
 
-Create a "carousel" -- a ribbon of images that can be scrolled by clicking on arrows.
+Створити "Карусель" -- стрічку зображень, яку можна прокручувати, натискаючи на стрілки.
 
 [iframe height=200 src="solution"]
 
-Later we can add more features to it: infinite scrolling, dynamic loading etc.
+Надалі до неї можна буде додати анімацію, динамічне підвантаження та інші можливості.
 
-P.S. For this task HTML/CSS structure is actually 90% of the solution.
+P.S. У цьому завданні розробка структури HTML/CSS становить 90% рішення.

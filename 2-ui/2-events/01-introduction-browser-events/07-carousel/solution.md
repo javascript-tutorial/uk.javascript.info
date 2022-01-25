@@ -1,17 +1,17 @@
-The images ribbon can be represented as `ul/li` list of images `<img>`.
+Стрічка зображень може бути представлена як список `ul/li` з картинками `<img>`.
 
-Normally, such a ribbon is wide, but we put a fixed-size `<div>` around to "cut" it, so that only a part of the ribbon is visible:
+Потрібно розташувати стрічку всередині `<div>` фіксованого розміру, так щоб одночасно була видна тільки потрібна частина списку:
 
 ![](carousel1.svg)
 
-To make the list show horizontally we need to apply correct CSS properties for `<li>`, like `display: inline-block`.
+Щоб список зробити горизонтальним, нам потрібно застосувати CSS-властивість `display: inline-block` для `<li>`.
 
-For `<img>` we should also adjust `display`, because by default it's `inline`. There's extra space reserved under `inline` elements for "letter tails", so we can use `display:block` to remove it.
+Для тегу `<img>` ми також повинні налаштувати `display`, оскільки за умовчанням він є `inline`. У всіх елементах типу `inline` резервується додаткове місце під "хвости" символів. І щоб його забрати, нам потрібно прописати `display:block`.
 
-To do the scrolling, we can shift `<ul>`. There are many ways to do it, for instance by changing `margin-left` or (better performance) use `transform: translateX()`:
+Для прокручування будемо переміщати `<ul>`. Це можна робити по-різному, наприклад, призначенням CSS-властивості `transform: translateX()` (краще для продуктивності) або `margin-left`:
 
 ![](carousel2.svg)
 
-The outer `<div>` has a fixed width, so "extra" images are cut.
+У зовнішнього `<div>` фіксована ширина, тому зайві зображення обрізаються.
 
-The whole carousel is a self-contained "graphical component" on the page, so we'd better wrap it into a single `<div class="carousel">` and style things inside it.
+Вся карусель -- це самостійний «графічний компонент» на сторінці, таким чином нам краще його «обернути» в окремий `<div class="carousel">` і вже модифікувати стилі всередині нього.

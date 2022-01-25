@@ -1,8 +1,8 @@
-The answer: `1` and `2`.
+Відповідь: `1` та `2`.
 
-The first handler triggers, because it's not removed by `removeEventListener`. To remove the handler we need to pass exactly the function that was assigned. And in the code a new function is passed, that looks the same, but is still another function.
+Перший обробник спрацює, тому що він не був вилучений методом `removeEventListener`. Щоб видалити обробник, необхідно передати саме ту функцію, яка була призначена як обробник. Попри те, що код ідентичний, в `removeEventListener` передається нова, інша функція.
 
-To remove a function object, we need to store a reference to it, like this:
+Щоб видалити функцію-обробник, потрібно десь зберегти посилання на неї, наприклад:
 
 ```js
 function handler() {
@@ -13,4 +13,4 @@ button.addEventListener("click", handler);
 button.removeEventListener("click", handler);
 ```
 
-The handler `button.onclick` works independently and in addition to `addEventListener`.
+Обробник `button.onclick` спрацює все одно. Разом з `addEventListener`.
