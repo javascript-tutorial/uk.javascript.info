@@ -18,7 +18,7 @@ function isVisible(elem) {
   // видно верхній край елемента?
   let topVisible = coords.top > 0 && coords.top < windowHeight;
 
-  // виднонижній край елемента?
+  // видно нижній край елемента?
   let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
 
   return topVisible || bottomVisible;
