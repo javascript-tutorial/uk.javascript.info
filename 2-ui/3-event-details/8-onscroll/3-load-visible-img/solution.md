@@ -1,13 +1,13 @@
-The `onscroll` handler should check which images are visible and show them.
+Обробник `onscroll` повинен перевірити, які зображення є видимими, і показати їх.
 
-We also want to run it when the page loads, to detect immediately visible images and load them.
+Ми також хочемо запускати його під час завантаження сторінки, щоб виявляти видимі зображення відразу та завантажувати їх.
 
-The code should execute when the document is loaded, so that it has access to its content.
+Код повинен виконуватися під час завантаження документа, щоб він мав доступ до його вмісту.
 
-Or put it at the `<body>` bottom:
+Або розмістіть його внизу `<body>`:
 
 ```js
-// ...the page content is above...
+// ...вміст сторінки вище...
 
 function isVisible(elem) {
 
@@ -15,17 +15,17 @@ function isVisible(elem) {
 
   let windowHeight = document.documentElement.clientHeight;
 
-  // top elem edge is visible?
+  // видно верхній край елемента?
   let topVisible = coords.top > 0 && coords.top < windowHeight;
 
-  // bottom elem edge is visible?
+  // виднонижній край елемента?
   let bottomVisible = coords.bottom < windowHeight && coords.bottom > 0;
 
   return topVisible || bottomVisible;
 }
 ```
 
-The `showVisible()` function uses the visibility check, implemented by `isVisible()`, to load visible images:
+Функція `showVisible()` використовує перевірку видимості, реалізовану `isVisible()`, для завантаження видимих зображень:
 
 ```js
 function showVisible() {
@@ -46,4 +46,4 @@ window.onscroll = showVisible;
 */!*
 ```
 
-P.S. The solution also has a variant of `isVisible` that "preloads" images that are within 1 page above/below the current document scroll.
+P.S. Рішення також має варіант `isVisible`, який "попередньо завантажує" зображення, які знаходяться в межах 1 сторінки вище/під поточною прокруткою документа.
