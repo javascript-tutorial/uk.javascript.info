@@ -19,7 +19,7 @@
 
 ```html autorun height=40 run
 <select onchange="alert(this.value)">
-  <option value="">ьВиберіть щось</option>
+  <option value="">Виберіть щось</option>
   <option value="1">Варіант 1</option>
   <option value="2">Варіант 2</option>
   <option value="3">Варіант 3</option>
@@ -87,7 +87,7 @@
 
 Це тому, що `clipboardData` реалізує інтерфейс `DataTransfer`, який зазвичай використовується для перетягування та копіювання/вставлення. Зараз це трохи виходить за рамки наших можливостей, але ви можете знайти його методи в [специфікації DataTransfer](https://html.spec.whatwg.org/multipage/dnd.html#the-datatransfer-interface).
 
-Крім того, існує додатковий асинхронний API для доступу до буфера обміну: `navigator.clipboard`. Детальніше про це в специфікації [Clipboard API та події](https://www.w3.org/TR/clipboard-apis/), [не підтримується Firefox](https://caniuse.com/async-clipboard) .
+Крім того, існує додатковий асинхронний API для доступу до буфера обміну: `navigator.clipboard`. Детальніше про це в специфікації [Clipboard API та події](https://www.w3.org/TR/clipboard-apis/), [не підтримується Firefox](https://caniuse.com/async-clipboard).
 
 ### Обмеження у сфері безпеки
 
