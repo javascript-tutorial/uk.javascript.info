@@ -1,40 +1,40 @@
 <!DOCTYPE html>
 <html>
 <body>
-
   <div id="container"></div>
 
   <script>
     let data = {
-      "Fish": {
-        "trout": {},
-        "salmon": {}
+      Риба: {
+        форель: {},
+        лосось: {},
       },
 
-      "Tree": {
-        "Huge": {
-          "sequoia": {},
-          "oak": {}
+      Дерево: {
+        Величезні: {
+          секвойя: {},
+          дуб: {},
         },
-        "Flowering": {
-          "apple tree": {},
-          "magnolia": {}
-        }
-      }
+        Квітучі: {
+          яблуня: {},
+          магнолія: {},
+        },
+      },
     };
 
     function createTree(container, obj) {
       container.innerHTML = createTreeText(obj);
     }
 
-    function createTreeText(obj) { // standalone recursive function
+    function createTreeText(obj) {
+      // окрема рекурсивна функція
       let li = '';
       let ul;
       for (let key in obj) {
         li += '<li>' + key + createTreeText(obj[key]) + '</li>';
       }
       if (li) {
-        ul = '<ul>' + li + '</ul>'
+        ul = '<ul>' + li + '</ul>';
       }
       return ul || '';
     }

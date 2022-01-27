@@ -2,12 +2,12 @@ importance: 5
 
 ---
 
-# Show descendants in a tree
+# Показати нащадків в дереві
 
-There's a tree organized as nested `ul/li`.
+Дано дерево з вкладених `ul/li`.
 
-Write the code that adds to each `<li>` the number of its descendants. Skip leaves (nodes without children).
+Напишіть код, який додає до кожного `<li>` кількість його нащадків. Пропускаючи пусті вузли (без дочірніх елементів).
 
-The result:
+Результат:
 
 [iframe border=1 src="solution"]

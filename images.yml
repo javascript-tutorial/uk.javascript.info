@@ -130,5 +130,10 @@ placeholder.svg: {}
 
 logo-fetch.svg: {}
 
-demo.svg:
+demo.svg: 
   '1': ''
+
+before-prepend-append-after.svg: 
+  (…nodes-or-strings): "(...вузли або рядки)"
+
+

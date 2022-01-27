@@ -1,117 +1,118 @@
-# Modifying the document
+# Внесення змін в документ
 
-DOM modification is the key to creating "live" pages.
+Маніпуляціїї з DOM(об'єктна модель документа) це ключ до створення «живих» сторінок.
 
-Here we'll see how to create new elements "on the fly" and modify the existing page content.
+Тут ми побачимо як створювати нові елементи «на льоту» та змінювати вже існуючі.
 
-## Example: show a message
+## Приклад: показати повідомлення
 
-Let's demonstrate using an example. We'll add a message on the page that looks nicer than `alert`.
+Розглянемо на прикладі. Ми додамо на сторінку повідомлення яке виглядатиме краще аніж `alert`.
 
-Here's how it will look:
+Ось так воно виглядатиме:
 
 ```html autorun height="80"
 <style>
-.alert {
-  padding: 15px;
-  border: 1px solid #d6e9c6;
-  border-radius: 4px;
-  color: #3c763d;
-  background-color: #dff0d8;
-}
+  .alert {
+    padding: 15px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+  }
 </style>
 
 *!*
 <div class="alert">
-  <strong>Hi there!</strong> You've read an important message.
+  <strong>Привіт!</strong> Ви прочитали важливе повідомлення.
 </div>
 */!*
 ```
 
-That was the HTML example. Now let's create the same `div` with JavaScript (assuming that the styles are in the HTML/CSS already).
+Це був приклад HTML розмітки. Тепер створимо такий самий `div` за допомогою JavaScript (припускаємо, що стилі вже є в HTML або в окремому CSS-файлі).
 
-## Creating an element
+## Створення елементу
 
-To create DOM nodes, there are two methods:
+Є два способи створення DOM вузлів:
 
 `document.createElement(tag)`
-: Creates a new *element node* with the given tag:
+: Створює новий _елемент_ з заданим тегом:
 
     ```js
     let div = document.createElement('div');
     ```
 
 `document.createTextNode(text)`
-: Creates a new *text node* with the given text:
+: Створює новий _текстовий вузол_ з заданим текстом:
 
     ```js
-    let textNode = document.createTextNode('Here I am');
+    let textNode = document.createTextNode('От і я');
     ```
 
-Most of the time we need to create element nodes, such as the `div` for the message.
+У більшості випадків нам потрібно створювати саме _елементи_, такі як `div` для повідомлень.
 
-### Creating the message
+### Створення повідомлень
 
-Creating the message div takes 3 steps:
+Створення div елементу для повідомлення складається з трьох кроків:
 
 ```js
-// 1. Create <div> element
+// 1. Створіть елемент <div>
 let div = document.createElement('div');
 
-// 2. Set its class to "alert"
-div.className = "alert";
+// 2. Задайте йому клас "alert"
+div.className = 'alert';
 
-// 3. Fill it with the content
-div.innerHTML = "<strong>Hi there!</strong> You've read an important message.";
+// 3. Наповніть <div> змістом
+div.innerHTML =
+  '<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.';
 ```
 
-We've created the element. But as of now it's only in a variable named `div`, not in the page yet. So we can't see it.
+Ми створили елемент, але поки що він знаходиться лише у змінній під назвою `div`, а не на сторінці. Тому ми не можемо його побачити.
 
-## Insertion methods
+## Методи вставки
 
-To make the `div` show up, we need to insert it somewhere into `document`. For instance, into `<body>` element, referenced by `document.body`.
+Щоб `div` показався нам потрібно вставити його десь на сторінці в `document`. Наприклад, в елемент `<body>` який можна отримати звернувшись до `document.body`.
 
-There's a special method `append` for that: `document.body.append(div)`.
+Для цього існує спеціальний метод `append`: `document.body.append(div)`.
 
-Here's the full code:
+Нижче повна версія коду:
 
 ```html run height="80"
 <style>
-.alert {
-  padding: 15px;
-  border: 1px solid #d6e9c6;
-  border-radius: 4px;
-  color: #3c763d;
-  background-color: #dff0d8;
-}
+  .alert {
+    padding: 15px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+  }
 </style>
 
 <script>
-  let div = document.createElement('div');
-  div.className = "alert";
-  div.innerHTML = "<strong>Hi there!</strong> You've read an important message.";
+    let div = document.createElement('div');
+    div.className = "alert";
+    div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.";
 
-*!*
-  document.body.append(div);
-*/!*
+  *!*
+    document.body.append(div);
+  */!*
 </script>
 ```
 
-Here we called `append` on `document.body`, but we can call `append` method on any other element, to put another element into it. For instance, we can append something to `<div>` by calling `div.append(anotherElement)`.
+В наведеному прикладі ми викликали метод `append` на `document.body`, але це можна зробити на будь-якому іншому елементі з ціллю вставити інший елемент всередину. Наприклад, ми можемо додати щось до `<div>` викливавши `div.append(anotherElement)`.
 
-Here are more insertion methods, they specify different places where to insert:
+Нижче наведено більше методів для вставки, вони вказують куди саме буде вставлено вміст:
 
-- `node.append(...nodes or strings)` -- append nodes or strings *at the end* of `node`,
-- `node.prepend(...nodes or strings)` -- insert nodes or strings *at the beginning* of `node`,
-- `node.before(...nodes or strings)` –- insert nodes or strings *before* `node`,
-- `node.after(...nodes or strings)` –- insert nodes or strings *after* `node`,
-- `node.replaceWith(...nodes or strings)` –- replaces `node` with the given nodes or strings.
+- `node.append(...вузли або рядки)` -- додає вузли або рядки _в кінець_ `node`,
+- `node.prepend(...вузли або рядки)` -- вставляє вузли вбо рядки _на початку_ `node`,
+- `node.before(...вузли або рядки)` –- вставляє вузли або рядки _попереду_ `node`,
+- `node.after(...вузли або рядки)` –- вставляє вузли або рядки _після_ `node`,
+- `node.replaceWith(...вузли або рядки)` –- замінює `node` заданими вузлами або рядками.
 
-Arguments of these methods are an arbitrary list of DOM nodes to insert, or text strings (that become text nodes automatically).
+Аргументами цих методів може бути довільний список DOM вузлів або текстові рядки(які автоматично перетворюються на текстові вузли).
 
-Let's see them in action.
+Подивимося на них в дії.
 
-Here's an example of using these methods to add items to a list and the text before/after it:
+Нижче наведено приклад використання цих методів, щоб додати до списку нові пункти та текст до/після нього.
 
 ```html autorun
 <ol id="ol">
@@ -121,24 +122,24 @@ Here's an example of using these methods to add items to a list and the text bef
 </ol>
 
 <script>
-  ol.before('before'); // insert string "before" before <ol>
-  ol.after('after'); // insert string "after" after <ol>
+  ol.before('before'); // вставити рядок "before" перед <ol>
+  ol.after('after'); // вставити рядок "after" після <ol>
 
   let liFirst = document.createElement('li');
   liFirst.innerHTML = 'prepend';
-  ol.prepend(liFirst); // insert liFirst at the beginning of <ol>
+  ol.prepend(liFirst); // вставити liFirst на початку <ol>
 
   let liLast = document.createElement('li');
   liLast.innerHTML = 'append';
-  ol.append(liLast); // insert liLast at the end of <ol>
+  ol.append(liLast); // вставити liLast в кінці <ol>
 </script>
 ```
 
-Here's a visual picture of what the methods do:
+Наочна ілюстрацію роботи методів:
 
 ![](before-prepend-append-after.svg)
 
-So the final list will be:
+Фінальний список виглядатиме так:
 
 ```html
 before
@@ -152,213 +153,214 @@ before
 after
 ```
 
-As said, these methods can insert multiple nodes and text pieces in a single call.
+Як вже було сказано, ці методи можуть вставляти декілька вузлів та фрагментів тексту за один виклик.
 
-For instance, here a string and an element are inserted:
+Наприклад, тут вставлено рядок та елемент одночасно.
 
 ```html run
 <div id="div"></div>
 <script>
-  div.before('<p>Hello</p>', document.createElement('hr'));
+  div.before('<p>Привіт!</p>', document.createElement('hr'));
 </script>
 ```
 
-Please note: the text is inserted "as text", not "as HTML", with proper escaping of characters such as `<`, `>`.
+Пам'ятайте, що текст вставляється «як текст», а не «як HTML», з відповідними замінами таких символів як `<`, `>`.
 
-So the final HTML is:
+Тому фінальний HTML буде таким:
 
 ```html run
-*!*
-&lt;p&gt;Hello&lt;/p&gt;
-*/!*
-<hr>
+*!* &lt;p&gt;Привіт&lt;/p&gt; */!*
+<hr />
 <div id="div"></div>
 ```
 
-In other words, strings are inserted in a safe way, like `elem.textContent` does it.
+Іншими словами, рядки вставляються безпечним способом, як це робить `elem.textContent`.
 
-So, these methods can only be used to insert DOM nodes or text pieces.
+Тому ці методи можна використовувати лише для вставки DOM вузлів або фрагментів тексту.
 
-But what if we'd like to insert an HTML string "as html", with all tags and stuff working, in the same manner as `elem.innerHTML` does it?
+Але що, як нам потрібно вставити рядок HTML «як html», з усіма тегами та іншим, в той самий спосіб як це робить `elem.innerHTML`?
 
 ## insertAdjacentHTML/Text/Element
 
-For that we can use another, pretty versatile method: `elem.insertAdjacentHTML(where, html)`.
+Для цього ми можемо використовувати інший, досить універсальний метод: `elem.insertAdjacentHTML(куди, html)`.
 
-The first parameter is a code word, specifying where to insert relative to `elem`. Must be one of the following:
+Перший параметр це кодове слово, яке вказує куди вставляти відносно `elem`. Його значенння має бути одним з наступних:
 
-- `"beforebegin"` -- insert `html` immediately before `elem`,
-- `"afterbegin"` -- insert `html` into `elem`, at the beginning,
-- `"beforeend"` -- insert `html` into `elem`, at the end,
-- `"afterend"` -- insert `html` immediately after `elem`.
+- `"beforebegin"` -- вставити `html` безпосередньо перед `elem`,
+- `"afterbegin"` -- вставити `html` в `elem`, на початку,
+- `"beforeend"` -- вставити `html` в `elem`, в кінці,
+- `"afterend"` -- вставити `html` безпосередньо після `elem`.
 
-The second parameter is an HTML string, that is inserted "as HTML".
+Другий параметр це рядок у форматі HTML.
 
-For instance:
+Наприклад:
 
 ```html run
 <div id="div"></div>
 <script>
-  div.insertAdjacentHTML('beforebegin', '<p>Hello</p>');
-  div.insertAdjacentHTML('afterend', '<p>Bye</p>');
+  div.insertAdjacentHTML('beforebegin', '<p>Привіт</p>');
+  div.insertAdjacentHTML('afterend', '<p>Бувай</p>');
 </script>
 ```
 
-...Would lead to:
+...виглядатиме як:
 
 ```html run
-<p>Hello</p>
+<p>Привіт</p>
 <div id="div"></div>
-<p>Bye</p>
+<p>Бувай</p>
 ```
 
-That's how we can append arbitrary HTML to the page.
+Ось так ми можемо додавати HTML на сторінку.
 
-Here's the picture of insertion variants:
+На зображенні показані всі можливі варіанти вставки.
 
 ![](insert-adjacent.svg)
 
-We can easily notice similarities between this and the previous picture. The insertion points are actually the same, but this method inserts HTML.
+Можна легко помітити схожість між цим та попереднім зображенням. Місця вставки насправді ті ж самі, але останній метод вставляє HTML.
 
-The method has two brothers:
+Метод має двох братів:
 
-- `elem.insertAdjacentText(where, text)` -- the same syntax, but a string of `text` is inserted "as text" instead of HTML,
-- `elem.insertAdjacentElement(where, elem)` -- the same syntax, but inserts an element.
+- `elem.insertAdjacentText(куди, текст)` -- синтаксис той самий, але рядок тексту вставляється «як текст» замість HTML
+- `elem.insertAdjacentElement(куди, текст)` -- синтаксис той самий, але вставляється елемент
 
-They exist mainly to make the syntax "uniform". In practice, only `insertAdjacentHTML` is used most of the time. Because for elements and text, we have methods `append/prepend/before/after` -- they are shorter to write and can insert nodes/text pieces.
+Наведені методи існують для того щоб синтаксис залишався «однорідним». На практиці ж, у більшості випадків використовується `insertAdjacentHTML`. Тому що для вставки елементів та тексту є методи `append/prepend/before/after` - вони коротші для написання і так само вміють вставляти вузли чи фрагменти тексту.
 
-So here's an alternative variant of showing a message:
+Ось так можна вивести повідомлення на екран альтернативним способом:
 
 ```html run
 <style>
-.alert {
-  padding: 15px;
-  border: 1px solid #d6e9c6;
-  border-radius: 4px;
-  color: #3c763d;
-  background-color: #dff0d8;
-}
+  .alert {
+    padding: 15px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+  }
 </style>
 
 <script>
-  document.body.insertAdjacentHTML("afterbegin", `<div class="alert">
-    <strong>Hi there!</strong> You've read an important message.
-  </div>`);
+  document.body.insertAdjacentHTML(
+    'afterbegin',
+    `<div class="alert">
+    <strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.
+  </div>`
+  );
 </script>
 ```
 
-## Node removal
+## Видалення вузлів
 
-To remove a node, there's a method `node.remove()`.
+Щоб видалити вузол використовуйте метод `node.remove()`.
 
-Let's make our message disappear after a second:
+Спробуємо зробити так, щоб наше повідомлення зникало через одну секунду:
 
 ```html run untrusted
 <style>
-.alert {
-  padding: 15px;
-  border: 1px solid #d6e9c6;
-  border-radius: 4px;
-  color: #3c763d;
-  background-color: #dff0d8;
-}
+  .alert {
+    padding: 15px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+  }
 </style>
 
 <script>
-  let div = document.createElement('div');
-  div.className = "alert";
-  div.innerHTML = "<strong>Hi there!</strong> You've read an important message.";
+    let div = document.createElement('div');
+    div.className = "alert";
+    div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.";
 
-  document.body.append(div);
-*!*
-  setTimeout(() => div.remove(), 1000);
-*/!*
+    document.body.append(div);
+  *!*
+    setTimeout(() => div.remove(), 1000);
+  */!*
 </script>
 ```
 
-Please note: if we want to *move* an element to another place -- there's no need to remove it from the old one.
+Зверніть увагу: якщо ми хочемо _перемістити_ елемент на інше місце в документі - тоді немає потреби його видаляти.
 
-**All insertion methods automatically remove the node from the old place.**
+**Всі методи вставки автоматично видаляють вузол з попереднього місця розташування.**
 
-For instance, let's swap elements:
+Наприклад, поміняємо елементи місцями:
 
 ```html run height=50
-<div id="first">First</div>
-<div id="second">Second</div>
+<div id="first">Перший</div>
+<div id="second">Другий</div>
 <script>
-  // no need to call remove
-  second.after(first); // take #second and after it insert #first
+  // немає потреби викликати .remove
+  second.after(first); // взяти #другий та після нього вставити #перший
 </script>
 ```
 
-## Cloning nodes: cloneNode
+## Клонування вузлів: cloneNode
 
-How to insert one more similar message?
+Як вставити ще одне схоже повідомлення?
 
-We could make a function and put the code there. But the alternative way would be to *clone* the existing `div` and modify the text inside it (if needed).
+Можна створити функцію та помістити код в неї. Але є ще один спосіб - _клонувати_ існуючий `div` та змінити текст всередині(якщо потрібно).
 
-Sometimes when we have a big element, that may be faster and simpler.
+У випадку, коли наш елемент великий, це може бути швидше і простіше.
 
-- The call `elem.cloneNode(true)` creates a "deep" clone of the element -- with all attributes and subelements. If we call `elem.cloneNode(false)`, then the clone is made without child elements.
+- Виклик `elem.cloneNode(true)` створює «глибоку» копію елемента. -- з усіма атрибутами та піделементами. Якщо ми викличемо `elem.cloneNode(false)`, тоді буде створена копія без дочірніх елементів.
 
-An example of copying the message:
+Приклад копіювання повідомлення:
 
 ```html run height="120"
 <style>
-.alert {
-  padding: 15px;
-  border: 1px solid #d6e9c6;
-  border-radius: 4px;
-  color: #3c763d;
-  background-color: #dff0d8;
-}
+  .alert {
+    padding: 15px;
+    border: 1px solid #d6e9c6;
+    border-radius: 4px;
+    color: #3c763d;
+    background-color: #dff0d8;
+  }
 </style>
 
 <div class="alert" id="div">
-  <strong>Hi there!</strong> You've read an important message.
+  <strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.
 </div>
 
 <script>
-*!*
-  let div2 = div.cloneNode(true); // clone the message
-  div2.querySelector('strong').innerHTML = 'Bye there!'; // change the clone
+  *!*
+    let div2 = div.cloneNode(true); // клонувати елемент
+    div2.querySelector('strong').innerHTML = 'Bye there!'; // змінити клона
 
-  div.after(div2); // show the clone after the existing div
-*/!*
+    div.after(div2); // вставити клонований елемент після існуючого `div`
+  */!*
 </script>
 ```
 
 ## DocumentFragment [#document-fragment]
 
-`DocumentFragment` is a special DOM node that serves as a wrapper to pass around lists of nodes.
+`DocumentFragment` це спеціальний DOM-вузол який служить обгорткою для передачі списку вузлів.
 
-We can append other nodes to it, but when we insert it somewhere, then its content is inserted instead.
+Ми можемо додавати до нього інші вузли, але коли ми вставляємо кудись його самого, тоді вставляється лише його вміст(контент).
 
-For example, `getListContent` below generates a fragment with `<li>` items, that are later inserted into `<ul>`:
+Наприклад, нижче `getListContent` генерує фрагмент з пунктами `<li>`, які пізніше вставляються в `<ul>`:
 
 ```html run
 <ul id="ul"></ul>
 
 <script>
-function getListContent() {
-  let fragment = new DocumentFragment();
+  function getListContent() {
+    let fragment = new DocumentFragment();
 
-  for(let i=1; i<=3; i++) {
-    let li = document.createElement('li');
-    li.append(i);
-    fragment.append(li);
+    for(let i=1; i<=3; i++) {
+      let li = document.createElement('li');
+      li.append(i);
+      fragment.append(li);
+    }
+
+    return fragment;
   }
 
-  return fragment;
-}
-
-*!*
-ul.append(getListContent()); // (*)
-*/!*
+  *!*
+  ul.append(getListContent()); // (*)
+  */!*
 </script>
 ```
 
-Please note, at the last line `(*)` we append `DocumentFragment`, but it "blends in", so the resulting structure will be:
+Зверніть увагу, що в останньому рядку коду `(*)` ми додаємо `DocumentFragment`, але він «зникає», тому в результаті структура будет такою:
 
 ```html
 <ul>
@@ -368,46 +370,46 @@ Please note, at the last line `(*)` we append `DocumentFragment`, but it "blends
 </ul>
 ```
 
-`DocumentFragment` is rarely used explicitly. Why append to a special kind of node, if we can return an array of nodes instead? Rewritten example:
+`DocumentFragment` рідко використовується. Навіщо додавати спеціальний вид вузла, якщо натомість можна повернути масив вузлів? Переписаний приклад:
 
 ```html run
 <ul id="ul"></ul>
 
 <script>
-function getListContent() {
-  let result = [];
+  function getListContent() {
+    let result = [];
 
-  for(let i=1; i<=3; i++) {
-    let li = document.createElement('li');
-    li.append(i);
-    result.push(li);
+    for(let i=1; i<=3; i++) {
+      let li = document.createElement('li');
+      li.append(i);
+      result.push(li);
+    }
+
+    return result;
   }
 
-  return result;
-}
-
-*!*
-ul.append(...getListContent()); // append + "..." operator = friends!
-*/!*
+  *!*
+  ul.append(...getListContent()); // append + оператор "..." = друзі!
+  */!*
 </script>
 ```
 
-We mention `DocumentFragment` mainly because there are some concepts on top of it, like [template](info:template-element) element, that we'll cover much later.
+Ми згадуємо `DocumentFragment` в основному тому що на ньому базуються деякі концепції, як от елемент [template](info:template-element), який ми розберемо пізніше.
 
-## Old-school insert/remove methods
+## Застарілі методи вставки/видалення
 
 [old]
 
-There are also "old school" DOM manipulation methods, existing for historical reasons.
+Також є застарілі методи для маніпуляціі з DOM, які існують лише з історичних причин.
 
-These methods come from really ancient times. Nowadays, there's no reason to use them, as modern methods, such as `append`, `prepend`, `before`, `after`, `remove`, `replaceWith`, are more flexible.
+Це методи прийшли з давніх часів. Сьогодні немає причин їх використовувати, оскільки сучасні методи, такі як `append`, `prepend`, `before`, `after`, `remove`, `replaceWith`, набагато зручніші у використанні.
 
-The only reason we list these methods here is that you can find them in many old scripts:
+Ми перераховуємо ці методи лише тому, що вони можуть зустрітися вам в багатьох старих скриптах:
 
 `parentElem.appendChild(node)`
-: Appends `node` as the last child of `parentElem`.
+: Додає `node` як останній дочірній елемент `parentElem`.
 
-    The following example adds a new `<li>` to the end of `<ol>`:
+    В наведеному нижче прикладі додаємо `<li>` в кінець `<ol>`:
 
     ```html run height=100
     <ol id="list">
@@ -418,16 +420,16 @@ The only reason we list these methods here is that you can find them in many old
 
     <script>
       let newLi = document.createElement('li');
-      newLi.innerHTML = 'Hello, world!';
+      newLi.innerHTML = 'Привіт, світ';
 
       list.appendChild(newLi);
     </script>
     ```
 
 `parentElem.insertBefore(node, nextSibling)`
-: Inserts `node` before `nextSibling` into `parentElem`.
+: Вставляє `node` перед `nextSibling` в `parentElem`.
 
-    The following code inserts a new list item before the second `<li>`:
+    В наведеному нижче прикладі вставляється новий елемент списку перед другим `<li>`:
 
     ```html run height=100
     <ol id="list">
@@ -437,26 +439,26 @@ The only reason we list these methods here is that you can find them in many old
     </ol>
     <script>
       let newLi = document.createElement('li');
-      newLi.innerHTML = 'Hello, world!';
+      newLi.innerHTML = 'Привіт, світ!';
 
     *!*
       list.insertBefore(newLi, list.children[1]);
     */!*
     </script>
     ```
-    To insert `newLi` as the first element, we can do it like this:
+    Щоб вставити `newLi` першим елементом, ми можемо зробити так:
 
     ```js
     list.insertBefore(newLi, list.firstChild);
     ```
 
 `parentElem.replaceChild(node, oldChild)`
-: Replaces `oldChild` with `node` among children of `parentElem`.
+: Замінює `oldChild` на `node` поміж дочірніми елементами `parentElem`.
 
 `parentElem.removeChild(node)`
-: Removes `node` from `parentElem` (assuming `node` is its child).
+: Видаляє `node` з `parentElem` (припускаючи, що `node` це його дочірній елемент).
 
-    The following example removes first `<li>` from `<ol>`:
+    В наведеному нижче прикладі з `<ol>` видаляється перший `<li>` :
 
     ```html run height=100
     <ol id="list">
@@ -471,91 +473,98 @@ The only reason we list these methods here is that you can find them in many old
     </script>
     ```
 
-All these methods return the inserted/removed node. In other words, `parentElem.appendChild(node)` returns `node`. But usually the returned value is not used, we just run the method.
+Всі ці методи повертаються вставлені/видалено вузли. Іншими словами, `parentElem.appendChild(node)` повертає `node`. Але зазвичай повернуті значення не використовуються, ми лише запускаємо метод.
 
-## A word about "document.write"
+## Декілька слів про «document.write»
 
-There's one more, very ancient method of adding something to a web-page: `document.write`.
+Є ще один дуже застарілий метод щоб додати вміст на веб-сторінку:
+`document.write`.
 
-The syntax:
+Синтаксис:
 
 ```html run
-<p>Somewhere in the page...</p>
+<p>Десь на сторінці...</p>
 *!*
 <script>
-  document.write('<b>Hello from JS</b>');
+  document.write('<b>Привіт від JS</b>');
 </script>
 */!*
-<p>The end</p>
+<p>Кінець</p>
 ```
 
-The call to `document.write(html)` writes the `html` into page "right here and now". The `html` string can be dynamically generated, so it's kind of flexible. We can use JavaScript to create a full-fledged webpage and write it.
+Виклик `document.write(html)` записує `html` на сторінку «прямо тут і зараз». Рядок `html` може бути згенерований динамічно, тож метод дещо гнучкий.
+За допомою JavaScript ми можемо створити повноцінну веб-сторінку та записати її в документ.
 
-The method comes from times when there was no DOM, no standards... Really old times. It still lives, because there are scripts using it.
+Метод прийшов з тих часів коли не було ані DOM(об'єктна модель документу), ані стандартів... Справді давні часи. Метод досі живий, тому що є скрипти, в яких він використовується.
 
-In modern scripts we can rarely see it, because of the following important limitation:
+В сучасних скриптах він рідко зустрічається через наступні важливі обмеження:
 
-**The call to `document.write` only works while the page is loading.**
+**Виклик `document.write` працює поки сторінка завантажується.**
 
-If we call it afterwards, the existing document content is erased.
+Якщо ми викличемо його пізніше, то існуючий вміст документу буде видалений.
 
-For instance:
+Наприклад:
 
 ```html run
-<p>After one second the contents of this page will be replaced...</p>
+<p>Через одну секунду вміст цієї сторінки буде замінено...</p>
 *!*
 <script>
-  // document.write after 1 second
-  // that's after the page loaded, so it erases the existing content
+  // document.write через 1 секунду
+  // виклик відбувся після того як сторінка завантажилася, тому метод стирає вміст
   setTimeout(() => document.write('<b>...By this.</b>'), 1000);
 </script>
 */!*
 ```
 
-So it's kind of unusable at "after loaded" stage, unlike other DOM methods we covered above.
+Тому цей метод непридатний на стадії «після завантаження», на відміну від інших DOM-методів які ми розібрали раніше.
 
-That's the downside.
+Це його недолік.
 
-There's an upside also. Technically, when `document.write` is called while the browser is reading ("parsing") incoming HTML, and it writes something, the browser consumes it just as if it were initially there, in the HTML text.
+Окрім того є і перевага. Технічно, коли `document.write` викликається поки браузер читає («розбирає») вхідний HTML і щось записує в документ, то браузер сприймає його так, наче він з самого початку був там, в HTML-документі.
 
-So it works blazingly fast, because there's *no DOM modification* involved. It writes directly into the page text, while the DOM is not yet built.
+Тому він працює надзвичайно швидко, адже не відбувається _жодних DOM-модифікацій_. Він записує беспосередньо в текст сторінки, поки DOM ще не сформований.
 
-So if we need to add a lot of text into HTML dynamically, and we're at page loading phase, and the speed matters, it may help. But in practice these requirements rarely come together. And usually we can see this method in scripts just because they are old.
+Тому якщо нам потрібно динамічно додати в HTML велику кількість тексту, і ми на стадії завантаження сторінки, і швидкість завантаження має значення - цей метод може допомогти. Але на практиці всі ці вимоги рідко поєднуються. І зазвичай цей метод зустрічається в скриптах лише тому, що вони старі.
 
-## Summary
+## Підсумки
 
-- Methods to create new nodes:
-    - `document.createElement(tag)` -- creates an element with the given tag,
-    - `document.createTextNode(value)` -- creates a text node (rarely used),
-    - `elem.cloneNode(deep)` -- clones the element, if `deep==true` then with all descendants.  
+- Методи для створення нових вузлів:
 
-- Insertion and removal:
-    - `node.append(...nodes or strings)` -- insert into `node`, at the end,
-    - `node.prepend(...nodes or strings)` -- insert into `node`, at the beginning,
-    - `node.before(...nodes or strings)` –- insert right before `node`,
-    - `node.after(...nodes or strings)` –- insert right after `node`,
-    - `node.replaceWith(...nodes or strings)` –- replace `node`.
-    - `node.remove()` –- remove the `node`.
+  - `document.createElement(tag)` -- створює елемент з заданим тегом,
+  - `document.createTextNode(value)` -- створює текстовий вузол (рідко використовється),
+  - `elem.cloneNode(deep)` -- клонує елемен, якщо `deep==true` то з усіма нащадками.
 
-    Text strings are inserted "as text".
+- Вставка та видалення:
 
-- There are also "old school" methods:
-    - `parent.appendChild(node)`
-    - `parent.insertBefore(node, nextSibling)`
-    - `parent.removeChild(node)`
-    - `parent.replaceChild(newElem, node)`
+  - `node.append(...nodes or strings)` -- вставляє в `node`, в кінець,
+  - `node.prepend(...nodes or strings)` -- вставляє в `node`, на початку,
+  - `node.before(...nodes or strings)` –- вставляє прямо перед `node`,
+  - `node.after(...nodes or strings)` –- вставляє відразу після `node`,
+  - `node.replaceWith(...nodes or strings)` –- замінює `node`.
+  - `node.remove()` –- видаляє `node`.
 
-    All these methods return `node`.
+  Текстові рядки вставляються «як текст».
 
-- Given some HTML in `html`, `elem.insertAdjacentHTML(where, html)` inserts it depending on the value of `where`:
-    - `"beforebegin"` -- insert `html` right before `elem`,
-    - `"afterbegin"` -- insert `html` into `elem`, at the beginning,
-    - `"beforeend"` -- insert `html` into `elem`, at the end,
-    - `"afterend"` -- insert `html` right after `elem`.
+- Також є застарілі методи:
 
-    Also there are similar methods, `elem.insertAdjacentText` and `elem.insertAdjacentElement`, that insert text strings and elements, but they are rarely used.
+  - `parent.appendChild(node)`
+  - `parent.insertBefore(node, nextSibling)`
+  - `parent.removeChild(node)`
+  - `parent.replaceChild(newElem, node)`
 
-- To append HTML to the page before it has finished loading:
-    - `document.write(html)`
+  Всі вони повертають `node`.
 
-    After the page is loaded such a call erases the document. Mostly seen in old scripts.
+- Метод `elem.insertAdjacentHTML(where, html)` вставляє заданий HTML в залежності від значення параметру `where`:
+
+  - `"beforebegin"` -- вставляє `html` прямо перед `elem`,
+  - `"afterbegin"` -- вставляє `html` в `elem`, на початку,
+  - `"beforeend"` -- вставляє `html` в `elem`, в кінці,
+  - `"afterend"` -- вставляє `html` відразу після `elem`.
+
+  Також є схожі методи, `elem.insertAdjacentText` та `elem.insertAdjacentElement`, що вставляють текстові рядки та елементи, але їх рідко використовують.
+
+- Шоб додати HTML на сторінку до того як вона повністю завантажиться:
+
+  - `document.write(html)`
+
+  Після завантаження сторінки такий виклик призведе до стирання документу. В основному зустрічається в старих скриптах.

@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
 <body>
-
   <div id="container"></div>
 
   <script>
     let data = {
-      "Fish": {
-        "trout": {},
-        "salmon": {}
+      Риба: {
+        форель: {},
+        лосось: {},
       },
 
-      "Tree": {
-        "Huge": {
-          "sequoia": {},
-          "oak": {}
+      Дерево: {
+        Величезні: {
+          секвойя: {},
+          дуб: {},
         },
-        "Flowering": {
-          "apple tree": {},
-          "magnolia": {}
-        }
-      }
+        Квітучі: {
+          яблуня: {},
+          магнолія: {},
+        },
+      },
     };
 
     function createTree(container, obj) {
@@ -28,8 +27,8 @@
     }
 
     function createTreeDom(obj) {
-      // if there's no children, then the call returns undefined
-      // and the <ul> won't be created
+      // якщо дочірніх елементів немає, тоді виклик повертає undefined
+      // та <ul> не буде створено
       if (!Object.keys(obj).length) return;
 
       let ul = document.createElement('ul');
@@ -52,6 +51,5 @@
     let container = document.getElementById('container');
     createTree(container, data);
   </script>
-
 </body>
 </html>

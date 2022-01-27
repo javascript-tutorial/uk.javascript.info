@@ -2,26 +2,26 @@ importance: 5
 
 ---
 
-# Sort the table
+# Відсортуйте таблицю
 
-There's a table:
+Ось таблиця:
 
 ```html run
 <table>
 <thead>
   <tr>
-    <th>Name</th><th>Surname</th><th>Age</th>
+    <th>Ім'я</th><th>Прізвище</th><th>Вік</th>
   </tr>
 </thead>
 <tbody>
   <tr>
-    <td>John</td><td>Smith</td><td>10</td>
+    <td>Сергій</td><td>Петренко</td><td>10</td>
   </tr>
   <tr>
-    <td>Pete</td><td>Brown</td><td>15</td>
+    <td>Юрій</td><td>Даниленко</td><td>15</td>
   </tr>
   <tr>
-    <td>Ann</td><td>Lee</td><td>5</td>
+    <td>Анна</td><td>Ткаченко</td><td>5</td>
   </tr>
   <tr>
     <td>...</td><td>...</td><td>...</td>
@@ -30,6 +30,6 @@ There's a table:
 </table>
 ```
 
-There may be more rows in it.
+В таблиці може бути більше рядків.
 
-Write the code to sort it by the `"name"` column.
+Напишіть код для сортування по імені, колонка `"name"`.

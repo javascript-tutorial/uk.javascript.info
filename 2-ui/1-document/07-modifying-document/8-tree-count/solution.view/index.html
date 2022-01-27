@@ -3,36 +3,36 @@
 <body>
 
   <ul>
-    <li>Animals
+    <li>Тварини
       <ul>
-        <li>Mammals
+        <li>Ссавці
           <ul>
-            <li>Cows</li>
-            <li>Donkeys</li>
-            <li>Dogs</li>
-            <li>Tigers</li>
+            <li>Корови</li>
+            <li>Осли</li>
+            <li>Собаки</li>
+            <li>Тигри</li>
           </ul>
         </li>
-        <li>Other
+        <li>Інші
           <ul>
-            <li>Snakes</li>
-            <li>Birds</li>
-            <li>Lizards</li>
+            <li>Змії</li>
+            <li>Птахи</li>
+            <li>Ящірки</li>
           </ul>
         </li>
       </ul>
     </li>
-    <li>Fishes
+    <li>Риби
       <ul>
-        <li>Aquarium
+        <li>Акваріумні
           <ul>
-            <li>Guppy</li>
-            <li>Angelfish</li>
+            <li>Гуппі</li>
+            <li>Риба-янгол</li>
           </ul>
         </li>
-        <li>Sea
+        <li>Морські
           <ul>
-            <li>Sea trout</li>
+            <li>Морська форель</li>
           </ul>
         </li>
       </ul>
@@ -43,11 +43,11 @@
     let lis = document.getElementsByTagName('li');
 
     for (let li of lis) {
-      // get the count of all <li> below this <li>
+      // порахуйте всі вкладені <li> всередині поточного <li>
       let descendantsCount = li.getElementsByTagName('li').length;
       if (!descendantsCount) continue;
 
-      // add directly to the text node (append to the text)
+      // додайте результат безспосередньо до текстового вузла
       li.firstChild.data += ' [' + descendantsCount + ']';
     }
   </script>
