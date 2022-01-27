@@ -1,4 +1,4 @@
-A modal window can be implemented using a half-transparent `<div id="cover-div">` that covers the whole window, like this:
+Модальне вікно можна реалізувати за допомогою напівпрозорого `<div id="cover-div">, який охоплює все вікно, наприклад:
 
 ```css
 #cover-div {
@@ -13,8 +13,8 @@ A modal window can be implemented using a half-transparent `<div id="cover-div">
 }
 ```
 
-Because the `<div>` covers everything, it gets all clicks, not the page below it.
+Оскільки `<div>` перекриває всі елементи, то саме він отримує всі кліки.
 
-Also we can prevent page scroll by setting `body.style.overflowY='hidden'`.
+Також ми можемо запобігти прокручуванню сторінки, налаштувавши `body.style.overflowY='hidden'`.
 
-The form should be not in the `<div>`, but next to it, because we don't want it to have `opacity`.
+Форма повинна бути не в `<div>`, а поряд з ним, тому що ми не хочемо, щоб вона мала `opacity`.

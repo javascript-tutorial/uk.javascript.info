@@ -2,32 +2,32 @@ importance: 5
 
 ---
 
-# Modal form
+# Модальна форма
 
-Create a function `showPrompt(html, callback)` that shows a form with the message `html`, an input field and buttons `OK/CANCEL`.
+Створіть функцію `showPrompt(html, callback)`, яка показує форму з повідомленням `html`, полем введення та кнопками `OK/СКАСУВАТИ`.
 
-- A user should type something into a text field and press `key:Enter` or the OK button, then `callback(value)` is called with the value they entered.
-- Otherwise if the user presses `key:Esc` or CANCEL, then `callback(null)` is called.
+- Користувач повинен ввести щось у текстове поле і натиснути `key:Enter` або кнопку ОК, після чого буде викликано `callback(value)` з введеним значенням.
+- В іншому випадку, якщо користувач натискає `key:Esc` або СКАСУВАТИ, тоді викликається `callback(null)`.
 
-In both cases that ends the input process and removes the form.
+В обох випадках це завершує процес введення та видаляє форму.
 
-Requirements:
+Вимоги:
 
-- The form should be in the center of the window.
-- The form is *modal*. In other words, no interaction with the rest of the page is possible until the user closes it.
-- When the form is shown, the focus should be inside the `<input>` for the user.
-- Keys `key:Tab`/`key:Shift+Tab` should shift the focus between form fields, don't allow it to leave for other page elements.
+- Форма повинна знаходитися в центрі вікна.
+- Форма -- це *модальне вікно*. Іншими словами, жодна взаємодія з іншою частиною сторінки неможлива, поки користувач не закриє її.
+- Коли відображається форма, фокус має бути всередині `<input>` для користувача.
+- Клавіші `key:Tab`/`key:Shift+Tab` повинні зміщувати фокус між полями форми, не дозволяючи йому залишати форму і переходити на інші елементи сторінки.
 
-Usage example:
+Приклад використання:
 
 ```js
-showPrompt("Enter something<br>...smart :)", function(value) {
+showPrompt("Введіть щось<br>...розумне :)", function(value) {
   alert(value);
 });
 ```
 
-A demo in the iframe:
+Демо в iframe:
 
 [iframe src="solution" height=160 border=1]
 
-P.S. The source document has HTML/CSS for the form with fixed positioning, but it's up to you to make it modal.
+P.S. У вихідному документі є HTML/CSS для форми з фіксованим позиціонуванням, але ви можете зробити її модальною.
