@@ -1,39 +1,39 @@
-# Events: change, input, cut, copy, paste
+# Події: change, input, cut, copy, paste
 
-Let's cover various events that accompany data updates.
+Давайте розглянемо події, які супроводжують оновлення даних.
 
-## Event: change
+## Подія: change
 
-The `change` event triggers when the element has finished changing.
+Подія `change` спрацьовує після закінчення зміни елемента.
 
-For text inputs that means that the event occurs when it loses focus.
+Для текстового поля це означає, що подія відбувається, коли втрачається фокус.
 
-For instance, while we are typing in the text field below -- there's no event. But when we move the focus somewhere else, for instance, click on a button -- there will be a `change` event:
+Наприклад, поки ми вводимо текст у текстовому полі нижче, події немає. Але коли ми перемістимо фокус кудись в інше місце, наприклад, натиснемо кнопку - відбудеться подія `change`:
 
 ```html autorun height=40 run
 <input type="text" onchange="alert(this.value)">
 <input type="button" value="Button">
 ```
 
-For other elements: `select`, `input type=checkbox/radio` it triggers right after the selection changes:
+Для інших елементів: `select`, `input type=checkbox/radio` подія запускається відразу після зміни значення:
 
 ```html autorun height=40 run
 <select onchange="alert(this.value)">
-  <option value="">Select something</option>
-  <option value="1">Option 1</option>
-  <option value="2">Option 2</option>
-  <option value="3">Option 3</option>
+  <option value="">ьВиберіть щось</option>
+  <option value="1">Варіант 1</option>
+  <option value="2">Варіант 2</option>
+  <option value="3">Варіант 3</option>
 </select>
 ```
 
 
-## Event: input
+## Подія: input
 
-The `input` event triggers every time after a value is modified by the user.
+Подія `input` запускається щоразу після того, як користувач змінює значення.
 
-Unlike keyboard events, it triggers on any value change, even those that does not involve keyboard actions: pasting with a mouse or using speech recognition to dictate the text.
+На відміну від подій клавіатури, `input` запускається при будь-якій зміні значень, навіть тих, які не передбачають дії клавіатури: вставлення тексту за допомогою миші або використання розпізнавання мовлення для диктування тексту.
 
-For instance:
+Наприклад:
 
 ```html autorun height=40 run
 <input type="text" id="input"> oninput: <span id="result"></span>
@@ -44,31 +44,31 @@ For instance:
 </script>
 ```
 
-If we want to handle every modification of an `<input>` then this event is the best choice.
+Якщо ми хочемо обробляти кожну модифікацію `<input>`, тоді ця подія є найкращим вибором.
 
-On the other hand, `input` event doesn't trigger on keyboard input and other actions that do not involve value change, e.g. pressing arrow keys `key:⇦` `key:⇨` while in the input.
+З іншого боку, подія `input` не запускається під час введення з клавіатури та інших дій, які не передбачають зміну значення, напр. натискання клавіш зі стрілками `key:⇦` `key:⇨`.
 
-```smart header="Can't prevent anything in `oninput`"
-The `input` event occurs after the value is modified.
+```smart header="Не можна нічому запобігти в `oninput`"
+Подія `input` відбувається після зміни значення.
 
-So we can't use `event.preventDefault()` there -- it's just too late, there would be no effect.
+Тож ми не можемо використовувати там `event.preventDefault()` -- просто надто пізно, ефекту не буде.
 ```
 
-## Events: cut, copy, paste
+## Події: cut, copy, paste
 
-These events occur on cutting/copying/pasting a value.
+Ці події відбуваються під час вирізання/копіювання/вставлення значення.
 
-They belong to [ClipboardEvent](https://www.w3.org/TR/clipboard-apis/#clipboard-event-interfaces) class and provide access to the data that is cut/copied/pasted.
+Вони належать до класу [ClipboardEvent](https://www.w3.org/TR/clipboard-apis/#clipboard-event-interfaces) і надають доступ до даних, які вирізаються/копіюються/вставляються.
 
-We also can use `event.preventDefault()` to abort the action, then nothing gets copied/pasted.
+Ми можемо використовувати `event.preventDefault()`, щоб припинити дію, тоді нічого не буде скопійовано/вставлено.
 
-For instance, the code below prevents all `cut/copy/paste` events and shows the text we're trying to cut/copy/paste:
+Наприклад, наведений нижче код запобігає всім подіям `cut/copy/paste` і показує текст, який ми намагаємося вирізати/скопіювати/вставити:
 
 ```html autorun height=40 run
 <input type="text" id="input">
 <script>
   input.onpaste = function(event) {
-    alert("paste: " + event.clipboardData.getData('text/plain'));
+    alert("Вставити: " + event.clipboardData.getData('text/plain'));
     event.preventDefault();
   };
 
@@ -79,36 +79,36 @@ For instance, the code below prevents all `cut/copy/paste` events and shows the 
 </script>
 ```
 
-Please note: inside `cut` and `copy` event handlers a call to  `event.clipboardData.getData(...)` returns an empty string. That's because technically the data isn't in the clipboard yet. If we use `event.preventDefault()` it won't be copied at all.
+Зверніть увагу: всередині обробників подій `cut` та `copy` виклик `event.clipboardData.getData(...)` повертає порожній рядок. Це тому, що технічно даних ще немає в буфері обміну. Якщо ми використовуємо `event.preventDefault()`, він взагалі не буде скопійований.
 
-So the example above uses `document.getSelection()` to get the selected text. You can find more details about document selection in the article <info:selection-range>.
+Тож у прикладі вище використовується `document.getSelection()`, щоб отримати виділений текст. Детальніше про вибір документів можна знайти в статті <info:selection-range>.
 
-It's possible to copy/paste not just text, but everything. For instance, we can copy a file in the OS file manager, and paste it.
+Можна копіювати/вставляти не тільки текст, а все. Наприклад, ми можемо скопіювати файл у файловий менеджер ОС і вставити його.
 
-That's because `clipboardData` implements `DataTransfer` interface, commonly used for drag'n'drop and copy/pasting. It's bit beyond our scope now, but you can find its methods in the [DataTransfer specification](https://html.spec.whatwg.org/multipage/dnd.html#the-datatransfer-interface).
+Це тому, що `clipboardData` реалізує інтерфейс `DataTransfer`, який зазвичай використовується для перетягування та копіювання/вставлення. Зараз це трохи виходить за рамки наших можливостей, але ви можете знайти його методи в [специфікації DataTransfer](https://html.spec.whatwg.org/multipage/dnd.html#the-datatransfer-interface).
 
-Also, there's an additional asynchronous API of accessing the clipboard: `navigator.clipboard`. More about it in the specification [Clipboard API and events](https://www.w3.org/TR/clipboard-apis/), [not supported by Firefox](https://caniuse.com/async-clipboard).
+Крім того, існує додатковий асинхронний API для доступу до буфера обміну: `navigator.clipboard`. Детальніше про це в специфікації [Clipboard API та події](https://www.w3.org/TR/clipboard-apis/), [не підтримується Firefox](https://caniuse.com/async-clipboard) .
 
-### Safety restrictions
+### Обмеження у сфері безпеки
 
-The clipboard is a "global" OS-level thing. A user may switch between various applications, copy/paste different things, and a browser page shouldn't see all that.
+Буфер обміну — це "глобальна" річ на рівні ОС. Користувач може перемикатися між різними програмами, копіювати/вставляти різні речі, і сторінка браузера не повинна бачити всього цього.
 
-So most browsers allow seamless read/write access to the clipboard only in the scope of certain user actions, such as copying/pasting etc.
+Тому більшість браузерів надають безперешкодний доступ для читання/запису до буфера обміну лише в рамках певних дій користувача, таких як копіювання/вставлення тощо.
 
-It's forbidden to generate "custom" clipboard events with `dispatchEvent` in all browsers except Firefox. And even if we manage to dispatch such event, the specification clearly states that such "syntetic" events must not provide access to the clipboard.
+Заборонено генерувати "користувацькі" події буфера обміну з `dispatchEvent` у всіх браузерах, крім Firefox. І навіть якщо нам вдасться відправити таку подію, у специфікації чітко зазначено, що такі "синтетичні" події не повинні надавати доступ до буфера обміну.
 
-Even if someone decides to save `event.clipboardData` in an event handler, and then access it later -- it won't work.
+Навіть якщо хтось вирішить зберегти `event.clipboardData` в обробник подій, а потім отримати до нього доступ пізніше -- це не спрацює.
 
-To reiterate, [event.clipboardData](https://www.w3.org/TR/clipboard-apis/#clipboardevent-clipboarddata) works solely in the context of user-initiated event handlers.
+Ще раз, [event.clipboardData](https://www.w3.org/TR/clipboard-apis/#clipboardevent-clipboarddata) працює виключно в контексті ініційованих користувачем обробників подій.
 
-On the other hand, [navigator.clipboard](https://www.w3.org/TR/clipboard-apis/#h-navigator-clipboard) is the more recent API, meant for use in any context. It asks for user permission, if needed. Not supported in Firefox.
+З іншого боку, [navigator.clipboard](https://www.w3.org/TR/clipboard-apis/#h-navigator-clipboard) -- це найновіший API, призначений для використання в будь-якому контексті. Він запитує дозвіл користувача, якщо потрібно. Не підтримується у Firefox.
 
-## Summary
+## Підсумки
 
-Data change events:
+Події зміни даних::
 
-| Event | Description | Specials |
+| Подія | Опис | Особливості |
 |---------|----------|-------------|
-| `change`| A value was changed. | For text inputs triggers on focus loss. |
-| `input` | For text inputs on every change. | Triggers immediately unlike `change`. |
-| `cut/copy/paste` | Cut/copy/paste actions. | The action can be prevented. The `event.clipboardData` property gives access to the clipboard. All browsers except Firefox also support `navigator.clipboard`. |
+| `change`| Значення було змінено. | Для текстових полей спрацьовує при втраті фокусу. |
+| `input` | Спрацьовує при кожній зміні значення. | Спрацьовує негайно, на відміну від `change`. |
+| `cut/copy/paste` | Дії при вирізанні/копіюванні/вставлянні. | Дії можна запобігти. Властивість `event.clipboardData` надає доступ до буфера обміну. Усі браузери, крім Firefox, також підтримують `navigator.clipboard`. |
