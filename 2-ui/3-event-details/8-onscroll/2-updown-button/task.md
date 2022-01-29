@@ -2,15 +2,15 @@ importance: 5
 
 ---
 
-# Up/down button
+# Кнопка вгору/вниз
 
-Create a "to the top" button to help with page scrolling.
+Створіть кнопку "вгору", щоб допомогти прокручувати сторінку.
 
-It should work like this:
-- While the page is not scrolled down at least for the window height -- it's invisible.
-- When the page is scrolled down more than the window height -- there appears an "upwards" arrow in the left-top corner. If the page is scrolled back, it disappears.
-- When the arrow is clicked, the page scrolls to the top.
+Вона має працювати так:
+- Поки сторінка не прокручена принаймні на висоту вікна -- вона невидима.
+- Якщо сторінка прокручена нижче висоти вікна, у верхньому лівому куті з’являється стрілка "вгору". Якщо сторінку прокрутити назад, вона зникне.
+- При натисканні стрілки сторінка прокручується вгору.
 
-Like this (top-left corner, scroll to see):
+Ось так (верхній лівий кут, прокрутіть, щоб побачити):
 
 [iframe border="1" height="200" link src="solution"]
