@@ -1,37 +1,37 @@
-# Styles and classes
+# Стилі та класи
 
-Before we get into JavaScript's ways of dealing with styles and classes -- here's an important rule. Hopefully it's obvious enough, but we still have to mention it.
+Перед тим як перейти до того, як JavaScript взаємодіє зі стилями й класами, є одне важливе правило. Сподіваємося, воно достатньо очевидне, проте його все одно необхідно згадати.
 
-There are generally two ways to style an element:
+Загалом існує два способи стилізувати елемент:
 
-1. Create a class in CSS and add it: `<div class="...">`
-2. Write properties directly into `style`: `<div style="...">`.
+1. Створити клас в CSS і додати його до елемента: `<div class="...">`
+2. Записати правила безпосередньо в атрибут `style`: `<div style="...">`.
 
-JavaScript can modify both classes and `style` properties.
+JavaScript дозволяє змінювати як класи, так і `style` властивості.
 
-We should always prefer CSS classes to `style`. The latter should only be used if classes "can't handle it".
+Завжди слід надавати перевагу CSS-класам замість `style`. Останній варто використовувати лише у тих випадках, які не можна обробити за допомогою класів.
 
-For example, `style` is acceptable if we calculate coordinates of an element dynamically and want to set them from JavaScript, like this:
+Для прикладу, допустимо використовувати `style`, якщо ми обраховуємо координати елемента динамічно, і ми хочемо встановлювати їх через JavaScript, як от:
 
 ```js
-let top = /* complex calculations */;
-let left = /* complex calculations */;
+let top = /* складні обрахунки */;
+let left = /* складні обрахунки */;
 
-elem.style.left = left; // e.g '123px', calculated at run-time
-elem.style.top = top; // e.g '456px'
+elem.style.left = left; // наприклад, '123px', обраховано на ходу
+elem.style.top = top; // наприклад '456px'
 ```
 
-For other cases, like making the text red, adding a background icon -- describe that in CSS and then add the class (JavaScript can do that). That's more flexible and easier to support.
+В інших випадках (зробити текст червоним, чи додати іконку на тлі тощо) -- просто опишіть це в CSS і потім додайте клас (JavaScript з цим прекрасно справиться). Такий підхід більш гнучкий, і простіший у підтримці.
 
-## className and classList
+## Властивості className та classList
 
-Changing a class is one of the most often used actions in scripts.
+Зміна класу -- це одна з найчастіше вживаних дій у скриптах.
 
-In the ancient time, there was a limitation in JavaScript: a reserved word like `"class"` could not be an object property. That limitation does not exist now, but at that time it was impossible to have a `"class"` property, like `elem.class`.
+В давні часи JavaScript мав певні обмеження: зарезервоване слово, таке як `"class"`, не могло бути властивістю об’єкта. Цього обмеження наразі більше не існує, проте на той час було неможливо мати властивість `"class"`, як от `elem.class`.
 
-So for classes the similar-looking property `"className"` was introduced: the `elem.className` corresponds to the `"class"` attribute.
+Тому для класів було додано схожу властивість `"className"`: `elem.className` відповідає атрибуту `"class"`.
 
-For instance:
+Наприклад:
 
 ```html run
 <body class="main page">
@@ -41,19 +41,19 @@ For instance:
 </body>
 ```
 
-If we assign something to `elem.className`, it replaces the whole string of classes. Sometimes that's what we need, but often we want to add/remove a single class.
+Коли ми присвоюємо щось властивості `elem.className`, це значення замінює весь рядок з класами. Інколи це саме те, що потрібно, проте значно частіше ми хочемо просто додати чи видалити один клас.
 
-There's another property for that: `elem.classList`.
+Для цього існує інша властивість, а саме `elem.classList`.
 
-The `elem.classList` is a special object with methods to `add/remove/toggle` a single class.
+Властивість `elem.classList` -- це спеціальний об’єкт, який містить методи для додавання, видалення або перемикання окремого класу.
 
-For instance:
+Наприклад:
 
 ```html run
 <body class="main page">
   <script>
 *!*
-    // add a class
+    // додати клас
     document.body.classList.add('article');
 */!*
 
@@ -62,31 +62,31 @@ For instance:
 </body>
 ```
 
-So we can operate both on the full class string using `className` or on individual classes using `classList`. What we choose depends on our needs.
+Таким чином можна оперувати як цілим рядком класів за допомогою властивості `className`, так і окремими класами через `classList`. Що саме обрати -- залежить від потреб конкретної ситуації.
 
-Methods of `classList`:
+Методи `classList`:
 
-- `elem.classList.add/remove("class")` -- adds/removes the class.
-- `elem.classList.toggle("class")` -- adds the class if it doesn't exist, otherwise removes it.
-- `elem.classList.contains("class")` -- checks for the given class, returns `true/false`.
+- `elem.classList.add/remove("class")` -- додати/видалити клас.
+- `elem.classList.toggle("class")` -- додає клас, якщо він не існує, а інакше -- видаляє його.
+- `elem.classList.contains("class")` -- перевіряє, чи переданий клас існує, відповідно повертає `true/false`.
 
-Besides, `classList` is iterable, so we can list all classes with `for..of`, like this:
+Крім того, `classList` -- це ітерований об’єкт, тому можна легко вивести перелік всіх класів циклом `for..of`, як показано далі:
 
 ```html run
 <body class="main page">
   <script>
     for (let name of document.body.classList) {
-      alert(name); // main, and then page
+      alert(name); // main, а за ним page
     }
   </script>
 </body>
 ```
 
-## Element style
+## Стиль елементу
 
-The property `elem.style` is an object that corresponds to what's written in the `"style"` attribute. Setting `elem.style.width="100px"` works the same as if we had in the attribute `style` a string `width:100px`.
+Властивість `elem.style` -- це об’єкт, вміст якого відповідає тому, що записано в атрибуті `"style"`. Встановлення `elem.style.width="100px"` працює точнісінько так само, як рядок `width:100px` записаний в атрибут `style`.
 
-For multi-word property the camelCase is used:
+Для властивостей, які називаються кількома словами, використовується верблюдячийРегістр:
 
 ```js no-beautify
 background-color  => elem.style.backgroundColor
@@ -94,16 +94,16 @@ z-index           => elem.style.zIndex
 border-left-width => elem.style.borderLeftWidth
 ```
 
-For instance:
+Наприклад:
 
 ```js run
 document.body.style.backgroundColor = prompt('background color?', 'green');
 ```
 
-````smart header="Prefixed properties"
-Browser-prefixed properties like `-moz-border-radius`, `-webkit-border-radius` also follow the same rule: a dash means upper case.
+````smart header="Властивості з префіксами"
+Властивості з браузерними префіксами -- наприклад, `-moz-border-radius`, `-webkit-border-radius` -- також підпорядковуються цьому правилу: дефіс означає верхній регістр.
 
-For instance:
+Наприклад:
 
 ```js
 button.style.MozBorderRadius = '5px';
@@ -111,33 +111,33 @@ button.style.WebkitBorderRadius = '5px';
 ```
 ````
 
-## Resetting the style property
+## Скидання значення стильової властивості
 
-Sometimes we want to assign a style property, and later remove it.
+Інколи потрібно призначити певну стильову властивість, а пізніше видалити її.
 
-For instance, to hide an element, we can set `elem.style.display = "none"`.
+Наприклад, щоб сховати елемент, можна встановити властивість `elem.style.display = "none"`.
 
-Then later we may want to remove the `style.display` as if it were not set. Instead of `delete elem.style.display` we should assign an empty string to it: `elem.style.display = ""`.
+Потім може виникнути потреба видалити `style.display` так, як наче вона не була встановлена. Замість використання інструкції `delete elem.style.display` слід присвоїти їй порожній рядок: `elem.style.display = ""`.
 
 ```js run
-// if we run this code, the <body> will blink
-document.body.style.display = "none"; // hide
+// якщо ми запустимо цей код, елемент <body> "моргне"
+document.body.style.display = "none"; // сховати
 
-setTimeout(() => document.body.style.display = "", 1000); // back to normal
+setTimeout(() => document.body.style.display = "", 1000); // назад до нормального стану
 ```
 
-If we set `style.display` to an empty string, then the browser applies CSS classes and its built-in styles normally, as if there were no such `style.display` property at all.
+Якщо ми встановлюємо порожній рядок значенням властивості `style.display`, то браузер звичайним чином застосовує CSS-класи і його вбудовані стилі, так, наче тут взагалі не було такої властивості `style.display`.
 
-````smart header="Full rewrite with `style.cssText`"
-Normally, we use `style.*` to assign individual style properties. We can't set the full style like `div.style="color: red; width: 100px"`, because `div.style` is an object, and it's read-only.
+````smart header="Повний перезапис за допомогою `style.cssText`"
+Зазвичай, `style.*` використовується для встановлення окремих властивостей стилю. Немає можливості задати весь стиль, як от `div.style="color: red; width: 100px"`, оскільки `div.style` -- це об’єкт, і він придатний лише для читання.
 
-To set the full style as a string, there's a special property `style.cssText`:
+Існує спеціальна властивість `style.cssText`, яка дає змогу встановлювати повний стиль елемента як рядок:
 
 ```html run
-<div id="div">Button</div>
+<div id="div">Кнопка</div>
 
 <script>
-  // we can set special style flags like "important" here
+  // тут можна встановити такі спеціальні прапорці стилю, як "important"
   div.style.cssText=`color: red !important;
     background-color: yellow;
     width: 100px;
@@ -148,27 +148,27 @@ To set the full style as a string, there's a special property `style.cssText`:
 </script>
 ```
 
-This property is rarely used, because such assignment removes all existing styles: it does not add, but replaces them. May occasionally delete something needed. But we can safely use it for new elements, when we know we won't delete an existing style.
+Ця властивість рідко використовується, оскільки присвоєння стилів у такий спосіб видаляє всі наявні стилі: тобто воно не додає стилі, а радше заміняє їх. Може випадково видалити щось важливе. Однак можна спокійно використовувати її для нових елементів, коли наперед відомо, що там немає ніяких наявних стилів, які можна було б випадково видалити.
 
-The same can be accomplished by setting an attribute: `div.setAttribute('style', 'color: red...')`.
+Того самого можна досягнути шляхом встановлення значення атрибута: `div.setAttribute('style', 'color: red...')`.
 ````
 
-## Mind the units
+## Пам’ятайте про одиниці вимірювання
 
-Don't forget to add CSS units to values.
+Не забувайте додавати одиниці вимірювання CSS до значень.
 
-For instance, we should not set `elem.style.top` to `10`, but rather to `10px`. Otherwise it wouldn't work:
+Наприклад, не слід встановлювати значення `10` властивості `elem.style.top`, проте радше `10px`. Інакше воно не працюватиме:
 
 ```html run height=100
 <body>
   <script>
   *!*
-    // doesn't work!
+    // не працює!
     document.body.style.margin = 20;
-    alert(document.body.style.margin); // '' (empty string, the assignment is ignored)
+    alert(document.body.style.margin); // '' (порожній рядок, присвоєння проігноровано)
   */!*
 
-    // now add the CSS unit (px) - and it works
+    // тепер додамо одиниці виміру CSS (px) - і це працює
     document.body.style.margin = '20px';
     alert(document.body.style.margin); // 20px
 
@@ -178,19 +178,19 @@ For instance, we should not set `elem.style.top` to `10`, but rather to `10px`. 
 </body>
 ```
 
-Please note: the browser "unpacks" the property `style.margin` in the last lines and infers `style.marginLeft` and `style.marginTop` from it.
+Зауважте, будь ласка: браузер в останніх рядках "розпаковує" властивість `style.margin` і від неї обчислює значення властивостей `style.marginLeft` та `style.marginTop`.
 
-## Computed styles: getComputedStyle
+## Обчислені стилі: getComputedStyle
 
-So, modifying a style is easy. But how to *read* it?
+Отже, змінити стиль -- це легко. Проте як його *прочитати*?
 
-For instance, we want to know the size, margins, the color of an element. How to do it?
+Уявімо собі, що ми хочемо дізнатися розміри, зовнішні відступи, та колір елементу. Як це зробити?
 
-**The `style` property operates only on the value of the `"style"` attribute, without any CSS cascade.**
+**Властивість `style` працює лише зі значенням атрибута `"style"`, без врахування каскадності CSS.**
 
-So we can't read anything that comes from CSS classes using `elem.style`.
+Тобто  за допомогою `elem.style` неможливо прочитати щось, що прийшло з CSS-класів.
 
-For instance, here `style` doesn't see the margin:
+Наприклад, ось тут властивість `style` не бачить зовнішніх відступів:
 
 ```html run height=60 no-beautify
 <head>
@@ -198,35 +198,35 @@ For instance, here `style` doesn't see the margin:
 </head>
 <body>
 
-  The red text
+  Червоний текст
   <script>
 *!*
-    alert(document.body.style.color); // empty
-    alert(document.body.style.marginTop); // empty
+    alert(document.body.style.color); // порожньо
+    alert(document.body.style.marginTop); // порожньо
 */!*
   </script>
 </body>
 ```
 
-...But what if we need, say, to increase the margin by `20px`? We would want the current value of it.
+...Але що робити, якщо ми хочемо, скажімо, збільшити розмір зовнішнього відступу на `20px`? Для цього нам потрібно знати актуальне значення.
 
-There's another method for that: `getComputedStyle`.
+Для цього існує інший метод, а саме -- `getComputedStyle`.
 
-The syntax is:
+Синтаксис виглядає так:
 
 ```js
 getComputedStyle(element, [pseudo])
 ```
 
 element
-: Element to read the value for.
+: Елемент, значення властивості якого потрібно прочитати.
 
 pseudo
-: A pseudo-element if required, for instance `::before`. An empty string or no argument means the element itself.
+: Вказується, якщо потрібен стиль псевдоелемента, наприклад: `::before`. Порожній рядок, або опущений аргумент означатимуть, що буде опрацьовано сам елемент.
 
-The result is an object with styles, like `elem.style`, but now with respect to all CSS classes.
+В результаті виклику методу буде повернено об’єкт зі стилями, подібно до `elem.style`, але зі врахуванням всіх класів CSS.
 
-For instance:
+Наприклад:
 
 ```html run height=100
 <head>
@@ -237,7 +237,7 @@ For instance:
   <script>
     let computedStyle = getComputedStyle(document.body);
 
-    // now we can read the margin and the color from it
+    // тепер звідти можна прочитати значення зовнішнього відступу та кольору
 
     alert( computedStyle.marginTop ); // 5px
     alert( computedStyle.color ); // rgb(255, 0, 0)
@@ -246,23 +246,23 @@ For instance:
 </body>
 ```
 
-```smart header="Computed and resolved values"
-There are two concepts in [CSS](https://drafts.csswg.org/cssom/#resolved-values):
+```smart header="Обчислені (computed) і вирішені (resolved) значення властивостей"
+[CSS](https://drafts.csswg.org/cssom/#resolved-values) має дві концепції:
 
-1. A *computed* style value is the value after all CSS rules and CSS inheritance is applied, as the result of the CSS cascade. It can look like `height:1em` or `font-size:125%`.
-2. A *resolved* style value is the one finally applied to the element. Values like `1em` or `125%` are relative. The browser takes the computed value and makes all units fixed and absolute, for instance: `height:20px` or `font-size:16px`. For geometry properties resolved values may have a floating point, like `width:50.5px`.
+1. *Обчислене* (*computed*) значення стилю -- це значення після застосування всіх CSS-правил і наслідування, результат CSS-каскаду. Воно може виглядати як `height:1em` чи `font-size:125%`.
+2. *Вирішене* (*resolved*) значення стилю -- це значення, яке безпосередньо застосовується до елементу. Такі значення, як `1em` чи `125%` -- відносні. Браузер бере обчислене значення, і перераховує все у фіксованих і абсолютних одиницях, наприклад: `height:20px` чи `font-size:16px`. Для геометричних властивостей вирішені значення можуть бути числами з рухомою комою, як от `width:50.5px`.
 
-A long time ago `getComputedStyle` was created to get computed values, but it turned out that resolved values are much more convenient, and the standard changed.
+Колись давно метод `getComputedStyle` був створений саме для отримання обчислених значень, проте вирішені значення виявились значно зручнішими, тому стандарт було змінено.
 
-So nowadays `getComputedStyle` actually returns the resolved value of the property, usually in `px` for geometry.
+Тому станом на сьогодні метод `getComputedStyle` насправді повертає вирішене значення властивості, для геометрії зазвичай виражене в `px`.
 ```
 
-````warn header="`getComputedStyle` requires the full property name"
-We should always ask for the exact property that we want, like `paddingLeft` or `marginTop` or `borderTopWidth`. Otherwise the correct result is not guaranteed.
+````warn header="`getComputedStyle` вимагає повної назви властивості"
+Слід завжди запитувати точну назву властивості, значення якої потрібно отримати, як `paddingLeft`, `marginTop` чи `borderTopWidth`. Інакше коректний результат не гарантовано.
 
-For instance, if there are properties `paddingLeft/paddingTop`, then what should we get for `getComputedStyle(elem).padding`? Nothing, or maybe a "generated" value from known paddings? There's no standard rule here.
+Наприклад, якщо на елементі задано властивості `paddingLeft/paddingTop`, що ми отримаємо, запитавши значення `getComputedStyle(elem).padding`? Нічого, чи може якесь "згенероване" значення наявних полів? Тут немає жодного стандартного правила.
 
-There are other inconsistencies. As an example, some browsers (Chrome) show `10px` in the document below, and some of them (Firefox) --  do not:
+Також існують інші непослідовності. Для прикладу, деякі браузери (Chrome) покажуть `10px` в документі, наведеному нижче, а інші (Firefox) -- цього не зроблять:
 
 ```html run
 <style>
@@ -272,32 +272,32 @@ There are other inconsistencies. As an example, some browsers (Chrome) show `10p
 </style>
 <script>
   let style = getComputedStyle(document.body);
-  alert(style.margin); // empty string in Firefox
+  alert(style.margin); // порожній рядок у Firefox
 </script>
 ```
 ````
 
-```smart header="Styles applied to `:visited` links are hidden!"
-Visited links may be colored using `:visited` CSS pseudoclass.
+```smart header="Стилі, які застосовані на `:visited` (відвідані) посилання -- приховуються!"
+Відвідані посилання можна забарвлювати, використовуючи CSS-псевдоклас `:visited`.
 
-But `getComputedStyle` does not give access to that color, because otherwise an arbitrary page could find out whether the user visited a link by creating it on the page and checking the styles.
+Проте метод `getComputedStyle` не дає доступу до цього кольору, бо інакше будь-яка вебсторінка могла б визначити, чи користувач відвідував якесь посилання, просто створивши це посилання на сторінці та перевіривши його стилі.
 
-JavaScript may not see the styles applied by `:visited`. And also, there's a limitation in CSS that forbids applying geometry-changing styles in `:visited`. That's to guarantee that there's no side way for an evil page to test if a link was visited and hence to break the privacy.
+JavaScript не бачить стилі, застосовані через селектор `:visited`. На додачу, також є певні обмеження в CSS, які забороняють застосовувати на `:visited` будь-які стилі, що змінюють геометрію елемента. Це все робиться з метою гарантувати, що для шкідливої сторінки не існує ніякого побічного способу перевірити, чи посилання відвідувалось, і таким чином поламати приватність користувача.
 ```
 
-## Summary
+## Підсумки
 
-To manage classes, there are two DOM properties:
+Існує дві властивості DOM для керування класами:
 
-- `className` -- the string value, good to manage the whole set of classes.
-- `classList` -- the object with methods `add/remove/toggle/contains`, good for individual classes.
+- `className` -- рядкове значення, гарно підходить для керування всім набором класів елемента в цілому.
+- `classList` -- об’єкт з методами `add/remove/toggle/contains`, підходить для роботи з окремими класами.
 
-To change the styles:
+Для зміни стилів:
 
-- The `style` property is an object with camelCased styles. Reading and writing to it has the same meaning as modifying individual properties in the `"style"` attribute. To see how to apply `important` and other rare stuff -- there's a list of methods at [MDN](mdn:api/CSSStyleDeclaration).
+- Властивість `style` -- об’єкт зі стилями, записаними верблюдячимРегістром. Читання і запис у неї має такий самий зміст, як і модифікація окремих властивостей в атрибуті `"style"`. Щоб побачити, як застосовується `important` та інші рідкісні речі -- на [MDN](mdn:api/CSSStyleDeclaration) описано перелік методів.
 
-- The `style.cssText` property corresponds to the whole `"style"` attribute, the full string of styles.
+- Властивість `style.cssText` показує атрибут `"style"` в цілому, весь рядок стилів.
 
-To read the resolved styles (with respect to all classes, after all CSS is applied and final values are calculated):
+Для зчитування вирішених стилів (з врахуванням всіх класів, після застосування всього CSS і обчислення остаточних значень):
 
-- The `getComputedStyle(elem, [pseudo])` returns the style-like object with them. Read-only.
+- Метод `getComputedStyle(elem, [pseudo])` повертає об’єкт, подібний до властивості `style`, з вирішеними значеннями. Виключно для читання.
