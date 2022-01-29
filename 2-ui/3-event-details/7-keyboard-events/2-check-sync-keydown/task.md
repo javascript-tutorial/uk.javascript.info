@@ -2,15 +2,15 @@ importance: 5
 
 ---
 
-# Extended hotkeys
+# Розширені комбінації гарячих клавіш
 
-Create a function `runOnKeys(func, code1, code2, ... code_n)` that runs `func` on simultaneous pressing of keys with codes `code1`, `code2`, ..., `code_n`.
+Створіть функцію `runOnKeys(func, code1, code2, ... code_n)`, яка запускає `func` при одночасному натисканні клавіш із кодами `code1`, `code2`, ..., `code_n`.
 
-For instance, the code below shows `alert` when `"Q"` and `"W"` are pressed together (in any language, with or without CapsLock)
+Наприклад, код нижче показує `alert`, коли `"Q"` та `"W"` натискаються разом (будь-якою мовою, з або без CapsLock)
 
 ```js no-beautify
 runOnKeys(
-  () => alert("Hello!"),
+  () => alert("Привіт!"),
   "KeyQ",
   "KeyW"
 );
