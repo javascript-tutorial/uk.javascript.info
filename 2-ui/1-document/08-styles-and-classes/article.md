@@ -94,7 +94,7 @@ z-index           => elem.style.zIndex
 border-left-width => elem.style.borderLeftWidth
 ```
 
-Для прикладу:
+Наприклад:
 
 ```js run
 document.body.style.backgroundColor = prompt('background color?', 'green');
