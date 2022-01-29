@@ -120,7 +120,7 @@ button.style.WebkitBorderRadius = '5px';
 Потім може виникнути потреба видалити `style.display` так, як наче вона не була встановлена. Замість використання інструкції `delete elem.style.display` слід присвоїти їй порожній рядок: `elem.style.display = ""`.
 
 ```js run
-// якщо цей код виконається, елемент <body> моргне
+// якщо ми запустимо цей код, елемент <body> "моргне"
 document.body.style.display = "none"; // сховати
 
 setTimeout(() => document.body.style.display = "", 1000); // назад до нормального стану
