@@ -177,7 +177,7 @@ function checkPhoneKey(key) {
 
 ## Мобільні клавіатури
 
-Під час використання віртуальних/мобільних клавіатур, офіційно відомих як IME (Input-Method Editor), стандарт W3C стверджує, що [`e.keyCode`] події клавіатури має бути `229` (https://www.w3.org/TR/ uievents/#determine-keydown-keyup-keyCode), а [`e.key` має бути "Unidentified"`](https://www.w3.org/TR/uievents-key/#key-attr-values).
+Під час використання віртуальних/мобільних клавіатур, офіційно відомих як IME (Input-Method Editor), стандарт W3C стверджує, що у події клавіатури [`e.keyCode` має бути `229`](https://www.w3.org/TR/uievents/#determine-keydown-keyup-keyCode), а [`e.key` має бути `"Unidentified"`](https://www.w3.org/TR/uievents-key/#key-attr-values).
 
 Хоча деякі з цих клавіатур все ще можуть використовувати правильні значення для `e.key`, `e.code`, `e.keyCode`... під час натискання певних клавіш, таких як стрілки або видалення, немає гарантії, тому ваша логіка клавіатури може не завжди працювати на мобільних пристроях.
 
