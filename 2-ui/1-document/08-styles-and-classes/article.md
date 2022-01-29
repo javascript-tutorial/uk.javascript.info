@@ -103,7 +103,7 @@ document.body.style.backgroundColor = prompt('background color?', 'green');
 ````smart header="Властивості з префіксами"
 Властивості з браузерними префіксами -- наприклад, `-moz-border-radius`, `-webkit-border-radius` -- також підпорядковуються цьому правилу: дефіс означає верхній регістр.
 
-Для прикладу:
+Наприклад:
 
 ```js
 button.style.MozBorderRadius = '5px';
