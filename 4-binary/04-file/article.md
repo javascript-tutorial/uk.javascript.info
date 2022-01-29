@@ -42,44 +42,44 @@ function showFile(input) {
 
 ## FileReader
 
-[FileReader](https://www.w3.org/TR/FileAPI/#dfn-filereader) is an object with the sole purpose of reading data from `Blob` (and hence `File` too) objects.
+[FileReader](https://www.w3.org/TR/FileAPI/#dfn-filereader) -- об’єкт для читання даних з `Blob`, а отже і з `File` також.
 
-It delivers the data using events, as reading from disk may take time.
+Дані передаються за допомогою подій, оскільки читання даних з диску потребує часу.
 
-The constructor:
+Конструктор:
 
 ```js
-let reader = new FileReader(); // no arguments
+let reader = new FileReader(); // без аргументів
 ```
 
-The main methods:
+Основні методи:
 
-- **`readAsArrayBuffer(blob)`** -- read the data in binary format `ArrayBuffer`.
-- **`readAsText(blob, [encoding])`** -- read the data as a text string with the given encoding (`utf-8` by default).
-- **`readAsDataURL(blob)`** -- read the binary data and encode it as base64 data url.
-- **`abort()`** -- cancel the operation.
+- **`readAsArrayBuffer(blob)`** -- прочитати дані в бінарному форматі і зберегти в `ArrayBuffer`.
+- **`readAsText(blob, [encoding])`** -- прочитати дані як текст із заданим кодуванням (типово `utf-8`).
+- **`readAsDataURL(blob)`** -- прочитати бінарні дані та закодувати у форматі base64 data url.
+- **`abort()`** -- відмінити операцію.
 
-The choice of `read*` method depends on which format we prefer, how we're going to use the data.
+Вибір `read*` методу залежить від формату даних з яким ми хочемо працювати.
 
-- `readAsArrayBuffer` -- for binary files, to do low-level binary operations. For high-level operations, like slicing, `File` inherits from `Blob`, so we can call them directly, without reading.
-- `readAsText` -- for text files, when we'd like to get a string.
-- `readAsDataURL` -- when we'd like to use this data in `src` for `img` or another tag. There's an alternative to reading a file for that, as discussed in chapter <info:blob>: `URL.createObjectURL(file)`.
+- `readAsArrayBuffer` -- використовується для низькор івневих операцій з бінарними даними. Для високорівневих операцій, як отримання зрізів, об’єкт `File` успадковується від `Blob`, тому його можна використовувати безпосередньо без читання файлу.
+- `readAsText` -- використовується для текстових файлів, вмісту буде записано в рядок.
+- `readAsDataURL` -- використовується, якщо ми хочемо використати дані як вміст `src` тегу `img` або інших. Можна скористатися іншим способом для цього, що описано в розділі <info:blob>: `URL.createObjectURL(file)`.
 
-As the reading proceeds, there are events:
-- `loadstart` -- loading started.
-- `progress` -- occurs during reading.
-- `load` -- no errors, reading complete.
-- `abort` -- `abort()` called.
-- `error` -- error has occurred.
-- `loadend` -- reading finished with either success or failure.
+Протягом читання файлу можуть виникнути події:
+- `loadstart` -- читання файлу почалось.
+- `progress` -- виникає протягом читання.
+- `load` -- читання завершилось без помилок.
+- `abort` -- викликано `abort()`.
+- `error` -- виникла помилка.
+- `loadend` -- читання закінчилось успішно чи з помилкою.
 
-When the reading is finished, we can access the result as:
-- `reader.result` is the result (if successful)
-- `reader.error` is the error (if failed).
+Після закінчення читання файлу результат можна отримати за допомогою:
+- `reader.result` якщо читання закінчилося успішно, без помилки
+- `reader.error` якщо протягом читання виникла помилка.
 
-The most widely used events are for sure `load` and `error`.
+Найрозповсюдженіші події: `load` та `error`.
 
-Here's an example of reading a file:
+Приклад читання файлу:
 
 ```html run
 <input type="file" onchange="readFile(this)">
@@ -104,35 +104,35 @@ function readFile(input) {
 </script>
 ```
 
-```smart header="`FileReader` for blobs"
-As mentioned in the chapter <info:blob>, `FileReader` can read not just files, but any blobs.
+```smart header="`FileReader` для Blob"
+Як описано в розділі <info:blob>, `FileReader` може читати будь-які бінарні об’єкти, а не тільки файли.
 
-We can use it to convert a blob to another format:
-- `readAsArrayBuffer(blob)` -- to `ArrayBuffer`,
-- `readAsText(blob, [encoding])` -- to string (an alternative to `TextDecoder`),
-- `readAsDataURL(blob)` -- to base64 data url.
+Це можна використати для перетворення бінарних Blob об’єктів у інші формати:
+- `readAsArrayBuffer(blob)` -- в `ArrayBuffer`,
+- `readAsText(blob, [encoding])` -- в рядок (альтернативний спосіб до `TextDecoder`),
+- `readAsDataURL(blob)` -- в base64 data url.
 ```
 
 
-```smart header="`FileReaderSync` is available inside Web Workers"
-For Web Workers, there also exists a synchronous variant of `FileReader`, called [FileReaderSync](https://www.w3.org/TR/FileAPI/#FileReaderSync).
+```smart header="`FileReaderSync` доступний всередині Web Workers"
+Для Web Workers існує [FileReaderSync](https://www.w3.org/TR/FileAPI/#FileReaderSync) -- синхронний варіант `FileReader`.
 
-Its reading methods `read*` do not generate events, but rather return a result, as regular functions do.
+Його метод `read*` не створює подій, а просто повертає результат, як звичайна функція.
 
-That's only inside a Web Worker though, because delays in synchronous calls, that are possible while reading from files, in Web Workers are less important. They do not affect the page.
+Синхронний метод бажано використовувати тільки разом з Web Worker, бо синхронний операція читання файлу не вплине на роботу сторінки.
 ```
 
-## Summary
+## Підсумки
 
-`File` objects inherit from `Blob`.
+`File` успадковується від `Blob`.
 
-In addition to `Blob` methods and properties, `File` objects also have `name` and `lastModified` properties, plus the internal ability to read from filesystem. We usually get `File` objects from user input, like `<input>` or Drag'n'Drop events (`ondragend`).
+На додачу до методів та властивостей, що доступні в `Blob`, об’єкт файл має властивості `name`, `lastModified`  та ще можливість читати файли з файлової системи. Переважно об’єкт `File` отримується з введення користувача, як `<input>` чи Drag'n'Drop подіями (`ondragend`).
 
-`FileReader` objects can read from a file or a blob, in one of three formats:
-- String (`readAsText`).
+`FileReader` об’єкт може прочитати з файлу чи `Blob` в одному з трьох форматів:
+- Рядок (`readAsText`).
 - `ArrayBuffer` (`readAsArrayBuffer`).
-- Data url, base-64 encoded (`readAsDataURL`).
+- Data url закодованому в base-64 (`readAsDataURL`).
 
-In many cases though, we don't have to read the file contents. Just as we did with blobs, we can create a short url with `URL.createObjectURL(file)` and assign it to `<a>` or `<img>`. This way the file can be downloaded or shown up as an image, as a part of canvas etc.
+У багатьох випадках нам не потрібно читати увесь вміст файлу. Так же як і з `Blob`, ми можемо створити коротке посилання за допомогою `URL.createObjectURL(file)` та присвоїти його тегу `<a>` чи `<img>`. Таким чином файл можна завантажити чи показати як зображення, як частина вмісту canvas тощо.
 
-And if we're going to send a `File` over a network, that's also easy: network API like `XMLHttpRequest` or `fetch` natively accepts `File` objects.
+Також легко відправити `File` мережею, бо мережеве API `XMLHttpRequest` чи `fetch` можуть безпосередньо працювати з об’єктами `File`.
