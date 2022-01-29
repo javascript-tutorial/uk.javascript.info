@@ -68,7 +68,7 @@ elem.style.top = top; // наприклад '456px'
 
 - `elem.classList.add/remove("class")` -- додати/видалити клас.
 - `elem.classList.toggle("class")` -- додає клас, якщо він не існує, а інакше -- видаляє його.
-- `elem.classList.contains("class")` — перевіряє, чи переданий клас існує, повертає `true/false` відповідно.
+- `elem.classList.contains("class")` -- перевіряє, чи переданий клас існує, відповідно повертає `true/false`.
 
 На додачу, `classList` — це ітерований об'єкт, тому можна легко вивести перелік всіх класів циклом `for..of`, як показано далі:
 
