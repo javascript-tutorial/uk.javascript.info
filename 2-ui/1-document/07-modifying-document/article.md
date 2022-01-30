@@ -525,7 +525,6 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
 ## Підсумки
 
 - Методи для створення нових вузлів:
-
   - `document.createElement(tag)` -- створює елемент з заданим тегом,
   - `document.createTextNode(value)` -- створює текстовий вузол (рідко використовється),
   - `elem.cloneNode(deep)` -- клонує елемен, якщо `deep==true` то з усіма нащадками.
