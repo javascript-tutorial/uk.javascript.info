@@ -323,8 +323,8 @@ after
   let div2 = div.cloneNode(true); // клонувати елемент
   div2.querySelector('strong').innerHTML = 'Bye there!'; // змінити клона
 
-    div.after(div2); // вставити клонований елемент після існуючого `div`
-  */!*
+  div.after(div2); // вставити клонований елемент після існуючого `div`
+*/!*
 </script>
 ```
 
