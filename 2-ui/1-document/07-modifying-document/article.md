@@ -269,10 +269,10 @@ after
   div.className = "alert";
   div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.";
 
-    document.body.append(div);
-  *!*
-    setTimeout(() => div.remove(), 1000);
-  */!*
+  document.body.append(div);
+*!*
+  setTimeout(() => div.remove(), 1000);
+*/!*
 </script>
 ```
 
