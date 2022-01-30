@@ -540,7 +540,6 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
   Текстові рядки вставляються «як текст».
 
 - Також є застарілі методи:
-
   - `parent.appendChild(node)`
   - `parent.insertBefore(node, nextSibling)`
   - `parent.removeChild(node)`
