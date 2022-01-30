@@ -110,7 +110,7 @@ function readFile(input) {
 Це можна використати для перетворення бінарних Blob об’єктів у інші формати:
 - `readAsArrayBuffer(blob)` -- в `ArrayBuffer`,
 - `readAsText(blob, [encoding])` -- в рядок (альтернативний спосіб до `TextDecoder`),
-- `readAsDataURL(blob)` -- в base64 data url.
+- `readAsDataURL(blob)` -- в формат base64-кодованого url.
 ```
 
 
