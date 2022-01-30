@@ -349,8 +349,8 @@ function getListContent() {
     fragment.append(li);
   }
 
-    return fragment;
-  }
+  return fragment;
+}
 
   *!*
   ul.append(getListContent()); // (*)
