@@ -59,7 +59,7 @@
 let div = document.createElement('div');
 
 // 2. Задайте йому клас "alert"
-div.className = 'alert';
+div.className = "alert";
 
 // 3. Наповніть <div> змістом
 div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.";
