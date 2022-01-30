@@ -91,9 +91,9 @@ div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали
   div.className = "alert";
   div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.";
 
-  *!*
-    document.body.append(div);
-  */!*
+*!*
+  document.body.append(div);
+*/!*
 </script>
 ```
 
