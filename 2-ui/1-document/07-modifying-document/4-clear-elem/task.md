@@ -13,9 +13,7 @@ importance: 5
 </ol>
 
 <script>
-  function clear(elem) {
-    /* ваш код */
-  }
+  function clear(elem) { /* ваш код */ }
 
   clear(elem); // очищує список
 </script>
