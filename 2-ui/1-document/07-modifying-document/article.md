@@ -386,9 +386,9 @@ function getListContent() {
   return result;
 }
 
-  *!*
-  ul.append(...getListContent()); // append + оператор "..." = друзі!
-  */!*
+*!*
+ul.append(...getListContent()); // append + оператор "..." = друзі!
+*/!*
 </script>
 ```
 
