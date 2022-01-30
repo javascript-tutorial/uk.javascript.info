@@ -383,8 +383,8 @@ function getListContent() {
     result.push(li);
   }
 
-    return result;
-  }
+  return result;
+}
 
   *!*
   ul.append(...getListContent()); // append + оператор "..." = друзі!
