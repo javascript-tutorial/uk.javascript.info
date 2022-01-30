@@ -131,7 +131,7 @@ function readFile(input) {
 `FileReader` об’єкт може прочитати з файлу чи blob в одному з трьох форматів:
 - Рядок (`readAsText`).
 - `ArrayBuffer` (`readAsArrayBuffer`).
-- Data url закодованому в base-64 (`readAsDataURL`).
+- URL в форматі base-64 (`readAsDataURL`).
 
 У багатьох випадках нам не потрібно читати увесь вміст файлу. Так же як і з blob, ми можемо створити коротке посилання за допомогою `URL.createObjectURL(file)` та присвоїти його тегу `<a>` чи `<img>`. Таким чином файл можна завантажити чи показати як зображення, як частину вмісту canvas тощо.
 
