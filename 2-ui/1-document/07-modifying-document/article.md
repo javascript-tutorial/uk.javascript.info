@@ -374,8 +374,8 @@ after
 <ul id="ul"></ul>
 
 <script>
-  function getListContent() {
-    let result = [];
+function getListContent() {
+  let result = [];
 
     for(let i=1; i<=3; i++) {
       let li = document.createElement('li');
