@@ -87,9 +87,9 @@ div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали
 </style>
 
 <script>
-    let div = document.createElement('div');
-    div.className = "alert";
-    div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.";
+  let div = document.createElement('div');
+  div.className = "alert";
+  div.innerHTML = "<strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.";
 
   *!*
     document.body.append(div);
