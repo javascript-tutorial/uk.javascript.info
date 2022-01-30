@@ -538,10 +538,10 @@ after
 
   - `node.append(...nodes or strings)` -- вставляє в `node`, в кінець,
   - `node.prepend(...nodes or strings)` -- вставляє в `node`, на початку,
-  - `node.before(...nodes or strings)` –- вставляє прямо перед `node`,
-  - `node.after(...nodes or strings)` –- вставляє відразу після `node`,
-  - `node.replaceWith(...nodes or strings)` –- замінює `node`.
-  - `node.remove()` –- видаляє `node`.
+  - `node.before(...nodes or strings)` -- вставляє прямо перед `node`,
+  - `node.after(...nodes or strings)` -- вставляє відразу після `node`,
+  - `node.replaceWith(...nodes or strings)` -- замінює `node`.
+  - `node.remove()` -- видаляє `node`.
 
   Текстові рядки вставляються «як текст».
 
