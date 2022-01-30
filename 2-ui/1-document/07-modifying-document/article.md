@@ -168,7 +168,9 @@ after
 Тому фінальний HTML буде таким:
 
 ```html run
-*!* &lt;p&gt;Привіт&lt;/p&gt; */!*
+*!*
+&lt;p&gt;Привіт&lt;/p&gt;
+*/!*
 <hr />
 <div id="div"></div>
 ```
