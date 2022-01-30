@@ -548,7 +548,6 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
   Всі вони повертають `node`.
 
 - Метод `elem.insertAdjacentHTML(where, html)` вставляє заданий HTML в залежності від значення параметру `where`:
-
   - `"beforebegin"` -- вставляє `html` прямо перед `elem`,
   - `"afterbegin"` -- вставляє `html` в `elem`, на початку,
   - `"beforeend"` -- вставляє `html` в `elem`, в кінці,
