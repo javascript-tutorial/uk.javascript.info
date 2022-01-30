@@ -241,12 +241,9 @@ after
 </style>
 
 <script>
-  document.body.insertAdjacentHTML(
-    'afterbegin',
-    `<div class="alert">
+  document.body.insertAdjacentHTML("afterbegin", `<div class="alert">
     <strong>Всім привіт!</strong> Ви прочитали важливе повідомлення.
-  </div>`
-  );
+  </div>`);
 </script>
 ```
 
