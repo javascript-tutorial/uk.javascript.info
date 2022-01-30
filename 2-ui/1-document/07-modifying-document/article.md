@@ -530,7 +530,6 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
   - `elem.cloneNode(deep)` -- клонує елемен, якщо `deep==true` то з усіма нащадками.
 
 - Вставка та видалення:
-
   - `node.append(...nodes or strings)` -- вставляє в `node`, в кінець,
   - `node.prepend(...nodes or strings)` -- вставляє в `node`, на початку,
   - `node.before(...nodes or strings)` -- вставляє прямо перед `node`,
