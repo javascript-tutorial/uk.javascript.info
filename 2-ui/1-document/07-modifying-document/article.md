@@ -171,7 +171,7 @@ after
 *!*
 &lt;p&gt;Привіт&lt;/p&gt;
 */!*
-<hr />
+<hr>
 <div id="div"></div>
 ```
 
