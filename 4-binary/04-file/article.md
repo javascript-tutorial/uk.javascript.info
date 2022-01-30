@@ -105,7 +105,7 @@ function readFile(input) {
 ```
 
 ```smart header="`FileReader` для Blob"
-Як описано в розділі <info:blob>, `FileReader` може зчитати вміст будь-яких бінарних об’єктів, а не тільки файли.
+Як описано в розділі <info:blob>, `FileReader` може зчитати вміст будь-яких бінарних об’єктів, а не тільки файлів.
 
 Це можна використати для перетворення бінарних Blob об’єктів у інші формати:
 - `readAsArrayBuffer(blob)` -- в `ArrayBuffer`,
