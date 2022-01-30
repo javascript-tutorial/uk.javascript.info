@@ -340,8 +340,8 @@ after
 <ul id="ul"></ul>
 
 <script>
-  function getListContent() {
-    let fragment = new DocumentFragment();
+function getListContent() {
+  let fragment = new DocumentFragment();
 
     for(let i=1; i<=3; i++) {
       let li = document.createElement('li');
