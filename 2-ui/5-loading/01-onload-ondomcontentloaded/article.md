@@ -1,39 +1,39 @@
-# Page: DOMContentLoaded, load, beforeunload, unload
+# Сторінка: DOMContentLoaded, load, beforeunload, unload
 
-The lifecycle of an HTML page has three important events:
+Життєвий цикл сторінки HTML має три важливі події:
 
-- `DOMContentLoaded` -- the browser fully loaded HTML, and the DOM tree is built, but external resources like pictures `<img>` and stylesheets may not yet have loaded.
-- `load` -- not only HTML is loaded, but also all the external resources: images, styles etc.
-- `beforeunload/unload` -- the user is leaving the page.
+- `DOMContentLoaded` -- браузер повністю завантажив HTML, створно дерево DOM, але зовнішні ресурси, такі як зображення `<img>` і таблиці стилів, можливо, ще не завантажені.
+- `load` -- завантажується не тільки HTML, а й усі зовнішні ресурси: зображення, стилі тощо.
+- `beforeunload/unload` -- користувач покидає сторінку.
 
-Each event may be useful:
+Кожна подія може бути корисною:
 
-- `DOMContentLoaded` event -- DOM is ready, so the handler can lookup DOM nodes, initialize the interface.
-- `load` event -- external resources are loaded, so styles are applied, image sizes are known etc.
-- `beforeunload` event -- the user is leaving: we can check if the user saved the changes and ask them whether they really want to leave.
-- `unload` -- the user almost left, but we still can initiate some operations, such as sending out statistics.
+- `DOMContentLoaded` -- DOM готовий, тому обробник може шукати вузли DOM, ініціалізувати інтерфейс.
+- `load` -- завантажуються зовнішні ресурси, тому застосовуються стилі, відомі розміри зображень тощо.
+- `beforeunload` -- користувач покидає сторінку: ми можемо перевірити, чи зберіг користувач зміни, і запитати, чи дійсно він хоче піти.
+- `unload` -- користувач майже пішов, але ми все ще можемо ініціювати деякі операції, наприклад надсилати статистику.
 
-Let's explore the details of these events.
+Розглянемо подробиці цих подій.
 
 ## DOMContentLoaded
 
-The `DOMContentLoaded` event happens on the `document` object.
+Подія `DOMContentLoaded` відбувається на об’єкті `document`.
 
-We must use `addEventListener` to catch it:
+Ми повинні використовувати `addEventListener`, щоб зловити її:
 
 ```js
 document.addEventListener("DOMContentLoaded", ready);
-// not "document.onDOMContentLoaded = ..."
+// не "document.onDOMContentLoaded = ..."
 ```
 
-For instance:
+Наприклад:
 
 ```html run height=200 refresh
 <script>
   function ready() {
-    alert('DOM is ready');
+    alert('DOM готовий');
 
-    // image is not yet loaded (unless it was cached), so the size is 0x0
+    // зображення ще не завантажено (якщо воно не було кешоване), тому розмір 0x0
     alert(`Image size: ${img.offsetWidth}x${img.offsetHeight}`);
   }
 
@@ -45,79 +45,79 @@ For instance:
 <img id="img" src="https://en.js.cx/clipart/train.gif?speed=1&cache=0">
 ```
 
-In the example, the `DOMContentLoaded` handler runs when the document is loaded, so it can see all the elements, including `<img>` below.
+У прикладі обробник `DOMContentLoaded` запускається під час завантаження документа, тому він може бачити всі елементи, включаючи `<img>` нижче.
 
-But it doesn't wait for the image to load. So `alert` shows zero sizes.
+Але він не чекає на завантаження зображення. Таким чином, `alert` показує нульові розміри.
 
-At first sight, the `DOMContentLoaded` event is very simple. The DOM tree is ready -- here's the event. There are few peculiarities though.
+На перший погляд подія `DOMContentLoaded` дуже проста. Дерево DOM готове -- ось подія. Хоча є деякі особливості.
 
-### DOMContentLoaded and scripts
+### DOMContentLoaded та скрипти
 
-When the browser processes an HTML-document and comes across a `<script>` tag, it needs to execute before continuing building the DOM. That's a precaution, as scripts may want to modify DOM, and even `document.write` into it, so `DOMContentLoaded` has to wait.
+Коли браузер обробляє HTML-документ і зустрічає тег `<script>`, його потрібно виконати, перш ніж продовжити створення DOM. Це запобіжний захід, оскільки сценарії можуть захотіти змінити DOM і навіть `document.write` в нього, тому `DOMContentLoaded` має зачекати.
 
-So DOMContentLoaded definitely happens after such scripts:
+Отже, DOMContentLoaded обов’язково відбувається після таких скриптів:
 
 ```html run
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    alert("DOM ready!");
+    alert("DOM готовий!");
   });
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
 
 <script>
-  alert("Library loaded, inline script executed");
+  alert("Бібліотека завантажена, вбудований сценарій виконано");
 </script>
 ```
 
-In the example above, we first see "Library loaded...", and then "DOM ready!" (all scripts are executed).
+У наведеному вище прикладі ми спочатку бачимо "Бібліотеку завантажено...", а потім "DOM готовий!" (виконуються всі скрипти).
 
-```warn header="Scripts that don't block DOMContentLoaded"
-There are two exceptions from this rule:
-1. Scripts with the `async` attribute, that we'll cover [a bit later](info:script-async-defer), don't block `DOMContentLoaded`.
-2. Scripts that are generated dynamically with `document.createElement('script')` and then added to the webpage also don't block this event.
+```warn header="Скрипти, які не блокують DOMContentLoaded"
+З цього правила є два винятки:
+1. Скрипти з атрибутом `async`, який ми розглянемо [трохи пізніше] (info:script-async-defer), не блокують `DOMContentLoaded`.
+2. Сценарії, які створюються динамічно за допомогою `document.createElement('script')` і потім додаються на веб-сторінку, також не блокують цю подію.
 ```
 
-### DOMContentLoaded and styles
+### DOMContentLoaded та стилі
 
-External style sheets don't affect DOM, so `DOMContentLoaded` does not wait for them.
+Зовнішні таблиці стилів не впливають на DOM, тому `DOMContentLoaded` не чекає їх.
 
-But there's a pitfall. If we have a script after the style, then that script must wait until the stylesheet loads:
+Але є підводний камінь. Якщо у нас є скрипт після стилю, то він повинен почекати, поки таблиця стилів не завантажиться:
 
 ```html run
 <link type="text/css" rel="stylesheet" href="style.css">
 <script>
-  // the script doesn't not execute until the stylesheet is loaded
+  // скрипт не виконується, поки не буде завантажена таблиця стилів
   alert(getComputedStyle(document.body).marginTop);
 </script>
 ```
 
-The reason for this is that the script may want to get coordinates and other style-dependent properties of elements, like in the example above. Naturally, it has to wait for styles to load.
+Причина цього полягає в тому, що скрипт може захотіти отримати координати та інші властивості елементів, що залежать від стилю, як у наведеному вище прикладі. Природно, він повинен дочекатися завантаження стилів.
 
-As `DOMContentLoaded` waits for scripts, it now waits for styles before them as well.
+Оскільки `DOMContentLoaded` очікує на скрипти, тепер він також чекає на стилі перед ними.
 
-### Built-in browser autofill
+### Вбудована функція автозаповнення браузера
 
-Firefox, Chrome and Opera autofill forms on `DOMContentLoaded`.
+Firefox, Chrome і Opera автоматично заповнюють форми на `DOMContentLoaded`.
 
-For instance, if the page has a form with login and password, and the browser remembered the values, then on `DOMContentLoaded` it may try to autofill them (if approved by the user).
+Наприклад, якщо на сторінці є форма з логіном та паролем, і браузер запам’ятав значення, то на `DOMContentLoaded` він може спробувати їх автоматично заповнити (якщо це схвалено користувачем).
 
-So if `DOMContentLoaded` is postponed by long-loading scripts, then autofill also awaits. You probably saw that on some sites (if you use browser autofill) -- the login/password fields don't get autofilled immediately, but there's a delay till the page fully loads. That's actually the delay until the `DOMContentLoaded` event.
+Тож якщо `DOMContentLoaded` відкладається довгим завантаженням скриптів, то автозаповнення також чекає. Ви, мабуть, бачили, що на деяких сайтах (якщо ви використовуєте автозаповнення браузера) – поля логіна/паролю не заповнюються автоматично, але є затримка до повного завантаження сторінки. Фактично це затримка до події `DOMContentLoaded`.
 
 
 ## window.onload [#window-onload]
 
-The `load` event on the `window` object triggers when the whole page is loaded including styles, images and other resources. This event is available via the `onload` property.
+Подія `load` для об’єкта `window` запускається, коли завантажується вся сторінка, включаючи стилі, зображення та інші ресурси. Ця подія доступна через властивість `onload`.
 
-The example below correctly shows image sizes, because `window.onload` waits for all images:
+Наведений нижче приклад правильно показує розміри зображень, тому що `window.onload` чекає на всі зображення:
 
 ```html run height=200 refresh
 <script>
-  window.onload = function() { // can also use window.addEventListener('load', (event) => {
+  window.onload = function() { // можна також використовувати window.addEventListener('load', (event) => {
     alert('Page loaded');
 
-    // image is loaded at this time
+    // зображення завантажується в цей час
     alert(`Image size: ${img.offsetWidth}x${img.offsetHeight}`);
   };
 </script>
@@ -127,45 +127,45 @@ The example below correctly shows image sizes, because `window.onload` waits for
 
 ## window.onunload
 
-When a visitor leaves the page, the `unload` event triggers on `window`. We can do something there that doesn't involve a delay, like closing related popup windows.
+Коли відвідувач залишає сторінку, у `window` запускається подія `unload`. Ми можемо зробити щось, що не передбачає затримки, наприклад закрити пов’язані спливаючі вікна.
 
-The notable exception is sending analytics.
+Помітним винятком є надсилання аналітики.
 
-Let's say we gather data about how the page is used: mouse clicks, scrolls, viewed page areas, and so on.
+Скажімо, ми збираємо дані про те, як використовується сторінка: клацання мишею, прокручування, переглянуті області сторінки тощо.
 
-Naturally, `unload` event is when the user leaves us, and we'd like to save the data on our server.
+Як і слід було чекати, подія `unload` -- це коли користувач залишає нас, і ми хочемо зберегти дані на нашому сервері.
 
-There exists a special `navigator.sendBeacon(url, data)` method for such needs, described in the specification <https://w3c.github.io/beacon/>.
+Для таких потреб існує спеціальний метод `navigator.sendBeacon(url, data)`, описаний у специфікації <https://w3c.github.io/beacon/>.
 
-It sends the data in background. The transition to another page is not delayed: the browser leaves the page, but still performs `sendBeacon`.
+Він надсилає дані у фоновому режимі. Перехід на іншу сторінку не затримується: браузер залишає сторінку, але все одно виконує `sendBeacon`.
 
-Here's how to use it:
+Ось як ним користуватися:
 ```js
-let analyticsData = { /* object with gathered data */ };
+let analyticsData = { /* об’єкт із зібраними даними */ };
 
 window.addEventListener("unload", function() {
   navigator.sendBeacon("/analytics", JSON.stringify(analyticsData));
 });
 ```
 
-- The request is sent as POST.
-- We can send not only a string, but also forms and other formats, as described in the chapter <info:fetch>, but usually it's a stringified object.
-- The data is limited by 64kb.
+- Запит надсилається як POST.
+- Ми можемо надсилати не тільки рядок, а й форми та інші формати, як описано в главі <info:fetch>, але зазвичай це рядковий об’єкт.
+- Дані обмежені 64 Кб.
 
-When the `sendBeacon` request is finished, the browser probably has already left the document, so there's no way to get server response (which is usually empty for analytics).
+Коли запит `sendBeacon` завершено, браузер, ймовірно, вже залишив документ, тому немає можливості отримати відповідь сервера (яка зазвичай порожня для аналітики).
 
-There's also a `keepalive` flag for doing such "after-page-left" requests in  [fetch](info:fetch) method for generic network requests. You can find more information in the chapter <info:fetch-api>.
+Існує також прапор `keepalive` для виконання запитів після відходу зі сторінки у методі [fetch](info:fetch) для загальних мережевих запитів. Ви можете знайти більше інформації в розділі <info:fetch-api>.
 
 
-If we want to cancel the transition to another page, we can't do it here. But we can use another event -- `onbeforeunload`.
+Якщо ми хочемо скасувати перехід на іншу сторінку, ми не можемо цього зробити тут. Але ми можемо використовувати іншу подію -- `onbeforeunload`.
 
 ## window.onbeforeunload [#window.onbeforeunload]
 
-If a visitor initiated navigation away from the page or tries to close the window, the `beforeunload` handler asks for additional confirmation.
+Якщо відвідувач ініціював перехід зі сторінки або намагається закрити вікно, обробник `beforeunload` запитає додаткове підтвердження.
 
-If we cancel the event, the browser may ask the visitor if they are sure.
+Якщо ми скасовуємо подію, браузер може запитати відвідувача, чи впевнений він.
 
-You can try it by running this code and then reloading the page:
+Ви можете спробувати, запустивши цей код, а потім перезавантаживши сторінку:
 
 ```js run
 window.onbeforeunload = function() {
@@ -173,89 +173,89 @@ window.onbeforeunload = function() {
 };
 ```
 
-For historical reasons, returning a non-empty string also counts as canceling the event. Some time ago browsers used to show it as a message, but as the [modern specification](https://html.spec.whatwg.org/#unloading-documents) says, they shouldn't.
+З історичних причин повернення не порожнього рядка також вважається скасуванням події. Деякий час тому браузери відображали це як повідомлення, але, як говорить [сучасна специфікація](https://html.spec.whatwg.org/#unloading-documents), вони не повинні.
 
-Here's an example:
+Ось приклад:
 
 ```js run
 window.onbeforeunload = function() {
-  return "There are unsaved changes. Leave now?";
+  return "Є незбережені зміни. Піти зі сторінки?";
 };
 ```
 
-The behavior was changed, because some webmasters abused this event handler by showing misleading and annoying messages. So right now old browsers still may show it as a message, but aside of that -- there's no way to customize the message shown to the user.
+Поведінку було змінено, оскільки деякі веб-майстри зловживали цим обробником подій, показуючи оманливі та дратівливі повідомлення. Тож зараз старі браузери все ще можуть відображати це як повідомлення, але крім цього -- немає можливості налаштувати повідомлення, яке відображається користувачеві.
 
-````warn header="The `event.preventDefault()` doesn't work from a `beforeunload` handler"
-That may sound weird, but most browsers ignore `event.preventDefault()`.
+````warn header="`event.preventDefault()` не працює з `beforeunload` обробника"
+Може здатися дивним, але більшість браузерів ігнорують `event.preventDefault()`.
 
-Which means, following code may not work:
+Це означає, що наступний код може не працювати:
 ```js run
 window.addEventListener("beforeunload", (event) => {
-  // doesn't work, so this event handler doesn't do anything
+  // не працює, тому цей обробник подій нічого не робить
 	event.preventDefault();
 });
 ```
 
-Instead, in such handlers one should set `event.returnValue` to a string to get the result similar to the code above:
+Натомість у таких обробниках слід встановити `event.returnValue` у рядок, щоб отримати результат, подібний до коду вище:
 ```js run
 window.addEventListener("beforeunload", (event) => {
-  // works, same as returning from window.onbeforeunload
-	event.returnValue = "There are unsaved changes. Leave now?";
+  // працює, як і повернення з window.onbeforeunload
+	event.returnValue = "Є незбережені зміни. Піти зі сторінки?";
 });
 ```
 ````
 
 ## readyState
 
-What happens if we set the `DOMContentLoaded` handler after the document is loaded?
+Що станеться, якщо ми встановимо обробник `DOMContentLoaded` після завантаження документа?
 
-Naturally, it never runs.
+Зрозуміло, що він ніколи не запуститься.
 
-There are cases when we are not sure whether the document is ready or not. We'd like our function to execute when the DOM is loaded, be it now or later.
+Бувають випадки, коли ми не впевнені, готовий документ чи ні. Ми б хотіли, щоб наша функція виконувалася під час завантаження DOM, зараз чи пізніше.
 
-The `document.readyState` property tells us about the current loading state.
+Властивість `document.readyState` повідомляє нам про поточний стан завантаження.
 
-There are 3 possible values:
+Є 3 можливі значення:
 
-- `"loading"` -- the document is loading.
-- `"interactive"` -- the document was fully read.
-- `"complete"` -- the document was fully read and all resources (like images) are loaded too.
+- `"loading"` -- документ завантажується.
+- `"interactive"` -- документ повністю прочитано.
+- `"complete"` -- документ повністю прочитано, і всі ресурси (наприклад, зображення) також завантажені.
 
-So we can check `document.readyState` and setup a handler or execute the code immediately if it's ready.
+Тож ми можемо перевірити `document.readyState` і налаштувати обробник або негайно виконати код, якщо він готовий.
 
-Like this:
+Ось таким чином:
 
 ```js
 function work() { /*...*/ }
 
 if (document.readyState == 'loading') {
-  // still loading, wait for the event
+  // все ще завантажується, дочекайтеся події
   document.addEventListener('DOMContentLoaded', work);
 } else {
-  // DOM is ready!
+  // DOM готовий!
   work();
 }
 ```
 
-There's also the `readystatechange` event that triggers when the state changes, so we can print all these states like this:
+Існує також подія `readystatechange`, яка запускається, коли стан змінюється, тому ми можемо вивести всі ці стани таким чином:
 
 ```js run
-// current state
+// поточний стан
 console.log(document.readyState);
 
-// print state changes
+// вивести зміни стану
 document.addEventListener('readystatechange', () => console.log(document.readyState));
 ```
 
-The `readystatechange` event is an alternative mechanics of tracking the document loading state, it appeared long ago. Nowadays, it is rarely used.
+Подія `readystatechange` є альтернативною механікою відстеження стану завантаження документа, вона з’явилася давно. У наш час використовується рідко.
 
-Let's see the full events flow for the completeness.
+Давайте для повноти подивимося повний перебіг подій.
 
-Here's a document with `<iframe>`, `<img>` and handlers that log events:
+Ось документ із `<iframe>`, `<img>` та обробниками, які реєструють події:
 
 ```html
 <script>
-  log('initial readyState:' + document.readyState);
+  log('початковий readyState:' + document.readyState);
 
   document.addEventListener('readystatechange', () => log('readyState:' + document.readyState));
   document.addEventListener('DOMContentLoaded', () => log('DOMContentLoaded'));
@@ -271,10 +271,10 @@ Here's a document with `<iframe>`, `<img>` and handlers that log events:
 </script>
 ```
 
-The working example is [in the sandbox](sandbox:readystate).
+Робочий приклад [в пісочниці](sandbox:readystate).
 
-The typical output:
-1. [1] initial readyState:loading
+Типовий вихідний результат:
+1. [1] початковий readyState:loading
 2. [2] readyState:interactive
 3. [2] DOMContentLoaded
 4. [3] iframe onload
@@ -282,23 +282,23 @@ The typical output:
 6. [4] readyState:complete
 7. [4] window onload
 
-The numbers in square brackets denote the approximate time of when it happens. Events labeled with the same digit happen approximately at the same time (+- a few ms).
+Цифри в квадратних дужках позначають приблизний час, коли це станеться. Події, позначені однією цифрою, відбуваються приблизно в один і той же час (+- кілька мс).
 
-- `document.readyState` becomes `interactive` right before `DOMContentLoaded`. These two things actually mean the same.
-- `document.readyState` becomes `complete` when all resources (`iframe` and `img`) are loaded. Here we can see that it happens in about the same time as `img.onload` (`img` is the last resource) and `window.onload`. Switching to `complete` state means the same as `window.onload`. The difference is that `window.onload` always works after all other `load` handlers.
+- `document.readyState` стає `interactive` безпосередньо перед `DOMContentLoaded`. Ці дві речі насправді означають те саме.
+- `document.readyState` стає `complete`, коли всі ресурси (`iframe` та `img`) завантажуються. Тут ми бачимо, що це відбувається приблизно в той же час, що й `img.onload` (`img` – останній ресурс) і `window.onload`. Перехід у стан `complete` означає те саме, що і `window.onload`. Різниця в тому, що `window.onload` завжди працює після всіх інших обробників `load`.
 
 
-## Summary
+## Підсумки
 
-Page load events:
+Події завантаження сторінки:
 
-- The `DOMContentLoaded` event triggers on `document` when the DOM is ready. We can apply JavaScript to elements at this stage.
-  - Script such as `<script>...</script>` or `<script src="..."></script>` block DOMContentLoaded, the browser waits for them to execute.
-  - Images and other resources may also still continue loading.
-- The `load` event on `window` triggers when the page and all resources are loaded. We rarely use it, because there's usually no need to wait for so long.
-- The `beforeunload` event on `window` triggers when the user wants to leave the page. If we cancel the event, browser asks whether the user really wants to leave (e.g we have unsaved changes).
-- The `unload` event on `window` triggers when the user is finally leaving, in the handler we can only do simple things that do not involve delays or asking a user. Because of that limitation, it's rarely used. We can send out a network request with `navigator.sendBeacon`.
-- `document.readyState` is the current state of the document, changes can be tracked in the `readystatechange` event:
-  - `loading` -- the document is loading.
-  - `interactive` -- the document is parsed, happens at about the same time as `DOMContentLoaded`, but before it.
-  - `complete` -- the document and resources are loaded, happens at about the same time as `window.onload`, but before it.
+- Подія `DOMContentLoaded` запускається в документі, коли DOM готовий. На цьому етапі ми можемо застосувати JavaScript до елементів.
+  - Скрипти, такі як `<script>...</script>` або `<script src="..."></script>` блокують DOMContentLoaded, браузер чекає їх виконання.
+  - Зображення та інші ресурси також можуть продовжувати завантажуватися.
+- Подія `load` у `window` запускається, коли сторінка та всі ресурси завантажуються. Ми рідко використовуємо її, тому що зазвичай не потрібно так довго чекати.
+- Подія `beforeunload` у `window` запускається, коли користувач хоче залишити сторінку. Якщо ми скасовуємо подію, браузер запитає, чи дійсно користувач хоче вийти (наприклад, у нас є незбережені зміни).
+- Подія `unload` у `window` запускається, коли користувач нарешті залишає сторінку, в обробнику ми можемо робити лише прості речі, які не передбачають затримок чи запиту користувача. Через це обмеження він використовується рідко. Ми можемо надіслати мережевий запит за допомогою `navigator.sendBeacon`.
+- `document.readyState` -- це поточний стан документа, зміни можна відстежувати в події `readystatechange`:
+  - `loading` -- документ завантажується.
+  - `interactive` -- документ прочитано, відбувається приблизно в той же час, що і `DOMContentLoaded`, але перед ним.
+  - `complete` -- документ і ресурси завантажуються, це відбувається приблизно в той же час, що і `window.onload`, але раніше.
