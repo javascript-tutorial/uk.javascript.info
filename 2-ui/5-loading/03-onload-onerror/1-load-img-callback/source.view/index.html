@@ -7,10 +7,10 @@
 
   <script>
     function preloadImages(sources, callback) {
-      /* your code */
+      /* ваш код */
     }
 
-    // ---------- The test ----------
+    // ---------- Тест ----------
 
     let sources = [
       "https://en.js.cx/images-load/1.jpg",
@@ -18,13 +18,13 @@
       "https://en.js.cx/images-load/3.jpg"
     ];
 
-    // add random characters to prevent browser caching
+    // додайте випадкові символи, щоб запобігти кешуванню браузера
     for (let i = 0; i < sources.length; i++) {
       sources[i] += '?' + Math.random();
     }
 
-    // for each image,
-    // let's create another img with the same src and check that we have its width immediately
+    // для кожного зображення,
+    // давайте створимо інший img з тим же src і перевіримо, чи маємо його ширину відразу
     function testLoaded() {
       let widthSum = 0;
       for (let i = 0; i < sources.length; i++) {
@@ -35,7 +35,7 @@
       alert(widthSum);
     }
 
-    // every image is 100x100, the total width should be 300
+    // кожне зображення має розмір 100x100, загальна ширина повинна бути 300
     preloadImages(sources, testLoaded);
   </script>
 
