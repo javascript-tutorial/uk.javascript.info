@@ -107,7 +107,11 @@ document.addEventListener('keydown', function(event) {
 
 Для надійного відстеження символів, що залежать від розкладки, `event.key` може бути кращим рішенням.
 
+<<<<<<< HEAD
 З іншого боку, `event.code` має перевагу, так як залишається завжди однаковим, прив’язаним до місця розташування фізичної клавіші, навіть якщо відвідувач змінює мови. Тому гарячі клавіші, які покладаються на нього, працюють добре навіть у разі перемикання мови.
+=======
+On the other hand, `event.code` has the benefit of staying always the same, bound to the physical key location. So hotkeys that rely on it work well even in case of a language switch.
+>>>>>>> 0f748275e20a81700c8514f22a7cc80c4422d09c
 
 Чи хочемо ми обробляти клавіші, що залежать від розкладки? Тоді `event.key` -- це вихід.
 

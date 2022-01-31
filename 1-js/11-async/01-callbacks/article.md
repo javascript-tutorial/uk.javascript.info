@@ -196,9 +196,15 @@ loadScript('/my/script.js', function(error, script) {
 
 ## Пекельна піраміда
 
+<<<<<<< HEAD
 З першого погляду це життєздатний спосіб асинхронного кодування. І це дійсно так. Для одного або, можливо, двох вкладених викликів це виглядає добре.
 
 Але для кількох асинхронних дій, які слідують одна за одною, ми матимемо такий код:
+=======
+At first glance, it looks like a viable approach to asynchronous coding. And indeed it is. For one or maybe two nested calls it looks fine.
+
+But for multiple asynchronous actions that follow one after another, we'll have code like this:
+>>>>>>> 0f748275e20a81700c8514f22a7cc80c4422d09c
 
 ```js
 loadScript('1.js', function(error, script) {
@@ -228,10 +234,17 @@ loadScript('1.js', function(error, script) {
 });
 ```
 
+<<<<<<< HEAD
 У коді вище:
 1. Завантажуємо `1.js`, продовжуємо, якщо немає помилки.
 2. Завантажуємо `2.js`, продовжуємо, якщо немає помилки.
 3. Ми завантажуємо `3.js`, продовжуємо, якщо немає помилки -- робимо щось інше `(*)`.
+=======
+In the code above:
+1. We load `1.js`, then if there's no error...
+2. We load `2.js`, then if there's no error...
+3. We load `3.js`, then if there's no error -- do something else `(*)`.
+>>>>>>> 0f748275e20a81700c8514f22a7cc80c4422d09c
 
 Оскільки виклики стають більш вкладеними, код стає глибшим і його стає все важче підтримувати, особливо якщо замість `...` у нас є реальний код, який може включати більше циклів, умовних операторів тощо.
 
@@ -299,7 +312,11 @@ function step3(error, script) {
 }
 ```
 
+<<<<<<< HEAD
 Бачите? Код робить те саме, і тепер немає глибокого вкладення, тому що ми зробили кожну дію окремою функцією верхнього рівня.
+=======
+See? It does the same thing, and there's no deep nesting now because we made every action a separate top-level function.
+>>>>>>> 0f748275e20a81700c8514f22a7cc80c4422d09c
 
 Це працює, але код виглядає розірваним на частини. Його важко читати, і ви, напевно, помітили, що під час читання потрібно стрибати між частинами. Це незручно, особливо якщо читач не знайомий з кодом і не знає, що за чим слідує.
 

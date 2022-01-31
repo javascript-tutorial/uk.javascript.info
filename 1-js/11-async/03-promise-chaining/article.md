@@ -120,7 +120,11 @@ new Promise(function(resolve, reject) {
 });
 ```
 
+<<<<<<< HEAD
 Тут перший `.then` показує `1` і повертає `new Promise(…)` у рядку `(*)`. Через одну секунду він вирішується, а результат (аргумент `resolve`, тут це `результат * 2`) передається обробнику другого `.then`. Цей обробник знаходиться в рядку `(**)`, він показує `2` і робить те ж саме.
+=======
+Here the first `.then` shows `1` and returns `new Promise(…)` in the line `(*)`. After one second it resolves, and the result (the argument of `resolve`, here it's `result * 2`) is passed on to the handler of the second `.then`. That handler is in the line `(**)`, it shows `2` and does the same thing.
+>>>>>>> 0f748275e20a81700c8514f22a7cc80c4422d09c
 
 Отже, результат такий же, як і в попередньому прикладі: 1 -> 2 -> 4, але тепер із затримкою в 1 секунду між викликами `alert`.
 

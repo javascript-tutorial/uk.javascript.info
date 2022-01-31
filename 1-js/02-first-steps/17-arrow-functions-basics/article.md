@@ -33,7 +33,11 @@ let sum = function(a, b) {
 alert( sum(1, 2) ); // 3
 ```
 
+<<<<<<< HEAD
 Як ви бачите, `(a, b) => a + b` означає функцію, яка приймає два аргументи `a` і `b`. Після запуску, вона виконає вираз `a + b` і поверне результат.
+=======
+As you can see, `(a, b) => a + b` means a function that accepts two arguments named `a` and `b`. Upon the execution, it evaluates the expression `a + b` and returns the result.
+>>>>>>> 0f748275e20a81700c8514f22a7cc80c4422d09c
 
 - Якщо функція має лише один аргумент, тоді дужки навколо параметрів можна опускати, що дозволить записати її ще коротше.
 
@@ -86,7 +90,11 @@ welcome();
 let sum = (a, b) => {  // фігурна дужка починає блок багаторядкової функції
   let result = a + b;
 *!*
+<<<<<<< HEAD
   return result; // якщо ми використовуємо фігурні дужки, то "return" дозволить повернути результат
+=======
+  return result; // if we use curly braces, then we need an explicit "return"
+>>>>>>> 0f748275e20a81700c8514f22a7cc80c4422d09c
 */!*
 };
 
