@@ -1,42 +1,42 @@
-# Coordinates
+# Координати
 
-To move elements around we should be familiar with coordinates.
+Для того, щоб переміщувати елементи на екрані, ми повинні познайомитися з системи координат.
 
-Most JavaScript methods deal with one of two coordinate systems:
+Більшість відповідних методів JavaScript працюють з однією з двох систем координат:
 
-1. **Relative to the window** - similar to `position:fixed`, calculated from the window top/left edge.
-    - we'll denote these coordinates as `clientX/clientY`, the reasoning for such name will become clear later, when we study event properties.
-2. **Relative to the document** - similar to `position:absolute` in the document root, calculated from the document top/left edge.
-    - we'll denote them `pageX/pageY`.
+1. **Відносно вікна браузера** - схоже на `position:fixed`, обчислюється від верхнього лівого кута вікна браузера.
+   - позначимо ці координати як `clientX/clientY`, аргументація такої назви стане зрозуміла пізніше, коли ми вивчимо властивості події.
+2. **Відносно документа** - схоже на `position:absolute` у корені документа, обчислюється від верхнього лівого кута документа.
+   - позначимо їх як `pageX/pageY`.
 
-When the page is scrolled to the very beginning, so that the top/left corner of the window is exactly the document top/left corner, these coordinates equal each other. But after the document shifts, window-relative coordinates of elements change, as elements move across the window, while document-relative coordinates remain the same.
+Коли сторінка прокручена до самого початку, то верхній лівий кут вікна точно збігається з верхнім лівим кутом документа, тому їх системи координат також збігаються. Але якщо документ прокрутити, то координати елементів відносно вікна змінюються, а координати, відносно до документа, залишаються сталими.
 
-On this picture we take a point in the document and demonstrate its coordinates before the scroll (left) and after it (right):
+На цьому малюнку ми беремо точку в документі та демонструємо її координати перед прокруткою (ліворуч) і після неї (праворуч):
 
 ![](document-and-window-coordinates-scrolled.svg)
 
-When the document scrolled:
-- `pageY` - document-relative coordinate stayed the same, it's counted from the document top (now scrolled out).
-- `clientY` - window-relative coordinate did change (the arrow became shorter), as the same point became closer to window top.
+Після прокрутки документа:
+- `pageY` - координата відносно документа залишилася незмінною, оскільки вона відраховується від верхнього краю документа (який зараз прокручений вгору).
+- `clientY` - координата відносно до вікна змінилася (стрілка стала коротшою), оскільки та сама точка стала ближче до вершини вікна.
 
-## Element coordinates: getBoundingClientRect
+## Координати елемента відносно вікна: getBoundingClientRect
 
-The method `elem.getBoundingClientRect()` returns window coordinates for a minimal rectangle that encloses `elem` as an object of built-in [DOMRect](https://www.w3.org/TR/geometry-1/#domrect) class.
+Метод `elem.getBoundingClientRect()` повертає координати у контексті вікна для мінімального за розмірами прямокутника, який вміщує `elem` у вигляді об'єкта вбудованого класу [DOMRect](https://www.w3.org/TR/geometry-1/#domrect).
 
-Main `DOMRect` properties:
+Основні властивості `DOMRect`:
 
-- `x/y` -- X/Y-coordinates of the rectangle origin relative to window,
-- `width/height` -- width/height of the rectangle (can be negative).
+- `x/y` -- координати X/Y початку прямокутника відносно вікна,
+- `width/height` -- ширина/висота прямокутника (можуть бути від'ємними).
 
-Additionally, there are derived properties:
+Крім того, в об'єкті містяться такі похідні властивості:
 
-- `top/bottom` -- Y-coordinate for the top/bottom rectangle edge,
-- `left/right` -- X-coordinate for the left/right rectangle edge.
+- `top/bottom` -- Y-координата для верхнього/нижнього краю прямокутника,
+- `left/right` -- X-координата для лівого/правого краю прямокутника.
 
 ```online
-For instance click this button to see its window coordinates:
+Наприклад, натисніть на цю кнопку, щоб побачити ЇЇ координати відносно вікна:
 
-<p><input id="brTest" type="button" value="Get coordinates using button.getBoundingClientRect() for this button" onclick='showRect(this)'/></p>
+<p><input id="brTest" type="button" value="Отримати координати цієї кнопки за допомогою button.getBoundingClientRect()" onclick='showRect(this)'/></p>
 
 <script>
 function showRect(elem) {
@@ -53,66 +53,66 @@ right:${r.right}
 }
 </script>
 
-If you scroll the page and repeat, you'll notice that as window-relative button position changes, its window coordinates (`y/top/bottom` if you scroll vertically) change as well.
+Якщо ви прокрутите сторінку та спробуєте знову, то помітите, що по мірі зміни положення кнопки, змінюються і ЇЇ координати відносно вікна (`y/top/bottom`, при прокрутці по вертикалі).
 ```
 
-Here's the picture of `elem.getBoundingClientRect()` output:
+Ось зображення з результатом виклику `elem.getBoundingClientRect()`:
 
 ![](coordinates.svg)
 
-As you can see, `x/y` and `width/height` fully describe the rectangle. Derived properties can be easily calculated from them:
+Як бачите, `x/y` та `width/height` повністю описують прямокутник. З них можна легко обчислити похідні властивості:
 
 - `left = x`
 - `top = y`
 - `right = x + width`
 - `bottom = y + height`
 
-Please note:
+Зверніть увагу:
 
-- Coordinates may be decimal fractions, such as `10.5`. That's normal, internally browser uses fractions in calculations. We don't have to round them when setting to `style.left/top`.
-- Coordinates may be negative. For instance, if the page is scrolled so that `elem` is now above the window, then `elem.getBoundingClientRect().top` is negative.
+- Координати можуть бути десятковими дробами, наприклад `10.5`. Це нормально, тому, що внутрішньо браузер використовує дроби у своїх обчисленнях. Нам не потрібно їх округлювати, коли встановлюємо значення `style.left/top`.
+– Координати можуть бути від’ємними. Наприклад, якщо сторінка прокручена таким чином, що `elem` знаходиться над видимою частиною вікна, то `elem.getBoundingClientRect().top` буде від’ємними.
 
-```smart header="Why derived properties are needed? Why does `top/left` exist if there's `x/y`?"
-Mathematically, a rectangle is uniquely defined with its starting point `(x,y)` and the direction vector `(width,height)`. So the additional derived properties are for convenience.
+```smart header="Навіщо потрібні похідні властивості? Чому існує `top/left`, якщо є `x/y`?"
+Математично прямокутник однозначно визначається його початковою точкою `(x,y)` і вектором напрямку `(width,height)`. Тому додаткові похідні властивості призначені для зручності.
 
-Technically it's possible for `width/height` to be negative, that allows for "directed" rectangle, e.g. to represent mouse selection with properly marked start and end.
+Технічно можливо, щоб `width/height` були від’ємними, це дозволяє використовувати «спрямований» прямокутник, наприклад для представлення виділення мишею з правильно позначеними початком і кінцем.
 
-Negative `width/height` values mean that the rectangle starts at its bottom-right corner and then "grows" left-upwards.
+Від'ємні значення `width/height` означають, що прямокутник починається з нижнього правого кута, а потім "зростає" ліворуч вгору.
 
-Here's a rectangle with negative `width` and `height` (e.g. `width=-200`, `height=-100`):
+Ось прямокутник із від’ємними значеннями `width` і `height` (наприклад, `width=-200`, `height=-100`):
 
 ![](coordinates-negative.svg)
 
-As you can see, `left/top` do not equal `x/y` in such case.
+Як бачите, у такому випадку, `left/top` не дорівнює `x/y`.
 
-In practice though, `elem.getBoundingClientRect()` always returns positive width/height, here we mention negative `width/height` only for you to understand why these seemingly duplicate properties are not actually duplicates.
+Однак на практиці `elem.getBoundingClientRect()` завжди повертає позитивні значення ширини/висоти, тут ми згадуємо про негативні значення `width/height` лише для того, щоб ви зрозуміли, чому ці, здавалося б, повторювані властивості насправді не є повторюваними.
 ```
 
-```warn header="Internet Explorer: no support for `x/y`"
-Internet Explorer doesn't support `x/y` properties for historical reasons.
+```warn header="Internet Explorer: немає підтримки `x/y`"
+Internet Explorer не підтримує властивості `x/y` з історичних причин.
 
-So we can either make a polyfill (add getters in `DomRect.prototype`) or just use `top/left`, as they are always the same as `x/y` for positive `width/height`, in particular in the result of `elem.getBoundingClientRect()`.
+Тож ми можемо або створити поліфіл (додати гетери в `DomRect.prototype`), або просто використовувати `top/left`, оскільки вони завжди дорівнюють `x/y` для додатніх `width/height`, зокрема в результаті виклику `elem.getBoundingClientRect()`.
 ```
 
-```warn header="Coordinates right/bottom are different from CSS position properties"
-There are obvious similarities between window-relative coordinates and CSS `position:fixed`.
+```warn header="Координати right/bottom відрізняються від однойменних властивостей CSS"
+Існує очевидна подібність між координатами відносними до вікна, та CSS `position:fixed`.
 
-But in CSS positioning, `right` property means the distance from the right edge, and `bottom` property means the distance from the bottom edge.
+Але в CSS властивість `right` означає відстань від правого краю, а властивість `bottom` означає відстань від нижнього краю.
 
-If we just look at the picture above, we can see that in JavaScript it is not so. All window coordinates are counted from the top-left corner, including these ones.
+Якщо подивимося на малюнок вище, то побачимо, що в JavaScript це не так. Усі координати вікна відраховуються від верхнього лівого кута, включаючи `right` та `bottom`.
 ```
 
 ## elementFromPoint(x, y) [#elementFromPoint]
 
-The call to `document.elementFromPoint(x, y)` returns the most nested element at window coordinates `(x, y)`.
+Виклик `document.elementFromPoint(x, y)` повертає найбільш вкладений елемент вікна з координатами `(x, y)`.
 
-The syntax is:
+Синтаксис такий:
 
 ```js
 let elem = document.elementFromPoint(x, y);
 ```
 
-For instance, the code below highlights and outputs the tag of the element that is now in the middle of the window:
+Наприклад, наведений нижче код виділяє та виводить тег елемента, який зараз знаходиться в середині вікна:
 
 ```js run
 let centerX = document.documentElement.clientWidth / 2;
@@ -124,43 +124,43 @@ elem.style.background = "red";
 alert(elem.tagName);
 ```
 
-As it uses window coordinates, the element may be different depending on the current scroll position.
+Оскільки код використовує координати відносно вікна, то елемент може відрізнятися залежно від поточної позиції прокручування.
 
-````warn header="For out-of-window coordinates the `elementFromPoint` returns `null`"
-The method `document.elementFromPoint(x,y)` only works if `(x,y)` are inside the visible area.
+````warn header="Для координат, які знаходяться поза вікном `elementFromPoint` повертає `null`"
+Метод `document.elementFromPoint(x,y)` працює, лише якщо координати `(x,y)` знаходяться у видимій області вікна.
 
-If any of the coordinates is negative or exceeds the window width/height, then it returns `null`.
+Якщо будь-яка з координат від'ємна, або більша ніж ширина/висота вікна, то повертається `null`.
 
-Here's a typical error that may occur if we don't check for it:
+Ось типова помилка, яка може виникнути, якщо не додати перевірку:
 
 ```js
 let elem = document.elementFromPoint(x, y);
-// if the coordinates happen to be out of the window, then elem = null
+// якщо координати виходять за межі вікна, то elem = null
 *!*
-elem.style.background = ''; // Error!
+elem.style.background = ''; // Помилка!
 */!*
 ```
 ````
 
-## Using for "fixed" positioning
+## Використання разом з "position:fixed"
 
-Most of time we need coordinates in order to position something.
+Найчастіше нам потрібні координати, щоб щось розташувати.
 
-To show something near an element, we can use `getBoundingClientRect` to get its coordinates, and then CSS `position` together with `left/top` (or `right/bottom`).
+Щоб показати щось поблизу елемента, ми можемо використати `getBoundingClientRect` для отримання його координат, а потім CSS `position` разом із `left/top` (або `right/bottom`).
 
-For instance, the function `createMessageUnder(elem, html)` below shows the message under `elem`:
+Наприклад, наведена нижче функція `createMessageUnder(elem, html)` виводить повідомлення під елементом `elem`:
 
 ```js
 let elem = document.getElementById("coords-show-mark");
 
 function createMessageUnder(elem, html) {
-  // create message element
+  // створюємо елемент повідомлення
   let message = document.createElement('div');
-  // better to use a css class for the style here
+  // тут краще було б використати CSS клас
   message.style.cssText = "position:fixed; color: red";
 
 *!*
-  // assign coordinates, don't forget "px"!
+  // призначаємо координати, не забуваємо про "px"!
   let coords = elem.getBoundingClientRect();
 
   message.style.left = coords.left + "px";
@@ -172,45 +172,45 @@ function createMessageUnder(elem, html) {
   return message;
 }
 
-// Usage:
-// add it for 5 seconds in the document
-let message = createMessageUnder(elem, 'Hello, world!');
+// Використання:
+// додаємо повідомлення у документ на 5 секунд 
+let message = createMessageUnder(elem, 'Привіт, світ!');
 document.body.append(message);
 setTimeout(() => message.remove(), 5000);
 ```
 
 ```online
-Click the button to run it:
+Натисніть кнопку, щоб запустити приклад:
 
-<button id="coords-show-mark">Button with id="coords-show-mark", the message will appear under it</button>
+<button id="coords-show-mark">Кнопка з id="coords-show-mark", під нею з'явиться повідомлення</button>
 ```
 
-The code can be modified to show the message at the left, right, below, apply CSS animations to "fade it in" and so on. That's easy, as we have all the coordinates and sizes of the element.
+Код можна змінити, щоб показати повідомлення ліворуч, праворуч, знизу, застосувати CSS анімацію, і так далі. Це легко, оскільки у нас є всі координати та розміри елемента.
 
-But note the important detail: when the page is scrolled, the message flows away from the button.
+Але зверніть увагу на важливу деталь: коли сторінка прокручується, повідомлення відпливає від кнопки.
 
-The reason is obvious: the message element relies on `position:fixed`, so it remains at the same place of the window while the page scrolls away.
+Причина очевидна: елемент повідомлення позиціонується за допомогою `position:fixed`, тому він залишається на тому ж місці у вікні, під час прокрутки сторінки.
 
-To change that, we need to use document-based coordinates and `position:absolute`.
+Щоб це змінити, нам потрібно використовувати систему координат відносно документа та `position:absolute`.
 
-## Document coordinates [#getCoords]
+## Координати відносно документа [#getCoords]
 
-Document-relative coordinates start from the upper-left corner of the document, not the window.
+Координати, відносні до документа, починаються з верхнього лівого кута документа, а не вікна.
 
-In CSS, window coordinates correspond to `position:fixed`, while document coordinates are similar to `position:absolute` on top.
+У CSS координати відносно вікна відповідають `position:fixed`, тоді як координати відносно документа подібні до `position:absolute` на верхньому рівні вкладеності.
 
-We can use `position:absolute` and `top/left` to put something at a certain place of the document, so that it remains there during a page scroll. But we need the right coordinates first.
+Ми можемо використовувати `position:absolute` і `top/left`, щоб розмістити щось у певному місці документа таким чином, щоб воно залишалося там навіть під час прокручування сторінки. Але спочатку нам потрібно отримати правильні координати.
 
-There's no standard method to get the document coordinates of an element. But it's easy to write it.
+Не існує стандартного методу для отримання координат елемента відносно до документа. Але написати його легко.
 
-The two coordinate systems are connected by the formula:
-- `pageY` = `clientY` + height of the scrolled-out vertical part of the document.
-- `pageX` = `clientX` + width of the scrolled-out horizontal part of the document.
+Дві системи координат з'єднуються за формулою:
+- `pageY` = `clientY` + висота прокрученої вертикальної частини документа.
+- `pageX` = `clientX` + ширина прокрученої горизонтальної частини документа.
 
-The function `getCoords(elem)` will take window coordinates from `elem.getBoundingClientRect()` and add the current scroll to them:
+Функція `getCoords(elem)` візьме координати вікна з `elem.getBoundingClientRect()` і додасть до них значення поточної прокрутки:
 
 ```js
-// get document coordinates of the element
+// отримуємо координати елемента відносно документа
 function getCoords(elem) {
   let box = elem.getBoundingClientRect();
 
@@ -223,9 +223,9 @@ function getCoords(elem) {
 }
 ```
 
-If in the example above we used it with `position:absolute`, then the message would stay near the element on scroll.
+Якщо б у наведеному вище прикладі ми використовували його разом з `position:absolute`, то повідомлення залишалося б біля елемента під час прокручування.
 
-The modified `createMessageUnder` function:
+Модифікована функція `createMessageUnder`:
 
 ```js
 function createMessageUnder(elem, html) {
@@ -243,13 +243,13 @@ function createMessageUnder(elem, html) {
 }
 ```
 
-## Summary
+## Підсумки
 
-Any point on the page has coordinates:
+Будь-яка точка на сторінці має координати:
 
-1. Relative to the window -- `elem.getBoundingClientRect()`.
-2. Relative to the document -- `elem.getBoundingClientRect()` plus the current page scroll.
+1. Відносно вікна -- `elem.getBoundingClientRect()`.
+2. Відносно документа -- `elem.getBoundingClientRect()` плюс значення поточної прокрутки.
 
-Window coordinates are great to use with `position:fixed`, and document coordinates do well with `position:absolute`.
+Координати відносно вікна зручно використовувати з `position:fixed`, а координати відносно документа з `position:absolute`.
 
-Both coordinate systems have their pros and cons; there are times we need one or the other one, just like CSS `position` `absolute` and `fixed`.
+Обидві системи координат мають свої плюси і мінуси. Іноді нам потрібна та чи інша, так само я і в CSS мы обираємо між CSS `position` `absolute` та `fixed`.

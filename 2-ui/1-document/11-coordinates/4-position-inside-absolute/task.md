@@ -1,28 +1,28 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Position the note inside (absolute)
+# Розташуйте примітку всередині елемента (абсолютне позиціювання)
 
-Extend the previous task <info:task/position-at-absolute>: teach the function  `positionAt(anchor, position, elem)` to insert `elem` inside the `anchor`.
+Розширте попереднє завдання <info:task/position-at-absolute>: навчіть функцію `positionAt(anchor, position, elem)` вставляти `elem` всередині `anchor`.
 
-New values for `position`:
+Нові значення для `position`:
 
-- `top-out`, `right-out`, `bottom-out` -- work the same as before, they insert the `elem` over/right/under `anchor`.
-- `top-in`, `right-in`, `bottom-in` -- insert `elem` inside the `anchor`: stick it to the upper/right/bottom edge.
+- `top-out`, `right-out`, `bottom-out` -- працюють так само як і раніше, вони вставляють `elem` над/праворуч/під елементом `anchor`.
+- `top-in`, `right-in`, `bottom-in` -- вставляють `elem` всередину елемента `anchor`, та прикріпляють його до верхнього/правого/нижнього краю.
 
-For instance:
+Наприклад:
 
 ```js
-// shows the note above blockquote
+// показує примітку над елементом blockquote
 positionAt(blockquote, "top-out", note);
 
-// shows the note inside blockquote, at the top
+// показує примітку всередині елемента blockquote поряд з верхнім краєм
 positionAt(blockquote, "top-in", note);
 ```
 
-The result:
+Результат:
 
 [iframe src="solution" height="310" border="1" link]
 
-As the source code, take the solution of the task <info:task/position-at-absolute>.
+Для початку візьміть розв'язання задачі <info:task/position-at-absolute>.

@@ -1,11 +1,11 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Show a note near the element (absolute)
+# Покажіть примітку біля елемента (абсолютне позиціювання)
 
-Modify the solution of the [previous task](info:task/position-at) so that the note uses `position:absolute` instead of `position:fixed`.
+Скорегуйте рішення [попереднього завдання](info:task/position-at), щоб для позиціювання примітки використовувалося `position:absolute` замість `position:fixed`.
 
-That will prevent its "runaway" from the element when the page scrolls.
+Це запобіжить «втечу» нотатки від елемента під час прокручування сторінки.
 
-Take the solution of that task as a starting point. To test the scroll, add the style `<body style="height: 2000px">`.
+Візьміть розв’язання попереднього завдання за відправну точку. Щоб перевірити прокрутку, додайте стиль `<body style="height: 2000px">`.

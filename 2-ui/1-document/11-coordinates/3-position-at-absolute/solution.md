@@ -1,4 +1,4 @@
-The solution is actually pretty simple:
+Рішення насправді досить просте:
 
-- Use `position:absolute` in CSS instead of `position:fixed` for `.note`.
-- Use the function [getCoords()](info:coordinates#getCoords) from the chapter <info:coordinates> to get document-relative coordinates.
+- Використовуйте `position:absolute` у CSS замість `position:fixed` для елемента `.note`.
+- Використовуйте функцію [getCoords()](info:coordinates#getCoords) з розділу <info:coordinates>, щоб отримати координати відносно до документа.
