@@ -1,95 +1,95 @@
-# Popups and window methods
+# Спливаючі вікна та методи window
 
-A popup window is one of the oldest methods to show additional document to user.
+Спливаюче вікно є одним із найстаріших методів показу додаткового документа користувачеві.
 
-Basically, you just run:
+В основному, ви просто запускаєте:
 ```js
 window.open('https://javascript.info/')
 ```
 
-...And it will open a new window with given URL. Most modern browsers are configured to open url in new tabs instead of separate windows.
+...І відкриється нове вікно з заданою URL-адресою. Більшість сучасних браузерів налаштовано на відкриття URL-адрес у нових вкладках замість окремих вікон.
 
-Popups exist from really ancient times. The initial idea was to show another content without closing the main window. As of now, there are other ways to do that: we can load content dynamically with [fetch](info:fetch) and show it in a dynamically generated `<div>`. So, popups is not something we use everyday.
+Спливаючі вікна існують з давніх часів. Початкова ідея полягала в тому, щоб показати інший вміст, не закриваючи основне вікно. На даний момент є інші способи зробити це: ми можемо динамічно завантажувати вміст за допомогою [fetch](info:fetch) і показувати його у динамічно згенерованому `<div>`. Отже, спливаючі вікна -- це не те, що ми використовуємо щодня.
 
-Also, popups are tricky on mobile devices, that don't show multiple windows simultaneously.
+Крім того, спливаючі вікна не дуже зручні для мобільних пристроїв, які не показують кілька вікон одночасно.
 
-Still, there are tasks where popups are still used, e.g. for OAuth authorization (login with Google/Facebook/...), because:
+Проте є завдання, де все ще використовуються спливаючі вікна, напр. для авторизації OAuth (вхід через Google/Facebook/...), тому що:
 
-1. A popup is a separate window which has its own independent JavaScript environment. So opening a popup from a third-party, non-trusted site is safe.
-2. It's very easy to open a popup.
-3. A popup can navigate (change URL) and send messages to the opener window.
+1. Спливаюче вікно -- це окреме вікно, яке має власне незалежне середовище JavaScript. Тому відкриття спливаючого вікна із стороннього ненадійного сайту безпечно.
+2. Відкрити спливаюче вікно дуже легко.
+3. Спливаюче вікно може здійснювати навігацію (змінювати URL-адресу) та надсилати повідомлення в основне вікно.
 
-## Popup blocking
+## Блокування спливаючих вікон
 
-In the past, evil sites abused popups a lot. A bad page could open tons of popup windows with ads. So now most browsers try to block popups and protect the user.
+У минулому погані сайти часто зловживали спливаючими вікнами. Погана сторінка може відкрити безліч спливаючих вікон з рекламою. Тому зараз більшість браузерів намагаються блокувати спливаючі вікна та захистити користувача.
 
-**Most browsers block popups if they are called outside of user-triggered event handlers like `onclick`.**
+**Більшість браузерів блокують спливаючі вікна, якщо вони викликані за межами обробників подій, ініційованих користувачем, як-от `onclick`.**
 
-For example:
+Наприклад:
 ```js
-// popup blocked
+// спливаюче вікно заблоковано
 window.open('https://javascript.info');
 
-// popup allowed
+// спливаюче вікно дозволено
 button.onclick = () => {
   window.open('https://javascript.info');
 };
 ```
 
-This way users are somewhat protected from unwanted popups, but the functionality is not disabled totally.
+Таким чином користувачі дещо захищені від небажаних спливаючих вікон, але функціональність не відключається повністю.
 
-What if the popup opens from `onclick`, but after `setTimeout`? That's a bit tricky.
+Що робити, якщо спливаюче вікно відкривається з `onclick`, але після `setTimeout`? Це трохи складніше.
 
-Try this code:
+Спробуйте цей код:
 
 ```js run
-// open after 3 seconds
+// відкривається через 3 секунди
 setTimeout(() => window.open('http://google.com'), 3000);
 ```
 
-The popup opens in Chrome, but gets blocked in Firefox.
+Спливаюче вікно відкривається в Chrome, але блокується у Firefox.
 
-...If we decrease the delay, the popup works in Firefox too:
+...Якщо ми зменшимо затримку, спливаюче вікно працюватиме і у Firefox:
 
 ```js run
-// open after 1 seconds
+// відкривається через 1 секунду
 setTimeout(() => window.open('http://google.com'), 1000);
 ```
 
-The difference is that Firefox treats a timeout of 2000ms or less are acceptable, but after it -- removes the "trust", assuming that now it's "outside of the user action". So the first one is blocked, and the second one is not.
+Різниця полягає в тому, що Firefox допускає тайм-аут у 2000 мс або менше, але все, що понад -- не викликає його довіри, так як передбачається, що у разі відкриття вікна все відбувається без відома користувача. Саме тому спливаюче вікно із першого прикладу буде заблоковано, а з другого – ні.
 
 ## window.open
 
-The syntax to open a popup is: `window.open(url, name, params)`:
+Синтаксис відкриття спливаючого вікна: `window.open(url, name, params)`:
 
 url
-: An URL to load into the new window.
+: URL-адреса для завантаження в нове вікно.
 
 name
-: A name of the new window. Each window has a `window.name`, and here we can specify which window to use for the popup. If there's already a window with such name -- the given URL opens in it, otherwise a new window is opened.
+: Ім’я нового вікна. Кожне вікно має `window.name`, і тут ми можемо вказати, яке вікно використовувати для спливаючого вікна. Якщо вікно з такою назвою вже є -- в ньому відкривається дана URL-адреса, інакше відкривається нове вікно. 
 
 params
-: The configuration string for the new window. It contains settings, delimited by a comma. There must be no spaces in params, for instance: `width=200,height=100`.
+: Рядок конфігурації для нового вікна. Він містить налаштування, розділені комою. У параметрах не повинно бути пробілів, наприклад: `width=200,height=100`.
 
-Settings for `params`:
+Налаштування для `params`:
 
-- Position:
-  - `left/top` (numeric) -- coordinates of the window top-left corner on the screen. There is a limitation: a new window cannot be positioned offscreen.
-  - `width/height` (numeric) -- width and height of a new window. There is a limit on minimal width/height, so it's impossible to create an invisible window.
-- Window features:
-  - `menubar` (yes/no) -- shows or hides the browser menu on the new window.
-  - `toolbar` (yes/no) -- shows or hides the browser navigation bar (back, forward, reload etc) on the new window.
-  - `location` (yes/no) -- shows or hides the URL field in the new window. FF and IE don't allow to hide it by default.
-  - `status` (yes/no) -- shows or hides the status bar. Again, most browsers force it to show.
-  - `resizable` (yes/no) -- allows to disable the resize for the new window. Not recommended.
-  - `scrollbars` (yes/no) -- allows to disable the scrollbars for the new window. Not recommended.
+- Позиція:
+  - `left/top` (числові) -- координати верхнього лівого кута вікна на екрані. Є обмеження: нове вікно не можна розташувати за екраном.
+  - `width/height` (числові) -- ширина та висота нового вікна. Існує обмеження на мінімальну ширину/висоту, тому створити невидиме вікно неможливо.
+- Характеристики вікна:
+  - `menubar` (так/ні) -- показує або приховує меню браузера в новому вікні.
+  - `toolbar` (так/ні) -- показує або приховує панель навігації браузера (назад, вперед, перезавантаження тощо) у новому вікні.
+  - `location` (так/ні) -- показує або приховує поле URL у новому вікні. FF та IE не дозволяють приховати його за замовчуванням.
+  - `status` (так/ні) -- показує або приховує рядок стану. Знову ж таки, більшість браузерів змушують його показувати.
+  - `resizable` (так/ні) -- дозволяє вимкнути зміну розміру для нового вікна. Не рекомендовано.
+  - `scrollbars` (так/ні) -- дозволяє вимкнути смуги прокрутки для нового вікна. Не рекомендовано.
 
 
-There is also a number of less supported browser-specific features, which are usually not used. Check <a href="https://developer.mozilla.org/en/DOM/window.open">window.open in MDN</a> for examples.
+Існує також ряд менш підтримуваних функцій браузера, які зазвичай не використовуються. Перегляньте приклади <a href="https://developer.mozilla.org/en/DOM/window.open">window.open у MDN</a>.
 
-## Example: a minimalistic window   
+## Приклад: мінімалістичне вікно
 
-Let's open a window with minimal set of features, just to see which of them browser allows to disable:
+Давайте відкриємо вікно з мінімальним набором функцій, щоб побачити, який із них браузер дозволяє відключити:
 
 ```js run
 let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
@@ -98,9 +98,9 @@ width=0,height=0,left=-1000,top=-1000`;
 open('/', 'test', params);
 ```
 
-Here most "window features" are disabled and window is positioned offscreen. Run it and see what really happens. Most browsers "fix" odd things like zero `width/height` and offscreen `left/top`. For instance, Chrome open such a window with full width/height, so that it occupies the full screen.
+Тут більшість "функцій вікна" вимкнено, а вікно розміщено за екраном. Запустіть і подивіться, що насправді станеться. Більшість браузерів "виправляють" дивні речі, як-от нульове значення `width/height` та від’ємні `left/top`. Наприклад, Chrome відкриває таке вікно з повною шириною/висотою, щоб воно займало весь екран.
 
-Let's add normal positioning options and reasonable `width`, `height`, `left`, `top` coordinates:
+Давайте додамо звичайні параметри позиціонування та прийнятні координати `width`, `height`, `left`, `top`:
 
 ```js run
 let params = `scrollbars=no,resizable=no,status=no,location=no,toolbar=no,menubar=no,
@@ -109,78 +109,78 @@ width=600,height=300,left=100,top=100`;
 open('/', 'test', params);
 ```
 
-Most browsers show the example above as required.
+Більшість браузерів показують наведений вище приклад як потрібно.
 
-Rules for omitted settings:
+Правила для пропущених налаштувань:
 
-- If there is no 3rd argument in the `open` call, or it is empty, then the default window parameters are used.
-- If there is a string of params, but some `yes/no` features are omitted, then the omitted features assumed to have `no` value. So if you specify params, make sure you explicitly set all required features to yes.
-- If there is no `left/top` in params, then the browser tries to open a new window near the last opened window.
-- If there is no `width/height`, then the new window will be the same size as the last opened.
+- Якщо у виклику `open` немає третього аргументу або він порожній, то використовуються параметри вікна за замовчуванням.
+- Якщо є рядок параметрів, але деякі `yes/no` параметри пропущені, тоді вважається, що вони мають значення `no`. Тому якщо ви вказуєте параметри, переконайтеся, що ви явно встановили для всіх необхідних значення так.
+- Якщо в параметрах немає `left/top`, тоді браузер намагається відкрити нове вікно біля останнього відкритого вікна.
+- Якщо немає `width/height`, тоді нове вікно матиме такий самий розмір, як і останнє відкрите.
 
-## Accessing popup from window
+## Доступ до спливаючого вікна з window
 
-The `open` call returns a reference to the new window. It can be used to manipulate it's properties, change location and even more.
+Виклик `open` повертає посилання на нове вікно. Його можна використовувати для маніпулювання його властивостями, зміни розташування тощо.
 
-In this example, we generate popup content from JavaScript:
+У цьому прикладі ми генеруємо спливаюче вікно з JavaScript:
 
 ```js
 let newWin = window.open("about:blank", "hello", "width=200,height=200");
 
-newWin.document.write("Hello, world!");
+newWin.document.write("Привіт, світ!");
 ```
 
-And here we modify the contents after loading:
+А тут ми змінюємо вміст після завантаження:
 
 ```js run
 let newWindow = open('/', 'example', 'width=300,height=300')
 newWindow.focus();
 
-alert(newWindow.location.href); // (*) about:blank, loading hasn't started yet
+alert(newWindow.location.href); // (*) about:blank, завантаження ще не почалось
 
 newWindow.onload = function() {
-  let html = `<div style="font-size:30px">Welcome!</div>`;
+  let html = `<div style="font-size:30px">Ласкаво просимо!</div>`;
 *!*
   newWindow.document.body.insertAdjacentHTML('afterbegin', html);
 */!*
 };
 ```
 
-Please note: immediately after `window.open`, the new window isn't loaded yet. That's demonstrated by `alert` in line `(*)`. So we wait for `onload` to modify it. We could also use `DOMContentLoaded` handler for `newWin.document`.
+Зверніть увагу: одразу після `window.open` нове вікно ще не завантажено. Це демонструє `alert` в рядку "(*)". Тому ми чекаємо `onload`, щоб змінити його. Ми також можемо використовувати обробник `DOMContentLoaded` для `newWin.document`.
 
-```warn header="Same origin policy"
-Windows may freely access content of each other only if they come from the same origin (the same protocol://domain:port).
+```warn header="Політика одного джерела"
+Вікна можуть вільно отримувати доступ до вмісту один одного, лише якщо вони мають одне походження (однаковий protocol://domain:port).
 
-Otherwise, e.g. if the main window is from `site.com`, and the popup from `gmail.com`, that's impossible for user safety reasons. For the details, see chapter <info:cross-window-communication>.
+Інакше, напр. якщо основне вікно з сайту `site.com`, а спливаюче з `gmail.com`, це неможливо з міркувань безпеки користувача. Додаткову інформацію див. у розділі <info:cross-window-communication>. 
 ```
 
-## Accessing window from popup
+## Доступ до window зі спливаючого вікна
 
-A popup may access the "opener" window as well using `window.opener` reference. It is `null` for all windows except popups.
+Спливаюче вікно також може отримати доступ до основного вікна за допомогою посилання `window.opener`. Воно маэ значення `null` для всіх вікон, крім спливаючих.
 
-If you run the code below, it replaces the opener (current) window content with "Test":
+Якщо ви запустите наведений нижче код, він замінить вміст основного вікна (поточного) на "Тест":
 
 ```js run
 let newWin = window.open("about:blank", "hello", "width=200,height=200");
 
 newWin.document.write(
-  "<script>window.opener.document.body.innerHTML = 'Test'<\/script>"
+  "<script>window.opener.document.body.innerHTML = 'Тест'<\/script>"
 );
 ```
 
-So the connection between the windows is bidirectional: the main window and the popup have a reference to each other.
+Таким чином, зв’язок між вікнами є двонаправленим: основне вікно та спливаюче вікно мають посилання один на одного.
 
-## Closing a popup
+## Закриття спливаючого вікна
 
-To close a window: `win.close()`.
+Щоб закрити вікно: `win.close()`.
 
-To check if a window is closed: `win.closed`.
+Щоб перевірити, чи закрите вікно: `win.closed`.
 
-Technically, the `close()` method is available for any `window`, but `window.close()` is ignored by most browsers if `window` is not created with `window.open()`. So it'll only work on a popup.
+Технічно метод `close()` доступний для будь-якого `window`, але `window.close()` ігнорується більшістю браузерів, якщо `window` не створено за допомогою `window.open()`. Тож він працюватиме лише у спливаючому вікні.
 
-The `closed` property is `true` if the window is closed. That's useful to check if the popup (or the main window) is still open or not. A user can close it anytime, and our code should take that possibility into account.
+Властивість `closed` має значення `true`, якщо вікно закрите. Це корисно, щоб перевірити, чи відкрите спливаюче вікно (або основне вікно) чи ні. Користувач може закрити його в будь-який час, і наш код повинен враховувати цю можливість.
 
-This code loads and then closes the window:
+Цей код завантажується, а потім закриває вікно:
 
 ```js run
 let newWindow = open('/', 'example', 'width=300,height=300');
@@ -192,87 +192,87 @@ newWindow.onload = function() {
 ```
 
 
-## Moving and resizing
+## Переміщення та зміна розміру
 
-There are methods to move/resize a window:
+Існують методи переміщення/зміни розміру вікна:
 
 `win.moveBy(x,y)`
-: Move the window relative to current position `x` pixels to the right and `y` pixels down. Negative values are allowed (to move left/up).
+: Перемістити вікно відносно поточної позиції `x` пікселів праворуч і `y` пікселів вниз. Допускаються від’ємні значення (переміщення вліво/вгору).
 
 `win.moveTo(x,y)`
-: Move the window to coordinates `(x,y)` on the screen.
+: Перемістити вікно до координат `(x,y)` на екрані.
 
 `win.resizeBy(width,height)`
-: Resize the window by given `width/height` relative to the current size. Negative values are allowed.
+: Змінити розмір вікна на задану `width/height` відносно поточного розміру. Допускаються від’ємні значення.
 
 `win.resizeTo(width,height)`
-: Resize the window to the given size.
+: Змінити розмір вікна на заданий.
 
-There's also `window.onresize` event.
+Існує також подія `window.onresize`.
 
-```warn header="Only popups"
-To prevent abuse, the browser usually blocks these methods. They only work reliably on popups that we opened, that have no additional tabs.
+```warn header="Тільки спливаючі вікна"
+Щоб запобігти зловживанням, браузер зазвичай блокує ці методи. Вони надійно працюють лише на відкриті нами спливаючі вікна, які не мають додаткових вкладок.
 ```
 
-```warn header="No minification/maximization"
-JavaScript has no way to minify or maximize a window. These OS-level functions are hidden from Frontend-developers.
+```warn header="Без згортання/розгортання вікна"
+JavaScript не має можливості згортати або розгортати вікно. Ці функції рівня ОС приховані від Frontend-розробників.
 
-Move/resize methods do not work for maximized/minimized windows.
+Методи переміщення/змінення розміру не працюють для розгорнутих/згорнутих вікон.
 ```
 
-## Scrolling a window
+## Прокручування вікна
 
-We already talked about scrolling a window in the chapter <info:size-and-scroll-window>.
+Ми вже говорили про прокручування вікна в розділі <info:size-and-scroll-window>.
 
 `win.scrollBy(x,y)`
-: Scroll the window `x` pixels right and `y` down relative the current scroll. Negative values are allowed.
+: Прокрутіть вікно `x` пікселів праворуч і `y` вниз відносно поточного прокручування. Допускаються від’ємні значення.
 
 `win.scrollTo(x,y)`
-: Scroll the window to the given coordinates `(x,y)`.
+: Прокрутіть вікно до заданих координат `(x,y)`.
 
 `elem.scrollIntoView(top = true)`
-: Scroll the window to make `elem` show up at the top (the default) or at the bottom for `elem.scrollIntoView(false)`.
+: Прокрутіть вікно, щоб `elem` відображався вгорі (за замовчуванням) або внизу для `elem.scrollIntoView(false)`.
 
-There's also `window.onscroll` event.
+Існує також подія `window.onscroll`.
 
-## Focus/blur on a window
+## Фокусування/розфокусування на вікні
 
-Theoretically, there are `window.focus()` and `window.blur()` methods to focus/unfocus on a window. And there are also `focus/blur` events that allow to catch the moment when the visitor focuses on a window and switches elsewhere.
+Теоретично існують методи `window.focus()` і `window.blur()` для фокусування/розфокусування на вікні. Є також події `focus/blur`, які дозволяють вловити момент, коли відвідувач фокусується на вікні та перемикається в інше місце.
 
-Although, in practice they are severely limited, because in the past evil pages abused them. 
+Хоча на практиці вони сильно обмежені, бо в минулому "погані" сторінки ними зловживали.
 
-For instance, look at this code:
+Наприклад, подивіться на цей код:
 
 ```js run
 window.onblur = () => window.focus();
 ```
 
-When a user attempts to switch out of the window (`window.onblur`), it brings the window back into focus. The intention is to "lock" the user within the `window`.
+Коли користувач намагається перемикнути фокус із поточного вікна (`window.onblur`), фокус повертається назад. Мета полягає в тому, щоб "заблокувати" користувача у `window`.
 
-So browsers had to introduce many limitations to forbid the code like that and protect the user from ads and evils pages. They depend on the browser.
+Тож браузерам довелося ввести багато обмежень, щоб заборонити такий код і захистити користувача від реклами та шкідливих сторінок. Ці обмеження залежать від браузера.
 
-For instance, a mobile browser usually ignores `window.focus()` completely. Also focusing doesn't work when a popup opens in a separate tab rather than a new window.
+Наприклад, мобільний браузер зазвичай повністю ігнорує `window.focus()`. Також фокусування не працює, коли спливаюче вікно відкривається в окремій вкладці, а не в новому вікні.
 
-Still, there are some use cases when such calls do work and can be useful.
+Проте є деякі випадки використання, коли такі виклики працюють і можуть бути корисними.
 
-For instance:
+Наприклад:
 
-- When we open a popup, it's might be a good idea to run a `newWindow.focus()` on it. Just in case, for some OS/browser combinations it ensures that the user is in the new window now.
-- If we want to track when a visitor actually uses our web-app, we can track `window.onfocus/onblur`. That allows us to suspend/resume in-page activities, animations etc. But please note that the `blur` event means that the visitor switched out from the window, but they still may observe it. The window is in the background, but still may be visible.
+- Коли ми відкриваємо спливаюче вікно, може бути гарною ідеєю запустити в ньому `newWindow.focus()`. Про всяк випадок, для деяких комбінацій ОС/браузер це гарантує, що користувач зараз у новому вікні.
+- Якщо ми хочемо відстежувати, коли відвідувач дійсно використовує нашу веб-програму, ми можемо відстежувати `window.onfocus/onblur`. Це дозволяє нам призупинити/відновити дії на сторінці, анімацію тощо. Але, будь ласка, зверніть увагу, що подія `blur` означає, що відвідувач вийшов із вікна, але він все одно може спостерігати за ним. Вікно знаходиться у фоновому режимі, але все ще може бути видимим.
 
-## Summary   
+## Підсумки
 
-Popup windows are used rarely, as there are alternatives: loading and displaying information in-page, or in iframe.
+Спливаючі вікна використовуються рідко, оскільки є альтернативи: завантаження та відображення інформації на сторінці або в iframe.
 
-If we're going to open a popup, a good practice is to inform the user about it. An "opening window" icon near a link or button would allow the visitor to survive the focus shift and keep both windows in mind.
+Якщо ми збираємося відкрити спливаюче вікно, хороша практика -- повідомити про це користувача. Значок "відкриття вікна" поруч із посиланням або кнопкою дозволить відвідувачеві зрозуміти, що відбувається з фокусом і не втратити обидва вікна з поля зору.
 
-- A popup can be opened by the `open(url, name, params)` call. It returns the reference to the newly opened window.
-- Browsers block `open` calls from the code outside of user actions. Usually a notification appears, so that a user may allow them.
-- Browsers open a new tab by default, but if sizes are provided, then it'll be a popup window.
-- The popup may access the opener window using the `window.opener` property.
-- The main window and the popup can freely read and modify each other if they have the same origin. Otherwise, they can change location of each other and [exchange messages](info:cross-window-communication).
+- Спливаюче вікно можна відкрити за допомогою виклику `open(url, name, params)`. Він повертає посилання на щойно відкрите вікно.
+- Браузери блокують виклики `open` з коду за межами дій користувача. Зазвичай з’являється сповіщення, щоб користувач міг їх дозволити.
+- Типово браузери відкривають нову вкладку, але якщо вказано розміри, то це буде спливаюче вікно.
+- Спливаюче вікно може отримати доступ до основного вікна за допомогою властивості `window.opener`.
+- Основне вікно та спливаюче вікно можуть вільно читати та змінювати одне одного, якщо вони мають однакове походження. Інакше вони можуть змінити розташування один одного та [обмін повідомленнями](info:cross-window-communication).
 
-To close the popup: use `close()` call. Also the user may close them (just like any other windows). The `window.closed` is `true` after that.
+Щоб закрити спливаюче вікно: скористайтеся викликом `close()`. Також користувач може закрити їх (як і будь-які інші вікна). Після цього `window.closed` стає `true`.
 
-- Methods `focus()` and `blur()` allow to focus/unfocus a window. But they don't work all the time.
-- Events `focus` and `blur` allow to track switching in and out of the window. But please note that a  window may still be visible even in the background state, after `blur`.
+- Методи `focus()` і `blur()` дозволяють фокусувати/розфокусувати вікно. Але вони не працюють постійно.
+- Події `focus` та `blur` дозволяють відстежувати фокусування на вікні та поза ним. Але зверніть увагу, що вікно все ще може бути видимим навіть у фоновому стані після `blur`.
