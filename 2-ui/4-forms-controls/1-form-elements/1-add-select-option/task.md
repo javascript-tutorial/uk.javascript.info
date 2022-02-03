@@ -2,21 +2,21 @@ importance: 5
 
 ---
 
-# Add an option to select
+# Додайте нову опцію до елемента `<select>`
 
-There's a `<select>`:
+Маємо `<select>`:
 
 ```html
 <select id="genres">
-  <option value="rock">Rock</option>
-  <option value="blues" selected>Blues</option>
+  <option value="rock">Рок</option>
+  <option value="blues" selected>Блюз</option>
 </select>
 ```
 
-Use JavaScript to:
+Використовуючи JavaScript:
 
-1. Show the value and the text of the selected option.
-2. Add an option: `<option value="classic">Classic</option>`.
-3. Make it selected.
+1. Виведіть значення та текст обраної опції.
+2. Додайте опцію: `<option value="classic">Класика</option>`.
+3. Зробіть її обраною.
 
-Note, if you've done everything right, your alert should show `blues`.
+Зверніть увагу: якщо ви все зробили правильно, то ваше сповіщення має показати значення `blues`.
