@@ -105,7 +105,7 @@ alert(ageElems[0]); // [object HTMLInputElement]
 <script>
   alert(form.elements.login == form.login); // true, це один і той самий <input>
 
-  form.login.name = "username"; // змінюємо ім'я поля вводу
+  form.login.name = "username"; // змінюємо ім’я поля вводу
 
   // form.elements оновив ім'я:
   alert(form.elements.login); // undefined
