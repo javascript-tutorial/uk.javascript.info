@@ -1,23 +1,23 @@
-# Form properties and methods
+# Властивості та методи форми
 
-Forms and control elements, such as `<input>` have a lot of special properties and events.
+Форми та елементи керування, такі як `<input>`, мають багато спеціальних властивостей і подій.
 
-Working with forms will be much more convenient when we learn them.
+Працювати з формами буде набагато зручніше, коли ми їх вивчимо.
 
-## Navigation: form and elements
+## Навігація: форми та елементи
 
-Document forms are members of the special collection `document.forms`.
+Форми в документі є членами спеціальної колекції `document.forms`.
 
-That's a so-called *"named collection"*: it's both named and ordered. We can use both the name or the number in the document to get the form.
+Це так звана *"іменована колекція"*: щоб отримати форму ми можемо використовувати як її ім’я, так і порядковий номер у документі.
 
 ```js no-beautify
-document.forms.my; // the form with name="my"
-document.forms[0]; // the first form in the document
+document.forms.my; // форма з іменем "my" (name="my")
+document.forms[0]; // перша форма в документі
 ```
 
-When we have a form, then any element is available in the named collection `form.elements`.
+Коли у нас є форма, будь-який її елемент доступний в іменованій колекції `form.elements`.
 
-For instance:
+Наприклад:
 
 ```html run height=40
 <form name="my">
@@ -26,19 +26,19 @@ For instance:
 </form>
 
 <script>
-  // get the form
-  let form = document.forms.my; // <form name="my"> element
+  // отримуємо форму
+  let form = document.forms.my; // елемент <form name="my">
 
-  // get the element
-  let elem = form.elements.one; // <input name="one"> element
+  // отримуємо елемент
+  let elem = form.elements.one; // елемент <input name="one">
 
   alert(elem.value); // 1
 </script>
 ```
 
-There may be multiple elements with the same name. This is typical with radio buttons and checkboxes.
+У колекції може бути кілька елементів з однаковим ім'ям (`name`). Це типово для перемикачів (radio buttons) та чекбоксів (checkboxes).
 
-In that case, `form.elements[name]` is a *collection*. For instance:
+У цьому випадку `form.elements[name]` - це *колекція*. Наприклад:
 
 ```html run height=40
 <form>
@@ -57,13 +57,12 @@ alert(ageElems[0]); // [object HTMLInputElement]
 </script>
 ```
 
-These navigation properties do not depend on the tag structure. All control elements, no matter how deep they are in the form, are available in `form.elements`.
+Ці властивості навігації не залежать від структури тегів в середині форми. Усі елементи керування, незалежно від того, наскільки глибоко вони розташовані у формі, доступні в колекції `form.elements`.
 
+````smart header="Елементи `<fieldset>` як \"підформи\""
+Форма може містити всередині один або кілька елементів `<fieldset>`. Вони також мають властивість `elements`, яка містить колекцію елементів керування всередині них.
 
-````smart header="Fieldsets as \"subforms\""
-A form may have one or many `<fieldset>` elements inside it. They also have `elements` property that lists form controls inside them.
-
-For instance:
+Наприклад:
 
 ```html run height=80
 <body>
@@ -81,7 +80,7 @@ For instance:
     let fieldset = form.elements.userFields;
     alert(fieldset); // HTMLFieldSetElement
 
-    // we can get the input by name both from the form and from the fieldset
+    // ми можемо отримати поле за іменем як з форми, так і з елементу fieldset
     alert(fieldset.elements.login == form.elements.login); // true
 */!*
   </script>
@@ -89,14 +88,14 @@ For instance:
 ```
 ````
 
-````warn header="Shorter notation: `form.name`"
-There's a shorter notation: we can access the element as `form[index/name]`.
+````warn header="Коротший варіант: `form.name`"
+Існує коротший варіант запису: ми можемо отримати доступ до елемента через `form[index/name]`.
 
-In other words, instead of `form.elements.login` we can write `form.login`.
+Іншими словами, замість `form.elements.login` ми можемо написати `form.login`.
 
-That also works, but there's a minor issue: if we access an element, and then change its `name`, then it is still available under the old name (as well as under the new one).
+Такий варіант також працює, але є незначна проблема: якщо ми отримуємо доступ до елемента, а потім змінюємо його ім’я (`name`), то він все ще буде доступний під старим ім’ям (а також під новим).
 
-That's easy to see in an example:
+Це легко побачити на прикладі:
 
 ```html run height=40
 <form id="form">
@@ -104,34 +103,33 @@ That's easy to see in an example:
 </form>
 
 <script>
-  alert(form.elements.login == form.login); // true, the same <input>
+  alert(form.elements.login == form.login); // true, це один і той самий <input>
 
-  form.login.name = "username"; // change the name of the input
+  form.login.name = "username"; // змінюємо ім'я поля вводу
 
-  // form.elements updated the name:
+  // form.elements оновив ім'я:
   alert(form.elements.login); // undefined
   alert(form.elements.username); // input
 
 *!*
-  // form allows both names: the new one and the old one
+  // а у формі доступні обидва імені: нове та старе
   alert(form.username == form.login); // true
 */!*
 </script>
 ```
 
-That's usually not a problem, however, because we rarely change names of form elements.
-
+Однак це зазвичай не проблема, оскільки ми рідко змінюємо імена елементів форми.
 ````
 
-## Backreference: element.form
+## Зворотне посилання: element.form
 
-For any element, the form is available as `element.form`. So a form references all elements, and elements reference the form.
+Для будь-якого елемента форми, сама форма доступна у властивості `element.form`. Таким чином, форма посилається на всі елементи, а елементи посилаються на форму.
 
-Here's the picture:
+Ось картинка:
 
 ![](form-navigation.svg)
 
-For instance:
+Наприклад:
 
 ```html run height=40
 <form id="form">
@@ -149,76 +147,76 @@ For instance:
 </script>
 ```
 
-## Form elements
+## Елементи форми
 
-Let's talk about form controls.
+Розглянемо елементи керування формою.
 
-### input and textarea
+### input та textarea
 
-We can access their value as `input.value` (string) or `input.checked` (boolean) for checkboxes.
+Ми можемо отримати доступ до їх значення через властивість `input.value` (рядок) або `input.checked` (логічне значення) для чекбоксів.
 
-Like this:
+Ось так:
 
 ```js
 input.value = "New value";
 textarea.value = "New text";
 
-input.checked = true; // for a checkbox or radio button
+input.checked = true; // для чекбокса або перемикача (radio button)
 ```
 
-```warn header="Use `textarea.value`, not `textarea.innerHTML`"
-Please note that even though `<textarea>...</textarea>` holds its value as nested HTML, we should never use `textarea.innerHTML` to access it.
+```warn header="Використовуйте `textarea.value` замість `textarea.innerHTML`"
+Зауважте, що, попри те, що `<textarea>...</textarea>` зберігає своє значення як вкладений HTML, ми ніколи не повинні використовувати `textarea.innerHTML` для доступу до нього.
 
-It stores only the HTML that was initially on the page, not the current value.
+Властивість `innerHTML` містить лише початковий HTML, а не поточне значення.
 ```
 
-### select and option
+### select та option
 
-A `<select>` element has 3 important properties:
+Елемент `<select>` має 3 важливі властивості:
 
-1. `select.options` -- the collection of `<option>` subelements,
-2. `select.value` -- the *value* of the currently selected `<option>`,
-3. `select.selectedIndex` -- the *number* of the currently selected `<option>`.
+1. `select.options` -- набір піделементів `<option>`,
+2. `select.value` -- *значення* поточного обраного елемента `<option>`,
+3. `select.selectedIndex` -- *номер* поточного обраного елемента `<option>`.
 
-They provide three different ways of setting a value for a `<select>`:
+Вони надають три різні способи встановлення значення для `<select>`:
 
-1. Find the corresponding `<option>` element (e.g. among `select.options`) and set its `option.selected` to `true`.
-2. If we know a new value: set `select.value` to the new value.
-3. If we know the new option number: set `select.selectedIndex` to that number.
+1. Знайти відповідний елемент `<option>` (наприклад, серед `select.options`) і встановити для його властивості `option.selected` значення `true`.
+2. Якщо ми знаємо нове значення: встановити нове значення для `select.value`.
+3. Якщо ми знаємо порядковий номер опції: встановити це число для `select.selectedIndex`.
 
-Here is an example of all three methods:
+Ось приклад усіх трьох методів:
 
 ```html run
 <select id="select">
-  <option value="apple">Apple</option>
-  <option value="pear">Pear</option>
-  <option value="banana">Banana</option>
+  <option value="apple">Яблуко</option>
+  <option value="pear">Груша</option>
+  <option value="banana">Банан</option>
 </select>
 
 <script>
-  // all three lines do the same thing
+  // всі три рядки роблять те саме
   select.options[2].selected = true; 
   select.selectedIndex = 2;
   select.value = 'banana';
-  // please note: options start from zero, so index 2 means the 3rd option.
+  // зверніть увагу: опції починаються з нуля, тому індекс 2 означає 3-й варіант.
 </script>
 ```
 
-Unlike most other controls, `<select>` allows to select multiple options at once if it has `multiple` attribute. This attribute is rarely used, though.
+На відміну від більшості інших елементів керування, `<select>` дозволяє вибрати декілька опцій одночасно, якщо він має атрибут `multiple`. Однак цей атрибут використовується рідко.
 
-For multiple selected values, use the first way of setting values: add/remove the `selected` property from `<option>` subelements.
+Для вибору кількох значень скористайтеся першим способом встановлення значень: встановіть або видаліть властивість `selected` для піделементів `<option>`.
 
-Here's an example of how to get selected values from a multi-select:
+Ось приклад того, як отримати вибрані значення з елемента `<select>` з множинним вибором:
 
 ```html run
 <select id="select" *!*multiple*/!*>
-  <option value="blues" selected>Blues</option>
-  <option value="rock" selected>Rock</option>
-  <option value="classic">Classic</option>
+  <option value="blues" selected>Блюз</option>
+  <option value="rock" selected>Рок</option>
+  <option value="classic">Класика</option>
 </select>
 
 <script>
-  // get all selected values from multi-select
+  // отримати всі вибрані значення з множинного вибору
   let selected = Array.from(select.options)
     .filter(option => option.selected)
     .map(option => option.value);
@@ -227,72 +225,72 @@ Here's an example of how to get selected values from a multi-select:
 </script>
 ```
 
-The full specification of the `<select>` element is available in the specification <https://html.spec.whatwg.org/multipage/forms.html#the-select-element>.
+Вся інформація щодо елемента `<select>` доступна в специфікації <https://html.spec.whatwg.org/multipage/forms.html#the-select-element>.
 
 ### new Option
 
-In the [specification](https://html.spec.whatwg.org/multipage/forms.html#the-option-element) there's a nice short syntax to create an `<option>` element:
+У [специфікації](https://html.spec.whatwg.org/multipage/forms.html#the-option-element) є гарний короткий синтаксис для створення елемента `<option>`:
 
 ```js
 option = new Option(text, value, defaultSelected, selected);
 ```
 
-This syntax is optional. We can use `document.createElement('option')` and set attributes manually. Still, it may be shorter, so here are the parameters:
+Цей синтаксис необов'язковий. Ми можемо використати `document.createElement('option')` і встановити атрибути вручну. Однак те саме можна зробити коротше, тому ось параметри:
 
-- `text` -- the text inside the option,
-- `value` -- the option value,
-- `defaultSelected` -- if `true`, then `selected` HTML-attribute is created,
-- `selected` -- if `true`, then the option is selected.
+- `text` -- текст всередині опції,
+- `value` -- значення опції,
+- `defaultSelected` -- якщо `true`, то до опції буде додано HTML-атрибут `selected`,
+- `selected` -- якщо `true`, то опція буде обраною.
 
-The difference between `defaultSelected` and `selected` is that `defaultSelected` sets the HTML-attribute (that we can get using `option.getAttribute('selected')`, while `selected` sets whether the option is selected or not.
+Різниця між `defaultSelected` та `selected` полягає в тому, що `defaultSelected` встановлює HTML-атрибут (який ми можемо отримати за допомогою `option.getAttribute('selected')`, тоді як `selected` визначає, обрана опція чи ні.
 
-In practice, one should usually set _both_ values to `true` or `false`. (Or, simply omit them; both default to `false`.)
+На практиці зазвичай слід встановлювати значення _обох_ параметрів на `true` або `false`. (Або просто не додавайте їх - за замовчуванням вони мають значення `false`.)
 
-For instance, here's a new "unselected" option:
+Ось, наприклад, створення нової "невибраної" опції:
 
 ```js
 let option = new Option("Text", "value");
-// creates <option value="value">Text</option>
+// створює <option value="value">Text</option>
 ```
 
-The same option, but selected:
+Та сама опція, але обрана:
 
 ```js
 let option = new Option("Text", "value", true, true);
 ```
 
-Option elements have properties:
+Елементи `<option>` мають такі властивості:
 
 `option.selected`
-: Is the option selected.
+: Вказує чи обрана опція.
 
 `option.index`
-: The number of the option among the others in its `<select>`.
+: Номер опції серед інших в елементі `<select>`.
 
 `option.text`
-: Text content of the option (seen by the visitor).
+: Текстовий зміст опції (те, що бачить відвідувач).
 
-## References
+## Посилання
 
-- Specification: <https://html.spec.whatwg.org/multipage/forms.html>.
+- Специфікація: <https://html.spec.whatwg.org/multipage/forms.html>.
 
-## Summary
+## Підсумки
 
-Form navigation:
+Навігація по формам:
 
 `document.forms`
-: A form is available as `document.forms[name/index]`.
+: Отримати форму можна через `document.forms[name/index]`.
 
 `form.elements`  
-: Form elements are available as `form.elements[name/index]`, or can use just `form[name/index]`. The `elements` property also works for `<fieldset>`.
+: Елементи форми можна отримати за допомогою `form.elements[ім’я/індекс]`, або можна використовувати лише `form[name/index]`. Властивість `elements` також доступна для `<fieldset>`.
 
 `element.form`
-: Elements reference their form in the `form` property.
+: Елементи посилаються на свою форму через властивість `form`.
 
-Value is available as `input.value`, `textarea.value`, `select.value`, etc. (For checkboxes and radio buttons, use `input.checked` to determine whether a value is selected.)
+Значення елементів форми доступні як `input.value`, `textarea.value`, `select.value` тощо (для чекбоксів та перемикачів використовуйте `input.checked`, щоб визначити, чи вибрано значення.)
 
-For `<select>`, one can also get the value by the index `select.selectedIndex` or through the options collection `select.options`.
+Для елемента `<select>` також можна отримати значення за індексом `select.selectedIndex` або за допомогою колекції опцій `select.options`.
 
-These are the basics to start working with forms. We'll meet many examples further in the tutorial.
+Це були основи для початку роботи з формами. Далі ми зустрінемо ще багато прикладів у підручнику.
 
-In the next chapter we'll cover `focus` and `blur` events that may occur on any element, but are mostly handled on forms.
+У наступному розділі ми розглянемо події `focus` та `blur`, які можуть відбуватися на будь-якому елементі, але в основному обробляються у формах.
