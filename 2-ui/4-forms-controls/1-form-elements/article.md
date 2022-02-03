@@ -107,7 +107,7 @@ alert(ageElems[0]); // [object HTMLInputElement]
 
   form.login.name = "username"; // змінюємо ім’я поля вводу
 
-  // form.elements оновив ім'я:
+  // form.elements оновив ім’я:
   alert(form.elements.login); // undefined
   alert(form.elements.username); // input
 
