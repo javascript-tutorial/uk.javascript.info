@@ -59,6 +59,7 @@ alert(ageElems[0]); // [object HTMLInputElement]
 
 Ці властивості навігації не залежать від структури тегів в середині форми. Усі елементи керування, незалежно від того, наскільки глибоко вони розташовані у формі, доступні в колекції `form.elements`.
 
+
 ````smart header="Елементи `<fieldset>` як \"підформи\""
 Форма може містити всередині один або кілька елементів `<fieldset>`. Вони також мають властивість `elements`, яка містить колекцію елементів керування всередині них.
 
@@ -119,6 +120,7 @@ alert(ageElems[0]); // [object HTMLInputElement]
 ```
 
 Однак це зазвичай не проблема, оскільки ми рідко змінюємо імена елементів форми.
+
 ````
 
 ## Зворотне посилання: element.form
@@ -158,8 +160,8 @@ alert(ageElems[0]); // [object HTMLInputElement]
 Ось так:
 
 ```js
-input.value = "New value";
-textarea.value = "New text";
+input.value = "Нове значення";
+textarea.value = "Новий текст";
 
 input.checked = true; // для чекбокса або перемикача (radio button)
 ```
@@ -249,14 +251,14 @@ option = new Option(text, value, defaultSelected, selected);
 Ось, наприклад, створення нової "невибраної" опції:
 
 ```js
-let option = new Option("Text", "value");
-// створює <option value="value">Text</option>
+let option = new Option("Текст", "value");
+// створює <option value="value">Текст</option>
 ```
 
 Та сама опція, але обрана:
 
 ```js
-let option = new Option("Text", "value", true, true);
+let option = new Option("Текст", "value", true, true);
 ```
 
 Елементи `<option>` мають такі властивості:
