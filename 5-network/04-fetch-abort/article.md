@@ -35,8 +35,8 @@ let controller = new AbortController();
 let signal = controller.signal;
 
 // Сторона, що виконує операцію, яку можна скасувати
-// отримує об’єкт "signal".
-// і налаштовує прослуховувач на тригер, коли викликається controller.abort().
+// отримує об’єкт "signal"
+// і налаштовує прослуховувач на тригер, коли викликається controller.abort()
 signal.addEventListener('abort', () => alert("переривання!"));
 
 // Інша сторона, що скасовує (в будь-який момент пізніше):
