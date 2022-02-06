@@ -19,7 +19,7 @@
 
 Подія `DOMContentLoaded` відбувається на об’єкті `document`.
 
-Ми повинні використовувати `addEventListener`, щоб зловити її:
+Ми повинні використовувати `addEventListener`, щоб перехопити її:
 
 ```js
 document.addEventListener("DOMContentLoaded", ready);
