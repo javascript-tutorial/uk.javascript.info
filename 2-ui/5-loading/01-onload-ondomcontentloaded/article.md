@@ -284,7 +284,7 @@ document.addEventListener('readystatechange', () => console.log(document.readySt
 
 Цифри в квадратних дужках позначають приблизний час, коли це станеться. Події, позначені однією цифрою, відбуваються приблизно в один і той же час (+- кілька мс).
 
-- `document.readyState` стає `interactive` безпосередньо перед `DOMContentLoaded`. Ці дві речі насправді означають те саме.
+- `document.readyState` стає `interactive` безпосередньо перед `DOMContentLoaded`. Ці дві речі насправді означають одне й те ж саме.
 - `document.readyState` стає `complete`, коли всі ресурси (`iframe` та `img`) завантажуються. Тут ми бачимо, що це відбувається приблизно в той же час, що й `img.onload` (`img` -- останній ресурс) і `window.onload`. Перехід у стан `complete` означає те саме, що і `window.onload`. Різниця в тому, що `window.onload` завжди працює після всіх інших обробників `load`.
 
 
