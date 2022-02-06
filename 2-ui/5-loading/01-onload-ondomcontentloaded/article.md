@@ -301,4 +301,4 @@ document.addEventListener('readystatechange', () => console.log(document.readySt
 - `document.readyState` -- це поточний стан документа, зміни можна відстежувати в події `readystatechange`:
   - `loading` -- документ завантажується.
   - `interactive` -- документ прочитано, відбувається приблизно в той же час, що і `DOMContentLoaded`, але перед ним.
-  - `complete` -- документ і ресурси завантажуються, це відбувається приблизно в той же час, що і `window.onload`, але раніше.
+  - `complete` -- документ і ресурси завантажено, це відбувається приблизно в той же час, що і `window.onload`, але раніше.
