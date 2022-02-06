@@ -1,6 +1,6 @@
 # Зовнішні кути
 
-Зовнішні кути – це саме те, що ми отримуємо в результаті виклику [elem.getBoundingClientRect()](https://developer.mozilla.org/en-US/docs/DOM/element.getBoundingClientRect).
+Зовнішні кути -- це саме те, що ми отримуємо в результаті виклику [elem.getBoundingClientRect()](https://developer.mozilla.org/en-US/docs/DOM/element.getBoundingClientRect).
 
 Координати верхнього лівого кута `answer1` і нижнього правого кута `answer2`:
 
