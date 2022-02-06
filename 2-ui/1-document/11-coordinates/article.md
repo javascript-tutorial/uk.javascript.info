@@ -21,7 +21,7 @@
 
 ## Координати елемента відносно вікна: getBoundingClientRect
 
-Метод `elem.getBoundingClientRect()` повертає координати у контексті вікна для мінімального за розмірами прямокутника, який вміщує `elem` у вигляді об'єкта вбудованого класу [DOMRect](https://www.w3.org/TR/geometry-1/#domrect).
+Метод `elem.getBoundingClientRect()` повертає координати у контексті вікна для мінімального за розмірами прямокутника, який вміщує `elem` у вигляді об’єкта вбудованого класу [DOMRect](https://www.w3.org/TR/geometry-1/#domrect).
 
 Основні властивості `DOMRect`:
 
