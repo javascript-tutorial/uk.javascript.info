@@ -318,7 +318,11 @@ for (let key in user) {
 
 ...Але це не копіює прапори. Отже, якщо ми хочемо "кращого" клону, то `Object.defineProperties` є переважним.
 
+<<<<<<< HEAD
 Інша відмінність полягає в тому, що `for..in` ігнорує символьні властивості, але `Object.getOwnPropertyDescriptors` повертає *всі* дескриптори властивостей, включаючи символьні.
+=======
+Another difference is that `for..in` ignores symbolic and non-enumerable properties, but `Object.getOwnPropertyDescriptors` returns *all* property descriptors including symbolic and non-enumerable ones.
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
 
 ## Глобальне запечатування об’єкта
 

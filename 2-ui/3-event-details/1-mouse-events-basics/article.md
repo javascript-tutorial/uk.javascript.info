@@ -39,9 +39,15 @@
 ```online
 Клікніть кнопку нижче, і ви побачите події. Спробуйте також клікнути двічі.
 
+<<<<<<< HEAD
 Всі події миші реєструються у тестовому вікні нижче, і якщо між ними є затримка більше 1 секунди, вони розділяються горизонтальною лінією.
 
 Також ми можемо побачити властивість `button`, яка дозволяє виявити яку саме кнопку миші клікнули, це пояснюється нижче.
+=======
+On the teststand below, all mouse events are logged, and if there is more than a 1 second delay between them, they are separated by a horizontal rule.
+
+Also, we can see the `button` property that allows us to detect the mouse button; it's explained below.
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
 
 <input onmousedown="return logMouse(event)" onmouseup="return logMouse(event)" onclick="return logMouse(event)" oncontextmenu="return logMouse(event)" ondblclick="return logMouse(event)" value="Click me with the right or the left mouse button" type="button"> <input onclick="logClear('test')" value="Clear" type="button"> <form id="testform" name="testform"> <textarea style="font-size:12px;height:150px;width:360px;"></textarea></form>
 ```

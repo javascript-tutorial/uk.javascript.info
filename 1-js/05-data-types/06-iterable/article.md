@@ -28,10 +28,17 @@ let range = {
 
 Щоб зробити об’єкт `range` ітерабельним (і таким чином дозволити `for..of` працювати), нам потрібно додати метод до об’єкта з назвою `Symbol.iterator` (спеціальний вбудований символ саме для цього).
 
+<<<<<<< HEAD
 1. Коли `for..of` запускається, він викликає цей метод один раз (або викликає помилку, якщо цей метод не знайдено). Метод повинен повернути *ітератор* -- об’єкт з методом `next`.
 2. Далі `for..of` працює *лише з поверненим об’єктом*.
 3. Коли `for..of` хоче отримати наступне значення, він викликає `next()` на цьому об’єкті.
 4. Результат `next()` повинен мати вигляд `{done: Boolean, value: any}`, де `done=true` означає, що ітерація завершена, інакше `value` -- це наступне значення.
+=======
+1. When `for..of` starts, it calls that method once (or errors if not found). The method must return an *iterator* -- an object with the method `next`.
+2. Onward, `for..of` works *only with that returned object*.
+3. When `for..of` wants the next value, it calls `next()` on that object.
+4. The result of `next()` must have the form `{done: Boolean, value: any}`, where `done=true` means that the loop is finished, otherwise `value` is the next value.
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
 
 Ось повна реалізація об’єкту `range` із зауваженнями:
 
@@ -44,11 +51,16 @@ let range = {
 // 1. виклик for..of спочатку викликає цю функцію
 range[Symbol.iterator] = function() {
 
+<<<<<<< HEAD
   // ...вона повертає об’єкт ітератора:
   // 2. Далі, for..of працює тільки з цим ітератором, запитуючи у нього наступні значення
+=======
+  // ...it returns the iterator object:
+  // 2. Onward, for..of works only with the iterator object below, asking it for next values
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
   return {
     current: this.from,
-    last: this.to,      
+    last: this.to,
 
     // 3. next() викликається на кожній ітерації циклом for..of
     next() {
@@ -269,7 +281,11 @@ for (let char of str) {
 alert(chars);
 ```
 
+<<<<<<< HEAD
 ...Але це коротше.
+=======
+...But it is shorter.
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
 
 Ми навіть можемо побудувати на ньому `slice`, що підтримує сурогатні пари:
 

@@ -25,7 +25,11 @@ alert(user.address.street); // помилка!
 
 Проте в багатьох життєвих ситуаціях було б набагато зручніше просто отримати `undefined`, що буде означати "немає вулиці".
 
+<<<<<<< HEAD
 Ще один приклад. У веброзробці ми можемо отримати об’єкт котрий відповідає елементу на вебсторінці за допомогою спеціальних методів, наприклад: `document.querySelector('.elem')`. Проте якщо ми намагатимемось отримати елемент, якого немає на сторінці, то нам вернеться `null`.
+=======
+...and another example. In Web development, we can get an object that corresponds to a web page element using a special method call, such as `document.querySelector('.elem')`, and it returns `null` when there's no such element.
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
 
 ```js run
 // document.querySelector('.elem') рівний null якщо такого елемента не існує

@@ -46,6 +46,7 @@ n = 12.345;
   alert("not a number" / 2); // NaN, таке ділення є помилковим
   ```
 
+<<<<<<< HEAD
   `NaN` є "причепливим" ("заразливим"). Будь-яка подальша математична операція з `NaN` повертає `NaN`:
 
   ```js run
@@ -53,6 +54,17 @@ n = 12.345;
   ```
 
   Отже, якщо у математичному виразі десь є `NaN`, це значення буде поширюватися на весь результат.
+=======
+    `NaN` is sticky. Any further mathematical operation on `NaN` returns `NaN`:
+
+    ```js run
+    alert( NaN + 1 ); // NaN
+    alert( 3 * NaN ); // NaN
+    alert( "not a number" / 2 - 1 ); // NaN
+    ```
+
+    So, if there's a `NaN` somewhere in a mathematical expression, it propagates to the whole result (there's only one exception to that: `NaN ** 0` is `1`).
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
 
 ```smart header="Математичні операції є безпечними"
 Обчислення є "безпечним" в JavaScript. Ми можемо робити будь-що: ділити на нуль, звертатися до нечислового рядка як до числа тощо.

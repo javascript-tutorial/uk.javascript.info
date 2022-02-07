@@ -1,6 +1,10 @@
 # Конструктори, оператор "new"
 
+<<<<<<< HEAD
 Звичайний синтаксис `{...}` дозволяє створити тільки один об’єкт. Проте часто нам потрібно створити багато однотипних об’єктів, таких як, наприклад, користувачі чи елементи меню тощо.
+=======
+The regular `{...}` syntax allows us to create one object. But often we need to create many similar objects, like multiple users or menu items and so on.
+>>>>>>> 71da17e5960f1c76aad0d04d21f10bc65318d3f6
 
 Це можна зробити за допомогою функції-конструктора та оператора `"new"`.
 
