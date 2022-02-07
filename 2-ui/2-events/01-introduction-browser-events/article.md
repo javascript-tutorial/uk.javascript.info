@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 Як бачимо, якщо `addEventListener` отримує об’єкт як обробник, він викликає `obj.handleEvent(event)`, коли відбувається подія.
 
-Ми також можемо використовувати клас для цього:
+Ми також можемо використати клас для цього:
 
 
 ```html run
