@@ -43,7 +43,7 @@
       let fieldCoords = this.getBoundingClientRect();
 
       // м’яч має абсолютне позиціювання (position:absolute), поле -- відносне (position:relative)
-      // таким чином, координати м’яча розраховуються щодо внутрішнього, верхнього лівого кута поля.
+      // таким чином, координати м’яча розраховуються відносно внутрішнього, верхнього лівого кута поля.
       let ballCoords = {
         top: event.clientY - fieldCoords.top - field.clientTop - ball.clientHeight / 2,
         left: event.clientX - fieldCoords.left - field.clientLeft - ball.clientWidth / 2
