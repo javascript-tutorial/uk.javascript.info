@@ -6,6 +6,6 @@ importance: 5
 
 Додайте JavaScript до кнопки `button`, щоб при її натисканні елемент `<div id="text">` зникав.
 
-Демо:
+Демонстрація роботи:
 
 [iframe border=1 src="solution" height=80]
