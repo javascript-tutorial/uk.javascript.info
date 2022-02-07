@@ -4,13 +4,13 @@
   padding: 0;
   display: block;
   
-  /* remove resizing handle in Firefox */
+  /* заборонити змінювати розмір в Firefox */
   resize: none;
   
-  /* remove outline on focus in Chrome */
+  /* позбутися рамки при фокусуванні в Chrome */
   outline: none;
   
-  /* remove scrollbar in IE */
+  /* позбутися прокрутки в IE */
   overflow: auto;
 }
 

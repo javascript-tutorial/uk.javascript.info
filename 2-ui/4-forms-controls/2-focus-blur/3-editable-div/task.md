@@ -2,12 +2,12 @@ importance: 5
 
 ---
 
-# Editable div
+# div, який можна відредагувати
 
-Create a `<div>` that turns into `<textarea>` when clicked.
+Створіть `<div>`, який при кліканні на ньому, перетворюється на `<textarea>`.
 
-The textarea allows to edit the HTML in the `<div>`.
+Текстова область дозволяє редагувати HTML всередині `<div>`.
 
-When the user presses `key:Enter` or it loses focus, the `<textarea>` turns back into `<div>`, and its content becomes HTML in `<div>`.
+Коли користувач натискає `key:Enter` або `<textarea>` втрачає фокус, тоді знову з'являється `<div>`, який містить в собі HTML введений в `<textarea>`.
 
 [demo src="solution"]

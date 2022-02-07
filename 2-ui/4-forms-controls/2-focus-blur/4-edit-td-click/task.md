@@ -2,15 +2,15 @@ importance: 5
 
 ---
 
-# Edit TD on click
+# Редагувати TD по кліку
 
-Make table cells editable on click.
+Створіть таблицю, клітини якої можна було б редагувати клікнувши на них.
 
-- On click -- the cell should become "editable" (textarea appears inside), we can change HTML. There should be no resize, all geometry should remain the same.
-- Buttons OK and CANCEL appear below the cell to finish/cancel the editing.
-- Only one cell may be editable at a moment. While a `<td>` is in "edit mode", clicks on other cells are ignored.
-- The table may have many cells. Use event delegation.
+- По кліку -- в клітині з'являється `<textarea>`, в якій можна редагувати вміст в форматі HTML. Висота та ширина клітини при цьому не змінюється.
+- Кнопки ЗГОДА та ВІДМІНА з'являються внизу клітини щоб підтвердити/відмінити зміни.
+- Одночасно можна редагувати лише одну клітину. Поки `<td>` в «режимі редагування», кліки на інших клітинах ігноруються.
+- В талиці може бути багато клітин. Використовуйте делегування подій.
 
-The demo:
+Демо:
 
 [iframe src="solution" height=400]
