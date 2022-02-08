@@ -72,7 +72,7 @@ function onUpload(req, res) {
 
       res.end("Success " + upload.bytesReceived);
     } else {
-      // з'єднання втрачено, ми зберігаємо незавершений файл
+      // з’єднання втрачено, ми зберігаємо незавершений файл
       debug("File unfinished, stopped at " + upload.bytesReceived);
       res.end();
     }
