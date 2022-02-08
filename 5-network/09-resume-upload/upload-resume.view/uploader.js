@@ -59,7 +59,7 @@ class Uploader {
         }
       };
 
-      // onabort запускається лише тоді, коли викликається xhr.abort().
+      // onabort запускається лише тоді, коли викликається xhr.abort()
       xhr.onabort = () => resolve(false);
 
     });
