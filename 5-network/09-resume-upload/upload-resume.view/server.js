@@ -17,14 +17,14 @@ function onUpload(req, res) {
     res.end();
   }
 
-  // we'll files "nowhere"
+  // ми будемо зберігати файли в "нікуди"
   let filePath = '/dev/null';
-  // could use a real path instead, e.g.
+  // замість цього можна використовувати реальний шлях, наприклад
   // let filePath = path.join('/tmp', fileId);
 
   debug("onUpload fileId: ", fileId);
 
-  // initialize a new upload
+  // ініціалізуємо нове завантаження
   if (!uploads[fileId]) uploads[fileId] = {};
   let upload = uploads[fileId];
 
@@ -32,7 +32,7 @@ function onUpload(req, res) {
 
   let fileStream;
 
-  // if startByte is 0 or not set, create a new file, otherwise check the size and append to existing one
+  // якщо startByte не встановлений або дорівнює 0, то створюємо новий файл, в противному випадку перевіряємо розмір і додаємо дані до наявного файлу
   if (!startByte) {
     upload.bytesReceived = 0;
     fileStream = fs.createWriteStream(filePath, {
@@ -40,13 +40,13 @@ function onUpload(req, res) {
     });
     debug("New file created: " + filePath);
   } else {
-    // we can check on-disk file size as well to be sure
+    // ми також можемо перевірити розмір файлу на диску, щоб бути впевненими
     if (upload.bytesReceived != startByte) {
       res.writeHead(400, "Wrong start byte");
       res.end(upload.bytesReceived);
       return;
     }
-    // append to existing file
+    // додати дані до наявного файлу
     fileStream = fs.createWriteStream(filePath, {
       flags: 'a'
     });
@@ -59,26 +59,26 @@ function onUpload(req, res) {
     upload.bytesReceived += data.length;
   });
 
-  // send request body to file
+  // відправляємо тіло запиту у файл
   req.pipe(fileStream);
 
-  // when the request is finished, and all its data is written
+  // коли запит буде завершено, і всі його дані будуть записані
   fileStream.on('close', function() {
     if (upload.bytesReceived == req.headers['x-file-size']) {
       debug("Upload finished");
       delete uploads[fileId];
 
-      // can do something else with the uploaded file here
+      // тут можна зробити ще щось інше із завантаженим файлом
 
       res.end("Success " + upload.bytesReceived);
     } else {
-      // connection lost, we leave the unfinished file around
+      // з'єднання втрачено, ми зберігаємо незавершений файл
       debug("File unfinished, stopped at " + upload.bytesReceived);
       res.end();
     }
   });
 
-  // in case of I/O error - finish the request
+  // у разі помилки введення/виводу - завершити запит
   fileStream.on('error', function(err) {
     debug("fileStream error");
     res.writeHead(500, "File error");
