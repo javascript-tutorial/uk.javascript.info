@@ -34,28 +34,28 @@ function publish(message) {
 function accept(req, res) {
   let urlParsed = url.parse(req.url, true);
 
-  // new client wants messages
+  // новий клієнт хоче отримати повідомлення
   if (urlParsed.pathname == '/subscribe') {
     onSubscribe(req, res);
     return;
   }
 
-  // sending a message
+  // надсилаємо повідомлення
   if (urlParsed.pathname == '/publish' && req.method == 'POST') {
-    // accept POST
+    // приймаємо запит POST
     req.setEncoding('utf8');
     let message = '';
     req.on('data', function(chunk) {
       message += chunk;
     }).on('end', function() {
-      publish(message); // publish it to everyone
+      publish(message); // надсилаємо його для всіх користувачів
       res.end("ok");
     });
 
     return;
   }
 
-  // the rest is static
+  // решта - статичні файли
   fileServer.serve(req, res);
 
 }
