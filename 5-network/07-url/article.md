@@ -1,28 +1,28 @@
 
-# URL objects
+# URL об'єкт
 
-The built-in [URL](https://url.spec.whatwg.org/#api) class provides a convenient interface for creating and parsing URLs.
+Вбудований клас [URL](https://url.spec.whatwg.org/#api) надає зручний інтерфейс для створення та розбирання URL на частини.
 
-There are no networking methods that require exactly a `URL` object, strings are good enough. So technically we don't have to use `URL`. But sometimes it can be really helpful.
+Методи, що дають змогу зробити мережевий запит, не вимагають саме екземпляр класу `URL`, досить передати рядок. Тому нас нічого не зобов'язує використовувати клас `URL`. Але це дійсно може стати в нагоді.
 
-## Creating a URL
+## Створення URL
 
-The syntax to create a new `URL` object:
+Синтаксис для створення `URL` об'єктів наступний:
 
 ```js
 new URL(url, [base])
 ```
 
-- **`url`** -- the full URL or only path (if base is set, see below),
-- **`base`** -- an optional base URL: if set and `url` argument has only path, then the URL is generated relative to `base`.
+- **`url`** -- повний URL чи, якщо задано другий параметр, тільки шлях (дивись далі),
+- **`base`** -- необов'язковий параметр з "основою" відносно якої буде побудовано URL, якщо в першому параметрі передано тільки шлях.
 
-For example:
+Наприклад:
 
 ```js
 let url = new URL('https://javascript.info/profile/admin');
 ```
 
-These two URLs are same:
+В обох випадках буде згенеровано однакові URLи:
 
 ```js run
 let url1 = new URL('https://javascript.info/profile/admin');
@@ -32,7 +32,7 @@ alert(url1); // https://javascript.info/profile/admin
 alert(url2); // https://javascript.info/profile/admin
 ```
 
-We can easily create a new URL based on the path relative to an existing URL:
+Можна легко створити новий URL із шляху ґрунтуючись на URL, що вже існує:
 
 ```js run
 let url = new URL('https://javascript.info/profile/admin');
@@ -41,7 +41,7 @@ let newUrl = new URL('tester', url);
 alert(newUrl); // https://javascript.info/profile/tester
 ```
 
-The `URL` object immediately allows us to access its components, so it's a nice way to parse the url, e.g.:
+Об'єкт `URL` дозволяє негайно отримати доступ до його складових, тому це зручний спосіб для розбору URL адрес:
 
 ```js run
 let url = new URL('https://javascript.info/url');
@@ -51,21 +51,21 @@ alert(url.host);     // javascript.info
 alert(url.pathname); // /url
 ```
 
-Here's the cheatsheet for URL components:
+Підказка зі складовими URL:
 
 ![](url-object.svg)
 
-- `href` is the full url, same as `url.toString()`
-- `protocol` ends with the colon character `:`
-- `search` - a string of parameters, starts with the question mark `?`
-- `hash` starts with the hash character `#`
-- there may be also `user` and `password` properties if HTTP authentication is present: `http://login:password@site.com` (not painted above, rarely used).
+- `href` повна URL-адреса, те ж саме, що `url.toString()`
+- `protocol` протокол, закінчується символом двокрапки `:`
+- `search` - рядок з параметрами, починається символом знаку запитання `?`
+- `hash` починається символом решітки`#`
+- також можуть бути присутні властивості `user` та `password`, якщо використовується формат для HTTP аутентифікації: `http://login:password@site.com` (не згадано вище, бо рідко використовується).
 
 
-```smart header="We can pass `URL` objects to networking (and most other) methods instead of a string"
-We can use a `URL` object in `fetch` or `XMLHttpRequest`, almost everywhere where a URL-string is expected.
+```smart header="`URL` об'єкт можна передати у методи, що використовуються для мережевих запитів замість рядку"
+`fetch` чи `XMLHttpRequest` можуть отримувати `URL` об'єкти майже всюди, де можна передати рядок з URL.
 
-Generally, the `URL` object can be passed to any method instead of a string, as most methods will perform the string conversion, that turns a `URL` object into a string with full URL.
+Зазвичай, `URL` об'єкт можна передати в будь-який метод замість рядку, оскільки більшість методів перетворять об'єкт в рядок, що містить повну URL-адресу.
 ```
 
 ## SearchParams "?..."
