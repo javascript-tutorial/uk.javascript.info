@@ -68,46 +68,46 @@ alert(url.pathname); // /url
 Зазвичай, `URL` об'єкт можна передати в будь-який метод замість рядку, оскільки більшість методів перетворять об'єкт в рядок, що містить повну URL-адресу.
 ```
 
-## SearchParams "?..."
+## Параметри пошуку "?..."
 
-Let's say we want to create a url with given search params, for instance, `https://google.com/search?query=JavaScript`.
+Припустимо, нам потрібно створити URL-адресу з заданими параметрами пошуку, наприклад, `https://google.com/search?query=JavaScript`.
 
-We can provide them in the URL string:
+Ми, звичайно, можемо передати їх в рядку з URL-адресою:
 
 ```js
 new URL('https://google.com/search?query=JavaScript')
 ```
 
-...But parameters need to be encoded if they contain spaces, non-latin letters, etc (more about that below).
+...Але параметри повинні бути закодованими, якщо вони містять пробіли, не латинські символи тощо (більше про це нижче).
 
-So there's a URL property for that: `url.searchParams`, an object of type [URLSearchParams](https://url.spec.whatwg.org/#urlsearchparams).
+Отже, для цього `URL` має властивість: `url.searchParams`, об'єкт типу [URLSearchParams](https://url.spec.whatwg.org/#urlsearchparams).
 
-It provides convenient methods for search parameters:
+Він надає зручні методи для роботи з параметрами пошуку:
 
-- **`append(name, value)`** -- add the parameter by `name`,
-- **`delete(name)`** -- remove the parameter by `name`,
-- **`get(name)`** -- get the parameter by `name`,
-- **`getAll(name)`** -- get all parameters with the same `name` (that's possible, e.g. `?user=John&user=Pete`),
-- **`has(name)`** -- check for the existence of the parameter by `name`,
-- **`set(name, value)`** -- set/replace the parameter,
-- **`sort()`** -- sort parameters by name, rarely needed,
-- ...and it's also iterable, similar to `Map`.
+- **`append(name, value)`** -- додати параметр з ім'ям `name`,
+- **`delete(name)`** -- видалити параметр з іменем `name`,
+- **`get(name)`** -- отримати значення параметру з іменем `name`,
+- **`getAll(name)`** -- отримати всі параметри, що мають ім'я `name` (наприклад, `?user=John&user=Pete`),
+- **`has(name)`** -- перевірити чи існує параметр з іменем `name`,
+- **`set(name, value)`** -- встановити/замінити параметр з іменем `name`,
+- **`sort()`** -- відсортувати параметри за іменем, рідко стає в нагоді,
+- ...і це об'єкт також можна перебрати, подібно до `Map`.
 
-An example with parameters that contain spaces and punctuation marks:
+Приклад з параметрами, що містять пробіли та знаки пунктуації:
 
 ```js run
 let url = new URL('https://google.com/search');
 
-url.searchParams.set('q', 'test me!'); // added parameter with a space and !
+url.searchParams.set('q', 'test me!'); // додано параметр з пробілом та !
 
 alert(url); // https://google.com/search?q=test+me%21
 
-url.searchParams.set('tbs', 'qdr:y'); // added parameter with a colon :
+url.searchParams.set('tbs', 'qdr:y'); // додано параметр з двокрапкою :
 
-// parameters are automatically encoded
+// параметри автоматично закодовано
 alert(url); // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
 
-// iterate over search parameters (decoded)
+// у циклі перебираємо всі параметри пошуку (кожен параметр автоматично декодується)
 for(let [name, value] of url.searchParams) {
   alert(`${name}=${value}`); // q=test me!, then tbs=qdr:y
 }
