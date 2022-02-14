@@ -37,4 +37,4 @@ alert(HTMLDocument.prototype.__proto__.__proto__.constructor.name); // Node
 
 Це ієрархія.
 
-Ми також можемо розглянути об’єкт за допомогою `console.dir(document)` і побачити ці назви, відкриваючи `__proto__`.Консоль браузера під капотом бере їх з `constructor`.
+Ми також можемо розглянути об’єкт за допомогою `console.dir(document)` і побачити ці назви, відкриваючи `__proto__`. Консоль браузера під капотом бере їх з `constructor`.
