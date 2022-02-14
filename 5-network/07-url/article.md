@@ -114,26 +114,26 @@ for(let [name, value] of url.searchParams) {
 ```
 
 
-## Encoding
+## Кодування
 
-There's a standard [RFC3986](https://tools.ietf.org/html/rfc3986) that defines which characters are allowed in URLs and which are not.
+Набір символів, що можуть дозволено до використання в URL-адресах, визначено в стандарті [RFC3986](https://tools.ietf.org/html/rfc3986).
 
-Those that are not allowed, must be encoded, for instance non-latin letters and spaces - replaced with their UTF-8 codes, prefixed by `%`, such as `%20` (a space can be encoded by `+`, for historical reasons, but that's an exception).
+Усі інші символи, що не дозволені стандартом, повинні бути закодовані. Наприклад, не латинські букви та пробіл повинні бути заміненими на їх UTF-8 коди, що починаються з `%`. Пробіл буде закодовано у вигляді `%20` (з історичних причин пробіл дозволено закодувати як `+`).
 
-The good news is that `URL` objects handle all that automatically. We just supply all parameters unencoded, and then convert the `URL` to string:
+Гарна новина полягає в тому, що `URL` об'єкт виконає всі перетворення автоматично. Нам потрібно тільки передати всі параметри, а потім перетворити `URL` в рядок:
 
 ```js run
-// using some cyrillic characters for this example
+// для прикладу використано кириличні символи
 
-let url = new URL('https://ru.wikipedia.org/wiki/Тест');
+let url = new URL('https://uk.wikipedia.org/wiki/Тест');
 
-url.searchParams.set('key', 'ъ');
-alert(url); //https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82?key=%D1%8A
+url.searchParams.set('key', 'ї');
+alert(url); // https://uk.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82?key=%D1%97
 ```
 
-As you can see, both `Тест` in the url path and `ъ` in the parameter are encoded.
+Як бачите, і `Тест` у шляху, і параметр `ї` закодовано.
 
-The URL became longer, because each cyrillic letter is represented with two bytes in UTF-8, so there are two `%..` entities.
+URL-адреса стала довшою, бо кожен кириличний символ представлено двома байтами в UTF-8, тому там дві групи символів `%..`.
 
 ### Encoding strings
 
