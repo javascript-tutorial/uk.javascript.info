@@ -12,7 +12,11 @@ function sayHi() {
 
 Існує й інший синтаксис для створення функції, що називають [*Функціональним Виразом*](https://developer.mozilla.org/uk/docs/Web/JavaScript/Guide/Functions#Функціональні_вирази) (Function Expression).
 
+<<<<<<< HEAD
 Він дозволяє створювати функцію всередині будь-якого виразу.
+=======
+It allows us to create a new function in the middle of any expression.
+>>>>>>> 29216730a877be28d0a75a459676db6e7f5c4834
 
 Наприклад:
 

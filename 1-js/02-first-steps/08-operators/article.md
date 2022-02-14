@@ -194,6 +194,7 @@ alert( +apples + +oranges ); // 5
 | Пріоритет | Ім’я | Знак |
 |------------|------|------|
 | ... | ... | ... |
+<<<<<<< HEAD
 | 17 | унарний плюс | `+` |
 | 17 | унарне заперечення | `-` |
 | 16 | піднесення до степеня | `**` |
@@ -206,10 +207,28 @@ alert( +apples + +oranges ); // 5
 | ... | ... | ... |
 
 Як ми бачимо, "унарний плюс" має пріоритет `17`, що вище за `13` — пріоритет "додавання" (бінарний плюс). Саме тому, у виразі `"+apples + +oranges"`, унарні плюси виконуються перед додаванням (бінарним плюсом).
+=======
+| 15 | unary plus | `+` |
+| 15 | unary negation | `-` |
+| 14 | exponentiation | `**` |
+| 13 | multiplication | `*` |
+| 13 | division | `/` |
+| 12 | addition | `+` |
+| 12 | subtraction | `-` |
+| ... | ... | ... |
+| 2 | assignment | `=` |
+| ... | ... | ... |
+
+As we can see, the "unary plus" has a priority of `15` which is higher than the `12` of "addition" (binary plus). That's why, in the expression `"+apples + +oranges"`, unary pluses work before the addition.
+>>>>>>> 29216730a877be28d0a75a459676db6e7f5c4834
 
 ## Присвоєння
 
+<<<<<<< HEAD
 Зазначимо, що присвоєння `=` також є оператором. Воно є в таблиці з пріоритетами й має дуже низький пріоритет `3`.
+=======
+Let's note that an assignment `=` is also an operator. It is listed in the precedence table with the very low priority of `2`.
+>>>>>>> 29216730a877be28d0a75a459676db6e7f5c4834
 
 Тому, коли ми присвоюємо значення змінній, наприклад, `x = 2 * 2 + 1`, спочатку виконуються обчислення, а потім виконується присвоєння `=` зі збереженням результату в `x`.
 
