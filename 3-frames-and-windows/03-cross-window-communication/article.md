@@ -1,130 +1,130 @@
-# Cross-window communication
+# Міжвіконна комунікація
 
-The "Same Origin" (same site) policy limits access of windows and frames to each other.
+Політика "Одного походження" (одний і той самий сайт) обмежує доступ вікон і фреймів один до одного.
 
-The idea is that if a user has two pages open: one from `john-smith.com`, and another one is `gmail.com`, then they wouldn't want a script from `john-smith.com` to read our mail from `gmail.com`. So, the purpose of the "Same Origin" policy is to protect users from information theft.
+Ідея полягає в тому, що якщо користувач має дві відкриті сторінки: одну з `john-smith.com`, а іншу -- `gmail.com`, тоді він не хоче, щоб сценарій з `john-smith.com` читав нашу пошту з `gmail.com`. Отже, мета політики "Одного походження" -- захистити користувачів від крадіжки інформації.
 
-## Same Origin [#same-origin]
+## Політика "Одного походження" [#same-origin]
 
-Two URLs are said to have the "same origin" if they have the same protocol, domain and port.
+Кажуть, що дві URL-адреси мають "одне походження", якщо вони мають однаковий протокол, домен і порт.
 
-These URLs all share the same origin:
+Усі ці URL-адреси мають одне походження:
 
 - `http://site.com`
 - `http://site.com/`
 - `http://site.com/my/page.html`
 
-These ones do not:
+А ці ні:
 
-- <code>http://<b>www.</b>site.com</code> (another domain: `www.` matters)
-- <code>http://<b>site.org</b></code> (another domain: `.org` matters)
-- <code><b>https://</b>site.com</code> (another protocol: `https`)
-- <code>http://site.com:<b>8080</b></code> (another port: `8080`)
+- <code>http://<b>www.</b>site.com</code> (інший домен: `www.` має значення)
+- <code>http://<b>site.org</b></code> (інший домен: `.org` має значення)
+- <code><b>https://</b>site.com</code> (інший протокол: `https`)
+- <code>http://site.com:<b>8080</b></code> (інший порт: `8080`)
 
-The "Same Origin" policy states that:
+У політиці "Одного походження" зазначено, що:
 
-- if we have a reference to another window, e.g. a popup created by `window.open` or a window inside `<iframe>`, and that window comes from the same origin, then we have full access to that window.
-- otherwise, if it comes from another origin, then we can't access the content of that window: variables, document, anything. The only exception is `location`: we can change it (thus redirecting the user). But we cannot *read* location (so we can't see where the user is now, no information leak).
+- якщо ми маємо посилання на інше вікно, напр. спливаюче вікно, створене за допомогою `window.open` або вікна всередині `<iframe>`, і воно має те саме походження, то ми маємо повний доступ до цього вікна.
+- в іншому випадку, якщо походження відрізняється, ми не зможемо отримати доступ до вмісту цього вікна: змінних, документа, будь-чого. Єдиним винятком є `location`: ми можемо змінити його (таким чином перенаправити користувача). Але ми не можемо *читати* це місцезнаходження (тому ми не можемо побачити, де зараз перебуває користувач, немає витоку інформації).
 
-### In action: iframe
+### У дії: iframe
 
-An `<iframe>` tag hosts a separate embedded window, with its own separate `document` and `window` objects.
+Тег `<iframe>` містить окреме вбудоване вікно з окремими об’єктами `document` та `window`.
 
-We can access them using properties:
+Ми можемо отримати до них доступ за допомогою властивостей:
 
-- `iframe.contentWindow` to get the window inside the `<iframe>`.
-- `iframe.contentDocument` to get the document inside the `<iframe>`, shorthand for `iframe.contentWindow.document`.
+- `iframe.contentWindow`, щоб отримати вікно всередині `<iframe>`.
+- `iframe.contentDocument`, щоб отримати документ всередині `<iframe>`, скорочення від `iframe.contentWindow.document`.
 
-When we access something inside the embedded window, the browser checks if the iframe has the same origin. If that's not so then the access is denied (writing to `location` is an exception, it's still permitted).
+Коли ми отримуємо доступ до чогось у вбудованому вікні, браузер перевіряє, чи має iframe те саме походження. Якщо це не так, то доступ заборонено (запис у `location` є винятком, він все ще дозволений).
 
-For instance, let's try reading and writing to `<iframe>` from another origin:
+Наприклад, давайте спробуємо прочитати та записати в `<iframe>` з іншого походження:
 
 ```html run
 <iframe src="https://example.com" id="iframe"></iframe>
 
 <script>
   iframe.onload = function() {
-    // we can get the reference to the inner window
+    // ми можемо отримати посилання на внутрішнє вікно
 *!*
     let iframeWindow = iframe.contentWindow; // OK
 */!*
     try {
-      // ...but not to the document inside it
+      // ...але не до документа всередині нього
 *!*
-      let doc = iframe.contentDocument; // ERROR
+      let doc = iframe.contentDocument; // ПОМИЛКА
 */!*
     } catch(e) {
-      alert(e); // Security Error (another origin)
+      alert(e); // Security Error (інше походження)
     }
 
-    // also we can't READ the URL of the page in iframe
+    // ми також не можемо ПРОЧИТАТИ URL-адресу сторінки в iframe 
     try {
-      // Can't read URL from the Location object
+      // Не вдається прочитати URL-адресу з об’єкта Location
 *!*
-      let href = iframe.contentWindow.location.href; // ERROR
+      let href = iframe.contentWindow.location.href; // ПОМИЛКА
 */!*
     } catch(e) {
       alert(e); // Security Error
     }
 
-    // ...we can WRITE into location (and thus load something else into the iframe)!
+    // ...ми можемо ЗАПИСАТИ в нього (і таким чином завантажувати щось інше в iframe)!
 *!*
     iframe.contentWindow.location = '/'; // OK
 */!*
 
-    iframe.onload = null; // clear the handler, not to run it after the location change
+    iframe.onload = null; // очищаємо обробник, щоб не запускати його після зміни location
   };
 </script>
 ```
 
-The code above shows errors for any operations except:
+Код вище показує помилки для будь-яких операцій, крім:
 
-- Getting the reference to the inner window `iframe.contentWindow` - that's allowed.
-- Writing to `location`.
+- Отримання посилання на внутрішнє вікно `iframe.contentWindow` -- це дозволено.
+- Запис до `location`.
 
-Contrary to that, if the `<iframe>` has the same origin, we can do anything with it:
+На противагу цьому, якщо `<iframe>` має те саме походження, ми можемо робити з ним що завгодно:
 
 ```html run
-<!-- iframe from the same site -->
+<!-- iframe з того ж сайту -->
 <iframe src="/" id="iframe"></iframe>
 
 <script>
   iframe.onload = function() {
-    // just do anything
-    iframe.contentDocument.body.prepend("Hello, world!");
+    // робіть будь-що
+    iframe.contentDocument.body.prepend("Привіт, світ!");
   };
 </script>
 ```
 
 ```smart header="`iframe.onload` vs `iframe.contentWindow.onload`"
-The `iframe.onload` event (on the `<iframe>` tag) is essentially the same as `iframe.contentWindow.onload` (on the embedded window object). It triggers when the embedded window fully loads with all resources.
+Подія `iframe.onload` (у тегу `<iframe>`) по суті така ж, як `iframe.contentWindow.onload` (у вбудованому об’єкті вікна). Вона запускається, коли вбудоване вікно повністю завантажується всіма ресурсами. 
 
-...But we can't access `iframe.contentWindow.onload` for an iframe from another origin, so using `iframe.onload`.
+...Але ми не можемо отримати доступ до `iframe.contentWindow.onload` для iframe з іншого походження, тому використовуємо `iframe.onload`.
 ```
 
-## Windows on subdomains: document.domain
+## Вікна на субдоменах: document.domain
 
-By definition, two URLs with different domains have different origins.
+За визначенням, дві URL-адреси з різними доменами мають різне походження.
 
-But if windows share the same second-level domain, for instance `john.site.com`, `peter.site.com` and `site.com` (so that their common second-level domain is `site.com`), we can make the browser ignore that difference, so that they can be treated as coming from the "same origin" for the purposes of cross-window communication.
+Але якщо вікна спільно використовують один домен другого рівня, наприклад, `john.site.com`, `peter.site.com` і `site.com` (тобто їхнім загальним доменом другого рівня є `site.com`), ми можемо змусити браузер ігнорувати цю різницю, щоб вони могли розглядатися як вихідні з "одного походження" для цілей міжвіконної комунікації.
 
-To make it work, each such window should run the code:
+Щоб це запрацювало, кожне таке вікно має запускати код:
 
 ```js
 document.domain = 'site.com';
 ```
 
-That's all. Now they can interact without limitations. Again, that's only possible for pages with the same second-level domain.
+Це все. Тепер вони можуть взаємодіяти без обмежень. Знову ж таки, це можливо лише для сторінок з тим самим доменом другого рівня.
 
-## Iframe: wrong document pitfall
+## Iframe: помилковий підводний камінь документа
 
-When an iframe comes from the same origin, and we may access its  `document`, there's a pitfall. It's not related to cross-origin things, but important to know.
+Коли iframe походить з того самого походження, і ми можемо отримати доступ до його `document`, з’являється підводний камінь. Це не пов’язано з перехресним походженням, але важливо знати.
 
-Upon its creation an iframe immediately has a document. But that document is different from the one that loads into it!
+Після створення iframe одразу має документ. Але цей документ відрізняється від того, який до нього завантажується!
 
-So if we do something with the document immediately, that will probably be lost.
+Тому, якщо ми негайно зробимо щось із документом, його, ймовірно, буде втрачено.
 
-Here, look:
+Ось подивіться:
 
 
 ```html run
@@ -135,20 +135,20 @@ Here, look:
   iframe.onload = function() {
     let newDoc = iframe.contentDocument;
 *!*
-    // the loaded document is not the same as initial!
+    // завантажений документ не збігається з початковим!
     alert(oldDoc == newDoc); // false
 */!*
   };
 </script>
 ```
 
-We shouldn't work with the document of a not-yet-loaded iframe, because that's the *wrong document*. If we set any event handlers on it, they will be ignored.
+Нам не слід працювати з документом ще не завантаженого iframe, тому що це *неправильний документ*. Якщо ми встановимо для нього обробники подій, вони будуть проігноровані.
 
-How to detect the moment when the document is there?
+Як визначити момент, коли документ є?
 
-The right document is definitely at place when `iframe.onload`  triggers. But it only triggers when the whole iframe with all resources is loaded.
+Потрібний документ безперечно знаходиться на місці, коли запускається iframe.onload. Але він запускається лише тоді, коли завантажується весь iframe з усіма ресурсами.
 
-We can try to catch the moment earlier using checks in `setInterval`:
+Ми можемо спробувати вловити момент раніше за допомогою перевірок у `setInterval`:
 
 ```html run
 <iframe src="/" id="iframe"></iframe>
@@ -156,26 +156,26 @@ We can try to catch the moment earlier using checks in `setInterval`:
 <script>
   let oldDoc = iframe.contentDocument;
 
-  // every 100 ms check if the document is the new one
+  // кожні 100 мс перевіряйте, чи є документ новим
   let timer = setInterval(() => {
     let newDoc = iframe.contentDocument;
     if (newDoc == oldDoc) return;
 
-    alert("New document is here!");
+    alert("Новий документ тут!");
 
-    clearInterval(timer); // cancel setInterval, don't need it any more
+    clearInterval(timer); // скасуйте setInterval, він більше не потрібен
   }, 100);
 </script>
 ```
 
-## Collection: window.frames
+## Колекція: window.frames
 
-An alternative way to get a window object for `<iframe>` -- is to get it from the named collection  `window.frames`:
+Альтернативний спосіб отримати об’єкт вікна для `<iframe>` -- це отримати його з іменованої колекції `window.frames`:
 
-- By number: `window.frames[0]` -- the window object for the first frame in the document.
-- By name: `window.frames.iframeName` -- the window object for the frame with  `name="iframeName"`.
+- За номером: `window.frames[0]` -- об’єкт вікна для першого фрейму в документі.
+- За назвою: `window.frames.iframeName` -- об’єкт вікна для фрейму з `name="iframeName"`.
 
-For instance:
+Наприклад:
 
 ```html run
 <iframe src="/" style="height:80px" name="win" id="iframe"></iframe>
@@ -186,93 +186,93 @@ For instance:
 </script>
 ```
 
-An iframe may have other iframes inside. The corresponding `window` objects form a hierarchy.
+Усередині iframe можуть бути інші iframe. Відповідні об’єкти `window` утворюють ієрархію.
 
-Navigation links are:
+Навігаційні посилання:
 
-- `window.frames` -- the collection of "children" windows (for nested frames).
-- `window.parent` -- the reference to the "parent" (outer) window.
-- `window.top` -- the reference to the topmost parent window.
+- `window.frames` -- колекція дочірніх вікон (для вкладених фреймів).
+- `window.parent` -- посилання на "батьківське" (зовнішнє) вікно.
+- `window.top` -- посилання на найвище батьківське вікно.
 
-For instance:
+Наприклад:
 
 ```js run
 window.frames[0].parent === window; // true
 ```
 
-We can use the `top` property to check if the current document is open inside a frame or not:
+Ми можемо використовувати властивість `top`, щоб перевірити, чи відкритий поточний документ у фреймі чи ні:
 
 ```js run
 if (window == top) { // current window == window.top?
-  alert('The script is in the topmost window, not in a frame');
+  alert('Скрипт знаходиться у верхньому вікні, а не у фреймі');
 } else {
-  alert('The script runs in a frame!');
+  alert('Скрипт виконується у фреймі!');
 }
 ```
 
-## The "sandbox" iframe attribute
+## Атрибут iframe "sandbox".
 
-The `sandbox` attribute allows for the exclusion of certain actions inside an `<iframe>` in order to prevent it executing untrusted code. It "sandboxes" the iframe by treating it as coming from another origin and/or applying other limitations.
+Атрибут `sandbox` дозволяє виключити певні дії всередині `<iframe>`, щоб запобігти виконанню ненадійного коду. Атрибут поміщає iframe у "пісочницю", розглядаючи його як вихідний із іншого походження та/або застосовуючи інші обмеження.
 
-There's a "default set" of restrictions applied for `<iframe sandbox src="...">`. But it can be relaxed if we provide a space-separated list of restrictions that should not be applied as a value of the attribute, like this: `<iframe sandbox="allow-forms allow-popups">`.
+До `<iframe sandbox src="...">` застосовано "типовий набір" певних обмежень. Але їх можна послабити, якщо ми надамо розділений пробілами список обмежень, які не слід застосовувати як значення атрибута, наприклад: `<iframe sandbox="allow-forms allow-popups">`.
 
-In other words, an empty `"sandbox"` attribute puts the strictest limitations possible, but we can put a space-delimited list of those that we want to lift.
+Іншими словами, порожній атрибут `"sandbox"` накладає найсуворіші обмеження, але ми можемо помістити розділений пробілами список тих, які ми хочемо зняти.
 
-Here's a list of limitations:
+Ось список обмежень:
 
 `allow-same-origin`
-: By default `"sandbox"` forces the "different origin" policy for the iframe. In other words, it makes the browser to treat the `iframe` as coming from another origin, even if its `src` points to the same site. With all implied restrictions for scripts. This option removes that feature.
+: Типово `"пісочниця"` нав’язує політику "іншого походження" для iframe. Іншими словами, це змушує браузер розглядати `iframe` як вихідний із іншого походження, навіть якщо його `src` вказує на той самий сайт. З усіма неявними обмеженнями для скриптів. Цей параметр видаляє цю функцію.
 
 `allow-top-navigation`
-: Allows the `iframe` to change `parent.location`.
+: Дозволяє `iframe` змінити `parent.location`.
 
 `allow-forms`
-: Allows to submit forms from `iframe`.
+: Дозволяє надсилати форми з `iframe`.
 
 `allow-scripts`
-: Allows to run scripts from the `iframe`.
+: Дозволяє запускати скрипти з `iframe`.
 
 `allow-popups`
-: Allows to `window.open` popups from the `iframe`
+: Дозволяє `window.open` спливаючі вікна з `iframe`
 
-See [the manual](mdn:/HTML/Element/iframe) for more.
+Дивіться [посібник](mdn:/HTML/Element/iframe) для отримання додаткової інформації.
 
-The example below demonstrates a sandboxed iframe with the default set of restrictions: `<iframe sandbox src="...">`. It has some JavaScript and a form.
+Наведений нижче приклад демонструє iframe із ізольованим середовищем із набором обмежень за замовчуванням: `<iframe sandbox src="...">`. Він має певний JavaScript і форму.
 
-Please note that nothing works. So the default set is really harsh:
+Зверніть увагу, що нічого не працює. Отже, набір за замовчуванням дійсно суворий:
 
 [codetabs src="sandbox" height=140]
 
 
 ```smart
-The purpose of the `"sandbox"` attribute is only to *add more* restrictions. It cannot remove them. In particular, it can't relax same-origin restrictions if the iframe comes from another origin.
+Мета атрибута `"sandbox"` -- лише *додати більше* обмежень. Воно не може їх видалити. Зокрема, він не може послабити обмеження щодо того самого походження, якщо iframe походить з іншого походження.
 ```
 
-## Cross-window messaging
+## Обмін повідомленнями між вікнами
 
-The `postMessage` interface allows windows to talk to each other no matter which origin they are from.
+Інтерфейс `postMessage` дозволяє вікнам спілкуватися один з одним незалежно від того, з якого вони походження.
 
-So, it's a way around the "Same Origin" policy. It allows a window from `john-smith.com` to talk to `gmail.com` and exchange information, but only if they both agree and call corresponding JavaScript functions. That makes it safe for users.
+Отже, це спосіб обійти політику "Одного походження". Це дозволяє вікну з `john-smith.com` спілкуватися з `gmail.com` та обмінюватися інформацією, але лише якщо вони обидва згодні та викликають відповідні функції JavaScript. Це робить його безпечним для користувачів.
 
-The interface has two parts.
+Інтерфейс складається з двох частин.
 
 ### postMessage
 
-The window that wants to send a message calls [postMessage](mdn:api/Window.postMessage) method of the receiving window. In other words, if we want to send the message to `win`, we should call  `win.postMessage(data, targetOrigin)`.
+Вікно, яке хоче надіслати повідомлення, викликає метод [postMessage](mdn:api/Window.postMessage) вікна отримання. Іншими словами, якщо ми хочемо надіслати повідомлення до `win`, ми повинні викликати `win.postMessage(data, targetOrigin)`.
 
-Arguments:
+Аргументи:
 
 `data`
-: The data to send. Can be any object, the data is cloned using the "structured serialization algorithm". IE supports only strings, so we should `JSON.stringify` complex objects to support that browser.
+: Дані для відправки. Можуть бути будь-яким об’єктом, дані клонуються за допомогою "алгоритму структурованої серіалізації". IE підтримує лише рядки, тому ми повинні застосувати `JSON.stringify` для складних об’єктів для підтримки цього браузера.
 
 `targetOrigin`
-: Specifies the origin for the target window, so that only a window from the given origin will get the message.
+: Вказує джерело для цільового вікна, щоб повідомлення отримувало лише вікно з даного джерела.
 
-The `targetOrigin` is a safety measure. Remember, if the target window comes from another origin, we can't read it's `location` in the sender window. So we can't be sure which site is open in the intended window right now: the user could navigate away, and the sender window has no idea about it.
+`targetOrigin` є заходом безпеки. Пам’ятайте, якщо цільове вікно походить з іншого джерела, ми не можемо прочитати його `location` у вікні відправника. Тому ми не можемо бути впевнені, який сайт зараз відкритий у передбачуваному вікні: користувач міг би піти, а вікно відправника не має про це поняття.
 
-Specifying `targetOrigin` ensures that the window only receives the data if it's still at the right site. Important when the data is sensitive.
+Зазначення `targetOrigin` гарантує, що вікно отримає дані, лише якщо воно все ще знаходиться на потрібному сайті. Важливо, коли дані є конфіденційними.
 
-For instance, here `win` will only receive the message if it has a document from the origin `http://example.com`:
+Наприклад, тут `win` отримає повідомлення, лише якщо в ньому є документ із джерела `http://example.com`:
 
 ```html no-beautify
 <iframe src="http://example.com" name="example">
@@ -280,11 +280,11 @@ For instance, here `win` will only receive the message if it has a document from
 <script>
   let win = window.frames.example;
 
-  win.postMessage("message", "http://example.com");
+  win.postMessage("повідомлення", "http://example.com");
 </script>
 ```
 
-If we don't want that check, we can set `targetOrigin` to `*`.
+Якщо ми не хочемо цієї перевірки, ми можемо встановити для `targetOrigin` значення `*`.
 
 ```html no-beautify
 <iframe src="http://example.com" name="example">
@@ -293,7 +293,7 @@ If we don't want that check, we can set `targetOrigin` to `*`.
   let win = window.frames.example;
 
 *!*
-  win.postMessage("message", "*");
+  win.postMessage("повідомлення", "*");
 */!*
 </script>
 ```
@@ -301,70 +301,70 @@ If we don't want that check, we can set `targetOrigin` to `*`.
 
 ### onmessage
 
-To receive a message, the target window should have a handler on the `message` event. It triggers when `postMessage` is called (and `targetOrigin` check is successful).
+Щоб отримати повідомлення, цільове вікно має мати обробник події `message`. Він запускається, коли викликається `postMessage` (і перевірка `targetOrigin` успішна).
 
-The event object has special properties:
+Об’єкт події має спеціальні властивості:
 
 `data`
-: The data from `postMessage`.
+: Дані від `postMessage`.
 
 `origin`
-: The origin of the sender, for instance `http://javascript.info`.
+: Походження відправника, наприклад `http://javascript.info`.
 
 `source`
-: The reference to the sender window. We can immediately `source.postMessage(...)` back if we want.
+: Посилання на вікно відправника. Ми можемо негайно повернути `source.postMessage(...)`, якщо хочемо.
 
-To assign that handler, we should use `addEventListener`, a short syntax `window.onmessage` does not work.
+Щоб призначити цей обробник, ми повинні використовувати `addEventListener`, короткий синтаксис `window.onmessage` не працює.
 
-Here's an example:
+Ось приклад:
 
 ```js
 window.addEventListener("message", function(event) {
   if (event.origin != 'http://javascript.info') {
-    // something from an unknown domain, let's ignore it
+    // щось із невідомого домену, проігноруємо це
     return;
   }
 
-  alert( "received: " + event.data );
+  alert( "отримано: " + event.data );
 
-  // can message back using event.source.postMessage(...)
+  // можна надіслати повідомлення назад за допомогою event.source.postMessage(...)
 });
 ```
 
-The full example:
+Повний приклад:
 
 [codetabs src="postmessage" height=120]
 
-## Summary
+## Підсумки
 
-To call methods and access the content of another window, we should first have a reference to it.
+Щоб викликати методи та отримати доступ до вмісту іншого вікна, ми повинні спочатку мати посилання на нього.
 
-For popups we have these references:
-- From the opener window: `window.open` -- opens a new window and returns a reference to it,
-- From the popup: `window.opener` -- is a reference to the opener window from a popup.
+Для спливаючих вікон у нас є такі посилання:
+- З вікна відкриття: `window.open` -- відкриває нове вікно та повертає посилання на нього,
+- Зі спливаючого вікна: `window.opener` -- це посилання на основне вікно зі спливаючого вікна.
 
-For iframes, we can access parent/children windows using:
-- `window.frames` -- a collection of nested window objects,
-- `window.parent`, `window.top` are the references to parent and top windows,
-- `iframe.contentWindow` is the window inside an `<iframe>` tag.
+Для iframes ми можемо отримати доступ до батьківських/дочірніх вікон за допомогою:
+- `window.frames` -- набір вкладених об’єктів вікна,
+- `window.parent`, `window.top` посилання на батьківське та верхнє вікна,
+- `iframe.contentWindow` -- вікно всередині тегу `<iframe>`.
 
-If windows share the same origin (host, port, protocol), then windows can do whatever they want with each other.
+Якщо вікна мають однакове походження (хост, порт, протокол), то вони можуть робити між собою все, що захочуть.
 
-Otherwise, only possible actions are:
-- Change the `location` of another window (write-only access).
-- Post a message to it.
+В іншому випадку можливі лише такі дії:
+- Змінити `location` іншого вікна (доступ лише для запису).
+- Надіслати на нього повідомлення.
 
-Exceptions are:
-- Windows that share the same second-level domain: `a.site.com` and `b.site.com`. Then setting `document.domain='site.com'` in both of them puts them into the "same origin" state.
-- If an iframe has a `sandbox` attribute, it is forcefully put into the "different origin" state, unless the `allow-same-origin` is specified in the attribute value. That can be used to run untrusted code in iframes from the same site.
+Винятки:
+- Вікна, які використовують той самий домен другого рівня: `a.site.com` та `b.site.com`. Налаштування `document.domain='site.com'` в обох переведе їх у стан "одного походження".
+- Якщо iframe має атрибут `sandbox`, він примусово переводиться в стан "іншого походження", якщо у значенні атрибута не вказано `allow-same-origin`. Це можна використовувати для запуску ненадійного коду в iframes з того самого сайту.
 
-The `postMessage` interface allows two windows with any origins to talk:
+Інтерфейс `postMessage` дозволяє розмовляти двом вікнам з будь-яким джерелом:
 
-1. The sender calls `targetWin.postMessage(data, targetOrigin)`.
-2. If `targetOrigin` is not `'*'`, then the browser checks if window `targetWin` has the origin `targetOrigin`.
-3. If it is so, then `targetWin` triggers the `message` event with special properties:
-    - `origin` -- the origin of the sender window (like `http://my.site.com`)
-    - `source` -- the reference to the sender window.
-    - `data` -- the data, any object in everywhere except IE that supports only strings.
+1. Відправник викликає `targetWin.postMessage(data, targetOrigin)`.
+2. Якщо `targetOrigin` не є `'*'`, тоді браузер перевіряє, чи має вікно `targetWin` джерело `targetOrigin`.
+3. Якщо це так, то `targetWin` ініціює подію `message` зі спеціальними властивостями:
+    - `origin` -- походження вікна відправника (наприклад, `http://my.site.com`)
+    - `source` -- посилання на вікно відправника.
+    - `data` -- дані, можуть бути об'єктом скрізь, крім IE (в IE тільки рядки).
 
-    We should use `addEventListener` to set the handler for this event inside the target window.
+    Ми повинні використовувати `addEventListener`, щоб встановити обробник для цієї події всередині цільового вікна.
