@@ -203,7 +203,7 @@ menu.onclick = function(event) {
 Тепер теж все працює коректно. Якщо ми маємо вкладені елементи, і кожен з них має власне контекстне меню, це також спрацює. Просто не забудьте перевірити наявність `event.defaultPrevented` у кожному обробнику `contextmenu`.
 
 ```smart header="event.stopPropagation() та event.preventDefault()"
-Як ми чітко бачимо, `event.stopPropagation()` та `event.preventDefault()` (також відомий як `return false`) - два різні методи. Вони не пов’язані один з одним.
+Як ми чітко бачимо, `event.stopPropagation()` та `event.preventDefault()` (також відомий як `return false`) -- це два різні методи. Вони не пов’язані один з одним.
 ```
 
 ```smart header="Архітектура вкладених контекстних меню"
