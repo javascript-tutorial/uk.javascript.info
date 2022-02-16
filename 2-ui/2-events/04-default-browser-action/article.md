@@ -181,7 +181,7 @@ menu.onclick = function(event) {
 
 ```html autorun height=80 no-beautify run
 <p>Правий клік, щоб відкрити контекстне меню документа (додано перевірку для event.defaultPrevented)</p>
-<button id="elem">Правий клік, щоб відкрити меню кнопки </button>
+<button id="elem">Правий клік, щоб відкрити меню кнопки</button>
 
 <script>
   elem.oncontextmenu = function(event) {
