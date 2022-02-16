@@ -30,7 +30,7 @@ document.body.sayTagName = function() {
   alert(this.tagName);
 };
 
-document.body.sayTagName(); // BODY (значення "this" У методі є document.body)
+document.body.sayTagName(); // BODY (значення "this" у методі є document.body)
 ```
 
 Ми також можемо змінювати вбудовані прототипи, такі як `Element.prototype` і додати нові методи для всіх елементів:
