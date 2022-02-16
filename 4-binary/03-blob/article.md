@@ -29,7 +29,7 @@ let blob = new Blob(["<html>…</html>"], {type: 'text/html'});
 
 ```js
 // створення Blob з типізованого масиву і рядку
-let hello = new Uint8Array([72, 101, 108, 108, 111]); // "Hello" в бінарному форматі
+let hello = new Uint8Array([72, 101, 108, 108, 111]); // "Hello" у бінарному форматі
 
 let blob = new Blob([hello, ' ', 'world'], {type: 'text/plain'});
 ```
