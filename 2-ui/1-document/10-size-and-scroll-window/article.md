@@ -91,7 +91,7 @@ alert('Поточна прокрутка зліва: ' + window.pageXOffset);
 
 Ми можемо зробити те ж саме для сторінки, використовуючи `document.documentElement.scrollTop/scrollLeft` (крім Safari, де замість цього слід використовувати `document.body.scrollTop/Left`).
 
-Крім того, є більш просте та універсальне рішення: спеціальні методи [window.scrollBy(x,y)](mdn:api/Window/scrollBy) і [window.scrollTo(pageX,pageY)](mdn:api/Window/scrollTo) .
+Крім того, є більш просте та універсальне рішення: спеціальні методи [window.scrollBy(x,y)](mdn:api/Window/scrollBy) і [window.scrollTo(pageX,pageY)](mdn:api/Window/scrollTo).
 
 - Метод `scrollBy(x,y)` прокручує сторінку *відносно її поточної позиції*. Наприклад, `scrollBy(0,10)` прокручує сторінку на `10px` вниз.
 
