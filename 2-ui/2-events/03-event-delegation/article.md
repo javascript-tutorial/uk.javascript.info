@@ -83,7 +83,7 @@ function highlight(td) {
 
 ![](bagua-bubble.svg)
 
-В обробнику `table.onclick` ми повинні взяти `event.target` і з'ясувати, чи був клік всередині `<td>` чи ні.
+В обробнику `table.onclick` ми повинні взяти `event.target` і з’ясувати, чи був клік всередині `<td>` чи ні.
 
 Ось покращений код:
 
