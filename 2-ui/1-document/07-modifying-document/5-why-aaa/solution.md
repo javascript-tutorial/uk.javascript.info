@@ -1,9 +1,9 @@
-The HTML in the task is incorrect. That's the reason of the odd thing.
+HTML в завданні написаний невірно. Це і є причиною дивної поведінки коду.
 
-The browser has to fix it automatically. But there may be no text inside the `<table>`: according to the spec only table-specific tags are allowed. So the browser shows `"aaa"` *before* the `<table>`.
+Браузер має виправити це автоматично. Але згідно специфікації тег `<table>` може містити в собі лише теги які відносяться до таблиць. Тому браузер виносить `"aaa"` _перед_ тегом `<table>`.
 
-Now it's obvious that when we remove the table, it remains.
+Тепер очевидно, що коли ми видаляємо таблицю, текст залишається
 
-The question can be easily answered by exploring the DOM using the browser tools. You'll see `"aaa"` before the `<table>`.
+Можна легко відповісти на це запитання, дослідивши DOM за допомогою інструментів веб-розробки в браузері. Ви побачите `"aaa"` перед `<table>`.
 
-The HTML standard specifies in detail how to process bad HTML, and such behavior of the browser is correct.
+В стандартах HTML детально описано як обробляти некоректний HTML, тому така поведінка браузера є правильною.

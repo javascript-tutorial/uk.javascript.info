@@ -1,4 +1,4 @@
-The solution is short, yet may look a bit tricky, so here I provide it with extensive comments:
+Рішення коротке, але може виглядати дещо складним, тому я надаю його з розширеними коментарями:
 
 ```js
 let sortedRows = Array.from(table.tBodies[0].rows) // 1
@@ -7,12 +7,12 @@ let sortedRows = Array.from(table.tBodies[0].rows) // 1
 table.tBodies[0].append(...sortedRows); // (3)
 ```
 
-The step-by-step algorthm:
+Покроковий алгоритм:
 
-1. Get all `<tr>`, from `<tbody>`.
-2. Then sort them comparing by the content of the first `<td>` (the name field).
-3. Now insert nodes in the right order by `.append(...sortedRows)`.
+1. Отримати всі `<tr>` з `<tbody>`.
+2. Потім відсортувати їх порівнюючи за вмістом першого `<td>` (поле «Ім’я»).
+3. Вставити вузли в правильному порядку `.append(...sortedRows)`.
 
-We don't have to remove row elements, just "re-insert", they leave the old place automatically.
+Нам не потрібно видаляти існуючі рядки з таблиці, лише повторно вставити і вони автоматично залишать своє попереднє місце розташування.
 
-P.S. In our case, there's an explicit `<tbody>` in the table, but even if HTML table doesn't have `<tbody>`, the DOM structure always has it.
+P.S. У нашому випадку в таблиці є явний `<tbody>`, але навіть якщо HTML-таблиця не має `<tbody>`, він завжди є в структурі DOM.

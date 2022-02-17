@@ -1,7 +1,7 @@
 
-When we need to insert a piece of HTML somewhere, `insertAdjacentHTML` is the best fit.
+Коли нам потрібно кудись вставити фрагмент HTML, найкраще підходить `insertAdjacentHTML`.
   
-The solution:
+Рішення:
 
 ```js
 one.insertAdjacentHTML('afterend', '<li>2</li><li>3</li>');
