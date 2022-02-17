@@ -545,7 +545,7 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
     - `parent.removeChild(node)`
     - `parent.replaceChild(newElem, node)`
 
-  Всі вони повертають `node`.
+    Всі вони повертають `node`.
 
 - Метод `elem.insertAdjacentHTML(where, html)` вставляє заданий HTML в залежності від значення параметру `where`:
   - `"beforebegin"` -- вставляє `html` прямо перед `elem`,
