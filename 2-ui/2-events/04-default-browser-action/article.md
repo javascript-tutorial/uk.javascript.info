@@ -86,7 +86,7 @@ menu.onclick = function(event) {
 
 ```html run autorun
 <input value="Фокус працює" onfocus="this.value=''">
-<input *!*onmousedown="return false"*/!* onfocus="this.value=''" value="Клікни мене">
+<input *!*onmousedown="return false"*/!* onfocus="this.value=''" value="Клікни на мене">
 ```
 
 Це тому, що дія браузера скасовується під час `mousedown`. Фокусування все ще можливе, якщо ми використаємо інший спосіб введення вхідних даних. Наприклад, клавіша `key:Tab` для перемикання з 1-го входу на 2-й. Але вже не за допомогою кліку.
