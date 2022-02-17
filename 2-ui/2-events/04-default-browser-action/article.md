@@ -113,7 +113,7 @@ menu.onclick = function(event) {
 
 Є цікавий варіант використання.
 
-Пам’ятаєте, в розділі <info:bubbling-and-capturing> ми говорили про `event.stopPropagation()` і чому припинення спливання – це погано?
+Пам’ятаєте, в розділі <info:bubbling-and-capturing> ми говорили про `event.stopPropagation()` і чому припинення спливання -- це погано?
 
 Іноді замість цього ми можемо використовувати `event.defaultPrevented`, щоб повідомити іншим обробникам, що подія була оброблена.
 
