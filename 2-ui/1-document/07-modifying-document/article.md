@@ -553,7 +553,7 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
   - `"beforeend"` -- вставляє `html` в `elem`, в кінці,
   - `"afterend"` -- вставляє `html` відразу після `elem`.
 
-  Також є схожі методи, `elem.insertAdjacentText` та `elem.insertAdjacentElement`, що вставляють текстові рядки та елементи, але їх рідко використовують.
+    Також є схожі методи, `elem.insertAdjacentText` та `elem.insertAdjacentElement`, що вставляють текстові рядки та елементи, але їх рідко використовують.
 
 - Щоб додати HTML на сторінку до того як вона повністю завантажиться:
   - `document.write(html)`
