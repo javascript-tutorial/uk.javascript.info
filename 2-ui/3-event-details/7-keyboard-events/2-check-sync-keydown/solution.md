@@ -1,6 +1,6 @@
 
-We should use two handlers: `document.onkeydown` and `document.onkeyup`.
+Ми повинні використовувати два обробники: `document.onkeydown` і `document.onkeyup`.
 
-Let's create a set `pressed = new Set()` to keep currently pressed keys.
+Давайте створимо набір `pressed = new Set()`, щоб зберегти поточні натиснуті клавіші.
 
-The first handler adds to it, while the second one removes from it. Every time on `keydown` we check if we have enough keys pressed, and run the function if it is so.
+Перший обробник додає до нього, а другий видаляє. Кожного разу при `keydown` ми перевіряємо, чи достатньо натиснутих клавіш, і запускаємо функцію, якщо це так.
