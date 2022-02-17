@@ -537,7 +537,7 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
     - `node.replaceWith(...nodes or strings)` -- замінює `node`.
     - `node.remove()` -- видаляє `node`.
 
-  Текстові рядки вставляються «як текст».
+    Текстові рядки вставляються «як текст».
 
 - Також є застарілі методи:
     - `parent.appendChild(node)`
