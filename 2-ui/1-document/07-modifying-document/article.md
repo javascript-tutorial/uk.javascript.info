@@ -286,7 +286,7 @@ after
 <div id="first">Перший</div>
 <div id="second">Другий</div>
 <script>
-  // немає потреби викликати .remove
+  // немає потреби викликати remove
   second.after(first); // взяти #другий та після нього вставити #перший
 </script>
 ```
