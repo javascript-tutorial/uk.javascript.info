@@ -454,7 +454,7 @@ ul.append(...getListContent()); // append + оператор "..." = друзі!
 : Замінює `oldChild` на `node` поміж дочірніми елементами `parentElem`.
 
 `parentElem.removeChild(node)`
-: Видаляє `node` з `parentElem` (припускаючи, що `node` це його дочірній елемент).
+: Видаляє `node` з `parentElem` (припускаючи, що `node` -- це його дочірній елемент).
 
     В наведеному нижче прикладі з `<ol>` видаляється перший `<li>` :
 
