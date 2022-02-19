@@ -8,4 +8,4 @@ importance: 5
 
 [iframe border=1 height=100 src="solution"]
 
-P.S. HTML/CSS вихідного документа можна і треба міняти.
+P.S. HTML/CSS вихідного документа можна і треба змінювати.
