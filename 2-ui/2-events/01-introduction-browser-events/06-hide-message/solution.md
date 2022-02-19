@@ -1,7 +1,7 @@
 
 Щоб додати кнопку закриття, ми можемо використовувати або `position:absolute` (і зробити плитку (pane) `position:relative`) або `float:right`. Перевага варіанта з `float:right` у тому, що кнопка закриття ніколи не перекриє текст, але варіант `position:absolute` дає більше свободи для дій. Загалом вибір за вами.
 
-Тоді для кожної панелі код може бути таким:
+Тоді для кожного повідомлення(pane) код може бути таким:
 ```js
 pane.insertAdjacentHTML("afterbegin", '<button class="remove-button">[x]</button>');
 ```
