@@ -6,7 +6,7 @@
 pane.insertAdjacentHTML("afterbegin", '<button class="remove-button">[x]</button>');
 ```
 
-Елемент `<button>` стає `pane.firstChild`, таким чином ми можемо додати на нього обробник події:
+Елемент `<button>` стає `pane.firstChild`, таким чином ми можемо додати до нього обробник події:
 
 ```js
 pane.firstChild.onclick = () => pane.remove();
