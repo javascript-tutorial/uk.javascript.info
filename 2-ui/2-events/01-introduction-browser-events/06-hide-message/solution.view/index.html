@@ -10,16 +10,16 @@
 
   <div>
     <div class="pane">
-      <h3>Horse</h3>
-      <p>The horse is one of two extant subspecies of Equus ferus. It is an odd-toed ungulate mammal belonging to the taxonomic family Equidae. The horse has evolved over the past 45 to 55 million years from a small multi-toed creature, Eohippus, into the large, single-toed animal of today.</p>
+      <h3>Кінь</h3>
+      <p>Кінь є одним із двох підвидів Equus ferus, що існує. Це парнокопитний ссавець, що належить до таксономічної родини Equidae. За останні 45-55 мільйонів років кінь еволюціонував із маленької багатопалої істоти, Eohippus, до великої однопалої тварини сучасності.</p>
     </div>
     <div class="pane">
-      <h3>Donkey</h3>
-      <p>The donkey or ass (Equus africanus asinus) is a domesticated member of the horse family, Equidae. The wild ancestor of the donkey is the African wild ass, E. africanus. The donkey has been used as a working animal for at least 5000 years.</p>
+      <h3>Осел</h3>
+      <p>Ішак або осел (Equus africanus asinus) є одомашненим представником сімейства коней, Equidae. Диким предком осла є африканський дикий осел E. africanus. Осел використовувався як робоча тварина щонайменше 5000 років.</p>
     </div>
     <div class="pane">
-      <h3>Cat</h3>
-      <p>The domestic cat (Latin: Felis catus) is a small, typically furry, carnivorous mammal. They are often called house cats when kept as indoor pets or simply cats when there is no need to distinguish them from other felids and felines. Cats are often valued by humans for companionship and for their ability to hunt vermin.
+      <h3>Кіт</h3>
+      <p>Домашня кішка (лат. Felis catus) -- невеликий, типово пухнастий, хижий ссавець. Їх часто називають домашніми кішками, коли вони проживають з людьми, або просто кішками, коли нема потреби відрізняти їх від інших котячих. Люди часто цінують кішок за товариські стосунки й за їх здатність полювати на шкідників.
       </p>
     </div>
   </div>
@@ -30,7 +30,7 @@
 
     for(let pane of panes) {
       pane.insertAdjacentHTML("afterbegin", '<button class="remove-button">[x]</button>');
-      // button becomes the first child of pane
+      // кнопка стає першим дочірнім елементом pane
       pane.firstChild.onclick = () => pane.remove();
     }
   </script>

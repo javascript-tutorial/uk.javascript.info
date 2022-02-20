@@ -24,15 +24,15 @@ ul {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0; 
+  font-size: 0;
 }
 
 ul img {
   width: 130px;
   height: 130px;
-  display: block; /* removes extra space near images */
+  display: block; /* видаляє зайві пробіли біля зображень */
 }
 
 ul li {
-  display: inline-block; /* removes extra space between list items
+  display: inline-block; /* видаляє зайві пробіли між елементами списку */
 }

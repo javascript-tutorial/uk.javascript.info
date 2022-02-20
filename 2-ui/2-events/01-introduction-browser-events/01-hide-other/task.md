@@ -2,10 +2,10 @@ importance: 5
 
 ---
 
-# Hide on click
+# Приховати елемент після натискання кнопки
 
-Add JavaScript to the `button` to make `<div id="text">` disappear when we click it.
+Напишіть такий JavaScript, щоб після натискання на кнопку `button`, елемент `<div id="text">` зникав.
 
-The demo:
+Демонстрація роботи:
 
 [iframe border=1 src="solution" height=80]

@@ -1,12 +1,12 @@
 
-To add the button we can use either `position:absolute` (and make the pane `position:relative`) or `float:right`. The `float:right` has the benefit that the button never overlaps the text, but `position:absolute` gives more freedom. So the choice is yours.
+Щоб додати кнопку закриття, ми можемо використовувати або `position:absolute` (і зробити плитку (pane) `position:relative`) або `float:right`. Перевага варіанта з `float:right` у тому, що кнопка закриття ніколи не перекриє текст, але варіант `position:absolute` дає більше свободи для дій. Загалом вибір за вами.
 
-Then for each pane the code can be like:
+Тоді для кожного повідомлення(pane) код може бути таким:
 ```js
 pane.insertAdjacentHTML("afterbegin", '<button class="remove-button">[x]</button>');
 ```
 
-Then the `<button>` becomes `pane.firstChild`, so we can add a handler to it like this:
+Елемент `<button>` стає `pane.firstChild`, таким чином ми можемо додати до нього обробник події:
 
 ```js
 pane.firstChild.onclick = () => pane.remove();

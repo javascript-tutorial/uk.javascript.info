@@ -1,5 +1,5 @@
-Can use `this` in the handler to reference "the element itself" here:
+Можемо використати `this` в обробнику для доступу до самого елемента:
 
 ```html run height=50
-<input type="button" onclick="this.hidden=true" value="Click to hide">
+<input type="button" onclick="this.hidden=true" value="Сховати">
 ```
