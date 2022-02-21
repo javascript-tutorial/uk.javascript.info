@@ -1,63 +1,63 @@
-# Long polling
+# Тривале опитування
 
-Long polling is the simplest way of having persistent connection with server, that doesn't use any specific protocol like WebSocket or Server Side Events.
+Тривале опитування (Long polling) -- це найпростіший спосіб реалізувати постійне з’єднання із сервером, без використання спеціального протоколу, такого як WebSocket або Server Side Events.
 
-Being very easy to implement, it's also good enough in a lot of cases.
+Будучи дуже простим у реалізації, він також достатньо хороший у багатьох випадках.
 
-## Regular Polling
+## Періодичне опитування
 
-The simplest way to get new information from the server is periodic polling. That is, regular requests to the server: "Hello, I'm here, do you have any information for me?". For example, once every 10 seconds.
+Найпростіший спосіб отримати нову інформацію з сервера -- періодичне опитування. Тобто регулярні запити до сервера: "Привіт, я тут, у вас є якась інформація для мене?". Наприклад, раз на 10 секунд.
 
-In response, the server first takes a notice to itself that the client is online, and second - sends a packet of messages it got till that moment.
+У відповідь сервер спочатку помічає собі, що клієнт онлайн, а по-друге -- надсилає пакет повідомлень, які він отримав до цього моменту.
 
-That works, but there are downsides:
-1. Messages are passed with a delay up to 10 seconds (between requests).
-2. Even if there are no messages, the server is bombed with requests every 10 seconds, even if the user switched somewhere else or is asleep. That's quite a load to handle, speaking performance-wise.
+Це працює, але є і мінуси:
+1. Повідомлення передаються із затримкою до 10 секунд (між запитами).
+2. Навіть якщо повідомлень немає, сервер отримує запити кожні 10 секунд, навіть якщо користувач перейшов кудись в інше місце або сайт не використовується. З точки зору продуктивності, це може створювати велике навантаження.
 
-So, if we're talking about a very small service, the approach may be viable, but generally, it needs an improvement.
+Отже, якщо ми говоримо про невеликий сервіс, підхід може бути життєздатним, але загалом він потребує вдосконалення.
 
-## Long polling
+## Тривале опитування
 
-So-called "long polling" is a much better way to poll the server.
+Так зване "тривале опитування" (Long polling) -- це набагато кращий спосіб опитування сервера.
 
-It's also very easy to implement, and delivers messages without delays.
+Також він дуже простий у реалізації та дозволяє отримувати повідомлення без затримок.
 
-The flow:
+Як це працює:
 
-1. A request is sent to the server.
-2. The server doesn't close the connection until it has a message to send.
-3. When a message appears - the server responds to the request with it.
-4. The browser makes a new request immediately.
+1. На сервер надсилається запит.
+2. Сервер не закриває з’єднання, поки не з’явиться повідомлення для відправки.
+3. Коли з’являється повідомлення -- сервер відповідає ним на запит.
+4. Браузер негайно робить новий запит.
 
-The situation when the browser sent a request and has a pending connection with the server, is standard for this method. Only when a message is delivered, the connection is reestablished.
+Ситуація, коли браузер відправив запит і має відкрите з’єднання з сервером, є стандартною для цього методу. Лише після доставки повідомлення з’єднання із сервером закривається та відкривається нове.
 
 ![](long-polling.svg)
 
-If the connection is lost, because of, say, a network error, the browser immediately sends a new request.
+Якщо з’єднання втрачено, скажімо, через помилку мережі, браузер негайно надсилає новий запит.
 
-A sketch of client-side `subscribe` function that makes long requests:
+Ось ескіз функції `subscribe` на стороні клієнта, яка виконує тривале опитування:
 
 ```js
 async function subscribe() {
   let response = await fetch("/subscribe");
 
   if (response.status == 502) {
-    // Status 502 is a connection timeout error,
-    // may happen when the connection was pending for too long,
-    // and the remote server or a proxy closed it
-    // let's reconnect
+    // Статус 502 -- це помилка тайм-ауту підключення,
+    // вона може статися, коли з’єднання було відкрито занадто довго,
+    // і віддалений сервер або проксі-сервер закрили його.
+    // У цьому випадку повторюємо підключення
     await subscribe();
   } else if (response.status != 200) {
-    // An error - let's show it
+    // У разі помилки -- покажемо її
     showMessage(response.statusText);
-    // Reconnect in one second
+    // Повторне підключення через одну секунду
     await new Promise(resolve => setTimeout(resolve, 1000));
     await subscribe();
   } else {
-    // Get and show the message
+    // Отримуємо та показуємо повідомлення
     let message = await response.text();
     showMessage(message);
-    // Call subscribe() again to get the next message
+    // Знову викликаємо subscribe(), щоб отримати наступне повідомлення
     await subscribe();
   }
 }
@@ -65,34 +65,34 @@ async function subscribe() {
 subscribe();
 ```
 
-As you can see, `subscribe` function makes a fetch, then waits for the response, handles it and calls itself again.
+Як бачите, функція `subscribe` виконує запит, потім чекає на відповідь, обробляє її та знову викликає сама себе.
 
-```warn header="Server should be ok with many pending connections"
-The server architecture must be able to work with many pending connections.
+```warn header="Сервер має підтримувати багато відкритих з’єднань"
+Архітектура сервера повинна вміти працювати з великою кількістю незавершених з’єднаннь.
 
-Certain server architectures run one process per connection, resulting in there being as many processes as there are connections, while each process consumes quite a bit of memory. So, too many connections will just consume it all.
+Деякі архітектури серверів запускають один процес на одне з’єднання, в результаті чого процесів стає стільки, скільки є з’єднань, при цьому кожен процес споживає досить багато пам’яті. Таким чином, занадто багато з’єднань просто використають усю память.
 
-That's often the case for backends written in languages like PHP and Ruby.
+Це досить часто трапляється з серверами, які використовують мови PHP і Ruby.
 
-Servers written using Node.js usually don't have such problems.
+Сервери, написані за допомогою Node.js, зазвичай не мають таких проблем.
 
-That said, it isn't a programming language issue. Most modern languages, including PHP and Ruby allow to implement a proper backend. Just please make sure that your server architecture works fine with many simultaneous connections.
+Тим не менш, це не проблема мови програмування. Більшість сучасних мов, включаючи PHP і Ruby, дозволяють реалізувати належну роботу сервера. Просто переконайтеся, що архітектура вашого сервера добре працює з багатьма одночасними з’єднаннями.
 ```
 
-## Demo: a chat
+## Демо: чат
 
-Here's a demo chat, you can also download it and run locally (if you're familiar with Node.js and can install modules):
+Ось демонстраційний чат, який ви також можете завантажити та запустити локально (якщо ви знайомі з Node.js і вмієте встановлювати модулі):
 
 [codetabs src="longpoll" height=500]
 
-Browser code is in `browser.js`.
+Браузерний код знаходиться в `browser.js`.
 
-## Area of usage
+## Область використання
 
-Long polling works great in situations when messages are rare.
+Тривале опитування чудово працює в ситуаціях, коли повідомлення надходять рідко.
 
-If messages come very often, then the chart of requesting-receiving messages, painted above, becomes saw-like.
+Якщо повідомлення надходять дуже часто, то діаграма запиту-отримання повідомлень, намальована вище, стає схожою на пилку.
 
-Every message is a separate request, supplied with headers, authentication overhead, and so on.
+Кожне повідомлення є окремим запитом із заголовками, накладними витратами на аутентифікацію тощо.
 
-So, in this case, another method is preferred, such as [Websocket](info:websocket) or [Server Sent Events](info:server-sent-events).
+У цьому випадку перевага віддається іншим методам, наприклад [Websocket](info:websocket) або [Server Sent Events](info:server-sent-events).

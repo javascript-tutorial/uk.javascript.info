@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <script src="browser.js"></script>
 
-All visitors of this page will see messages of each other.
+Усі відвідувачі цієї сторінки будуть бачити повідомлення один одного.
 
 <form name="publish">
   <input type="text" name="message" />
-  <input type="submit" value="Send" />
+  <input type="submit" value="Надіслати" />
 </form>
 
 <div id="subscribe">
@@ -13,6 +13,6 @@ All visitors of this page will see messages of each other.
 
 <script>
   new PublishForm(document.forms.publish, 'publish');
-  // random url parameter to avoid any caching issues
+  // випадковий параметр URL-адреси, щоб уникнути проблем із кешуванням
   new SubscribePane(document.getElementById('subscribe'), 'subscribe?random=' + Math.random());
 </script>
