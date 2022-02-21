@@ -48,7 +48,7 @@ async function subscribe() {
     // У цьому випадку повторюємо підключення
     await subscribe();
   } else if (response.status != 200) {
-    // У разі помилки - покажемо її
+    // У разі помилки -- покажемо її
     showMessage(response.statusText);
     // Повторне підключення через одну секунду
     await new Promise(resolve => setTimeout(resolve, 1000));
