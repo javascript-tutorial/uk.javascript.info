@@ -55,7 +55,7 @@ function accept(req, res) {
     return;
   }
 
-  // решта - статичні файли
+  // решта -- статичні файли
   fileServer.serve(req, res);
 
 }
