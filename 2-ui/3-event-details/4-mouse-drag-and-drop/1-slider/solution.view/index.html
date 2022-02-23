@@ -16,10 +16,10 @@
     let thumb = slider.querySelector('.thumb');
 
     thumb.onmousedown = function(event) {
-      event.preventDefault(); // prevent selection start (browser action)
+      event.preventDefault(); // запобігти запуск виділення (дія браузера)
 
       let shiftX = event.clientX - thumb.getBoundingClientRect().left;
-      // shiftY not needed, the thumb moves only horizontally
+      // shiftY не потрібен, слайдер рухається тільки по горизонталі
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
@@ -27,7 +27,7 @@
       function onMouseMove(event) {
         let newLeft = event.clientX - shiftX - slider.getBoundingClientRect().left;
 
-        // the pointer is out of slider => lock the thumb within the bounaries
+        // курсор вийшов зі слайдера => залишити бігунок в його межах.
         if (newLeft < 0) {
           newLeft = 0;
         }

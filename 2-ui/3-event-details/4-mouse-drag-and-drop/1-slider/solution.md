@@ -1,5 +1,5 @@
-As we can see from HTML/CSS, the slider is a `<div>` with a colored background, that contains a runner -- another `<div>` with `position:relative`.
+Як можна бачити з `HTML/CSS`, слайдер - це `<div>`, з кольровим фоном, всередині якого знаходиться інший `<div>`, оформлений як бігунок, з `position: relative`.
 
-To position the runner we use `position:relative`, to provide the coordinates relative to its parent, here it's more convenient here than `position:absolute`.
+Використовуємо для його позиціювання `position: relative`, тобто координати встановлюються не абсолютні, а відносно зовнішнього родича, так як це зручніше.
 
-Then we implement horizontal-only Drag'n'Drop with limitation by width.
+І далі реалізуємо Drag'n'Drop тільки по горизонталі, з обмеженням по ширині.

@@ -4,13 +4,13 @@ importance: 5
 
 # Slider
 
-Create a slider:
+Створіть слайдер:
 
 [iframe src="solution" height=60 border=1]
 
-Drag the blue thumb with the mouse and move it.
+Натисніть мишею на синій бігунок і рухайте його.
 
-Important details:
+Важливі деталі:
 
-- When the mouse button is pressed, during the dragging the mouse may go over or below the slider. The slider will still work (convenient for the user).
-- If the mouse moves very fast to the left or to the right, the thumb should stop exactly at the edge.
+- При натиснутому бігунці курсор миші може виходити за межі смуги слайдера, але слайдер нехай все одно працює (це зручно для користувача).
+- Слайдер повинен нормально працювати при різкому русі миші вліво або вправо за межі смуги. При цьому бігунок повинен зупинятися чітко в потрібному кінці смуги.
