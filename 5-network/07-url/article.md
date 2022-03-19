@@ -3,7 +3,7 @@
 
 Вбудований клас [URL](https://url.spec.whatwg.org/#api) надає зручний інтерфейс для створення та розбирання URL на частини.
 
-Методи, що дають змогу зробити мережевий запит, не вимагають саме екземпляр класу `URL`, досить передати рядок. Тому нас нічого не зобов'язує використовувати клас `URL`. Але це дійсно може стати в нагоді.
+Методи, що дають змогу зробити мережевий запит, досить передати просто рядок, вони не вимагають саме екземпляр класу `URL`. Тому нас нічого не зобов'язує використовувати клас `URL`. Але це дійсно може стати в нагоді.
 
 ## Створення URL
 
@@ -135,46 +135,46 @@ alert(url); // https://uk.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82?key=%D1%97
 
 URL-адреса стала довшою, бо кожен кириличний символ представлено двома байтами в UTF-8, тому там дві групи символів `%..`.
 
-### Encoding strings
+### Кодування рядків
 
-In old times, before `URL` objects appeared, people used strings for URLs.
+До появи `URL`, розробники використовували рядки для URL-адрес.
 
-As of now, `URL` objects are often more convenient, but strings can still be used as well. In many cases using a string makes the code shorter.
+Наразі, зручніше використовувати `URL`, але рядки все ще можна використовувати. У більшості випадків, використання рядків потребує менше коду.
 
-If we use a string though, we need to encode/decode special characters manually.
+Слід зауважити, якщо ми використовуємо рядки, то закодувати та декодувати символи нам потрібно вручну.
 
-There are built-in functions for that:
+Для цього є вбудовані функції:
 
-- [encodeURI](mdn:/JavaScript/Reference/Global_Objects/encodeURI) - encodes URL as a whole.
-- [decodeURI](mdn:/JavaScript/Reference/Global_Objects/decodeURI) - decodes it back.
-- [encodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/encodeURIComponent) - encodes a URL component, such as a search parameter, or a hash, or a pathname.
-- [decodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/decodeURIComponent) - decodes it back.
+- [encodeURI](mdn:/JavaScript/Reference/Global_Objects/encodeURI) - закодувати URL-адресу повністю.
+- [decodeURI](mdn:/JavaScript/Reference/Global_Objects/decodeURI) - розкодувати її.
+- [encodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/encodeURIComponent) - закодувати частину URL-адреси, наприклад, параметри пошуку, шлях чи геш.
+- [decodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/decodeURIComponent) - розкодувати відповідну частину.
 
-A natural question is: "What's the difference between `encodeURIComponent` and `encodeURI`? When we should use either?"
+Може виникнути природне питання: "Яка різниця між `encodeURIComponent` та `encodeURI`? В якому випадку краще використовувати кожну функцію?"
 
-That's easy to understand if we look at the URL, that's split into components in the picture above:
+Це стає легше зрозуміти, якщо подивитися на URL-адресу, що показано розділеною на частини вище.
 
 ```
 https://site.com:8080/path/page?p1=v1&p2=v2#hash
 ```
 
-As we can see, characters such as `:`, `?`, `=`, `&`, `#` are allowed in URL.
+Як бачимо, символи `:`, `?`, `=`, `&`, `#` дозволено безпосередньо використовувати в URL.
 
-...On the other hand, if we look at a single URL component, such as a search parameter, these characters must be encoded, not to break the formatting.
+...На противагу цьому, якщо ми поглянемо тільки на параметри пошуку URL, то використані там символи повинні бути закодовані, щоб не зламати форматування.
 
-- `encodeURI` encodes only characters that are totally forbidden in URL.
-- `encodeURIComponent` encodes same characters, and, in addition to them, characters `#`, `$`, `&`, `+`, `,`, `/`, `:`, `;`, `=`, `?` and `@`.
+- `encodeURI` кодує тільки символи, що заборонені до використання в URL.
+- `encodeURIComponent` закодує деякі символи та символи: `#`, `$`, `&`, `+`, `,`, `/`, `:`, `;`, `=`, `?` та `@`.
 
-So, for a whole URL we can use `encodeURI`:
+Отже, для кодування всього URL можна використати `encodeURI`:
 
 ```js run
-// using cyrillic characters in url path
-let url = encodeURI('http://site.com/привет');
+// використання кириличних символі в шляху url
+let url = encodeURI('http://site.com/привіт');
 
-alert(url); // http://site.com/%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82
+alert(url); // http://site.com/%D0%BF%D1%80%D0%B8%D0%B2%D1%96%D1%82
 ```
 
-...While for URL parameters we should use `encodeURIComponent` instead:
+...Проте, для URL параметрів нам знадобиться використати `encodeURIComponent`:
 
 ```js run
 let music = encodeURIComponent('Rock&Roll');
@@ -183,7 +183,7 @@ let url = `https://google.com/search?q=${music}`;
 alert(url); // https://google.com/search?q=Rock%26Roll
 ```
 
-Compare it with `encodeURI`:
+Порівняймо його з `encodeURI`:
 
 ```js run
 let music = encodeURI('Rock&Roll');
@@ -192,16 +192,16 @@ let url = `https://google.com/search?q=${music}`;
 alert(url); // https://google.com/search?q=Rock&Roll
 ```
 
-As we can see, `encodeURI` does not encode `&`, as this is a legit character in URL as a whole.
+Як бачимо, `encodeURI` не кодує символ `&`, оскільки це дозволений для використання в URL.
 
-But we should encode `&` inside a search parameter, otherwise, we get `q=Rock&Roll` - that is actually `q=Rock` plus some obscure parameter `Roll`. Not as intended.
+Але нам потрібно закодувати `&` всередині параметрів пошуку, інакше ми отримаємо `q=Rock&Roll`, що означатиме `q=Rock` та незрозумілий параметр `Roll`. Не те, що ми очікували.
 
-So we should use only `encodeURIComponent` for each search parameter, to correctly insert it in the URL string. The safest is to encode both name and value, unless we're absolutely sure that it has only allowed characters.
+Нам слід використовувати тільки `encodeURIComponent` з параметрами пошуку для правильного вставлення в рядок URL. Для повної безпеки, слід кодувати ім'я та значення параметрів, якщо ми не можемо бути повністю впевненими, що вони містять тільки дозволені символи.
 
-````smart header="Encoding difference compared to `URL`"
-Classes [URL](https://url.spec.whatwg.org/#url-class) and [URLSearchParams](https://url.spec.whatwg.org/#interface-urlsearchparams) are based on the latest URI specification: [RFC3986](https://tools.ietf.org/html/rfc3986), while `encode*` functions are based on the obsolete version [RFC2396](https://www.ietf.org/rfc/rfc2396.txt).
+````smart header="Різниця в кодуванні у порівнянні з `URL`"
+Класи [URL](https://url.spec.whatwg.org/#url-class) та [URLSearchParams](https://url.spec.whatwg.org/#interface-urlsearchparams) ґрунтуються на останній специфікації URL: [RFC3986](https://tools.ietf.org/html/rfc3986), але функції `encode*` використовують застарілу версію [RFC2396](https://www.ietf.org/rfc/rfc2396.txt).
 
-There are a few differences, e.g. IPv6 addresses are encoded differently:
+Існують деякі відмінності, як от IPv6 адреси кодуються по-іншому:
 
 ```js run
 // valid url with IPv6 address
@@ -211,7 +211,7 @@ alert(encodeURI(url)); // http://%5B2607:f8b0:4005:802::1007%5D/
 alert(new URL(url)); // http://[2607:f8b0:4005:802::1007]/
 ```
 
-As we can see, `encodeURI` replaced square brackets `[...]`, that's not correct, the reason is: IPv6 urls did not exist at the time of RFC2396 (August 1998).
+Як бачимо, `encodeURI` заміню квадратні дужки `[...]`, що є помилкою, причиною є те, що IPv6 адреси ще не існували в часи створення стандарту RFC2396 (серпень 1998).
 
-Such cases are rare, `encode*` functions work well most of the time.
+Такі випадки рідко трапляються, функції `encode*` добре справляються в більшості випадків.
 ````
