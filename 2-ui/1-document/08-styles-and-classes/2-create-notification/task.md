@@ -2,23 +2,23 @@ importance: 5
 
 ---
 
-# Create a notification
+# Створити сповіщення
 
-Write a function `showNotification(options)` that creates a notification: `<div class="notification">` with the given content. The notification should automatically disappear after 1.5 seconds.
+Напишіть функцію `showNotification(options)`, яка створює сповіщення `<div class="notification">` з переданим вмістом. Сповіщення повинно автоматично зникати через 1.5 секунди.
 
-The options are:
+Вхідні параметри такі:
 
 ```js
-// shows an element with the text "Hello" near the right-top of the window
+// показує елемент з текстом "Hello" біля правого верхнього кутка вікна
 showNotification({
-  top: 10, // 10px from the top of the window (by default 0px)
-  right: 10, // 10px from the right edge of the window (by default 0px)
-  html: "Hello!", // the HTML of notification
-  className: "welcome" // an additional class for the div (optional)
+  top: 10, // 10px від верха вікна (усталено має бути 0px)
+  right: 10, // 10px від правого краю вікна (усталено — 0px)
+  html: "Hello!", // HTML-код сповіщення
+  className: "welcome" // додатковий клас для елемента div (необов'язково)
 });
 ```
 
 [demo src="solution"]
 
 
-Use CSS positioning to show the element at given top/right coordinates. The source document has the necessary styles.
+Використовуйте позиціонування CSS для розміщення елемента за вказаними координатами `top/right`. Документ з оточенням вже містить всі необхідні стилі.

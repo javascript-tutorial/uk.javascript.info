@@ -2,50 +2,50 @@ importance: 5
 
 ---
 
-# Create a tree from the object
+# Створіть дерево з об’єкту
 
-Write a function `createTree` that creates a nested `ul/li` list from the nested object.
+Напишіть функцію `createTree` яка створює вкладений `ul/li` список з вкладеного об’єкта.
 
-For instance:
+Наприклад:
 
 ```js
 let data = {
-  "Fish": {
-    "trout": {},
-    "salmon": {}
+  Риба: {
+    форель: {},
+    лосось: {}
   },
 
-  "Tree": {
-    "Huge": {
-      "sequoia": {},
-      "oak": {}
+  Дерево: {
+    Величезні: {
+      секвойя: {},
+      дуб: {}
     },
-    "Flowering": {
-      "apple tree": {},
-      "magnolia": {}
+    Квітучі: {
+      яблуня: {},
+      магнолія: {}
     }
   }
 };
 ```
 
-The syntax:
+Синтаксис:
 
 ```js
 let container = document.getElementById('container');
 *!*
-createTree(container, data); // creates the tree in the container
+createTree(container, data); // створює дерево в контейнері
 */!*
 ```
 
-The result (tree) should look like this:
+Результат (дерево) має виглядати так:
 
 [iframe border=1 src="build-tree-dom"]
 
-Choose one of two ways of solving this task:
+Виберіть один із двох способів вирішення цього завдання:
 
-1. Create the HTML for the tree and then assign to `container.innerHTML`.
-2. Create tree nodes and append with DOM methods.
+1. Створіть HTML для дерева, а потім призначте в `container.innerHTML`.
+2. Створіть вузли дерева та додайте їх за допомогою методів DOM.
 
-Would be great if you could do both.
+Було б чудово, якби ви могли зробити обидва.
 
-P.S. The tree should not have "extra" elements like empty `<ul></ul>` for the leaves.
+P.S. Дерево не повинно мати "зайвих" елементів, як-от порожній `<ul></ul>` для листя.

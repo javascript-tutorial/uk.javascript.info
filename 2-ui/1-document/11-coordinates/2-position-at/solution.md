@@ -1,4 +1,4 @@
-In this task we only need to accurately calculate the coordinates. See the code for details.
+У цьому завданні нам потрібно лише точно розрахувати координати. Подробиці дивіться в коді.
 
-Please note: the elements must be in the document to read `offsetHeight` and other properties.
-A hidden (`display:none`) or out of the document element has no size.
+Зверніть увагу: елементи повинні бути в документі, щоб прочитати `offsetHeight` та інші властивості.
+Прихований елемент (`display:none`) або елемент поза документом не має розміру.

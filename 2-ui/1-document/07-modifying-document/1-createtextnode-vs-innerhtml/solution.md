@@ -1,8 +1,8 @@
-Answer: **1 and 3**.
+Відповідь: **1 та 3**.
 
-Both commands result in adding the `text` "as text" into the `elem`.
+Результатом обох команд буде `text` доданий до `elem` «як текст».
 
-Here's an example:
+Приклад:
 
 ```html run height=80
 <div id="elem1"></div>

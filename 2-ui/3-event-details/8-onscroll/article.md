@@ -1,12 +1,12 @@
-# Scrolling
+# Прокрутка
 
-The `scroll` event allows reacting to a page or element scrolling. There are quite a few good things we can do here.
+Подія `scroll` дозволяє реагувати на прокручування сторінки або елемента. Є багато цікавих речей, які при цьому можна зробити.
 
-For instance:
-- Show/hide additional controls or information depending on where in the document the user is.
-- Load more data when the user scrolls down till the end of the page.
+Наприклад:
+- Показати/приховати додаткові елементи керування або інформацію залежно від того, де в документі перебуває користувач.
+- Завантажити більше даних, коли користувач прокрутить сторінку вниз до кінця.
 
-Here's a small function to show the current scroll:
+Ось невелика функція для відображення поточного прокручування:
 
 ```js autorun
 window.addEventListener('scroll', function() {
@@ -15,23 +15,23 @@ window.addEventListener('scroll', function() {
 ```
 
 ```online
-In action:
+У дії:
 
-Current scroll = <b id="showScroll">scroll the window</b>
+Поточна прокрутка = <b id="showScroll">прокрутіть вікно браузера</b>
 ```
 
-The `scroll` event works both on the `window` and on scrollable elements.
+Подія `scroll` працює як на `window`, так і на елементах, які можна прокручувати. 
 
-## Prevent scrolling
+## Запобігання прокручування
 
-How do we make something unscrollable?
+Як ми можемо зробити щось непрокручуваним?
 
-We can't prevent scrolling by using `event.preventDefault()` in `onscroll` listener, because it triggers *after* the scroll has already happened.
+Ми не можемо запобігти прокручуванню за допомогою `event.preventDefault()` у прослуховувачі `onscroll`, оскільки він запускається *після* прокручування.
 
-But we can prevent scrolling by `event.preventDefault()` on an event that causes the scroll, for instance `keydown` event for `key:pageUp` and `key:pageDown`.
+Але ми можемо запобігти прокручуванню за допомогою `event.preventDefault()` для події, яка його викликає, наприклад, події `keydown` для `key:pageUp` та `key:pageDown`.
 
-If we add an event handler to these events and `event.preventDefault()` in it, then the scroll won't start.
+Якщо ми додамо обробник до цих подій з `event.preventDefault()`, то прокручування не почнеться.
 
-There are many ways to initiate a scroll, so it's more reliable to use CSS, `overflow` property.
+Існує багато способів ініціювати прокручування, тому надійніше використовувати CSS, а саме властивість `overflow`.
 
-Here are few tasks that you can solve or look through to see applications of `onscroll`.
+Ось кілька завдань, які ви можете вирішити або переглянути, щоб побачити застосування `onscroll`.

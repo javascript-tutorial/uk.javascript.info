@@ -43,26 +43,26 @@
     }
 
     function clockStart() {
-      // set a new interval only if the clock is stopped
-      // otherwise we would rewrite the timerID reference to the running interval and wouldn't be able to stop the clock ever again
+      // встановити новий інтервал лише тоді, коли годинник вимкнений
+      // інакше, ми перепишемо посилання на timerID новим інтервалом і більше ніколи не зможемо зупитини годинник 
       if (!timerId) {
         timerId = setInterval(update, 1000);
       }
-      update(); // <--  start right now, don't wait 1 second till the first setInterval works
+      update(); // <--  почати прямо зараз, не чекати 1 секунду поки спрацює перший setInterval
     }
 
     function clockStop() {
       clearInterval(timerId);
-      timerId = null; // <-- clear timerID to indicate that the clock has been stopped, so that it is possible to start it again in clockStart()
+      timerId = null; // <-- очистити timerID, щоб показати, що годинник зупинено і можна знову запускати clockStart()
     }
 
   </script>
 
-  <!-- click on this button calls clockStart() -->
-  <input type="button" onclick="clockStart()" value="Start">
+  <!-- натискання на цю кнопку викличе clockStart() -->
+  <input type="button" onclick="clockStart()" value="Пуск">
 
-  <!-- click on this button calls clockStop() -->
-  <input type="button" onclick="clockStop()" value="Stop">
+  <!-- натискання на цю кнопку викличе clockStop() -->
+  <input type="button" onclick="clockStop()" value="Стоп">
 
 </body>
 </html>

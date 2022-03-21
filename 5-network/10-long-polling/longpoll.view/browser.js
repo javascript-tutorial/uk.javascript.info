@@ -1,4 +1,4 @@
-// Sending messages, a simple POST
+// Відправляємо повідомлення простим POST-запитом
 function PublishForm(form, url) {
 
   function sendMessage(message) {
@@ -18,7 +18,7 @@ function PublishForm(form, url) {
   };
 }
 
-// Receiving messages with long polling
+// Отримуємо повідомлення за допомогою тривалого опитування
 function SubscribePane(elem, url) {
 
   function showMessage(message) {
@@ -31,18 +31,18 @@ function SubscribePane(elem, url) {
     let response = await fetch(url);
 
     if (response.status == 502) {
-      // Connection timeout
-      // happens when the connection was pending for too long
-      // let's reconnect
+      // Тайм-аут з’єднання
+      // відбувається, коли з’єднання було відкрито занадто довго,
+      // відновлюємо з’єднання
       await subscribe();
     } else if (response.status != 200) {
-      // Show Error
+      // Показуємо помилку
       showMessage(response.statusText);
-      // Reconnect in one second
+      // Повторне підключення через одну секунду
       await new Promise(resolve => setTimeout(resolve, 1000));
       await subscribe();
     } else {
-      // Got message
+      // Отримано повідомлення
       let message = await response.text();
       showMessage(message);
       await subscribe();

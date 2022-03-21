@@ -27,7 +27,7 @@
   </div>
 
   <script>
-    /* label the images, just for convenience, to visually track them */
+    /* цей код позначає картинки, для зручності розробки */
     let i = 1;
     for(let li of carousel.querySelectorAll('li')) {
       li.style.position = 'relative';
@@ -35,27 +35,27 @@
       i++;
     }
 
-    /* configuration */
-    let width = 130; // image width
-    let count = 3; // visible images count
+    /* Конфігурація */
+    let width = 130; // ширина зображення
+    let count = 3; // видима кількість зображень
 
     let list = carousel.querySelector('ul');
     let listElems = carousel.querySelectorAll('li');
 
-    let position = 0; // ribbon scroll position
+    let position = 0; // початкова позиція каруселі
 
     carousel.querySelector('.prev').onclick = function() {
-      // shift left
+      // зсув ліворуч
       position += width * count;
-      // can't move to the left too much, end of images
+      // останній зсув вліво може бути не на 3, а на 2 або 1 елемент
       position = Math.min(position, 0)
       list.style.marginLeft = position + 'px';
     };
 
     carousel.querySelector('.next').onclick = function() {
-      // shift right
+      // зсув праворуч
       position -= width * count;
-      // can only shift the ribbbon for (total ribbon length - visible count) images
+      // останнє пересування вправо може бути не на 3, а на 2 або 1 елемент
       position = Math.max(position, -width * (listElems.length - count));
       list.style.marginLeft = position + 'px';
     };

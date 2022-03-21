@@ -27,7 +27,7 @@ alert(document.constructor.name); // HTMLDocument
 alert(HTMLDocument.prototype.constructor === HTMLDocument); // true
 ```
 
-Щоб отримати назву класу як рядок, ми можемо використовувати `constructor.name`. Давайте зробимо це для всього прототипного ланцюга `document` аж до класу` Node`:
+Щоб отримати назву класу як рядок, ми можемо використовувати `constructor.name`. Давайте зробимо це для всього прототипного ланцюга `document` аж до класу `Node`:
 
 ```js run
 alert(HTMLDocument.prototype.constructor.name); // HTMLDocument
@@ -37,4 +37,4 @@ alert(HTMLDocument.prototype.__proto__.__proto__.constructor.name); // Node
 
 Це ієрархія.
 
-Ми також можемо розглянути об’єкт за допомогою `console.dir(document)` і побачити ці назви, відкриваючи `__proto__`.Консоль браузера під капотом бере їх з `constructor`.
+Ми також можемо розглянути об’єкт за допомогою `console.dir(document)` і побачити ці назви, відкриваючи `__proto__`. Консоль браузера під капотом бере їх з `constructor`.

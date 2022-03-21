@@ -2,20 +2,20 @@ importance: 5
 
 ---
 
-# Move the ball across the field
+# Пересуньте м’яч по полю
 
-Move the ball across the field to a click. Like this:
+Нехай м’яч переміщається при натисканні на поле, туди, де був клік, ось так:
 
 [iframe src="solution" height="260" link]
 
-Requirements:
+Вимоги:
 
-- The ball center should come exactly under the pointer on click (if possible without crossing the field edge).
-- CSS-animation is welcome.
-- The ball must not cross field boundaries.
-- When the page is scrolled, nothing should break.
+- Центр м’яча повинен збігатися з курсором миші (якщо це можливо без перетину країв поля);
+- CSS-анімація бажана, але не є обов’язковою;
+- М’яч у жодному разі не повинен перетинати межі поля;
+- При прокручуванні сторінки нічого не повинно ламатися;
 
-Notes:
+Нотатки:
 
-- The code should also work with different ball and field sizes, not be bound to any fixed values.
-- Use properties `event.clientX/event.clientY` for click coordinates.
+- Код повинен уміти працювати з різними розмірами м’яча та поля, не прив’язуватися до будь-яких фіксованих значень.
+- Використовуйте властивості `event.clientX/event.clientY`, щоб вирахувати координати миші при кліці.

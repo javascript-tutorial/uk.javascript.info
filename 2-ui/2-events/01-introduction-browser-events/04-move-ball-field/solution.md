@@ -1,11 +1,11 @@
 
-First we need to choose a method of positioning the ball.
+Спочатку ми маємо вибрати метод позиціювання м’яча.
 
-We can't use `position:fixed` for it, because scrolling the page would move the ball from the field.
+Ми не можемо використати `position:fixed` для цього, оскільки прокручування сторінки переміщатиме м’яч поля.
 
-So we should use `position:absolute` and, to make the positioning really solid, make `field` itself positioned.
+Правильніше використовувати `position:absolute` і, щоб зробити позиціювання справді надійним, зробимо саме поле `field` позиціонованим.
 
-Then the ball will be positioned relatively to the field:
+Тоді м’яч буде позиціонований щодо поля:
 
 ```css
 #field {
@@ -16,36 +16,36 @@ Then the ball will be positioned relatively to the field:
 
 #ball {
   position: absolute;
-  left: 0; /* relative to the closest positioned ancestor (field) */
+  left: 0; /* по відношенню до найближчого розташованого предка (field) */
   top: 0;
-  transition: 1s all; /* CSS animation for left/top makes the ball fly */
+  transition: 1s all; /* CSS-анімація для значень left/top робить пересування м’яча плавним */
 }
 ```
 
-Next we need to assign the correct `ball.style.left/top`. They contain field-relative coordinates now.
+Далі ми маємо призначити коректні значення `ball.style.left/top`. Зараз вони містять координати щодо поля.
 
-Here's the picture:
+Як на зображенні:
 
 ![](move-ball-coords.svg)
 
-We have `event.clientX/clientY` -- window-relative coordinates of the click.
+Ми маємо `event.clientX/clientY` -- координати натискання мишки щодо вікна браузера.
 
-To get field-relative `left` coordinate of the click, we can substract the field left edge and the border width:
+Щоб отримати значення `left` для м’яча після натискання мишки щодо поля, ми повинні від координати натискання мишки відняти координату лівого краю поля та ширину межі:
 
 ```js
 let left = event.clientX - fieldCoords.left - field.clientLeft;
 ```
 
-Normally, `ball.style.left` means the "left edge of the element" (the ball). So if we assign that `left`, then the ball edge, not center, would be under the mouse cursor.
+Значення `ball.style.left` означає «лівий край елемента» (м’яча). І якщо ми призначимо такий `left` для м’яча, то його ліва межа, а не центр, буде під курсором миші.
 
-We need to move the ball half-width left and half-height up to make it center.
+Нам потрібно зрушити м'яч на половину його висоти вгору та половину його ширини вліво, щоб центр м’яча точно збігався з точкою натискання мишки.
 
-So the final `left` would be:
+У результаті значення для `left` буде таким:
 
 ```js
 let left = event.clientX - fieldCoords.left - field.clientLeft - ball.offsetWidth/2;
 ```
 
-The vertical coordinate is calculated using the same logic.
+Вертикальна координата обчислюватиметься за тією ж логікою.
 
-Please note that the ball width/height must be known at the time we access `ball.offsetWidth`. Should be specified in HTML or CSS.
+Слід пам’ятати, що ширина та висота м’яча має бути відома в той момент, коли ми отримуємо значення `ball.offsetWidth`. Це значення може бути задано в HTML або CSS.

@@ -1,4 +1,4 @@
-The easiest way to walk the object is to use recursion.
+Найпростіший спосіб обійти об’єкт -- скористатися рекурсією.
 
-1. [The solution with innerHTML](sandbox:innerhtml).
-2. [The solution with DOM](sandbox:build-tree-dom).
+1. [Рішення з innerHTML](sandbox:innerhtml).
+2. [Рішення з DOM](sandbox:build-tree-dom).
