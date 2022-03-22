@@ -28,7 +28,8 @@ ball.onmousedown = function(event) {
   ball.style.position = 'absolute';
   ball.style.zIndex = 1000;
 
-  // перемістимо в body, щоб м’яч був точно не всередині position: relative
+  // перемістимо його з будь-яких поточних батьків безпосередньо в body
+  // щоб розташувати його відносно body
   document.body.append(ball);  
 
   // центруємо м’яч за координатами (pageX, pageY)
