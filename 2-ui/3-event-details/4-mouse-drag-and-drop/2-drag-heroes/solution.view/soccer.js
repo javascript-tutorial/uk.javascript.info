@@ -45,8 +45,7 @@ document.addEventListener('mousedown', function(event) {
     moveAt(clientX, clientY);
   };
 
-  // перемикаємося назад на абсолютні координати
-  // щоб закріпити елемент відносно документа
+  // перемикаємося назад на абсолютні координати щоб закріпити елемент відносно документа
   function finishDrag() {
     if(!isDragging) {
       return;
@@ -67,8 +66,7 @@ document.addEventListener('mousedown', function(event) {
     let newY = clientY - shiftY;
 
     // перевіряємо, чи не виходять нові координати за нижній край вікна:
-    // спочатку обчислюємо гіпотетичний новий нижній край вікна
-    let newBottom = newY + dragElement.offsetHeight;
+    let newBottom = newY + dragElement.offsetHeight; // нові координати
 
     // виходять за межі вікна? прокручуємо сторінку
     if (newBottom > document.documentElement.clientHeight) {
