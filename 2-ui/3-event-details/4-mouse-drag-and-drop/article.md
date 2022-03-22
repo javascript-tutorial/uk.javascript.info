@@ -260,10 +260,8 @@ function onMouseMove(event) {
   if (currentDroppable != droppableBelow) {
     // ми або залітаємо на ціль, або відлітаємо з неї
     // увага: обидва значення можуть бути null
-    //  currentDroppable = null ,
-    //    якщо ми були не над droppable до цієї події (наприклад, над порожнім простором)
-    //  droppableBelow = null ,
-    //    якщо ми не над droppable саме зараз, під час цієї події
+    //  currentDroppable = null, якщо ми були не над droppable до цієї події (наприклад, над порожнім простором)
+    //  droppableBelow = null, якщо ми не над droppable саме зараз, під час цієї події
 
     if (currentDroppable) {
       // логіка обробки процесу "вильоту" з droppable (видаляємо підсвічування)
