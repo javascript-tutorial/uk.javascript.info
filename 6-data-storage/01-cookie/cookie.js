@@ -9,8 +9,8 @@ function setCookie(name, value, options = {}) {
 
   options = {
     path: '/',
-    // add other defaults here if necessary
-    ...options
+    // за потреби додайте інші типові значення
+    ...options,
   };
 
   if (options.expires instanceof Date) {

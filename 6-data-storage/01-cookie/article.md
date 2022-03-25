@@ -1,80 +1,80 @@
-# Cookies, document.cookie
+# Файли cookie, document.cookie
 
-Cookies are small strings of data that are stored directly in the browser. They are a part of the HTTP protocol, defined by the [RFC 6265](https://tools.ietf.org/html/rfc6265) specification.
+Файли cookie - це невеликі рядки з даними, які зберігаються безпосередньо в браузері. Вони є частиною HTTP-протоколу, визначеного специфікацією [RFC 6265](https://tools.ietf.org/html/rfc6265).
 
-Cookies are usually set by a web-server using the response `Set-Cookie` HTTP-header. Then, the browser automatically adds them to (almost) every request to the same domain using the `Cookie` HTTP-header.
+Файли cookie зазвичай встановлюються web-сервером за допомогою HTTP-заголовка `Set-Cookie`. Потім браузер автоматично додаватиме їх при (майже) кожному запиті до відповідного домену використовуючи HTTP-заголовок `Cookie`.
 
-One of the most widespread use cases is authentication:
+Одним з найбільш поширених випадків використання є аутентифікація:
 
-1. Upon sign in, the server uses the `Set-Cookie` HTTP-header in the response to set a cookie with a unique "session identifier".
-2. Next time when the request is sent to the same domain, the browser sends the cookie over the net using the `Cookie` HTTP-header.
-3. So the server knows who made the request.
+1. При вході в систему, сервер використовує відповідь отриману з  HTTP-заголовка `Set-Cookie`, щоб додати в файл cookie унікальний "ідентифікатор сесії" .
+2. Наступного разу, коли на той самий домен буде відправлено запит, браузер надішле файл cookie використовуючи HTTP-заголовок `Cookie`.
+3. Таким чином, сервер знає, хто зробив запит.
 
-We can also access cookies from the browser, using `document.cookie` property.
+Також ми маємо доступ до файлів cookie з браузера, використовуючи властивість `document.cookie`.
 
-There are many tricky things about cookies and their options. In this chapter we'll cover them in detail.
+Файли cookie зі своїми параметрами мають багато тонкощів та особливостей. В цьому розділі ми детально їх розлянемо.
 
-## Reading from document.cookie
+## Читання з document.cookie
 
 ```online
-Does your browser store any cookies from this site? Let's see:
+Чи зберігає браузер файли cookie з цього сайту? Перевіримо:
 ```
 
 ```offline
-Assuming you're on a website, it's possible to see the cookies from it, like this:
+Уявімо, що ви зайшли на web-сайт, наступний код дає можливість побачити його файли cookies:
 ```
 
 ```js run
-// At javascript.info, we use Google Analytics for statistics,
-// so there should be some cookies
+// На javascript.info, ми використовуємо Google Analytics для збору статистики,
+// тому тут мають бути деякі файли cookie
 alert( document.cookie ); // cookie1=value1; cookie2=value2;...
 ```
 
 
-The value of `document.cookie` consists of `name=value` pairs, delimited by `; `. Each one is a separate cookie.
+Значення `document.cookie` складається з пар `name=value` розділених `; `. Кожна пара -- це окремий файл cookie.
 
-To find a particular cookie, we can split `document.cookie` by `; `, and then find the right name. We can use either a regular expression or array functions to do that.
+Щоб знайти певний файл cookie потрібно розділити значення `document.cookie` за допомогою `; `, а потім знайти потрібний ключ за іменем.  Для цього можна використовувати як регулярні вирази так і функції для роботи з масивами.
 
-We leave it as an exercise for the reader. Also, at the end of the chapter you'll find helper functions to manipulate cookies.
+Залишимо це завдання для самостійної роботи читача. Окрім того, в кінці розділу ви знайдете допоміжні функції для роботи з файлами cookie.
 
-## Writing to document.cookie
+## Запис в document.cookie
 
-We can write to `document.cookie`. But it's not a data property, it's an [accessor (getter/setter)](info:property-accessors). An assignment to it is treated specially.
+Ми можемо записувати в `document.cookie`. Але це не просто властивості даних, це [аксесори (гетери/сетери)](info:property-accessors). Присвоєння цих властивостей обробляється особливим чином.
 
-**A write operation to `document.cookie` updates only cookies mentioned in it, but doesn't touch other cookies.**
+**Запис в `document.cookie` оновлює лише вказані файли cookie, та не чіпатиме решту.**
 
-For instance, this call sets a cookie with the name `user` and value `John`:
+Наприклад, цей виклик встановить файл cookie з іменем `user` та значенням `John`:
 
 ```js run
-document.cookie = "user=John"; // update only cookie named 'user'
-alert(document.cookie); // show all cookies
+document.cookie = "user=John"; // оновити лише файл cookie під назвою 'user'
+alert(document.cookie); // показати всі файли cookie
 ```
 
-If you run it, then probably you'll see multiple cookies. That's because the `document.cookie=` operation does not overwrite all cookies. It only sets the mentioned cookie `user`.
+Якщо ви запустите код вище, то напевно побачите декілька файлів cookie. Це тому що операція `document.cookie=` оновлює не всі файли cookie, а лише вказані файли з іменем `user`.
 
-Technically, name and value can have any characters. To keep the valid formatting, they should be escaped using a built-in `encodeURIComponent` function:
+Технічно, ім’я та значення можуть містити будь-які символи. Щоб зберегти правильне форматування, вони повинні бути кодовані за допомогою вмонтованих функцій `encodeURIComponent`.
 
 ```js run
-// special characters (spaces), need encoding
-let name = "my name";
-let value = "John Smith"
+// спеціальні символи (пробіли, кирилиця), потребують кодування
+let name = "моє ім’я";
+let value = "John Smith";
 
-// encodes the cookie as my%20name=John%20Smith
+// кодується як %D0%BC%D0%BE%D1%94%20%D1%96%D0%BC%E2%80%99%D1%8FJohn%20Smith
 document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
 
-alert(document.cookie); // ...; my%20name=John%20Smith
+alert(document.cookie); // ...; %D0%BC%D0%BE%D1%94%20%D1%96%D0%BC%E2%80%99%D1%8FJohn%20Smith
 ```
 
 
-```warn header="Limitations"
-There are few limitations:
-- The `name=value` pair, after `encodeURIComponent`, should not exceed 4KB. So we can't store anything huge in a cookie.
-- The total number of cookies per domain is limited to around 20+, the exact limit depends on the browser.
+```warn header="Обмеження"
+Є декілька обмежень:
+- Пара `name=value`, після кодування `encodeURIComponent`, не повинна перевищувати 4KB. Тому ми не можемо зберігати великий обʼєм даних у файлах cookie.
+- Дозволена сумарна кількість файлів cookie на один домен приблизно 20+, точний ліміт залежить від браузера.
 ```
 
-Cookies have several options, many of them are important and should be set.
+Файли cookies мають ряд параметрів, деякі з них важливі і повинні бути задані.
 
-The options are listed after `key=value`, delimited by `;`, like this:
+Параметри перераховуються після пари `key=value` та розділяються `;`, як показано нижче:
 
 ```js run
 document.cookie = "user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
@@ -84,87 +84,87 @@ document.cookie = "user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT"
 
 - **`path=/mypath`**
 
-The url path prefix must be absolute. It makes the cookie accessible for pages under that path. By default, it's the current path.
+URL-префікс адреси повинен бути абсолютним. Для того щоб файли cookie були доступними зі сторінок за цією адресою. За замовчуванням, це поточна сторінка.
 
-If a cookie is set with `path=/admin`, it's visible at pages `/admin` and `/admin/something`, but not at `/home` or `/adminpage`.
+Якщо в файлі cookie задано `path=/admin`, то він видимий на сторінках `/admin` та `/admin/something`, але не на `/home` або `/adminpage`.
 
-Usually, we should set `path` to the root: `path=/` to make the cookie accessible from all website pages.
+Зазвичай, в якості `path` вказують кореневу сторінку: `path=/` для того щоб зробити файли cookie доступними з будь-якої сторінки web-сайту.
 
 ## domain
 
 - **`domain=site.com`**
 
-A domain defines where the cookie is accessible. In practice though, there are limitations. We can't set any domain.
+Домен визначає звідки будуть доступні файли cookie. Проте, на практиці, існують деякі обмеження -- ми не можемо вказати будь-який домен.
 
-**There's no way to let a cookie be accessible from another 2nd-level domain, so `other.com` will never receive a cookie set at `site.com`.**
+**Не існує способу зробити файли cookie доступними з іншого домену 2-го рівня, тому `other.com` ніколи не отримає файл cookie заданий на `site.com`.**
 
-It's a safety restriction, to allow us to store sensitive data in cookies that should be available only on one site.
+Це обмеження задля безпеки, воно дозволяє нам зберігати конфіденційні дані в файлах cookie, які будуть достпуними лише на одному сайті.
 
-By default, a cookie is accessible only at the domain that set it.
+За замовчуванням, файли cookie доступні лише на тому домені на якому були встановлені.
 
-Please note, by default a cookie is also not shared to a subdomain as well, such as `forum.site.com`.
+Зверніть увагу, що за замовчуванням файли cookie також не доступні і на піддомені, такому як `forum.site.com`.
 
 ```js
-// if we set a cookie at site.com website...
+// якщо задати файл cookie на web-сайті site.com ...
 document.cookie = "user=John"
 
-// ...we won't see it at forum.site.com
-alert(document.cookie); // no user
+// ...ми не побачимо їх на forum.site.com
+alert(document.cookie); // користувача немає
 ```
 
-...But this can be changed. If we'd like to allow subdomains like `forum.site.com` to get a cookie set at `site.com`, that's possible.
+...Проте цю поведінку можна змінити. Якщо ми хочемо дозволити піддоменам на кшталт `forum.site.com` отримувати файли cookie задані на `site.com` -- це також можливо.
 
-For that to happen, when setting a cookie at `site.com`, we should explicitly set the `domain` option to the root domain: `domain=site.com`. Then all subdomains will see such cookie.
+Для цього потрібно, задаючи файл cookie на `site.com`, явно вказати в `domain` кореневий домен: `domain=site.com`. Тоді файли cookie будуть видимі з усіх піддоменів.
 
-For example:
+Наприклад:
 
 ```js
-// at site.com
-// make the cookie accessible on any subdomain *.site.com:
+// на site.com
+// зробити файл cookie доступним на будь-якому піддомені *.site.com:
 document.cookie = "user=John; *!*domain=site.com*/!*"
 
-// later
+// пізніше
 
-// at forum.site.com
-alert(document.cookie); // has cookie user=John
+// на forum.site.com
+alert(document.cookie); // файл cookie user=John існує
 ```
 
-For historical reasons, `domain=.site.com` (with a dot before `site.com`) also works the same way, allowing access to the cookie from subdomains. That's an old notation and should be used if we need to support very old browsers.
+Історично склалося так що, `domain=.site.com`(з крапкою перед `site.com`)   зпрацює так само, надаючи доступ до файлів cookie з піддоменів. Цей застарілий синтаксис варто використовуваи лише якщо потрібна підтримка дуже старих браузерів.
 
-To summarize, the `domain` option allows to make a cookie accessible at subdomains.
+Отже, параметр `domain` робить файли cookie доступними на піддоменах.
 
 ## expires, max-age
 
-By default, if a cookie doesn't have one of these options, it disappears when the browser is closed. Such cookies are called "session cookies"
+За замовчуванням, якщо файл cookie не має одного з цих параметрів, то файл зникає при закриванні браузера. Такі файли cookie називаються сесійними ("session cookies").
 
-To let cookies survive a browser close, we can set either the `expires` or `max-age` option.
+Щоб файли cookie могли "пережити" закривання браузера, можна встановити значення одного з параметрів `expires` або `max-age`.
 
 - **`expires=Tue, 19 Jan 2038 03:14:07 GMT`**
 
-The cookie expiration date defines the time, when the browser will automatically delete it.
+Термін придатності файлу cookie визначає час, коли браузер автоматично видалить його.
 
-The date must be exactly in this format, in the GMT timezone. We can use `date.toUTCString` to get it. For instance, we can set the cookie to expire in 1 day:
+Дата має бути вказана саме в такому форматі, в часовому поясі GMT. Щоб отримати правильну дату, можна скористатися `date.toUTCString`. Наприклад, можемо встановити, що термін придатності файлу cookie закінчується через 1 день:
 
 ```js
-// +1 day from now
+// +1 день від сьогодні
 let date = new Date(Date.now() + 86400e3);
 date = date.toUTCString();
 document.cookie = "user=John; expires=" + date;
 ```
 
-If we set `expires` to a date in the past, the cookie is deleted.
+Якщо встановити  значенням параметру `expires` дату з минулого, то файл cookie видалиться.
 
 -  **`max-age=3600`**
 
-Is an alternative to `expires` and specifies the cookie's expiration in seconds from the current moment.
+Це ще один параметр, який вказує термін придатності в секундах з поточного моменту.
 
-If set to zero or a negative value, the cookie is deleted:
+Як встановлено 0 або від’ємне значення, то файл cookie буде видалено:
 
 ```js
-// cookie will die in +1 hour from now
+// файл cookie буде видалено через 1 годину
 document.cookie = "user=John; max-age=3600";
 
-// delete cookie (let it expire right now)
+// видалити файл cookie (термін придатності закінчується прямо зараз)
 document.cookie = "user=John; max-age=0";
 ```
 
@@ -172,126 +172,127 @@ document.cookie = "user=John; max-age=0";
 
 - **`secure`**
 
-The cookie should be transferred only over HTTPS.
+Файл cookie повинен передаватися виключно по HTTPS-протоколу.
 
-**By default, if we set a cookie at `http://site.com`, then it also appears at `https://site.com` and vice versa.**
+**За замовчуванням, якщо ми створимо файл cookie на `http://site.com`, тоді він автоматично з’явиться на `https://site.com` та навпаки.**
 
-That is, cookies are domain-based, they do not distinguish between the protocols.
+Тобто файли cookie базуються на домені, вони не залежать від протоколів.
 
-With this option, if a cookie is set by `https://site.com`, then it doesn't appear when the same site is accessed by HTTP, as `http://site.com`. So if a cookie has sensitive content that should never be sent over unencrypted HTTP, the `secure` flag is the right thing.
+
+В разі якщо цей параметр задано, то файл cookie створений на `https://site.com` не буде доступний на тому ж web-сайті з HTTP-протоколом `http://site.com`. Тому якщо файли cookie містять конфіденційні дані, які в жодному разі не мають бути відправлені по незашифрованому HTTP-протоколу, тоді параметр `secure` це правильнйи вибір.
 
 ```js
-// assuming we're on https:// now
-// set the cookie to be secure (only accessible over HTTPS)
+// припустимо, що зараз ми на https://
+// створимо захищений файл cookie (доступний лише по HTTPS)
 document.cookie = "user=John; secure";
 ```
 
 ## samesite
 
-That's another security attribute `samesite`. It's designed to protect from so-called XSRF (cross-site request forgery) attacks.
+Це ще один атрибут безпеки. Він створений щоб захищати від так званих XSRF-атак (міжсайтова підміна запиту).
 
-To understand how it works and when it's useful, let's take a look at XSRF attacks.
+Щоб зрозуміти як він працює та в яких випадках може бути корисним, давайте детальніше розглянемо поняття XSRF-атак.
 
-### XSRF attack
+### XSRF-атаки
 
-Imagine, you are logged into the site `bank.com`. That is: you have an authentication cookie from that site. Your browser sends it to `bank.com` with every request, so that it recognizes you and performs all sensitive financial operations.
+Уявіть, що ви увійшли в свій обліковий запис на сайті `bank.com`. Тобто: у вас є файли cookie з даними аторизації. Ваш браузер відправляє їх web-сайту `bank.com` при кожному запиті для того щоб той розпізнав вас та виконав всі конфіденційні фінансові операції.
 
-Now, while browsing the web in another window, you accidentally come to another site `evil.com`. That site has JavaScript code that submits a form `<form action="https://bank.com/pay">` to `bank.com` with fields that initiate a transaction to the hacker's account.
+Тепер, переглядаючи web-сторінки в іншому вікні, ви випадково потрапили на сайт `evil.com`. Цей сайт містить  код JavaScript, який відправляє форму `<form action="https://bank.com/pay">` на `bank.com` з заповненими полями, які ініціюють транзакцію на рахунок хакера.
 
-The browser sends cookies every time you visit the site `bank.com`, even if the form was submitted from `evil.com`. So the bank recognizes you and actually performs the payment.
+Браузер відправляє файл cookie щоразу як ви відвідуєте сайт `bank.com`, навіть якщо форма була відпралена з `evil.com`. Тому банк "впізнає" вас та дійсно виконає платіж.
 
 ![](cookie-xsrf.svg)
 
-That's a so-called "Cross-Site Request Forgery" (in short, XSRF) attack.
+Така атака називається міжсайтова підміна запиту (Cross-Site Request Forgery, XSRF).
 
-Real banks are protected from it of course. All forms generated by `bank.com` have a special field, a so-called "XSRF protection token", that an evil page can't generate or extract from a remote page. It can submit a form there, but can't get the data back. The site `bank.com` checks for such token in every form it receives.
+Звісно, справжні банкові системи захищені від цього. У всіх згенерованих сайтом `bank.com` формах є спеціальне поле, так взваний "токен захисту від XSRF", який не може бути ані згенерований зловмисним сайтом, ані вилучений з віддаленої сторінки. Зловмисник може спробувати відправити форму туди, але не може отримати дані назад. Сайт `bank.com` перевіряє кожну отриману форму на наявність даного токену.
 
-Such a protection takes time to implement though. We need to ensure that every form has the required token field, and we must also check all requests.
+Проте такий захист вимагає більше часу на реалізацію. Нам потрібно переконатися, що кожна форма несе в собі обов’язкове поле з токеном, окрім того потрібно перевіряти всі запити.
 
-### Enter cookie samesite option
+### Параметр samesite
 
-The cookie `samesite` option provides another way to protect from such attacks, that (in theory) should not require "xsrf protection tokens".
+Параметр `samesite` пропонує ще один спосіб захисту від атак, який ( в теорії) не вимагає "токен захисту від xsrf".
 
-It has two possible values:
+В нього є два можливі значення:
 
-- **`samesite=strict` (same as `samesite` without value)**
+- **`samesite=strict` (теж саме що `samesite` без заданого значення)**
 
-A cookie with `samesite=strict` is never sent if the user comes from outside the same site.
+Файли cookie з параметром `samesite=strict` ніколи не відправляються якщо корстувач прийшов ззовні (з іншого сайту).
 
-In other words, whether a user follows a link from their mail or submits a form from `evil.com`, or does any operation that originates from another domain, the cookie is not sent.
+Іншими словами, якщо користувач перейшов за посиланням зі свого електронного листа або відправим форму з `evil.com`, або виконав яку завгодно операцію, що походить з іншого домену, файли cookie не відправляться.
 
-If authentication cookies have the `samesite` option, then a XSRF attack has no chances to succeed, because a submission from `evil.com` comes without cookies. So `bank.com` will not recognize the user and will not proceed with the payment.
+Якщо авторизаційний файл cookie має параметр `samesite`, тоді у XSRF-атаки немає шансу на успіх, тому що запит з сайту `evil.com` надходить без файлу cookie. Таким чином, `bank.com` не ідентифікує користувача та не здійснить платіж.
 
-The protection is quite reliable. Only operations that come from `bank.com` will send the `samesite` cookie, e.g. a form submission from another page at `bank.com`.
+Захист доволі найдійний. Файли cookie з параметром `samesite` відправлятимуться тільки якщо операції надходять з `bank.com`, наприклад відправка форми з іншої сторінки домену `bank.com`.
 
-Although, there's a small inconvenience.
+Хоча, у цього рішення є дрібний недолік.
 
-When a user follows a legitimate link to `bank.com`, like from their own notes, they'll be surprised that `bank.com` does not recognize them. Indeed, `samesite=strict` cookies are not sent in that case.
+Коли користувач переходить за легітимним посилання до `bank.com`, як то зі своїх нотаток, то він буде неприємно здивований коли `bank.com` не "впізнає" його. Дійсно, в такому випадку файл cookie з парамером `samesite=strict` не відправляється.
 
-We could work around that by using two cookies: one for "general recognition", only for the purposes of saying: "Hello, John", and the other one for data-changing operations with `samesite=strict`. Then, a person coming from outside of the site will see a welcome, but payments must be initiated from the bank's website, for the second cookie to be sent.
+Цю проблему можна вирішити використанням двох файлів cookie: один для загальної ідентифакації, лише для того щоб сказати: "Привіт, Джон", а інший з параметром `samesite=strict` для операцій з даними. Тоді особа, яка перейшла за посиланням поза межами сайту побачить привітання, проте для того щоб другий файл cookie відправився, платіжні операції повинні бути ініційовані з сайту банку.
 
 - **`samesite=lax`**
 
-A more relaxed approach that also protects from XSRF and doesn't break the user experience.
+Спрощене рішення яке так само захищає від XSRF-атак, але не руйнує очікування користувача.
 
-Lax mode, just like `strict`, forbids the browser to send cookies when coming from outside the site, but adds an exception.
+Режим `lax`, так само як `strict`, забороняє браузеру відправляти файл cookie коли запит приходить не з сайту, але є одне виключення.
 
-A `samesite=lax` cookie is sent if both of these conditions are true:
-1. The HTTP method is "safe" (e.g. GET, but not POST).
+Файл cookie з параметром `samesite=lax` відправляється лише тоді, коли виконуються обидві умови:
+1. Обраний HTTP-метод безпечний (наприклад GET, але не POST)
 
-    The full list of safe HTTP methods is in the [RFC7231 specification](https://tools.ietf.org/html/rfc7231). Basically, these are the methods that should be used for reading, but not writing the data. They must not perform any data-changing operations. Following a link is always GET, the safe method.
+    Повний список безпечних HTTP-методів зібрано в [специфікацї RFC7231](https://tools.ietf.org/html/rfc7231). По суті, безпечними вважаються методи які використовуються для читаня, а не для запису даних. Вони не повинні виконувати жодних операції по редагуванню даних. Перехід за посиланням це завжди метод GET, тобто безпечний.
 
-2. The operation performs a top-level navigation (changes URL in the browser address bar).
+2. Операція виконує навігацію вищого рівня (змінює URL в адресному полі браузера)
 
-    That's usually true, but if the navigation is performed in an `<iframe>`, then it's not top-level. Also, JavaScript methods for network requests do not perform any navigation, hence they don't fit.
+    Як правило, ця умова виконуєтся, проте якщо навігація відбувається в `<iframe>` то це не вищий рівень. Також, методи JavaScript для мережевих запитів не виконують навігації, тому вони не підходять.
 
-So, what `samesite=lax` does, is to basically allow the most common "go to URL" operation to have cookies. E.g. opening a website link from notes that satisfy these conditions.
+Тому насправді, все що робить параметр `samesite=lax` -  це дозволяє найбільш поширеним операціям (таким як перехід по URL) передавати файли cookie. Наприклад, відкривання web-сайту за посиланям зі своїх нотаток, що повністю задовольняє умовам.
 
-But anything more complicated, like a network request from another site or a form submission, loses cookies.
+Але будь-яка більш складна операція, як то мережевий запит з іншого сайту чи відправка форми, втрачає файли cookie.
 
-If that's fine for you, then adding `samesite=lax` will probably not break the user experience and add protection.
+Якщо вас це влаштовує, тоді використання параметру `samesite=lax` скоріш за все не зіпсує враженя користувача від взаємодії з вашим сайтом та захистить дані.
 
-Overall, `samesite` is a great option.
+Вцілому, `samesite` це чудовий параметр.
 
-There's a drawback:
+Є лише один недолік:
 
-- `samesite` is ignored (not supported) by very old browsers, year 2017 or so.
+- `samesite` ігнорується  (не підтримується) старими версіями браузерів, з 2017 року і раніше.
 
-**So if we solely rely on `samesite` to provide protection, then old browsers will be vulnerable.**
+**Тому, якщо для забезпечення захисту, покладатися виключно на параметр `samesite`, то старі браузери залишаться вразливими .**
 
-But we surely can use `samesite` together with other protection measures, like xsrf tokens, to add an additional layer of defence and then, in the future, when old browsers die out, we'll probably be able to drop xsrf tokens.
+Звісно,ми можемо використовувати `samesite` разом з іншими засобами безпеки, такими як "токен захисту від xsrf", щоб додати ше один рівень захисту, а потім в майбутньому, коли старі браузери вимруть, ми зможемо відмовитися від токенів.
 
 ## httpOnly
 
-This option has nothing to do with JavaScript, but we have to mention it for completeness.
+Цей параметр не має нічого спільного з JavaScript, але ми повинні згадати його заради повноти картини.
 
-The web-server uses the `Set-Cookie` header to set a cookie. Also, it may set the `httpOnly` option.
+Web-сервер використовує заголовок `Set-Cookie` щоб задати файли cookie. Також він може встановити параметр `httpOnly`.
 
-This option forbids any JavaScript access to the cookie. We can't see such a cookie or manipulate it using `document.cookie`.
+Даний параметр забороняє будь-який доступ до файлів cookie з JavaScript. Ми не можемо бачити чи маніпулювати файлами cookie користуючись `document.cookie`.
 
-That's used as a precaution measure, to protect from certain attacks when a hacker injects his own JavaScript code into a page and waits for a user to visit that page. That shouldn't be possible at all, hackers should not be able to inject their code into our site, but there may be bugs that let them do it.
+Його використовують як запобіжний метод, щоб захистити від деяких атак, коли хакер вживляє на сторінку свій власний код JavaScript та чекає поки користувач зайде на таку сторінку. За ідеальних умов це взагалі неможливо, хакери не повинні мати можливості проникнути своїм кодом на наш сайт, але в коді можуть бути помилки, які все ж дозволяють їм це робити.
 
 
-Normally, if such a thing happens, and a user visits a web-page with hacker's JavaScript code, then that code executes and gains access to `document.cookie` with user cookies containing authentication information. That's bad.
+Зазвичай, якщо таке трапляється, і користувач все ж зайшов на web-сторінку с хакерським кодом JavaScript, тоді код виконується та отримує доступ до команди `document.cookie`, яка містить аутентифікаційну інформацію. Це погано.
 
-But if a cookie is `httpOnly`, then `document.cookie` doesn't see it, so it is protected.
+Проте якщо файл cookie має параметр `httpOnly`, то в такому разі `document.cookie` не бачить його, тому файл в безпеці.
 
-## Appendix: Cookie functions
+## Додаток: Функції файлів cookie
 
-Here's a small set of functions to work with cookies, more convenient than a manual modification of `document.cookie`.
+Тут наведено невелику підбірку функцій для роботи з файлами cookie, більш зручних аніж ручна модифікація  `document.cookie`. 
 
-There exist many cookie libraries for that, so these are for demo purposes. Fully working though.
+Існує безліч бібліотек для роботи з файлами cookie, тому ці функції тут скоріше в демонстраційних цілях. Але повністю робочі.
 
 
 ### getCookie(name)
 
-The shortest way to access a cookie is to use a [regular expression](info:regular-expressions).
+Найкоротший шлях щоб отримати доступ до файлів cookie це використання [регулярних виразів](info:regular-expressions).
 
-The function `getCookie(name)` returns the cookie with the given `name`:
+Функція `getCookie(name)` повертає файл cookie з заданим іменем `name`:
 
 ```js
-// returns the cookie with the given name,
-// or undefined if not found
+// повертає файл cookie з заданим іменем
+// або undefined якщо нічого не знайдено
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -300,20 +301,20 @@ function getCookie(name) {
 }
 ```
 
-Here `new RegExp` is generated dynamically, to match `; name=<value>`.
+Тут динамічно генерується `new RegExp` який задовольняє `; name=<value>`.
 
-Please note that a cookie value is encoded, so `getCookie` uses a built-in `decodeURIComponent` function to decode it.
+Зверніть увагу, що значення файлу cookie закодоване, тому `getCookie` використовує вмонтовану функцію `decodeURIComponent` щоб розшифрувати його.
 
 ### setCookie(name, value, options)
 
-Sets the cookie's `name` to the given `value` with `path=/` by default (can be modified to add other defaults):
+Встановлює файл cookie з заданим ім’ям `name`, значенням `value`, та типовим параметром `path=/` (можна редагувати, щоб додати інші типові значення):
 
 ```js run
 function setCookie(name, value, options = {}) {
 
   options = {
     path: '/',
-    // add other defaults here if necessary
+    // за потреби додайте інші типові значення 
     ...options
   };
 
@@ -334,13 +335,13 @@ function setCookie(name, value, options = {}) {
   document.cookie = updatedCookie;
 }
 
-// Example of use:
+// Приклад використання:
 setCookie('user', 'John', {secure: true, 'max-age': 3600});
 ```
 
 ### deleteCookie(name)
 
-To delete a cookie, we can call it with a negative expiration date:
+Щоб видалили файли cookie, ми можем викликати функцію вказавши від’ємне значення в параметрі `max-age`:
 
 ```js
 function deleteCookie(name) {
@@ -350,87 +351,87 @@ function deleteCookie(name) {
 }
 ```
 
-```warn header="Updating or deleting must use same path and domain"
-Please note: when we update or delete a cookie, we should use exactly the same path and domain options as when we set it.
+```warn header="Операція оновлення або видалення повинні використовувати ті самі адресу та домен."
+Зауважте: коли ми оновлюємо чи видаляємо файли cookie, ми повинні використовувати ті самі адресу та доменне ім’я, що і при встановленні.
 ```
 
-Together: [cookie.js](cookie.js).
+Все разом: [cookie.js](cookie.js).
 
 
-## Appendix: Third-party cookies
+## Додаток: Сторонні файли cookie
 
-A cookie is called "third-party" if it's placed by a domain other than the page the user is visiting.
+Файли cookie називаються "сторонніми", якщо вони розміщені з домену який відрізняється від того, до якого належить поточна сторінка.
 
-For instance:
-1. A page at `site.com` loads a banner from another site: `<img src="https://ads.com/banner.png">`.
-2. Along with the banner, the remote server at `ads.com` may set the `Set-Cookie` header with a cookie like `id=1234`. Such a cookie originates from the `ads.com` domain, and will only be visible at `ads.com`:
+Наприклад:
+1. Сторінка розміщена на `site.com` завантажує банер з іншого сайту: `<img src="https://ads.com/banner.png">`.
+2. Разом з банером, віддалений сервер на `ads.com` може встановити заголовок `Set-Cookie` зі значенням `id=1234` взятим з файла cookie. Створені файли cookie походять з домену `ads.com` та будуть видимі лише з `ads.com`:
 
     ![](cookie-third-party.svg)
 
-3. Next time when `ads.com` is accessed, the remote server gets the `id` cookie and recognizes the user:
+3. Наступного разу коли `ads.com` відправить запит на доступ, віддалений сервер отримає `id` з файлу cookie та розпізнає користувача:
 
     ![](cookie-third-party-2.svg)
 
-4. What's even more important is, when the user moves from `site.com` to another site `other.com`, which also has a banner, then `ads.com` gets the cookie, as it belongs to `ads.com`, thus recognizing the visitor and tracking him as he moves between sites:
+4. Іще важливіше те, що коли користувач переходить з `site.com` до іншого сайту `other.com`, на якому також є банер, тоді `ads.com` отримує файли cookie, так наче вони насправді належать `ads.com` і таким чином розпізнає відвідувача та відстежить його, коли той переміщається між сайтами:
 
     ![](cookie-third-party-3.svg)
 
 
-Third-party cookies are traditionally used for tracking and ads services, due to their nature. They are bound to the originating domain, so `ads.com` can track the same user between different sites, if they all access it.
+Сторонні файли cookie традиційно використовуються для відслідковування статистики відвідувань та показу реклами. Вони прив’язані до початкового домену, тому `ads.com` може відслідковувати одного й того ж користувача при переході між сайтами, якщо всі вони мають до нього доступ.
 
-Naturally, some people don't like being tracked, so browsers allow to disable such cookies.
+Природньо, що деякі люди не хочуть щоб за ними стежили, тому браузери дозволяють відключити такі файли cookie.
 
-Also, some modern browsers employ special policies for such cookies:
-- Safari does not allow third-party cookies at all.
-- Firefox comes with a "black list" of third-party domains where it blocks third-party cookies.
+Крім того, деякі сучасні браузери запроваджують спеціальну політику для таких файлів cookie:
+- Safari взагалі не дозволяє сторонні файли cookie.
+- У Firefox є "чорний список" сторонніх доменів, з яких він блокує надходження сторонніх файлів cookie.
 
 
 ```smart
-If we load a script from a third-party domain, like `<script src="https://google-analytics.com/analytics.js">`, and that script uses `document.cookie` to set a cookie, then such cookie is not third-party.
+Якщо ми завантажимо скрипт з стороннього домену, такого як `<script src="https://google-analytics.com/analytics.js">`, і цей скрипт використовує `document.cookie` щоб встановити файли cookie, то вони не вважатимуться сторонніми.
 
-If a script sets a cookie, then no matter where the script came from -- the cookie belongs to the domain of the current webpage.
+Якщо скрипт встановлює файл cookie, тоді неважливо звідки завантажений цей скрипт -- файл cookie належить домену поточного web-сайту.
 ```
 
-## Appendix: GDPR
+## Додаток: GDPR
 
-This topic is not related to JavaScript at all, just something to keep in mind when setting cookies.
+Ця тема взагалі не пов’язана з JavaScript, це просто потрібно пам’ятати, налаштовуючи файли cookie.
 
-There's a legislation in Europe called GDPR, that enforces a set of rules for websites to respect the users' privacy. One of these rules is to require an explicit permission for tracking cookies from the user.
+У Європі існує законодавство під назвою GDPR, яке встановлює набір правил для веб-сайтів щодо поваги до конфіденційності користувачів. Одне з цих правил — вимагати від користувача явного дозволу на відстеження файлів cookie.
 
-Please note, that's only about tracking/identifying/authorizing cookies.
+Зауважте, що йдеться лише про відстеження/ідентифікацію/авторизацію файлів cookie.
 
-So, if we set a cookie that just saves some information, but neither tracks nor identifies the user, then we are free to do it.
+Отже, якщо ми встановлюємо файл cookie, який лише зберігає деяку інформацію, але не відстежує та не ідентифікує користувача, ми можемо це зробити.
 
-But if we are going to set a cookie with an authentication session or a tracking id, then a user must allow that.
+Але якщо ми збираємося встановити файл cookie з даними аутентифікації або ідентифікатором відстеження, користувач повинен дозволити це.
 
-Websites generally have two variants of following GDPR. You must have seen them both already in the web:
+Зазвичай, виконання GDPR web-сайтами реалізується в двох варіантах. Ви, напевно, вже бачили їх обидва в мережі інтернет: 
 
-1. If a website wants to set tracking cookies only for authenticated users.
+1. Якщо web-сайт хоче встановити відслідковуючі файли cookie лише для аутентифікованих користувачів.
 
-    To do so, the registration form should have a checkbox like "accept the privacy policy" (that describes how cookies are used), the user must check it, and then the website is free to set auth cookies.
+     Для цього в реєстраційній формі має бути прапорець на кшталт «прийняти політику конфіденційності» (яка описує, як використовуються файли cookie), користувач повинен відмітити його, лише тоді web-сайт може встановлювати файли cookie для авторизації.
 
-2. If a website wants to set tracking cookies for everyone.
+2. Якщо web-сайт хоче встановити відстежуючі файли cookie для всіх.
 
-    To do so legally, a website shows a modal "splash screen" for newcomers, and requires them to agree to the cookies. Then the website can set them and let people see the content. That can be disturbing for new visitors though. No one likes to see such "must-click" modal splash screens instead of the content. But GDPR requires an explicit agreement.
-
-
-GDPR is not only about cookies, it's about other privacy-related issues too, but that's too much beyond our scope.
+     Щоб зробити це законно, web-сайт показує спливаюче модальне вікно для нових користувачів і вимагає від них погодитися на файли cookie. Тоді web-сайт може встановлювати їх і дозволити людям бачити контент. Але це може турбувати нових відвідувачів. Ніхто не любить бачити такі спливаючі модальні вікна, які вимагають взаємодії, замість перегляду контенту. Але GDPR вимагає чіткої угоди.
 
 
-## Summary
+GDPR стосується не лише файлів cookie, а й інших питань, пов’язаних із конфіденційністю, але це виходить за рамки даного розділу.
 
-`document.cookie` provides access to cookies
-- write operations modify only cookies mentioned in it.
-- name/value must be encoded.
-- one cookie must not exceed 4KB, 20+ cookies per site (depends on the browser).
 
-Cookie options:
-- `path=/`, by default current path, makes the cookie visible only under that path.
-- `domain=site.com`, by default a cookie is visible on the current domain only. If the domain is set explicitly, the cookie becomes visible on subdomains.
-- `expires` or `max-age` sets the cookie expiration time. Without them the cookie dies when the browser is closed.
-- `secure` makes the cookie HTTPS-only.
-- `samesite` forbids the browser to send the cookie with requests coming from outside the site. This helps to prevent XSRF attacks.
+## Підсумки
 
-Additionally:
-- Third-party cookies may be forbidden by the browser, e.g. Safari does that by default.
-- When setting a tracking cookie for EU citizens, GDPR requires to ask for permission.
+`document.cookie` забезпечує доступ до файлів cookie
+- операції запису змінюють лише вказані файли cookie.
+- ім’я та значення файлу cookie повинні бути закодовані.
+- один файл cookie не повинен перевищувати 4KB, 20+ файлів на один сайт (залежно від браузера).
+
+Параметри:
+- `path=/`, встановлює поточну адресу як типове значеня, робить файли cookie видимими лише за вказаною адресою.
+- `domain=site.com`, за замовчуванням файли cookie видимі лише на поточному домені. Якщо домен вказано явно, файли cookie стають видимі на сторінках піддомену.
+- `expires` або `max-age` задають кінцевий термін придатності файлів cookie. Без них файли cookie помирають відразу після закритя вікна браузера.
+- `secure` робить файли cookie доступними лише по HTTPS (HTTPS-only).
+- `samesite` забороняє браузеру відправляти файли cookie у відповідь на запити які надходять з зовнішнього сайту. Це допомагає запобігти XSRF-атакам.
+
+Додатково:
+- Сторонні файли cookie можуть бути відхилені браузером, наприклад Safari робить це за замовчуванням.
+- Встановлюючи відстежуючий файл cookie для громадян ЄС, GDPR вимагає запитувати дозвіл.
