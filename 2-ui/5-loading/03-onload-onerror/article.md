@@ -1,17 +1,17 @@
-# Resource loading: onload and onerror
+# Завантаження ресурсів: onload та onerror
 
-The browser allows us to track the loading of external resources -- scripts, iframes, pictures and so on.
+Браузер дозволяє нам відстежувати завантаження зовнішніх ресурсів -- скриптів, фреймів, зображень тощо.
 
-There are two events for it:
+Для цього передбачено дві події:
 
-- `onload` -- successful load,
-- `onerror` -- an error occurred.
+- `onload` -- успішне завантаження,
+- `onerror` -- виявлено помилку.
 
-## Loading a script
+## Завантаження скрипта
 
-Let's say we need to load a third-party script and call a function that resides there.
+Скажімо, нам потрібно завантажити сторонній скрипт і викликати функцію, яка там знаходиться.
 
-We can load it dynamically, like this:
+Ми можемо завантажити його динамічно, наприклад:
 
 ```js
 let script = document.createElement('script');
@@ -20,106 +20,106 @@ script.src = "my.js";
 document.head.append(script);
 ```
 
-...But how to run the function that is declared inside that script? We need to wait until the script loads, and only then we can call it.
+...Але як запустити функцію, оголошену всередині цього скрипта? Нам потрібно почекати, поки скрипт завантажиться, і тільки тоді ми зможемо її викликати.
 
 ```smart
-For our own scripts we could use [JavaScript modules](info:modules) here, but they are not widely adopted by third-party libraries.
+Для наших власних скриптів ми могли б використовувати [модулі JavaScript](info:modules), але вони не набули широкого поширення у сторонніх бібліотеках.
 ```
 
 ### script.onload
 
-The main helper is the `load` event. It triggers after the script was loaded and executed.
+Основним помічником є подія `load`. Вона запускається після завантаження та виконання скрипта.
 
-For instance:
+Наприклад:
 
 ```js run untrusted
 let script = document.createElement('script');
 
-// can load any script, from any domain
+// можемо завантажувати будь-який скрипт з будь-якого домену
 script.src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"
 document.head.append(script);
 
 *!*
 script.onload = function() {
-  // the script creates a variable "_"
-  alert( _.VERSION ); // shows library version
+  // скрипт створює змінну "_"
+  alert( _.VERSION ); // показує версію бібліотеки
 };
 */!*
 ```
 
-So in `onload` we can use script variables, run functions etc.
+Тож у `onload` ми можемо використовувати змінні скрипта, виконувати функції тощо.
 
-...And what if the loading failed? For instance, there's no such script (error 404) or the server is down (unavailable).
+...А якщо не вдалося завантажити? Наприклад, такого сценарію немає (помилка 404) або сервер не працює (недоступний).
 
 ### script.onerror
 
-Errors that occur during the loading of the script can be tracked in an `error` event.
+Помилки, які виникають під час завантаження скрипта, можна відстежити за допомогою події `error`.
 
-For instance, let's request a script that doesn't exist:
+Наприклад, давайте запросимо скрипт, якого не існує:
 
 ```js run
 let script = document.createElement('script');
-script.src = "https://example.com/404.js"; // no such script
+script.src = "https://example.com/404.js"; // немає такого скрипта
 document.head.append(script);
 
 *!*
 script.onerror = function() {
-  alert("Error loading " + this.src); // Error loading https://example.com/404.js
+  alert("Помилка завантаження " + this.src); // Помилка завантаження https://example.com/404.js
 };
 */!*
 ```
 
-Please note that we can't get HTTP error details here. We don't know if it was an error 404 or 500 or something else. Just that the loading failed.
+Зверніть увагу, що ми не можемо отримати відомості про помилку HTTP тут. Ми не знаємо, чи була це помилка 404 чи 500 чи щось інше. Просто не вдалося завантажити.
 
 ```warn
-Events `onload`/`onerror` track only the loading itself.
+Події `onload`/`onerror` відстежують лише саме завантаження.
 
-Errors that may occur during script processing and execution are out of scope for these events. That is: if a script loaded successfully, then `onload` triggers, even if it has programming errors in it. To track script errors, one can use `window.onerror` global handler.
+Помилки, які можуть виникнути під час обробки та виконання скрипта, виходять за рамки цих подій. Тобто: якщо скрипт завантажується успішно, то запускається `onload`, навіть якщо в ньому є помилки програмування. Щоб відстежувати помилки скрипта, можна використовувати глобальний обробник `window.onerror`.
 ```
 
-## Other resources
+## Інші ресурси
 
-The `load` and `error` events also work for other resources, basically for any resource that has an external `src`.
+Події `load` та `error` також працюють для інших ресурсів, в основному для будь-якого ресурсу, який має зовнішній `src`.
 
-For example:
+Наприклад:
 
 ```js run
 let img = document.createElement('img');
 img.src = "https://js.cx/clipart/train.gif"; // (*)
 
 img.onload = function() {
-  alert(`Image loaded, size ${img.width}x${img.height}`);
+  alert(`Зображення завантажено, розмір ${img.width}x${img.height}`);
 };
 
 img.onerror = function() {
-  alert("Error occurred while loading image");
+  alert("Під час завантаження зображення сталася помилка");
 };
 ```
 
-There are some notes though:
+Хоча є деякі примітки:
 
-- Most resources start loading when they are added to the document. But `<img>` is an exception. It starts loading when it gets a src `(*)`.
-- For `<iframe>`, the `iframe.onload` event triggers when the iframe loading finished, both for successful load and in case of an error.
+- Більшість ресурсів починають завантажуватися, коли вони додаються до документа. Але `<img>` є винятком. Він починає завантажуватися, коли отримує src `(*)`.
+- Для `<iframe>` подія `iframe.onload` запускається після завершення завантаження iframe, як для успішного завантаження, так і в разі помилки.
 
-That's for historical reasons.
+Це обумовлено історичними причинами.
 
-## Crossorigin policy
+## Політика кросдоменних запитів
 
-There's a rule: scripts from one site can't access contents of the other site. So, e.g. a script at `https://facebook.com` can't read the user's mailbox at `https://gmail.com`.
+Існує правило: скрипти з одного сайту не можуть отримати доступ до вмісту іншого сайту. Отже, напр. скрипт на `https://facebook.com` не може прочитати поштову скриньку користувача на `https://gmail.com`.
 
-Or, to be more precise, one origin (domain/port/protocol triplet) can't access the content from another one. So even if we have a subdomain, or just another port, these are different origins with no access to each other.
+Або, якщо бути більш точним, одне джерело (триплет домену/порту/протоколу) не може отримати доступ до вмісту з іншого. Тому навіть якщо у нас є субдомен або просто інший порт, це різні джерела без доступу один до одного. 
 
-This rule also affects resources from other domains.
+Це правило також впливає на ресурси з інших доменів.
 
-If we're using a script from another domain, and there's an error in it, we can't get error details.
+Якщо ми використовуємо скрипт з іншого домену, і в ньому є помилка, ми не можемо отримати відомості про неї.
 
-For example, let's take a script `error.js` that consists of a single (bad) function call:
+Наприклад, візьмемо скрипт `error.js`, який складається з одного (неправильного) виклику функції:
 ```js
 // 📁 error.js
 noSuchFunction();
 ```
 
-Now load it from the same site where it's located:
+Тепер завантажте його з того самого сайту, де він розташований:
 
 ```html run height=0
 <script>
@@ -130,14 +130,14 @@ window.onerror = function(message, url, line, col, errorObj) {
 <script src="/article/onload-onerror/crossorigin/error.js"></script>
 ```
 
-We can see a good error report, like this:
+Ми можемо побачити хороший звіт про помилки, наприклад:
 
 ```
 Uncaught ReferenceError: noSuchFunction is not defined
 https://javascript.info/article/onload-onerror/crossorigin/error.js, 1:1
 ```
 
-Now let's load the same script from another domain:
+Тепер давайте завантажимо той самий скрипт з іншого домену:
 
 ```html run height=0
 <script>
@@ -148,40 +148,40 @@ window.onerror = function(message, url, line, col, errorObj) {
 <script src="https://cors.javascript.info/article/onload-onerror/crossorigin/error.js"></script>
 ```
 
-The report is different, like this:
+Звіт відрізняється, наприклад:
 
 ```
 Script error.
 , 0:0
 ```
 
-Details may vary depending on the browser, but the idea is the same: any information about the internals of a script, including error stack traces, is hidden. Exactly because it's from another domain.
+Деталі можуть відрізнятися залежно від браузера, але ідея одна: будь-яка інформація про внутрішні елементи скрипта, включаючи трасування стеку помилок, прихована. Саме тому, що він з іншого домену.
 
-Why do we need error details?
+Навіщо нам потрібні відомості про помилку?
 
-There are many services (and we can build our own) that listen for global errors using `window.onerror`, save errors and provide an interface to access and analyze them. That's great, as we can see real errors, triggered by our users. But if a script comes from another origin, then there's not much information about errors in it, as we've just seen.
+Існує багато сервісів (і ми можемо створити власні), які прослуховують глобальні помилки за допомогою `window.onerror`, зберігають помилки та надають інтерфейс для доступу та аналізу до них. Це чудово, оскільки ми бачимо реальні помилки, спричинені нашими користувачами. Але якщо скрипт походить з іншого джерела, то в ньому не так багато інформації про помилки, як ми щойно бачили.
 
-Similar cross-origin policy (CORS) is enforced for other types of resources as well.
+Подібна політика кросдоменних запитів (CORS) застосовується і для інших типів ресурсів.
 
-**To allow cross-origin access, the `<script>` tag needs to have the `crossorigin` attribute, plus the remote server must provide special headers.**
+**Щоб дозволити доступ із різних джерел, тег `<script>` повинен мати атрибут `crossorigin`, а також віддалений сервер повинен надавати спеціальні заголовки.**
 
-There are three levels of cross-origin access:
+Існує три рівні кросдоменного доступу:
 
-1. **No `crossorigin` attribute** -- access prohibited.
-2. **`crossorigin="anonymous"`** -- access allowed if the server responds with the header `Access-Control-Allow-Origin` with `*` or our origin. Browser does not send authorization information and cookies to remote server.
-3. **`crossorigin="use-credentials"`** -- access allowed if the server sends back the header `Access-Control-Allow-Origin` with our origin and `Access-Control-Allow-Credentials: true`. Browser sends authorization information and cookies to remote server.
+1. **Немає атрибута `crossorigin`** -- доступ заборонено.
+2. **`crossorigin="anonymous"`** -- доступ дозволений, якщо сервер відповідає із заголовком `Access-Control-Allow-Origin` з `*` або нашим джерелом. Браузер не надсилає інформацію про авторизацію та файли cookie на віддалений сервер.
+3. **`crossorigin="use-credentials"`** -- доступ дозволений, якщо сервер надсилає назад заголовок `Access-Control-Allow-Origin` з нашим походженням та `Access-Control-Allow-Credentials: true`. Браузер надсилає інформацію про авторизацію та файли cookie на віддалений сервер.
 
 ```smart
-You can read more about cross-origin access in the chapter <info:fetch-crossorigin>. It describes the `fetch` method for network requests, but the policy is exactly the same.
+Ви можете прочитати більше про доступ із різних джерел у розділі <info:fetch-crossorigin>. Він описує метод `fetch` для мережевих запитів, але політика точно така ж.
 
-Such thing as "cookies" is out of our current scope, but you can read about them in the chapter <info:cookie>.
+Таке поняття, як "cookies" не входить до нашої поточної теми, але ви можете прочитати про них у розділі <info:cookie>.
 ```
 
-In our case, we didn't have any crossorigin attribute. So the cross-origin access was prohibited. Let's add it.
+У нашому випадку ми не мали атрибута crossorigin. Таким чином, кросдоменний доступ був заборонений. Додаймо його.
 
-We can choose between `"anonymous"` (no cookies sent, one server-side header needed) and `"use-credentials"` (sends cookies too, two server-side headers needed).
+Ми можемо вибирати між `"anonymous"` (файли cookie не надсилаються, потрібен один заголовок на стороні сервера) та `"use-credentials"` (надсилає файли cookie, потрібні два заголовки на стороні сервера).
 
-If we don't care about cookies, then `"anonymous"` is the way to go:
+Якщо нам не важливі файли cookie, то нам підійде `"anonymous"`:
 
 ```html run height=0
 <script>
@@ -192,15 +192,15 @@ window.onerror = function(message, url, line, col, errorObj) {
 <script *!*crossorigin="anonymous"*/!* src="https://cors.javascript.info/article/onload-onerror/crossorigin/error.js"></script>
 ```
 
-Now, assuming that the server provides an `Access-Control-Allow-Origin` header, everything's fine. We have the full error report.
+Тепер, якщо припустити, що сервер надає заголовок `Access-Control-Allow-Origin`, все в порядку. У нас є повний звіт про помилки.
 
-## Summary
+## Підсумки
 
-Images `<img>`, external styles, scripts and other resources provide `load` and `error` events to track their loading:
+Зображення `<img>`, зовнішні стилі, скрипти та інші ресурси забезпечують події `load` та `error` для відстеження їх завантаження:
 
-- `load` triggers on a successful load,
-- `error` triggers on a failed load.
+- `load` спрацьовує при успішному завантаженні,
+- `error` спрацьовує при невдалому завантаженні.
 
-The only exception is `<iframe>`: for historical reasons it always triggers `load`, for any load completion, even if the page is not found.
+Єдиним винятком є `<iframe>`: з історичних причин він завжди запускає `load` для будь-якого завершення завантаження, навіть якщо сторінка не знайдена.
 
-The `readystatechange` event also works for resources, but is rarely used, because `load/error` events are simpler.
+Подія `readystatechange` також працює для ресурсів, але використовується рідко, оскільки події `load/error` простіші.

@@ -9,27 +9,27 @@
 
   <div id="tree"></div>
 
-  <!-- The result should be:
+  <!-- Результатом буде:
 <div id="tree">
 <ul>
-  <li>Fish
+  <li>Риба
     <ul>
-      <li>trout</li>
-      <li>salmon</li>
+      <li>форель</li>
+      <li>лосось</li>
     </ul>
   </li>
-  <li>Trees
+  <li>Дерева
     <ul>
-      <li>Huge
+      <li>Величезні
         <ul>
-          <li>sequoia</li>
-          <li>oak</li>
+          <li>секвойя</li>
+          <li>дуб</li>
         </ul>
       </li>
-      <li>Flowering
+      <li>Квітучі
         <ul>
-          <li>apple tree</li>
-          <li>magnolia</li>
+          <li>яблуня</li>
+          <li>магнолія</li>
         </ul>
       </li>
     </ul>
@@ -40,25 +40,25 @@
 
   <script>
     let data = {
-      "Fish": {
-        "trout": {},
-        "salmon": {}
+      Риба: {
+        форель: {},
+        лосось: {}
       },
 
-      "Tree": {
-        "Huge": {
-          "sequoia": {},
-          "oak": {}
+      Дерево: {
+        Величезні: {
+          секвойя: {},
+          дуб: {},
         },
-        "Flowering": {
-          "apple tree": {},
-          "magnolia": {}
-        }
-      }
+        Квітучі: {
+          яблуня: {},
+          магнолія: {},
+        },
+      },
     };
 
     function createTree(container, data) {
-      /* your code */
+      /* ваш код */
     }
 
     createTree(document.getElementById('tree'), data);

@@ -1,6 +1,6 @@
-First, let's make HTML/CSS.
+Спочатку, напишемо HTML/CSS.
 
-Each component of the time would look great in its own `<span>`:
+Кожен компонент часу обгорнемо у `<span>`:
 
 ```html
 <div id="clock">
@@ -8,9 +8,9 @@ Each component of the time would look great in its own `<span>`:
 </div>
 ```
 
-Also we'll need CSS to color them.
+Розфарбуємо кожен `<span>` за допомогою CSS.
 
-The `update` function will refresh the clock, to be called by `setInterval` every second:
+Функція `update` оновлюватиме годинник, а метод `setInterval` викликатиме її щосекунди. 
 
 ```js
 function update() {
@@ -32,15 +32,15 @@ function update() {
 }
 ```
 
-In the line `(*)` we every time check the current date. The calls to `setInterval` are not reliable: they may happen with delays.
+В рядку `(*)` ми щоразу перевіряємо поточну дату. Виклики `setInterval` не надійні: вони можуть відбуватися з затримкою.
 
-The clock-managing functions:
+Функція для управління годинником:
 
 ```js
 let timerId;
 
-function clockStart() { // run the clock  
-  if (!timerId) { // only set a new interval if the clock is not running
+function clockStart() { // увімкнути годинник  
+  if (!timerId) { // встановити новий інтервал, якщо годинник не увімкнений
     timerId = setInterval(update, 1000);
   }
   update(); // (*)
@@ -52,6 +52,6 @@ function clockStop() {
 }
 ```
 
-Please note that the call to `update()` is not only scheduled in `clockStart()`, but immediately run in the line `(*)`. Otherwise the visitor would have to wait till the first execution of `setInterval`. And the clock would be empty till then.
+Будь ласка, зверніть увагу, що виклик `update()` не тільки заплановано в `clockStart()`, а ще й негайно виконується в рядку `(*)`. Інакше відвідувач повинен був би чекати до першого виконання `setInterval`. І до того часу годинник був би порожнім.
 
-Also it is important to set a new interval in `clockStart()` only when the clock is not running. Otherways clicking the start button several times would set multiple concurrent intervals. Even worse - we would only keep the `timerID` of the last interval, losing references to all others. Then we wouldn't be able to stop the clock ever again! Note that we need to clear the `timerID` when the clock is stopped in the line `(**)`, so that it can be started again by running `clockStart()`.
+Також важливо встановити новий інтервал у `clockStart()` лише тоді, коли годинник не працює. Інакше натискання кнопки «Пуск» кілька разів встановить кілька одночасних інтервалів. Ще гірше -- ми запам’ятаємо лише `timerID` останнього інтервалу, втративши посилання на всі інші. В такому разі ми б ніколи більше не змогли зупинити годинник! Зауважте, в рядку `(**)` нам потрібно очистити `timerID`, коли годинник зупинено, щоб його можна було знову увімкнути, запустивши `clockStart()`.

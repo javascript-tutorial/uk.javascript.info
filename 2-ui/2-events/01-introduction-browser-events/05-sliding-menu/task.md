@@ -2,10 +2,10 @@ importance: 5
 
 ---
 
-# Create a sliding menu
+# Створіть меню, що розкривається
 
-Create a menu that opens/collapses on click:
+Створіть меню, яке відкривається/згортається після кліку:
 
 [iframe border=1 height=100 src="solution"]
 
-P.S. HTML/CSS of the source document is to be modified.
+P.S. HTML/CSS вихідного документа можна і треба змінювати.

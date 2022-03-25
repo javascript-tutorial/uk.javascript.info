@@ -2,29 +2,29 @@ importance: 4
 
 ---
 
-# Load visible images
+# Завантаження видимих зображень
 
-Let's say we have a slow-speed client and want to save their mobile traffic.
+Припустимо, у нас є клієнт з низькою швидкістю з’єднання, і ми хочемо заощадити його мобільний трафік.
 
-For that purpose we decide not to show images immediately, but rather replace them with placeholders, like this:
+З цією метою ми вирішуємо не показувати зображення відразу, а замінити їх заповнювачами, наприклад:
 
 ```html
 <img *!*src="placeholder.svg"*/!* width="128" height="128" *!*data-src="real.jpg"*/!*>
 ```
 
-So, initially all images are `placeholder.svg`. When the page scrolls to the position where the user can see the image -- we change `src` to the one in `data-src`, and so the image loads.
+Отже, спочатку всі зображення є `placeholder.svg`. Коли сторінка прокручується до місця, де користувач може побачити зображення, ми змінюємо `src` на значення `data-src`, і таким чином зображення завантажується.
 
-Here's an example in `iframe`:
+Ось приклад в `iframe`:
 
 [iframe src="solution"]
 
-Scroll it to see images load "on-demand".
+Прокрутіть, щоб побачити, як зображення завантажуються "на вимогу".
 
-Requirements:
-- When the page loads, those images that are on-screen should load immediately, prior to any scrolling.
-- Some images may be regular, without `data-src`. The code should not touch them.
-- Once an image is loaded, it should not reload any more when scrolled in/out.
+Вимоги:
+- Коли сторінка завантажується, зображення на екрані мають завантажуватися негайно, перед будь-яким прокручуванням.
+- Деякі зображення можуть бути звичайними, без `data-src`. Код не повинен їх торкатися.
+- Після того, як зображення завантажено, воно більше не повинно перезавантажуватися під час прокручування/виходу.
 
-P.S. If you can, make a more advanced solution that would "preload" images that are one page below/after the current position.
+P.S. Якщо ви можете, створіть більш просунуте рішення, яке б "попередньо завантажувало" зображення, які знаходяться на одну сторінку нижче/після поточної позиції.
 
-P.P.S. Only vertical scroll is to be handled, no horizontal scrolling.
+P.P.S. Потрібно обробляти лише вертикальну прокрутку, горизонтально прокручувати не можна.

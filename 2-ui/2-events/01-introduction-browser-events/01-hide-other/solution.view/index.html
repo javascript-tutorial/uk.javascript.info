@@ -7,13 +7,13 @@
 
 <body>
 
-  <input type="button" id="hider" value="Click to hide the text" />
+  <input type="button" id="hider" value="Натисніть, щоб текст зник" />
 
-  <div id="text">Text</div>
+  <div id="text">Текст</div>
 
   <script>
-    // Here it doesn't matter how we hide the text,
-    // could also use style.display:
+    // Тут не має значення, як ми приховуємо текст
+    // Також можна використати style.display:
     document.getElementById('hider').onclick = function() {
       document.getElementById('text').hidden = true;
     }

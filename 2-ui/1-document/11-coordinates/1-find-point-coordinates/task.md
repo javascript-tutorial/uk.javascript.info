@@ -1,24 +1,24 @@
-importance: 5
+важливість: 5
 
 ---
 
-# Find window coordinates of the field
+# Знайти координати поля відносно вікна
 
-In the iframe below you can see a document with the green "field".
+У iframe нижче ви можете побачити документ із зеленим «полем».
 
-Use JavaScript to find window coordinates of corners pointed by with arrows.
+Використовуючи JavaScript, знайдіть координати кутів відносно вікна, на які вказано стрілками.
 
-There's a small feature implemented in the document for convenience. A click at any place shows coordinates there.
+Для зручності в документі реалізована невелика функція, яка показує координати кліку.
 
 [iframe border=1 height=360 src="source" link edit]
 
-Your code should use DOM to get window coordinates of:
+Ваш код повинен використовувати DOM для отримання чотирьох пар координат відносно вікна:
 
-1. Upper-left, outer corner (that's simple).
-2. Bottom-right, outer corner (simple too).
-3. Upper-left, inner corner (a bit harder).
-4. Bottom-right, inner corner (there are several ways, choose one).
+1. Верхній лівий, зовнішній кут (це просто).
+2. Правий нижній, зовнішній кут (теж просто).
+3. Верхній лівий, внутрішній кут (трохи складніше).
+4. Правий нижній, внутрішній кут (є кілька способів, оберіть один).
 
-The coordinates that you calculate should be the same as those returned by the mouse click.
+Обчислені координати повинні збігатися з тими, які повертаються клацанням миші.
 
-P.S. The code should also work if the element has another size or border, not bound to any fixed values.
+P.S. Код також повинен працювати, якщо елемент має інший розмір або рамку, тобто не прив’язаний до жодних фіксованих значень.

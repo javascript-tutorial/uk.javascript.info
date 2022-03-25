@@ -121,6 +121,18 @@ try-catch-flow.svg:
   '}': ''
   // code...: '// код...'
 
+promise-handler-variants.svg:
+  _defaults:
+    position: "center"
+  ...with the result: '...з результатом'
+  of the new promise...: 'нового промісу...'
+  'the call of .then(handler) always returns a promise:': 'виклик .then(handler) завжди повертає проміс:'
+  if handler ends with…: 'якщо handler завершується…'
+  return value: 'поверненням значення'
+  return promise: 'поверненням промісу'
+  throw error: 'помилкою'
+  'that promise settles with:': 'цей проміс завершується з:'
+
 statusbarButtonGlyphs.svg:
   '!': ''
 
@@ -132,3 +144,8 @@ logo-fetch.svg: {}
 
 demo.svg:
   '1': ''
+
+before-prepend-append-after.svg: 
+  (…nodes-or-strings): "(...вузли або рядки)"
+
+
