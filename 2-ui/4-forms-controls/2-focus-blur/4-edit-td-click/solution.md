@@ -1,5 +1,5 @@
 
-1. On click -- replace `innerHTML` of the cell by `<textarea>` with same sizes and no border. Can use JavaScript or CSS to set the right size.
-2. Set `textarea.value` to `td.innerHTML`.
-3. Focus on the textarea.
-4. Show buttons OK/CANCEL under the cell, handle clicks on them.
+1. По кліку -- замінити `innerHTML` клітини на `<textarea>` того ж розміру, без рамки. Задати розміри можна як в CSS так і в JavaScript.
+2. Взяти значення `textarea.value` з `td.innerHTML`.
+3. Встановити фокус в текстову область.
+4. Показати кнопки ЗГОДА/ВІДМІНА під клітиною, опрацювати кліки на них.

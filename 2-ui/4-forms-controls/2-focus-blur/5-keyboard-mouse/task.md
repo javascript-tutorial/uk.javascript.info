@@ -2,12 +2,12 @@ importance: 4
 
 ---
 
-# Keyboard-driven mouse
+# Миша, керована з клавіатури
 
-Focus on the mouse. Then use arrow keys to move it:
+Встановіть фокус на мишу. Використовуйте стрілки на клавіатурі, щоб рухати нею:
 
 [demo src="solution"]
 
-P.S. Don't put event handlers anywhere except the `#mouse` element.
+P.S. Не додавайте обробники подій нікуди окрім елементу `#mouse`.
 
-P.P.S. Don't modify HTML/CSS, the approach should be generic and work with any element.
+P.P.S. Не змінюйте HTML/CSS, рішення повинно бути універсальним і працювати з будь-яким елементом.
