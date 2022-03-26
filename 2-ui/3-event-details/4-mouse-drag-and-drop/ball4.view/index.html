@@ -8,7 +8,7 @@
 
 <body>
 
-  <p>Drag the ball.</p>
+  <p>Перетягніть м’яч.</p>
 
   <img src="https://en.js.cx/clipart/soccer-gate.svg" id="gate" class="droppable">
 
@@ -44,12 +44,12 @@
 
         let droppableBelow = elemBelow.closest('.droppable');
         if (currentDroppable != droppableBelow) {
-          if (currentDroppable) { // null when we were not over a droppable before this event
+          if (currentDroppable) { // null якщо ми були не над droppable до цієї події
             leaveDroppable(currentDroppable);
           }
           currentDroppable = droppableBelow;
-          if (currentDroppable) { // null if we're not coming over a droppable now
-            // (maybe just left the droppable)
+          if (currentDroppable) { // null якщо ми не над droppable зараз, під час цієї події
+            // можливо залишив droppable елемент
             enterDroppable(currentDroppable);
           }
         }
