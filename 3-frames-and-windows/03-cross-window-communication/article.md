@@ -99,7 +99,7 @@
 ```smart header="`iframe.onload` vs `iframe.contentWindow.onload`"
 Подія `iframe.onload` (у тегу `<iframe>`) по суті така ж, як `iframe.contentWindow.onload` (у вбудованому об’єкті вікна). Вона запускається, коли вбудоване вікно повністю завантажується зі всіма ресурсами. 
 
-...Але ми не можемо отримати доступ до `iframe.contentWindow.onload` для iframe з іншого походження, тому використовуємо `iframe.onload`.
+...Але ми не можемо отримати доступ до `iframe.contentWindow.onload` для iframe з іншим походженням, тому використовуємо `iframe.onload`.
 ```
 
 ## Вікна на субдоменах: document.domain
