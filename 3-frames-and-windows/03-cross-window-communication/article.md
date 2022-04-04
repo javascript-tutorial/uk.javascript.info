@@ -361,7 +361,7 @@ window.addEventListener("message", function(event) {
 Інтерфейс `postMessage` дозволяє розмовляти двом вікнам з будь-яким джерелом:
 
 1. Відправник викликає `targetWin.postMessage(data, targetOrigin)`.
-2. Якщо `targetOrigin` не є `'*'`, тоді браузер перевіряє, чи має вікно `targetWin` джерело `targetOrigin`.
+2. Якщо значення у `targetOrigin` не `'*'`, тоді браузер перевіряє, чи має вікно `targetWin` джерело `targetOrigin`.
 3. Якщо це так, то `targetWin` ініціює подію `message` зі спеціальними властивостями:
     - `origin` -- походження вікна відправника (наприклад, `http://my.site.com`)
     - `source` -- посилання на вікно відправника.
