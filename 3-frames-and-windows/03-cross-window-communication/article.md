@@ -67,7 +67,7 @@
       alert(e); // Security Error
     }
 
-    // ...ми можемо ЗАПИСАТИ в нього (і таким чином завантажувати щось інше в iframe)!
+    // ...ми можемо ЗМІНИТИ location (і таким чином завантажувати щось інше в iframe)!
 *!*
     iframe.contentWindow.location = '/'; // OK
 */!*
