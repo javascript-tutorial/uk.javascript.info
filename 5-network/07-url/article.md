@@ -1,28 +1,28 @@
 
-# URL objects
+# URL об’єкти
 
-The built-in [URL](https://url.spec.whatwg.org/#api) class provides a convenient interface for creating and parsing URLs.
+Вбудований клас [URL](https://url.spec.whatwg.org/#api) надає зручний інтерфейс для створення та розбирання URL на частини.
 
-There are no networking methods that require exactly a `URL` object, strings are good enough. So technically we don't have to use `URL`. But sometimes it can be really helpful.
+Зазвичай, щоб зробити мережевий запит, достатньо передати лише рядок з адресою, передавати саме екземпляр класу `URL` не має жодної потреби. Тому нас ніхто не зобов’язує використовувати клас `URL`. Але іноді це може стати в нагоді.
 
-## Creating a URL
+## Створення URL
 
-The syntax to create a new `URL` object:
+Синтаксис для створення `URL` об’єктів:
 
 ```js
 new URL(url, [base])
 ```
 
-- **`url`** -- the full URL or only path (if base is set, see below),
-- **`base`** -- an optional base URL: if set and `url` argument has only path, then the URL is generated relative to `base`.
+- **`url`** -- повний URL чи, якщо задано другий параметр, тільки шлях (дивись далі),
+- **`base`** -- необов’язковий параметр з "основою" відносно якої буде побудовано URL, якщо в першому параметрі передано тільки шлях.
 
-For example:
+Наприклад:
 
 ```js
 let url = new URL('https://javascript.info/profile/admin');
 ```
 
-These two URLs are same:
+В обох випадках буде згенеровано однакові URL:
 
 ```js run
 let url1 = new URL('https://javascript.info/profile/admin');
@@ -32,7 +32,7 @@ alert(url1); // https://javascript.info/profile/admin
 alert(url2); // https://javascript.info/profile/admin
 ```
 
-We can easily create a new URL based on the path relative to an existing URL:
+Можна легко створити новий URL із шляху ґрунтуючись на URL, що вже існує:
 
 ```js run
 let url = new URL('https://javascript.info/profile/admin');
@@ -41,7 +41,7 @@ let newUrl = new URL('tester', url);
 alert(newUrl); // https://javascript.info/profile/tester
 ```
 
-The `URL` object immediately allows us to access its components, so it's a nice way to parse the url, e.g.:
+Об’єкт `URL` дозволяє негайно отримати доступ до його складових, тому це зручний спосіб для розбору URL адреси:
 
 ```js run
 let url = new URL('https://javascript.info/url');
@@ -51,130 +51,130 @@ alert(url.host);     // javascript.info
 alert(url.pathname); // /url
 ```
 
-Here's the cheatsheet for URL components:
+Підказка зі складовими URL об’єкту:
 
 ![](url-object.svg)
 
-- `href` is the full url, same as `url.toString()`
-- `protocol` ends with the colon character `:`
-- `search` - a string of parameters, starts with the question mark `?`
-- `hash` starts with the hash character `#`
-- there may be also `user` and `password` properties if HTTP authentication is present: `http://login:password@site.com` (not painted above, rarely used).
+- `href` повна URL-адреса, те ж саме, що `url.toString()`
+- `protocol` протокол, закінчується символом двокрапки `:`
+- `search` -- рядок з параметрами, починається символом знаку запитання `?`
+- `hash` починається символом решітки`#`
+- також можуть бути присутні властивості `user` та `password`, якщо використовується формат для HTTP аутентифікації: `http://login:password@site.com` (не згадано вище, бо рідко використовується).
 
 
-```smart header="We can pass `URL` objects to networking (and most other) methods instead of a string"
-We can use a `URL` object in `fetch` or `XMLHttpRequest`, almost everywhere where a URL-string is expected.
+```smart header="`URL` об’єкт можна передати у методи, що використовуються для мережевих запитів замість рядку"
+`fetch` чи `XMLHttpRequest` можуть використовувати `URL` об’єкти майже всюди, де можна передати рядок з `URL`.
 
-Generally, the `URL` object can be passed to any method instead of a string, as most methods will perform the string conversion, that turns a `URL` object into a string with full URL.
+Зазвичай, `URL` об’єкт можна передати в будь-який метод замість рядку, оскільки більшість методів перетворять об’єкт в рядок, що містить повну URL-адресу.
 ```
 
-## SearchParams "?..."
+## Параметри пошуку "?..."
 
-Let's say we want to create a url with given search params, for instance, `https://google.com/search?query=JavaScript`.
+Припустимо, нам потрібно створити URL-адресу з заданими параметрами пошуку, наприклад, `https://google.com/search?query=JavaScript`.
 
-We can provide them in the URL string:
+Ми, звичайно, можемо передати їх в рядку з URL-адресою:
 
 ```js
 new URL('https://google.com/search?query=JavaScript')
 ```
 
-...But parameters need to be encoded if they contain spaces, non-latin letters, etc (more about that below).
+...Але параметри повинні бути закодованими, якщо вони містять пробіли, не латинські символи тощо (більше про це нижче).
 
-So there's a URL property for that: `url.searchParams`, an object of type [URLSearchParams](https://url.spec.whatwg.org/#urlsearchparams).
+Отже, для цього `URL` має властивість: `url.searchParams`, об’єкт типу [URLSearchParams](https://url.spec.whatwg.org/#urlsearchparams).
 
-It provides convenient methods for search parameters:
+Він надає зручні методи для роботи з параметрами пошуку:
 
-- **`append(name, value)`** -- add the parameter by `name`,
-- **`delete(name)`** -- remove the parameter by `name`,
-- **`get(name)`** -- get the parameter by `name`,
-- **`getAll(name)`** -- get all parameters with the same `name` (that's possible, e.g. `?user=John&user=Pete`),
-- **`has(name)`** -- check for the existence of the parameter by `name`,
-- **`set(name, value)`** -- set/replace the parameter,
-- **`sort()`** -- sort parameters by name, rarely needed,
-- ...and it's also iterable, similar to `Map`.
+- **`append(name, value)`** -- додати параметр з іменем `name`,
+- **`delete(name)`** -- видалити параметр з іменем `name`,
+- **`get(name)`** -- отримати значення параметру з іменем `name`,
+- **`getAll(name)`** -- отримати всі параметри, що мають ім'я `name` (наприклад, `?user=John&user=Pete`),
+- **`has(name)`** -- перевірити чи існує параметр з іменем `name`,
+- **`set(name, value)`** -- встановити/замінити параметр з іменем `name`,
+- **`sort()`** -- відсортувати параметри за іменем, рідко стає в нагоді,
+- ...і це об’єкт також можна перебрати, подібно до `Map`.
 
-An example with parameters that contain spaces and punctuation marks:
+Приклад з параметрами, що містять пробіли та знаки пунктуації:
 
 ```js run
 let url = new URL('https://google.com/search');
 
-url.searchParams.set('q', 'test me!'); // added parameter with a space and !
+url.searchParams.set('q', 'test me!'); // додано параметр з пробілом та !
 
 alert(url); // https://google.com/search?q=test+me%21
 
-url.searchParams.set('tbs', 'qdr:y'); // added parameter with a colon :
+url.searchParams.set('tbs', 'qdr:y'); // додано параметр з двокрапкою :
 
-// parameters are automatically encoded
+// параметри автоматично закодовано
 alert(url); // https://google.com/search?q=test+me%21&tbs=qdr%3Ay
 
-// iterate over search parameters (decoded)
+// у циклі перебираємо всі параметри пошуку (кожен параметр автоматично декодується)
 for(let [name, value] of url.searchParams) {
   alert(`${name}=${value}`); // q=test me!, then tbs=qdr:y
 }
 ```
 
 
-## Encoding
+## Кодування
 
-There's a standard [RFC3986](https://tools.ietf.org/html/rfc3986) that defines which characters are allowed in URLs and which are not.
+Набір символів, що можуть дозволено до використання в URL-адресах, визначено в стандарті [RFC3986](https://tools.ietf.org/html/rfc3986).
 
-Those that are not allowed, must be encoded, for instance non-latin letters and spaces - replaced with their UTF-8 codes, prefixed by `%`, such as `%20` (a space can be encoded by `+`, for historical reasons, but that's an exception).
+Усі інші символи, що не дозволені стандартом, повинні бути закодовані. Наприклад, не латинські букви та пробіли мають бути замінені на їх UTF-8 коди, що починаються з `%`. Пробіл буде закодовано у вигляді `%20` (з історичних причин пробіл дозволено закодувати як `+`).
 
-The good news is that `URL` objects handle all that automatically. We just supply all parameters unencoded, and then convert the `URL` to string:
+Гарна новина полягає в тому, що `URL` об’єкт виконає всі перетворення автоматично. Нам потрібно тільки передати всі параметри, а потім перетворити `URL` в рядок:
 
 ```js run
-// using some cyrillic characters for this example
+// для прикладу використано кириличні символи
 
-let url = new URL('https://ru.wikipedia.org/wiki/Тест');
+let url = new URL('https://uk.wikipedia.org/wiki/Тест');
 
-url.searchParams.set('key', 'ъ');
-alert(url); //https://ru.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82?key=%D1%8A
+url.searchParams.set('key', 'ї');
+alert(url); // https://uk.wikipedia.org/wiki/%D0%A2%D0%B5%D1%81%D1%82?key=%D1%97
 ```
 
-As you can see, both `Тест` in the url path and `ъ` in the parameter are encoded.
+Як бачите, і `Тест` у шляху, і параметр `ї` закодовано.
 
-The URL became longer, because each cyrillic letter is represented with two bytes in UTF-8, so there are two `%..` entities.
+URL-адреса стала довшою, бо кожен кириличний символ представлено двома байтами в UTF-8, тому там дві групи символів `%..`.
 
-### Encoding strings
+### Кодування рядків
 
-In old times, before `URL` objects appeared, people used strings for URLs.
+До появи `URL` об’єктів, розробники використовували рядки для URL-адрес.
 
-As of now, `URL` objects are often more convenient, but strings can still be used as well. In many cases using a string makes the code shorter.
+Наразі, зручніше використовувати `URL` об’єкти, але рядки все ще можна використовувати. У більшості випадків, використання рядків потребує менше коду.
 
-If we use a string though, we need to encode/decode special characters manually.
+Слід зауважити, якщо ми використовуємо рядки, то закодувати та декодувати символи нам потрібно вручну.
 
-There are built-in functions for that:
+Для цього є вбудовані функції:
 
-- [encodeURI](mdn:/JavaScript/Reference/Global_Objects/encodeURI) - encodes URL as a whole.
-- [decodeURI](mdn:/JavaScript/Reference/Global_Objects/decodeURI) - decodes it back.
-- [encodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/encodeURIComponent) - encodes a URL component, such as a search parameter, or a hash, or a pathname.
-- [decodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/decodeURIComponent) - decodes it back.
+- [encodeURI](mdn:/JavaScript/Reference/Global_Objects/encodeURI) - закодувати URL-адресу повністю.
+- [decodeURI](mdn:/JavaScript/Reference/Global_Objects/decodeURI) - розкодувати її.
+- [encodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/encodeURIComponent) - закодувати частину URL-адреси, наприклад, параметри пошуку, шлях чи хеш.
+- [decodeURIComponent](mdn:/JavaScript/Reference/Global_Objects/decodeURIComponent) - розкодувати відповідну частину.
 
-A natural question is: "What's the difference between `encodeURIComponent` and `encodeURI`? When we should use either?"
+Може виникнути природне питання: "Яка різниця між `encodeURIComponent` та `encodeURI`? Коли використовувати яку?"
 
-That's easy to understand if we look at the URL, that's split into components in the picture above:
+Це легше зрозуміти, якщо подивитися на URL-адресу, що показано розділеною на частини вище.
 
 ```
 https://site.com:8080/path/page?p1=v1&p2=v2#hash
 ```
 
-As we can see, characters such as `:`, `?`, `=`, `&`, `#` are allowed in URL.
+Як бачимо, символи `:`, `?`, `=`, `&`, `#` дозволено безпосередньо використовувати в URL.
 
-...On the other hand, if we look at a single URL component, such as a search parameter, these characters must be encoded, not to break the formatting.
+...На противагу цьому, якщо ми поглянемо тільки на параметри пошуку URL, то використані там символи повинні бути закодовані, щоб не зламати форматування.
 
-- `encodeURI` encodes only characters that are totally forbidden in URL.
-- `encodeURIComponent` encodes same characters, and, in addition to them, characters `#`, `$`, `&`, `+`, `,`, `/`, `:`, `;`, `=`, `?` and `@`.
+- `encodeURI` кодує тільки символи, що заборонені до використання в URL.
+- `encodeURIComponent` закодує деякі символи та символи: `#`, `$`, `&`, `+`, `,`, `/`, `:`, `;`, `=`, `?` та `@`.
 
-So, for a whole URL we can use `encodeURI`:
+Отже, для кодування всього URL можна використати `encodeURI`:
 
 ```js run
-// using cyrillic characters in url path
-let url = encodeURI('http://site.com/привет');
+// використання кириличних символі в шляху url
+let url = encodeURI('http://site.com/привіт');
 
-alert(url); // http://site.com/%D0%BF%D1%80%D0%B8%D0%B2%D0%B5%D1%82
+alert(url); // http://site.com/%D0%BF%D1%80%D0%B8%D0%B2%D1%96%D1%82
 ```
 
-...While for URL parameters we should use `encodeURIComponent` instead:
+...Проте, для URL параметрів нам знадобиться використати `encodeURIComponent`:
 
 ```js run
 let music = encodeURIComponent('Rock&Roll');
@@ -183,7 +183,7 @@ let url = `https://google.com/search?q=${music}`;
 alert(url); // https://google.com/search?q=Rock%26Roll
 ```
 
-Compare it with `encodeURI`:
+Порівняймо його з `encodeURI`:
 
 ```js run
 let music = encodeURI('Rock&Roll');
@@ -192,16 +192,16 @@ let url = `https://google.com/search?q=${music}`;
 alert(url); // https://google.com/search?q=Rock&Roll
 ```
 
-As we can see, `encodeURI` does not encode `&`, as this is a legit character in URL as a whole.
+Як бачимо, `encodeURI` не кодує символ `&`, оскільки це дозволений для використання в URL.
 
-But we should encode `&` inside a search parameter, otherwise, we get `q=Rock&Roll` - that is actually `q=Rock` plus some obscure parameter `Roll`. Not as intended.
+Але нам потрібно закодувати `&` всередині параметрів пошуку, інакше ми отримаємо `q=Rock&Roll`, що означатиме `q=Rock` та незрозумілий параметр `Roll`. Не те, що ми очікували.
 
-So we should use only `encodeURIComponent` for each search parameter, to correctly insert it in the URL string. The safest is to encode both name and value, unless we're absolutely sure that it has only allowed characters.
+Нам слід використовувати тільки `encodeURIComponent` з параметрами пошуку для правильного вставлення в рядок URL. Для повної безпеки, слід кодувати ім’я та значення параметрів, якщо ми не можемо бути повністю впевненими, що вони містять тільки дозволені символи.
 
-````smart header="Encoding difference compared to `URL`"
-Classes [URL](https://url.spec.whatwg.org/#url-class) and [URLSearchParams](https://url.spec.whatwg.org/#interface-urlsearchparams) are based on the latest URI specification: [RFC3986](https://tools.ietf.org/html/rfc3986), while `encode*` functions are based on the obsolete version [RFC2396](https://www.ietf.org/rfc/rfc2396.txt).
+````smart header="Різниця в кодуванні у порівнянні з `URL`"
+Класи [URL](https://url.spec.whatwg.org/#url-class) та [URLSearchParams](https://url.spec.whatwg.org/#interface-urlsearchparams) ґрунтуються на останній специфікації URL: [RFC3986](https://tools.ietf.org/html/rfc3986), але функції `encode*` використовують застарілу версію [RFC2396](https://www.ietf.org/rfc/rfc2396.txt).
 
-There are a few differences, e.g. IPv6 addresses are encoded differently:
+Існують деякі відмінності, як от IPv6 адреси кодуються по-іншому:
 
 ```js run
 // valid url with IPv6 address
@@ -211,7 +211,7 @@ alert(encodeURI(url)); // http://%5B2607:f8b0:4005:802::1007%5D/
 alert(new URL(url)); // http://[2607:f8b0:4005:802::1007]/
 ```
 
-As we can see, `encodeURI` replaced square brackets `[...]`, that's not correct, the reason is: IPv6 urls did not exist at the time of RFC2396 (August 1998).
+Як бачимо, `encodeURI` замінила квадратні дужки `[...]`, що є помилкою, причиною є те, що IPv6 адреси ще не існували в часи створення стандарту RFC2396 (серпень 1998).
 
-Such cases are rare, `encode*` functions work well most of the time.
+Такі випадки рідко трапляються, функції `encode*` добре справляються в більшості випадків.
 ````
