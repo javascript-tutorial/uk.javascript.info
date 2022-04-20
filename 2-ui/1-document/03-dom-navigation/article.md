@@ -127,64 +127,64 @@ elem.childNodes[elem.childNodes.length - 1] === elem.lastChild
 
 Існує також спеціальна функція `elem.hasChildNodes()`, що перевіряє, чи є взагалі дочірні вузли.
 
-### DOM collections
+### DOM колекції
 
-As we can see, `childNodes` looks like an array. But actually it's not an array, but rather a *collection* -- a special array-like iterable object.
+Як бачимо, `childNodes` виглядає як масив. Але насправді це не масив, а скоріше *колекція* -- спеціальний ітеративний об’єкт, подібний до масиву.
 
-There are two important consequences:
+Є два важливих наслідки:
 
-1. We can use `for..of` to iterate over it:
+1. Ми можемо використовувати `for..of`, щоб перебирати його:
   ```js
   for (let node of document.body.childNodes) {
-    alert(node); // shows all nodes from the collection
+    alert(node); // показує всі вузли з колекції
   }
   ```
-  That's because it's iterable (provides the `Symbol.iterator` property, as required).
+  Це тому, що він ітерований (підчас перебору може надавати властивість `Symbol.iterator`).
 
-2. Array methods won't work, because it's not an array:
+2. Методи масиву не працюватимуть, тому що це не масив:
   ```js run
-  alert(document.body.childNodes.filter); // undefined (there's no filter method!)
+  alert(document.body.childNodes.filter); // undefined (методу filter немає!)
   ```
 
-The first thing is nice. The second is tolerable, because we can use `Array.from` to create a "real" array from the collection, if we want array methods:
+Перший наслідок приємний, з другим можна змиритися, оскільки ми можемо використовувати `Array.from` для створення "справжнього" масиву з колекції, якщо нам потрібні методи масиву:
 
   ```js run
   alert( Array.from(document.body.childNodes).filter ); // function
   ```
 
-```warn header="DOM collections are read-only"
-DOM collections, and even more -- *all* navigation properties listed in this chapter are read-only.
+```warn header="Колекції DOM доступні лише для считування"
+Колекції DOM і навіть більше -- *всі* властивості навігації, перелічені в цьому розділі, доступні лише для считування.
 
-We can't replace a child by something else by assigning `childNodes[i] = ...`.
+Ми не можемо замінити дочірній елемент на щось інше, призначивши `childNodes[i] = ...`.
 
-Changing DOM needs other methods. We will see them in the next chapter.
+Для зміни DOM потрібні інші методи. Ми розберемо їх у наступному розділі.
 ```
 
-```warn header="DOM collections are live"
-Almost all DOM collections with minor exceptions are *live*. In other words, they reflect the current state of DOM.
+```warn header="DOM колецкції живі"
+Майже всі колекції DOM, за незначними винятками, є *живими*. Іншими словами, вони завжди відображають поточний стан DOM.
 
-If we keep a reference to `elem.childNodes`, and add/remove nodes into DOM, then they appear in the collection automatically.
+Якщо ми зберегли посилання на `elem.childNodes` і після цього додамо/видалемо вузли в DOM, вони автоматично з’являться в колекції.
 ```
 
-````warn header="Don't use `for..in` to loop over collections"
-Collections are iterable using `for..of`. Sometimes people try to use `for..in` for that.
+````warn header="Не використовуйте `for..in` для перебору колекцій"
+Колекції можна перебирати за допомогою `for..of`. Але іноді люди намагаються використовувати для цього `for..in`.
 
-Please, don't. The `for..in` loop iterates over all enumerable properties. And collections have some "extra" rarely used properties that we usually do not want to get:
+Будь ласка, не треба. Цикл `for..in` перебирає всі властивості без виключення. А колекції мають деякі "додаткові" рідко використовувані властивості, які ми зазвичай не хочемо отримувати:
 
 ```html run
 <body>
 <script>
-  // shows 0, 1, length, item, values and more.
+  // показує 0, 1, length, item, values і більше.
   for (let prop in document.body.childNodes) alert(prop);
 </script>
 </body>
 ````
 
-## Siblings and the parent
+## Сусідні і батьківський елементи
 
-*Siblings* are nodes that are children of the same parent.
+*Сусіди*, або сусідні вузли -- це вузли, які мають однаковий батьківський елемент.
 
-For instance, here `<head>` and `<body>` are siblings:
+Наприклад, тут `<head>` і `<body>` є сусідами:
 
 ```html
 <html>
@@ -192,64 +192,64 @@ For instance, here `<head>` and `<body>` are siblings:
 </html>
 ```
 
-- `<body>` is said to be the "next" or "right" sibling of `<head>`,
-- `<head>` is said to be the "previous" or "left" sibling of `<body>`.
+- `<body>` вважається "наступним" або сусідом "праворуч" для `<head>`,
+- `<head>` вважається "попереднім" або сусідом "ліворуч" для `<body>`.
 
-The next sibling is in `nextSibling` property, and the previous one - in `previousSibling`.
+Наступний сусід знаходиться у властивості `nextSibling`, а попередній -- у `previousSibling`.
 
-The parent is available as `parentNode`.
+Батьківський вузол доступний як `parentNode`.
 
-For example:
+Наприклад:
 
 ```js run
-// parent of <body> is <html>
+// батьком <body> є <html>
 alert( document.body.parentNode === document.documentElement ); // true
 
-// after <head> goes <body>
+// після <head> іде <body>
 alert( document.head.nextSibling ); // HTMLBodyElement
 
-// before <body> goes <head>
+// після <body> іде <head>
 alert( document.body.previousSibling ); // HTMLHeadElement
 ```
 
-## Element-only navigation
+## Навігація лише за елементами
 
-Navigation properties listed above refer to *all* nodes. For instance, in `childNodes` we can see both text nodes, element nodes, and even comment nodes if they exist.
+Властивості навігації, перераховані вище, відносяться до *всіх* вузлів. Наприклад, у `childNodes` ми можемо побачити як текстові вузли, так і вузли елементів і навіть вузли коментарів, якщо вони існують.
 
-But for many tasks we don't want text or comment nodes. We want to manipulate element nodes that represent tags and form the structure of the page.
+Але для багатьох задач нам не потрібні текстові вузли чи вузли коментарів. Ми хочемо маніпулювати вузлами елементів, які представляють теги та формують структуру сторінки.
 
-So let's see more navigation links that only take *element nodes* into account:
+Тож давайте подивимося властивости зі спеціальними посиланнями, які враховують лише *вузли елементи*:
 
 ![](dom-links-elements.svg)
 
-The links are similar to those given above, just with `Element` word inside:
+Посилання подібні до наведених вище, лише із словом `Element` всередині:
 
-- `children` -- only those children that are element nodes.
-- `firstElementChild`, `lastElementChild` -- first and last element children.
-- `previousElementSibling`, `nextElementSibling` -- neighbor elements.
-- `parentElement` -- parent element.
+- `children` -- тільки ті дочірні елементи, які є вузлами елементами.
+- `firstElementChild`, `lastElementChild` -- перший і останній дочірні елементи.
+- `previousElementSibling`, `nextElementSibling` -- сусідні елементи.
+- `parentElement` -- батьківський елемент.
 
-````smart header="Why `parentElement`? Can the parent be *not* an element?"
-The `parentElement` property returns the "element" parent, while `parentNode` returns "any node" parent. These properties are usually the same: they both get the parent.
+````smart header="Чому `parentElement`? Чи може батько бути *не* елементом?"
+Властивість `parentElement` повертає батьківський елемент "element", тоді як `parentNode` повертає батьківський "будь-який вузол". Ці властивості зазвичай однакові: обидва вони отримують батьківський елемент.
 
-With the one exception of `document.documentElement`:
+За одним винятком `document.documentElement`:
 
 ```js run
 alert( document.documentElement.parentNode ); // document
 alert( document.documentElement.parentElement ); // null
 ```
 
-The reason is that the root node `document.documentElement` (`<html>`) has `document` as its parent. But `document` is not an element node, so `parentNode` returns it and `parentElement` does not.
+Причина в тому, що кореневий вузол `document.documentElement` (`<html>`) має `document` як батьківський. Але він має тип `document` -- це не елемент, тому `parentNode` повертає його, а `parentElement` ні.
 
-This detail may be useful when we want to travel up from an arbitrary element `elem` to `<html>`, but not to the `document`:
+Ця деталь може бути корисною, коли ми хочемо перейти від довільного елемента `elem` до `<html>`, але не до `document`:
 ```js
-while(elem = elem.parentElement) { // go up till <html>
+while(elem = elem.parentElement) { // ідемо вверх поки не дійдемо до <html>
   alert( elem );
 }
 ```
 ````
 
-Let's modify one of the examples above: replace `childNodes` with `children`. Now it shows only elements:
+Давайте змінимо один із прикладів вище: замінимо `childNodes` на `children`. Тепер він показує лише елементи:
 
 ```html run
 <html>
@@ -274,31 +274,31 @@ Let's modify one of the examples above: replace `childNodes` with `children`. No
 </html>
 ```
 
-## More links: tables [#dom-navigation-tables]
+## Ще корисних властивостей: таблиці [#dom-navigation-tables]
 
-Till now we described the basic navigation properties.
+До цих пір ми описали основні властивості для навігації.
 
-Certain types of DOM elements may provide additional properties, specific to their type, for convenience.
+Деякі типи елементів DOM можуть надавати додаткові властивості, специфічні для їх типу, для зручності.
 
-Tables are a great example of that, and represent a particularly important case:
+Таблиці є чудовим прикладом цього і представляють особливо важливий випадок:
 
-**The `<table>`** element supports (in addition to the given above) these properties:
-- `table.rows` -- the collection of `<tr>` elements of the table.
-- `table.caption/tHead/tFoot` -- references to elements `<caption>`, `<thead>`, `<tfoot>`.
-- `table.tBodies` -- the collection of `<tbody>` elements (can be many according to the standard, but there will always be at least one -- even if it is not in the source HTML, the browser will put it in the DOM).
+**Елемент`<table>`** підтримує (на додаток до наведених вище) такі властивості:
+- `table.rows` -- набір елементів `<tr>` таблиці.
+- `table.caption/tHead/tFoot` -- посилання на елементи `<caption>`, `<thead>`, `<tfoot>`.
+- `table.tBodies` -- колекція елементів `<tbody>` (за стандартом може бути багато, але завжди буде принаймні один -- навіть якщо його немає у вихідному HTML, браузер помістить його в DOM).
 
-**`<thead>`, `<tfoot>`, `<tbody>`** elements provide the `rows` property:
-- `tbody.rows` -- the collection of `<tr>` inside.
+**Елементи `<thead>`, `<tfoot>`, `<tbody>`** забезпечують властивість `rows`:
+- `tbody.rows` -- колекція `<tr>` всередині.
 
 **`<tr>`:**
-- `tr.cells` -- the collection of `<td>` and `<th>` cells inside the given `<tr>`.
-- `tr.sectionRowIndex` -- the position (index) of the given `<tr>` inside the enclosing `<thead>/<tbody>/<tfoot>`.
-- `tr.rowIndex` -- the number of the `<tr>` in the table as a whole (including all table rows).
+- `tr.cells` -- колекція клітинок `<td>` і `<th>` всередині заданого рядка `<tr>`.
+- `tr.sectionRowIndex` -- позиція (індекс) заданого `<tr>` всередині батьківського `<thead>/<tbody>/<tfoot>`.
+- `tr.rowIndex` -- номер (індекс) рядка `<tr>` у таблиці в цілому (враховуючи всі рядки таблиці без виключення).
 
-**`<td>` and `<th>`:**
-- `td.cellIndex` -- the number of the cell inside the enclosing `<tr>`.
+**`<td>` і `<th>`:**
+- `td.cellIndex` -- номер клітинки у рядку `<tr>`.
 
-An example of usage:
+Приклад використання:
 
 ```html run height=100
 <table id="table">
@@ -317,17 +317,17 @@ An example of usage:
 </script>
 ```
 
-The specification: [tabular data](https://html.spec.whatwg.org/multipage/tables.html).
+Специфікація: [табличні дані](https://html.spec.whatwg.org/multipage/tables.html).
 
-There are also additional navigation properties for HTML forms. We'll look at them later when we start working with forms.
+Існують також додаткові властивості навігації для HTML-форм. Ми розглянемо їх пізніше, коли почнемо працювати з формами.
 
-## Summary
+## Підсумки
 
-Given a DOM node, we can go to its immediate neighbors using navigation properties.
+Для вузла DOM, ми можемо перейти до його безпосередніх сусідів за допомогою властивостей навігації.
 
-There are two main sets of them:
+Існує два основних набори:
 
-- For all nodes: `parentNode`, `childNodes`, `firstChild`, `lastChild`, `previousSibling`, `nextSibling`.
-- For element nodes only: `parentElement`, `children`, `firstElementChild`, `lastElementChild`, `previousElementSibling`, `nextElementSibling`.
+- Для всіх вузлів: `parentNode`, `childNodes`, `firstChild`, `lastChild`, `previousSibling`, `nextSibling`.
+- Лише для вузлів елементів: `parentElement`, `children`, `firstElementChild`, `lastElementChild`, `previousElementSibling`, `nextElementSibling`.
 
-Some types of DOM elements, e.g. tables, provide additional properties and collections to access their content.
+Деякі типи елементів DOM, напр. таблиці, надають додаткові властивості та колекції для доступу до їх вмісту.
