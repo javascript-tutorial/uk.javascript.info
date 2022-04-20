@@ -2,23 +2,23 @@ importance: 5
 
 ---
 
-# DOM children
+# Діти у DOM
 
-Look at this page:
+Подивіться на цю сторінку:
 
 ```html
 <html>
 <body>
-  <div>Users:</div>
+  <div>Користувачи:</div>
   <ul>
-    <li>John</li>
-    <li>Pete</li>
+    <li>Іван</li>
+    <li>Петро</li>
   </ul>
 </body>
 </html>
 ```
 
-For each of the following, give at least one way of how to access them:
-- The `<div>` DOM node?
-- The `<ul>` DOM node?
-- The second `<li>` (with Pete)?
+Вкажіть принаймні один спосіб доступу до кожного з перелічених нижче DOM вузлів:
+- До DOM вузла `<div>`?
+- До DOM вузла `<ul>`?
+- До другого `<li>` (Петро)?
