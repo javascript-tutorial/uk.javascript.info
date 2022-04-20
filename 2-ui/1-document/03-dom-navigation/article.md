@@ -5,37 +5,37 @@ libs:
 ---
 
 
-# Walking the DOM
+# Навігація по DOM
 
-The DOM allows us to do anything with elements and their contents, but first we need to reach the corresponding DOM object.
+DOM дозволяє нам робити будь-що з елементами та їх вмістом, але спочатку нам потрібно знайти відповідний DOM об’єкт.
 
-All operations on the DOM start with the `document` object. That's the main "entry point" to DOM. From it we can access any node.
+Усі операції з DOM починаються з об’єкта `document`. Це головна "точка входу" в DOM. З нього ми можемо отримати доступ до будь-якого вузла.
 
-Here's a picture of links that allow for travel between DOM nodes:
+Ось зображення структури посилань, які дозволяють переміщатися між вузлами DOM:
 
 ![](dom-links.svg)
 
-Let's discuss them in more detail.
+Обговоримо їх більш детально.
 
-## On top: documentElement and body
+## Зверху: documentElement і body
 
-The topmost tree nodes are available directly as `document` properties:
+Найвищі вузли дерева доступні безпосередньо як властивості `document`:
 
 `<html>` = `document.documentElement`
-: The topmost document node is `document.documentElement`. That's the DOM node of the `<html>` tag.
+: Найвищий вузол документа -- `document.documentElement`. Це вузол DOM тегу `<html>`.
 
 `<body>` = `document.body`
-: Another widely used DOM node is the `<body>` element -- `document.body`.
+: Іншим широко використовуваним вузлом DOM є елемент `<body>` -- `document.body`.
 
 `<head>` = `document.head`
-: The `<head>` tag is available as `document.head`.
+: Тег `<head>` доступний як `document.head`.
 
-````warn header="There's a catch: `document.body` can be `null`"
-A script cannot access an element that doesn't exist at the moment of running.
+````warn header="Але є загвоздка: `document.body` може бути `null`"
+Скрипт не може отримати доступ до елемента, який не існує на момент виконання цього скрипта.
 
-In particular, if a script is inside `<head>`, then `document.body` is unavailable, because the browser did not read it yet.
+Зокрема, якщо скрипт знаходиться всередині `<head>`, то `document.body` недоступний, оскільки браузер ще не прочитав його.
 
-So, in the example below the first `alert` shows `null`:
+Отже, у прикладі нижче перший `alert` виведе `null`:
 
 ```html run
 <html>
@@ -43,7 +43,7 @@ So, in the example below the first `alert` shows `null`:
 <head>
   <script>
 *!*
-    alert( "From HEAD: " + document.body ); // null, there's no <body> yet
+    alert( "Якщо у HEAD: " + document.body ); // null, ще немає <body>
 */!*
   </script>
 </head>
@@ -51,7 +51,7 @@ So, in the example below the first `alert` shows `null`:
 <body>
 
   <script>
-    alert( "From BODY: " + document.body ); // HTMLBodyElement, now it exists
+    alert( "Якщо у BODY: " + document.body ); // HTMLBodyElement, тепер body існує
   </script>
 
 </body>
@@ -59,18 +59,18 @@ So, in the example below the first `alert` shows `null`:
 ```
 ````
 
-```smart header="In the DOM world `null` means \"doesn't exist\""
-In the DOM, the `null` value means "doesn't exist" or "no such node".
+```smart header="У світі DOM `null` означає \"не існує\""
+У DOM значення `null` означає "не існує" або "такого вузла немає".
 ```
 
-## Children: childNodes, firstChild, lastChild
+## Дочірні елементи: childNodes, firstChild, lastChild
 
-There are two terms that we'll use from now on:
+Відтепер ми будемо використовувати два терміни:
 
-- **Child nodes (or children)** -- elements that are direct children. In other words, they are nested exactly in the given one. For instance, `<head>` and `<body>` are children of `<html>` element.
-- **Descendants** -- all elements that are nested in the given one, including children, their children and so on.
+- **Дочірні вузли (або діти)** -- елементи, які є безпосередніми дітьми. Іншими словами, вони вкладені саме в цей вузол. Наприклад, `<head>` і `<body>` є дочірніми елементами `<html>`.
+- **Нащадки** -- всі елементи, які вкладені в даний, включаючи дітей, їхніх дітей тощо.
 
-For instance, here `<body>` has children `<div>` and `<ul>` (and few blank text nodes):
+Наприклад, тут `<body>` має дочірні `<div>` і `<ul>` (і кілька пустих текстових вузлів):
 
 ```html run
 <html>
@@ -86,22 +86,22 @@ For instance, here `<body>` has children `<div>` and `<ul>` (and few blank text 
 </html>
 ```
 
-...And descendants of `<body>` are not only direct children `<div>`, `<ul>` but also more deeply nested elements, such as `<li>` (a child of `<ul>`) and `<b>` (a child of `<li>`) -- the entire subtree.
+...А нащадками `<body>` є не тільки прямі дочірні елементи `<div>`, `<ul>`, але й більш глибоко вкладені елементи, такі як `<li>` (дочірній елемент `<ul>`) та `<b>` (дочірній елемент `<li>`) -- тобто усе піддерево.
 
-**The `childNodes` collection lists all child nodes, including text nodes.**
+**Колекція `childNodes` містить список усіх дочірніх вузлів, включаючи текстові вузли.**
 
-The example below shows children of `document.body`:
+Наведений нижче приклад показує дочірні елементи `document.body`:
 
 ```html run
 <html>
 <body>
-  <div>Begin</div>
+  <div>Початок</div>
 
   <ul>
-    <li>Information</li>
+    <li>Інформація</li>
   </ul>
 
-  <div>End</div>
+  <div>Кінець</div>
 
   <script>
 *!*
@@ -110,22 +110,22 @@ The example below shows children of `document.body`:
     }
 */!*
   </script>
-  ...more stuff...
+  ...щось ще...
 </body>
 </html>
 ```
 
-Please note an interesting detail here. If we run the example above, the last element shown is `<script>`. In fact, the document has more stuff below, but at the moment of the script execution the browser did not read it yet, so the script doesn't see it.
+Зверніть увагу на цікаву деталь. Якщо ми запустимо наведений вище приклад, останнім показаним елементом буде `<script>`. Насправді нижче в документі є більше речей, але на момент виконання сценарію браузер його ще не прочитав, тому скрипт його не бачить.
 
-**Properties `firstChild` and `lastChild` give fast access to the first and last children.**
+**Властивості `firstChild` і `lastChild` надають швидкий доступ до першого та останнього дочірнього елемента.**
 
-They are just shorthands. If there exist child nodes, then the following is always true:
+Це лише скорочення. Якщо існують дочірні вузли, то завжди вірно наступне:
 ```js
 elem.childNodes[0] === elem.firstChild
 elem.childNodes[elem.childNodes.length - 1] === elem.lastChild
 ```
 
-There's also a special function `elem.hasChildNodes()` to check whether there are any child nodes.
+Існує також спеціальна функція `elem.hasChildNodes()`, що перевіряє, чи є взагалі дочірні вузли.
 
 ### DOM collections
 
