@@ -2,17 +2,17 @@ importance: 5
 
 ---
 
-# Select all diagonal cells
+# Виділіть усі діагональні клітинки
 
-Write the code to paint all diagonal table cells in red.
+Напишіть код, щоб зафарбувати всі діагональні клітинки таблиці червоним кольором.
 
-You'll need to get all diagonal `<td>` from the `<table>` and paint them using the code:
+Вам потрібно буде отримати всі діагоналі `<td>` з `<table>` і розфарбувати їх за допомогою коду:
 
 ```js
-// td should be the reference to the table cell
+// у td має бути посилання на клітинку таблиці
 td.style.backgroundColor = 'red';
 ```
 
-The result should be:
+Результат повинен бути таким:
 
 [iframe src="solution" height=180]

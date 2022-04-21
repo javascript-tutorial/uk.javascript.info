@@ -1,1 +1,1 @@
-We'll be using `rows` and `cells` properties to access diagonal table cells.
+Ми будемо використовувати властивості `rows` та `cells` для доступу до діагональних клітинок таблиці.
