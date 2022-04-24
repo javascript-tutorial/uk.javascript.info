@@ -92,6 +92,38 @@ let fruits = [
 Кома в кінці спрощує процес додавання/видалення елементів, тому що всі рядки стають однотипними.
 ````
 
+## Get last elements with "at"
+
+[recent browser="new"]
+
+Let's say we want a last element of the array.
+
+Some programming languages allow to use negative indexes for the same purpose, like `fruits[-1]`.
+
+Although, in JavaScript it won't work. The result will be `undefined`, because the index in square brackets is treated literally.
+
+We can explicitly calculate the last element index and then access it: `fruits[fruits.length - 1]`.
+
+```js run
+let fruits = ["Apple", "Orange", "Plum"];
+
+alert( fruits[fruits.length-1] ); // Plum
+```
+
+A bit cumbersome, isn't it? We need to write the variable name twice.
+
+Luckily, there's a shorter syntax: `fruits.at(-1)`:
+
+```js run
+let fruits = ["Apple", "Orange", "Plum"];
+
+// same as fruits[fruits.length-1]
+alert( fruits.at(-1) ); // Plum
+```
+
+In other words, `arr.at(i)`:
+- is exactly the same as `arr[i]`, if `i >= 0`.
+- for negative values of `i`, it steps back from the end of the array.
 
 ## Методи pop/push, shift/unshift
 
@@ -137,6 +169,8 @@ let fruits = [
 
     alert( fruits ); // Apple, Orange
     ```
+
+    Both `fruits.pop()` and `fruits.at(-1)` return the last element of the array, but `fruits.pop()` also modifies the array by removing it.
 
 `push`
 : Додає елемент в кінець масиву:
@@ -459,7 +493,7 @@ alert( 0 == [] ); // true
 alert('0' == [] ); // false
 ```
 
-В обох випадках ми порівнювали примітиви з масивом. Під час порівняння, масив `[]` конвертується в примітив і стає порожнім рядком `''`. 
+В обох випадках ми порівнювали примітиви з масивом. Масив `[]` задля порівняння конвертується в примітив і стає порожнім рядком `''`. 
 
 Далі відбувається порівняння примітивів. Логіка такого порівняння описана в розділі <info:type-conversions>:
 
