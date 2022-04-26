@@ -92,17 +92,17 @@ let fruits = [
 Кома в кінці спрощує процес додавання/видалення елементів, тому що всі рядки стають однотипними.
 ````
 
-## Get last elements with "at"
+## Отримати останні елементи за допомогою "at"
 
 [recent browser="new"]
 
-Let's say we want a last element of the array.
+Скажімо, нам потрібен останній елемент масиву.
 
-Some programming languages allow to use negative indexes for the same purpose, like `fruits[-1]`.
+Деякі мови програмування дозволяють використовувати негативні індекси з цією ж метою, наприклад, `fruits[-1]`.
 
-Although, in JavaScript it won't work. The result will be `undefined`, because the index in square brackets is treated literally.
+Хоча в JavaScript це не працюватиме. Результат буде `undefined`, оскільки індекс у квадратних дужках трактується буквально.
 
-We can explicitly calculate the last element index and then access it: `fruits[fruits.length - 1]`.
+Ми можемо явно обчислити індекс останнього елемента, а потім отримати до нього доступ: `fruits[fruits.length - 1]`.
 
 ```js run
 let fruits = ["Apple", "Orange", "Plum"];
@@ -110,20 +110,20 @@ let fruits = ["Apple", "Orange", "Plum"];
 alert( fruits[fruits.length-1] ); // Plum
 ```
 
-A bit cumbersome, isn't it? We need to write the variable name twice.
+Трохи громіздко, чи не так? Нам потрібно двічі написати ім’я змінної.
 
-Luckily, there's a shorter syntax: `fruits.at(-1)`:
+На щастя, є коротший синтаксис: `fruits.at(-1)`:
 
 ```js run
 let fruits = ["Apple", "Orange", "Plum"];
 
-// same as fruits[fruits.length-1]
+// те ж саме що й fruits[fruits.length-1]
 alert( fruits.at(-1) ); // Plum
 ```
 
-In other words, `arr.at(i)`:
-- is exactly the same as `arr[i]`, if `i >= 0`.
-- for negative values of `i`, it steps back from the end of the array.
+Іншими словами, `arr.at(i)`:
+- те ж саме що й `arr[i]`, якщо `i >= 0`.
+- для негативних значень `i` він шукає елемент відступаючи від кінця масиву.
 
 ## Методи pop/push, shift/unshift
 
@@ -170,7 +170,7 @@ In other words, `arr.at(i)`:
     alert( fruits ); // Apple, Orange
     ```
 
-    Both `fruits.pop()` and `fruits.at(-1)` return the last element of the array, but `fruits.pop()` also modifies the array by removing it.
+    І `fruits.pop()`, і `fruits.at(-1)` повертають останній елемент масиву, але `fruits.pop()` також змінює масив, видаляючи його.
 
 `push`
 : Додає елемент в кінець масиву:

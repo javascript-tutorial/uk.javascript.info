@@ -221,31 +221,31 @@ const bufferPromise = await blob.arrayBuffer();
 blob.arrayBuffer().then(buffer => /* process the ArrayBuffer */);
 ```
 
-## From Blob to stream
+## Від Blob до потоку
 
-When we read and write to a blob of more than `2 GB`, the use of `arrayBuffer` becomes more memory intensive for us. At this point, we can directly convert the blob to a stream.
+Коли ми читаємо та пишемо в blob дані розміром понад `2 ГБ`, використання `arrayBuffer` стає більш інтенсивним для нас. На цьому етапі ми можемо безпосередньо перетворити blob на потік.
 
-A stream is a special object that allows to read from it (or write into it) portion by portion. It's outside of our scope here, but here's an example, and you can read more at <https://developer.mozilla.org/en-US/docs/Web/API/Streams_API>. Streams are convenient for data that is suitable for processing piece-by-piece.
+Потік -- це спеціальний об’єкт, який дозволяє читати з нього (або записувати в нього) частина за частиною. Це виходить за рамки цієї статті, але ось приклад, і ви можете прочитати більше на сторінці <https://developer.mozilla.org/en-US/docs/Web/API/Streams_API>. Потоки зручні для даних, які придатні для обробки частинами.
 
-The `Blob` interface's `stream()` method returns a `ReadableStream` which upon reading returns the data contained within the `Blob`.
+Метод `stream()` інтерфейсу `Blob` повертає `ReadableStream`, який під час читання повертає дані, що містяться в `Blob`.
 
-Then we can read from it, like this:
+Прочитати з нього ми можемо, наприклад, ось так:
 
 ```js
-// get readableStream from blob
+// отримати readableStream з blob
 const readableStream = blob.stream();
 const stream = readableStream.getReader();
 
 while (true) {
-  // for each iteration: data is the next blob fragment
+  // для кожної ітерації: дані є наступним фрагментом(частиною) blob
   let { done, data } = await stream.read();
   if (done) {
-    // no more data in the stream
+    // більше немає даних у потоці
     console.log('all blob processed.');
     break;
   }
 
-   // do something with the data portion we've just read from the blob
+   // зробити щось із частиною даних, яку ми щойно прочитали з blob
   console.log(data);
 }
 ```

@@ -1,50 +1,50 @@
-The console output is: 1 7 3 5 2 6 4.
+У консолі ми побачимо: 1 7 3 5 2 6 4.
 
-The task is quite simple, we just need to know how microtask and macrotask queues work.
+Завдання досить просте, нам потрібно лише знати, як працюють черги мікрозадач і макрозадач.
 
-Let's see what's going on, step by step.
+Подивимося, що відбувається, крок за кроком.
 
 ```js
 console.log(1);
-// The first line executes immediately, it outputs `1`.
-// Macrotask and microtask queues are empty, as of now.
+// Перший рядок виконується негайно і виводить `1`.
+// На даний момент черги макрозадач і мікрозадач порожні.
 
 setTimeout(() => console.log(2));
-// `setTimeout` appends the callback to the macrotask queue.
-// - macrotask queue content:
+// `setTimeout` додає зворотний виклик функції до черги макрозадач. 
+// - вміст черги макрозадач:
 //   `console.log(2)`
 
 Promise.resolve().then(() => console.log(3));
-// The callback is appended to the microtask queue.
-// - microtask queue content:
+// Зворотний виклик функції додається до черги мікрозадач.
+// - вміст черги мікрозадач:
 //   `console.log(3)`
 
 Promise.resolve().then(() => setTimeout(() => console.log(4)));
-// The callback with `setTimeout(...4)` is appended to microtasks
-// - microtask queue content:
+// Зворотний виклик функції із `setTimeout(...4)` додається до мікрозадач
+// - вміст черги мікрозадач:
 //   `console.log(3); setTimeout(...4)`
 
 Promise.resolve().then(() => console.log(5));
-// The callback is appended to the microtask queue
-// - microtask queue content:
+// Зворотний виклик додається до черги мікрозадач
+// - вміст черги мікрозадач:
 //   `console.log(3); setTimeout(...4); console.log(5)`
 
 setTimeout(() => console.log(6));
-// `setTimeout` appends the callback to macrotasks
-// - macrotask queue content:
+// `setTimeout` додає зворотний виклик функції до макрозадач
+// - вміст черги макрозадач:
 //   `console.log(2); console.log(6)`
 
 console.log(7);
-// Outputs 7 immediately.
+// Негайно виводить 7.
 ```
 
-To summarize,
+Підведемо підсумки,
 
-1. Numbers `1` и `7` show up immediately, because simple `console.log` calls don't use any queues.
-2. Then, after the main code flow is finished, the microtask queue runs.
-    - It has commands: `console.log(3); setTimeout(...4); console.log(5)`.
-    - Numbers `3` и `5` show up, while `setTimeout(() => console.log(4))` adds the `console.log(4)` call to the end of the macrotask queue.
-    - The macrotask queue is now: `console.log(2); console.log(6); console.log(4)`.
-3. After the microtask queue becomes empty, the macrotask queue executes. It outputs `2`, `6`, `4`.
+1. Числа `1` і `7` з’являються відразу, тому що прості виклики `console.log` не використовують жодних черг.
+2. Потім, після завершення основного потоку коду, запускається черга мікрозадач.
+    - Він містить команди: `console.log(3); setTimeout(...4); console.log(5)`.
+    - З’являються числа `3` і `5`, а `setTimeout(() => console.log(4))` додає виклик `console.log(4)` в кінець черги макрозадач.
+    - Черга макрозадач тепер така: `console.log(2); console.log(6); console.log(4)`.
+3. Після того як черга мікрозадач стає порожньою, виконується черга макрозадач. І він виводить `2`, `6`, `4`.
 
-Finally, we have the output: `1 7 3 5 2 6 4`.
+Нарешті, маємо у консолі: `1 7 3 5 2 6 4`.
