@@ -1,6 +1,6 @@
-1. Yes, true. The element `elem.lastChild` is always the last one, it has no `nextSibling`.
-2. No, wrong, because `elem.children[0]` is the first child *among elements*. But there may exist non-element nodes before it. So `previousSibling` may be a text node.
+1. Так, це правда. Елемент `elem.lastChild` завжди останній, у нього немає `nextSibling`.
+2. Ні, це неправда, тому що `elem.children[0]` — перший дочірній *серед елементів*. Але перед ним можуть існувати вузли інших типів. Отже, `previousSibling` може бути, наприклад, текстовим вузлом.
 
-Please note: for both cases if there are no children, then there will be an error.
+Зверніть увагу: в обох випадках якщо немає дітей, то буде помилка.
 
-If there are no children, `elem.lastChild` is `null`, so we can't access `elem.lastChild.nextSibling`. And the collection `elem.children` is empty (like an empty array `[]`).
+Якщо дочірніх елементів немає, `elem.lastChild` матиме значення `null`, тому ми не зможемо отримати доступ до `elem.lastChild.nextSibling`. А колекція `elem.children` порожня (як порожній масив `[]`).

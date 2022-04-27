@@ -2,9 +2,9 @@ importance: 5
 
 ---
 
-# The sibling question
+# Питання про сусідів
 
-If `elem` -- is an arbitrary DOM element node...
+Якщо `elem` -- це довільний DOM елемент...
 
-- Is it true that `elem.lastChild.nextSibling` is always `null`?
-- Is it true that `elem.children[0].previousSibling` is always `null` ?
+- Чи правда що `elem.lastChild.nextSibling` завжди `null`?
+- Чи правда що `elem.children[0].previousSibling` завжди `null`?

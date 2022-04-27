@@ -1,27 +1,27 @@
-There are many ways, for instance:
+Існує багато способів, наприклад:
 
 
-The `<div>` DOM node:
+До DOM вузла `<div>`:
 
 ```js
 document.body.firstElementChild
-// or
+// або
 document.body.children[0]
-// or (the first node is space, so we take 2nd)
+// або (перший вузол -- це пробіл, тому беремо 2-й)
 document.body.childNodes[1]
 ```
 
-The `<ul>` DOM node:
+До DOM вузла `<ul>`:
 
 ```js
 document.body.lastElementChild
-// or
+// або
 document.body.children[1]
 ```
 
-The second `<li>` (with Pete):
+До другого `<li>` (Петро):
 
 ```js
-// get <ul>, and then get its last element child
+// отримати <ul>, а потім отримати його останній дочірній елемент
 document.body.lastElementChild.lastElementChild
 ```
