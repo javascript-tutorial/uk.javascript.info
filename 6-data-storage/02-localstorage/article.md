@@ -64,6 +64,7 @@ delete localStorage.test;
 Це дозволено з історичних причин і в цілому працює, але зазвичай не рекомендується, оскільки:
 
 1. Якщо ключ створений користувачем, він може бути будь-яким, наприклад, `length` або `toString`, або іншим вбудованим методом `localStorage`. У цьому випадку `getItem/setItem` працює нормально, тоді як доступ через об’єкт ні:
+
     ```js run
     let key = 'length';
     localStorage[key] = 5; // Помилка, не вдається задати length
@@ -119,7 +120,6 @@ for(let key of keys) {
 
 Останній варіант працює, оскільки `Object.keys` повертає лише ключі, які належать об’єкту, ігноруючи прототип.
 
-
 ## Тільки рядки
 
 Зверніть увагу, що і ключ, і значення мають бути рядками.
@@ -147,7 +147,6 @@ alert( user.name ); // Тарас
 // додано параметри форматування до JSON.stringify, щоб об’єкт виглядав краще
 alert( JSON.stringify(localStorage, null, 2) );
 ```
-
 
 ## sessionStorage
 
@@ -180,7 +179,7 @@ alert( sessionStorage.getItem('test') ); // після оновлення: 1
 
 ## Подія storage
 
-Коли дані оновлюються в `localStorage` або `sessionStorage`, запускається подія [storage](https://www.w3.org/TR/webstorage/#the-storage-event) із властивостями:
+Коли дані оновлюються в `localStorage` або `sessionStorage`, запускається подія [storage](https://html.spec.whatwg.org/multipage/webstorage.html#the-storageevent-interface) із властивостями:
 
 - `key` – ключ, який було змінено (`null`, якщо викликається `.clear()`).
 - `oldValue` – старе значення (`null`, якщо це новий ключ).
@@ -221,6 +220,7 @@ localStorage.setItem('now', ​​Date.now());
 ## Підсумки
 
 Об’єкти веб-сховища `localStorage` та `sessionStorage` дозволяють зберігати ключ/значення в браузері.
+
 - І `key`, і `value` мають бути рядками.
 - Ліміт становить 5 Мб+, залежить від браузера.
 - Дані не мають терміну зберіганя, тобто не видаляються.

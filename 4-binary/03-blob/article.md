@@ -211,21 +211,44 @@ let blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'))
 
 Конструктор `Blob` дозволяє створювати `Blob` майже з будь-чого, тим паче з `BufferSource`.
 
-Тому, якщо нам потрібно низькорівнева обробка, ми можемо створити низькорівневий `ArrayBuffer` з `Blob` використовуючи `FileReader`:
+Але якщо нам потрібно виконати низькорівневу обробку, ми можемо отримати найнижчий рівень `ArrayBuffer` з `blob.arrayBuffer()`:
 
 ```js
-// отримати ArrayBuffer з Blob
-let fileReader = new FileReader();
+// отримати arrayBuffer з blob
+const bufferPromise = await blob.arrayBuffer();
 
-*!*
-fileReader.readAsArrayBuffer(blob);
-*/!*
-
-fileReader.onload = function(event) {
-  let arrayBuffer = fileReader.result;
-};
+// or
+blob.arrayBuffer().then(buffer => /* process the ArrayBuffer */);
 ```
 
+## Від Blob до потоку
+
+Коли ми читаємо та пишемо в blob дані розміром понад `2 ГБ`, використання `arrayBuffer` стає більш інтенсивним для нас. На цьому етапі ми можемо безпосередньо перетворити blob на потік.
+
+Потік -- це спеціальний об’єкт, який дозволяє читати з нього (або записувати в нього) частина за частиною. Це виходить за рамки цієї статті, але ось приклад, і ви можете прочитати більше на сторінці <https://developer.mozilla.org/en-US/docs/Web/API/Streams_API>. Потоки зручні для даних, які придатні для обробки частинами.
+
+Метод `stream()` інтерфейсу `Blob` повертає `ReadableStream`, який під час читання повертає дані, що містяться в `Blob`.
+
+Прочитати з нього ми можемо, наприклад, ось так:
+
+```js
+// отримати readableStream з blob
+const readableStream = blob.stream();
+const stream = readableStream.getReader();
+
+while (true) {
+  // для кожної ітерації: дані є наступним фрагментом(частиною) blob
+  let { done, data } = await stream.read();
+  if (done) {
+    // більше немає даних у потоці
+    console.log('all blob processed.');
+    break;
+  }
+
+   // зробити щось із частиною даних, яку ми щойно прочитали з blob
+  console.log(data);
+}
+```
 
 ## Підсумки
 
@@ -238,4 +261,6 @@ fileReader.onload = function(event) {
 Ми можемо легко трансформувати дані між `Blob` та іншими низькорівневими бінарними типами:
 
 - Ми можемо створити `Blob` з типізованих масивів з використанням конструктору `new Blob(...)`.
-- Можна отримати `ArrayBuffer` з `Blob` з використанням `FileReader` і потім створити об’єкт представлення для обробки бінарних даних.
+- Ми можемо повернути `ArrayBuffer` з Blob за допомогою `blob.arrayBuffer()`, а потім створити над ним подання для низькорівневої двійкової обробки.
+
+Потоки перетворення дуже корисні, коли нам потрібно обробляти великий blob. Ви можете легко створити `ReadableStream` з blob. Метод `stream()` інтерфейсу `Blob` повертає `ReadableStream`, який після читання повертає дані, що містяться у цьому blob.
