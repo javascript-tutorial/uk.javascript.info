@@ -1,83 +1,83 @@
 # LocalStorage, sessionStorage
 
-Web storage objects `localStorage` and `sessionStorage` allow to save key/value pairs in the browser.
+Об’єкти веб-сховища `localStorage` та `sessionStorage` дозволяють зберігати дані в браузері у вигляди пар ключ/значення.
 
-What's interesting about them is that the data survives a page refresh (for `sessionStorage`) and even a full browser restart (for `localStorage`). We'll see that very soon.
+Що цікаво, дані зберігаються навіть після оновлення сторінки (для `sessionStorage`) і після повного закриття і нового відкриття вікна браузера (для `localStorage`). Ми скоро перевіримо це на практиці.
 
-We already have cookies. Why additional objects?
+Ми вже маємо `cookies`. Навіщо додаткові об’єкти?
 
-- Unlike cookies, web storage objects are not sent to server with each request. Because of that, we can store much more. Most browsers allow at least 2 megabytes of data (or more) and have settings to configure that.
-- Also unlike cookies, the server can't manipulate storage objects via HTTP headers. Everything's done in JavaScript.
-- The storage is bound to the origin (domain/protocol/port triplet). That is, different protocols or subdomains infer different storage objects, they can't access data from each other.
+- На відміну від файлів cookies, об’єкти веб-сховища не надсилаються на сервер із кожним запитом. Завдяки цьому ми можемо зберігати набагато більше даних. Більшість браузерів дозволяють принаймні 2 мегабайти даних (або більше), користувач може навіть змінити цей об’єм.
+- Крім того, на відміну від файлів cookies, сервер не може маніпулювати об’єктами сховища через HTTP-заголовки. Все зроблено на JavaScript.
+- Сховище прив’язане до оригінального сайту (домен/протокол/порт). Таким чином, що різні протоколи або субдомени мають різні об’єкти зберігання, і не можуть отримати доступ до даних один одного.
 
-Both storage objects provide same methods and properties:
+Обидва об’єкти сховища забезпечують однакові методи та властивості:
 
-- `setItem(key, value)` -- store key/value pair.
-- `getItem(key)` -- get the value by key.
-- `removeItem(key)` -- remove the key with its value.
-- `clear()` -- delete everything.
-- `key(index)` -- get the key on a given position.
-- `length` -- the number of stored items.
+- `setItem(key, value)` -- зберегти пару ключ/значення.
+- `getItem(key)` -- отримати значення за ключем.
+- `removeItem(key)` -- видалити дані за ключем.
+- `clear()` -- видалити все.
+- `key(index)` -- отримати ключ на заданій позиції.
+- `length` -- кількість збережених елементів.
 
-As you can see, it's like a `Map` collection (`setItem/getItem/removeItem`), but also allows access by index with `key(index)`.
+Як ви можете бачити, це схоже на колекцію `Map` (`setItem/getItem/removeItem`), але також дозволяє отримати доступ за індексом за допомогою `key(index)`.
 
-Let's see how it works.
+Давайте подивимося, як це працює.
 
-## localStorage demo
+## Демонстрація роботи localStorage
 
-The main features of `localStorage` are:
+Основними особливостями `localStorage` є:
 
-- Shared between all tabs and windows from the same origin.
-- The data does not expire. It remains after the browser restart and even OS reboot.
+- Спільний доступ з усіх вкладок і вікон для одного і того ж самого сайту.
+- Термін дії даних не закінчується. Дані залишаються після перезавантаження браузера і навіть перезавантаження ОС.
 
-For instance, if you run this code...
+Наприклад, якщо ви запустите цей код...
 
 ```js run
 localStorage.setItem('test', 1);
 ```
 
-...And close/open the browser or just open the same page in a different window, then you can get it like this:
+...І закриєте/відкриєте браузер або просто відкриєте ту саму сторінку в іншому вікні, то зможете отримати дані так:
 
 ```js run
 alert( localStorage.getItem('test') ); // 1
 ```
 
-We only have to be on the same origin (domain/port/protocol), the url path can be different.
+Ми повинні бути на тому ж самому сайті (домен/порт/протокол), шлях URL-адреси може відрізнятись
 
-The `localStorage` is shared between all windows with the same origin, so if we set the data in one window, the change becomes visible in another one.
+`localStorage` доступний для одного сайту в усіх відкритих вікнах, тому якщо ми встановимо дані в одному вікні, зміна стане видимою в іншому.
 
-## Object-like access
+## Доступ як до звичайного об’єкту
 
-We can also use a plain object way of getting/setting keys, like this:
+Ми також можемо використовувати простий об’єктний спосіб отримання/запису даних, наприклад:
 
 ```js run
-// set key
+// записати дані за ключем
 localStorage.test = 2;
 
-// get key
+// отримати дані за ключем
 alert( localStorage.test ); // 2
 
-// remove key
+// видалити дані
 delete localStorage.test;
 ```
 
-That's allowed for historical reasons, and mostly works, but generally not recommended, because:
+Це дозволено з історичних причин і в цілому працює, але зазвичай не рекомендується, оскільки:
 
-1. If the key is user-generated, it can be anything, like `length` or `toString`, or another built-in method of `localStorage`. In that case `getItem/setItem` work fine, while object-like access fails:
+1. Якщо ключ створений користувачем, він може бути будь-яким, наприклад, `length` або `toString`, або іншим вбудованим методом `localStorage`. У цьому випадку `getItem/setItem` працює нормально, тоді як доступ через об’єкт ні:
     ```js run
     let key = 'length';
-    localStorage[key] = 5; // Error, can't assign length
+    localStorage[key] = 5; // Помилка, не вдається задати length
     ```
 
-2. There's a `storage` event, it triggers when we modify the data. That event does not happen for object-like access. We'll see that later in this chapter.
+2. Існує подія `storage`, вона запускається, коли ми змінюємо дані. Ця подія не відбувається при зміні даних без виклику `setItem`. Ми поговоримо про це пізніше в цьому розділі.
 
-## Looping over keys
+## Перебір ключів
 
-As we've seen, the methods provide "get/set/remove by key" functionality. But how to get all saved values or keys?
+Як ми бачили, методи забезпечують функцію "отримати/записати/видалити за ключем". Але як отримати всі збережені значення чи ключі?
 
-Unfortunately, storage objects are not iterable.
+На жаль, об’єкти зберігання не є ітераційними.
 
-One way is to loop over them as over an array:
+Один із способів -- працювати з ними як з масивом:
 
 ```js run
 for(let i=0; i<localStorage.length; i++) {
@@ -86,29 +86,29 @@ for(let i=0; i<localStorage.length; i++) {
 }
 ```
 
-Another way is to use `for key in localStorage` loop, just as we do with regular objects.
+Інший спосіб -- використати цикл `for key in localStorage`, так само, як для звичайних об’єктів.
 
-It iterates over keys, but also outputs few built-in fields that we don't need:
+Він перебирає ключі, але також виводить кілька вбудованих властивостей, які нам не потрібні:
 
 ```js run
-// bad try
+// невдала спроба
 for(let key in localStorage) {
-  alert(key); // shows getItem, setItem and other built-in stuff
+  alert(key); // показує getItem, setItem та інші вбудовані властивості
 }
 ```
 
-...So we need either to filter fields from the prototype with `hasOwnProperty` check:
+...Тож нам потрібно або відфільтрувати поля з прототипу за допомогою перевірки `hasOwnProperty`:
 
 ```js run
 for(let key in localStorage) {
   if (!localStorage.hasOwnProperty(key)) {
-    continue; // skip keys like "setItem", "getItem" etc
+    continue; // пропускати ключі, такі як "setItem", "getItem" тощо
   }
   alert(`${key}: ${localStorage.getItem(key)}`);
 }
 ```
 
-...Or just get the "own" keys with `Object.keys` and then loop over them if needed:
+...Або просто отримати "власні" ключі за допомогою `Object.keys`, а потім перебрати їх, якщо потрібно:
 
 ```js run
 let keys = Object.keys(localStorage);
@@ -117,133 +117,133 @@ for(let key of keys) {
 }
 ```
 
-The latter works, because `Object.keys` only returns the keys that belong to the object, ignoring the prototype.
+Останній варіант працює, оскільки `Object.keys` повертає лише ключі, які належать об’єкту, ігноруючи прототип.
 
 
-## Strings only
+## Тільки рядки
 
-Please note that both key and value must be strings.
+Зверніть увагу, що і ключ, і значення мають бути рядками.
 
-If were any other type, like a number, or an object, it gets converted to string automatically:
+Якщо ми спробуємо використати будь-який інший тип, наприклад число або об’єкт, він автоматично перетвориться на рядок:
 
 ```js run
 localStorage.user = {name: "John"};
 alert(localStorage.user); // [object Object]
 ```
 
-We can use `JSON` to store objects though:
+Однак ми можемо використати `JSON` для зберігання об’єктів:
 
 ```js run
-localStorage.user = JSON.stringify({name: "John"});
+localStorage.user = JSON.stringify({name: "Тарас"});
 
-// sometime later
+// через деякий час
 let user = JSON.parse( localStorage.user );
-alert( user.name ); // John
+alert( user.name ); // Тарас
 ```
 
-Also it is possible to stringify the whole storage object, e.g. for debugging purposes:
+Також можна перетворити весь об’єкт сховища на JSON рядок, наприклад, підчас налагодження коду:
 
 ```js run
-// added formatting options to JSON.stringify to make the object look nicer
+// додано параметри форматування до JSON.stringify, щоб об’єкт виглядав краще
 alert( JSON.stringify(localStorage, null, 2) );
 ```
 
 
 ## sessionStorage
 
-The `sessionStorage` object is used much less often than `localStorage`.
+Об’єкт `sessionStorage` використовується набагато рідше, ніж `localStorage`.
 
-Properties and methods are the same, but it's much more limited:
+Властивості та методи ті самі, але можливості більш обмежені:
 
-- The `sessionStorage` exists only within the current browser tab.
-  - Another tab with the same page will have a different storage.
-  - But it is shared between iframes in the same tab (assuming they come from the same origin).
-- The data survives page refresh, but not closing/opening the tab.
+- `sessionStorage` існує лише на поточній вкладці браузера.
+  - Інша вкладка з тією ж сторінкою матиме інше сховище.
+  - Але він використовується між iframes на одній вкладці (за умови, що це один сайт).
+- Дані зберігаються після оновлення сторінки, але не закриття/відкриття вкладки.
 
-Let's see that in action.
+Давайте подивимося на це в дії.
 
-Run this code...
+Запустіть цей код...
 
 ```js run
 sessionStorage.setItem('test', 1);
 ```
 
-...Then refresh the page. Now you can still get the data:
+...Потім оновіть сторінку. Тепер ви все ще можете отримати дані:
 
 ```js run
-alert( sessionStorage.getItem('test') ); // after refresh: 1
+alert( sessionStorage.getItem('test') ); // після оновлення: 1
 ```
 
-...But if you open the same page in another tab, and try again there, the code above returns `null`, meaning "nothing found".
+...Але якщо ви відкриєте ту саму сторінку в іншій вкладці та спробуєте там ще раз, код вище поверне `null`, що означає "нічого не знайдено".
 
-That's exactly because `sessionStorage` is bound not only to the origin, but also to the browser tab. For that reason, `sessionStorage` is used sparingly.
+Це саме тому, що `sessionStorage` прив’язаний не лише до сайту, а й до вкладки браузера. З цієї причини `sessionStorage` використовується не часто.
 
-## Storage event
+## Подія storage
 
-When the data gets updated in `localStorage` or `sessionStorage`, [storage](https://www.w3.org/TR/webstorage/#the-storage-event) event triggers, with properties:
+Коли дані оновлюються в `localStorage` або `sessionStorage`, запускається подія [storage](https://www.w3.org/TR/webstorage/#the-storage-event) із властивостями:
 
-- `key` – the key that was changed (`null` if `.clear()` is called).
-- `oldValue` – the old value (`null` if the key is newly added).
-- `newValue` – the new value (`null` if the key is removed).
-- `url` – the url of the document where the update happened.
-- `storageArea` – either `localStorage` or `sessionStorage` object where the update happened.
+- `key` – ключ, який було змінено (`null`, якщо викликається `.clear()`).
+- `oldValue` – старе значення (`null`, якщо це новий ключ).
+- `newValue` – нове значення (`null`, якщо дані видалено).
+- `url` – URL-адреса документа, де відбулося оновлення.
+- `storageArea` – об’єкт `localStorage` або `sessionStorage`, де відбулося оновлення.
 
-The important thing is: the event triggers on all `window` objects where the storage is accessible, except the one that caused it.
+Важливо: подія запускається на всіх об’єктах `window`, де доступне сховище, крім того, що його викликало.
 
-Let's elaborate.
+Давайте детальніше.
 
-Imagine, you have two windows with the same site in each. So `localStorage` is shared between them.
+Уявіть, у вас є два вікна з однаковим сайтом у кожному. Таким чином, `localStorage` є спільним між ними.
 
 ```online
-You might want to open this page in two browser windows to test the code below.
+Ви можете відкрити цю сторінку в двох вікнах браузера, щоб перевірити наведений нижче код.
 ```
 
-If both windows are listening for `window.onstorage`, then each one will react on updates that happened in the other one.
+Якщо обидва вікна прослуховують `window.onstorage`, то кожне з них реагуватиме на оновлення, які відбулися в іншому.
 
 ```js run
-// triggers on updates made to the same storage from other documents
-window.onstorage = event => { // can also use window.addEventListener('storage', event => {
+// запускає оновлення, створені в тому самому сховищі з інших документів
+window.onstorage = event => { // також можна використовувати window.addEventListener('storage', event => {
   if (event.key != 'now') return;
-  alert(event.key + ':' + event.newValue + " at " + event.url);
+  alert(event.key + ':' + event.newValue + " в " + event.url);
 };
 
-localStorage.setItem('now', Date.now());
+localStorage.setItem('now', ​​Date.now());
 ```
 
-Please note that the event also contains: `event.url` -- the url of the document where the data was updated.
+Зверніть увагу, що подія також містить: `event.url` -- URL-адресу документа, в якому оновлено дані.
 
-Also, `event.storageArea` contains the storage object -- the event is the same for both `sessionStorage` and `localStorage`, so `event.storageArea` references the one that was modified. We may even want to set something back in it, to "respond" to a change.
+Крім того, `event.storageArea` містить об’єкт сховища -- подія однакова для `sessionStorage` та `localStorage`, тому `event.storageArea` посилається на той, який було змінено. Ми навіть можемо захотіти щось змінити в ньому, "відреагувати" на зміни.
 
-**That allows different windows from the same origin to exchange messages.**
+**Це дозволяє різним вікнам одного сайту обмінюватися повідомленнями.**
 
-Modern browsers also support [Broadcast channel API](mdn:/api/Broadcast_Channel_API), the special API for same-origin inter-window communication, it's more full featured, but less supported. There are libraries that polyfill that API, based on `localStorage`, that make it available everywhere.
+Сучасні браузери також підтримують [Broadcast channel API](mdn:/api/Broadcast_Channel_API), спеціальний API для міжвіконного зв’язку одного джерела, він більш повнофункціональний, але має меншу підтримку серед браузерів. Існують бібліотеки-поліфіли цього API на основі `localStorage`, що робить його доступним майже скрізь.
 
-## Summary
+## Підсумки
 
-Web storage objects `localStorage` and `sessionStorage` allow to store key/value in the browser.
-- Both `key` and `value` must be strings.
-- The limit is 5mb+, depends on the browser.
-- They do not expire.
-- The data is bound to the origin (domain/port/protocol).
+Об’єкти веб-сховища `localStorage` та `sessionStorage` дозволяють зберігати ключ/значення в браузері.
+- І `key`, і `value` мають бути рядками.
+- Ліміт становить 5 Мб+, залежить від браузера.
+- Дані не мають терміну зберіганя, тобто не видаляються.
+- Дані прив’язані до сайту (домен/порт/протокол).
 
 | `localStorage` | `sessionStorage` |
 |----------------|------------------|
-| Shared between all tabs and windows with the same origin | Visible within a browser tab, including iframes from the same origin |
-| Survives browser restart | Survives page refresh (but not tab close) |
+| Спільний для всіх вкладок і вікон з однаковим сайтом | Відображається у вкладці браузера, включаючи iframe того самого сайту|
+| Не видаляється при перезапуску браузера | Витримує оновлення сторінки (але не закриття вкладки) |
 
 API:
 
-- `setItem(key, value)` -- store key/value pair.
-- `getItem(key)` -- get the value by key.
-- `removeItem(key)` -- remove the key with its value.
-- `clear()` -- delete everything.
-- `key(index)` -- get the key number `index`.
-- `length` -- the number of stored items.
-- Use `Object.keys` to get all keys.
-- We access keys as object properties, in that case `storage` event isn't triggered.
+- `setItem(key, value)` -- зберегти пару ключ/значення.
+- `getItem(key)` -- отримати значення за ключем.
+- `removeItem(key)` -- видалити дані за ключем.
+- `clear()` -- видалити все.
+- `key(index)` -- отримати ключ на заданій позиції.
+- `length` -- кількість збережених елементів.
+- Використовуйте `Object.keys`, щоб отримати всі ключі.
+- Ми маємо доступ до ключів як властивостей об’єкта та можемо ними маніпулювати, у цьому випадку подія `storage` не ініціюється.
 
-Storage event:
+Подія storage:
 
-- Triggers on `setItem`, `removeItem`, `clear` calls.
-- Contains all the data about the operation (`key/oldValue/newValue`), the document `url` and the storage object `storageArea`.
-- Triggers on all `window` objects that have access to the storage except the one that generated it (within a tab for `sessionStorage`, globally for `localStorage`).
+- Спрацьовує на виклики `setItem`, `removeItem`, `clear`.
+- Містить усі дані про операцію (`key/oldValue/newValue`), URL-адресу документа та об’єкт сховища `storageArea`.
+- Спрацьовує для всіх об’єктів `window`, які мають доступ до сховища, крім того, який його створив (у межах вкладки для `sessionStorage`, глобально для `localStorage`).
