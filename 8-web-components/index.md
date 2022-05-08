@@ -1,3 +1,4 @@
-# Web components
+# Веб компоненти
 
-Web components is a set of standards to make self-contained components: custom HTML-elements with their own properties and methods, encapsulated DOM and styles.
+Веб компоненти — це набір стандартів для створення користувацьких HTML-елементів зі своїми властивостями й методами, інкапсульованим DOM і стилями.
+
