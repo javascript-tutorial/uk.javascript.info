@@ -34,13 +34,13 @@ IndexedDB — це база даних, вбудована в браузер, н
 let openRequest = indexedDB.open(name, version);
 ```
 
-- `name` -- рядок, ім'я бази даних.
+- `name` -- рядок, ім’я бази даних.
 - `version` -- версія є цілим числом, за замовчунням `1` (пояснення нижче).
 
 У нас може бути багато баз даних з різними іменами, але всі вони існують у поточному джерелі (домен/протокол/порт). Різні веб-сайти не мають доступу до баз даних один одного.
 
 Виклик повертає об’єкт `openRequest`, ми повинні прослухати події на ньому:
-- `success`: база даних готова, в `openRequest.result`є "об'єкт бази даних", ми повинні використовувати його для подальших викликів.
+- `success`: база даних готова, в `openRequest.result`є "об’єкт бази даних", ми повинні використовувати його для подальших викликів.
 - `error`: не вдалося відкрити.
 - `upgradeneeded`: база даних готова, але її версія застаріла (див. нижче).
 
@@ -70,7 +70,7 @@ openRequest.onerror = function() {
 
 openRequest.onsuccess = function() {
   let db = openRequest.result;
-  // продовжити роботу з базою даних за допомогою об'єкта db
+  // продовжити роботу з базою даних за допомогою об’єкта db
 };
 ```
 
@@ -114,24 +114,24 @@ let deleteRequest = indexedDB.deleteDatabase(name)
 Щоб захиститися від помилок, ми повинні перевірити `db.version` і якщо потрібно запропонувати перезавантажити сторінку. Використовуйте правильні заголовки кешування HTTP, щоб уникнути завантаження старого коду та щоб у вас ніколи не виникло таких проблем.
 ```
 
-### Parallel update problem
+### Проблема паралельного оновлення
 
-As we're talking about versioning, let's tackle a small related problem.
+Оскільки ми говоримо про версіоність, давайте розглянемо невеличку проблему пов’язану з цим.
 
-Let's say:
-1. A visitor opened our site in a browser tab, with database version `1`.
-2. Then we rolled out an update, so our code is newer.
-3. And then the same visitor opens our site in another tab.
+Скажімо:
+1. Відвідувач відкрив наш сайт у вкладці браузера з версією бази даних `1`.
+2. Потім ми випустили оновлення, тож наш код новіший.
+3. А потім той же відвідувач відкриває наш сайт в іншій вкладці.
 
-So there's a tab with an open connection to DB version `1`, while the second one attempts to update it to version `2` in its `upgradeneeded` handler.
+Отже, є вкладка з відкритим підключенням до БД версії `1`, а друга намагається оновити її до версії `2` у своєму обробнику `upgradeneeded`.
 
-The problem is that a database is shared between two tabs, as it's the same site, same origin. And it can't be both version `1` and `2`. To perform the update to version `2`, all connections to version 1 must be closed, including the one in the first tab.
+Проблема полягає в тому, що база даних є спільною між двома вкладками, оскільки це той самий сайт, з того самого джерела. І це не може бути одночасно версія `1` і `2`. Щоб виконати оновлення до версії `2`, усі підключення до версії `1` мають бути закриті, включно з підключенням на першій вкладці.
 
-In order to organize that, the `versionchange` event triggers on the "outdated" database object. We should listen for it and close the old database connection (and probably suggest a page reload, to load the updated code).
+Щоб це організувати, подія `versionchange` запускається на "застарілому" об’єкті бази даних. Нам слід прислухатися до цього та закрити старе підключення до бази даних (і, ймовірно, запропонувати перезавантажити сторінку, щоб завантажити оновлений код).
 
-If we don't listen for the `versionchange` event and don't close the old connection, then the second, new connection won't be made. The `openRequest` object will emit the `blocked` event instead of `success`. So the second tab won't work.
+Якщо ми не прослухаємо подію `versionchange` і не закриємо старе з’єднання, то друге, нове з’єднання не буде встановлено. Об’єкт `openRequest` видаватиме подію `blocked` замість `success`. Тому друга вкладка не працюватиме.
 
-Here's the code to correctly handle the parallel upgrade. It installs the `onversionchange` handler, that triggers if the current database connection becomes outdated (db version is updated elsewhere) and closes the connection.
+Ось код для правильної обробки паралельного оновлення. Він встановлює обробник `onversionchange`, який запускається, якщо поточне з’єднання з базою даних стає застарілим (версія db оновлюється в іншому місці), і закриває з’єднання.
 
 ```js
 let openRequest = indexedDB.open("store", 2);
@@ -145,105 +145,105 @@ openRequest.onsuccess = function() {
   *!*
   db.onversionchange = function() {
     db.close();
-    alert("Database is outdated, please reload the page.")
+    alert("База даних застаріла, перезавантажте сторінку.")
   };
   */!*
 
-  // ...the db is ready, use it...
+  // ...БД готова, використовуйте її...
 };
 
 *!*
 openRequest.onblocked = function() {
-  // this event shouldn't trigger if we handle onversionchange correctly
+  // ця подія не має спрацьовувати, якщо ми правильно обробимо зміну версії
 
-  // it means that there's another open connection to the same database
-  // and it wasn't closed after db.onversionchange triggered for it
+  // це означає, що є ще одне відкрите підключення до тієї ж бази даних
+  // і воно не буде закрите після того, як для нього спрацьовує db.onversionchange
 };
 */!*
 ```
 
-...In other words, here we do two things:
+...Іншими словами, тут ми робимо дві речі:
 
-1. The `db.onversionchange` listener informs us about a parallel update attempt, if the current database version becomes outdated.
-2. The `openRequest.onblocked` listener informs us about the opposite situation: there's a connection to an outdated version elsewhere, and it doesn't close, so the newer connection can't be made.
+1. Слухач `db.onversionchange` повідомляє нас про спробу паралельного оновлення, якщо поточна версія бази даних стає застарілою.
+2. Слухач `openRequest.onblocked` інформує нас про протилежну ситуацію: є підключення до застарілої версії в іншому місці, і воно не закривається, тому нове з’єднання неможливо встановити.
 
-We can handle things more gracefully in `db.onversionchange`, prompt the visitor to save the data before the connection is closed and so on. 
+Ми можемо обробляти подібні речі більш витончено в `db.onversionchange`, запропонувати відвідувачу зберегти дані до закриття з’єднання.
 
-Or, an alternative approach would be to not close the database in `db.onversionchange`, but instead use the `onblocked` handler (in the new tab) to alert the visitor, tell him that the newer version can't be loaded until they close other tabs.
+Або, альтернативним підходом було б не закривати базу даних у `db.onversionchange`, а замість цього використовувати обробник `onblocked` (у новій вкладці), щоб попередити відвідувача про те, що новішу версію не можна завантажити, доки він не закриє іншу вкладку.
 
-These update collisions happen rarely, but we should at least have some handling for them, at least an `onblocked` handler, to prevent our script from dying silently.
+Ці зіткнення оновлень трапляються рідко, але ми повинні принаймні мати певну обробку для них, обробник `onblocked`, щоб запобігти безшумній смерті нашого сценарію.
 
-## Object store
+## Сховище об’єктів
 
-To store something in IndexedDB, we need an *object store*.
+Щоб зберегти щось у IndexedDB, нам потріне *сховище об’єктів*.
 
-An object store is a core concept of IndexedDB. Counterparts in other databases are called "tables" or "collections". It's where the data is stored. A database may have multiple stores: one for users, another one for goods, etc.
+Сховище об’єктів є основною концепцією IndexedDB. Аналоги в інших базах даних називаються «таблицями» або «колекціями». Саме там зберігаються дані. База даних може мати кілька сховищ: одне для користувачів, інше для товарів тощо.
 
-Despite being named an "object store", primitives can be stored too.
+Незважаючи на те, що це називають «сховищем об’єктів», примітиви також можна зберігати.
 
-**We can store almost any value, including complex objects.**
+**Ми можемо зберігати практично будь-які значення, включаючи складні об’єкти.**
 
-IndexedDB uses the [standard serialization algorithm](https://www.w3.org/TR/html53/infrastructure.html#section-structuredserializeforstorage) to clone-and-store an object. It's like `JSON.stringify`, but more powerful, capable of storing much more datatypes.
+IndexedDB використовує [стандартний алгоритм серіалізації](https://www.w3.org/TR/html53/infrastructure.html#section-structuredserializeforstorage) щоб клонувати та зберігати об’єкт. Це як `JSON.stringify`, але потужніший, здатний зберігати набагато більше типів даних.
 
-An example of an object that can't be stored: an object with circular references. Such objects are not serializable. `JSON.stringify` also fails for such objects.
+Приклад об’єкта, який не можливо зберегти: об’єкт з круговими посиланнями. Такі об’єкти не можна серіалізувати. `JSON.stringify` також не придатний для таких об’єктів.
 
-**There must be a unique `key` for every value in the store.**     
+**Для кожного значення в сховищі має бути унікальний "ключ".**     
 
-A key must be one of these types - number, date, string, binary, or array. It's a unique identifier, so we can search/remove/update values by the key.
+Ключ повинен бути одним з цих типів - число, дата, рядок, двійковий або масив. Це унікальний ідентифікатор, тому ми можемо шукати/видаляти/оновлювати значення за ключем.
 
 ![](indexeddb-structure.svg)
 
 
-As we'll see very soon, we can provide a key when we add a value to the store, similar to `localStorage`. But when we store objects, IndexedDB allows setting up an object property as the key, which is much more convenient. Or we can auto-generate keys.
+Як побачимо незабаром, ми можемо надати ключ, коли додамо значення до сховища, подібне до `localStorage`. Але коли ми зберігаємо об’єкти, IndexedDB дозволяє налаштувати властивість об’єкта як ключ, що набагато зручніше. Або ми можемо автоматично згенерувати ключі.
 
-But we need to create an object store first.
+Але спочатку нам потрібно створити сховище об’єктів.
 
 
-The syntax to create an object store:
+Синтаксис створення сховища об’єктів:
 ```js
 db.createObjectStore(name[, keyOptions]);
 ```
 
-Please note, the operation is synchronous, no `await` needed.
+Зауважте, що операція синхронна, та не потребує `await`.
 
-- `name` is the store name, e.g. `"books"` for books,
-- `keyOptions` is an optional object with one of two properties:
-  - `keyPath` -- a path to an object property that IndexedDB will use as the key, e.g. `id`.
-  - `autoIncrement` -- if `true`, then the key for a newly stored object is generated automatically, as an ever-incrementing number.
+- `name` -- назва сховища, наприклад. `"books"` для книжок,
+- `keyOptions` є необов’язковим об’єктом з однією з двох властивостей:
+  - `keyPath` -- шлях до властивості об’єкта, який IndexedDB використовуватиме як ключ, напр. `id`.
+  - `autoIncrement` -- якщо `true`, тоді ключ для щойно збереженого об’єкта генерується автоматично у вигляді постійно зростаючого числа.
 
-If we don't supply `keyOptions`, then we'll need to provide a key explicitly later, when storing an object.
+Якщо ми не постачаємо `keyOptions`, тоді нам потрібно буде надати ключ явно пізніше, коли будемо зберігати об’єкт.
 
-For instance, this object store uses `id` property as the key:
+Наприклад, це сховище об’єктів використовує властивість `id` як ключ:
 ```js
 db.createObjectStore('books', {keyPath: 'id'});
 ```
 
-**An object store can only be created/modified while updating the DB version, in `upgradeneeded` handler.**
+**Сховище об’єктів можна створити/змінити лише під час оновлення версії БД в обробнику `upgradeneeded`.**
 
-That's a technical limitation. Outside of the handler we'll be able to add/remove/update the data, but object stores can only be created/removed/altered during a version update.
+Це технічне обмеження. За межами обробника ми зможемо додавати/вилучати/оновлювати дані, але сховища об’єктів можна створювати/вилучати/змінювати лише під час оновлення версії.
 
-To perform a database version upgrade, there are two main approaches:
-1. We can implement per-version upgrade functions: from 1 to 2, from 2 to 3, from 3 to 4 etc. Then, in `upgradeneeded` we can compare versions (e.g. old 2, now 4) and run per-version upgrades step by step, for every intermediate version (2 to 3, then 3 to 4).
-2. Or we can just examine the database: get a list of existing object stores as `db.objectStoreNames`. That object is a [DOMStringList](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#domstringlist) that provides `contains(name)` method to check for existance. And then we can do updates depending on what exists and what doesn't.
+Щоб виконати оновлення версії бази даних, існує два основних підходи:
+1. Ми можемо реалізувати функції оновлення для кожної версії: від 1 до 2, від 2 до 3, від 3 до 4 тощо. Потім у `upgradeneeded` ми можемо порівняти версії (наприклад, стару 2, тепер 4) та запустити крок оновлення для кожної версії покроково, для кожної проміжної версії (2 до 3, потім від 3 до 4).
+2. Або ми можемо просто перевірити базу даних: отримати список існуючих сховищ об’єктів як `db.objectStoreNames`. Цим об’єктом є [DOMStringList](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#domstringlist) який надає метод `contains(name)` для перевірки існування. А потім ми можемо виконувати оновлення залежно від того, що існує, а що ні.
 
-For small databases the second variant may be simpler.
+Для невеликих баз даних другий варіант може бути простішим.
 
-Here's the demo of the second approach:
+Ось демонстрація другого підходу:
 
 ```js
 let openRequest = indexedDB.open("db", 2);
 
-// create/upgrade the database without version checks
+// створити/оновити базу даних без перевірки версій
 openRequest.onupgradeneeded = function() {
   let db = openRequest.result;
-  if (!db.objectStoreNames.contains('books')) { // if there's no "books" store
-    db.createObjectStore('books', {keyPath: 'id'}); // create it
+  if (!db.objectStoreNames.contains('books')) { // якщо не існує сховища "books"
+    db.createObjectStore('books', {keyPath: 'id'}); // створити його
   }
 };
 ```
 
 
-To delete an object store:
+Щоб видалити сховище об’єктів:
 
 ```js
 db.deleteObjectStore('books')
