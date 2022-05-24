@@ -5,63 +5,63 @@ libs:
 
 # IndexedDB
 
-IndexedDB is a database that is built into a browser, much more powerful than `localStorage`.
+IndexedDB — це база даних, вбудована в браузер, набагато потужніша, ніж `localStorage`.
 
-- Stores almost any kind of values by keys, multiple key types.
-- Supports transactions for reliability.
-- Supports key range queries, indexes.
-- Can store much bigger volumes of data than `localStorage`.
+- Зберігає майже будь-які значення за ключами, використовує кілька типів ключів.
+- Підтримує надійність транзакцій.
+- Підтримує запити за диапазоном ключів та індекси.
+- Може зберігати набагато більші обсяги даних, ніж `localStorage`.
 
-That power is usually excessive for traditional client-server apps. IndexedDB is intended for offline apps, to be combined with ServiceWorkers and other technologies.
+Ця потужність зазвичай надмірна для традиційних програм клієнт-сервер. IndexedDB призначена для автономних додатків для поєднання із ServiceWorkers та іншими технологіями.
 
-The native interface to IndexedDB, described in the specification <https://www.w3.org/TR/IndexedDB>, is event-based.
+Нативний інтерфейс для IndexedDB, описаний у специфікації <https://www.w3.org/TR/IndexedDB>, базується на подіях.
 
-We can also use `async/await` with the help of a promise-based wrapper, like <https://github.com/jakearchibald/idb>. That's pretty convenient, but the wrapper is not perfect, it can't replace events for all cases. So we'll start with events, and then, after we gain an understanding of IndexedDb, we'll use the wrapper.
+Ми також можемо використовувати `async/await` за допомогою обгортки на основі промісів, наприклад <https://github.com/jakearchibald/idb>. Це досить зручно, але обгортка не ідеальна, вона не може замінити події для всіх випадків. Отже, ми почнемо з подій, а потім, коли зрозуміємо IndexedDb, скористаємося обгорткою.
 
-```smart header="Where's the data?"
-Technically, the data is usually stored in the visitor's home directory, along with browser settings, extensions, etc.
+```smart header="Де зберігаються дані?"
+Технічно дані зазвичай зберігаються в домашньому каталозі відвідувача разом з налаштуваннями браузера, розширеннями тощо.
 
-Different browsers and OS-level users have each their own independant storage.
+У різних браузерів і користувачів на рівні ОС є власне незалежне сховище.
 ```
 
-## Open database
+## Відкрити базу даних
 
-To start working with IndexedDB, we first need to `open` (connect to) a database.
+Щоб почати працювати з IndexedDB, нам спочатку потрібно `відкрити` (підключитися до) бази даних.
 
-The syntax:
+Синтаксис:
 
 ```js
 let openRequest = indexedDB.open(name, version);
 ```
 
-- `name` -- a string, the database name.
-- `version` -- a positive integer version, by default `1` (explained below).
+- `name` -- рядок, ім'я бази даних.
+- `version` -- версія є цілим числом, за замовчунням `1` (пояснення нижче).
 
-We can have many databases with different names, but all of them exist within the current origin (domain/protocol/port). Different websites can't access each other's databases.
+У нас може бути багато баз даних з різними іменами, але всі вони існують у поточному джерелі (домен/протокол/порт). Різні веб-сайти не мають доступу до баз даних один одного.
 
-The call returns `openRequest` object, we should listen to events on it:
-- `success`: database is ready, there's the "database object" in `openRequest.result`, we should use it for further calls.
-- `error`: opening failed.
-- `upgradeneeded`: database is ready, but its version is outdated (see below).
+Виклик повертає об’єкт `openRequest`, ми повинні прослухати події на ньому:
+- `success`: база даних готова, в `openRequest.result`є "об'єкт бази даних", ми повинні використовувати його для подальших викликів.
+- `error`: не вдалося відкрити.
+- `upgradeneeded`: база даних готова, але її версія застаріла (див. нижче).
 
-**IndexedDB has a built-in mechanism of "schema versioning", absent in server-side databases.**
+**IndexedDB має вбудований механізм «cхему контролю версій», який відсутній у серверних базах даних.**
 
-Unlike server-side databases, IndexedDB is client-side, the data is stored in the browser, so we, developers, don't have full-time access to it. So, when we have published a new version of our app, and the user visits our webpage, we may need to update the database.
+На відміну від серверних баз даних, IndexedDB є клієнтською, дані зберігаються в браузері, тому ми, розробники, не маємо до них постійного доступу. Отже, коли ми опублікували нову версію нашого застосунку, і користувач відвідує веб-сторінку, нам може знадобитися оновити базу даних.
 
-If the local database version is less than specified in `open`, then a special event `upgradeneeded` is triggered, and we can compare versions and upgrade data structures as needed.
+Якщо версія локальної бази даних менша за вказану в `open`, тоді запускається спеціальна подія `upgradeneeded`, і ми можемо порівнювати версії та оновлювати структури даних за потребою.
 
-The `upgradeneeded` event also triggers when the database doesn't yet exist (technically, its version is `0`), so we can perform the initialization.
+Подія `upgradeneeded` також запускається, коли база даних ще не існує (технічно її версія дорівнює `0`), тому ми можемо виконати ініціалізацію.
 
-Let's say we published the first version of our app.
+Скажімо, ми опублікували першу версію нашого застосунку.
 
-Then we can open the database with version `1` and perform the initialization in an `upgradeneeded` handler like this:
+Тоді ми можемо відкрити базу даних з версією `1` та виконати ініціалізацію в `upgradeneeded` обробника, таким чином:
 
 ```js
 let openRequest = indexedDB.open("store", *!*1*/!*);
 
 openRequest.onupgradeneeded = function() {
-  // triggers if the client had no database
-  // ...perform initialization...
+  // спрацьовує, якщо на клієнті немає бази даних
+  // ...виконати ініціалізацію...
 };
 
 openRequest.onerror = function() {
@@ -70,48 +70,48 @@ openRequest.onerror = function() {
 
 openRequest.onsuccess = function() {
   let db = openRequest.result;
-  // continue working with database using db object
+  // продовжити роботу з базою даних за допомогою об'єкта db
 };
 ```
 
-Then, later, we publish the 2nd version.
+Потім, пізніше, ми публікуємо 2-у версію.
 
-We can open it with version `2` and perform the upgrade like this:
+Ми можемо зробити це за допомогою версії `2` і виконати оновлення таким чином:
 
 ```js
 let openRequest = indexedDB.open("store", *!*2*/!*);
 
 openRequest.onupgradeneeded = function(event) {
-  // the existing database version is less than 2 (or it doesn't exist)
+  // існуюча версія бази даних менше 2 (або її не існує).
   let db = openRequest.result;
-  switch(event.oldVersion) { // existing db version
+  switch(event.oldVersion) { // існуюча версія БД
     case 0:
-      // version 0 means that the client had no database
-      // perform initialization
+      // версія 0 означає, що клієнт не мав бази даних
+      // виконати ініціалізацію
     case 1:
-      // client had version 1
-      // update
+      // клієнт мав версію 1
+      // оновлення
   }
 };
 ```
 
-Please note: as our current version is `2`, the `onupgradeneeded` handler has a code branch for version `0`, suitable for users that are accessing for the first time and have no database, and also for version `1`, for upgrades.
+Зверніть увагу: оскільки наша поточна версія `2`, обробник `onupgradeneeded` що має гілку коду для версії `0`, підходить для користувачів, які звертаються вперше і не мають бази даних, а також для версії `1`, для оновлення.
 
-And then, only if `onupgradeneeded` handler finishes without errors, `openRequest.onsuccess` triggers, and the database is considered successfully opened.
+І лише якщо обробник `onupgradeneeded` завершиться без помилок, запускається `openRequest.onsuccess`, і база даних вважається успішно відкритою.
 
-To delete a database:
+Щоб видалити базу даних:
 
 ```js
 let deleteRequest = indexedDB.deleteDatabase(name)
-// deleteRequest.onsuccess/onerror tracks the result
+// deleteRequest.onsuccess/onerror відстежує результат
 ```
 
-```warn header="We can't open a database using an older open call version"
-If the current user database has a higher version than in the `open` call, e.g. the existing DB version is `3`, and we try to `open(...2)`, then that's an error, `openRequest.onerror` triggers.
+```warn header="Ми не можемо відкрити базу даних за допомогою виклику для відкриття старішої версії"
+Якщо поточна база даних користувача має вищу версію, ніж у виклику "open", напр. існуюча версія БД `3`, а ми намагаємося викликати `open(...2)`, тоді це помилка, і запускається `openRequest.onerror`.
 
-That's rare, but such a thing may happen when a visitor loads outdated JavaScript code, e.g. from a proxy cache. So the code is old, but his database is new.
+Це рідкість, але таке може статися, коли відвідувач завантажує застарілий код JavaScript, напр. з кешу проксі. Отже, код старий, але його база даних нова.
 
-To protect from errors, we should check `db.version` and suggest a page reload. Use proper HTTP caching headers to avoid loading the old code, so that you'll never have such problems.
+Щоб захиститися від помилок, ми повинні перевірити `db.version` і якщо потрібно запропонувати перезавантажити сторінку. Використовуйте правильні заголовки кешування HTTP, щоб уникнути завантаження старого коду та щоб у вас ніколи не виникло таких проблем.
 ```
 
 ### Parallel update problem
