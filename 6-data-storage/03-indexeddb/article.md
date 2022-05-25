@@ -333,23 +333,23 @@ request.onerror = function() {
 - `request.result` для `add` є ключем нового об’єкта.
 - Помилкою, якщо є, буде `request.error`.
 
-## Transactions' autocommit
+## Автозавершення транзакцій
 
-In the example above we started the transaction and made `add` request. But as we stated previously, a transaction may have multiple associated requests, that must either all succeed or all fail. How do we mark the transaction as finished, with no more requests to come?
+У наведеному вище прикладі ми запустили транзакцію та зробили запит на додавання. Але, як ми зазначали раніше, транзакція може мати кілька пов’язаних запитів, усі вони повинні бути успішними або невдалими. Як позначити транзакцію як завершену, без запитів?
 
-The short answer is: we don't.
+Коротка відповідь: це не потрібно.
 
-In the next version 3.0 of the specification, there will probably be a manual way to finish the transaction, but right now in 2.0 there isn't.
+У наступній версії специфікації 3.0, ймовірно, буде ручний спосіб завершити транзакцію, але зараз у 2.0 його немає.
 
-**When all transaction requests are finished, and the [microtasks queue](info:microtask-queue) is empty, it is committed automatically.**
+**Коли всі запити транзакції завершено, а [черга мікрозадач](info:microtask-queue) порожня, вона завершується автоматично.**
 
-Usually, we can assume that a transaction commits when all its requests are complete, and the current code finishes.
+Зазвичай ми можемо припустити, що транзакція завершується, коли всі її запити завершені, а поточний код виконаний.
 
-So, in the example above no special call is needed to finish the transaction.
+Отже, у наведеному вище прикладі не потрібен особливий виклик для завершення транзакції.
 
-Transactions auto-commit principle has an important side effect. We can't insert an async operation like `fetch`, `setTimeout` in the middle of a transaction. IndexedDB will not keep the transaction waiting till these are done.
+Принцип автозавершення транзакцій має важливий побічний ефект. Ми не можемо вставити асинхронну операцію, як-от `fetch`, `setTimeout`, у середину транзакції. IndexedDB не буде чекати транзакцію, поки вона не виконана.
 
-In the code below, `request2` in the line `(*)` fails, because the transaction is already committed, and can't make any request in it:
+У наведеному нижче коді `request2` у рядку `(*)` не працює, оскільки транзакція вже завершена, і в ній не можливо зробити жодного запиту:
 
 ```js
 let request1 = books.add(book);
@@ -366,54 +366,54 @@ request1.onsuccess = function() {
 };
 ```
 
-That's because `fetch` is an asynchronous operation, a macrotask. Transactions are closed before the browser starts doing macrotasks.
+Це тому, що `fetch` є асинхронною операцією, макрозавданням. Трансакції закриваються до того, як браузер почне виконувати макрозавдання.
 
-Authors of IndexedDB spec believe that transactions should be short-lived. Mostly for performance reasons.
+Автори специфікації IndexedDB вважають, що транзакції мають бути короткочасними. В основному з міркувань продуктивності.
 
-Notably, `readwrite` transactions "lock" the stores for writing. So if one part of the application initiated `readwrite` on `books` object store, then another part that wants to do the same has to wait: the new transaction "hangs" till the first one is done. That can lead to strange delays if transactions take a long time.
+Примітно, що транзакції `readwrite` "блокують" сховища для запису. Отже, якщо одна частина програми ініціювала `readwrite` у сховищі об’єктів `books`, тоді інша частина, яка хоче зробити те ж саме, повинна почекати: нова транзакція "зависає", доки не буде виконана перша. Це може призвести до дивних затримок, якщо транзакції займають багато часу.
 
-So, what to do?
+Отже, що робити?
 
-In the example above we could make a new `db.transaction` right before the new request `(*)`.
+У наведеному вище прикладі ми могли б створити новий `db.transaction` безпосередньо перед новим запитом `(*)`.
 
-But it will be even better, if we'd like to keep the operations together, in one transaction, to split apart IndexedDB transactions and "other" async stuff.
+Але буде ще краще, якщо ми захочемо зберегти операції разом, в одній транзакції, розділити транзакції IndexedDB та «інші» асинхронні речі.
 
-First, make `fetch`, prepare the data if needed, afterwards create a transaction and perform all the database requests, it'll work then.
+Спочатку зробіть `fetch`, підготуйте дані, якщо потрібно, потім створіть транзакцію та виконайте всі запити до бази даних, тоді це запрацює.
 
-To detect the moment of successful completion, we can listen to `transaction.oncomplete` event:
+Щоб визначити момент успішного завершення, ми можемо прослухати подію `transaction.oncomplete`:
 
 ```js
 let transaction = db.transaction("books", "readwrite");
 
-// ...perform operations...
+// ...виконувати операції...
 
 transaction.oncomplete = function() {
-  console.log("Transaction is complete");
+  console.log("Транзакція завершена");
 };
 ```
 
-Only `complete` guarantees that the transaction is saved as a whole. Individual requests may succeed, but the final write operation may go wrong (e.g. I/O error or something).
+Тільки `complete` гарантує, що транзакція буде збережена в цілому. Окремі запити можуть бути успішними, але остаточна операція запису може піти не так (наприклад, помилка введення-виводу чи щось подібне).
 
-To manually abort the transaction, call:
+Щоб вручну припинити транзакцію, викличте:
 
 ```js
 transaction.abort();
 ```
 
-That cancels all modification made by the requests in it and triggers `transaction.onabort` event.
+Це скасовує всі зміни, зроблені запитами, і запускає подію `transaction.onabort`.
 
 
-## Error handling
+## Обробка помилок
 
-Write requests may fail.
+Запити на запис можуть не виконуватися.
 
-That's to be expected, not only because of possible errors at our side, but also for reasons not related to the transaction itself. For instance, the storage quota may be exceeded. So we must be ready to handle such case.
+Цього можна очікувати не лише через можливі помилки з нашого боку, а й з причин, не пов’язаних із самою транзакцією. Наприклад, закінчилося пам’ять. Тож ми повинні бути готові впоратися з такою справою.
 
-**A failed request automatically aborts the transaction, canceling all its changes.**
+**Невдалий запит автоматично перериває транзакцію, скасовуючи всі зміни.**
 
-In some situations, we may want to handle the failure (e.g. try another request), without canceling existing changes, and continue the transaction. That's possible. The `request.onerror` handler is able to prevent the transaction abort by calling `event.preventDefault()`.
+У деяких ситуаціях ми можемо забажати обробити помилку (наприклад, спробувати інший запит), не скасовуючи наявні зміни, і продовжити транзакцію. Це можливо. Обробник `request.onerror` може запобігти перериванню транзакції, викликавши `event.preventDefault()`.
 
-In the example below a new book is added with the same key (`id`) as the existing one. The `store.add` method generates a `"ConstraintError"` in that case. We handle it without canceling the transaction:
+У наведеному нижче прикладі додається нова книга з тим самим ключем (`id`), що й існуюча. У цьому випадку метод `store.add` генерує "ConstraintError". Ми обробляємо це, не скасовуючи транзакцію:
 
 ```js
 let transaction = db.transaction("books", "readwrite");
@@ -423,54 +423,54 @@ let book = { id: 'js', price: 10 };
 let request = transaction.objectStore("books").add(book);
 
 request.onerror = function(event) {
-  // ConstraintError occurs when an object with the same id already exists
+  // ConstraintError виникає, коли об’єкт з таким же ідентифікатором вже існує
   if (request.error.name == "ConstraintError") {
-    console.log("Book with such id already exists"); // handle the error
-    event.preventDefault(); // don't abort the transaction
-    // use another key for the book?
+    console.log("Книга з таким ідентифікатором вже існує"); // обробіть помилку
+    event.preventDefault(); // запобігаємо скасуванню транзакції
+    // використовувати інший ключ для книги?
   } else {
-    // unexpected error, can't handle it
-    // the transaction will abort
+    // несподівана помилка, не можу впоратися з нею
+    // транзакція буде перервана
   }
 };
 
 transaction.onabort = function() {
-  console.log("Error", transaction.error);
+  console.log("Помилка", transaction.error);
 };
 ```
 
-### Event delegation
+### Делегування події
 
-Do we need onerror/onsuccess for every request? Not every time. We can use event delegation instead.
+Чи потрібно нам onerror/onsuccess для кожного запиту? Не завжди. Замість цього ми можемо використовувати делегування подій.
 
-**IndexedDB events bubble: `request` -> `transaction` -> `database`.**
+**Спливаюча подія IndexedDB: `запит` -> `транзакція` -> `база даних`.**
 
-All events are DOM events, with capturing and bubbling, but usually only bubbling stage is used.
+Всі події є DOM-подіями з фазами перехоплення та спливання, але зазвичай використовується тільки спливання.
 
-So we can catch all errors using `db.onerror` handler, for reporting or other purposes:
+Тож ми можемо відловити всі помилки за допомогою обробника `db.onerror` для звітів чи інших цілей:
 
 ```js
 db.onerror = function(event) {
-  let request = event.target; // the request that caused the error
+  let request = event.target; // запит, який спричинив помилку
 
-  console.log("Error", request.error);
+  console.log("Помилка", request.error);
 };
 ```
 
-...But what if an error is fully handled? We don't want to report it in that case.
+...Але що, якщо помилка повністю оброблена? Ми не хочемо повідомляти про це в такому випадку.
 
-We can stop the bubbling and hence `db.onerror` by using `event.stopPropagation()` in `request.onerror`.
+Ми можемо зупинити спливання і, відповідно, `db.onerror`, використовуючи `event.stopPropagation()` у `request.onerror`.
 
 ```js
 request.onerror = function(event) {
   if (request.error.name == "ConstraintError") {
-    console.log("Book with such id already exists"); // handle the error
-    event.preventDefault(); // don't abort the transaction
-    event.stopPropagation(); // don't bubble error up, "chew" it
+    console.log("Книга з таким ідентифікатором вже існує"); // обробіть помилку
+    event.preventDefault(); // запобігаємо скасуванню транзакції
+    event.stopPropagation(); // запобігаємо спливанню помилки
   } else {
-    // do nothing
-    // transaction will be aborted
-    // we can take care of error in transaction.onabort
+    // нічого не робимо
+    // транзакція буде скасована
+    // ми можемо подбати про помилку в transaction.onabort
   }
 };
 ```
