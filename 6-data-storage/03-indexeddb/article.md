@@ -249,39 +249,39 @@ openRequest.onupgradeneeded = function() {
 db.deleteObjectStore('books')
 ```
 
-## Transactions
+## Транзакції
 
-The term "transaction" is generic, used in many kinds of databases.
+Термін "транзакція" є загальним і використовується в багатьох видах баз даних.
 
-A transaction is a group of operations, that should either all succeed or all fail.
+Транзакція — це група операцій, які повинні або всі завершитися успішно, або всі невдало.
 
-For instance, when a person buys something, we need to:
-1. Subtract the money from their account.
-2. Add the item to their inventory.
+Наприклад, коли людина щось купує, нам потрібно:
+1. Відняти гроші з рахунку.
+2. Додати товар до списку.
 
-It would be pretty bad if we complete the 1st operation, and then something goes wrong, e.g. lights out, and we fail to do the 2nd. Both should either succeed (purchase complete, good!) or both fail (at least the person kept their money, so they can retry).
+Було б дуже прикро, якби ми завершили 1-у операцію, а потім щось пішло не так, напр. гасне світло, і ми не можемо зробити 2-у. Обидві мають досягти успіху (купівля завершена, добре!), або обидві потерпіли невдачу (принаймні, людина залишила свої гроші, щоб повторити спробу).
 
-Transactions can guarantee that.
+Це можуть гарантувати транзакції.
 
-**All data operations must be made within a transaction in IndexedDB.**
+**Усі операції з даними повинні виконуватися в рамках транзакції в IndexedDB.**
 
-To start a transaction:
+Почати транзакцію:
 
 ```js
 db.transaction(store[, type]);
 ```
 
-- `store` is a store name that the transaction is going to access, e.g. `"books"`. Can be an array of store names if we're going to access multiple stores.
-- `type` – a transaction type, one of:
-  - `readonly` -- can only read, the default.
-  - `readwrite` -- can only read and write the data, but not create/remove/alter object stores.
+- `store` це назва сховища, до якого має отримати доступ транзакція, напр. `"books"`. Це може бути масив імен сховищ, якщо ми збираємося отримати доступ до кількох сховищ.
+- `type` – тип транзакції, один з:
+  - `readonly` -- може лише читати дані, за замовчуванням.
+  - `readwrite` -- може лише читати та записувати дані, але не створювати/видаляти/змінювати сховища об’єктів.
 
-There's also `versionchange` transaction type: such transactions can do everything, but we can't create them manually. IndexedDB automatically creates a `versionchange` transaction when opening the database, for `updateneeded` handler. That's why it's a single place where we can update the database structure, create/remove object stores.
+Існує також тип транзакції `versionchange`: такі транзакції можуть робити все, але ми не можемо створити їх вручну. IndexedDB автоматично створює транзакцію `versionchange` під час відкриття бази даних для обробника `updateneeded`. That's why it's a single place where we can update the database structure, create/remove object stores.
 
-```smart header="Why are there different types of transactions?"
-Performance is the reason why transactions need to be labeled either `readonly` and `readwrite`.
+```smart header="Чому існують різні види транзакцій?"
+Продуктивність є причиною, чому транзакції мають бути позначені як `readonly` та `readwrite`. 
 
-Many `readonly` transactions are able to access the same store concurrently, but `readwrite` transactions can't. A `readwrite` transaction "locks" the store for writing. The next transaction must wait before the previous one finishes before accessing the same store.
+Багато `readonly` транзакцій можуть отримати доступ до того самого сховища одночасно, але `readwrite` транзакції - не можуть. Транзакція `readwrite` "блокує" сховище для запису. Наступна транзакція повинна почекати до завершення попередньої, перш ніж отримати доступ до того самого сховища.
 ```
 
 After the transaction is created, we can add an item to the store, like this:
