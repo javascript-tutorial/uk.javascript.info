@@ -284,12 +284,12 @@ db.transaction(store[, type]);
 Багато `readonly` транзакцій можуть отримати доступ до того самого сховища одночасно, але `readwrite` транзакції - не можуть. Транзакція `readwrite` "блокує" сховище для запису. Наступна транзакція повинна почекати до завершення попередньої, перш ніж отримати доступ до того самого сховища.
 ```
 
-After the transaction is created, we can add an item to the store, like this:
+Після створення транзакції ми можемо додати елемент до сховища, ось так:
 
 ```js
 let transaction = db.transaction("books", "readwrite"); // (1)
 
-// get an object store to operate on it
+// отримати сховище об’єктів для роботи з ним
 *!*
 let books = transaction.objectStore("books"); // (2)
 */!*
@@ -305,33 +305,33 @@ let request = books.add(book); // (3)
 */!*
 
 request.onsuccess = function() { // (4)
-  console.log("Book added to the store", request.result);
+  console.log("Книгу додано в сховище", request.result);
 };
 
 request.onerror = function() {
-  console.log("Error", request.error);
+  console.log("Помилка", request.error);
 };
 ```
 
-There were basically four steps:
+Ось чотири основні кроки:
 
-1. Create a transaction, mentioning all the stores it's going to access, at `(1)`.
-2. Get the store object using `transaction.objectStore(name)`, at `(2)`.
-3. Perform the request to the object store `books.add(book)`, at `(3)`.
-4. ...Handle request success/error `(4)`, then we can make other requests if needed, etc.
+1. Створіть транзакцію, вказавши всі сховища, в які вона збирається отримати доступ `(1)`.
+2. Отримайте об’єкт магазину за допомогою `transaction.objectStore(name)` `(2)`.
+3. Виконайте запит до сховища об’єктів `books.add(book)` `(3)`.
+4. ...Обробіть запит успішно/помилка `(4)`, потім можливо робити інші запити, якщо потрібно.
 
-Object stores support two methods to store a value:
+Сховища об’єктів підтримують два методи збереження значення:
 
 - **put(value, [key])**
-    Add the `value` to the store. The `key` is supplied only if the object store did not have `keyPath` or `autoIncrement` option. If there's already a value with the same key, it will be replaced.
+    Додайте `value` до сховища. `Key` надається лише в тому випадку, якщо в сховищі об’єктів не було параметра `keyPath` або `autoIncrement`. `keyPath` чи `autoIncrement` опція. Якщо вже є значення з таким самим ключем, воно буде замінено.
 
 - **add(value, [key])**
-    Same as `put`, but if there's already a value with the same key, then the request fails, and an error with the name `"ConstraintError"` is generated.
+    Те саме що `put`, але якщо вже є значення з тим самим ключем, запит не вдається, і генерується помилка з назвою `"ConstraintError"`.
 
-Similar to opening a database, we can send a request: `books.add(book)`, and then wait for `success/error` events.
+Подібно до відкриття бази даних, ми можемо відправити запит: `books.add(book)`, а потім чекати події `success/error`.
 
-- The `request.result` for `add` is the key of the new object.
-- The error is in `request.error` (if any).
+- `request.result` для `add` є ключем нового об’єкта.
+- Помилкою, якщо є, буде `request.error`.
 
 ## Transactions' autocommit
 
