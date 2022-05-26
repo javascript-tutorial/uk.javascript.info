@@ -636,37 +636,37 @@ request.onsuccess = function() {
 books.clear(); // очистити сховище.
 ```
 
-## Cursors
+## Курсори
 
-Methods like `getAll/getAllKeys` return an array of keys/values.
+Такі методи, як `getAll/getAllKeys` повертають масив ключів/значень.
 
-But an object storage can be huge, bigger than the available memory. Then `getAll` will fail to get all records as an array.
+Але сховище об’єктів може бути величезним, більшим за доступну пам’ять. Тоді `getAll` не зможе отримати всі записи у вигляді масиву.
 
-What to do?
+Що робити?
 
-Cursors provide the means to work around that.
+Курсори забезпечують засоби, щоб обійти це.
 
-**A *cursor* is a special object that traverses the object storage, given a query, and returns one key/value at a time, thus saving memory.**
+***cursor — це спеціальний об’єкт, який обходить сховище об’єктів за запитом і повертає один ключ/значення за раз, економлячи таким чином пам’ять.**
 
-As an object store is sorted internally by key, a cursor walks the store in key order (ascending by default).
+Оскільки сховище об’єктів внутрішньо відсортовано за ключем, курсор проходить по сховищу в порядку знаходження ключа (зростаючий за замовчуванням).
 
-The syntax:
+Синтаксис:
 ```js
-// like getAll, but with a cursor:
+// як getAll, але з використанням курсору:
 let request = store.openCursor(query, [direction]);
 
-// to get keys, not values (like getAllKeys): store.openKeyCursor
+// отримати ключі, не значення (як getAllKeys): store.openKeyCursor
 ```
 
-- **`query`** is a key or a key range, same as for `getAll`.
-- **`direction`** is an optional argument, which order to use:
-  - `"next"` -- the default, the cursor walks up from the record with the lowest key.
-  - `"prev"` -- the reverse order: down from the record with the biggest key.
-  - `"nextunique"`, `"prevunique"` -- same as above, but skip records with the same key (only for cursors over indexes, e.g. for multiple books with price=5 only the first one will be returned).
+- **`query`** є ключем або діапазоном ключів, як і для `getAll`.
+- **`direction`** є необов’язковим аргументом, що вказує який порядок використовувати:
+  - `"next"` -- за замовчуванням, курсор піднімається від найнижчого ключа до найвищчого.
+  - `"prev"` -- зворотний порядок: вниз від запису з найбільшим ключем.
+  - `"nextunique"`, `"prevunique"` -- те саме, що й вище, але пропускає записи з тим же ключем, який вже був (лише для курсорів за індексами, наприклад, для кількох книг із ціною=5 буде повернута лише перша).
 
-**The main difference of the cursor is that `request.onsuccess` triggers multiple times: once for each result.**
+**Основна відмінність курсору полягає в тому, що `request.onsuccess` запускається кілька разів: один раз для кожного результату.**
 
-Here's an example of how to use a cursor:
+Ось приклад того, як використовувати курсор:
 
 ```js
 let transaction = db.transaction("books");
@@ -674,47 +674,47 @@ let books = transaction.objectStore("books");
 
 let request = books.openCursor();
 
-// called for each book found by the cursor
+// викликається для кожної книги, знайденої курсором
 request.onsuccess = function() {
   let cursor = request.result;
   if (cursor) {
-    let key = cursor.key; // book key (id field)
-    let value = cursor.value; // book object
+    let key = cursor.key; // ключ книги (поле id)
+    let value = cursor.value; // книжковий об’єкт
     console.log(key, value);
     cursor.continue();
   } else {
-    console.log("No more books");
+    console.log("Книг більше немає");
   }
 };
 ```
 
-The main cursor methods are:
+Основними методами курсора є:
 
-- `advance(count)` -- advance the cursor `count` times, skipping values.
-- `continue([key])` -- advance the cursor to the next value in range matching (or immediately after `key` if given).
+- `advance(count)` -- пересунути курсор `count` разів, пропускаючи значення.
+- `continue([key])` -- пересунути курсор до наступного значення у відповідності з діапазоном (або відразу після `key`, якщо вказано).
 
-Whether there are more values matching the cursor or not -- `onsuccess` gets called, and then in `result` we can get the cursor pointing to the next record, or `undefined`.
+Незалежно від того, чи є значення, що відповідають курсору, чи ні – викликається `onsuccess`, а потім у `result` ми можемо отримати курсор, що вказує на наступний запис, або `undefined`.
 
-In the example above the cursor was made for the object store.
+У наведеному вище прикладі курсор був створений для сховища об’єктів.
 
-But we also can make a cursor over an index. As we remember, indexes allow to search by an object field. Cursors over indexes do precisely the same as over object stores -- they save memory by returning one value at a time.
+Але ми також можемо навести курсор на індекс. Як ми пам’ятаємо, індекси дозволяють здійснювати пошук по полю об’єкта. Курсори над індексами діють точно так само, як і над сховищами об’єктів — вони економлять пам’ять, повертаючи по одному значенню за раз.
 
-For cursors over indexes, `cursor.key` is the index key (e.g. price), and we should use `cursor.primaryKey` property for the object key:
+Для курсорів над індексами `cursor.key` є ключем індексу (наприклад, ціна), і ми повинні використовувати властивість `cursor.primaryKey` для ключа об’єкта:
 
 ```js
 let request = priceIdx.openCursor(IDBKeyRange.upperBound(5));
 
-// called for each record
+// викликані для кожного запису
 request.onsuccess = function() {
   let cursor = request.result;
   if (cursor) {
-    let primaryKey = cursor.primaryKey; // next object store key (id field)
-    let value = cursor.value; // next object store object (book object)
-    let key = cursor.key; // next index key (price)
+    let primaryKey = cursor.primaryKey; // ключ сховища наступного об’єкта (поле id)
+    let value = cursor.value; // наступний об’єкт сховища (об’єкт книги)
+    let key = cursor.key; // наступний ключ індексу (price)
     console.log(key, value);
     cursor.continue();
   } else {
-    console.log("No more books");
+    console.log("Книг більше немає");
   }
 };
 ```
