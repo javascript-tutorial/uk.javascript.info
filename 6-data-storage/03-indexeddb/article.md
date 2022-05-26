@@ -475,90 +475,90 @@ request.onerror = function(event) {
 };
 ```
 
-## Searching
+## Пошук
 
-There are two main types of search in an object store:
+Існує два основних типи пошуку в сховищі об’єктів:
 
-1. By a key value or a key range. In our "books" storage that would be a value or range of values of `book.id`.
-2. By another object field, e.g. `book.price`. This required an additional data structure, named "index".
+1. За значенням ключа або діапазоном ключа. У нашому сховищі «книги» це буде значення або діапазон значень `book.id`.
+2. За іншим полем об’єкта, напр. `book.price`. Для цього потрібна додаткова структура даних під назвою «index».
 
-### By key
+### За ключем
 
-First let's deal with the first type of search: by key.
+Спочатку розберемося з першим типом пошуку: за ключем.
 
-Searching methods support both exact key values and so-called "ranges of values" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) objects that specify an acceptable "key range".
+Методи пошуку підтримують як точні значення ключів, та так звані "діапазони значень" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) об’єкти, які визначають прийнятний "діапазон ключів".
 
-`IDBKeyRange` objects are created using following calls:
+Об’єкти `IDBKeyRange` створюються за допомогою наступних викликів:
 
-- `IDBKeyRange.lowerBound(lower, [open])` means: `≥lower` (or `>lower` if `open` is true)
-- `IDBKeyRange.upperBound(upper, [open])` means: `≤upper` (or `<upper` if `open` is true)
-- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` means: between `lower` and `upper`. If the open flags is true, the corresponding key is not included in the range.
-- `IDBKeyRange.only(key)` -- a range that consists of only one `key`, rarely used.
+- `IDBKeyRange.lowerBound(lower, [open])` означає: `≥lower` (чи `>lower` якщо `open` є істина)
+- `IDBKeyRange.upperBound(upper, [open])` означає: `≤upper` (чи `<upper` якщо `open` є істина)
+- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` означає: поміж `lower` та `upper`. Якщо прапори open істинні, відповідний ключ не входить до діапазону.
+- `IDBKeyRange.only(key)` -- діапазон, який складається лише з одного `ключа`, рідко використовується.
 
-We'll see practical examples of using them very soon.
+Зовсім скоро ми побачимо практичні приклади їх використання.
 
-To perform the actual search, there are following methods. They accept a `query` argument that can be either an exact key or a key range:
+Для здійснення фактичного пошуку існують такі методи. Вони приймають аргумент `query`, який може бути точним ключем або діапазоном ключів:
 
-- `store.get(query)` -- search for the first value by a key or a range.
-- `store.getAll([query], [count])` -- search for all values, limit by `count` if given.
-- `store.getKey(query)` -- search for the first key that satisfies the query, usually a range.
-- `store.getAllKeys([query], [count])` -- search for all keys that satisfy the query, usually a range, up to `count` if given.
-- `store.count([query])` -- get the total count of keys that satisfy the query, usually a range.
+- `store.get(query)` -- пошук першого значення за ключем або діапазоном.
+- `store.getAll([query], [count])` -- шукати всі значення, обмежуючись `count`, якщо вказано.
+- `store.getKey(query)` -- пошук першого ключа, який задовольняє запиту, зазвичай діапазон.
+- `store.getAllKeys([query], [count])` -- пошук усіх ключів, які задовольняють запиту, зазвичай діапазону, до `count`, якщо вказано.
+- `store.count([query])` -- отримати загальну кількість ключів, які задовольняють запиту, зазвичай діапазон.
 
-For instance, we have a lot of books in our store. Remember, the `id` field is the key, so all these methods can search by `id`.
+Наприклад, у нас в магазині багато книг. Пам’ятайте, що поле `id` є ключем, тому всі ці методи можуть здійснювати пошук за `id`.
 
-Request examples:
+Приклади запитів:
 
 ```js
-// get one book
+// отримати одну книгу
 books.get('js')
 
-// get books with 'css' <= id <= 'html'
+// отримати книги з 'css' <= id <= 'html'
 books.getAll(IDBKeyRange.bound('css', 'html'))
 
-// get books with id < 'html'
+// отримати книги з id < 'html'
 books.getAll(IDBKeyRange.upperBound('html', true))
 
-// get all books
+// отримати всі книги
 books.getAll()
 
-// get all keys, where id > 'js'
+// отримати всі ключи, де id > 'js'
 books.getAllKeys(IDBKeyRange.lowerBound('js', true))
 ```
 
-```smart header="Object store is always sorted"
-An object store sorts values by key internally.
+```smart header="Сховище об’єктів завжди відсортовано"
+Сховище об’єктів внутрішньо сортує значення за ключем.
 
-So requests that return many values always return them in sorted by key order.
+Тому запити, які повертають багато значень, завжди повертають їх у відсортованому за ключем порядку.
 ```
 
-### By a field using an index
+### За полем за допомогою індексу
 
-To search by other object fields, we need to create an additional data structure named "index".
+Для пошуку за іншими полями об’єкта нам потрібно створити додаткову структуру даних під назвою «індекс».
 
-An index is an "add-on" to the store that tracks a given object field. For each value of that field, it stores a list of keys for objects that have that value. There will be a more detailed picture below.
+Індекс — це «доповнення» до сховища, яке відстежує дане поле об’єкта. Для кожного значення цього поля він зберігає список ключів для об’єктів, які мають це значення. Нижче буде більш детальна картинка.
 
-The syntax:
+Синтаксис:
 
 ```js
 objectStore.createIndex(name, keyPath, [options]);
 ```
 
-- **`name`** -- index name,
-- **`keyPath`** -- path to the object field that the index should track (we're going to search by that field),
-- **`option`** -- an optional object with properties:
-  - **`unique`** -- if true, then there may be only one object in the store with the given value at the `keyPath`. The index will enforce that by generating an error if we try to add a duplicate.
-  - **`multiEntry`** -- only used if the value on `keyPath` is an array. In that case, by default, the index will treat the whole array as the key. But if `multiEntry` is true, then the index will keep a list of store objects for each value in that array. So array members become index keys.
+- **`name`** -- ім’я індексу,
+- **`keyPath`** -- шлях до поля об’єкта, яке має відстежувати індекс (ми будемо шукати за цим полем),
+- **`option`** -- необов’язковий об’єкт з властивостями:
+  - **`unique`** -- якщо значення true, то в сховищі може бути лише один об’єкт із заданим значенням у `keyPath`. Індекс забезпечить це, генеруючи помилку, якщо ми спробуємо додати дублікат.
+  - **`multiEntry`** -- використовується лише якщо значення `keyPath` є масивом. У цьому випадку за замовчуванням індекс розглядатиме весь масив як ключ. Але якщо `multiEntry` має значення true, то індекс зберігатиме список об’єктів сховища для кожного значення в цьому масиві. Таким чином, члени масиву стають ключами індексу.
 
-In our example, we store books keyed by `id`.
+У нашому прикладі ми зберігаємо книги з ключем `id`.
 
-Let's say we want to search by `price`.
+Скажімо, ми хочемо шукати за `price`.
 
-First, we need to create an index. It must be done in `upgradeneeded`, just like an object store:
+Спочатку нам потрібно створити індекс. Це потрібно зробити в `upgradeneeded`, як у сховищі об’єктів:
 
 ```js
 openRequest.onupgradeneeded = function() {
-  // we must create the index here, in versionchange transaction
+  // ми повинні створити індекс тут, у транзакції зміни версії
   let books = db.createObjectStore('books', {keyPath: 'id'});
 *!*
   let index = books.createIndex('price_idx', 'price');
@@ -566,19 +566,19 @@ openRequest.onupgradeneeded = function() {
 };
 ```
 
-- The index will track `price` field.
-- The price is not unique, there may be multiple books with the same price, so we don't set `unique` option.
-- The price is not an array, so `multiEntry` flag is not applicable.
+- Індекс буде відстежувати поле `price`.
+- Ціна не є унікальною, може бути кілька книг з однаковою ціною, тому ми не встановлюємо параметр `unique`.
+- Ціна не є масивом, тому прапор `multiEntry` не застосовується.
 
-Imagine that our `inventory` has 4 books. Here's the picture that shows exactly what the `index` is:
+Уявіть собі, що в нашому `inventory` є 4 книги. Ось малюнок, який показує, що саме таке `index`.
 
 ![](indexeddb-index.svg)
 
-As said, the index for each value of `price` (second argument) keeps the list of keys that have that price.
+Як сказано, індекс для кожного значення `price` (другий аргумент) зберігає список ключів, які мають таку ціну.
 
-The index keeps itself up to date automatically, we don't have to care about it.
+Індекс оновлюється автоматично, нам не потрібно дбати про це.
 
-Now, when we want to search for a given price, we simply apply the same search methods to the index:
+Тепер, коли ми хочемо шукати за заданою ціною, ми просто застосовуємо ті самі методи пошуку до індексу:
 
 ```js
 let transaction = db.transaction("books"); // readonly
@@ -591,38 +591,38 @@ let request = priceIndex.getAll(10);
 
 request.onsuccess = function() {
   if (request.result !== undefined) {
-    console.log("Books", request.result); // array of books with price=10
+    console.log("Книги", request.result); // масив книг із ціною=10
   } else {
-    console.log("No such books");
+    console.log("Немає таких книжок");
   }
 };
 ```
 
-We can also use `IDBKeyRange` to create ranges and looks for cheap/expensive books:
+Ми також можемо використовувати `IDBKeyRange` для створення діапазонів і пошуку дешевих/дорогих книг:
 
 ```js
-// find books where price <= 5
+// знайти книги, де ціна <= 5
 let request = priceIndex.getAll(IDBKeyRange.upperBound(5));
 ```
 
-Indexes are internally sorted by the tracked object field, `price` in our case. So when we do the search, the results are also sorted by `price`.
+Індекси внутрішньо відсортовані за полем відстежуваного об’єкта, у нашому випадку `price`. Тому, коли ми виконуємо пошук, результати також сортуються за `price`.
 
-## Deleting from store
+## Видалення зі сховища
 
-The `delete` method looks up values to delete by a query, the call format is similar to `getAll`:
+Метод `delete` шукає значення для видалення за запитом, формат виклику подібний до `getAll`:
 
-- **`delete(query)`** -- delete matching values by query.
+- **`delete(query)`** -- видалити відповідні значення за запитом.
 
-For instance:
+Наприклад:
 ```js
-// delete the book with id='js'
+// видалити книгу з id='js'
 books.delete('js');
 ```
 
-If we'd like to delete books based on a price or another object field, then we should first find the key in the index, and then call `delete`:
+Якщо ми хочемо видалити книги на основі ціни або іншого поля об’єкта, то спочатку ми повинні знайти ключ в індексі, а потім викликати `delete`:
 
 ```js
-// find the key where price = 5
+// знайти ключ з price = 5
 let request = priceIndex.getKey(5);
 
 request.onsuccess = function() {
@@ -631,9 +631,9 @@ request.onsuccess = function() {
 };
 ```
 
-To delete everything:
+Щоб видалити все:
 ```js
-books.clear(); // clear the storage.
+books.clear(); // очистити сховище.
 ```
 
 ## Cursors
