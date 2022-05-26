@@ -719,18 +719,18 @@ request.onsuccess = function() {
 };
 ```
 
-## Promise wrapper
+## Обгортка промісів
 
-Adding `onsuccess/onerror` to every request is quite a cumbersome task. Sometimes we can make our life easier by using event delegation, e.g. set handlers on the whole transactions, but `async/await` is much more convenient.
+Додавання `onsuccess/onerror` до кожного запиту є досить громіздким завданням. Іноді ми можемо полегшити життя, використовуючи делегування подій, напр. встановити обробники для всіх транзакцій, але `async/await` набагато зручніше. 
 
-Let's use a thin promise wrapper <https://github.com/jakearchibald/idb> further in this chapter. It creates a global `idb` object with [promisified](info:promisify) IndexedDB methods.
+Давайте використаємо тонку обгортку промісів <https://github.com/jakearchibald/idb> далі в цьому розділі. Вона створює глобальний об’єкт `idb` з методами IndexedDB [promisified](info:promisify).
 
-Then, instead of `onsuccess/onerror` we can write like this:
+Тоді замість `onsuccess/onerror` ми можемо написати так:
 
 ```js
 let db = await idb.openDB('store', 1, db => {
   if (db.oldVersion == 0) {
-    // perform the initialization
+    // виконати ініціалізацію
     db.createObjectStore('books', {keyPath: 'id'});
   }
 });
@@ -751,33 +751,33 @@ try {
 
 ```
 
-So we have all the sweet "plain async code" and "try..catch" stuff.
+Тож маємо все солоденьке «простий асинхронний код» та "try..catch".
 
-### Error handling
+### Обробка помилок
 
-If we don't catch an error, then it falls through, till the closest outer `try..catch`.
+Якщо ми не ловимо помилку, вона провалюється до найближчого зовнішнього `try..catch`.
 
-An uncaught error becomes an "unhandled promise rejection" event on `window` object.
+Невиявлена помилка стає подією "необробленого відхилення промісу" на об’єкті `window`.
 
-We can handle such errors like this:
+Ми можемо обробляти такі помилки таким чином:
 
 ```js
 window.addEventListener('unhandledrejection', event => {
-  let request = event.target; // IndexedDB native request object
-  let error = event.reason; //  Unhandled error object, same as request.error
-  ...report about the error...
+  let request = event.target; // Власний об’єкт запиту IndexedDB
+  let error = event.reason; //  Необроблений об’єкт помилки, те саме, що request.error
+  ...повідомити про помилку...
 });
 ```
 
-### "Inactive transaction" pitfall
+### Підводний камінь «Неактивна транзакція».
 
 
-As we already know, a transaction auto-commits as soon as the browser is done with the current code and microtasks. So if we put a *macrotask* like `fetch` in the middle of a transaction, then the transaction won't wait for it to finish. It just auto-commits. So the next request in it would fail.
+Як ми вже знаємо, транзакція автоматично завершується, як тільки браузер закінчить роботу з поточним кодом і мікрозавданнями. Отже, якщо ми помістимо *макрозавдання* на кшталт `fetch` в середині транзакції, то транзакція не чекатиме завершення. Вона просто автоматично завершається. Отже, наступний запит буде невдалим.
 
 
-For a promise wrapper and `async/await` the situation is the same.
+Для обгортки промісів і `async/await` ситуація однакова.
 
-Here's an example of `fetch` in the middle of the transaction:
+Ось приклад `fetch` у середині транзакції:
 
 ```js
 let transaction = db.transaction("inventory", "readwrite");
@@ -787,14 +787,14 @@ await inventory.add({ id: 'js', price: 10, created: new Date() });
 
 await fetch(...); // (*)
 
-await inventory.add({ id: 'js', price: 10, created: new Date() }); // Error
+await inventory.add({ id: 'js', price: 10, created: new Date() }); // Помилка
 ```
 
-The next `inventory.add` after `fetch` `(*)` fails with an "inactive transaction" error, because the transaction is already committed and closed at that time.
+Наступний `inventory.add` після `fetch` `(*)` не вдається з помилкою "неактивна транзакція", оскільки на той момент транзакція вже завершена та закрита.
 
-The workaround is the same as when working with native IndexedDB: either make a new transaction or just split things apart.
-1. Prepare the data and fetch all that's needed first.
-2. Then save in the database.
+Обхідний шлях такий же, як і під час роботи з рідною IndexedDB: або зробіть нову транзакцію, або просто розділіть речі.
+1. Підготуйте дані та спершу отримайте все необхідне.
+2. Потім збережіть у базі даних.
 
 ### Getting native objects
 
