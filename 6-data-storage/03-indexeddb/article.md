@@ -796,43 +796,43 @@ await inventory.add({ id: 'js', price: 10, created: new Date() }); // Помил
 1. Підготуйте дані та спершу отримайте все необхідне.
 2. Потім збережіть у базі даних.
 
-### Getting native objects
+### Отримання вбудованих об’єктів
 
-Internally, the wrapper performs a native IndexedDB request, adding `onerror/onsuccess` to it, and returns a promise that rejects/resolves with the result.
+Внутрішньо обгортка виконує запит IndexedDB, додаючи до нього `onerror/onsuccess`, і повертає проміс, який відхиляється/розв’язується з результатом.
 
-That works fine most of the time. The examples are at the lib page <https://github.com/jakearchibald/idb>.
+Це добре працює більшість часу. Приклади є на сторінці lib <https://github.com/jakearchibald/idb>.
 
-In few rare cases, when we need the original `request` object, we can access it as `promise.request` property of the promise:
+У кількох рідкісних випадках, коли нам потрібен оригінальний об’єкт `request`, ми можемо отримати до нього доступ як властивості `promise.request` промісу:
 
 ```js
-let promise = books.add(book); // get a promise (don't await for its result)
+let promise = books.add(book); // отримати проміс (не чекаємо результату)
 
-let request = promise.request; // native request object
-let transaction = request.transaction; // native transaction object
+let request = promise.request; // вбудований об’єкт запиту
+let transaction = request.transaction; // вбудований об’єкт транзакції
 
-// ...do some native IndexedDB voodoo...
+// ...працюємо з IndexedDB...
 
-let result = await promise; // if still needed
+let result = await promise; // якщо ще потрібно
 ```
 
-## Summary
+## Резюме
 
-IndexedDB can be thought of as a "localStorage on steroids". It's a simple key-value database, powerful enough for offline apps, yet simple to use.
+IndexedDB можна розглядати як «локальне сховище на стероїдах». Це проста база даних ключ-значення, достатньо потужна для автономних програм, але проста у використанні.
 
-The best manual is the specification, [the current one](https://www.w3.org/TR/IndexedDB-2/) is 2.0, but few methods from [3.0](https://w3c.github.io/IndexedDB/) (it's not much different) are partially supported.
+Найкращий посібник — це специфікація,, [поточна](https://www.w3.org/TR/IndexedDB-2/) версія 2.0, але кілька методів із [3.0](https://w3c.github.io/IndexedDB/) (це мало чим відрізняється) частково підтримуються.
 
-The basic usage can be described with a few phrases:
+Використання можна описати кількома фразами:
 
-1. Get a promise wrapper like [idb](https://github.com/jakearchibald/idb).
-2. Open a database: `idb.openDb(name, version, onupgradeneeded)`
-    - Create object storages and indexes in `onupgradeneeded` handler or perform version update if needed.
-3. For requests:
-    - Create transaction `db.transaction('books')` (readwrite if needed).
-    - Get the object store `transaction.objectStore('books')`.
-4. Then, to search by a key, call methods on the object store directly.
-    - To search by an object field, create an index.
-5. If the data does not fit in memory, use a cursor.
+1. Підключити обгортку над промісами, наприклад [idb](https://github.com/jakearchibald/idb).
+2. Відкрити базу даних: `idb.openDb(name, version, onupgradeneeded)`
+    - Створити сховища об’єктів та індекси в обробнику `onupgradeneeded` або виконати оновлення версії, якщо потрібно.
+3. Для запитів:
+    - Створити транзакцію `db.transaction('books')` (можна вказати readwrite якщо потрібно).
+    - Отримати сховище об’єктів `transaction.objectStore('books')`.
+4. Потім для пошуку за ключем викличте методи безпосередньо в сховищі об’єктів.
+    - Для пошуку по полю об’єкта створіть індекс.
+5. Якщо дані не поміщаються в пам’ять, скористайтеся курсором.
 
-Here's a small demo app:
+Ось невелика демонстраційна програма:
 
 [codetabs src="books" current="index.html"]
