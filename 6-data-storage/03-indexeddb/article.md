@@ -5,63 +5,63 @@ libs:
 
 # IndexedDB
 
-IndexedDB is a database that is built into a browser, much more powerful than `localStorage`.
+IndexedDB — це база даних, вбудована в браузер, набагато потужніша, ніж `localStorage`.
 
-- Stores almost any kind of values by keys, multiple key types.
-- Supports transactions for reliability.
-- Supports key range queries, indexes.
-- Can store much bigger volumes of data than `localStorage`.
+- Зберігає майже будь-які значення за ключами, використовує кілька типів ключів.
+- Підтримує транзакції для надійності.
+- Підтримує запити за диапазоном ключів та індекси.
+- Може зберігати набагато більші обсяги даних, ніж `localStorage`.
 
-That power is usually excessive for traditional client-server apps. IndexedDB is intended for offline apps, to be combined with ServiceWorkers and other technologies.
+Ця потужність зазвичай надмірна для традиційних програм клієнт-сервер. IndexedDB призначена для автономних додатків для поєднання із ServiceWorkers та іншими технологіями.
 
-The native interface to IndexedDB, described in the specification <https://www.w3.org/TR/IndexedDB>, is event-based.
+Нативний інтерфейс для IndexedDB, описаний у специфікації <https://www.w3.org/TR/IndexedDB>, базується на подіях.
 
-We can also use `async/await` with the help of a promise-based wrapper, like <https://github.com/jakearchibald/idb>. That's pretty convenient, but the wrapper is not perfect, it can't replace events for all cases. So we'll start with events, and then, after we gain an understanding of IndexedDb, we'll use the wrapper.
+Ми також можемо використовувати `async/await` за допомогою обгортки на основі промісів, наприклад <https://github.com/jakearchibald/idb>. Це досить зручно, але обгортка не ідеальна, вона не може замінити події для всіх випадків. Отже, ми почнемо з подій, а потім, коли зрозуміємо IndexedDb, скористаємося обгорткою.
 
-```smart header="Where's the data?"
-Technically, the data is usually stored in the visitor's home directory, along with browser settings, extensions, etc.
+```smart header="Де зберігаються дані?"
+Технічно дані зазвичай зберігаються в домашньому каталозі відвідувача разом з налаштуваннями браузера, розширеннями тощо.
 
-Different browsers and OS-level users have each their own independant storage.
+У різних браузерів і користувачів на рівні ОС є власне незалежне сховище.
 ```
 
-## Open database
+## Відкрити базу даних
 
-To start working with IndexedDB, we first need to `open` (connect to) a database.
+Щоб почати працювати з IndexedDB, нам спочатку потрібно `відкрити` (підключитися до) бази даних.
 
-The syntax:
+Синтаксис:
 
 ```js
 let openRequest = indexedDB.open(name, version);
 ```
 
-- `name` -- a string, the database name.
-- `version` -- a positive integer version, by default `1` (explained below).
+- `name` -- рядок, ім’я бази даних.
+- `version` -- версія є цілим числом, типово `1` (пояснення нижче).
 
-We can have many databases with different names, but all of them exist within the current origin (domain/protocol/port). Different websites can't access each other's databases.
+У нас може бути багато баз даних з різними іменами, але всі вони існують лише в межах поточного вебсайту (протокол/домен/порт). Різні вебсайти не мають доступу до баз даних один одного.
 
-The call returns `openRequest` object, we should listen to events on it:
-- `success`: database is ready, there's the "database object" in `openRequest.result`, we should use it for further calls.
-- `error`: opening failed.
-- `upgradeneeded`: database is ready, but its version is outdated (see below).
+Виклик повертає об’єкт `openRequest`, ми повинні прослухати події на ньому:
+- `success`: база даних готова, в `openRequest.result`є "об’єкт бази даних", ми повинні використовувати його для подальших викликів.
+- `error`: не вдалося відкрити.
+- `upgradeneeded`: база даних готова, але її версія застаріла (див. нижче).
 
-**IndexedDB has a built-in mechanism of "schema versioning", absent in server-side databases.**
+**IndexedDB має вбудований механізм «cхему контролю версій», який відсутній у серверних базах даних.**
 
-Unlike server-side databases, IndexedDB is client-side, the data is stored in the browser, so we, developers, don't have full-time access to it. So, when we have published a new version of our app, and the user visits our webpage, we may need to update the database.
+На відміну від серверних баз даних, IndexedDB є клієнтською, дані зберігаються в браузері, тому ми, розробники, не маємо до них постійного доступу. Отже, коли ми опублікували нову версію нашого застосунку, і користувач відвідує веб-сторінку, нам може знадобитися оновити базу даних.
 
-If the local database version is less than specified in `open`, then a special event `upgradeneeded` is triggered, and we can compare versions and upgrade data structures as needed.
+Якщо версія локальної бази даних менша за вказану в `open`, тоді запускається спеціальна подія `upgradeneeded`, і ми можемо порівнювати версії та оновлювати структури даних за потребою.
 
-The `upgradeneeded` event also triggers when the database doesn't yet exist (technically, its version is `0`), so we can perform the initialization.
+Подія `upgradeneeded` також запускається, коли база даних ще не існує (технічно її версія дорівнює `0`), тому ми можемо виконати ініціалізацію.
 
-Let's say we published the first version of our app.
+Скажімо, ми опублікували першу версію нашого застосунку.
 
-Then we can open the database with version `1` and perform the initialization in an `upgradeneeded` handler like this:
+Тоді ми можемо відкрити базу даних з версією `1` та виконати ініціалізацію в обробнику `upgradeneeded`, таким чином:
 
 ```js
 let openRequest = indexedDB.open("store", *!*1*/!*);
 
 openRequest.onupgradeneeded = function() {
-  // triggers if the client had no database
-  // ...perform initialization...
+  // спрацьовує, якщо на клієнті немає бази даних
+  // ...виконати ініціалізацію...
 };
 
 openRequest.onerror = function() {
@@ -70,68 +70,68 @@ openRequest.onerror = function() {
 
 openRequest.onsuccess = function() {
   let db = openRequest.result;
-  // continue working with database using db object
+  // продовжити роботу з базою даних за допомогою об’єкта db
 };
 ```
 
-Then, later, we publish the 2nd version.
+Потім, пізніше, ми публікуємо 2-у версію.
 
-We can open it with version `2` and perform the upgrade like this:
+Ми можемо зробити це за допомогою версії `2` і виконати оновлення таким чином:
 
 ```js
 let openRequest = indexedDB.open("store", *!*2*/!*);
 
 openRequest.onupgradeneeded = function(event) {
-  // the existing database version is less than 2 (or it doesn't exist)
+  // існуюча версія бази даних менше 2 (або її не існує).
   let db = openRequest.result;
-  switch(event.oldVersion) { // existing db version
+  switch(event.oldVersion) { // існуюча версія БД
     case 0:
-      // version 0 means that the client had no database
-      // perform initialization
+      // версія 0 означає, що клієнт не мав бази даних
+      // виконати ініціалізацію
     case 1:
-      // client had version 1
-      // update
+      // клієнт мав версію 1
+      // оновлення
   }
 };
 ```
 
-Please note: as our current version is `2`, the `onupgradeneeded` handler has a code branch for version `0`, suitable for users that are accessing for the first time and have no database, and also for version `1`, for upgrades.
+Зверніть увагу: оскільки наша поточна версія `2`, обробник `onupgradeneeded` що має гілку коду для версії `0`, підходить для користувачів, які звертаються вперше і не мають бази даних, а також для версії `1`, для оновлення.
 
-And then, only if `onupgradeneeded` handler finishes without errors, `openRequest.onsuccess` triggers, and the database is considered successfully opened.
+І лише якщо обробник `onupgradeneeded` завершиться без помилок, запускається `openRequest.onsuccess`, і база даних вважається успішно відкритою.
 
-To delete a database:
+Щоб видалити базу даних:
 
 ```js
 let deleteRequest = indexedDB.deleteDatabase(name)
-// deleteRequest.onsuccess/onerror tracks the result
+// deleteRequest.onsuccess/onerror відстежує результат
 ```
 
-```warn header="We can't open a database using an older open call version"
-If the current user database has a higher version than in the `open` call, e.g. the existing DB version is `3`, and we try to `open(...2)`, then that's an error, `openRequest.onerror` triggers.
+```warn header="Ми не можемо відкрити базу даних за допомогою виклику для відкриття старішої версії"
+Якщо поточна база даних користувача має вищу версію, ніж у виклику "open", напр. існуюча версія БД `3`, а ми намагаємося викликати `open(...2)`, тоді це помилка, і запускається `openRequest.onerror`.
 
-That's rare, but such a thing may happen when a visitor loads outdated JavaScript code, e.g. from a proxy cache. So the code is old, but his database is new.
+Це рідкість, але таке може статися, коли відвідувач завантажує застарілий код JavaScript, напр. з кешу проксі. Отже, код старий, але його база даних нова.
 
-To protect from errors, we should check `db.version` and suggest a page reload. Use proper HTTP caching headers to avoid loading the old code, so that you'll never have such problems.
+Щоб захиститися від помилок, ми повинні перевірити `db.version` і, якщо потрібно, запропонувати перезавантажити сторінку. Використовуйте правильні заголовки кешування HTTP, щоб уникнути завантаження старого коду та щоб у вас ніколи не виникло таких проблем.
 ```
 
-### Parallel update problem
+### Проблема паралельного оновлення
 
-As we're talking about versioning, let's tackle a small related problem.
+Оскільки ми говоримо про версійність, давайте розглянемо невеличку проблему пов’язану з цим.
 
-Let's say:
-1. A visitor opened our site in a browser tab, with database version `1`.
-2. Then we rolled out an update, so our code is newer.
-3. And then the same visitor opens our site in another tab.
+Скажімо:
+1. Відвідувач відкрив наш сайт у вкладці браузера з версією бази даних `1`.
+2. Потім ми випустили оновлення, тож наш код новіший.
+3. А потім той же відвідувач відкриває наш сайт в іншій вкладці.
 
-So there's a tab with an open connection to DB version `1`, while the second one attempts to update it to version `2` in its `upgradeneeded` handler.
+Отже, є вкладка з відкритим підключенням до БД версії `1`, а друга намагається оновити її до версії `2` у своєму обробнику `upgradeneeded`.
 
-The problem is that a database is shared between two tabs, as it's the same site, same origin. And it can't be both version `1` and `2`. To perform the update to version `2`, all connections to version 1 must be closed, including the one in the first tab.
+Проблема полягає в тому, що база даних є спільною між двома вкладками, оскільки це той самий сайт, з того самого джерела. І це не може бути одночасно версія `1` і `2`. Щоб виконати оновлення до версії `2`, усі підключення до версії `1` мають бути закриті, включно з підключенням на першій вкладці.
 
-In order to organize that, the `versionchange` event triggers on the "outdated" database object. We should listen for it and close the old database connection (and probably suggest a page reload, to load the updated code).
+Щоб це організувати, подія `versionchange` запускається на "застарілому" об’єкті бази даних. Нам слід прислухатися до цього та закрити старе підключення до бази даних (і, ймовірно, запропонувати перезавантажити сторінку, щоб завантажити оновлений код).
 
-If we don't listen for the `versionchange` event and don't close the old connection, then the second, new connection won't be made. The `openRequest` object will emit the `blocked` event instead of `success`. So the second tab won't work.
+Якщо ми не прослухаємо подію `versionchange` і не закриємо старе з’єднання, то друге, нове з’єднання не буде встановлено. Об’єкт `openRequest` видаватиме подію `blocked` замість `success`. Тому друга вкладка не працюватиме.
 
-Here's the code to correctly handle the parallel upgrade. It installs the `onversionchange` handler, that triggers if the current database connection becomes outdated (db version is updated elsewhere) and closes the connection.
+Ось код для правильної обробки паралельного оновлення. Він встановлює обробник `onversionchange`, який запускається, якщо поточне з’єднання з базою даних стає застарілим (версія db оновлюється в іншому місці), і закриває з’єднання.
 
 ```js
 let openRequest = indexedDB.open("store", 2);
@@ -145,151 +145,151 @@ openRequest.onsuccess = function() {
   *!*
   db.onversionchange = function() {
     db.close();
-    alert("Database is outdated, please reload the page.")
+    alert("База даних застаріла, перезавантажте сторінку.")
   };
   */!*
 
-  // ...the db is ready, use it...
+  // ...БД готова, використовуйте її...
 };
 
 *!*
 openRequest.onblocked = function() {
-  // this event shouldn't trigger if we handle onversionchange correctly
+  // ця подія не має спрацьовувати, якщо ми правильно обробимо зміну версії
 
-  // it means that there's another open connection to the same database
-  // and it wasn't closed after db.onversionchange triggered for it
+  // це означає, що є ще одне відкрите підключення до тієї ж бази даних
+  // і воно не буде закрите після того, як для нього спрацьовує db.onversionchange
 };
 */!*
 ```
 
-...In other words, here we do two things:
+...Інакше кажучи, тут ми робимо дві речі:
 
-1. The `db.onversionchange` listener informs us about a parallel update attempt, if the current database version becomes outdated.
-2. The `openRequest.onblocked` listener informs us about the opposite situation: there's a connection to an outdated version elsewhere, and it doesn't close, so the newer connection can't be made.
+1. Слухач `db.onversionchange` повідомляє нас про спробу паралельного оновлення, якщо поточна версія бази даних стає застарілою.
+2. Слухач `openRequest.onblocked` інформує нас про протилежну ситуацію: є підключення до застарілої версії в іншому місці, і воно не закривається, тому нове з’єднання неможливо встановити.
 
-We can handle things more gracefully in `db.onversionchange`, prompt the visitor to save the data before the connection is closed and so on. 
+Ми можемо обробляти подібні речі більш витончено в `db.onversionchange`, запропонувати відвідувачу зберегти дані до закриття з’єднання.
 
-Or, an alternative approach would be to not close the database in `db.onversionchange`, but instead use the `onblocked` handler (in the new tab) to alert the visitor, tell him that the newer version can't be loaded until they close other tabs.
+Або, альтернативним підходом було б не закривати базу даних у `db.onversionchange`, а замість цього використовувати обробник `onblocked` (у новій вкладці), щоб попередити відвідувача про те, що новішу версію не можна завантажити, доки він не закриє іншу вкладку.
 
-These update collisions happen rarely, but we should at least have some handling for them, at least an `onblocked` handler, to prevent our script from dying silently.
+Ці зіткнення оновлень трапляються рідко, але ми повинні принаймні мати певну обробку для них, обробник `onblocked`, щоб запобігти безшумній смерті нашого сценарію.
 
-## Object store
+## Сховище об’єктів
 
-To store something in IndexedDB, we need an *object store*.
+Щоб зберегти щось у IndexedDB, нам потріне *сховище об’єктів*.
 
-An object store is a core concept of IndexedDB. Counterparts in other databases are called "tables" or "collections". It's where the data is stored. A database may have multiple stores: one for users, another one for goods, etc.
+Сховище об’єктів є основною концепцією IndexedDB. Аналоги в інших базах даних називаються «таблицями» або «колекціями». Саме там зберігаються дані. База даних може мати кілька сховищ: одне для користувачів, інше для товарів тощо.
 
-Despite being named an "object store", primitives can be stored too.
+Незважаючи на те, що це називають «сховищем об’єктів», примітиви також можна зберігати.
 
-**We can store almost any value, including complex objects.**
+**Ми можемо зберігати практично будь-які значення, включаючи складні об’єкти.**
 
-IndexedDB uses the [standard serialization algorithm](https://www.w3.org/TR/html53/infrastructure.html#section-structuredserializeforstorage) to clone-and-store an object. It's like `JSON.stringify`, but more powerful, capable of storing much more datatypes.
+IndexedDB використовує [стандартний алгоритм серіалізації](https://www.w3.org/TR/html53/infrastructure.html#section-structuredserializeforstorage) щоб клонувати та зберігати об’єкт. Це як `JSON.stringify`, але потужніший, здатний зберігати набагато більше типів даних.
 
-An example of an object that can't be stored: an object with circular references. Such objects are not serializable. `JSON.stringify` also fails for such objects.
+Приклад об’єкта, який не можливо зберегти: об’єкт з круговими посиланнями. Такі об’єкти не можна серіалізувати. `JSON.stringify` також не придатний для таких об’єктів.
 
-**There must be a unique `key` for every value in the store.**     
+**Для кожного значення в сховищі має бути унікальний "ключ".**     
 
-A key must be one of these types - number, date, string, binary, or array. It's a unique identifier, so we can search/remove/update values by the key.
+Ключ повинен бути одним з цих типів - число, дата, рядок, двійковий або масив. Це унікальний ідентифікатор, тому ми можемо шукати/видаляти/оновлювати значення за ключем.
 
 ![](indexeddb-structure.svg)
 
 
-As we'll see very soon, we can provide a key when we add a value to the store, similar to `localStorage`. But when we store objects, IndexedDB allows setting up an object property as the key, which is much more convenient. Or we can auto-generate keys.
+Як побачимо незабаром, ми можемо надати ключ, коли додамо значення до сховища, подібне до `localStorage`. Але коли ми зберігаємо об’єкти, IndexedDB дозволяє налаштувати властивість об’єкта як ключ, що набагато зручніше. Або ми можемо автоматично згенерувати ключі.
 
-But we need to create an object store first.
+Але спочатку нам потрібно створити сховище об’єктів.
 
 
-The syntax to create an object store:
+Синтаксис створення сховища об’єктів:
 ```js
 db.createObjectStore(name[, keyOptions]);
 ```
 
-Please note, the operation is synchronous, no `await` needed.
+Зауважте, що операція синхронна, та не потребує `await`.
 
-- `name` is the store name, e.g. `"books"` for books,
-- `keyOptions` is an optional object with one of two properties:
-  - `keyPath` -- a path to an object property that IndexedDB will use as the key, e.g. `id`.
-  - `autoIncrement` -- if `true`, then the key for a newly stored object is generated automatically, as an ever-incrementing number.
+- `name` -- назва сховища, наприклад. `"books"` для книжок,
+- `keyOptions` є необов’язковим об’єктом з однією з двох властивостей:
+  - `keyPath` -- шлях до властивості об’єкта, який IndexedDB використовуватиме як ключ, напр. `id`.
+  - `autoIncrement` -- якщо `true`, тоді ключ для щойно збереженого об’єкта генерується автоматично у вигляді постійно зростаючого числа.
 
-If we don't supply `keyOptions`, then we'll need to provide a key explicitly later, when storing an object.
+Якщо ми не постачаємо `keyOptions`, тоді нам потрібно буде надати ключ явно пізніше, коли будемо зберігати об’єкт.
 
-For instance, this object store uses `id` property as the key:
+Наприклад, це сховище об’єктів використовує властивість `id` як ключ:
 ```js
 db.createObjectStore('books', {keyPath: 'id'});
 ```
 
-**An object store can only be created/modified while updating the DB version, in `upgradeneeded` handler.**
+**Сховище об’єктів можна створити/змінити лише під час оновлення версії БД в обробнику `upgradeneeded`.**
 
-That's a technical limitation. Outside of the handler we'll be able to add/remove/update the data, but object stores can only be created/removed/altered during a version update.
+Це технічне обмеження. За межами обробника ми зможемо додавати/вилучати/оновлювати дані, але сховища об’єктів можна створювати/вилучати/змінювати лише під час оновлення версії.
 
-To perform a database version upgrade, there are two main approaches:
-1. We can implement per-version upgrade functions: from 1 to 2, from 2 to 3, from 3 to 4 etc. Then, in `upgradeneeded` we can compare versions (e.g. old 2, now 4) and run per-version upgrades step by step, for every intermediate version (2 to 3, then 3 to 4).
-2. Or we can just examine the database: get a list of existing object stores as `db.objectStoreNames`. That object is a [DOMStringList](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#domstringlist) that provides `contains(name)` method to check for existance. And then we can do updates depending on what exists and what doesn't.
+Щоб виконати оновлення версії бази даних, існує два основних підходи:
+1. Ми можемо реалізувати функції оновлення для кожної версії: від 1 до 2, від 2 до 3, від 3 до 4 тощо. Потім у `upgradeneeded` ми можемо порівняти версії (наприклад, стару 2, тепер 4) та запустити крок оновлення для кожної версії покроково, для кожної проміжної версії (2 до 3, потім від 3 до 4).
+2. Або ми можемо просто перевірити базу даних: отримати список існуючих сховищ об’єктів як `db.objectStoreNames`. Цим об’єктом є [DOMStringList](https://html.spec.whatwg.org/multipage/common-dom-interfaces.html#domstringlist) який надає метод `contains(name)` для перевірки існування. А потім ми можемо виконувати оновлення залежно від того, що існує, а що ні.
 
-For small databases the second variant may be simpler.
+Для невеликих баз даних другий варіант може бути простішим.
 
-Here's the demo of the second approach:
+Ось демонстрація другого підходу:
 
 ```js
 let openRequest = indexedDB.open("db", 2);
 
-// create/upgrade the database without version checks
+// створити/оновити базу даних без перевірки версій
 openRequest.onupgradeneeded = function() {
   let db = openRequest.result;
-  if (!db.objectStoreNames.contains('books')) { // if there's no "books" store
-    db.createObjectStore('books', {keyPath: 'id'}); // create it
+  if (!db.objectStoreNames.contains('books')) { // якщо не існує сховища "books"
+    db.createObjectStore('books', {keyPath: 'id'}); // створити його
   }
 };
 ```
 
 
-To delete an object store:
+Щоб видалити сховище об’єктів:
 
 ```js
 db.deleteObjectStore('books')
 ```
 
-## Transactions
+## Транзакції
 
-The term "transaction" is generic, used in many kinds of databases.
+Термін "транзакція" є загальним і використовується в багатьох видах баз даних.
 
-A transaction is a group of operations, that should either all succeed or all fail.
+Транзакція — це група операцій, які повинні або всі завершитися успішно, або всі невдало.
 
-For instance, when a person buys something, we need to:
-1. Subtract the money from their account.
-2. Add the item to their inventory.
+Наприклад, коли людина щось купує, нам потрібно:
+1. Відняти гроші з рахунку.
+2. Додати товар до списку.
 
-It would be pretty bad if we complete the 1st operation, and then something goes wrong, e.g. lights out, and we fail to do the 2nd. Both should either succeed (purchase complete, good!) or both fail (at least the person kept their money, so they can retry).
+Було б дуже прикро, якби ми завершили 1-у операцію, а потім щось пішло не так, напр. трапилася помилка, і ми не можемо виконати 2-у операцію. Обидві мають досягти успіху (купівля завершена, добре!), або обидві потерпіли невдачу (принаймні, людина залишила свої гроші, щоб повторити спробу).
 
-Transactions can guarantee that.
+Це можуть гарантувати транзакції.
 
-**All data operations must be made within a transaction in IndexedDB.**
+**Усі операції з даними повинні виконуватися в рамках транзакції в IndexedDB.**
 
-To start a transaction:
+Почати транзакцію:
 
 ```js
 db.transaction(store[, type]);
 ```
 
-- `store` is a store name that the transaction is going to access, e.g. `"books"`. Can be an array of store names if we're going to access multiple stores.
-- `type` – a transaction type, one of:
-  - `readonly` -- can only read, the default.
-  - `readwrite` -- can only read and write the data, but not create/remove/alter object stores.
+- `store` це назва сховища, до якого має отримати доступ транзакція, напр. `"books"`. Це може бути масив імен сховищ, якщо ми збираємося отримати доступ до кількох сховищ.
+- `type` – тип транзакції, один з:
+  - `readonly` -- може лише читати дані, типово.
+  - `readwrite` -- може лише читати та записувати дані, але не створювати/видаляти/змінювати сховища об’єктів.
 
-There's also `versionchange` transaction type: such transactions can do everything, but we can't create them manually. IndexedDB automatically creates a `versionchange` transaction when opening the database, for `updateneeded` handler. That's why it's a single place where we can update the database structure, create/remove object stores.
+Існує також тип транзакції `versionchange`: такі транзакції можуть робити все, але ми не можемо створити їх вручну. IndexedDB автоматично створює транзакцію `versionchange` під час відкриття бази даних для обробника `updateneeded`. That's why it's a single place where we can update the database structure, create/remove object stores.
 
-```smart header="Why are there different types of transactions?"
-Performance is the reason why transactions need to be labeled either `readonly` and `readwrite`.
+```smart header="Чому існують різні види транзакцій?"
+Продуктивність є причиною, чому транзакції мають бути позначені як `readonly` та `readwrite`. 
 
-Many `readonly` transactions are able to access the same store concurrently, but `readwrite` transactions can't. A `readwrite` transaction "locks" the store for writing. The next transaction must wait before the previous one finishes before accessing the same store.
+Багато `readonly` транзакцій можуть отримати доступ до того самого сховища одночасно, але `readwrite` транзакції - не можуть. Транзакція `readwrite` "блокує" сховище для запису. Наступна транзакція повинна почекати до завершення попередньої, перш ніж отримати доступ до того самого сховища.
 ```
 
-After the transaction is created, we can add an item to the store, like this:
+Після створення транзакції ми можемо додати елемент до сховища, ось так:
 
 ```js
 let transaction = db.transaction("books", "readwrite"); // (1)
 
-// get an object store to operate on it
+// отримати сховище об’єктів для роботи з ним
 *!*
 let books = transaction.objectStore("books"); // (2)
 */!*
@@ -305,51 +305,51 @@ let request = books.add(book); // (3)
 */!*
 
 request.onsuccess = function() { // (4)
-  console.log("Book added to the store", request.result);
+  console.log("Книгу додано в сховище", request.result);
 };
 
 request.onerror = function() {
-  console.log("Error", request.error);
+  console.log("Помилка", request.error);
 };
 ```
 
-There were basically four steps:
+Ось чотири основні кроки:
 
-1. Create a transaction, mentioning all the stores it's going to access, at `(1)`.
-2. Get the store object using `transaction.objectStore(name)`, at `(2)`.
-3. Perform the request to the object store `books.add(book)`, at `(3)`.
-4. ...Handle request success/error `(4)`, then we can make other requests if needed, etc.
+1. Створіть транзакцію, вказавши всі сховища, в які вона збирається отримати доступ `(1)`.
+2. Отримайте об’єкт магазину за допомогою `transaction.objectStore(name)` `(2)`.
+3. Виконайте запит до сховища об’єктів `books.add(book)` `(3)`.
+4. ...Обробіть запит успішно/помилка `(4)`, потім можливо робити інші запити, якщо потрібно.
 
-Object stores support two methods to store a value:
+Сховища об’єктів підтримують два методи збереження значення:
 
 - **put(value, [key])**
-    Add the `value` to the store. The `key` is supplied only if the object store did not have `keyPath` or `autoIncrement` option. If there's already a value with the same key, it will be replaced.
+    Додайте `value` до сховища. `Key` надається лише в тому випадку, якщо в сховищі об’єктів не було параметра `keyPath` або `autoIncrement`. `keyPath` чи `autoIncrement` опція. Якщо вже є значення з таким самим ключем, воно буде замінено.
 
 - **add(value, [key])**
-    Same as `put`, but if there's already a value with the same key, then the request fails, and an error with the name `"ConstraintError"` is generated.
+    Те саме що `put`, але якщо вже є значення з тим самим ключем, запит не вдається, і генерується помилка з назвою `"ConstraintError"`.
 
-Similar to opening a database, we can send a request: `books.add(book)`, and then wait for `success/error` events.
+Подібно до відкриття бази даних, ми можемо відправити запит: `books.add(book)`, а потім чекати події `success/error`.
 
-- The `request.result` for `add` is the key of the new object.
-- The error is in `request.error` (if any).
+- `request.result` для `add` є ключем нового об’єкта.
+- Помилкою, якщо є, буде `request.error`.
 
-## Transactions' autocommit
+## Автозавершення транзакцій
 
-In the example above we started the transaction and made `add` request. But as we stated previously, a transaction may have multiple associated requests, that must either all succeed or all fail. How do we mark the transaction as finished, with no more requests to come?
+У наведеному вище прикладі ми запустили транзакцію та зробили запит на додавання. Але, як ми зазначали раніше, транзакція може мати кілька пов’язаних запитів, усі вони повинні бути успішними або невдалими. Як позначити транзакцію як завершену, без запитів?
 
-The short answer is: we don't.
+Коротка відповідь: це не потрібно.
 
-In the next version 3.0 of the specification, there will probably be a manual way to finish the transaction, but right now in 2.0 there isn't.
+У наступній версії специфікації 3.0, ймовірно, буде ручний спосіб завершити транзакцію, але зараз у 2.0 його немає.
 
-**When all transaction requests are finished, and the [microtasks queue](info:microtask-queue) is empty, it is committed automatically.**
+**Коли всі запити транзакції завершено, а [черга мікрозадач](info:microtask-queue) порожня, вона завершується автоматично.**
 
-Usually, we can assume that a transaction commits when all its requests are complete, and the current code finishes.
+Зазвичай ми можемо припустити, що транзакція завершується, коли всі її запити завершені, а поточний код виконаний.
 
-So, in the example above no special call is needed to finish the transaction.
+Отже, у наведеному вище прикладі не потрібен особливий виклик для завершення транзакції.
 
-Transactions auto-commit principle has an important side effect. We can't insert an async operation like `fetch`, `setTimeout` in the middle of a transaction. IndexedDB will not keep the transaction waiting till these are done.
+Принцип автозавершення транзакцій має важливий побічний ефект. Ми не можемо вставити асинхронну операцію, як-от `fetch`, `setTimeout`, у середину транзакції. IndexedDB не буде чекати транзакцію, поки вона не виконана.
 
-In the code below, `request2` in the line `(*)` fails, because the transaction is already committed, and can't make any request in it:
+У наведеному нижче коді `request2` у рядку `(*)` не працює, оскільки транзакція вже завершена, і в ній не можливо зробити жодного запиту:
 
 ```js
 let request1 = books.add(book);
@@ -366,54 +366,54 @@ request1.onsuccess = function() {
 };
 ```
 
-That's because `fetch` is an asynchronous operation, a macrotask. Transactions are closed before the browser starts doing macrotasks.
+Це тому, що `fetch` є асинхронною операцією, макрозавданням. Трансакції закриваються до того, як браузер почне виконувати макрозавдання.
 
-Authors of IndexedDB spec believe that transactions should be short-lived. Mostly for performance reasons.
+Автори специфікації IndexedDB вважають, що транзакції мають бути короткочасними. В основному з міркувань продуктивності.
 
-Notably, `readwrite` transactions "lock" the stores for writing. So if one part of the application initiated `readwrite` on `books` object store, then another part that wants to do the same has to wait: the new transaction "hangs" till the first one is done. That can lead to strange delays if transactions take a long time.
+Примітно, що транзакції `readwrite` "блокують" сховища для запису. Отже, якщо одна частина програми ініціювала `readwrite` у сховищі об’єктів `books`, тоді інша частина, яка хоче зробити те ж саме, повинна почекати: нова транзакція "зависає", доки не буде виконана перша. Це може призвести до дивних затримок, якщо транзакції займають багато часу.
 
-So, what to do?
+Отже, що робити?
 
-In the example above we could make a new `db.transaction` right before the new request `(*)`.
+У наведеному вище прикладі ми могли б створити новий `db.transaction` безпосередньо перед новим запитом `(*)`.
 
-But it will be even better, if we'd like to keep the operations together, in one transaction, to split apart IndexedDB transactions and "other" async stuff.
+Але буде ще краще, якщо ми захочемо зберегти операції разом, в одній транзакції, розділити транзакції IndexedDB та «інші» асинхронні речі.
 
-First, make `fetch`, prepare the data if needed, afterwards create a transaction and perform all the database requests, it'll work then.
+Спочатку зробіть `fetch`, підготуйте дані, якщо потрібно, потім створіть транзакцію та виконайте всі запити до бази даних, тоді це запрацює.
 
-To detect the moment of successful completion, we can listen to `transaction.oncomplete` event:
+Щоб визначити момент успішного завершення, ми можемо прослухати подію `transaction.oncomplete`:
 
 ```js
 let transaction = db.transaction("books", "readwrite");
 
-// ...perform operations...
+// ...виконувати операції...
 
 transaction.oncomplete = function() {
-  console.log("Transaction is complete");
+  console.log("Транзакція завершена");
 };
 ```
 
-Only `complete` guarantees that the transaction is saved as a whole. Individual requests may succeed, but the final write operation may go wrong (e.g. I/O error or something).
+Тільки `complete` гарантує, що транзакція буде збережена в цілому. Окремі запити можуть бути успішними, але остаточна операція запису може піти не так (наприклад, помилка введення-виводу чи щось подібне).
 
-To manually abort the transaction, call:
+Щоб вручну припинити транзакцію, викличте:
 
 ```js
 transaction.abort();
 ```
 
-That cancels all modification made by the requests in it and triggers `transaction.onabort` event.
+Це скасовує всі зміни, зроблені запитами, і запускає подію `transaction.onabort`.
 
 
-## Error handling
+## Обробка помилок
 
-Write requests may fail.
+Запити на запис можуть не виконуватися.
 
-That's to be expected, not only because of possible errors at our side, but also for reasons not related to the transaction itself. For instance, the storage quota may be exceeded. So we must be ready to handle such case.
+Цього можна очікувати не лише через можливі помилки з нашого боку, а й з причин, не пов’язаних із самою транзакцією. Наприклад, закінчилося пам’ять. Тож ми повинні бути готові впоратися з такою справою.
 
-**A failed request automatically aborts the transaction, canceling all its changes.**
+**Невдалий запит автоматично перериває транзакцію, скасовуючи всі зміни.**
 
-In some situations, we may want to handle the failure (e.g. try another request), without canceling existing changes, and continue the transaction. That's possible. The `request.onerror` handler is able to prevent the transaction abort by calling `event.preventDefault()`.
+У деяких ситуаціях ми можемо забажати обробити помилку (наприклад, спробувати інший запит), не скасовуючи наявні зміни, і продовжити транзакцію. Це можливо. Обробник `request.onerror` може запобігти перериванню транзакції, викликавши `event.preventDefault()`.
 
-In the example below a new book is added with the same key (`id`) as the existing one. The `store.add` method generates a `"ConstraintError"` in that case. We handle it without canceling the transaction:
+У наведеному нижче прикладі додається нова книга з тим самим ключем (`id`), що й існуюча. У цьому випадку метод `store.add` генерує "ConstraintError". Ми обробляємо це, не скасовуючи транзакцію:
 
 ```js
 let transaction = db.transaction("books", "readwrite");
@@ -423,142 +423,142 @@ let book = { id: 'js', price: 10 };
 let request = transaction.objectStore("books").add(book);
 
 request.onerror = function(event) {
-  // ConstraintError occurs when an object with the same id already exists
+  // ConstraintError виникає, коли об’єкт з таким же ідентифікатором вже існує
   if (request.error.name == "ConstraintError") {
-    console.log("Book with such id already exists"); // handle the error
-    event.preventDefault(); // don't abort the transaction
-    // use another key for the book?
+    console.log("Книга з таким ідентифікатором вже існує"); // обробіть помилку
+    event.preventDefault(); // запобігаємо скасуванню транзакції
+    // використовувати інший ключ для книги?
   } else {
-    // unexpected error, can't handle it
-    // the transaction will abort
+    // несподівана помилка, не можу впоратися з нею
+    // транзакція буде перервана
   }
 };
 
 transaction.onabort = function() {
-  console.log("Error", transaction.error);
+  console.log("Помилка", transaction.error);
 };
 ```
 
-### Event delegation
+### Делегування події
 
-Do we need onerror/onsuccess for every request? Not every time. We can use event delegation instead.
+Чи потрібно нам onerror/onsuccess для кожного запиту? Не завжди. Замість цього ми можемо використовувати делегування подій.
 
-**IndexedDB events bubble: `request` -> `transaction` -> `database`.**
+**Спливаюча подія IndexedDB: `запит` -> `транзакція` -> `база даних`.**
 
-All events are DOM events, with capturing and bubbling, but usually only bubbling stage is used.
+Всі події є DOM-подіями з фазами перехоплення та спливання, але зазвичай використовується тільки спливання.
 
-So we can catch all errors using `db.onerror` handler, for reporting or other purposes:
+Тож ми можемо відловити всі помилки за допомогою обробника `db.onerror` для звітів чи інших цілей:
 
 ```js
 db.onerror = function(event) {
-  let request = event.target; // the request that caused the error
+  let request = event.target; // запит, який спричинив помилку
 
-  console.log("Error", request.error);
+  console.log("Помилка", request.error);
 };
 ```
 
-...But what if an error is fully handled? We don't want to report it in that case.
+...Але що, якщо помилка повністю оброблена? Ми не хочемо повідомляти про це в такому випадку.
 
-We can stop the bubbling and hence `db.onerror` by using `event.stopPropagation()` in `request.onerror`.
+Ми можемо зупинити спливання і, відповідно, `db.onerror`, використовуючи `event.stopPropagation()` у `request.onerror`.
 
 ```js
 request.onerror = function(event) {
   if (request.error.name == "ConstraintError") {
-    console.log("Book with such id already exists"); // handle the error
-    event.preventDefault(); // don't abort the transaction
-    event.stopPropagation(); // don't bubble error up, "chew" it
+    console.log("Книга з таким ідентифікатором вже існує"); // обробіть помилку
+    event.preventDefault(); // запобігаємо скасуванню транзакції
+    event.stopPropagation(); // запобігаємо спливанню помилки
   } else {
-    // do nothing
-    // transaction will be aborted
-    // we can take care of error in transaction.onabort
+    // нічого не робимо
+    // транзакція буде скасована
+    // ми можемо подбати про помилку в transaction.onabort
   }
 };
 ```
 
-## Searching
+## Пошук
 
-There are two main types of search in an object store:
+Існує два основних типи пошуку в сховищі об’єктів:
 
-1. By a key value or a key range. In our "books" storage that would be a value or range of values of `book.id`.
-2. By another object field, e.g. `book.price`. This required an additional data structure, named "index".
+1. За значенням ключа або діапазоном ключа. У нашому сховищі «книги» це буде значення або діапазон значень `book.id`.
+2. За іншим полем об’єкта, напр. `book.price`. Для цього потрібна додаткова структура даних під назвою «index».
 
-### By key
+### За ключем
 
-First let's deal with the first type of search: by key.
+Спочатку розберемося з першим типом пошуку: за ключем.
 
-Searching methods support both exact key values and so-called "ranges of values" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) objects that specify an acceptable "key range".
+Методи пошуку підтримують як точні значення ключів, та так звані "діапазони значень" -- [IDBKeyRange](https://www.w3.org/TR/IndexedDB/#keyrange) об’єкти, які визначають прийнятний "діапазон ключів".
 
-`IDBKeyRange` objects are created using following calls:
+Об’єкти `IDBKeyRange` створюються за допомогою наступних викликів:
 
-- `IDBKeyRange.lowerBound(lower, [open])` means: `≥lower` (or `>lower` if `open` is true)
-- `IDBKeyRange.upperBound(upper, [open])` means: `≤upper` (or `<upper` if `open` is true)
-- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` means: between `lower` and `upper`. If the open flags is true, the corresponding key is not included in the range.
-- `IDBKeyRange.only(key)` -- a range that consists of only one `key`, rarely used.
+- `IDBKeyRange.lowerBound(lower, [open])` означає: `≥lower` (чи `>lower` якщо `open` є істина)
+- `IDBKeyRange.upperBound(upper, [open])` означає: `≤upper` (чи `<upper` якщо `open` є істина)
+- `IDBKeyRange.bound(lower, upper, [lowerOpen], [upperOpen])` означає: поміж `lower` та `upper`. Якщо прапори open істинні, відповідний ключ не входить до діапазону.
+- `IDBKeyRange.only(key)` -- діапазон, який складається лише з одного `ключа`, рідко використовується.
 
-We'll see practical examples of using them very soon.
+Зовсім скоро ми побачимо практичні приклади їх використання.
 
-To perform the actual search, there are following methods. They accept a `query` argument that can be either an exact key or a key range:
+Для здійснення фактичного пошуку існують такі методи. Вони приймають аргумент `query`, який може бути точним ключем або діапазоном ключів:
 
-- `store.get(query)` -- search for the first value by a key or a range.
-- `store.getAll([query], [count])` -- search for all values, limit by `count` if given.
-- `store.getKey(query)` -- search for the first key that satisfies the query, usually a range.
-- `store.getAllKeys([query], [count])` -- search for all keys that satisfy the query, usually a range, up to `count` if given.
-- `store.count([query])` -- get the total count of keys that satisfy the query, usually a range.
+- `store.get(query)` -- пошук першого значення за ключем або діапазоном.
+- `store.getAll([query], [count])` -- шукати всі значення, обмежуючись `count`, якщо вказано.
+- `store.getKey(query)` -- пошук першого ключа, який задовольняє запиту, зазвичай діапазон.
+- `store.getAllKeys([query], [count])` -- пошук усіх ключів, які задовольняють запиту, зазвичай діапазону, до `count`, якщо вказано.
+- `store.count([query])` -- отримати загальну кількість ключів, які задовольняють запиту, зазвичай діапазон.
 
-For instance, we have a lot of books in our store. Remember, the `id` field is the key, so all these methods can search by `id`.
+Наприклад, у нас в магазині багато книг. Пам’ятайте, що поле `id` є ключем, тому всі ці методи можуть здійснювати пошук за `id`.
 
-Request examples:
+Приклади запитів:
 
 ```js
-// get one book
+// отримати одну книгу
 books.get('js')
 
-// get books with 'css' <= id <= 'html'
+// отримати книги з 'css' <= id <= 'html'
 books.getAll(IDBKeyRange.bound('css', 'html'))
 
-// get books with id < 'html'
+// отримати книги з id < 'html'
 books.getAll(IDBKeyRange.upperBound('html', true))
 
-// get all books
+// отримати всі книги
 books.getAll()
 
-// get all keys, where id > 'js'
+// отримати всі ключи, де id > 'js'
 books.getAllKeys(IDBKeyRange.lowerBound('js', true))
 ```
 
-```smart header="Object store is always sorted"
-An object store sorts values by key internally.
+```smart header="Сховище об’єктів завжди відсортовано"
+Сховище об’єктів внутрішньо сортує значення за ключем.
 
-So requests that return many values always return them in sorted by key order.
+Тому запити, які повертають багато значень, завжди повертають їх у відсортованому за ключем порядку.
 ```
 
-### By a field using an index
+### За полем за допомогою індексу
 
-To search by other object fields, we need to create an additional data structure named "index".
+Для пошуку за іншими полями об’єкта нам потрібно створити додаткову структуру даних під назвою «індекс».
 
-An index is an "add-on" to the store that tracks a given object field. For each value of that field, it stores a list of keys for objects that have that value. There will be a more detailed picture below.
+Індекс — це «доповнення» до сховища, яке відстежує дане поле об’єкта. Для кожного значення цього поля він зберігає список ключів для об’єктів, які мають це значення. Нижче буде більш детальна картинка.
 
-The syntax:
+Синтаксис:
 
 ```js
 objectStore.createIndex(name, keyPath, [options]);
 ```
 
-- **`name`** -- index name,
-- **`keyPath`** -- path to the object field that the index should track (we're going to search by that field),
-- **`option`** -- an optional object with properties:
-  - **`unique`** -- if true, then there may be only one object in the store with the given value at the `keyPath`. The index will enforce that by generating an error if we try to add a duplicate.
-  - **`multiEntry`** -- only used if the value on `keyPath` is an array. In that case, by default, the index will treat the whole array as the key. But if `multiEntry` is true, then the index will keep a list of store objects for each value in that array. So array members become index keys.
+- **`name`** -- ім’я індексу,
+- **`keyPath`** -- шлях до поля об’єкта, яке має відстежувати індекс (ми будемо шукати за цим полем),
+- **`option`** -- необов’язковий об’єкт з властивостями:
+  - **`unique`** -- якщо значення true, то в сховищі може бути лише один об’єкт із заданим значенням у `keyPath`. Індекс забезпечить це, генеруючи помилку, якщо ми спробуємо додати дублікат.
+  - **`multiEntry`** -- використовується лише якщо значення `keyPath` є масивом. У цьому випадку індекс розглядатиме весь масив як ключ. Але якщо `multiEntry` має значення true, то індекс зберігатиме список об’єктів сховища для кожного значення в цьому масиві. Таким чином, члени масиву стають ключами індексу.
 
-In our example, we store books keyed by `id`.
+У нашому прикладі ми зберігаємо книги з ключем `id`.
 
-Let's say we want to search by `price`.
+Скажімо, ми хочемо шукати за `price`.
 
-First, we need to create an index. It must be done in `upgradeneeded`, just like an object store:
+Спочатку нам потрібно створити індекс. Це потрібно зробити в `upgradeneeded`, як у сховищі об’єктів:
 
 ```js
 openRequest.onupgradeneeded = function() {
-  // we must create the index here, in versionchange transaction
+  // ми повинні створити індекс тут, у транзакції зміни версії
   let books = db.createObjectStore('books', {keyPath: 'id'});
 *!*
   let index = books.createIndex('price_idx', 'price');
@@ -566,19 +566,19 @@ openRequest.onupgradeneeded = function() {
 };
 ```
 
-- The index will track `price` field.
-- The price is not unique, there may be multiple books with the same price, so we don't set `unique` option.
-- The price is not an array, so `multiEntry` flag is not applicable.
+- Індекс буде відстежувати поле `price`.
+- Ціна не є унікальною, може бути кілька книг з однаковою ціною, тому ми не встановлюємо параметр `unique`.
+- Ціна не є масивом, тому прапор `multiEntry` не застосовується.
 
-Imagine that our `inventory` has 4 books. Here's the picture that shows exactly what the `index` is:
+Уявіть собі, що в нашому `inventory` є 4 книги. Ось малюнок, який показує, що саме таке `index`.
 
 ![](indexeddb-index.svg)
 
-As said, the index for each value of `price` (second argument) keeps the list of keys that have that price.
+Як сказано, індекс для кожного значення `price` (другий аргумент) зберігає список ключів, які мають таку ціну.
 
-The index keeps itself up to date automatically, we don't have to care about it.
+Індекс оновлюється автоматично, нам не потрібно дбати про це.
 
-Now, when we want to search for a given price, we simply apply the same search methods to the index:
+Тепер, коли ми хочемо шукати за заданою ціною, ми просто застосовуємо ті самі методи пошуку до індексу:
 
 ```js
 let transaction = db.transaction("books"); // readonly
@@ -591,38 +591,38 @@ let request = priceIndex.getAll(10);
 
 request.onsuccess = function() {
   if (request.result !== undefined) {
-    console.log("Books", request.result); // array of books with price=10
+    console.log("Книги", request.result); // масив книг із ціною=10
   } else {
-    console.log("No such books");
+    console.log("Немає таких книжок");
   }
 };
 ```
 
-We can also use `IDBKeyRange` to create ranges and looks for cheap/expensive books:
+Ми також можемо використовувати `IDBKeyRange` для створення діапазонів і пошуку дешевих/дорогих книг:
 
 ```js
-// find books where price <= 5
+// знайти книги, де ціна <= 5
 let request = priceIndex.getAll(IDBKeyRange.upperBound(5));
 ```
 
-Indexes are internally sorted by the tracked object field, `price` in our case. So when we do the search, the results are also sorted by `price`.
+Індекси внутрішньо відсортовані за полем відстежуваного об’єкта, у нашому випадку `price`. Тому, коли ми виконуємо пошук, результати також сортуються за `price`.
 
-## Deleting from store
+## Видалення зі сховища
 
-The `delete` method looks up values to delete by a query, the call format is similar to `getAll`:
+Метод `delete` шукає значення для видалення за запитом, формат виклику подібний до `getAll`:
 
-- **`delete(query)`** -- delete matching values by query.
+- **`delete(query)`** -- видалити відповідні значення за запитом.
 
-For instance:
+Наприклад:
 ```js
-// delete the book with id='js'
+// видалити книгу з id='js'
 books.delete('js');
 ```
 
-If we'd like to delete books based on a price or another object field, then we should first find the key in the index, and then call `delete`:
+Якщо ми хочемо видалити книги на основі ціни або іншого поля об’єкта, то спочатку ми повинні знайти ключ в індексі, а потім викликати `delete`:
 
 ```js
-// find the key where price = 5
+// знайти ключ з price = 5
 let request = priceIndex.getKey(5);
 
 request.onsuccess = function() {
@@ -631,42 +631,42 @@ request.onsuccess = function() {
 };
 ```
 
-To delete everything:
+Щоб видалити все:
 ```js
-books.clear(); // clear the storage.
+books.clear(); // очистити сховище.
 ```
 
-## Cursors
+## Курсори
 
-Methods like `getAll/getAllKeys` return an array of keys/values.
+Такі методи, як `getAll/getAllKeys` повертають масив ключів/значень.
 
-But an object storage can be huge, bigger than the available memory. Then `getAll` will fail to get all records as an array.
+Але сховище об’єктів може бути величезним, більшим за доступну пам’ять. Тоді `getAll` не зможе отримати всі записи у вигляді масиву.
 
-What to do?
+Що робити?
 
-Cursors provide the means to work around that.
+Курсори забезпечують засоби, щоб обійти це.
 
-**A *cursor* is a special object that traverses the object storage, given a query, and returns one key/value at a time, thus saving memory.**
+**Об’єкт *cursor* — це спеціальний об’єкт, який обходить сховище об’єктів за запитом і повертає один ключ/значення за раз, економлячи таким чином пам’ять.**
 
-As an object store is sorted internally by key, a cursor walks the store in key order (ascending by default).
+Оскільки сховище об’єктів внутрішньо відсортовано за ключем, курсор проходить по сховищу в порядку знаходження ключа (типово за зростанням).
 
-The syntax:
+Синтаксис:
 ```js
-// like getAll, but with a cursor:
+// як getAll, але з використанням курсору:
 let request = store.openCursor(query, [direction]);
 
-// to get keys, not values (like getAllKeys): store.openKeyCursor
+// отримати ключі, не значення (як getAllKeys): store.openKeyCursor
 ```
 
-- **`query`** is a key or a key range, same as for `getAll`.
-- **`direction`** is an optional argument, which order to use:
-  - `"next"` -- the default, the cursor walks up from the record with the lowest key.
-  - `"prev"` -- the reverse order: down from the record with the biggest key.
-  - `"nextunique"`, `"prevunique"` -- same as above, but skip records with the same key (only for cursors over indexes, e.g. for multiple books with price=5 only the first one will be returned).
+- **`query`** є ключем або діапазоном ключів, як і для `getAll`.
+- **`direction`** є необов’язковим аргументом, що вказує який порядок використовувати:
+  - `"next"` -- типово, курсор піднімається від найнижчого ключа до найвищчого.
+  - `"prev"` -- зворотний порядок: вниз від запису з найбільшим ключем.
+  - `"nextunique"`, `"prevunique"` -- те саме, що й вище, але пропускає записи з тим же ключем, який вже був (лише для курсорів за індексами, наприклад, для кількох книг із ціною=5 буде повернута лише перша).
 
-**The main difference of the cursor is that `request.onsuccess` triggers multiple times: once for each result.**
+**Основна відмінність курсору полягає в тому, що `request.onsuccess` запускається кілька разів: один раз для кожного результату.**
 
-Here's an example of how to use a cursor:
+Ось приклад того, як використовувати курсор:
 
 ```js
 let transaction = db.transaction("books");
@@ -674,63 +674,63 @@ let books = transaction.objectStore("books");
 
 let request = books.openCursor();
 
-// called for each book found by the cursor
+// викликається для кожної книги, знайденої курсором
 request.onsuccess = function() {
   let cursor = request.result;
   if (cursor) {
-    let key = cursor.key; // book key (id field)
-    let value = cursor.value; // book object
+    let key = cursor.key; // ключ книги (поле id)
+    let value = cursor.value; // книжковий об’єкт
     console.log(key, value);
     cursor.continue();
   } else {
-    console.log("No more books");
+    console.log("Книг більше немає");
   }
 };
 ```
 
-The main cursor methods are:
+Основними методами курсора є:
 
-- `advance(count)` -- advance the cursor `count` times, skipping values.
-- `continue([key])` -- advance the cursor to the next value in range matching (or immediately after `key` if given).
+- `advance(count)` -- пересунути курсор `count` разів, пропускаючи значення.
+- `continue([key])` -- пересунути курсор до наступного значення у відповідності з діапазоном (або відразу після `key`, якщо вказано).
 
-Whether there are more values matching the cursor or not -- `onsuccess` gets called, and then in `result` we can get the cursor pointing to the next record, or `undefined`.
+Незалежно від того, чи є значення, що відповідають курсору, чи ні – викликається `onsuccess`, а потім у `result` ми можемо отримати курсор, що вказує на наступний запис, або `undefined`.
 
-In the example above the cursor was made for the object store.
+У наведеному вище прикладі курсор був створений для сховища об’єктів.
 
-But we also can make a cursor over an index. As we remember, indexes allow to search by an object field. Cursors over indexes do precisely the same as over object stores -- they save memory by returning one value at a time.
+Але ми також можемо навести курсор на індекс. Як ми пам’ятаємо, індекси дозволяють здійснювати пошук по полю об’єкта. Курсори над індексами діють точно так само, як і над сховищами об’єктів — вони економлять пам’ять, повертаючи по одному значенню за раз.
 
-For cursors over indexes, `cursor.key` is the index key (e.g. price), and we should use `cursor.primaryKey` property for the object key:
+Для курсорів над індексами `cursor.key` є ключем індексу (наприклад, ціна), і ми повинні використовувати властивість `cursor.primaryKey` для ключа об’єкта:
 
 ```js
 let request = priceIdx.openCursor(IDBKeyRange.upperBound(5));
 
-// called for each record
+// викликані для кожного запису
 request.onsuccess = function() {
   let cursor = request.result;
   if (cursor) {
-    let primaryKey = cursor.primaryKey; // next object store key (id field)
-    let value = cursor.value; // next object store object (book object)
-    let key = cursor.key; // next index key (price)
+    let primaryKey = cursor.primaryKey; // ключ сховища наступного об’єкта (поле id)
+    let value = cursor.value; // наступний об’єкт сховища (об’єкт книги)
+    let key = cursor.key; // наступний ключ індексу (price)
     console.log(key, value);
     cursor.continue();
   } else {
-    console.log("No more books");
+    console.log("Книг більше немає");
   }
 };
 ```
 
-## Promise wrapper
+## Обгортка промісів
 
-Adding `onsuccess/onerror` to every request is quite a cumbersome task. Sometimes we can make our life easier by using event delegation, e.g. set handlers on the whole transactions, but `async/await` is much more convenient.
+Додавання `onsuccess/onerror` до кожного запиту є досить громіздким завданням. Іноді ми можемо полегшити життя, використовуючи делегування подій, напр. встановити обробники для всіх транзакцій, але `async/await` набагато зручніше. 
 
-Let's use a thin promise wrapper <https://github.com/jakearchibald/idb> further in this chapter. It creates a global `idb` object with [promisified](info:promisify) IndexedDB methods.
+Давайте використаємо тонку обгортку промісів <https://github.com/jakearchibald/idb> далі в цьому розділі. Вона створює глобальний об’єкт `idb` з методами IndexedDB [promisified](info:promisify).
 
-Then, instead of `onsuccess/onerror` we can write like this:
+Тоді замість `onsuccess/onerror` ми можемо написати так:
 
 ```js
 let db = await idb.openDB('store', 1, db => {
   if (db.oldVersion == 0) {
-    // perform the initialization
+    // виконати ініціалізацію
     db.createObjectStore('books', {keyPath: 'id'});
   }
 });
@@ -751,33 +751,33 @@ try {
 
 ```
 
-So we have all the sweet "plain async code" and "try..catch" stuff.
+Тож маємо все солоденьке «простий асинхронний код» та "try..catch".
 
-### Error handling
+### Обробка помилок
 
-If we don't catch an error, then it falls through, till the closest outer `try..catch`.
+Якщо ми не ловимо помилку, вона провалюється до найближчого зовнішнього `try..catch`.
 
-An uncaught error becomes an "unhandled promise rejection" event on `window` object.
+Невиявлена помилка стає подією "необробленого відхилення промісу" на об’єкті `window`.
 
-We can handle such errors like this:
+Ми можемо обробляти такі помилки таким чином:
 
 ```js
 window.addEventListener('unhandledrejection', event => {
-  let request = event.target; // IndexedDB native request object
-  let error = event.reason; //  Unhandled error object, same as request.error
-  ...report about the error...
+  let request = event.target; // Власний об’єкт запиту IndexedDB
+  let error = event.reason; //  Необроблений об’єкт помилки, те саме, що request.error
+  ...повідомити про помилку...
 });
 ```
 
-### "Inactive transaction" pitfall
+### Підводний камінь «Неактивна транзакція».
 
 
-As we already know, a transaction auto-commits as soon as the browser is done with the current code and microtasks. So if we put a *macrotask* like `fetch` in the middle of a transaction, then the transaction won't wait for it to finish. It just auto-commits. So the next request in it would fail.
+Як ми вже знаємо, транзакція автоматично завершується, як тільки браузер закінчить роботу з поточним кодом і мікрозавданнями. Отже, якщо ми помістимо *макрозавдання* на кшталт `fetch` в середині транзакції, то транзакція не чекатиме завершення. Вона просто автоматично завершається. Отже, наступний запит буде невдалим.
 
 
-For a promise wrapper and `async/await` the situation is the same.
+Для обгортки промісів і `async/await` ситуація однакова.
 
-Here's an example of `fetch` in the middle of the transaction:
+Ось приклад `fetch` у середині транзакції:
 
 ```js
 let transaction = db.transaction("inventory", "readwrite");
@@ -787,52 +787,52 @@ await inventory.add({ id: 'js', price: 10, created: new Date() });
 
 await fetch(...); // (*)
 
-await inventory.add({ id: 'js', price: 10, created: new Date() }); // Error
+await inventory.add({ id: 'js', price: 10, created: new Date() }); // Помилка
 ```
 
-The next `inventory.add` after `fetch` `(*)` fails with an "inactive transaction" error, because the transaction is already committed and closed at that time.
+Наступний `inventory.add` після `fetch` `(*)` не вдається з помилкою "неактивна транзакція", оскільки на той момент транзакція вже завершена та закрита.
 
-The workaround is the same as when working with native IndexedDB: either make a new transaction or just split things apart.
-1. Prepare the data and fetch all that's needed first.
-2. Then save in the database.
+Обхідний шлях такий же, як і під час роботи з рідною IndexedDB: або зробіть нову транзакцію, або просто розділіть речі.
+1. Підготуйте дані та спершу отримайте все необхідне.
+2. Потім збережіть у базі даних.
 
-### Getting native objects
+### Отримання вбудованих об’єктів
 
-Internally, the wrapper performs a native IndexedDB request, adding `onerror/onsuccess` to it, and returns a promise that rejects/resolves with the result.
+Внутрішньо обгортка виконує запит IndexedDB, додаючи до нього `onerror/onsuccess`, і повертає проміс, який відхиляється/розв’язується з результатом.
 
-That works fine most of the time. The examples are at the lib page <https://github.com/jakearchibald/idb>.
+Це добре працює більшість часу. Приклади є на сторінці lib <https://github.com/jakearchibald/idb>.
 
-In few rare cases, when we need the original `request` object, we can access it as `promise.request` property of the promise:
+У кількох рідкісних випадках, коли нам потрібен оригінальний об’єкт `request`, ми можемо отримати до нього доступ як властивості `promise.request` промісу:
 
 ```js
-let promise = books.add(book); // get a promise (don't await for its result)
+let promise = books.add(book); // отримати проміс (не чекаємо результату)
 
-let request = promise.request; // native request object
-let transaction = request.transaction; // native transaction object
+let request = promise.request; // вбудований об’єкт запиту
+let transaction = request.transaction; // вбудований об’єкт транзакції
 
-// ...do some native IndexedDB voodoo...
+// ...працюємо з IndexedDB...
 
-let result = await promise; // if still needed
+let result = await promise; // якщо ще потрібно
 ```
 
-## Summary
+## Підсумки
 
-IndexedDB can be thought of as a "localStorage on steroids". It's a simple key-value database, powerful enough for offline apps, yet simple to use.
+IndexedDB можна розглядати як «локальне сховище на стероїдах». Це проста база даних ключ-значення, достатньо потужна для автономних програм, але проста у використанні.
 
-The best manual is the specification, [the current one](https://www.w3.org/TR/IndexedDB-2/) is 2.0, but few methods from [3.0](https://w3c.github.io/IndexedDB/) (it's not much different) are partially supported.
+Найкращий посібник — це специфікація. [Поточна](https://www.w3.org/TR/IndexedDB-2/) версія 2.0, але кілька методів із [3.0](https://w3c.github.io/IndexedDB/) (це мало чим відрізняється) частково підтримуються.
 
-The basic usage can be described with a few phrases:
+Використання можна описати кількома фразами:
 
-1. Get a promise wrapper like [idb](https://github.com/jakearchibald/idb).
-2. Open a database: `idb.openDb(name, version, onupgradeneeded)`
-    - Create object storages and indexes in `onupgradeneeded` handler or perform version update if needed.
-3. For requests:
-    - Create transaction `db.transaction('books')` (readwrite if needed).
-    - Get the object store `transaction.objectStore('books')`.
-4. Then, to search by a key, call methods on the object store directly.
-    - To search by an object field, create an index.
-5. If the data does not fit in memory, use a cursor.
+1. Підключити обгортку над промісами, наприклад [idb](https://github.com/jakearchibald/idb).
+2. Відкрити базу даних: `idb.openDb(name, version, onupgradeneeded)`
+    - Створити сховища об’єктів та індекси в обробнику `onupgradeneeded` або виконати оновлення версії, якщо потрібно.
+3. Для запитів:
+    - Створити транзакцію `db.transaction('books')` (можна вказати readwrite якщо потрібно).
+    - Отримати сховище об’єктів `transaction.objectStore('books')`.
+4. Потім для пошуку за ключем викликати методи безпосередньо в сховищі об’єктів.
+    - Для пошуку по полю об’єкта потрібно створити індекс.
+5. Використовувати курсор, якщо дані не поміщаються в пам’ять.
 
-Here's a small demo app:
+Ось невелика демонстраційна програма:
 
 [codetabs src="books" current="index.html"]
