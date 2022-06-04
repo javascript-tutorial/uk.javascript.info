@@ -1,80 +1,80 @@
 # Server Sent Events
 
-The [Server-Sent Events](https://html.spec.whatwg.org/multipage/comms.html#the-eventsource-interface) specification describes a built-in class `EventSource`, that keeps connection with the server and allows to receive events from it.
+Специфікація [Server-Sent Events](https://html.spec.whatwg.org/multipage/comms.html#the-eventsource-interface) описує вбудований клас `EventSource`, який підтримує з’єднання з сервером і дозволяє отримувати від нього події.
 
-Similar to `WebSocket`, the connection is persistent.
+Подібно до `WebSocket`, з’єднання є постійним.
 
-But there are several important differences:
+Але є кілька важливих відмінностей:
 
 | `WebSocket` | `EventSource` |
 |-------------|---------------|
-| Bi-directional: both client and server can exchange messages | One-directional: only server sends data |
-| Binary and text data | Only text |
-| WebSocket protocol | Regular HTTP |
+| Двонаправлений: клієнт і сервер можуть обмінюватися повідомленнями | Односпрямований: дані надсилає лише сервер |
+| Двійкові та текстові дані | Тільки текст |
+| WebSocket протокол | Звичайний HTTP |
 
-`EventSource` is a less-powerful way of communicating with the server than `WebSocket`.
+`EventSource` є менш потужним способом зв’язку з сервером, ніж `WebSocket`.
 
-Why should one ever use it?
+Навіщо його використовувати?
 
-The main reason: it's simpler. In many applications, the power of `WebSocket` is a little bit too much.
+Основна причина: він простіший. У багатьох програмах потужність `WebSocket` є дещо занадто великою.
 
-We need to receive a stream of data from server: maybe chat messages or market prices, or whatever. That's what `EventSource` is good at. Also it supports auto-reconnect, something  we need to implement manually with `WebSocket`. Besides, it's a plain old HTTP, not a new protocol.
+Нам потрібно отримати потік даних із сервера: можливо, повідомлення в чаті чи ринкові ціни, чи що завгодно. Це те, у чому сильный `EventSource`. Також він підтримує автоматичне перепідключення, що зазвичай потрібно реалізовувати вручну за допомогою `WebSocket`. Крім того, це звичайний старий HTTP, а не новий протокол.
 
-## Getting messages
+## Отримання повідомлень
 
-To start receiving messages, we just need to create `new EventSource(url)`.
+Щоб почати отримувати повідомлення, необхідно створити `new EventSource(url)`.
 
-The browser will connect to `url` and keep the connection open, waiting for events.
+Браузер підключиться до `url` і залишить з’єднання відкритим, чекаючи на події.
 
-The server should respond with status 200 and the header `Content-Type: text/event-stream`, then keep the connection and write messages into it in the special format, like this:
+Сервер повинен відповісти статусом 200 і заголовком `Content-Type: text/event-stream`, а потім зберегти з’єднання та писати повідомлення в спеціальному форматі, наприклад:
 
 ```
-data: Message 1
+data: Повідомлення 1
 
-data: Message 2
+data: Повідомлення 2
 
-data: Message 3
-data: of two lines
+data: Повідомлення 3
+data: з двох рядків
 ```
 
-- A message text goes after `data:`, the space after the colon is optional.
-- Messages are delimited with double line breaks `\n\n`.
-- To send a line break `\n`, we can immediately send one more `data:` (3rd message above).
+- Текст повідомлення йде після `data:`, пробіл після двокрапки необов’язковий.
+- Повідомлення розділені подвійними розривами рядків `\n\n`.
+- Щоб надіслати розрив рядка `\n`, ми можемо негайно надіслати ще одне `data:` (3-е повідомлення вище).
 
-In practice, complex messages are usually sent JSON-encoded. Line-breaks are encoded as `\n` within them, so multiline `data:` messages are not necessary.
+На практиці складні повідомлення зазвичай надсилаються в кодуванні JSON. Розриви рядків у них кодуються як `\n`, тому багаторядкові повідомлення `data:` не потрібні.
 
-For instance:
+Наприклад:
 
 ```js
-data: {"user":"John","message":"First line*!*\n*/!* Second line"}
+data: {"user":"Тарас","message":"Перший рядок*!*\n*/!* Другий рядок"}
 ```
 
-...So we can assume that one `data:` holds exactly one message.
+...Отже, можемо припустити, що один `data:` містить рівно одне повідомлення.
 
-For each such message, the `message` event is generated:
+Для кожного такого повідомлення генерується подія `message`:
 
 ```js
 let eventSource = new EventSource("/events/subscribe");
 
 eventSource.onmessage = function(event) {
-  console.log("New message", event.data);
-  // will log 3 times for the data stream above
+  console.log("Нове повідомлення", event.data);
+  // буде зареєстровано 3 рази для потоку даних вище
 };
 
-// or eventSource.addEventListener('message', ...)
+// чи eventSource.addEventListener('message', ...)
 ```
 
-### Cross-origin requests
+### Запити з перехресних доменів
 
-`EventSource` supports cross-origin requests, like `fetch` and any other networking methods. We can use any URL:
+`EventSource` підтримує запити між різними джерелами, як-от `fetch` та будь-які інші мережеві методи. Ми можемо використовувати будь-яку URL-адресу:
 
 ```js
 let source = new EventSource("https://another-site.com/events");
 ```
 
-The remote server will get the `Origin` header and must respond with `Access-Control-Allow-Origin` to proceed.
+Віддалений сервер отримає заголовок `Origin` і повинен відповісти `Access-Control-Allow-Origin` , щоб продовжити.
 
-To pass credentials, we should set the additional option `withCredentials`, like this:
+Щоб передати облікові дані, ми повинні встановити додатковий параметр `withCredentials`, наприклад:
 
 ```js
 let source = new EventSource("https://another-site.com/events", {
@@ -82,30 +82,30 @@ let source = new EventSource("https://another-site.com/events", {
 });
 ```
 
-Please see the chapter <info:fetch-crossorigin> for more details about cross-origin headers.
+Будь ласка, перегляньте розділ <info:fetch-crossorigin>, щоб дізнатися більше про заголовки з перехресними джерелами.
 
 
-## Reconnection
+## Повторне з’єднання
 
-Upon creation, `new EventSource` connects to the server, and if the connection is broken -- reconnects.
+Після створення `new EventSource` підключається до сервера, і якщо з’єднання розривається - автоматично підключається знову.
 
-That's very convenient, as we don't have to care about it.
+Це дуже зручно, оскільки не потрібно дбати про це.
 
-There's a small delay between reconnections, a few seconds by default.
+Між повторними з’єднаннями є невелика затримка, за замовчуванням кілька секунд.
 
-The server can set the recommended delay using `retry:` in response (in milliseconds):
+Сервер може встановити рекомендовану затримку, використовуючи `retry:` у відповідь (у мілісекундах):
 
 ```js
 retry: 15000
-data: Hello, I set the reconnection delay to 15 seconds
+data: Привіт, я встановив затримку повторного з’єднання на 15 секунд
 ```
 
-The `retry:` may come both together with some data, or as a standalone message.
+`retry:` може надсилатись як разом із деякими даними, так і окремим повідомленням.
 
-The browser should wait that many milliseconds before reconnecting. Or longer, e.g. if the browser knows (from OS) that there's no network connection at the moment, it may wait until the connection appears, and then retry.
+Браузер повинен зачекати вказану кількість мілісекунд перед повторним з’єднанням. Або довше, напр. якщо браузер знає (з ОС), що на даний момент немає підключення до мережі, він може зачекати, доки з’єднання з’явиться, а потім повторити спробу.
 
-- If the server wants the browser to stop reconnecting, it should respond with HTTP status 204.
-- If the browser wants to close the connection, it should call `eventSource.close()`:
+- Якщо сервер бажає, щоб браузер припинив повторне з’єднання, він повинен відповісти HTTP статусом 204.
+- Якщо браузер хоче закрити з’єднання, він повинен викликати `eventSource.close()`:
 
 ```js
 let eventSource = new EventSource(...);
@@ -113,40 +113,40 @@ let eventSource = new EventSource(...);
 eventSource.close();
 ```
 
-Also, there will be no reconnection if the response has an incorrect `Content-Type` or its HTTP status differs from 301, 307, 200 and 204. In such cases the `"error"` event will be emitted, and the browser won't reconnect.
+Крім того, не буде повторного з’єднання, якщо відповідь містить неправильний `Content-Type` або його статус HTTP відрізняється від 301, 307, 200 і 204. У таких випадках буде створено подію `"помилка"`, і браузер не підключатиметься повторно.
 
 ```smart
-When a connection is finally closed, there's no way to "reopen" it. If we'd like to connect again, just create a new `EventSource`.
+Коли з’єднання остаточно закрито, його неможливо «відкрити» знову. Якщо ми хочемо знову під’єднатися, доведеться створити новий `EventSource`.
 ```
 
-## Message id
+## Ідентифікатор повідомлення
 
-When a connection breaks due to network problems, either side can't be sure which messages were received, and which weren't.
+Коли з’єднання розривається через проблеми з мережею, жодна сторона не може бути впевнена, які повідомлення були отримані, а які ні.
 
-To correctly resume the connection, each message should have an `id` field, like this:
+Щоб правильно відновити з’єднання, кожне повідомлення має мати поле `id`, наприклад:
 
 ```
-data: Message 1
+data: Повідомлення 1
 id: 1
 
-data: Message 2
+data: Повідомлення 2
 id: 2
 
-data: Message 3
-data: of two lines
+data: Повідомлення 3
+data: з двох рядків
 id: 3
 ```
 
-When a message with `id:` is received, the browser:
+Коли повідомлення з `id:` отримане браузером:
 
-- Sets the property `eventSource.lastEventId` to its value.
-- Upon reconnection sends the header `Last-Event-ID` with that `id`, so that the server may re-send following messages.
+- Встановлюється значення властивості `eventSource.lastEventId`.
+- Після повторного підключення надсилається заголовок `Last-Event-ID` з цим `id`, щоб сервер міг повторно надіслати наступні повідомлення.
 
-```smart header="Put `id:` after `data:`"
-Please note: the `id` is appended below message `data` by the server, to ensure that `lastEventId` is updated after the message is received.
+```smart header="Зазначайте `id:` після `data:`"
+Зверніть увагу: `id` додається сервером під повідомленням `data` , щоб гарантувати, що `lastEventId` оновлюється після отримання повідомлення.
 ```
 
-## Connection status: readyState
+## Статус підключення: readyState
 
 The `EventSource` object has `readyState` property, that has one of three values:
 
