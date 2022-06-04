@@ -148,98 +148,98 @@ id: 3
 
 ## Статус підключення: readyState
 
-The `EventSource` object has `readyState` property, that has one of three values:
+Об'єкт `EventSource` має властивість `readyState`, яка має одне з трьох значень:
 
 ```js no-beautify
-EventSource.CONNECTING = 0; // connecting or reconnecting
-EventSource.OPEN = 1;       // connected
-EventSource.CLOSED = 2;     // connection closed
+EventSource.CONNECTING = 0; // підключення або перепідключення
+EventSource.OPEN = 1;       // сполучено
+EventSource.CLOSED = 2;     // з'єднання закрите
 ```
 
-When an object is created, or the connection is down, it's always `EventSource.CONNECTING` (equals `0`).
+Коли створюється об’єкт або з’єднання розривається `EventSource.CONNECTING` (дорівнює `0`).
 
-We can query this property to know the state of `EventSource`.
+Ми можемо запитати цю властивість, щоб дізнатися стан `EventSource`.
 
-## Event types
+## Типи подій
 
-By default `EventSource` object generates three events:
+Типово об’єкт `EventSource` генерує три події:
 
-- `message` -- a message received, available as `event.data`.
-- `open` -- the connection is open.
-- `error` -- the connection could not be established, e.g. the server returned HTTP 500 status.
+- `message` -- отримане повідомлення, доступне як `event.data`.
+- `open` -- з'єднання відкрите.
+- `error` -- не вдалося встановити з’єднання, напр. сервер повернув статус HTTP 500.
 
-The server may specify another type of event with `event: ...` at the event start.
+Сервер може вказати інший тип події з `event: ...` на початку події.
 
-For example:
+Наприклад:
 
 ```
 event: join
-data: Bob
+data: Боб
 
-data: Hello
+data: Привіт
 
 event: leave
-data: Bob
+data: Боб
 ```
 
-To handle custom events, we must use `addEventListener`, not `onmessage`:
+Щоб обробляти спеціальні події, ми повинні використовувати `addEventListener`, а не `onmessage`:
 
 ```js
 eventSource.addEventListener('join', event => {
-  alert(`Joined ${event.data}`);
+  alert(`Приєднався ${event.data}`);
 });
 
 eventSource.addEventListener('message', event => {
-  alert(`Said: ${event.data}`);
+  alert(`Сказав: ${event.data}`);
 });
 
 eventSource.addEventListener('leave', event => {
-  alert(`Left ${event.data}`);
+  alert(`Вийшов ${event.data}`);
 });
 ```
 
-## Full example
+## Повний приклад
 
-Here's the server that sends messages with `1`, `2`, `3`, then `bye` and breaks the connection.
+Ось сервер, який надсилає повідомлення з `1`, `2`, `3`, потім `bye` та розриває з'єднання.
 
-Then the browser automatically reconnects.
+Потім браузер автоматично відновить з’єднання.
 
 [codetabs src="eventsource"]
 
-## Summary
+## Резюме
 
-`EventSource` object automatically establishes a persistent connection and allows the server to send messages over it.
+Об’єкт `EventSource` автоматично встановлює постійне з’єднання і дозволяє серверу надсилати повідомлення через нього.
 
-It offers:
-- Automatic reconnect, with tunable `retry` timeout.
-- Message ids to resume events, the last received identifier is sent in `Last-Event-ID` header upon reconnection.
-- The current state is in the `readyState` property.
+Він пропонує:
+- Автоматичне перепідключення, з затримкою `retry` що налаштовується.
+- Ідентифікатори повідомлень для відновлення подій, останній отриманий id надсилається в заголовку `Last-Event-ID` після повторного з’єднання.
+- Поточний стан знаходиться у властивості `readyState`.
 
-That makes `EventSource` a viable alternative to `WebSocket`, as the latter is more low-level and lacks such built-in features (though they can be implemented).
+Це робить `EventSource` життєздатною альтернативою `WebSocket`, оскільки останній є більш низькорівневим і не має таких вбудованих функцій (хоча їх можна реалізувати).
 
-In many real-life applications, the power of `EventSource` is just enough.
+У багатьох реальних програмах потужності `EventSource` якраз достатньо.
 
-Supported in all modern browsers (not IE).
+Підтримується у всіх сучасних браузерах (не в IE).
 
-The syntax is:
+Синтаксис такий:
 
 ```js
 let source = new EventSource(url, [credentials]);
 ```
 
-The second argument has only one possible option: `{ withCredentials: true }`, it allows sending cross-origin credentials.
+Другий аргумент має лише один можливий варіант: `{ withCredentials: true }`, він дозволяє надсилати облікові дані між різними джерелами.
 
-Overall cross-origin security is same as for `fetch` and other network methods.
+Загальна безпека між різними джерелами така ж, як і для `fetch` та інших мережевих методів.
 
-### Properties of an `EventSource` object
+### Властивості об'єкта `EventSource`
 
 `readyState`
-: The current connection state: either `EventSource.CONNECTING (=0)`, `EventSource.OPEN (=1)` or `EventSource.CLOSED (=2)`.
+: Поточний стан підключення: або `EventSource.CONNECTING (=0)`, `EventSource.OPEN (=1)` чи `EventSource.CLOSED (=2)`.
 
 `lastEventId`
-: The last received `id`. Upon reconnection the browser sends it in the header `Last-Event-ID`.
+: Останній отриманний `id`. Після повторного з’єднання браузер надсилає його в заголовку `Last-Event-ID`.
 
-### Methods
+### Методик
 
 `close()`
 : Closes the connection.
