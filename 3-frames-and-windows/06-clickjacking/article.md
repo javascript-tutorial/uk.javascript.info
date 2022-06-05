@@ -1,59 +1,59 @@
-# The clickjacking attack
+# Clickjacking атака
 
-The "clickjacking" attack allows an evil page to click on a "victim site" *on behalf of the visitor*.
+Атака типу "clickjacking" (англ. "захоплення кліка") дозволяє шкідливій сторінці натиснути посилання на "сайт-жертви" *від імені відвідувача*.
 
-Many sites were hacked this way, including Twitter, Facebook, Paypal and other sites. They have all been fixed, of course.
+Багато сайтів були зламані подібним способом, включаючи Twitter, Facebook, Paypal та інші. Усі вони, звісно ж, зараз захищені.
 
-## The idea
+## Ідея
 
-The idea is very simple.
+Ідея дуже проста.
 
-Here's how clickjacking was done with Facebook:
+Ось як clickjacking було зроблено на Facebook:
 
-1. A visitor is lured to the evil page. It doesn't matter how.
-2. The page has a harmless-looking link on it (like "get rich now" or "click here, very funny").
-3. Over that link the evil page positions a transparent `<iframe>` with `src` from facebook.com, in such a way that the "Like" button is right above that link. Usually that's done with `z-index`.
-4. In attempting to click the link, the visitor in fact clicks the button.
+1. Відвідувача заманюють на шкідливу сторінку. Не важливо як.
+2. На сторінці є нешкідливе посилання (наприклад, "розбагатіти зараз" або "натисніть тут, дуже смішно").
+3. Над цим посиланням шкідлива сторінка розміщує прозорий `<iframe>` з `src` з facebook.com таким чином, що кнопка "Подобається" знаходиться прямо над цим посиланням. Зазвичай це робиться за допомогою `z-index`.
+4. Намагаючись натиснути посилання, відвідувач фактично натискає кнопку.
 
-## The demo
+## Демо
 
-Here's how the evil page looks. To make things clear, the `<iframe>` is half-transparent (in real evil pages it's fully transparent):
+Ось як виглядає шкідлива сторінка. Щоб було зрозуміло, `<iframe>` є напівпрозорим (на справжніх шкідливих сторінках він повністю прозорий):
 
 ```html run height=120 no-beautify
 <style>
-iframe { /* iframe from the victim site */
+iframe { /* iframe із сайту жертви */
   width: 400px;
   height: 100px;
   position: absolute;
   top:0; left:-20px;
 *!*
-  opacity: 0.5; /* in real opacity:0 */
+  opacity: 0.5; /* насправді opacity:0 */
 */!*
   z-index: 1;
 }
 </style>
 
-<div>Click to get rich now:</div>
+<div>Натисніть, щоб розбагатіти зараз:</div>
 
-<!-- The url from the victim site -->
+<!-- URL-адреса з сайту-жертви -->
 *!*
 <iframe src="/clickjacking/facebook.html"></iframe>
 
-<button>Click here!</button>
+<button>Натісніть!</button>
 */!*
 
-<div>...And you're cool (I'm a cool hacker actually)!</div>
+<div>...І ти крутий (насправді я крутий хакер)!</div>
 ```
 
-The full demo of the attack:
+Повна демонстрація атаки:
 
 [codetabs src="clickjacking-visible" height=160]
 
-Here we have a half-transparent `<iframe src="facebook.html">`, and in the example we can see it hovering over the button. A click on the button actually clicks on the iframe, but that's not visible to the user, because the iframe is transparent.
+Тут ми маємо напівпрозорий `<iframe src="facebook.html">`, і в прикладі ми бачимо його над кнопкою. Натискаючи кнопку користувач фактично натискає на iframe, але не бачить його, оскільки iframe прозорий.
 
-As a result, if the visitor is authorized on Facebook ("remember me" is usually turned on), then it adds a "Like". On Twitter that would be a "Follow" button.
+Як наслідок, якщо відвідувач авторизований у Facebook (як правило, "запам’ятати мене" включено), він додає "подобається". У Twitter це була б кнопка "Підписатися".
 
-Here's the same example, but closer to reality, with `opacity:0` for `<iframe>`:
+Ось той самий приклад, але ближчий до реальності, з `opacity:0` для `<iframe>`:
 
 [codetabs src="clickjacking" height=160]
 
