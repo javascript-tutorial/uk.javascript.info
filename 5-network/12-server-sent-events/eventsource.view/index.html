@@ -2,38 +2,38 @@
 <script>
 let eventSource;
 
-function start() { // when "Start" button pressed
+function start() { // коли кнопку "Пуск" натиснуто
   if (!window.EventSource) {
-    // IE or an old browser
-    alert("The browser doesn't support EventSource.");
+    // для IE чи іншого старого браузера
+    alert("Браузер не підтримує EventSource.");
     return;
   }
 
   eventSource = new EventSource('digits');
 
   eventSource.onopen = function(e) {
-    log("Event: open");
+    log("Подія: open");
   };
 
   eventSource.onerror = function(e) {
-    log("Event: error");
+    log("Подія: error");
     if (this.readyState == EventSource.CONNECTING) {
-      log(`Reconnecting (readyState=${this.readyState})...`);
+      log(`Повторне з’єднання (readyState=${this.readyState})...`);
     } else {
-      log("Error has occured.");
+      log("Сталася помилка.");
     }
   };
 
   eventSource.addEventListener('bye', function(e) {
-    log("Event: bye, data: " + e.data);
+    log("Подія: bye, дані: " + e.data);
   });
 
   eventSource.onmessage = function(e) {
-    log("Event: message, data: " + e.data);
+    log("Подія: message, дані: " + e.data);
   };
 }
 
-function stop() { // when "Stop" button pressed
+function stop() { // коли кнопку "Стоп" натиснуто
   eventSource.close();
   log("eventSource.close()");
 }
@@ -44,7 +44,7 @@ function log(msg) {
 }
 </script>
 
-<button onclick="start()">Start</button> Press the "Start" to begin.
+<button onclick="start()">Пуск</button> Натісніть "Пуск" для початку.
 <div id="logElem" style="margin: 6px 0"></div>
 
-<button onclick="stop()">Stop</button> "Stop" to finish.
+<button onclick="stop()">Стоп</button> "Стоп" для зупинки.
