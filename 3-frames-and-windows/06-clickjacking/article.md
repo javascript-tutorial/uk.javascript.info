@@ -57,23 +57,23 @@ iframe { /* iframe із сайту жертви */
 
 [codetabs src="clickjacking" height=160]
 
-All we need to attack -- is to position the `<iframe>` on the evil page in such a way that the button is right over the link. So that when a user clicks the link, they actually click the button. That's usually doable with CSS.
+Все, що нам потрібно для атаки – це розташувати `<iframe>` на шкідливій сторінці таким чином, щоб кнопка знаходилась прямо над посиланням. Таким чином, коли користувач натискає посилання, він фактично натискає кнопку. Зазвичай це можна зробити за допомогою CSS.
 
-```smart header="Clickjacking is for clicks, not for keyboard"
-The attack only affects mouse actions (or similar, like taps on mobile).
+```smart header="Clickjacking призначений для кліків, а не для клавіатури"
+Атака впливає лише на дії миші (або подібні, як-от натискання на мобільному пристрої).
 
-Keyboard input is much difficult to redirect. Technically, if we have a text field to hack, then we can position an iframe in such a way that text fields overlap each other. So when a visitor tries to focus on the input they see on the page, they actually focus on the input inside the iframe.
+Введення з клавіатури дуже важко переспрямувати. Технічно, якщо у нас є текстове поле для зламу, ми можемо розташувати iframe таким чином, щоб текстові поля перекривали одне одного. Тому, коли відвідувач намагається сфокосуватися на текстовому полі, яке він бачить на сторінці, він фактично фокусується на полі всередині iframe.
 
-But then there's a problem. Everything that the visitor types will be hidden, because the iframe is not visible.
+Але тоді виникає проблема. Усе, що введе відвідувач, буде приховано, оскільки iframe не видно.
 
-People will usually stop typing when they can't see their new characters printing on the screen.
+Люди зазвичай припиняють вводити текст, коли не бачать, як на екрані друкуються нові символи.
 ```
 
-## Old-school defences (weak)
+## Приклади слабкого захисту
 
-The oldest defence is a bit of JavaScript which forbids opening the page in a frame (so-called "framebusting").
+Найстаріший спосіб захисту — це код JavaScript, який забороняє відкривати сторінку у фреймі (так званий "framebusting").
 
-That looks like this:
+Це виглядає так:
 
 ```js
 if (top != window) {
@@ -81,15 +81,15 @@ if (top != window) {
 }
 ```
 
-That is: if the window finds out that it's not on top, then it automatically makes itself the top.
+Тобто: якщо вікно дізнається, що воно не зверху, то воно автоматично стає верхнім.
 
-This not a reliable defence, because there are many ways to hack around it. Let's cover a few.
+Це не надійніший засіб захисту, тому що є багато способів зламати його. Давайте розглянемо декілька.
 
-### Blocking top-navigation
+### Блокування top-навігації
 
-We can block the transition caused by changing `top.location` in  [beforeunload](info:onload-ondomcontentloaded#window.onbeforeunload) event handler.
+Ми можемо заблокувати перехід, викликаний зміною `top.location` в обробнику події [beforeunload](info:onload-ondomcontentloaded#window.onbeforeunload).
 
-The top page (enclosing one, belonging to the hacker) sets a preventing handler to it, like this:
+Зовнішня сторінка (що належить хакеру) встановлює обробник події для запобігання, наприклад:
 
 ```js
 window.onbeforeunload = function() {
@@ -97,11 +97,11 @@ window.onbeforeunload = function() {
 };
 ```
 
-When the `iframe` tries to change `top.location`, the visitor gets a message asking them whether they want to leave.
+Коли `iframe` намагається змінити `top.location`, відвідувач отримує повідомлення із запитом, чи хоче він піти.
 
-In most cases the visitor would answer negatively because they don't know about the iframe - all they can see is the top page, there's no reason to leave. So `top.location` won't change!
+У більшості випадків відвідувач відповість негативно, тому що він не знає про iframe – все, що він бачить, це верхня сторінка, немає причин залишати її. Тож `top.location` не зміниться!
 
-In action:
+В дії:
 
 [codetabs src="top-location"]
 
