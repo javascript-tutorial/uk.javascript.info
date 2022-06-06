@@ -105,42 +105,42 @@ window.onbeforeunload = function() {
 
 [codetabs src="top-location"]
 
-### Sandbox attribute
+### Атрибут sandbox
 
-One of the things restricted by the `sandbox` attribute is navigation. A sandboxed iframe may not change `top.location`.
+Однією з речей, обмежених атрибутом `sandbox` є навігація. Ізольований iframe може не змінювати `top.location`.
 
-So we can add the iframe with `sandbox="allow-scripts allow-forms"`. That would relax the restrictions, permitting scripts and forms. But we omit `allow-top-navigation` so that changing `top.location` is forbidden.
+Тож ми можемо додати iframe за допомогою `sandbox="allow-scripts allow-forms"`. Це послабить обмеження, дозволивши сценарії та форми. Але ми опускаємо `allow-top-navigation`, щоб заборонити зміну `top.location`.
 
-Here's the code:
+Ось код:
 
 ```html
 <iframe *!*sandbox="allow-scripts allow-forms"*/!* src="facebook.html"></iframe>
 ```
 
-There are other ways to work around that simple protection too.
+Є й інші способи обходу цього простого захисту.
 
-## X-Frame-Options
+## Опції X-Frame
 
-The server-side header `X-Frame-Options` can permit or forbid displaying the page inside a frame.
+Заголовок на стороні сервера `X-Frame-Options` може дозволяти або забороняти відображення сторінки всередині фрейму.
 
-It must be sent exactly as HTTP-header: the browser will ignore it if found in HTML `<meta>` tag. So, `<meta http-equiv="X-Frame-Options"...>` won't do anything.
+Він має бути надісланий точно як HTTP-заголовок: браузер проігнорує його, якщо знайде в HTML `<meta>` тегу. Отже, `<meta http-equiv="X-Frame-Options"...>` нічого не дасть.
 
-The header may have 3 values:
+Заголовок може мати 3 значення:
 
 
 `DENY`
-: Never ever show the page inside a frame.
+: Ніколи не показувати сторінку всередині фрейму.
 
 `SAMEORIGIN`
-: Allow inside a frame if the parent document comes from the same origin.
+: Дозволити всередині фрейму, якщо батьківський документ походить із того самого джерела.
 
 `ALLOW-FROM domain`
-: Allow inside a frame if the parent document is from the given domain.
+: Дозволити всередині фрейму, якщо батьківський документ із заданого домену.
 
-For instance, Twitter uses `X-Frame-Options: SAMEORIGIN`.
+Наприклад, Twitter використовує `X-Frame-Options: SAMEORIGIN`.
 
 ````online
-Here's the result:
+Ось результат:
 
 ```html
 <iframe src="https://twitter.com"></iframe>
@@ -149,16 +149,16 @@ Here's the result:
 <!-- ebook: prerender/ chrome headless dies and timeouts on this iframe -->
 <iframe src="https://twitter.com"></iframe>
 
-Depending on your browser, the `iframe` above is either empty or alerting you that the browser won't permit that page to be navigating in this way.
+Залежно від вашого браузера, `iframe` вище або порожній, або попереджає вас про те, що браузер не дозволяє відобразити цю сторінку.
 ````
 
-## Showing with disabled functionality
+## Відображення з вимкненою функціональністю
 
-The `X-Frame-Options` header has a side-effect. Other sites won't be able to show our page in a frame, even if they have good reasons to do so.
+Заголовок `X-Frame-Options` має побічний ефект. Інші сайти не зможуть показати нашу сторінку у фреймі, навіть якщо у них є для цього вагомі причини.
 
-So there are other solutions... For instance, we can "cover" the page with a `<div>` with styles `height: 100%; width: 100%;`, so that it will intercept all clicks. That `<div>` is to be removed if `window == top` or if we figure out that we don't need the protection.
+Тому є інші рішення...Наприклад, ми можемо "покрити" сторінку `<div>` зі стилями `height: 100%; width: 100%;`, щоб він перехоплював усі клацання. Цей `<div>` можна видалити, якщо `window == top` або якщо ми зрозуміли, що захист нам не потрібен.
 
-Something like this:
+Щось на зразок цього:
 
 ```html
 <style>
@@ -173,39 +173,39 @@ Something like this:
 </style>
 
 <div id="protector">
-  <a href="/" target="_blank">Go to the site</a>
+  <a href="/" target="_blank">Перейти на сайт</a>
 </div>
 
 <script>
-  // there will be an error if top window is from the different origin
-  // but that's ok here
+  // буде помилка, якщо верхнє вікно має інше походження
+  // але тут гаразд
   if (top.document.domain == document.domain) {
     protector.remove();
   }
 </script>
 ```
 
-The demo:
+Демо:
 
 [codetabs src="protector"]
 
-## Samesite cookie attribute
+## Атрибут cookie: samesite 
 
-The `samesite` cookie attribute can also prevent clickjacking attacks.
+Атрибут cookie `samesite` також може запобігти атакам клікджекінгу.
 
-A cookie with such attribute is only sent to a website if it's opened directly, not via a frame, or otherwise. More information in the chapter <info:cookie#samesite>.
+Файл cookie з таким атрибутом надсилається на веб-сайт, лише якщо його відкрито безпосередньо, а не через фрейм чи іншим чином. Більше інформації в розділі <info:cookie#samesite>.
 
-If the site, such as Facebook, had `samesite` attribute on its authentication cookie, like this:
+Якби сайт, наприклад Facebook, при аутентифікації мав атрибут `samesite` у файлі cookie , наприклад:
 
 ```
 Set-Cookie: authorization=secret; samesite
 ```
 
-...Then such cookie wouldn't be sent when Facebook is open in iframe from another site. So the attack would fail.
+...Тоді такий файл cookie не надсилатиметься, коли Facebook буде відкрито в iframe з іншого сайту. Тож атака не вдасться.
 
-The `samesite` cookie attribute will not have an effect when cookies are not used. This may allow other websites to easily show our public, unauthenticated pages in iframes.
+Атрибут cookie `samesite` не матиме ефекту, якщо файли cookie не використовуються. Це може дозволити іншим веб-сайтам легко показувати наші загальнодоступні, неавтентифіковані сторінки в iframes.
 
-However, this may also allow clickjacking attacks to work in a few limited cases. An anonymous polling website that prevents duplicate voting by checking IP addresses, for example, would still be vulnerable to clickjacking because it does not authenticate users using cookies.
+Однак це також може дозволяти атакам за допомогою clickjacking працювати в кількох обмежених випадках. Наприклад, веб-сайт анонімного опитування, який запобігає дублюванню голосування шляхом перевірки IP-адреси, все одно буде вразливим до клікджекінгу, оскільки він не автентифікує користувачів за допомогою файлів cookie.
 
 ## Summary
 
