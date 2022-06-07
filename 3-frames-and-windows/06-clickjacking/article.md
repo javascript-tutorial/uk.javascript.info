@@ -107,7 +107,7 @@ window.onbeforeunload = function() {
 
 ### Атрибут sandbox
 
-Однією з речей, обмежених атрибутом `sandbox` є навігація. Ізольований iframe може не змінювати `top.location`.
+Однією з речей, які можна обмежити атрибутом `sandbox` є навігація. Ізольований iframe може не змінювати `top.location`.
 
 Тож ми можемо додати iframe за допомогою `sandbox="allow-scripts allow-forms"`. Це послабить обмеження, дозволивши сценарії та форми. Але ми опускаємо `allow-top-navigation`, щоб заборонити зміну `top.location`.
 
@@ -132,10 +132,10 @@ window.onbeforeunload = function() {
 : Ніколи не показувати сторінку всередині фрейму.
 
 `SAMEORIGIN`
-: Дозволити всередині фрейму, якщо батьківський документ походить із того самого джерела.
+: Дозволити показ всередині фрейму, якщо батьківський документ походить із того самого джерела.
 
 `ALLOW-FROM domain`
-: Дозволити всередині фрейму, якщо батьківський документ із заданого домену.
+: Дозволити показ всередині фрейму, якщо батьківський документ із заданого домену.
 
 Наприклад, Twitter використовує `X-Frame-Options: SAMEORIGIN`.
 
@@ -207,15 +207,15 @@ Set-Cookie: authorization=secret; samesite
 
 Однак це також може дозволяти атакам за допомогою clickjacking працювати в кількох обмежених випадках. Наприклад, веб-сайт анонімного опитування, який запобігає дублюванню голосування шляхом перевірки IP-адреси, все одно буде вразливим до клікджекінгу, оскільки він не автентифікує користувачів за допомогою файлів cookie.
 
-## Summary
+## Резюме
 
-Clickjacking is a way to "trick" users into clicking on a victim site without even knowing what's happening. That's dangerous if there are important click-activated actions.
+Clickjacking  — це спосіб «обдурити» користувачів, щоб вони натиснули на сайт-жертву, навіть не знаючи, що відбувається. Це небезпечно, якщо є важливі дії, активовані кліком.
 
-A hacker can post a link to their evil page in a message, or lure visitors to their page by some other means. There are many variations.
+Хакер може розмістити в повідомленні посилання на свою шкідливу сторінку або заманити відвідувачів якимось іншим способом. Існує багато варіацій.
 
-From one perspective -- the attack is "not deep": all a hacker is doing is intercepting a single click. But from another perspective, if the hacker knows that after the click another control will appear, then they may use cunning messages to coerce the user into clicking on them as well.
+З однієї точки зору — атака «не глибока»: все, що робить хакер, це перехоплює один клік. Але з іншої - якщо хакер знає, що після натискання з’явиться інший елемент керування, він може використовувати хитрі повідомлення, щоб змусити користувача натиснути на них.
 
-The attack is quite dangerous, because when we engineer the UI we usually don't anticipate that a hacker may click on behalf of the visitor. So vulnerabilities can be found in totally unexpected places.
+Атака досить небезпечна, тому що коли ми розробляємо інтерфейс користувача, ми зазвичай не очікуємо, що хакер може клацнути від імені відвідувача. Тому вразливість можна знайти в абсолютно несподіваних місцях.
 
-- It is recommended to use `X-Frame-Options: SAMEORIGIN` on pages (or whole websites) which are not intended to be viewed inside frames.
-- Use a covering `<div>` if we want to allow our pages to be shown in iframes, but still stay safe.
+- Рекомендується використовувати `X-Frame-Options: SAMEORIGIN` на сторінках (або веб-сайтах загалом), які не призначені для перегляду всередині фреймів.
+- Використовуйте `<div>` прикриття, якщо потрібно дозволити показ сторінок у iframes та залишатися в безпеці.
