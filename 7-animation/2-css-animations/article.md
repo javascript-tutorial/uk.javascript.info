@@ -1,16 +1,16 @@
-# CSS-animations
+# CSS-анімації
 
-CSS animations make it possible to do simple animations without JavaScript at all.
+CSS-анімація дає змогу робити прості анімації взагалі без JavaScript.
 
-JavaScript can be used to control CSS animations and make them even better, with little code.
+JavaScript можна використовувати для керування анімацією CSS та покращення її використовуючи трохи коду.
 
-## CSS transitions [#css-transition]
+## CSS-переходи [#css-transition]
 
-The idea of CSS transitions is simple. We describe a property and how its changes should be animated. When the property changes, the browser paints the animation.
+Ідея переходів CSS проста. Ми описуємо властивість і як її зміни мають бути анімовані. Коли властивість змінюється, браузер малює анімацію.
 
-That is, all we need is to change the property, and the fluid transition will be done by the browser.
+Тобто все, що нам потрібно, це змінити властивість, і плавний перехід буде здійснюватися браузером.
 
-For instance, the CSS below animates changes of `background-color` for 3 seconds:
+Наприклад, наведений нижче CSS анімує зміни `background-color` протягом 3 секунд:
 
 ```css
 .animated {
@@ -19,12 +19,12 @@ For instance, the CSS below animates changes of `background-color` for 3 seconds
 }
 ```
 
-Now if an element has `.animated` class, any change of `background-color` is animated during 3 seconds.
+Якщо елемент має клас `.animated`, будь-яка зміна `background-color` анімується протягом 3 секунд.
 
-Click the button below to animate the background:
+Натисніть кнопку нижче, щоб анімувати фон:
 
 ```html run autorun height=60
-<button id="color">Click me</button>
+<button id="color">Натисни мене</button>
 
 <style>
   #color {
@@ -40,19 +40,19 @@ Click the button below to animate the background:
 </script>
 ```
 
-There are 4 properties to describe CSS transitions:
+Є 4 властивості для опису переходів CSS:
 
 - `transition-property`
 - `transition-duration`
 - `transition-timing-function`
 - `transition-delay`
 
-We'll cover them in a moment, for now let's note that the common `transition` property allows declaring them together in the order: `property duration timing-function delay`, as well as animating multiple properties at once.
+Зараз ми їх розглянемо, а поки зазначимо, що загальна властивість `transition` дозволяє оголошувати їх разом у порядку: `property duration timing-function delay`, а також анімувати декілька властивостей одночасно.
 
-For instance, this button animates both `color` and `font-size`:
+Наприклад, ця кнопка анімує і `color`, і `font-size` одночасно:  
 
 ```html run height=80 autorun no-beautify
-<button id="growing">Click me</button>
+<button id="growing">Натисни мене</button>
 
 <style>
 #growing {
@@ -70,29 +70,29 @@ growing.onclick = function() {
 </script>
 ```
 
-Now, let's cover animation properties one by one.
+Тепер розглянемо властивості анімації по черзі.
 
 ## transition-property
 
-In `transition-property`, we write a list of properties to animate, for instance: `left`, `margin-left`, `height`, `color`. Or we could write `all`, which means "animate all properties".
+У `transition-property` ми пишемо список властивостей для анімації, наприклад: `left`, `margin-left`, `height`, `color`. Або можемо написати "all", що означає "анімувати всі властивості".
 
-Do note that, there are properties which can not be animated. However, [most of the generally used properties are animatable](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
+Зауважте, що є властивості, які не можна анімувати. Однак [більшість загальновживаних властивостей є анімаційними](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
 
 ## transition-duration
 
-In `transition-duration` we can specify how long the animation should take. The time should be in [CSS time format](http://www.w3.org/TR/css3-values/#time): in seconds `s` or milliseconds `ms`.
+У `transition-duration` вказуємл, скільки часу має займати анімація. Час має бути в [форматі часу CSS](http://www.w3.org/TR/css3-values/#time): в секундах `s` або мілісекундах `ms`.
 
 ## transition-delay
 
-In `transition-delay` we can specify the delay *before* the animation. For instance, if `transition-delay` is `1s` and `transition-duration` is `2s`, then the animation starts 1 second after the property change and the total duration will be 2 seconds.
+У `transition-delay` ми вказуємо затримку *перед* анімацією. Наприклад, якщо `transition-delay` дорівнює `1s`, а `transition-duration` - `2s`, то анімація починається через 1 секунду після зміни властивості, а загальна тривалість становитиме 2 секунди.  
 
-Negative values are also possible. Then the animation is shown immediately, but the starting point of the animation will be after given value (time). For example, if `transition-delay` is `-1s` and `transition-duration` is `2s`, then animation starts from the halfway point and total duration will be 1 second.
+Можливі й негативні значення. Тоді анімація відображається відразу, але початкова точка анімації буде після заданого значення (часу). Наприклад, якщо `transition-delay` дорівнює `-1s`, а `transition-duration` дорівнює 2с, то анімація починається з середини, а загальна тривалість становитиме 1 секунду.
 
-Here the animation shifts numbers from `0` to `9` using CSS `translate` property:
+Ця анімація переміщує числа з `0` на `9` за допомогою властивості `translate` CSS:
 
 [codetabs src="digits"]
 
-The `transform` property is animated like this:
+Властивість `transform` анімується так:
 
 ```css
 #stripe.animate {
@@ -102,25 +102,25 @@ The `transform` property is animated like this:
 }
 ```
 
-In the example above JavaScript adds the class `.animate` to the element -- and the animation starts:
+У наведеному вище прикладі JavaScript додає клас `.animate` до елемента -- і починається анімація:
 
 ```js
 stripe.classList.add('animate');
 ```
 
-We could also start it from somewhere in the middle of the transition, from an exact number, e.g. corresponding to the current second, using a negative `transition-delay`.
+Ми також могли б розпочати її десь із середини, точного вказавши число, напр. відповідно до поточної секунди, використовуючи негативне значення `transition-delay`.
 
-Here if you click the digit -- it starts the animation from the current second:
+Якщо ви зараз клацнете цифру - анімація почеться з поточної секунди:
 
 [codetabs src="digits-negative-delay"]
 
-JavaScript does it with an extra line:
+JavaScript робить це за допомогою додаткового рядка:
 
 ```js
 stripe.onclick = function() {
   let sec = new Date().getSeconds() % 10;
 *!*
-  // for instance, -3s here starts the animation from the 3rd second
+  // наприклад, -3s запускає анімацію з 3-ї секунди
   stripe.style.transitionDelay = '-' + sec + 's';
 */!*
   stripe.classList.add('animate');
@@ -129,60 +129,60 @@ stripe.onclick = function() {
 
 ## transition-timing-function
 
-The timing function describes how the animation process is distributed along its timeline. Will it start slowly and then go fast, or vice versa.
+Функція хронометражу описує, як процес анімації розподіляється по часовій шкалі. Почнеться повільно, а потім швидко, чи навпаки.
 
-It appears to be the most complicated property at first. But it becomes very simple if we devote a bit time to it.
+Спочатку це здається найскладнішою властивістю. Але все стає дуже просто, якщо ми приділимо цьому трохи часу.
 
-That property accepts two kinds of values: a Bezier curve or steps. Let's start with the curve, as it's used more often.
+Ця властивість приймає два види значень: крива Без'є або кроки. Почнемо з кривої, оскільки вона використовується частіше.
 
-### Bezier curve
+### Крива Без'є
 
-The timing function can be set as a [Bezier curve](/bezier-curve) with 4 control points that satisfy the conditions:
+Функцію хронометражу можна встановити як [криву Без'є](/bezier-curve) з 4 контрольними точками, які задовольняють умовам:
 
-1. First control point: `(0,0)`.
-2. Last control point: `(1,1)`.
-3. For intermediate points, the values of `x` must be in the interval `0..1`, `y` can be anything.
+1. Перша контрольна точка: `(0,0)`.
+2. Остання контрольна точка: `(1,1)`.
+3. Для проміжних точок значення `x` мають бути в інтервалі `0..1`, `y` може бути будь-яким.
 
-The syntax for a Bezier curve in CSS: `cubic-bezier(x2, y2, x3, y3)`. Here we need to specify only 2nd and 3rd control points, because the 1st one is fixed to `(0,0)` and the 4th one is `(1,1)`.
+Синтаксис кривої Без'є в CSS: `cubic-bezier(x2, y2, x3, y3)`. Тут нам потрібно вказати лише 2-ю і 3-ю контрольні точки, тому що 1-а фіксована на `(0,0)`, а 4-а — `(1,1)`.
 
-The timing function describes how fast the animation process goes.
+Функція часу описує, наскільки швидко проходить процес анімації.
 
-- The `x` axis is the time: `0` -- the start, `1` -- the end of `transition-duration`.
-- The `y` axis specifies the completion of the process: `0` -- the starting value of the property, `1` -- the final value.
+- Вісь `x` - це час: `0` - початок, `1` - кінець `transition-duration`.
+- Вісь `y` визначає завершення процесу: `0` -- початкове значення властивості, `1` -- кінцеве.
 
-The simplest variant is when the animation goes uniformly, with the same linear speed. That can be specified by the curve `cubic-bezier(0, 0, 1, 1)`.
+Найпростіший варіант – коли анімація йде рівномірно, з однаковою лінійною швидкістю. За допомогою кривої це можна визначити `cubic-bezier(0, 0, 1, 1)`.
 
-Here's how that curve looks:
+Ось як виглядає ця крива:
 
 ![](bezier-linear.svg)
 
-...As we can see, it's just a straight line. As the time (`x`) passes, the completion (`y`) of the animation steadily goes from `0` to `1`.
+...Як бачимо, це просто пряма лінія. З плином часу (`x`) завершення (`y`) анімації постійно змінюється від `0` до `1`.
 
-The train in the example below goes from left to right with the permanent speed (click it):
+Потяг у прикладі нижче рухається зліва направо з постійною швидкістю (натисніть):
 
 [codetabs src="train-linear"]
 
-The CSS `transition` is based on that curve:
+Властивість `transition` заснована на цій кривій:
 
 ```css
 .train {
   left: 0;
   transition: left 5s cubic-bezier(0, 0, 1, 1);
-  /* click on a train sets left to 450px, thus triggering the animation */
+  /* натискаючи на поїзд властивість left стає 450px, анімація запускається */
 }
 ```
 
-...And how can we show a train slowing down?
+...А як ми можемо показати, що потяг гальмує?
 
-We can use another Bezier curve: `cubic-bezier(0.0, 0.5, 0.5 ,1.0)`.
+Ми можемо використати іншу криву Без'є: `cubic-bezier(0.0, 0.5, 0.5 ,1.0)`.
 
-The graph:
+Графік:
 
 ![](train-curve.svg)
 
-As we can see, the process starts fast: the curve soars up high, and then slower and slower.
+Як бачимо, процес починається швидко: крива злітає вгору, а потім все повільніше.
 
-Here's the timing function in action (click the train):
+Ось функція часу в дії (натисніть на потяг):
 
 [codetabs src="train"]
 
@@ -191,35 +191,35 @@ CSS:
 .train {
   left: 0;
   transition: left 5s cubic-bezier(0, .5, .5, 1);
-  /* click on a train sets left to 450px, thus triggering the animation */
+  /* натискаючи на поїзд властивість left стає 450px, анімація запускається */
 }
 ```
 
-There are several built-in curves: `linear`, `ease`, `ease-in`, `ease-out` and `ease-in-out`.
+Існує кілька вбудованих кривих: `linear`, `ease`, `ease-in`, `ease-out` та `ease-in-out`.
 
-The `linear` is a shorthand for `cubic-bezier(0, 0, 1, 1)` -- a straight line, which we described above.
+`linear` це скорочення від `cubic-bezier(0, 0, 1, 1)` -- пряма лінія, яку ми вже описували.
 
-Other names are shorthands for the following `cubic-bezier`:
+Інші назви є скороченнями наступних `cubic-bezier`:
 
 | <code>ease</code><sup>*</sup> | <code>ease-in</code> | <code>ease-out</code> | <code>ease-in-out</code> |
 |-------------------------------|----------------------|-----------------------|--------------------------|
 | <code>(0.25, 0.1, 0.25, 1.0)</code> | <code>(0.42, 0, 1.0, 1.0)</code> | <code>(0, 0, 0.58, 1.0)</code> | <code>(0.42, 0, 0.58, 1.0)</code> |
 | ![ease, figure](ease.svg) | ![ease-in, figure](ease-in.svg) | ![ease-out, figure](ease-out.svg) | ![ease-in-out, figure](ease-in-out.svg) |
 
-`*` -- by default, if there's no timing function, `ease` is used.
+`*` -- типово, якщо функція часу не встановлена, використовується `ease`.
 
-So we could use `ease-out` for our slowing down train:
+Тож ми могли б використовувати `ease-out` для нашого потягу, що сповільнюється:
 
 
 ```css
 .train {
   left: 0;
   transition: left 5s ease-out;
-  /* same as transition: left 5s cubic-bezier(0, .5, .5, 1); */
+  /* те саме як transition: left 5s cubic-bezier(0, .5, .5, 1); */
 }
 ```
 
-But it looks a bit differently.
+Але виглядає це трохи інакше.
 
 **A Bezier curve can make the animation exceed its range.**
 
