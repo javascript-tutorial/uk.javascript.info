@@ -221,54 +221,54 @@ CSS:
 
 Але виглядає це трохи інакше.
 
-**A Bezier curve can make the animation exceed its range.**
+**Крива Без'є може змусити анімацію вийти за межі її діапазону.**
 
-The control points on the curve can have any `y` coordinates: even negative or huge ones. Then the Bezier curve would also extend very low or high, making the animation go beyond its normal range.
+Контрольні точки на кривій можуть мати будь-які координати `y`: навіть негативні або величезні. Тоді крива Без'є також буде дуже низькою або високою, що змушує анімацію виходити за межі нормального діапазону.
 
-In the example below the animation code is:
+У наведеному нижче прикладі код анімації:
 ```css
 .train {
   left: 100px;
   transition: left 5s cubic-bezier(.5, -1, .5, 2);
-  /* click on a train sets left to 450px */
+  /* клік на потязі встановлює властивість left на 450px */
 }
 ```
 
-The property `left` should animate from `100px` to `400px`.
+Властивість `left` має бути анімованою від `100px` до `400px`.
 
-But if you click the train, you'll see that:
+Але якщо ви клацнете потяг, ви побачите, що:
 
-- First, the train goes *back*: `left` becomes less than `100px`.
-- Then it goes forward, a little bit farther than `400px`.
-- And then back again -- to `400px`.
+- Спочатку потяг повертається *назад*: `left` стає меншим ніж `100px`.
+- Потім він рухається вперед, трохи далі, ніж `400px`.
+- А потім знову назад -- до `400px`.
 
 [codetabs src="train-over"]
 
-Why it happens is pretty obvious if we look at the graph of the given Bezier curve:
+Чому це відбувається, стає зрозумілим, якщо ми подивимося на графік даної кривої Без'є:
 
 ![](bezier-train-over.svg)
 
-We moved the `y` coordinate of the 2nd point below zero, and for the 3rd point we made it over `1`, so the curve goes out of the "regular" quadrant. The `y` is out of the "standard" range `0..1`.
+Ми перемістили координату `y` 2-ї точки нижче нуля, а для 3-ї точки ми зробили її на `1`, тому крива виходить із "звичайного" квадранта. Координата `y` виходить за "стандартний" діапазон `0..1`.
 
-As we know, `y` measures "the completion of the animation process". The value `y = 0` corresponds to the starting property value and `y = 1` -- the ending value. So values `y<0` move the property beyond the starting `left` and `y>1` -- past the final `left`.
+Як відомо, `y` вимірює "завершення процесу анімації". Значення `y = 0` відповідає початковому значенню властивості, а `y = 1` -- кінцевому. Таким чином, значення `y<0` переміщує властивість за межі початкового `left` і `y>1` -- за останній `left`.
 
-That's a "soft" variant for sure. If we put `y` values like `-99` and `99` then the train would jump out of the range much more.
+Це точно "м'який" варіант. Якщо ми введемо значення `y` як-от `-99` та `99` то потяг вискочить із діапазону значно більше.
 
-But how do we make a Bezier curve for a specific task? There are many tools. For instance, we can do it on the site <http://cubic-bezier.com/>.
+Але як зробити криву Без’є для конкретного завдання? Інструментів багато. Наприклад, ми можемо це зробити на сайті <http://cubic-bezier.com/>.
 
-### Steps
+### Кроки
 
-The timing function `steps(number of steps[, start/end])` allows splitting an transition into multiple steps.
+Функція часу `steps(кількість кроків[, start/end])` дозволяє розділити перехід на кілька кроків.
 
-Let's see that in an example with digits.
+Побачимо це на прикладі з цифрами.
 
-Here's a list of digits, without any animations, just as a source:
+Ось список цифр, без жодної анімації, просто як джерело:
 
 [codetabs src="step-list"]
 
-We'll make the digits appear in a discrete way by making the part of the list outside of the red "window" invisible and shifting the list to the left with each step.
+Ми зробимо так, щоб цифри відображалися дискретно, роблячи частину списку за межами червоного «вікна» незримою та зміщуючи список ліворуч з кожним кроком.
 
-There will be 9 steps, a step-move for each digit:
+Буде 9 кроків, крок-хід для кожної цифри:
 
 ```css
 #stripe.animate  {
@@ -277,46 +277,46 @@ There will be 9 steps, a step-move for each digit:
 }
 ```
 
-In action:
+В дії:
 
 [codetabs src="step"]
 
-The first argument of `steps(9, start)` is the number of steps. The transform will be split into 9 parts (10% each). The time interval is automatically divided into 9 parts as well, so `transition: 9s` gives us 9 seconds for the whole animation – 1 second per digit.
+Першим аргументом `steps(9, start)` є кількість кроків. Перетворення буде розділено на 9 частин (по 10% кожна). Часовий інтервал також автоматично ділиться на 9 частин, тому `transition: 9s` дає нам 9 секунд на всю анімацію – 1 секунда на цифру.
 
-The second argument is one of two words: `start` or `end`.
+Другий аргумент - це одне з двох слів: `start` чи `end`.
 
-The `start` means that in the beginning of animation we need to make the first step immediately.
+Значення `start` означає, що на початку анімації нам потрібно негайно зробити перший крок.
 
-We can observe that during the animation: when we click on the digit it changes to `1` (the first step) immediately, and then changes in the beginning of the next second.
+Ми можемо бачити, що під час анімації: коли ми клацаємо по цифрі, вона відразу змінюється на `1` (перший крок), а потім змінюється на початку наступної секунди.
 
-The process is progressing like this:
+Процес протікає так:
 
-- `0s` -- `-10%` (first change in the beginning of the 1st second, immediately)
+- `0s` -- `-10%` (перша зміна на початку 1-ї секунди, відразу)
 - `1s` -- `-20%`
 - ...
 - `8s` -- `-90%`
-- (the last second shows the final value).
+- (остання секунда показує остаточне значення).
 
-The alternative value `end` would mean that the change should be applied not in the beginning, but at the end of each second.
+Альтернативне значення `end` означатиме, що зміну слід застосовувати не на початку, а в кінці кожної секунди.
 
-So the process for `steps(9, end)` would go like this:
+Отже, процес для `steps(9, end)` буде виглядати так:
 
-- `0s` -- `0` (during the first second nothing changes)
-- `1s` -- `-10%` (first change at the end of the 1st second)
+- `0s` -- `0` (протягом першої секунди нічого не змінюється)
+- `1s` -- `-10%` (перша зміна в кінці 1-ї секунди)
 - `2s` -- `-20%`
 - ...
 - `9s` -- `-90%`
 
-Here's `steps(9, end)` in action (note the pause between the first digit change):
+Ось `steps(9, end)` в дії (зверніть увагу на паузу між зміною першої цифри):
 
 [codetabs src="step-end"]
 
-There are also shorthand values:
+Існують також скорочені значення:
 
-- `step-start` -- is the same as `steps(1, start)`. That is, the animation starts immediately and takes 1 step. So it starts and finishes immediately, as if there were no animation.
-- `step-end` -- the same as `steps(1, end)`: make the animation in a single step at the end of `transition-duration`.
+- `step-start` -- те саме, що `steps(1, start)`. Тобто анімація починається відразу і займає 1 крок. Вона починається й закінчується одразу, ніби не було анімації.
+- `step-end` -- те саме, що `steps(1, end)`: створіть анімацію за один крок у кінці `transition-duration`.
 
-These values are rarely used, because that's not really animation, but rather a single-step change.
+Ці значення рідко використовуються, тому що це насправді не анімація, а однокрокова зміна.
 
 ## Event transitionend
 
