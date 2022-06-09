@@ -318,17 +318,17 @@ CSS:
 
 Ці значення рідко використовуються, тому що це насправді не анімація, а однокрокова зміна.
 
-## Event transitionend
+## Подія transitionend
 
-When the CSS animation finishes the `transitionend` event triggers.
+Коли закінчується CSS анімація, запускається подія `transitionend`.
 
-It is widely used to do an action after the animation is done. Also we can join animations.
+Вона широко використовується для виконання дії після завершення анімації. Також ми можемо приєднатися до анімації з її допомогою.
 
-For instance, the ship in the example below starts to sail there and back when clicked, each time farther and farther to the right:
+Наприклад, якщо натиснути на корабель у наведеному нижче прикладі, він починає плисти туди й назад, щоразу все далі й далі праворуч:
 
 [iframe src="boat" height=300 edit link]
 
-The animation is initiated by the function `go` that re-runs each time the transition finishes, and flips the direction:
+Анімація ініціюється функцією `go`, яка повторно запускається кожного разу, коли закінчується перехід, і повертає напрямок:
 
 ```js
 boat.onclick = function() {
@@ -337,11 +337,11 @@ boat.onclick = function() {
 
   function go() {
     if (times % 2) {
-      // sail to the right
+      // пливти праворуч
       boat.classList.remove('back');
       boat.style.marginLeft = 100 * times + 200 + 'px';
     } else {
-      // sail to the left
+      // пливти ліворуч
       boat.classList.add('back');
       boat.style.marginLeft = 100 * times - 200 + 'px';
     }
@@ -357,40 +357,40 @@ boat.onclick = function() {
 };
 ```
 
-The event object for `transitionend` has a few specific properties:
+Об’єкт події для `transitionend` має кілька конкретних властивостей:
 
 `event.propertyName`
-: The property that has finished animating. Can be good if we animate multiple properties simultaneously.
+: Властивість, яка завершила анімацію. Може бути корисна коли ми анімуємо кілька властивостей одночасно.
 
 `event.elapsedTime`
-: The time (in seconds) that the animation took, without `transition-delay`.
+: Час (у секундах), який займала анімація, без `transition-delay`.
 
-## Keyframes
+## Ключові кадри
 
-We can join multiple simple animations together using the `@keyframes` CSS rule.
+Ми можемо об’єднати кілька простих анімацій разом за допомогою правила CSS `@keyframes`.
 
-It specifies the "name" of the animation and rules - what, when and where to animate. Then using the `animation` property, we can attach the animation to the element and specify additional parameters for it.
+Воно визначає "ім’я" анімації та правила - що, коли і де анімувати. Використовуючи властивість `animation`, ми можемо приєднати анімацію до елемента та вказати додаткові параметри.
 
-Here's an example with explanations:
+Ось приклад із поясненнями:
 
 ```html run height=60 autorun="no-epub" no-beautify
 <div class="progress"></div>
 
 <style>
 *!*
-  @keyframes go-left-right {        /* give it a name: "go-left-right" */
-    from { left: 0px; }             /* animate from left: 0px */
-    to { left: calc(100% - 50px); } /* animate to left: 100%-50px */
+  @keyframes go-left-right {        /* ім’я анімації: "go-left-right" */
+    from { left: 0px; }             /* початок анімації від left: 0px */
+    to { left: calc(100% - 50px); } /* кінець анімації до left: 100%-50px */
   }
 */!*
 
   .progress {
 *!*
     animation: go-left-right 3s infinite alternate;
-    /* apply the animation "go-left-right" to the element
-       duration 3 seconds
-       number of times: infinite
-       alternate direction every time
+    /* застосувати анімацію "go-left-right" до еменета
+       тривалість 3 секунди
+       кількість разів: нескінченно
+       щоразу змінювати напрямок
     */
 */!*
 
@@ -403,11 +403,11 @@ Here's an example with explanations:
 </style>
 ```
 
-There are many articles about `@keyframes` and a [detailed specification](https://drafts.csswg.org/css-animations/).
+Є багато статей про `@keyframes` та [датальна специфікація](https://drafts.csswg.org/css-animations/).
 
-You probably won't need `@keyframes` often, unless everything is in constant motion on your sites.
+Ймовірно, `@keyframes` не знадобляться вам часто, хіба якщо на ваших сайтах все постійно рухається.
 
-## Performance
+## Продуктивність
 
 Most CSS properties can be animated, because most of them are numeric values. For instance, `width`, `color`, `font-size` are all numbers. When you animate them, the browser gradually changes these numbers frame by frame, creating a smooth effect.
 
