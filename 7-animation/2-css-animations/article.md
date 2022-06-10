@@ -409,39 +409,39 @@ boat.onclick = function() {
 
 ## Продуктивність
 
-Most CSS properties can be animated, because most of them are numeric values. For instance, `width`, `color`, `font-size` are all numbers. When you animate them, the browser gradually changes these numbers frame by frame, creating a smooth effect.
+Більшість властивостей CSS можна анімувати, оскільки більшість із них є числовими значеннями. Наприклад, `width`, `color`, `font-size` є числами. Коли ви анімуєте їх, браузер поступово змінює ці числа кадр за кадром, створюючи плавний ефект.
 
-However, not all animations will look as smooth as you'd like, because different CSS properties cost differently to change.
+Однак не всі анімації виглядатимуть так гладко, як хотілося б, оскільки різні властивості змінюються по-різному.
 
-In more technical details, when there's a style change, the browser goes through 3 steps to render the new look:
+Якщо говорити більше про технічні деталі, коли відбувається зміна стилю, браузер виконує 3 кроки для відтворення нового вигляду:
 
-1. **Layout**: re-compute the geometry and position of each element, then
-2. **Paint**: re-compute how everything should look like at their places, including background, colors,
-3. **Composite**: render the final results into pixels on screen, apply CSS transforms if they exist.
+1. **Макет**: перерахувати геометрію, а потім положення кожного елемента
+2. **Фарбування**: перерахувати, як все має виглядати на своїх місцях, включаючи фон, кольори,
+3. **Композиція**: відтворити кінцеві результати в пікселях на екрані, застосувати CSS-перетворення, якщо вони існують.
 
-During a CSS animation, this process repeats every frame. However, CSS properties that never affect geometry or position, such as `color`, may skip the Layout step. If a `color` changes, the browser  doesn't calculate any new geometry, it goes to Paint -> Composite. And there are few properties that directly go to Composite. You can find a longer list of CSS properties and which stages they trigger at <https://csstriggers.com>.
+Під час CSS-анімації цей процес повторюється для кожного кадра. Однак властивості CSS, які ніколи не впливають на геометрію або положення, наприклад, `color`, можуть пропускатись кроці макета. Якщо `color` змінюється, браузер не обчислює нову геометрію, він переходить до кроків Фарбування -> Композиція. І є кілька властивостей, які безпосередньо переходять до Композиції. Ви можете знайти довший список властивостей CSS та на яких етапах вони запускаються тут <https://csstriggers.com>.
 
-The calculations may take time, especially on pages with many elements and a complex layout. And the delays are actually visible on most devices, leading to "jittery", less fluid animations.
+Обчислення може зайняти багато часу, особливо на сторінках із великою кількістю елементів і складним макетом. І затримки фактично помітні на більшості пристроїв, що призводить до «тривожності», менш плавної анімації.
 
-Animations of properties that skip the Layout step are faster. It's even better if Paint is skipped too.
+Анімація властивостей, які пропускають крок макета, швидше. Навіть ліпше, ніж у випадку з пропусканням кроку фарбування.
 
-The `transform` property is a great choice, because:
-- CSS transforms affect the target element box as a whole (rotate, flip, stretch, shift it).
-- CSS transforms never affect neighbour elements.
+Властивість `transform` є чудовим вибором, оскільки:
+- Перетворення CSS впливають на блок цільового елемента в цілому (повертають, перевертають, розтягують, зміщують його).
+- CSS-перетворення ніколи не впливають на сусідні елементи.
 
-...So browsers apply `transform` "on top" of existing Layout and Paint calculations, in the Composite stage.
+...Тому браузери застосовують `transform` "попереду" наявних обчислень Макету та Фарбування на етапі Композиції.
 
-In other words, the browser calculates the Layout (sizes, positions), paints it with colors, backgrounds, etc at the Paint stage, and then applies `transform` to element boxes that need it.
+Іншими словами, браузер обчислює макет (розміри, положення), розфарбовує його за допомогою colors, background тощо на етапі Фарбування, а потім застосовує `transform` до блоків елементів, які цього потребують.
 
-Changes (animations) of the `transform` property never trigger Layout and Paint steps. More than that, the browser  leverages the graphics accelerator (a special chip on the CPU or graphics card) for CSS transforms, thus making them very efficient.
+Зміни (анімації) властивості `transform` ніколи не запускають кроки Макет та Фарбування. Більше того, браузер використовує графічний прискорювач (спеціальний чіп на ЦП або відеокарті) для CSS-перетворень, що робить їх дуже ефективними.
 
-Luckily, the `transform` property is very powerful. By using `transform` on an element, you could rotate and flip it, stretch and shrink it, move it around, and [much more](https://developer.mozilla.org/docs/Web/CSS/transform#syntax). So instead of `left/margin-left` properties we can use `transform: translateX(…)`, use `transform: scale` for increasing element size, etc.
+На щастя, властивість `transform` дуже потужна. Використовуючи `transform` для елемента, ви можете обертати та повертати його, розтягувати та зменшувати, переміщувати та [багато іншого](https://developer.mozilla.org/docs/Web/CSS/transform#syntax ). Тому замість властивостей `left/margin-left` ми можемо використовувати `transform: translateX(…)`, `transform: scale` для збільшення розміру елемента, тощо.
 
-The `opacity` property also never triggers Layout (also skips Paint in Mozilla Gecko). We can use it for show/hide or fade-in/fade-out effects.
+Властивість `opacity` ніколи не запускає Макет (в Mozilla Gecko також пропускається Фарбування). Ми можемо використовувати його для ефектів відображення/приховування або посилення/згасання.
 
-Paring `transform` with `opacity` can usually solve most of our needs, providing fluid, good-looking animations.
+Поєднання `transform` з `opacity` зазвичай може вирішувати більшість наших потреб, забезпечуючи плавну, гарну анімацію.
 
-For example, here clicking on the `#boat` element adds the class with `transform: translateX(300)` and `opacity: 0`, thus making it move `300px` to the right and disappear:
+Наприклад, тут клік на елемент `#boat` додає клас із `transform: translateX(300)` та `opacity: 0`, таким чином змушуючи його рухатись на `300px` праворуч і зникати:
 
 ```html run height=260 autorun no-beautify
 <img src="https://js.cx/clipart/boat.png" id="boat">
@@ -462,10 +462,10 @@ For example, here clicking on the `#boat` element adds the class with `transform
 </script>
 ```
 
-Here's a more complex example, with `@keyframes`:
+Ось більш складний приклад із `@keyframes`:
 
 ```html run height=80 autorun no-beautify
-<h2 onclick="this.classList.toggle('animated')">click me to start / stop</h2>
+<h2 onclick="this.classList.toggle('animated')">натисніть на мене, щоб почати/зупинити</h2>
 <style>
   .animated {
     animation: hello-goodbye 1.8s infinite;
@@ -488,23 +488,23 @@ Here's a more complex example, with `@keyframes`:
 </style>
 ```
 
-## Summary
+## Підсумки
 
-CSS animations allow smoothly (or step-by-step) animated changes of one or multiple CSS properties.
+Анімація CSS дозволяє плавно (або покроково) анімувати зміну однієї або кількох властивостей CSS.
 
-They are good for most animation tasks. We're also able to use JavaScript for animations, the next chapter is devoted to that.
+Вона гарна для більшості завданнь анімації. Ми також можемо використовувати JavaScript для анімації, цьому присвячений наступний розділ.
 
-Limitations of CSS animations compared to JavaScript animations:
+Обмеження анімації CSS порівняно з JavaScript:
 
 ```compare plus="CSS animations" minus="JavaScript animations"
-+ Simple things done simply.
-+ Fast and lightweight for CPU.
-- JavaScript animations are flexible. They can implement any animation logic, like an "explosion" of an element.
-- Not just property changes. We can create new elements in JavaScript as part of the animation.
++ Прості речі робляться просто.
++ Швидка та легкиа для процесора.
+- Анімації JavaScript є гнучкими. Вони можуть реалізувати будь-яку логіку анімації, навіть «вибух» елемента.
+- Не тільки властивості змінюються. В JavaScript ми можемо створювати нові елементи як частину анімації.
 ```
 
-In early examples in this chapter, we animate `font-size`, `left`, `width`, `height`, etc. In real life projects, we should use `transform: scale()` and `transform: translate()` for better performance.
+У перших прикладах цього розділу ми анімували `font-size`, `left`, `width`, `height` тощо. У реальних проектах ми повинні використовувати `transform: scale()` і `transform: translate()` для кращої продуктивності.
 
-The majority of animations can be implemented using CSS as described in this chapter. And the `transitionend` event allows JavaScript to be run after the animation, so it integrates fine with the code.
+Більшість анімацій можна реалізувати за допомогою CSS, як описано в цьому розділі. А подія `transitionend` дозволяє запускати JavaScript після анімації, тому вона добре інтегрується з кодом.
 
-But in the next chapter we'll do some JavaScript animations to cover more complex cases.
+Але в наступному розділі ми зробимо кілька анімацій JavaScript, щоб охопити більш складні випадки.
