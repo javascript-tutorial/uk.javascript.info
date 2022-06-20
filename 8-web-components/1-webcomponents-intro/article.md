@@ -71,6 +71,6 @@
 - [Custom elements](https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements) -- для визначення власних HTML елементів.
 - [Shadow DOM](https://dom.spec.whatwg.org/#shadow-trees) -- для створення внутрішнього DOM для компонента, прихованого від інших.
 - [CSS Scoping](https://drafts.csswg.org/css-scoping/) -- щоб оголошувати стилі, які застосовуються лише всередині Shadow DOM компонента.
-- [Event retargeting](https://dom.spec.whatwg.org/#retarget) та інші незначні речі, щоб користувацькі компоненти краще відповідали розробці.
+- [Event retargeting](https://dom.spec.whatwg.org/#retarget) та інші незначні речі, щоб нестандартні компоненти краще відповідали розробці.
 
 У наступному розділі ми детально розглянемо «користувацькі елементи» — фундаментальну і добре підтримувану функцію веб компонентів, яка сама по собі хороша.
