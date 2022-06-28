@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-35-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-36-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -120,6 +120,9 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="http://Instagram.com/yaroslavom"><img src="https://avatars.githubusercontent.com/u/72073598?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Yaroslav</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Ayaroslavom" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/ilvl"><img src="https://avatars.githubusercontent.com/u/16276298?v=4?s=70" width="70px;" alt=""/><br /><sub><b>ilvl</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Ailvl" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://hasiuk.netlify.com"><img src="https://avatars.githubusercontent.com/u/27961118?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Yurii Hasiuk</b></sub></a><br /><a href="#translation-yugako" title="Translation">🌍</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/PavloKokhaniuk"><img src="https://avatars.githubusercontent.com/u/81250556?v=4?s=70" width="70px;" alt=""/><br /><sub><b>PavloKokhaniuk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3APavloKokhaniuk" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
