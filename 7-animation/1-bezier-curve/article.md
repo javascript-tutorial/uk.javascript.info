@@ -1,201 +1,201 @@
-# Bezier curve
+# Крива Безьє
 
-Bezier curves are used in computer graphics to draw shapes, for CSS animation and in many other places.
+Криві Безьє використовують у комп’ютерній графіці для малювання гладких фігур, для CSS-анімації та у багатьох інших випадках.
 
-They are a very simple thing, worth to study once and then feel comfortable in the world of vector graphics and advanced animations.
+Це дуже проста річ, яку варто дослідити один раз, щоб надалі комфортно почуватись у світі векторної графіки та просунутих анімацій.
 
-## Control points
+## Контрольні точки
 
-A [bezier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve) is defined by control points.
+[Крива Безьє](https://uk.wikipedia.org/wiki/Крива_Безьє) задається контрольними точками.
 
-There may be 2, 3, 4 or more.
+Їх може бути 2, 3, 4 або й більше.
 
-For instance, two points curve:
+Ось, наприклад, крива з двома опорними точками:
 
 ![](bezier2.svg)
 
-Three points curve:
+Крива з трьома точками:
 
 ![](bezier3.svg)
 
-Four points curve:
+Крива з чотирма точками:
 
 ![](bezier4.svg)
 
-If you look closely at these curves, you can immediately notice:
+Якщо придивитись до цих кривих, можна одразу помітити наступне:
 
-1. **Points are not always on curve.** That's perfectly normal, later we'll see how the curve is built.
-2. **The curve order equals the number of points minus one**.
-For two points we have a linear curve (that's a straight line), for three points -- quadratic curve (parabolic), for four points -- cubic curve.
-3. **A curve is always inside the [convex hull](https://en.wikipedia.org/wiki/Convex_hull) of control points:**
+1. **Точки не завжди знаходяться на кривій.** Це цілком нормально, як саме будується крива ми побачимо пізніше.
+2. **Ступінь кривої дорівнює кількості точок мінус один**.
+Дві точки дають лінійну криву (по суті пряму лінію), три точки -- квадратичну криву (параболу), чотири точки -- кубічну криву.
+3. **Крива завжди знаходиться всередині [опуклої оболонки](https://uk.wikipedia.org/wiki/Опукла_оболонка), що утворена контрольними точками:**
 
     ![](bezier4-e.svg) ![](bezier3-e.svg)
 
-Because of that last property, in computer graphics it's possible to optimize intersection tests. If convex hulls do not intersect, then curves do not either. So checking for the convex hulls intersection first can give a very fast "no intersection" result. Checking the intersection of convex hulls is much easier, because they are rectangles, triangles and so on (see the picture above), much simpler figures than the curve.
+Остання властивість дозволяє оптимізувати пошук перетинів у комп’ютерній графіці. Криві не перетинаються, якщо їх опуклі оболонки не перетинаються. Тож попередня перевірка на перетин опуклих оболонок може вказати на відсутність перетину. Перевірка перетину опуклих оболонок значно легша, оскільки вони мають форму чотирикутника, трикутника тощо (дивіться малюнок вище), значно простіші фігури, ніж сама крива.
 
-**The main value of Bezier curves for drawing -- by moving the points the curve is changing *in intuitively obvious way*.**
+**Головна цінність кривих Безьє для малювання в тому, що пересування контрольних точок змінює криву *інтуїтивно зрозумілим чином*.**
 
-Try to move control points using a mouse in the example below:
+Спробуйте пересунути контрольні точки за допомогою миші в наступній демонстрації:
 
 [iframe src="demo.svg?nocpath=1&p=0,0,0.5,0,0.5,1,1,1" height=370]
 
-**As you can notice, the curve stretches along the tangential lines 1 -> 2 and 3 -> 4.**
+**Як ви могли помітити, крива простягається вздовж дотичних ліній 1 -> 2 та 3 -> 4.**
 
-After some practice it becomes obvious how to place points to get the needed curve. And by connecting several curves we can get practically anything.
+Після невеликої практики стає зрозуміло, як розташувати точки, щоб отримати бажану форму. А поєднавши декілька кривих ми можемо отримати практично будь-що.
 
-Here are some examples:
+Ось деякі приклади:
 
 ![](bezier-car.svg) ![](bezier-letter.svg) ![](bezier-vase.svg)
 
-## De Casteljau's algorithm
+## Алгоритм де Кастельє
 
-There's a mathematical formula for Bezier curves, but let's cover it a bit later, because
-[De Casteljau's algorithm](https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm) is identical to the mathematical definition and visually shows how it is constructed.
+Існує математична формула для кривих Безьє, але давайте розглянемо її трохи пізніше, оскільки
+[Алгоритм де Кастельє](https://uk.wikipedia.org/wiki/Алгоритм_де_Кастельє) ідентичний математичному визначенню і наглядно показує, як вона будується.
 
-First let's see the 3-points example.
+Для початку давайте розглянемо приклад з трьох точок.
 
-Here's the demo, and the explanation follow.
+Ось демонстрація, а після неї буде пояснення.
 
-Control points (1,2 and 3) can be moved by the mouse. Press the "play" button to run it.
+Контрольні точки (1, 2 і 3) можна посунути мишею. Натисніть кнопку "play", щоб запустити її.
 
 [iframe src="demo.svg?p=0,0,0.5,1,1,0&animate=1" height=370]
 
-**De Casteljau's algorithm of building the 3-point bezier curve:**
+**Алгоритм де Кастельє для побудови кривої Безьє з трьох точок:**
 
-1. Draw control points. In the demo above they are labeled: `1`, `2`, `3`.
-2. Build segments between control points 1 -> 2 -> 3. In the demo above they are <span style="color:#825E28">brown</span>.
-3. The parameter `t` moves from `0` to `1`. In the example above the step `0.05` is used: the loop goes over `0, 0.05, 0.1, 0.15, ... 0.95, 1`.
+1. Намалюймо контрольні точки. У прикладі вище вони позначені як `1`, `2`, `3`.
+2. Побудуємо відрізки між контрольними точками 1 -> 2 -> 3. У прикладі вище вони <span style="color:#825E28">коричневі</span>.
+3. Параметр `t` рухається від `0` до `1`. Приклад вище використовує крок `0.05`: циклічно отримуємо значення `0, 0.05, 0.1, 0.15, ... 0.95, 1`.
 
-    For each of these values of `t`:
+    Для кожного з цих значень `t`:
 
-    - On each <span style="color:#825E28">brown</span> segment we take a point located on the distance proportional to `t` from its beginning. As there are two segments, we have two points.
+    - На кожному <span style="color:#825E28">коричневому</span> відрізку ми відкладаємо точку, що знаходиться на відстані від початку пропорційній до `t`. Оскільки відрізків два, ми отримуємо дві точки.
 
-        For instance, for `t=0` -- both points will be at the beginning of segments, and for `t=0.25` -- on the 25% of segment length from the beginning, for `t=0.5` -- 50%(the middle), for `t=1` -- in the end of segments.
+        Наприклад, для `t=0` -- обидві точки будуть на початку відрізка, для `t=0.25` -- на відстані 25% довжини відрізка від початку, для `t=0.5` -- 50% (на середині), для `t=1` -- в кінці відрізка.
 
-    - Connect the points. On the picture below the connecting segment is painted <span style="color:#167490">blue</span>.
+    - З’єднаймо ці точки. На зображенні нижче цей відрізок має <span style="color:#167490">синій</span> колір.
 
 
-| For `t=0.25`             | For `t=0.5`            |
+| Для `t=0.25`             | Для `t=0.5`            |
 | ------------------------ | ---------------------- |
 | ![](bezier3-draw1.svg)   | ![](bezier3-draw2.svg) |
 
-4. Now in the <span style="color:#167490">blue</span> segment take a point on the distance proportional to the same value of `t`. That is, for `t=0.25` (the left picture) we have a point at the end of the left quarter of the segment, and for `t=0.5` (the right picture) -- in the middle of the segment. On pictures above that point is <span style="color:red">red</span>.
+4. Тепер на <span style="color:#167490">синьому</span> відрізку знайдемо точку на відстані пропорційній до значення `t`. Тобто для `t=0.25` (зображення ліворуч) ми отримуємо точку в кінці лівої чверті відрізку, а для `t=0.5` (зображення праворуч) -- посередині відрізка. На зображенні вище ця точка <span style="color:red">червона</span>.
 
-5. As `t` runs from `0` to `1`, every value of `t` adds a point to the curve. The set of such points forms the Bezier curve. It's red and parabolic on the pictures above.
+5. Поки `t` проходить від `0` до `1`, кожне значення `t` додає одну точку до кривої. Множина таких точок утворює криву Безьє. Це <span style="color:red">червона</span> парабола на малюнку вгорі.
 
-That was a process for 3 points. But the same is for 4 points.
+Це був процес для 3 точок. Але те саме стосується і 4 точок.
 
-The demo for 4 points (points can be moved by a mouse):
+Демонстрація для 4 точок (точки можна рухати за допомогою миші):
 
 [iframe src="demo.svg?p=0,0,0.5,0,0.5,1,1,1&animate=1" height=370]
 
-The algorithm for 4 points:
+Алгоритм для 4 точок:
 
-- Connect control points by segments: 1 -> 2, 2 -> 3, 3 -> 4. There will be 3 <span style="color:#825E28">brown</span> segments.
-- For each `t` in the interval from `0` to `1`:
-    - We take points on these segments on the distance proportional to `t` from the beginning. These points are connected, so that we have two <span style="color:#0A0">green segments</span>.
-    - On these segments we take points proportional to `t`. We get one <span style="color:#167490">blue segment</span>.
-    - On the blue segment we take a point proportional to `t`. On the example above it's <span style="color:red">red</span>.
-- These points together form the curve.
+- Поєднаймо контрольні точки відрізками: 1 -> 2, 2 -> 3, 3 -> 4. Отримаємо 3 <span style="color:#825E28">коричневі</span> відрізки.
+- Для кожного `t` у інтервалі від `0` до `1`:
+    - Ми беремо точки на цих відрізках на відстані від початку пропорційній до `t`. З’єднаємо ці точки, що дає нам два <span style="color:#0A0">зелених відрізки</span>.
+    - На цих відрізках ми беремо точки, що пропорційні до `t`. Отримуємо <span style="color:#167490">синій відрізок</span>.
+    - На синьому відрізку беремо точку, що пропорційна до `t`. У попередньому прикладі вона <span style="color:red">червоного</span> кольору.
+- Разом ці точки утворюють криву.
 
-The algorithm is recursive and can be generalized for any number of control points.
+Алгоритм рекурсивний і може бути узагальненим для будь-якої кількості контрольних точок.
 
-Given N of control points:
+Для N контрольних точок:
 
-1. We connect them to get initially N-1 segments.
-2. Then for each `t` from `0` to `1`, we take a point on each segment on the distance proportional to `t` and connect them. There will be N-2 segments.
-3. Repeat step 2 until there is only one point.
+1. Ми поєднуємо їх, щоб отримати початкові N-1 відрізки.
+2. Потім для кожного `t` від `0` до `1`, ми беремо точку у кожному відрізку на відстані, що пропорційна до `t` і поєднуємо їх. Це нам дасть N-2 нових відрізків.
+3. Повторюємо крок 2 доки не залишиться лише одна точка.
 
-These points make the curve.
+Ці точки утворюють криву.
 
 ```online
-**Run and pause examples to clearly see the segments and how the curve is built.**
+**Запускайте і зупиняйте приклади, щоб ясніше побачити відрізки і те, яким чином вибудовується крива.**
 ```
 
 
-A curve that looks like `y=1/t`:
+Крива, що виглядає як `y=1/t`:
 
 [iframe src="demo.svg?p=0,0,0,0.75,0.25,1,1,1&animate=1" height=370]
 
-Zig-zag control points also work fine:
+Контрольні точки у формі зиг-загу також добре спрацьовують:
 
 [iframe src="demo.svg?p=0,0,1,0.5,0,0.5,1,1&animate=1" height=370]
 
-Making a loop is possible:
+Можна зробити петлю:
 
 [iframe src="demo.svg?p=0,0,1,0.5,0,1,0.5,0&animate=1" height=370]
 
-A non-smooth Bezier curve (yeah, that's possible too):
+Негладка крива Безьє (так, це теж можливо):
 
 [iframe src="demo.svg?p=0,0,1,1,0,1,1,0&animate=1" height=370]
 
 ```online
-If there's something unclear in the algorithm description, please look at the live examples above to see how
-the curve is built.
+Якщо щось не зрозуміло в описі алгоритму, запустіть "живі" приклади вище, щоб розібратись, як саме
+будується крива.
 ```
 
-As the algorithm is recursive, we can build Bezier curves of any order, that is: using 5, 6 or more control points. But in practice many points are less useful. Usually we take 2-3 points, and for complex lines glue several curves together. That's simpler to develop and calculate.
+Оскільки алгоритм рекурсивний, ми можемо побудувати криву Безьє будь-якого ступеню, тобто з використанням 5, 6 або й більше контрольних точок. На практиці велика кількість точок не приносить користі. Зазвичай використовується 2-3 точки, а для складних ліній "склеюють" декілька кривих в одну. Це простіше для розробки і розрахунків.
 
-```smart header="How to draw a curve *through* given points?"
-To specify a Bezier curve, control points are used. As we can see, they are not on the curve, except the first and the last ones.
+```smart header="Як намалювати криву, що проходить *крізь* задані точки?"
+Для задання кривої Безьє використовуються контрольні точки. Як ми бачимо, вони не знаходяться на кривій, окрім першої і останньої.
 
-Sometimes we have another task: to draw a curve *through several points*, so that all of them are on a single smooth curve. That task is called  [interpolation](https://en.wikipedia.org/wiki/Interpolation), and here we don't cover it.
+Інколи ми маємо інше завдання: намалювати криву, що *проходить крізь декілька точок*, тобто всі точки знаходяться на одній гладкій кривій. Ця задача називається [інтерполяцією](https://uk.wikipedia.org/wiki/Інтерполяція), і тут ми не будемо її розглядати.
 
-There are mathematical formulas for such curves, for instance [Lagrange polynomial](https://en.wikipedia.org/wiki/Lagrange_polynomial). In computer graphics [spline interpolation](https://en.wikipedia.org/wiki/Spline_interpolation) is often used to build smooth curves that connect many points.
+Для таких кривих існують математичні формули, наприклад [многочлен Лагранжа](https://uk.wikipedia.org/wiki/Многочлен_Лагранжа). У комп’ютерній графіці для побудови гладких кривих, які поєднують багато точок, використовується [інтерполяція кубічними сплайнами](https://uk.wikipedia.org/wiki/Кубічний_сплайн).
 ```
 
 
-## Maths
+## Математика
 
-A Bezier curve can be described using a mathematical formula.
+Криву Безьє можна описати за допомогою математичної формули.
 
-As we saw -- there's actually no need to know it, most people just draw the curve by moving points with a mouse. But if you're into maths -- here it is.
+Як ми побачили -- насправді її не потрібно знати, більшість людей просто малюють криву пересуваючи точки за допомогою миші. Але якщо ви захоплюєтесь математикою -- ось вона.
 
-Given the coordinates of control points <code>P<sub>i</sub></code>: the first control point has coordinates <code>P<sub>1</sub> = (x<sub>1</sub>, y<sub>1</sub>)</code>, the second: <code>P<sub>2</sub> = (x<sub>2</sub>, y<sub>2</sub>)</code>, and so on, the curve coordinates are described by the equation that depends on the parameter `t` from the segment `[0,1]`.
+Нехай <code>P<sub>i</sub></code> -- це координати контрольних точок. Перша контрольна точка має координати <code>P<sub>1</sub> = (x<sub>1</sub>, y<sub>1</sub>)</code>, друга: <code>P<sub>2</sub> = (x<sub>2</sub>, y<sub>2</sub>)</code> і так далі. Крива описується рівнянням, що залежить від параметру `t`, який лежить на відрізку `[0,1]`.
 
-- The formula for a 2-points curve:
+- Формула для кривої з 2 контрольними точками:
 
     <code>P = (1-t)P<sub>1</sub> + tP<sub>2</sub></code>
-- For 3 control points:
+- Для 3 контрольних точок:
 
     <code>P = (1−t)<sup>2</sup>P<sub>1</sub> + 2(1−t)tP<sub>2</sub> + t<sup>2</sup>P<sub>3</sub></code>
-- For 4 control points:
+- Для 4 контрольних точок:
 
     <code>P = (1−t)<sup>3</sup>P<sub>1</sub> + 3(1−t)<sup>2</sup>tP<sub>2</sub>  +3(1−t)t<sup>2</sup>P<sub>3</sub> + t<sup>3</sup>P<sub>4</sub></code>
 
 
-These are vector equations. In other words, we can put `x` and `y` instead of `P` to get corresponding coordinates.
+Це векторні рівняння. Іншими словами, ми можемо записати `x` і `y` замість `P`, щоб отримати відповідні координати.
 
-For instance, the 3-point curve is formed by points `(x,y)` calculated as:
+Наприклад, крива з 3 точок, що задана точками `(x,y)` обчислюється так:
 
 - <code>x = (1−t)<sup>2</sup>x<sub>1</sub> + 2(1−t)tx<sub>2</sub> + t<sup>2</sup>x<sub>3</sub></code>
 - <code>y = (1−t)<sup>2</sup>y<sub>1</sub> + 2(1−t)ty<sub>2</sub> + t<sup>2</sup>y<sub>3</sub></code>
 
-Instead of <code>x<sub>1</sub>, y<sub>1</sub>, x<sub>2</sub>, y<sub>2</sub>, x<sub>3</sub>, y<sub>3</sub></code> we should put coordinates of 3 control points, and then as `t` moves from `0` to `1`, for each value of `t` we'll have `(x,y)` of the curve.
+Замість <code>x<sub>1</sub>, y<sub>1</sub>, x<sub>2</sub>, y<sub>2</sub>, x<sub>3</sub>, y<sub>3</sub></code> ми маємо підставити координати 3 контрольних точок, і коли `t` проходить від `0` до `1`, для кожного значення `t` ми отримаємо `(x,y)` кривої.
 
-For instance, if control points are  `(0,0)`, `(0.5, 1)` and `(1, 0)`, the equations become:
+Наприклад, якщо задані контрольні точки  `(0,0)`, `(0.5, 1)` і `(1, 0)`, рівняння стають такими:
 
 - <code>x = (1−t)<sup>2</sup> * 0 + 2(1−t)t * 0.5 + t<sup>2</sup> * 1 = (1-t)t + t<sup>2</sup> = t</code>
 - <code>y = (1−t)<sup>2</sup> * 0 + 2(1−t)t * 1 + t<sup>2</sup> * 0 = 2(1-t)t = –2t<sup>2</sup> + 2t</code>
 
-Now as `t` runs from `0` to `1`, the set of values `(x,y)` for each `t` forms the curve for such control points.
+Тепер коли `t` проходить від `0` до `1`, множина значень `(x,y)` для кожного `t` утворює криву для заданих контрольних точок.
 
-## Summary
+## Підсумки
 
-Bezier curves are defined by their control points.
+Криві Безьє задаються їх контрольними точками.
 
-We saw two definitions of Bezier curves:
+Ми розглянули два визначення кривих Безьє:
 
-1. Using a drawing process: De Casteljau's algorithm.
-2. Using a mathematical formulas.
+1. За допомогою процесу малювання: алгоритм де Кастельє.
+2. За допомогою математичної формули.
 
-Good properties of Bezier curves:
+Переваги кривих Безьє:
 
-- We can draw smooth lines with a mouse by moving control points.
-- Complex shapes can be made of several Bezier curves.
+- Мишкою можемо малювати плавні лінії лише пересуваючи контрольні точки.
+- Складні фігури можуть бути зроблені з декількох кривих Безьє.
 
-Usage:
+Використання:
 
-- In computer graphics, modeling, vector graphic editors. Fonts are described by Bezier curves.
-- In web development -- for graphics on Canvas and in the SVG format. By the way, "live" examples above are written in SVG. They are actually a single SVG document that is given different points as parameters. You can open it in a separate window and see the source: [demo.svg](demo.svg?p=0,0,1,0.5,0,0.5,1,1&animate=1).
-- In CSS animation to describe the path and speed of animation.
+- У комп’ютерній графіці, моделюванні, редакторах векторної графіки. Шрифти також описані кривими Безьє.
+- У веб-розробці -- для графіки на Canvas, або у форматі SVG. До речі, всі "живі" приклади наведені вище написані на SVG. Насправді це один і той самий SVG-документ, якому точки передані як параметри. Ви можете відкрити його у окремому вікні та переглянути його вихідний код: [demo.svg](demo.svg?p=0,0,1,0.5,0,0.5,1,1&animate=1).
+- У CSS-анімації, щоб описати траєкторію або швидкість анімації.
