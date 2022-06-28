@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-38-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-39-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -125,6 +125,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="https://github.com/PavloKokhaniuk"><img src="https://avatars.githubusercontent.com/u/81250556?v=4?s=70" width="70px;" alt=""/><br /><sub><b>PavloKokhaniuk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3APavloKokhaniuk" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://kolumb.tk/"><img src="https://avatars.githubusercontent.com/u/4366033?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Danylo Kolumbet</b></sub></a><br /><a href="#translation-kolumb" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/MaxiManBW"><img src="https://avatars.githubusercontent.com/u/7721739?v=4?s=70" width="70px;" alt=""/><br /><sub><b>MaxiManBW</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AMaxiManBW" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/farkon00"><img src="https://avatars.githubusercontent.com/u/59134591?v=4?s=70" width="70px;" alt=""/><br /><sub><b>farkon00</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Afarkon00" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
