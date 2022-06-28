@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-33-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -118,6 +118,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="https://github.com/Lelihelija"><img src="https://avatars.githubusercontent.com/u/68015684?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Olha</b></sub></a><br /><a href="#translation-Lelihelija" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/DmytroSkrypnyk"><img src="https://avatars.githubusercontent.com/u/46841342?v=4?s=70" width="70px;" alt=""/><br /><sub><b>DmytroSkrypnyk</b></sub></a><br /><a href="#translation-DmytroSkrypnyk" title="Translation">🌍</a></td>
     <td align="center"><a href="http://Instagram.com/yaroslavom"><img src="https://avatars.githubusercontent.com/u/72073598?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Yaroslav</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Ayaroslavom" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/ilvl"><img src="https://avatars.githubusercontent.com/u/16276298?v=4?s=70" width="70px;" alt=""/><br /><sub><b>ilvl</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Ailvl" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
