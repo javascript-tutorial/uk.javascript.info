@@ -378,6 +378,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "AirFast",
+      "name": "Andrew Petryk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17478605?v=4",
+      "profile": "https://github.com/AirFast",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
