@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-36-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-37-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -123,6 +123,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/PavloKokhaniuk"><img src="https://avatars.githubusercontent.com/u/81250556?v=4?s=70" width="70px;" alt=""/><br /><sub><b>PavloKokhaniuk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3APavloKokhaniuk" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://kolumb.tk/"><img src="https://avatars.githubusercontent.com/u/4366033?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Danylo Kolumbet</b></sub></a><br /><a href="#translation-kolumb" title="Translation">🌍</a></td>
   </tr>
 </table>
 
