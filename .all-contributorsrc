@@ -333,6 +333,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "PavloKokhaniuk",
+      "name": "PavloKokhaniuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81250556?v=4",
+      "profile": "https://github.com/PavloKokhaniuk",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
