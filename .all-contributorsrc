@@ -324,6 +324,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "yugako",
+      "name": "Yurii Hasiuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/27961118?v=4",
+      "profile": "https://hasiuk.netlify.com",
+      "contributions": [
+        "translation"
+      ]
     }
   ]
 }
