@@ -39,7 +39,7 @@ iframe { /* iframe із сайту жертви */
 *!*
 <iframe src="/clickjacking/facebook.html"></iframe>
 
-<button>Натісніть!</button>
+<button>Натисніть!</button>
 */!*
 
 <div>...І ти крутий (насправді я крутий хакер)!</div>
