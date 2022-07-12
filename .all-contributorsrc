@@ -387,6 +387,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "emoquery",
+      "name": "emoquery",
+      "avatar_url": "https://avatars.githubusercontent.com/u/104505813?v=4",
+      "profile": "https://github.com/emoquery",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
