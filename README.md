@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-42-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-43-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -129,6 +129,9 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <td align="center"><a href="https://mykolamyslovskyi.xyz/"><img src="https://avatars.githubusercontent.com/u/11510394?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Mykola Myslovskyi</b></sub></a><br /><a href="#translation-AdriandeCita" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/AirFast"><img src="https://avatars.githubusercontent.com/u/17478605?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Andrew Petryk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AAirFast" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/emoquery"><img src="https://avatars.githubusercontent.com/u/104505813?v=4?s=70" width="70px;" alt=""/><br /><sub><b>emoquery</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Aemoquery" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/Numed"><img src="https://avatars.githubusercontent.com/u/70485845?v=4?s=70" width="70px;" alt=""/><br /><sub><b>Eugene</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ANumed" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
