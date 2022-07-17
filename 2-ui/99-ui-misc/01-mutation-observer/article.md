@@ -1,82 +1,82 @@
 
-# Mutation observer
+# Mutation Observer (спостерігач за мутаціями)
 
-`MutationObserver` is a built-in object that observes a DOM element and fires a callback when it detects a change.
+`MutationObserver` -- це вбудований об'єкт, який спостерігає за елементом DOM і викликає функцію зворотного виклику кожного разу, коли він помічає зміну.
 
-We'll first take a look at the syntax, and then explore a real-world use case, to see where such thing may be useful.
+Спочатку ми поглянемо на синтаксис, а потім дослідимо реальний приклад, щоб побачити, де така річ може знадобитися.
 
-## Syntax
+## Синтаксис
 
-`MutationObserver` is easy to use.
+`MutationObserver` -- простий у використанні.
 
-First, we create an observer with a callback-function:
+Спершу ми створюємо спостерігача із функцією зворотного виклику:
 
 ```js
 let observer = new MutationObserver(callback);
 ```
 
-And then attach it to a DOM node:
+А потім прикріплюємо його до вузла DOM:
 
 ```js
 observer.observe(node, config);
 ```
 
-`config` is an object with boolean options "what kind of changes to react on":
-- `childList` -- changes in the direct children of `node`,
-- `subtree` -- in all descendants of `node`,
-- `attributes` -- attributes of `node`,
-- `attributeFilter` -- an array of attribute names, to observe only selected ones.
-- `characterData` -- whether to observe `node.data` (text content),
+`config` -- це об'єкт із булевими опціями, які вказують "на якого роду зміни слід реагувати":
+- `childList` -- зміни в безпосередніх нащадках вузла `node`,
+- `subtree` -- у всіх нащадках вузла `node`,
+- `attributes` -- атрибути вузла `node`,
+- `attributeFilter` -- масив назв атрибутів, щоб спостерігати лише за певними з них.
+- `characterData` -- чи спостерігати за змінами в `node.data` (текстовий вміст),
 
-Few other options:
-- `attributeOldValue` -- if `true`, pass both the old and the new value of attribute to callback (see below), otherwise only the new one (needs `attributes` option),
-- `characterDataOldValue` -- if `true`, pass both the old and the new value of `node.data` to callback (see below), otherwise only the new one (needs `characterData` option).
+Декілька інших опцій:
+- `attributeOldValue` -- якщо вказана як `true` -- до функції зворотного виклику буде передано і нове, і старе значення атрибута (дивіться нижче), а інакше передаватиме лише нове значення (потребує вказаної опції `attributes`),
+- `characterDataOldValue` -- якщо дорівнює `true` -- до функції зворотного виклику буде передано і нове, і старе значення `node.data` (дивіться нижче), а інакше передаватиме лише нове значення (потребує вказаної опції `characterData`).
 
-Then after any changes, the `callback` is executed: changes are passed in the first argument as a list of [MutationRecord](https://dom.spec.whatwg.org/#mutationrecord) objects, and the observer itself as the second argument.
+Далі після будь-яких змін виконується `callback`: зміни передаються першим аргументом у вигляді списку об'єктів типу [MutationRecord](https://dom.spec.whatwg.org/#mutationrecord), а другим аргументом передається сам спостерігач.
 
-[MutationRecord](https://dom.spec.whatwg.org/#mutationrecord) objects have properties:
+Об'єкти [MutationRecord](https://dom.spec.whatwg.org/#mutationrecord) містять такі властивості:
 
-- `type` -- mutation type, one of
-    - `"attributes"`: attribute modified
-    - `"characterData"`: data modified, used for text nodes,
-    - `"childList"`: child elements added/removed,
-- `target` -- where the change occurred: an element for `"attributes"`, or text node for `"characterData"`, or an element for a `"childList"` mutation,
-- `addedNodes/removedNodes`  -- nodes that were added/removed,
-- `previousSibling/nextSibling` -- the previous and next sibling to added/removed nodes,
-- `attributeName/attributeNamespace` -- the name/namespace (for XML) of the changed attribute,
-- `oldValue` -- the previous value, only for attribute or text changes, if the corresponding option is set `attributeOldValue`/`characterDataOldValue`.
+- `type` -- тип мутації, одне з:
+    - `"attributes"`: змінився атрибут
+    - `"characterData"`: змінилися дані, використовуються для текстових вузлів,
+    - `"childList"`: додані/прибрані дочірні елементи,
+- `target` -- де саме відбулася зміна: для `"attributes"` це елемент, або текстовий вузол у випадку `"characterData"`, або елемент для мутації типу `"childList"`,
+- `addedNodes/removedNodes`  -- вузли, які було додано/прибрано,
+- `previousSibling/nextSibling` -- відповідно попередній та наступний елемент відносно доданих/прибраних вузлів,
+- `attributeName/attributeNamespace` -- ім'я/простір імен (для XML) зміненого атрибута,
+- `oldValue` -- попереднє значення, лише для змін в атрибуті або тексті, за умови, що встановлено відповідний параметр `attributeOldValue`/`characterDataOldValue`.
 
-For example, here's a `<div>` with a `contentEditable` attribute. That attribute allows us to focus on it and edit.
+Наприклад, ось елемент `<div>` із атрибутом `contentEditable`. Цей атрибут дає нам змогу переміщувати фокус на нього і редагувати.
 
 ```html run
-<div contentEditable id="elem">Click and <b>edit</b>, please</div>
+<div contentEditable id="elem">Натисни і <b>редагуй</b>, Будь ласка</div>
 
 <script>
 let observer = new MutationObserver(mutationRecords => {
-  console.log(mutationRecords); // console.log(the changes)
+  console.log(mutationRecords); // console.log(зміни)
 });
 
-// observe everything except attributes
+// спостерігати за всім окрім атрибутів
 observer.observe(elem, {
-  childList: true, // observe direct children
-  subtree: true, // and lower descendants too
-  characterDataOldValue: true // pass old data to callback
+  childList: true, // спостерігати за безпосередніми нащадками
+  subtree: true, // і також за глибшими нащадками
+  characterDataOldValue: true // передавати старі дані до функції зворотного виклику
 });
 </script>
 ```
 
-If we run this code in the browser, then focus on the given `<div>` and change the text inside `<b>edit</b>`, `console.log` will show one mutation:
+Якщо ми запустимо цей код у браузері, потім помістимо фокус на цей `<div>` і змінимо текст всередині `<b>редагуй</b>`, `console.log` покаже одну мутацію:
 
 ```js
 mutationRecords = [{
   type: "characterData",
   oldValue: "edit",
   target: <text node>,
-  // other properties empty
+  // інші властивості порожні
 }];
 ```
 
-If we make more complex editing operations, e.g. remove the `<b>edit</b>`, the mutation event may contain multiple mutation records:
+Якщо ми виконаємо складніші операції редагування, наприклад видалимо весь `<b>редагуй</b>`, подія мутації можливо міститиме декілька записів змін:
 
 ```js
 mutationRecords = [{
@@ -85,75 +85,75 @@ mutationRecords = [{
   removedNodes: [<b>],
   nextSibling: <text node>,
   previousSibling: <text node>
-  // other properties empty
+  // інші властивості порожні
 }, {
   type: "characterData"
   target: <text node>
-  // ...mutation details depend on how the browser handles such removal
-  // it may coalesce two adjacent text nodes "edit " and ", please" into one node
-  // or it may leave them separate text nodes
+  // ...деталі мутації залежать від того, як браузер обробляє таке видалення
+  // він може злити два сусідні текстові вузли "редагуй " і ", будь ласка" в один
+  // або залишити їх окремими вузлами
 }];
 ```
 
-So, `MutationObserver` allows to react on any changes within DOM subtree.
+Отже, `MutationObserver` дає змогу реагувати на будь-які зміни всередині піддерева DOM.
 
-## Usage for integration
+## Застосування для інтеграції
 
-When such thing may be useful?
+В яких випадках така річ може стати корисною?
 
-Imagine the situation when you need to add a third-party script that contains useful functionality, but also does something unwanted, e.g. shows ads `<div class="ads">Unwanted ads</div>`.
+Уявіть ситуацію, коли вам потрібно додати скрипт від третіх осіб, що містить корисну функціональність, проте також робить щось небажане, наприклад показує рекламу `<div class="ads">Небажана реклама</div>`.
 
-Naturally, the third-party script provides no mechanisms to remove it.
+Природньо, цей скрипт від третіх осіб не надає жодних механізмів для її видалення.
 
-Using `MutationObserver`, we can detect when the unwanted element appears in our DOM and remove it.
+Застосувавши `MutationObserver` ми можемо помітити, коли небажаний елемент з'являється всереднині нашої DOM, і видалити його.
 
-There are other situations when a third-party script adds something into our document, and we'd like to detect, when it happens, to adapt our page, dynamically resize something etc.
+Трапляються інші ситуації, коли скрипт від третіх осіб додає щось до нашого документа, і нам би хотілося помітити, коли це відбувається, щоб адаптувати нашу сторінку, динамічно змінити розмір чогось тощо.
 
-`MutationObserver` allows to implement this.
+`MutationObserver` дає можливість це реалізувати.
 
-## Usage for architecture
+## Застосування в архітектурі
 
-There are also situations when `MutationObserver` is good from architectural standpoint.
+Також трапляються ситуації, коли `MutationObserver` є корисним з точки зору архітектури.
 
-Let's say we're making a website about programming. Naturally, articles and other materials may contain source code snippets.
+Припустімо, ми робимо вебсайт про програмування. Природно, статті та інші матеріали можуть містити фрагменти програмного коду.
 
-Such snippet in an HTML markup looks like this:
+Такий фрагмент всередині HTML-розмітки виглядає так:
 
 ```html
 ...
 <pre class="language-javascript"><code>
-  // here's the code
+  // Тут знаходиться код
   let hello = "world";
 </code></pre>
 ...
 ```
 
-For better readability and at the same time, to beautify it, we'll be using a JavaScript syntax highlighting library on our site, like [Prism.js](https://prismjs.com/). To get syntax highlighting for above snippet in Prism, `Prism.highlightElem(pre)` is called, which examines the contents of such `pre` elements and adds special tags and styles for colored syntax highlighting into those elements, similar to what you see in examples here, on this page.
+Для кращої прочитності і, в той же час для естетичності, ми будемо використовувати JavaScript-бібліотеку для підсвітки синтаксису на нашому вебсайті, на кшталт [Prism.js](https://prismjs.com/). Для отримання синтаксичної підсвітки за допомогою Prism для наведеного вище фрагмента, викликається `Prism.highlightElem(pre)`, який вивчає вміст таких елементів `pre`, та додає в них особливі теги і стилі для кольорової підсвітки синтаксису, подібно до того, що ви можете побачитип в прикладах тут, на цій сторінці.
 
-When exactly should we run that highlighting method? Well, we can do it on `DOMContentLoaded` event, or put the script at the bottom of the page. The moment our DOM is ready, we can search for elements `pre[class*="language"]` and call `Prism.highlightElem` on them:
+Коли саме нам слід запускати такий метод для виконання підсвітки? Що ж, ми можемо це робити на подію `DOMContentLoaded`, або поставити скрипт внизу сторінки. Як тільки наша DOM готова, ми можемо виконати пошук елементів `pre[class*="language"]` та викликати на них `Prism.highlightElem`:
 
 ```js
-// highlight all code snippets on the page
+// підсвітити всі фрагменти коду на сторінці
 document.querySelectorAll('pre[class*="language"]').forEach(Prism.highlightElem);
 ```
 
-Everything's simple so far, right? We find code snippets in HTML and highlight them.
+Досі все просто, правда? Ми шукаємо фрагменти коду всередині HTML і розфарбовуємо їх.
 
-Now let's go on. Let's say we're going to dynamically fetch materials from a server. We'll study methods for that [later in the tutorial](info:fetch). For now it only matters that we fetch an HTML article from a webserver and display it on demand:
+Тепер продовжимо. Скажімо, ми збираємося динамічно забирати матеріали зі сервера. Ми вивчимо способи це зробити [далі в посібнику](info:fetch). Що важливо наразі -- це те, що ми забираємо статтю з HTML зі сервера, і показуємо її на вимогу:
 
 ```js
-let article = /* fetch new content from server */
+let article = /* отримаємо новий вміст із сервера */
 articleElem.innerHTML = article;
 ```
 
-The new `article` HTML may contain code snippets. We need to call `Prism.highlightElem` on them, otherwise they won't get highlighted.
+HTML-вміст нової статті `article` може містити фрагменти коду. Нам потрібно викликати на них `Prism.highlightElem`, інакше вони підсвітки на них не буде.
 
-**Where and when to call `Prism.highlightElem` for a dynamically loaded article?**
+**Коли і де нам слід викликати `Prism.highlightElem` для динамічно завантаженої статті ?**
 
-We could append that call to the code that loads an article, like this:
+Ми могли б прикріпити цей виклик до коду, який завантажує статтю, ось так:
 
 ```js
-let article = /* fetch new content from server */
+let article = /* отримаємо новий вміст із сервера */
 articleElem.innerHTML = article;
 
 *!*
@@ -162,38 +162,38 @@ snippets.forEach(Prism.highlightElem);
 */!*
 ```
 
-...But, imagine if we have many places in the code where we load our content - articles, quizzes, forum posts, etc. Do we need to put the highlighting call everywhere, to highlight the code in content after loading? That's not very convenient.
+...Але, уявімо, що у нас є багато місць в коді, де ми завантажуємо наш вміст: статті, опитники, форумні дописи тощо. Чи повинні ми всюди вставити виклик підсвітки, аби виконати підсвітку синтаксису коду всередині вмісту після завантаження? Це не надто зручно.
 
-And what if the content is loaded by a third-party module? For example, we have a forum written by someone else, that loads content dynamically, and we'd like to add syntax highlighting to it. No one likes patching third-party scripts.
+І що, якщо вміст було завантажено стороннім модулем? Наприклад, якщо ми маємо форум, написаний кимось іншим, який динамічно завантажує вміст, і нам би хотілося додати до нього підсвітку синтаксису. Ніхто не любить правити сторонні скрипти.
 
-Luckily, there's another option.
+На щастя, є інший спосіб.
 
-We can use `MutationObserver` to automatically detect when code snippets are inserted into the page and highlight them.
+Ми можемо використати `MutationObserver` для автоматичного виявлення моментів, коли фрагменти коду вставляються у сторінку, і виконання підсвітки на них.
 
-So we'll handle the highlighting functionality in one place, relieving us from the need to integrate it.
+Отже, ми виконаємо функціональність підсвітки в одному місці, позбавивши нас клопоту з її інтеграцією.
 
-### Dynamic highlight demo
+### Демонстрація динамічної підсвітки
 
-Here's the working example.
+Ось робочий приклад.
 
-If you run this code, it starts observing the element below and highlighting any code snippets that appear there:
+Якщо ви запустите цей код, він почне спостерігати за наведеним нижче елементом, і підсвічувати будь який фрагмент коду, який з'являтиметься там:
 
 ```js run
 let observer = new MutationObserver(mutations => {
 
   for(let mutation of mutations) {
-    // examine new nodes, is there anything to highlight?
+    // перевіряємо вузли, чи є тут щось для розфарбування?
 
     for(let node of mutation.addedNodes) {
-      // we track only elements, skip other nodes (e.g. text nodes)
+      // ми стежимо лише за елементами, пропустимо інші вузли (наприклад текстові вузли)
       if (!(node instanceof HTMLElement)) continue;
 
-      // check the inserted element for being a code snippet
+      // перевіримо, чи вставлений елемент є фрагментом коду
       if (node.matches('pre[class*="language-"]')) {
         Prism.highlightElement(node);
       }
 
-      // or maybe there's a code snippet somewhere in its subtree?
+      // чи можливо фрагмент коду десь в глибині його піддерева?
       for(let elem of node.querySelectorAll('pre[class*="language-"]')) {
         Prism.highlightElement(elem);
       }
@@ -207,67 +207,67 @@ let demoElem = document.getElementById('highlight-demo');
 observer.observe(demoElem, {childList: true, subtree: true});
 ```
 
-Here, below, there's an HTML-element and JavaScript that dynamically fills it using `innerHTML`.
+Тут, нижче наведено HTML-елемент і JavaScript, що динамічно заповнюють його за допомогою `innerHTML`.
 
-Please run the previous code (above, observes that element), and then the code below. You'll see how `MutationObserver` detects and highlights the snippet.
+Будь ласка, запускайте попередній код (наведено вище, для спостереження за елементом), а потім код, наведений нижче. Ви помітите, як `MutationObserver` виявляє і виконує підсвітку у фрагменті.
 
-<p id="highlight-demo" style="border: 1px solid #ddd">A demo-element with <code>id="highlight-demo"</code>, run the code above to observe it.</p>
+<p id="highlight-demo" style="border: 1px solid #ddd">Демо-елемент із <code>id="highlight-demo"</code>, запустіть наведений вище код для спостереження за ним.</p>
 
-The following code populates its `innerHTML`, that causes the `MutationObserver` to react and highlight its contents:
+Наступний код заповнює свій `innerHTML`, що змушує `MutationObserver` реагувати і підсвічувати його вміст:
 
 ```js run
 let demoElem = document.getElementById('highlight-demo');
 
-// dynamically insert content with code snippets
-demoElem.innerHTML = `A code snippet is below:
+// динамічно вставляє вміст із фрагментами коду
+demoElem.innerHTML = `Фрагмент коду -- нижче:
   <pre class="language-javascript"><code> let hello = "world!"; </code></pre>
-  <div>Another one:</div>
+  <div>Іще один:</div>
   <div>
     <pre class="language-css"><code>.class { margin: 5px; } </code></pre>
   </div>
 `;
 ```
 
-Now we have `MutationObserver` that can track all highlighting in observed elements or the whole `document`. We can add/remove code snippets in HTML without thinking about it.
+Тепер у нас є `MutationObserver`, який відстежує всю підсвітку у елементах, за якими спостерігає, або в цілому `document`. Ми можемо додавати/прибирати фрагменти коду з HTML не думаючи про це.
 
-## Additional methods
+## Додаткові методи
 
-There's a method to stop observing the node:
+Існує метод для зупинки спостереження за вузлом:
 
-- `observer.disconnect()` -- stops the observation.
+- `observer.disconnect()` -- зупиняє спостереження.
 
-When we stop the observing, it might be possible that some changes were not yet processed by the observer. In such cases, we use
+Коли ми припиняємо спостереження, може трапитися ситуація, що деякі зміни ще не були оброблені спостерігачем. В таких випадках, ми вживаємо
 
-- `observer.takeRecords()` -- gets a list of unprocessed mutation records - those that happened, but the callback has not handled them.
+- `observer.takeRecords()` -- отримує перелік необроблених записів мутацій - тих, що трапилися, проте функція зворотного виклику їх ще не опрацювала.
 
-These methods can be used together, like this:
+Ці методи можна застосовувати разом, як це показано далі:
 
 ```js
-// get a list of unprocessed mutations
-// should be called before disconnecting,
-// if you care about possibly unhandled recent mutations
+// отримання переліку необроблених мутацій
+// повинно викликатись перед роз'єднанням,
+// якщо для вас важливі потенційно необроблені недавні мутації
 let mutationRecords = observer.takeRecords();
 
-// stop tracking changes
+// зупинка відстежування змін
 observer.disconnect();
 ...
 ```
 
 
-```smart header="Records returned by `observer.takeRecords()` are removed from the processing queue"
-The callback won't be called for records, returned by `observer.takeRecords()`.
+```smart header="Записи, повернені методом `observer.takeRecords()` видаляються із черги обробки"
+Функцію зворотного виклику не буде викликано для записів, повернених методом `observer.takeRecords()`.
 ```
 
-```smart header="Garbage collection interaction"
-Observers use weak references to nodes internally. That is, if a node is removed from the DOM, and becomes unreachable, then it can be garbage collected.
+```smart header="Взаємодія зі збиранням сміття"
+Всередині спостерігачів використовуються слабкі посилання на вузли. Це означає, що якщо вузол видаляється із DOM, і стає недоступним - збирач сміття зможе його прибрати.
 
-The mere fact that a DOM node is observed doesn't prevent the garbage collection.
+Сам факт спостереження за вузлом DOM не перешкоджає процесу збирання сміття.
 ```
 
-## Summary  
+## Підсумки  
 
-`MutationObserver` can react to changes in DOM - attributes, text content and adding/removing elements.
+`MutationObserver` може реагувати на зміни в DOM, зокрема на зміни в атрибутах, текстовому вмісті, та додавання/прибирання елементів.
 
-We can use it to track changes introduced by other parts of our code, as well as to integrate with third-party scripts.
+Ми можемо використовувати його для відстеження змін, внесених іншими частинами нашого коду, так само як і інтегруватися зі сторонніми скриптами.
 
-`MutationObserver` can track any changes. The config "what to observe" options are used for optimizations, not to spend resources on unneeded callback invocations.
+`MutationObserver` може відстежувати будь які зміни. Поля конфігурації для вказівки "за чим саме спостерігати" використовуються для оптимізації, аби не витрачати ресурсів на непотрібні виклики функцій зворотного виклику.
