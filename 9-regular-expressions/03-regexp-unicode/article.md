@@ -1,12 +1,12 @@
-# Unicode: flag "u" and class \p{...}
+# Юнікод: прапорець "u" та клас \p{...}
 
-JavaScript uses [Unicode encoding](https://en.wikipedia.org/wiki/Unicode) for strings. Most characters are encoded with 2 bytes, but that allows to represent at most 65536 characters.
+У JavaScript для рядків використовується кодування [Юнікод](https://uk.wikipedia.org/wiki/Юнікод). Більшість символів кодуються 2 байтами, що дозволяє представити максимум 65536 символів.
 
-That range is not big enough to encode all possible characters, that's why some rare characters are encoded with 4 bytes, for instance like `𝒳` (mathematical X) or `😄` (a smile), some hieroglyphs and so on.
+Цей діапазон недостатньо великий для кодування всіх можливих символів, тому деякі рідкісні символи кодуються 4 байтами, наприклад `𝒳` (математичний X) або `😄` (смайл), деякі ієрогліфи тощо.
 
-Here are the Unicode values of some characters:
+Ось значення Юнікодів для деяких символів:
 
-| Character  | Unicode | Bytes count in Unicode  |
+| Символ  | Юнікод | Кількість байтів у Юнікоді  |
 |------------|---------|--------|
 | a | `0x0061` |  2 |
 | ≈ | `0x2248` |  2 |
@@ -14,148 +14,146 @@ Here are the Unicode values of some characters:
 |𝒴| `0x1d4b4` | 4 |
 |😄| `0x1f604` | 4 |
 
-So characters like `a` and `≈` occupy 2 bytes, while codes for `𝒳`, `𝒴` and `😄` are longer, they have 4 bytes.
+Таким чином, такі символи, як `a` і `≈`, займають 2 байти, а коди для `𝒳`, `𝒴` і `😄` довші, в них - 4 байти.
 
-Long time ago, when JavaScript language was created, Unicode encoding was simpler: there were no 4-byte characters. So, some language features still handle them incorrectly.
+Коли створювалась мова JavaScript, кодування Юнікод було простіше: 4-байтвоих символів не існувало. Тому досі деякі функції мови все ще обробляють їх неправильно.
 
-For instance, `length` thinks that here are two characters:
+Наприклад, властивість `length` вважає, що тут два символи:
 
 ```js run
 alert('😄'.length); // 2
 alert('𝒳'.length); // 2
 ```
+...Але ми бачимо, що лише один, правда ж? Річ у тому, що властивість `length` трактує 4 байти, як два символи по 2 байти. Це не правильно, адже їх необхідно розглядати тільки разом (так звана "сурогатна пара", детальніше у розділі <info:string>).
 
-...But we can see that there's only one, right? The point is that `length` treats 4 bytes as two 2-byte characters. That's incorrect, because they must be considered only together (so-called "surrogate pair", you can read about them in the article <info:string>).
+За замовчуванням регулярні вирази також розглядають 4-байтові «довгі символи» як пару 2-байтових. Як і у випадку з рядками, це може призвести до дивних результатів. Ми побачимо це трохи пізніше, у розділі <info:regexp-character-sets-and-ranges>.
 
-By default, regular expressions also treat 4-byte "long characters" as a pair of 2-byte ones. And, as it happens with strings, that may lead to odd results. We'll see that a bit later, in the article <info:regexp-character-sets-and-ranges>.
+На відміну від рядків, регулярні вирази мають прапорець `pattern:u`, який виправляє такі проблеми. З таким прапорцем регулярний вираз правильно обробляє 4-байтові символи. А також стає доступним пошук з використанням властивостей Юнікоду, який ми розглянемо далі.
 
-Unlike strings, regular expressions have flag `pattern:u` that fixes such problems. With such flag, a regexp handles 4-byte characters correctly. And also Unicode property search becomes available, we'll get to it next.
+## Властивості Юнікоду \p{...}
 
-## Unicode properties \p{...}
+Кожен символ в кодуванні Юнікод має багато властивостей. Вони описують, до якої «категорії» належить символ та містять різну інформацію про нього.
 
-Every character in Unicode has a lot of properties. They describe what "category" the character belongs to, contain miscellaneous information about it.
+Наприклад, якщо символ містить властивість `Letter`, це означає, що він належить до алфавіту (будь-якої мови). А властивість `Number` означає, що це цифра: може бути арабська, китайська тощо.
 
-For instance, if a character has `Letter` property, it means that the character belongs to an alphabet (of any language). And `Number` property means that it's a digit: maybe Arabic or Chinese, and so on.
+Ми можемо шукати символи за властивістю, записаною як `pattern:\p{…}`. Щоб використовувати `pattern:\p{…}`, регулярний вираз повинен мати прапорець `pattern:u`.
 
-We can search for characters with a property, written as `pattern:\p{…}`. To use `pattern:\p{…}`, a regular expression must have flag `pattern:u`.
+Наприклад, `\p{Letter}` позначає літеру будь-якою мовою. Ми також можемо використовувати коротший запис `\p{L}`, оскільки `L` є псевдонімом `Letter`. Майже для кожної властивості існують варіанти коротшого запису.
 
-For instance, `\p{Letter}` denotes a letter in any language. We can also use `\p{L}`, as `L` is an alias of `Letter`. There are shorter aliases for almost every property.
-
-In the example below three kinds of letters will be found: English, Georgian and Korean.
+У наведеному нижче прикладі буде знайдено три види літер: англійська, грузинська та корейська.
 
 ```js run
 let str = "A ბ ㄱ";
 
 alert( str.match(/\p{L}/gu) ); // A,ბ,ㄱ
-alert( str.match(/\p{L}/g) ); // null (no matches, \p doesn't work without the flag "u")
+alert( str.match(/\p{L}/g) ); // null (немає збігів, \p не працює без прапорця "u")
 ```
 
-Here's the main character categories and their subcategories:
+Ось основні категорії властивостей та їх підкатегорії:
 
-- Letter `L`:
-  - lowercase `Ll`
-  - modifier `Lm`,
-  - titlecase `Lt`,
-  - uppercase `Lu`,
-  - other `Lo`.
-- Number `N`:
-  - decimal digit `Nd`,
-  - letter number `Nl`,
-  - other `No`.
-- Punctuation `P`:
-  - connector `Pc`,
-  - dash `Pd`,
-  - initial quote `Pi`,
-  - final quote `Pf`,
-  - open `Ps`,
-  - close `Pe`,
-  - other `Po`.
-- Mark `M` (accents etc):
-  - spacing combining `Mc`,
-  - enclosing `Me`,
-  - non-spacing `Mn`.
-- Symbol `S`:
-  - currency `Sc`,
-  - modifier `Sk`,
-  - math `Sm`,
-  - other `So`.
-- Separator `Z`:
-  - line `Zl`,
-  - paragraph `Zp`,
-  - space `Zs`.
-- Other `C`:
-  - control `Cc`,
-  - format `Cf`,
-  - not assigned `Cn`,
-  - private use `Co`,
-  - surrogate `Cs`.
+- Літери `L`:
+  - мала літера `Ll`
+  - модифікатор `Lm`,
+  - регістр `Lt`,
+  - велика літера `Lu`,
+  - інші `Lo`.
+- Числа `N`:
+  - десяткові цифри `Nd`,
+  - числа позначені за допомогою літер `Nl`,
+  - інші `No`.
+- Знаки пунктуації `P`:
+  - з'єднувачі `Pc`,
+  - тире `Pd`,
+  - відкриваючі лапки `Pi`,
+  - закриваючі лапки `Pf`,
+  - відкриваючі дужки `Ps`,
+  - закриваючі дужки `Pe`,
+  - інші `Po`.
+- Знак `M` (акценти):
+  - двокрапка `Mc`,
+  - вкладення `Me`,
+  - апострофи `Mn`.
+- Символи `S`:
+  - валюти `Sc`,
+  - модифікатори `Sk`,
+  - математичні `Sm`,
+  - інші `So`.
+- Розділювачі `Z`:
+  - лінія `Zl`,
+  - параграф `Zp`,
+  - пробіл `Zs`.
+- Інші `C`:
+  - контроль `Cc`,
+  - форматування `Cf`,
+  - не призначенні `Cn`,
+  - для приватного користування `Co`,
+  - сурогат `Cs`.
 
+Наприклад, якщо нам потрібно знайти маленькі літери, ми можемо написати `pattern:\p{Ll}`, знаки пунктуації `pattern:\p{P}` і так далі.
 
-So, e.g. if we need letters in lower case, we can write `pattern:\p{Ll}`, punctuation signs: `pattern:\p{P}` and so on.
+Існують також інші похідні категорії, наприклад:
+- `Alphabetic` (`Alpha`), містить в собі літери `L`, а також числа позначені за допомогою літер `Nl` (наприклад, Ⅻ - символ для римської цифри 12), і деякі інші символи `Other_Alphabetic` (`OAlpha`).
+- `Hex_Digit` містить шістнадцяткові числа: `0-9`, `a-f`.
+- ...І так далі.
 
-There are also other derived categories, like:
-- `Alphabetic` (`Alpha`), includes Letters `L`, plus letter numbers `Nl` (e.g. Ⅻ - a character for the roman number 12), plus some other symbols `Other_Alphabetic` (`OAlpha`).
-- `Hex_Digit` includes hexadecimal digits: `0-9`, `a-f`.
-- ...And so on.
+Юнікод підтримує велику кількість властивостей, і їхній повний перелік потребував би дуже багато місця, тому ось посилання.
 
-Unicode supports many different properties, their full list would require a lot of space, so here are the references:
+- Перелік усіх властивостей за символом: <https://unicode.org/cldr/utility/character.jsp>.
+- Перелік усіх символів за властивістю: <https://unicode.org/cldr/utility/list-unicodeset.jsp>.
+- Псевдоніми властивостей: <https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt>.
+- Повна база символів Юнікод у текстовому форматі з усіма властивостями: <https://www.unicode.org/Public/UCD/latest/ucd/>.
 
-- List all properties by a character: <https://unicode.org/cldr/utility/character.jsp>.
-- List all characters by a property: <https://unicode.org/cldr/utility/list-unicodeset.jsp>.
-- Short aliases for properties: <https://www.unicode.org/Public/UCD/latest/ucd/PropertyValueAliases.txt>.
-- A full base of Unicode characters in text format, with all properties, is here: <https://www.unicode.org/Public/UCD/latest/ucd/>.
+### Приклад: шістнадцяткові числа
 
-### Example: hexadecimal numbers
+Наприклад, пошукаймо шістнадцяткові числа, записані в форматі `xFF`, де замість `F` може бути будь-яка шістнадцяткова цифра (0..9 or A..F).
 
-For instance, let's look for hexadecimal numbers, written as `xFF`, where `F` is a hex digit (0..9 or A..F).
-
-A hex digit can be denoted as `pattern:\p{Hex_Digit}`:
+Шістнадцяткову цифру можна позначити як `pattern:\p{Hex_Digit}`:
 
 ```js run
 let regexp = /x\p{Hex_Digit}\p{Hex_Digit}/u;
 
-alert("number: xAF".match(regexp)); // xAF
+alert("число: xAF".match(regexp)); // xAF
 ```
 
-### Example: Chinese hieroglyphs
+### Приклад: китайські ієрогліфи
 
-Let's look for Chinese hieroglyphs.
+Пошукаймо китайські ієрогліфи.
 
-There's a Unicode property `Script` (a writing system), that may have a value: `Cyrillic`, `Greek`, `Arabic`, `Han` (Chinese) and so on, [here's the full list](https://en.wikipedia.org/wiki/Script_(Unicode)).
+Нам допоможе властивість Юнікоду - `Script` (система письма), яка може мати значення: `Cyrillic`(Кирилиця), `Greek` (Грецька), `Arabic` (Арабська), `Han` (Китайська) та інші, [тут повний перелік](https://en.wikipedia.org/wiki/Script_(Unicode)).
 
-To look for characters in a given writing system we should use `pattern:Script=<value>`, e.g. for Cyrillic letters: `pattern:\p{sc=Cyrillic}`, for Chinese hieroglyphs: `pattern:\p{sc=Han}`, and so on:
+Для пошуку символів у певній системі письма ми повинні використати `pattern:Script=<value>`, наприклад для літер кирилиці: `pattern:\p{sc=Cyrillic}`, для китайських ієрогліфів: `pattern:\p{sc=Han}`, і так далі.
 
 ```js run
-let regexp = /\p{sc=Han}/gu; // returns Chinese hieroglyphs
+let regexp = /\p{sc=Han}/gu; // поверне китайські ієрогліфи
 
-let str = `Hello Привет 你好 123_456`;
+let str = `Hello Привіт 你好 123_456`;
 
 alert( str.match(regexp) ); // 你,好
 ```
 
-### Example: currency
+### Приклад: валюти
 
-Characters that denote a currency, such as `$`, `€`, `¥`, have Unicode property  `pattern:\p{Currency_Symbol}`, the short alias: `pattern:\p{Sc}`.
+Символи, які позначають валюту, такі як `$`, `€`, `¥`, мають властивість `pattern:\p{Currency_Symbol}`, короткий псевдонім: `pattern:\p{Sc}`.
 
-Let's use it to look for prices in the format "currency, followed by a digit":
+Використаємо його для пошуку цін у форматі «валюта, за якою йде цифра»:
 
 ```js run
 let regexp = /\p{Sc}\d/gu;
 
-let  str = `Prices: $2, €1, ¥9`;
+let  str = `Ціни: $2, €1, ¥9`;
 
 alert( str.match(regexp) ); // $2,€1,¥9
 ```
 
-Later, in the article <info:regexp-quantifiers> we'll see how to look for numbers that contain many digits.
+Пізніше у розділі <info:regexp-quantifiers> ми побачимо, як шукати числа, які містять багато цифр.
 
-## Summary
+## Підсумки
 
-Flag `pattern:u` enables the support of Unicode in regular expressions.
+Прапорець `pattern:u` вмикає підтримку Юнікоду у регулярних виразах.
 
-That means two things:
+Це означає дві речі:
 
-1. Characters of 4 bytes are handled correctly: as a single character, not two 2-byte characters.
-2. Unicode properties can be used in the search: `\p{…}`.
+1. Символи розміром 4 байти обробляються правильно: як один символ, а не як два 2-байтові символи.
+2. Працює пошук за допомогою властивостей Юнікоду: `\p{…}`.
 
-With Unicode properties we can look for words in given languages, special characters (quotes, currencies) and so on.
+За допомогою властивостей Юнікоду ми можемо шукати слова певними мовами, спеціальні символи (лапки, валюти) тощо.
