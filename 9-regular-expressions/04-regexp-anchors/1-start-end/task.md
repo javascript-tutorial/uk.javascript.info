@@ -1,3 +1,3 @@
-# Regexp ^$
+# Регулярний вираз ^$
 
-Which string matches the pattern `pattern:^$`?
+Який рядок буде відповідати шаблону `pattern:^$`?
