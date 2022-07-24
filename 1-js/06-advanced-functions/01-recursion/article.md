@@ -412,7 +412,7 @@ alert(sumSalaries(company)); // 7700
 
 ### Зв’язаний список
 
-Imagine, we want to store an ordered list of objects.
+Уявіть, що ми хочемо зберегти впорядкований список об’єктів.
 
 Очевидним вибором буде масивом:
 
