@@ -1,6 +1,6 @@
-The first solution we could try here is the recursive one.
+Спершу ми можемо спробувати рекурсію. 
 
-Fibonacci numbers are recursive by definition:
+Числа Фібоначчі є рекурсивними за визначенням:
 
 ```js run
 function fib(n) {
@@ -9,14 +9,14 @@ function fib(n) {
 
 alert( fib(3) ); // 2
 alert( fib(7) ); // 13
-// fib(77); // will be extremely slow!
+// fib(77); // екстремально повільно!
 ```
 
-...But for big values of `n` it's very slow. For instance, `fib(77)` may hang up the engine for some time eating all CPU resources.
+...Але для великих значень `n` це дуже повільно. Наприклад, `fib(77)` може заморозити роботу рушія на деякий час, споживаючи всі ресурси центрального процесора.
 
-That's because the function makes too many subcalls. The same values are re-evaluated again and again.
+При цьому, що функція продовжує широке дерево вкладених викликів. Тей самий ряд значень обчислюється знову і знову.
 
-For instance, let's see a piece of calculations for `fib(5)`:
+Наприклад, подивимось на уривок обчислень `fib(5)`:
 
 ```js no-beautify
 ...
@@ -25,68 +25,68 @@ fib(4) = fib(3) + fib(2)
 ...
 ```
 
-Here we can see that the value of `fib(3)` is needed for both `fib(5)` and `fib(4)`. So `fib(3)` will be called and evaluated two times completely independently.
+Тут ми спостерігаємо що значення `fib(3)` потрібне для обох `fib(5)` та `fib(4)`. Тож `fib(3)` буде викликано два рази абсолютно незалежно. 
 
-Here's the full recursion tree:
+Ось повне дерево рекурсії: 
 
 ![fibonacci recursion tree](fibonacci-recursion-tree.svg)
 
-We can clearly notice that `fib(3)` is evaluated two times and `fib(2)` is evaluated three times. The total amount of computations grows much faster than `n`, making it enormous even for `n=77`.
+Ми можемо чітко простежити що `fib(3)` вираховується двічі, а `fib(2)` - тричі. Загальна кількість обчислень росте набагато швидше, ніж `n`, що робить його величезним навіть для `n=77`.
 
-We can optimize that by remembering already-evaluated values: if a value of say `fib(3)` is calculated once, then we can just reuse it in future computations.
+Ми можемо оптимізувати це, запам’ятовуючи вже обчислені результати: якщо значення, скажімо, `fib(3)` обчислюється один раз, ми можемо просто повторно використовувати його в майбутніх обчисленнях.
 
-Another variant would be to give up recursion and use a totally different loop-based algorithm.
+Як інший варіант, ми можемо відмовитись від рекурсії та використати зовсім інший алгоритм на основі циклу.
 
-Instead of going from `n` down to lower values, we can make a loop that starts from `1` and `2`, then gets `fib(3)` as their sum, then `fib(4)` as the sum of two previous values, then `fib(5)` and goes up and up, till it gets to the needed value. On each step we only need to remember two previous values.
+Замість переходу від `n` до нижчих значень ми можемо створити цикл, який починається з `1` і `2`, потім отримує `fib(3)` як їхню суму, а потім `fib(4)` як суму двох попередніх значень, потім `fib(5)` і йде вгору і вгору, поки не досягне потрібного значення. На кожному кроці нам потрібно лише запам’ятати два попередні значення.
 
-Here are the steps of the new algorithm in details.
+Ось кроки нового алгоритму в деталях.
 
-The start:
+Початок:
 
 ```js
-// a = fib(1), b = fib(2), these values are by definition 1
+// a = fib(1), b = fib(2), ці значення типово дорівнюють одиниці
 let a = 1, b = 1;
 
-// get c = fib(3) as their sum
+// get c = fib(3) як їх сума
 let c = a + b;
 
-/* we now have fib(1), fib(2), fib(3)
+/* тепер ми маємо fib(1), fib(2), fib(3)
 a  b  c
 1, 1, 2
 */
 ```
 
-Now we want to get `fib(4) = fib(2) + fib(3)`.
+Тепер ми хочемо отримати `fib(4) = fib(2) + fib(3)`.
 
-Let's shift the variables: `a,b` will get `fib(2),fib(3)`, and `c` will get their sum:
+Зсуньмо змінні: `a,b` і отримаємо `fib(2),fib(3)` та `c` отримає їх суму:
 
 ```js no-beautify
-a = b; // now a = fib(2)
-b = c; // now b = fib(3)
+a = b; // тепер a = fib(2)
+b = c; // тепер b = fib(3)
 c = a + b; // c = fib(4)
 
-/* now we have the sequence:
+/* тепер ми маємо таку послідовність:
    a  b  c
 1, 1, 2, 3
 */
 ```
 
-The next step gives another sequence number:
+Наступний крок дає нове число послідовності:
 
 ```js no-beautify
-a = b; // now a = fib(3)
-b = c; // now b = fib(4)
+a = b; // тепер a = fib(3)
+b = c; // тепер b = fib(4)
 c = a + b; // c = fib(5)
 
-/* now the sequence is (one more number):
+/* тепер послідовність така (на одне число більше):
       a  b  c
 1, 1, 2, 3, 5
 */
 ```
 
-...And so on until we get the needed value. That's much faster than recursion and involves no duplicate computations.
+...І так далі, поки не отримаємо потрібне значення. Це набагато швидше, ніж рекурсія, і не вимагає повторних обчислень.
 
-The full code:
+Повний код:
 
 ```js run
 function fib(n) {
@@ -105,6 +105,6 @@ alert( fib(7) ); // 13
 alert( fib(77) ); // 5527939700884757
 ```
 
-The loop starts with `i=3`, because the first and the second sequence values are hard-coded into variables `a=1`, `b=1`.
+Цикл починається з `i=3`, тому що перше та друге значення послідовності жорстко закодовані в змінних `a=1`, `b=1`.
 
-The approach is called [dynamic programming bottom-up](https://en.wikipedia.org/wiki/Dynamic_programming).
+Підхід називається [динамічне програмування знизу вгору](https://uk.wikipedia.org/wiki/Динамічне_програмування).
