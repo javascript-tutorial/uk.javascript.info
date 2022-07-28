@@ -206,7 +206,7 @@ eventSource.addEventListener('leave', event => {
 
 [codetabs src="eventsource"]
 
-## Резюме
+## Підсумки
 
 Об’єкт `EventSource` автоматично встановлює постійне з’єднання і дозволяє серверу надсилати повідомлення через нього.
 
