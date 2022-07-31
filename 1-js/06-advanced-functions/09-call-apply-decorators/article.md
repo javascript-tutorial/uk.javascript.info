@@ -65,7 +65,7 @@ alert( "Again: " + slow(2) ); // slow(2) result returned from cache
 
 Кешуючий декоратор, згаданий вище, не підходить для роботи з методами об’єкта.
 
-Наприклад, у коді нижче `worker.slow()` перестаньте працювати після використання декоратора:
+Наприклад, у коді нижче `worker.slow()` перестане працювати після використання декоратора:
 
 ```js run
 // ми зробимо worker.slow з кешуванням
@@ -101,7 +101,7 @@ alert( worker.slow(1) ); // оригінальний метод працює
 worker.slow = cachingDecorator(worker.slow); // тепер зробимо йому кешування
 
 *!*
-alert( worker.slow(2) ); // Ой! Помилка: Cannot read property 'someMethod' of undefined
+alert( worker.slow(2) ); // Ой! Помилка: Cannot read property 'someMethod' of undefined (*)
 */!*
 ```
 
