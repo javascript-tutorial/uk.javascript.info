@@ -1,16 +1,16 @@
-# CSS-animations
+# CSS-анімації
 
-CSS animations make it possible to do simple animations without JavaScript at all.
+CSS дозволяє робити прості анімації взагалі без JavaScript.
 
-JavaScript can be used to control CSS animations and make them even better, with little code.
+JavaScript можна використовувати для керування CSS-анімацією та покращення її, додавши зовсім трохи коду.
 
-## CSS transitions [#css-transition]
+## CSS-переходи [#css-transition]
 
-The idea of CSS transitions is simple. We describe a property and how its changes should be animated. When the property changes, the browser paints the animation.
+Ідея CSS-переходів дуже проста. Ми описуємо властивість і як саме її зміни мають бути анімовані. Коли властивість змінюється, браузер анімую цей перехід, тобто зміну значення.
 
-That is, all we need is to change the property, and the fluid transition will be done by the browser.
+Тобто все, що нам потрібно, це змінити властивість, а плавний перехід буде здійснюватися браузером.
 
-For instance, the CSS below animates changes of `background-color` for 3 seconds:
+Наприклад, наведений нижче CSS анімує зміни `background-color` протягом 3 секунд:
 
 ```css
 .animated {
@@ -19,12 +19,12 @@ For instance, the CSS below animates changes of `background-color` for 3 seconds
 }
 ```
 
-Now if an element has `.animated` class, any change of `background-color` is animated during 3 seconds.
+Якщо елемент має клас `.animated`, будь-яка зміна `background-color` анімується протягом 3 секунд.
 
-Click the button below to animate the background:
+Натисніть кнопку нижче, щоб анімувати фон:
 
 ```html run autorun height=60
-<button id="color">Click me</button>
+<button id="color">Натисни мене</button>
 
 <style>
   #color {
@@ -40,19 +40,19 @@ Click the button below to animate the background:
 </script>
 ```
 
-There are 4 properties to describe CSS transitions:
+Є 4 властивості для опису переходів CSS:
 
 - `transition-property`
 - `transition-duration`
 - `transition-timing-function`
 - `transition-delay`
 
-We'll cover them in a moment, for now let's note that the common `transition` property allows declaring them together in the order: `property duration timing-function delay`, as well as animating multiple properties at once.
+Зараз ми їх розглянемо, а поки зазначимо, що загальна властивість `transition` дозволяє оголошувати їх разом у порядку: `property duration timing-function delay`, а також анімувати декілька властивостей одночасно.
 
-For instance, this button animates both `color` and `font-size`:
+Наприклад, ця кнопка анімує `color` і `font-size` одночасно:  
 
 ```html run height=80 autorun no-beautify
-<button id="growing">Click me</button>
+<button id="growing">Натисни мене</button>
 
 <style>
 #growing {
@@ -70,29 +70,29 @@ growing.onclick = function() {
 </script>
 ```
 
-Now, let's cover animation properties one by one.
+Тепер розглянемо властивості анімації по черзі.
 
 ## transition-property
 
-In `transition-property`, we write a list of properties to animate, for instance: `left`, `margin-left`, `height`, `color`. Or we could write `all`, which means "animate all properties".
+У `transition-property` ми пишемо список властивостей для анімації, наприклад: `left`, `margin-left`, `height`, `color`. Або можемо написати "all", що означає "анімувати всі властивості".
 
-Do note that, there are properties which can not be animated. However, [most of the generally used properties are animatable](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
+Зауважте, що є властивості, які не можна анімувати. Однак [більшість загальновживаних властивостей є анімаційними](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties).
 
 ## transition-duration
 
-In `transition-duration` we can specify how long the animation should take. The time should be in [CSS time format](http://www.w3.org/TR/css3-values/#time): in seconds `s` or milliseconds `ms`.
+У `transition-duration` задає, скільки часу має тривати анімація. Час має бути в [форматі часу CSS](http://www.w3.org/TR/css3-values/#time): в секундах `s` або мілісекундах `ms`.
 
 ## transition-delay
 
-In `transition-delay` we can specify the delay *before* the animation. For instance, if `transition-delay` is `1s` and `transition-duration` is `2s`, then the animation starts 1 second after the property change and the total duration will be 2 seconds.
+У `transition-delay` ми вказуємо затримку *перед* анімацією. Наприклад, якщо `transition-delay` дорівнює `1s`, а `transition-duration` - `2s`, то анімація починається через 1 секунду після зміни властивості, а загальна тривалість становитиме 2 секунди.  
 
-Negative values are also possible. Then the animation is shown immediately, but the starting point of the animation will be after given value (time). For example, if `transition-delay` is `-1s` and `transition-duration` is `2s`, then animation starts from the halfway point and total duration will be 1 second.
+Можливі й негативні значення. Тоді анімація відображається відразу, але початкова точка анімації буде після заданого значення (часу). Наприклад, якщо `transition-delay` дорівнює `-1s`, а `transition-duration` дорівнює 2с, то анімація починається з середини, а загальна тривалість становитиме 1 секунду.
 
-Here the animation shifts numbers from `0` to `9` using CSS `translate` property:
+Ця анімація переміщує числа з `0` на `9` за допомогою властивості `translate` CSS:
 
 [codetabs src="digits"]
 
-The `transform` property is animated like this:
+Властивість `transform` анімується так:
 
 ```css
 #stripe.animate {
@@ -102,25 +102,25 @@ The `transform` property is animated like this:
 }
 ```
 
-In the example above JavaScript adds the class `.animate` to the element -- and the animation starts:
+У наведеному вище прикладі JavaScript додає клас `.animate` до елемента -- і починається анімація:
 
 ```js
 stripe.classList.add('animate');
 ```
 
-We could also start it from somewhere in the middle of the transition, from an exact number, e.g. corresponding to the current second, using a negative `transition-delay`.
+Ми також могли б розпочати її десь із середини, точного вказавши число, напр. відповідно до поточної секунди, використовуючи негативне значення `transition-delay`.
 
-Here if you click the digit -- it starts the animation from the current second:
+Якщо ви зараз клацнете по цифрі -- анімація почнеться з поточної секунди:
 
 [codetabs src="digits-negative-delay"]
 
-JavaScript does it with an extra line:
+JavaScript робить це за допомогою додаткового рядка:
 
 ```js
 stripe.onclick = function() {
   let sec = new Date().getSeconds() % 10;
 *!*
-  // for instance, -3s here starts the animation from the 3rd second
+  // наприклад, -3s запускає анімацію з 3-ої секунди
   stripe.style.transitionDelay = '-' + sec + 's';
 */!*
   stripe.classList.add('animate');
@@ -129,60 +129,60 @@ stripe.onclick = function() {
 
 ## transition-timing-function
 
-The timing function describes how the animation process is distributed along its timeline. Will it start slowly and then go fast, or vice versa.
+Функція часу описує, як процес анімації має розподілятися у часі. Наприклад, починається повільно, а потім іде швидко, чи навпаки.
 
-It appears to be the most complicated property at first. But it becomes very simple if we devote a bit time to it.
+Спочатку це здається найскладнішою властивістю. Але все стає дуже просто, якщо ми приділимо цьому трохи часу.
 
-That property accepts two kinds of values: a Bezier curve or steps. Let's start with the curve, as it's used more often.
+Ця властивість приймає два типи значень: крива Безʼє або кроки. Почнемо з кривої, оскільки вона використовується частіше.
 
-### Bezier curve
+### Крива Безʼє
 
-The timing function can be set as a [Bezier curve](/bezier-curve) with 4 control points that satisfy the conditions:
+Функцію часу можна встановити як [криву Безʼє](/bezier-curve) з 4 контрольними точками, які задовольняють умовам:
 
-1. First control point: `(0,0)`.
-2. Last control point: `(1,1)`.
-3. For intermediate points, the values of `x` must be in the interval `0..1`, `y` can be anything.
+1. Перша контрольна точка: `(0,0)`.
+2. Остання контрольна точка: `(1,1)`.
+3. Для проміжних точок значення `x` мають бути в інтервалі `0..1`, `y` може бути будь-яким.
 
-The syntax for a Bezier curve in CSS: `cubic-bezier(x2, y2, x3, y3)`. Here we need to specify only 2nd and 3rd control points, because the 1st one is fixed to `(0,0)` and the 4th one is `(1,1)`.
+Синтаксис кривої Без’є в CSS: `cubic-bezier(x2, y2, x3, y3)`. Тут нам потрібно вказати лише 2-гу і 3-тю контрольні точки, тому що 1-ша фіксована на `(0,0)`, а 4-та -- `(1,1)`.
 
-The timing function describes how fast the animation process goes.
+Функція часу описує, швидкість процесу анімації.
 
-- The `x` axis is the time: `0` -- the start, `1` -- the end of `transition-duration`.
-- The `y` axis specifies the completion of the process: `0` -- the starting value of the property, `1` -- the final value.
+- Вісь `x` -- це час, де `0` -- початок, `1` -- кінець `transition-duration`.
+- Вісь `y` визначає завершення процесу, де `0` -- початкове значення властивості, `1` -- кінцеве.
 
-The simplest variant is when the animation goes uniformly, with the same linear speed. That can be specified by the curve `cubic-bezier(0, 0, 1, 1)`.
+Найпростіший варіант -- коли анімація йде рівномірно, з однаковою лінійною швидкістю. За допомогою кривої це можна визначити `cubic-bezier(0, 0, 1, 1)`.
 
-Here's how that curve looks:
+Ось як виглядає ця крива:
 
 ![](bezier-linear.svg)
 
-...As we can see, it's just a straight line. As the time (`x`) passes, the completion (`y`) of the animation steadily goes from `0` to `1`.
+...Як бачимо, це просто пряма лінія. З плином часу (`x`) завершення (`y`) анімації постійно змінюється від `0` до `1`.
 
-The train in the example below goes from left to right with the permanent speed (click it):
+Потяг у прикладі нижче рухається зліва направо з постійною швидкістю (клацніть по ньому):
 
 [codetabs src="train-linear"]
 
-The CSS `transition` is based on that curve:
+Властивість `transition` заснована на цій кривій:
 
 ```css
 .train {
   left: 0;
   transition: left 5s cubic-bezier(0, 0, 1, 1);
-  /* click on a train sets left to 450px, thus triggering the animation */
+  /* натискаючи на потяг властивість left стає 450px, анімація запускається */
 }
 ```
 
-...And how can we show a train slowing down?
+...А як ми можемо показати, що потяг гальмує?
 
-We can use another Bezier curve: `cubic-bezier(0.0, 0.5, 0.5 ,1.0)`.
+Ми можемо використати іншу криву Без'є: `cubic-bezier(0.0, 0.5, 0.5 ,1.0)`.
 
-The graph:
+Графік:
 
 ![](train-curve.svg)
 
-As we can see, the process starts fast: the curve soars up high, and then slower and slower.
+Як бачимо, процес починається швидко: крива злітає вгору, а потім все повільніше і повільніше.
 
-Here's the timing function in action (click the train):
+Ось функція часу в дії (натисніть на потяг):
 
 [codetabs src="train"]
 
@@ -191,84 +191,84 @@ CSS:
 .train {
   left: 0;
   transition: left 5s cubic-bezier(0, .5, .5, 1);
-  /* click on a train sets left to 450px, thus triggering the animation */
+  /* натискаючи на потяг властивість left стає 450px, анімація запускається */
 }
 ```
 
-There are several built-in curves: `linear`, `ease`, `ease-in`, `ease-out` and `ease-in-out`.
+Існує кілька вбудованих кривих: `linear`, `ease`, `ease-in`, `ease-out` та `ease-in-out`.
 
-The `linear` is a shorthand for `cubic-bezier(0, 0, 1, 1)` -- a straight line, which we described above.
+`linear` скорочення від `cubic-bezier(0, 0, 1, 1)` -- пряма лінія, яку ми вже описували.
 
-Other names are shorthands for the following `cubic-bezier`:
+Інші назви є скороченнями наступних `cubic-bezier`:
 
 | <code>ease</code><sup>*</sup> | <code>ease-in</code> | <code>ease-out</code> | <code>ease-in-out</code> |
 |-------------------------------|----------------------|-----------------------|--------------------------|
 | <code>(0.25, 0.1, 0.25, 1.0)</code> | <code>(0.42, 0, 1.0, 1.0)</code> | <code>(0, 0, 0.58, 1.0)</code> | <code>(0.42, 0, 0.58, 1.0)</code> |
 | ![ease, figure](ease.svg) | ![ease-in, figure](ease-in.svg) | ![ease-out, figure](ease-out.svg) | ![ease-in-out, figure](ease-in-out.svg) |
 
-`*` -- by default, if there's no timing function, `ease` is used.
+`*` -- типово, якщо функція часу не встановлена, використовується `ease`.
 
-So we could use `ease-out` for our slowing down train:
+Тож ми могли б використовувати `ease-out` для нашого потягу, що сповільнюється:
 
 
 ```css
 .train {
   left: 0;
   transition: left 5s ease-out;
-  /* same as transition: left 5s cubic-bezier(0, .5, .5, 1); */
+  /* те саме як transition: left 5s cubic-bezier(0, .5, .5, 1); */
 }
 ```
 
-But it looks a bit differently.
+Але виглядає це трохи інакше.
 
-**A Bezier curve can make the animation exceed its range.**
+**Крива Безʼє може змусити анімацію вийти за межі її діапазону.**
 
-The control points on the curve can have any `y` coordinates: even negative or huge ones. Then the Bezier curve would also extend very low or high, making the animation go beyond its normal range.
+Контрольні точки на кривій можуть мати будь-які координати `y`: навіть негативні або величезні. Тоді крива Без'є також буде дуже низькою або високою, що змушує анімацію виходити за межі нормального діапазону.
 
-In the example below the animation code is:
+У наведеному нижче прикладі код анімації:
 ```css
 .train {
   left: 100px;
   transition: left 5s cubic-bezier(.5, -1, .5, 2);
-  /* click on a train sets left to 450px */
+  /* клік на потязі встановлює властивість left на 450px */
 }
 ```
 
-The property `left` should animate from `100px` to `400px`.
+Властивість `left` має бути анімованою від `100px` до `400px`.
 
-But if you click the train, you'll see that:
+Але якщо ви клацнете по потягу, ви побачите, що:
 
-- First, the train goes *back*: `left` becomes less than `100px`.
-- Then it goes forward, a little bit farther than `400px`.
-- And then back again -- to `400px`.
+- Спочатку потяг повертається *назад*: `left` стає меншим ніж `100px`.
+- Потім він рухається вперед, трохи далі, ніж `400px`.
+- А потім знову назад -- до `400px`.
 
 [codetabs src="train-over"]
 
-Why it happens is pretty obvious if we look at the graph of the given Bezier curve:
+Чому це відбувається, стає зрозумілим, якщо ми подивимося на графік даної кривої Без'є:
 
 ![](bezier-train-over.svg)
 
-We moved the `y` coordinate of the 2nd point below zero, and for the 3rd point we made it over `1`, so the curve goes out of the "regular" quadrant. The `y` is out of the "standard" range `0..1`.
+Ми перемістили координату `y` 2-ої точки нижче нуля, а для 3-ої точки ми зробили її більше за `1`, тому крива виходить із "звичайного" квадранта. Координата `y` виходить за "стандартний" діапазон `0..1`.
 
-As we know, `y` measures "the completion of the animation process". The value `y = 0` corresponds to the starting property value and `y = 1` -- the ending value. So values `y<0` move the property beyond the starting `left` and `y>1` -- past the final `left`.
+Як відомо, `y` вимірює "завершення процесу анімації". Значення `y = 0` відповідає початковому значенню властивості, а `y = 1` -- кінцевому. Таким чином, значення `y<0` переміщує властивість за межі початкового `left` і `y>1` -- за останній `left`.
 
-That's a "soft" variant for sure. If we put `y` values like `-99` and `99` then the train would jump out of the range much more.
+Це точно "м'який" варіант. Якщо ми введемо значення `y` як-от `-99` та `99` то потяг вискочить із діапазону значно більше.
 
-But how do we make a Bezier curve for a specific task? There are many tools. For instance, we can do it on the site <http://cubic-bezier.com/>.
+Але як зробити криву Без’є для конкретного завдання? Інструментів багато. Наприклад, ми можемо це зробити на сайті <http://cubic-bezier.com/>.
 
-### Steps
+### Кроки
 
-The timing function `steps(number of steps[, start/end])` allows splitting an transition into multiple steps.
+Функція часу `steps(кількість кроків[, start/end])` дозволяє розділити перехід на кілька кроків.
 
-Let's see that in an example with digits.
+Побачимо це на прикладі з цифрами.
 
-Here's a list of digits, without any animations, just as a source:
+Ось список цифр, без жодної анімації, просто як основа:
 
 [codetabs src="step-list"]
 
-We'll make the digits appear in a discrete way by making the part of the list outside of the red "window" invisible and shifting the list to the left with each step.
+Ми зробимо так, щоб цифри відображалися дискретно, роблячи частину списку за межами червоного "вікна" незримою та зміщуючи список ліворуч з кожним кроком.
 
-There will be 9 steps, a step-move for each digit:
+Буде 9 кроків, крок-хід для кожної цифри:
 
 ```css
 #stripe.animate  {
@@ -277,58 +277,58 @@ There will be 9 steps, a step-move for each digit:
 }
 ```
 
-In action:
+В дії:
 
 [codetabs src="step"]
 
-The first argument of `steps(9, start)` is the number of steps. The transform will be split into 9 parts (10% each). The time interval is automatically divided into 9 parts as well, so `transition: 9s` gives us 9 seconds for the whole animation – 1 second per digit.
+Першим аргументом `steps(9, start)` є кількість кроків. Перетворення буде розділено на 9 частин (по 10% кожна). Часовий інтервал також автоматично ділиться на 9 частин, тому `transition: 9s` дає нам 9 секунд на всю анімацію -- 1 секунда на цифру.
 
-The second argument is one of two words: `start` or `end`.
+Другий аргумент -- це одне з двох слів: `start` чи `end`.
 
-The `start` means that in the beginning of animation we need to make the first step immediately.
+Значення `start` означає, що на початку анімації нам потрібно негайно зробити перший крок.
 
-We can observe that during the animation: when we click on the digit it changes to `1` (the first step) immediately, and then changes in the beginning of the next second.
+Можна помітити, що під час анімації: коли ми клацаємо по цифрі, вона відразу змінюється на `1` (перший крок), а потім змінюється на початку наступної секунди.
 
-The process is progressing like this:
+Процес іде так:
 
-- `0s` -- `-10%` (first change in the beginning of the 1st second, immediately)
+- `0s` -- `-10%` (перша зміна на початку 1-ої секунди, відразу)
 - `1s` -- `-20%`
 - ...
 - `8s` -- `-90%`
-- (the last second shows the final value).
+- (остання секунда показує остаточне значення).
 
-The alternative value `end` would mean that the change should be applied not in the beginning, but at the end of each second.
+Альтернативне значення `end` означатиме, що зміну слід застосовувати не на початку, а в кінці кожної секунди.
 
-So the process for `steps(9, end)` would go like this:
+Отже, процес для `steps(9, end)` буде виглядати так:
 
-- `0s` -- `0` (during the first second nothing changes)
-- `1s` -- `-10%` (first change at the end of the 1st second)
+- `0s` -- `0` (протягом першої секунди нічого не змінюється)
+- `1s` -- `-10%` (перша зміна в кінці 1-ої секунди)
 - `2s` -- `-20%`
 - ...
 - `9s` -- `-90%`
 
-Here's `steps(9, end)` in action (note the pause between the first digit change):
+Ось `steps(9, end)` в дії (зверніть увагу на паузу між зміною першої цифри):
 
 [codetabs src="step-end"]
 
-There are also shorthand values:
+Існують також скорочені значення:
 
-- `step-start` -- is the same as `steps(1, start)`. That is, the animation starts immediately and takes 1 step. So it starts and finishes immediately, as if there were no animation.
-- `step-end` -- the same as `steps(1, end)`: make the animation in a single step at the end of `transition-duration`.
+- `step-start` -- те саме, що й `steps(1, start)`. Тобто анімація починається відразу і займає 1 крок. Вона починається й закінчується одразу, ніби не було анімації.
+- `step-end` -- те саме, що й `steps(1, end)`: зробіть анімацію за один крок у кінці `transition-duration`.
 
-These values are rarely used, because that's not really animation, but rather a single-step change.
+Ці значення рідко використовуються, тому що це насправді не анімація, а однокрокова зміна.
 
-## Event transitionend
+## Подія transitionend
 
-When the CSS animation finishes the `transitionend` event triggers.
+Коли закінчується CSS анімація, запускається подія `transitionend`.
 
-It is widely used to do an action after the animation is done. Also we can join animations.
+Вона широко використовується для виконання дії після завершення анімації. Також ми можемо обʼєднувати анімації з її допомогою.
 
-For instance, the ship in the example below starts to sail there and back when clicked, each time farther and farther to the right:
+Наприклад, якщо натиснути на корабель у наведеному нижче прикладі, він починає плисти туди й назад, щоразу все далі й далі праворуч:
 
 [iframe src="boat" height=300 edit link]
 
-The animation is initiated by the function `go` that re-runs each time the transition finishes, and flips the direction:
+Анімація ініціюється функцією `go`, яка повторно запускається кожного разу, коли закінчується перехід, і змінює напрямок на протилежний:
 
 ```js
 boat.onclick = function() {
@@ -337,11 +337,11 @@ boat.onclick = function() {
 
   function go() {
     if (times % 2) {
-      // sail to the right
+      // пливти праворуч
       boat.classList.remove('back');
       boat.style.marginLeft = 100 * times + 200 + 'px';
     } else {
-      // sail to the left
+      // пливти ліворуч
       boat.classList.add('back');
       boat.style.marginLeft = 100 * times - 200 + 'px';
     }
@@ -357,40 +357,40 @@ boat.onclick = function() {
 };
 ```
 
-The event object for `transitionend` has a few specific properties:
+Об’єкт події для `transitionend` має кілька специфічних властивостей:
 
 `event.propertyName`
-: The property that has finished animating. Can be good if we animate multiple properties simultaneously.
+: Властивість, яка завершила анімацію. Може бути корисна коли ми анімуємо кілька властивостей одночасно.
 
 `event.elapsedTime`
-: The time (in seconds) that the animation took, without `transition-delay`.
+: Час (у секундах), який тривала анімація, без `transition-delay`.
 
 ## Keyframes
 
-We can join multiple simple animations together using the `@keyframes` CSS rule.
+Ми можемо об’єднати кілька простих анімацій разом за допомогою правила CSS `@keyframes`.
 
-It specifies the "name" of the animation and rules - what, when and where to animate. Then using the `animation` property, we can attach the animation to the element and specify additional parameters for it.
+Воно визначає "ім’я" анімації та правила - що, коли і де анімувати. Використовуючи властивість `animation`, ми можемо приєднати анімацію до елемента та вказати додаткові параметри.
 
-Here's an example with explanations:
+Ось приклад із поясненнями:
 
 ```html run height=60 autorun="no-epub" no-beautify
 <div class="progress"></div>
 
 <style>
 *!*
-  @keyframes go-left-right {        /* give it a name: "go-left-right" */
-    from { left: 0px; }             /* animate from left: 0px */
-    to { left: calc(100% - 50px); } /* animate to left: 100%-50px */
+  @keyframes go-left-right {        /* ім’я анімації: "go-left-right" */
+    from { left: 0px; }             /* початок анімації від left: 0px */
+    to { left: calc(100% - 50px); } /* кінець анімації до left: 100%-50px */
   }
 */!*
 
   .progress {
 *!*
     animation: go-left-right 3s infinite alternate;
-    /* apply the animation "go-left-right" to the element
-       duration 3 seconds
-       number of times: infinite
-       alternate direction every time
+    /* застосувати анімацію "go-left-right" до елемента
+       тривалість 3 секунди
+       кількість разів: нескінченно
+       щоразу змінювати напрямок
     */
 */!*
 
@@ -403,45 +403,45 @@ Here's an example with explanations:
 </style>
 ```
 
-There are many articles about `@keyframes` and a [detailed specification](https://drafts.csswg.org/css-animations/).
+Є багато статей про `@keyframes` та [детальна специфікація](https://drafts.csswg.org/css-animations/).
 
-You probably won't need `@keyframes` often, unless everything is in constant motion on your sites.
+Ймовірно, `@keyframes` не знадобиться вам часто, хіба якщо на ваших сайтах все постійно рухається.
 
-## Performance
+## Продуктивність
 
-Most CSS properties can be animated, because most of them are numeric values. For instance, `width`, `color`, `font-size` are all numbers. When you animate them, the browser gradually changes these numbers frame by frame, creating a smooth effect.
+Більшість властивостей CSS можна анімувати, оскільки більшість із них є числовими значеннями. Наприклад, `width`, `color`, `font-size` всі є числами. Коли ви анімуєте їх, браузер поступово змінює ці числа кадр за кадром, створюючи плавний ефект.
 
-However, not all animations will look as smooth as you'd like, because different CSS properties cost differently to change.
+Однак не всі анімації виглядатимуть так гладко, як хотілося б, оскільки різні властивості змінюються по-різному.
 
-In more technical details, when there's a style change, the browser goes through 3 steps to render the new look:
+Якщо говорити більше про технічні деталі, коли відбувається зміна стилю, браузер виконує 3 кроки для відтворення нового вигляду:
 
-1. **Layout**: re-compute the geometry and position of each element, then
-2. **Paint**: re-compute how everything should look like at their places, including background, colors,
-3. **Composite**: render the final results into pixels on screen, apply CSS transforms if they exist.
+1. **Layout**: перерахувати геометрію, а потім положення кожного елемента
+2. **Paint**: перерахувати, як все має виглядати на своїх місцях, включаючи фон, кольори,
+3. **Composite**: відтворити кінцеві результати в пікселях на екрані, застосувати CSS-перетворення, якщо вони існують.
 
-During a CSS animation, this process repeats every frame. However, CSS properties that never affect geometry or position, such as `color`, may skip the Layout step. If a `color` changes, the browser  doesn't calculate any new geometry, it goes to Paint -> Composite. And there are few properties that directly go to Composite. You can find a longer list of CSS properties and which stages they trigger at <https://csstriggers.com>.
+Під час CSS-анімації цей процес повторюється для кожного кадра. Однак властивості CSS, які ніколи не впливають на геометрію або положення, наприклад, `color`, можуть пропускатись крок Layout. Якщо `color` змінюється, браузер не обчислює нову геометрію, він переходить до кроків Paint -> Composite. І є кілька властивостей, які безпосередньо переходять до Composite. Ви можете знайти довший список властивостей CSS та на яких етапах вони запускаються тут <https://csstriggers.com>.
 
-The calculations may take time, especially on pages with many elements and a complex layout. And the delays are actually visible on most devices, leading to "jittery", less fluid animations.
+Обчислення може зайняти багато часу, особливо на сторінках із великою кількістю елементів і складною структурою. І затримки фактично помітні на більшості пристроїв, що призводить до "тремтіння", менш плавної анімації.
 
-Animations of properties that skip the Layout step are faster. It's even better if Paint is skipped too.
+Анімація властивостей, які пропускають Layout крок, працюють швидше. Навіть ліпше, ніж коли пропускається крок Paint.
 
-The `transform` property is a great choice, because:
-- CSS transforms affect the target element box as a whole (rotate, flip, stretch, shift it).
-- CSS transforms never affect neighbour elements.
+Властивість `transform` є чудовим вибором, оскільки:
+- Перетворення CSS впливають на блок цільового елемента в цілому (повертають, перевертають, розтягують, зміщують його).
+- CSS-перетворення ніколи не впливають на сусідні елементи.
 
-...So browsers apply `transform` "on top" of existing Layout and Paint calculations, in the Composite stage.
+...Тому браузери застосовують `transform` після наявних обчислень Layout та Paint на кроці Composite.
 
-In other words, the browser calculates the Layout (sizes, positions), paints it with colors, backgrounds, etc at the Paint stage, and then applies `transform` to element boxes that need it.
+Іншими словами, браузер обчислює макет (розміри, положення), розфарбовує його за допомогою colors, background тощо на етапі Paint, а потім застосовує `transform` до елементів, які цього потребують.
 
-Changes (animations) of the `transform` property never trigger Layout and Paint steps. More than that, the browser  leverages the graphics accelerator (a special chip on the CPU or graphics card) for CSS transforms, thus making them very efficient.
+Зміни (анімації) властивості `transform` ніколи не запускають кроки Layout та Paint. Більше того, браузер використовує графічний прискорювач (спеціальний чіп на ЦП або відеокарті) для CSS-перетворень, що робить їх дуже ефективними.
 
-Luckily, the `transform` property is very powerful. By using `transform` on an element, you could rotate and flip it, stretch and shrink it, move it around, and [much more](https://developer.mozilla.org/docs/Web/CSS/transform#syntax). So instead of `left/margin-left` properties we can use `transform: translateX(…)`, use `transform: scale` for increasing element size, etc.
+На щастя, властивість `transform` дуже потужна. Використовуючи `transform` для елемента, ви можете обертати та крутити його, розтягувати та зменшувати, переміщувати та [багато іншого](https://developer.mozilla.org/docs/Web/CSS/transform#syntax ). Тому замість властивостей `left/margin-left` ми можемо використовувати `transform: translateX(…)`, `transform: scale` для збільшення розміру елемента, тощо.
 
-The `opacity` property also never triggers Layout (also skips Paint in Mozilla Gecko). We can use it for show/hide or fade-in/fade-out effects.
+Властивість `opacity` ніколи не запускає Layout (в Mozilla Gecko також пропускається Paint). Ми можемо використовувати його для ефектів відображення/приховування або посилення/згасання.
 
-Paring `transform` with `opacity` can usually solve most of our needs, providing fluid, good-looking animations.
+Поєднання `transform` з `opacity` зазвичай може вирішувати більшість наших потреб, забезпечуючи плавну, яскраву анімацію.
 
-For example, here clicking on the `#boat` element adds the class with `transform: translateX(300)` and `opacity: 0`, thus making it move `300px` to the right and disappear:
+Наприклад, тут клік на елемент `#boat` додає клас із `transform: translateX(300)` та `opacity: 0`, таким чином змушуючи його рухатись на `300px` праворуч і зникати:
 
 ```html run height=260 autorun no-beautify
 <img src="https://js.cx/clipart/boat.png" id="boat">
@@ -462,10 +462,10 @@ For example, here clicking on the `#boat` element adds the class with `transform
 </script>
 ```
 
-Here's a more complex example, with `@keyframes`:
+Ось більш складний приклад із `@keyframes`:
 
 ```html run height=80 autorun no-beautify
-<h2 onclick="this.classList.toggle('animated')">click me to start / stop</h2>
+<h2 onclick="this.classList.toggle('animated')">натисніть на мене, щоб почати/зупинити</h2>
 <style>
   .animated {
     animation: hello-goodbye 1.8s infinite;
@@ -488,23 +488,23 @@ Here's a more complex example, with `@keyframes`:
 </style>
 ```
 
-## Summary
+## Підсумки
 
-CSS animations allow smoothly (or step-by-step) animated changes of one or multiple CSS properties.
+CSS-анімація дозволяє плавно (або покроково) анімувати зміну однієї або кількох властивостей CSS.
 
-They are good for most animation tasks. We're also able to use JavaScript for animations, the next chapter is devoted to that.
+Це підходить для більшості задач. Ми також можемо використовувати JavaScript для анімації, цьому присвячений наступний розділ.
 
-Limitations of CSS animations compared to JavaScript animations:
+Обмеження анімації CSS порівняно з JavaScript:
 
 ```compare plus="CSS animations" minus="JavaScript animations"
-+ Simple things done simply.
-+ Fast and lightweight for CPU.
-- JavaScript animations are flexible. They can implement any animation logic, like an "explosion" of an element.
-- Not just property changes. We can create new elements in JavaScript as part of the animation.
++ Прості речі робляться просто.
++ Швидка та легка для процесора.
+- Анімації JavaScript є гнучкими. Вони можуть реалізувати будь-яку логіку анімації, навіть "вибух" елемента.
+- Не тільки властивості змінюються. В JavaScript ми можемо створювати нові елементи як частину анімації.
 ```
 
-In early examples in this chapter, we animate `font-size`, `left`, `width`, `height`, etc. In real life projects, we should use `transform: scale()` and `transform: translate()` for better performance.
+У перших прикладах цього розділу ми анімували `font-size`, `left`, `width`, `height` тощо. У реальних проектах ми повинні використовувати `transform: scale()` і `transform: translate()` для кращої продуктивності.
 
-The majority of animations can be implemented using CSS as described in this chapter. And the `transitionend` event allows JavaScript to be run after the animation, so it integrates fine with the code.
+Більшість анімацій можна реалізувати за допомогою CSS, як описано в цьому розділі. А подія `transitionend` дозволяє запускати JavaScript після анімації, тому вона добре інтегрується з кодом.
 
-But in the next chapter we'll do some JavaScript animations to cover more complex cases.
+Але в наступному розділі ми зробимо кілька анімацій JavaScript, щоб охопити більш складні випадки.

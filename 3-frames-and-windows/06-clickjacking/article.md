@@ -1,79 +1,79 @@
-# The clickjacking attack
+# Clickjacking атака
 
-The "clickjacking" attack allows an evil page to click on a "victim site" *on behalf of the visitor*.
+Атака типу "clickjacking" (англ. "захоплення кліка") дозволяє шкідливій сторінці натиснути посилання на "сайт-жертви" *від імені відвідувача*.
 
-Many sites were hacked this way, including Twitter, Facebook, Paypal and other sites. They have all been fixed, of course.
+Багато сайтів були зламані подібним способом, включаючи Twitter, Facebook, Paypal та інші. Усі вони, звісно ж, зараз захищені.
 
-## The idea
+## Ідея
 
-The idea is very simple.
+Ідея дуже проста.
 
-Here's how clickjacking was done with Facebook:
+Ось як clickjacking було зроблено на Facebook:
 
-1. A visitor is lured to the evil page. It doesn't matter how.
-2. The page has a harmless-looking link on it (like "get rich now" or "click here, very funny").
-3. Over that link the evil page positions a transparent `<iframe>` with `src` from facebook.com, in such a way that the "Like" button is right above that link. Usually that's done with `z-index`.
-4. In attempting to click the link, the visitor in fact clicks the button.
+1. Відвідувача заманюють на шкідливу сторінку. Не важливо як.
+2. На сторінці є нешкідливе посилання (наприклад, "розбагатіти зараз" або "натисніть тут, дуже смішно").
+3. Над цим посиланням шкідлива сторінка розміщує прозорий `<iframe>` з `src` з facebook.com таким чином, що кнопка "Подобається" знаходиться прямо над цим посиланням. Зазвичай це робиться за допомогою `z-index`.
+4. Намагаючись натиснути посилання, відвідувач фактично натискає кнопку.
 
-## The demo
+## Демо
 
-Here's how the evil page looks. To make things clear, the `<iframe>` is half-transparent (in real evil pages it's fully transparent):
+Ось як виглядає шкідлива сторінка. Щоб було зрозуміло, `<iframe>` є напівпрозорим (на справжніх шкідливих сторінках він повністю прозорий):
 
 ```html run height=120 no-beautify
 <style>
-iframe { /* iframe from the victim site */
+iframe { /* iframe із сайту жертви */
   width: 400px;
   height: 100px;
   position: absolute;
   top:0; left:-20px;
 *!*
-  opacity: 0.5; /* in real opacity:0 */
+  opacity: 0.5; /* насправді opacity:0 */
 */!*
   z-index: 1;
 }
 </style>
 
-<div>Click to get rich now:</div>
+<div>Натисніть, щоб розбагатіти зараз:</div>
 
-<!-- The url from the victim site -->
+<!-- URL-адреса з сайту-жертви -->
 *!*
 <iframe src="/clickjacking/facebook.html"></iframe>
 
-<button>Click here!</button>
+<button>Натисніть!</button>
 */!*
 
-<div>...And you're cool (I'm a cool hacker actually)!</div>
+<div>...І ти крутий (насправді я крутий хакер)!</div>
 ```
 
-The full demo of the attack:
+Повна демонстрація атаки:
 
 [codetabs src="clickjacking-visible" height=160]
 
-Here we have a half-transparent `<iframe src="facebook.html">`, and in the example we can see it hovering over the button. A click on the button actually clicks on the iframe, but that's not visible to the user, because the iframe is transparent.
+Тут ми маємо напівпрозорий `<iframe src="facebook.html">`, і в прикладі ми бачимо його над кнопкою. Натискаючи кнопку користувач фактично натискає на iframe, але не бачить його, оскільки iframe прозорий.
 
-As a result, if the visitor is authorized on Facebook ("remember me" is usually turned on), then it adds a "Like". On Twitter that would be a "Follow" button.
+Як наслідок, якщо відвідувач авторизований у Facebook (як правило, "запам’ятати мене" включено), він додає "подобається". У Twitter це була б кнопка "Підписатися".
 
-Here's the same example, but closer to reality, with `opacity:0` for `<iframe>`:
+Ось той самий приклад, але ближчий до реальності, з `opacity:0` для `<iframe>`:
 
 [codetabs src="clickjacking" height=160]
 
-All we need to attack -- is to position the `<iframe>` on the evil page in such a way that the button is right over the link. So that when a user clicks the link, they actually click the button. That's usually doable with CSS.
+Все, що нам потрібно для атаки -- це розташувати `<iframe>` на шкідливій сторінці таким чином, щоб кнопка знаходилась прямо над посиланням. Таким чином, коли користувач натискає посилання, він фактично натискає кнопку. Зазвичай це можна зробити за допомогою CSS.
 
-```smart header="Clickjacking is for clicks, not for keyboard"
-The attack only affects mouse actions (or similar, like taps on mobile).
+```smart header="Clickjacking призначений для кліків, а не для клавіатури"
+Атака впливає лише на дії миші (або подібні, як-от натискання на мобільному пристрої).
 
-Keyboard input is much difficult to redirect. Technically, if we have a text field to hack, then we can position an iframe in such a way that text fields overlap each other. So when a visitor tries to focus on the input they see on the page, they actually focus on the input inside the iframe.
+Введення з клавіатури дуже важко переспрямувати. Технічно, якщо у нас є текстове поле для зламу, ми можемо розташувати iframe таким чином, щоб текстові поля перекривали одне одного. Тому, коли відвідувач намагається сфокосуватися на текстовому полі, яке він бачить на сторінці, він фактично фокусується на полі всередині iframe.
 
-But then there's a problem. Everything that the visitor types will be hidden, because the iframe is not visible.
+Але тоді виникає проблема. Усе, що введе відвідувач, буде приховано, оскільки iframe не видно.
 
-People will usually stop typing when they can't see their new characters printing on the screen.
+Люди зазвичай припиняють вводити текст, коли не бачать, як на екрані друкуються нові символи.
 ```
 
-## Old-school defences (weak)
+## Приклади слабкого захисту
 
-The oldest defence is a bit of JavaScript which forbids opening the page in a frame (so-called "framebusting").
+Найстаріший спосіб захисту -- це код JavaScript, який забороняє відкривати сторінку у фреймі (так званий "framebusting").
 
-That looks like this:
+Це виглядає так:
 
 ```js
 if (top != window) {
@@ -81,15 +81,15 @@ if (top != window) {
 }
 ```
 
-That is: if the window finds out that it's not on top, then it automatically makes itself the top.
+Тобто: якщо вікно дізнається, що воно не зверху, то воно автоматично стає верхнім.
 
-This not a reliable defence, because there are many ways to hack around it. Let's cover a few.
+Це не надійніший засіб захисту, тому що є багато способів зламати його. Давайте розглянемо декілька.
 
-### Blocking top-navigation
+### Блокування top-навігації
 
-We can block the transition caused by changing `top.location` in  [beforeunload](info:onload-ondomcontentloaded#window.onbeforeunload) event handler.
+Ми можемо заблокувати перехід, викликаний зміною `top.location` в обробнику події [beforeunload](info:onload-ondomcontentloaded#window.onbeforeunload).
 
-The top page (enclosing one, belonging to the hacker) sets a preventing handler to it, like this:
+Зовнішня сторінка (що належить хакеру) встановлює обробник події для запобігання, наприклад:
 
 ```js
 window.onbeforeunload = function() {
@@ -97,50 +97,50 @@ window.onbeforeunload = function() {
 };
 ```
 
-When the `iframe` tries to change `top.location`, the visitor gets a message asking them whether they want to leave.
+Коли `iframe` намагається змінити `top.location`, відвідувач отримує повідомлення із запитом, чи хоче він піти.
 
-In most cases the visitor would answer negatively because they don't know about the iframe - all they can see is the top page, there's no reason to leave. So `top.location` won't change!
+У більшості випадків відвідувач відповість негативно, тому що він не знає про iframe -- все, що він бачить, це верхня сторінка, немає причин залишати її. Тож `top.location` не зміниться!
 
-In action:
+В дії:
 
 [codetabs src="top-location"]
 
-### Sandbox attribute
+### Атрибут sandbox
 
-One of the things restricted by the `sandbox` attribute is navigation. A sandboxed iframe may not change `top.location`.
+Однією з речей, які можна обмежити атрибутом `sandbox` є навігація. Ізольований iframe може не змінювати `top.location`.
 
-So we can add the iframe with `sandbox="allow-scripts allow-forms"`. That would relax the restrictions, permitting scripts and forms. But we omit `allow-top-navigation` so that changing `top.location` is forbidden.
+Тож ми можемо додати iframe за допомогою `sandbox="allow-scripts allow-forms"`. Це послабить обмеження, дозволивши сценарії та форми. Але ми опускаємо `allow-top-navigation`, щоб заборонити зміну `top.location`.
 
-Here's the code:
+Ось код:
 
 ```html
 <iframe *!*sandbox="allow-scripts allow-forms"*/!* src="facebook.html"></iframe>
 ```
 
-There are other ways to work around that simple protection too.
+Є й інші способи обходу цього простого захисту.
 
 ## X-Frame-Options
 
-The server-side header `X-Frame-Options` can permit or forbid displaying the page inside a frame.
+Заголовок на стороні сервера `X-Frame-Options` може дозволяти або забороняти відображення сторінки всередині фрейму.
 
-It must be sent exactly as HTTP-header: the browser will ignore it if found in HTML `<meta>` tag. So, `<meta http-equiv="X-Frame-Options"...>` won't do anything.
+Він має бути надісланий точно як HTTP-заголовок: браузер проігнорує його, якщо знайде в HTML `<meta>` тегу. Отже, `<meta http-equiv="X-Frame-Options"...>` нічого не дасть.
 
-The header may have 3 values:
+Заголовок може мати 3 значення:
 
 
 `DENY`
-: Never ever show the page inside a frame.
+: Ніколи не показувати сторінку всередині фрейму.
 
 `SAMEORIGIN`
-: Allow inside a frame if the parent document comes from the same origin.
+: Дозволити показ всередині фрейму, якщо батьківський документ походить із того самого джерела.
 
 `ALLOW-FROM domain`
-: Allow inside a frame if the parent document is from the given domain.
+: Дозволити показ всередині фрейму, якщо батьківський документ із заданого домену.
 
-For instance, Twitter uses `X-Frame-Options: SAMEORIGIN`.
+Наприклад, Twitter використовує `X-Frame-Options: SAMEORIGIN`.
 
 ````online
-Here's the result:
+Ось результат:
 
 ```html
 <iframe src="https://twitter.com"></iframe>
@@ -149,16 +149,16 @@ Here's the result:
 <!-- ebook: prerender/ chrome headless dies and timeouts on this iframe -->
 <iframe src="https://twitter.com"></iframe>
 
-Depending on your browser, the `iframe` above is either empty or alerting you that the browser won't permit that page to be navigating in this way.
+Залежно від вашого браузера, `iframe` вище або порожній, або попереджає вас про те, що браузер не дозволяє відобразити цю сторінку.
 ````
 
-## Showing with disabled functionality
+## Відображення з вимкненою функціональністю
 
-The `X-Frame-Options` header has a side-effect. Other sites won't be able to show our page in a frame, even if they have good reasons to do so.
+Заголовок `X-Frame-Options` має побічний ефект. Інші сайти не зможуть показати нашу сторінку у фреймі, навіть якщо у них є для цього вагомі причини.
 
-So there are other solutions... For instance, we can "cover" the page with a `<div>` with styles `height: 100%; width: 100%;`, so that it will intercept all clicks. That `<div>` is to be removed if `window == top` or if we figure out that we don't need the protection.
+Тому є інші рішення...Наприклад, ми можемо "покрити" сторінку `<div>` зі стилями `height: 100%; width: 100%;`, щоб він перехоплював усі клацання. Цей `<div>` можна видалити, якщо `window == top` або якщо ми зрозуміли, що захист нам не потрібен.
 
-Something like this:
+Щось на зразок цього:
 
 ```html
 <style>
@@ -173,49 +173,49 @@ Something like this:
 </style>
 
 <div id="protector">
-  <a href="/" target="_blank">Go to the site</a>
+  <a href="/" target="_blank">Перейти на сайт</a>
 </div>
 
 <script>
-  // there will be an error if top window is from the different origin
-  // but that's ok here
+  // буде помилка, якщо верхнє вікно має інше походження
+  // але тут гаразд
   if (top.document.domain == document.domain) {
     protector.remove();
   }
 </script>
 ```
 
-The demo:
+Демо:
 
 [codetabs src="protector"]
 
-## Samesite cookie attribute
+## Атрибут cookie: samesite 
 
-The `samesite` cookie attribute can also prevent clickjacking attacks.
+Атрибут cookie `samesite` також може запобігти clickjacking атакам.
 
-A cookie with such attribute is only sent to a website if it's opened directly, not via a frame, or otherwise. More information in the chapter <info:cookie#samesite>.
+Файл cookie з таким атрибутом надсилається на веб-сайт, лише якщо його відкрито безпосередньо, а не через фрейм чи іншим чином. Більше інформації в розділі <info:cookie#samesite>.
 
-If the site, such as Facebook, had `samesite` attribute on its authentication cookie, like this:
+Якби сайт, наприклад Facebook, при аутентифікації мав атрибут `samesite` у файлі cookie, ось так:
 
 ```
 Set-Cookie: authorization=secret; samesite
 ```
 
-...Then such cookie wouldn't be sent when Facebook is open in iframe from another site. So the attack would fail.
+...Тоді такий файл cookie не надсилатиметься, коли Facebook буде відкрито в iframe з іншого сайту. Тож атака не вдасться.
 
-The `samesite` cookie attribute will not have an effect when cookies are not used. This may allow other websites to easily show our public, unauthenticated pages in iframes.
+Атрибут cookie `samesite` не матиме ефекту, якщо файли cookies не використовуються. Це може дозволити іншим веб-сайтам легко показувати наші загальнодоступні, неавтентифіковані сторінки в iframes.
 
-However, this may also allow clickjacking attacks to work in a few limited cases. An anonymous polling website that prevents duplicate voting by checking IP addresses, for example, would still be vulnerable to clickjacking because it does not authenticate users using cookies.
+Однак це також може дозволяти атакам за допомогою clickjacking працювати в кількох обмежених випадках. Наприклад, веб-сайт анонімного опитування, який запобігає дублюванню голосування шляхом перевірки IP-адреси, все одно буде вразливим до clickjacking атаки, оскільки він не автентифікує користувачів за допомогою файлів cookie.
 
-## Summary
+## Підсумки
 
-Clickjacking is a way to "trick" users into clicking on a victim site without even knowing what's happening. That's dangerous if there are important click-activated actions.
+Clickjacking -- це спосіб "обдурити" користувачів, щоб вони натиснули на сайт-жертву, навіть не знаючи, що відбувається. Це небезпечно, якщо є важливі дії, які активуються кліком.
 
-A hacker can post a link to their evil page in a message, or lure visitors to their page by some other means. There are many variations.
+Хакер може розмістити в повідомленні посилання на свою шкідливу сторінку або заманити відвідувачів якимось іншим способом. Існує багато варіацій.
 
-From one perspective -- the attack is "not deep": all a hacker is doing is intercepting a single click. But from another perspective, if the hacker knows that after the click another control will appear, then they may use cunning messages to coerce the user into clicking on them as well.
+З однієї точки зору -- атака "не глибока": все, що робить хакер, це перехоплює один клік. Але з іншої -- якщо хакер знає, що після натискання з’явиться інший елемент керування, він може використовувати хитрі повідомлення, щоб змусити користувача натиснути на них.
 
-The attack is quite dangerous, because when we engineer the UI we usually don't anticipate that a hacker may click on behalf of the visitor. So vulnerabilities can be found in totally unexpected places.
+Атака досить небезпечна, тому що коли ми розробляємо інтерфейс користувача, ми зазвичай не очікуємо, що хакер може клацнути від імені відвідувача. Тому вразливість можна знайти в абсолютно несподіваних місцях.
 
-- It is recommended to use `X-Frame-Options: SAMEORIGIN` on pages (or whole websites) which are not intended to be viewed inside frames.
-- Use a covering `<div>` if we want to allow our pages to be shown in iframes, but still stay safe.
+- Рекомендується використовувати `X-Frame-Options: SAMEORIGIN` на сторінках (або веб-сайтах загалом), які не призначені для перегляду всередині фреймів.
+- Використовуйте `<div>` прикриття, якщо потрібно дозволити показ сторінок у iframes та залишатися в безпеці.
