@@ -423,6 +423,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "git-antonyuk",
+      "name": "Oleksandr Antoniuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17859567?v=4",
+      "profile": "https://www.antoniuk.dev/",
+      "contributions": [
+        "bug"
+      ]
     }
   ]
 }
