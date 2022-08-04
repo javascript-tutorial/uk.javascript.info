@@ -265,7 +265,7 @@ alert(chars);
 ```
 ... Але значно коротше. 
 
-Доречі, ми можемо створити `slice`, якій підтримує сурогатні пари:
+До речі, ми можемо створити `slice`, якій підтримує сурогатні пари:
 ```js run
 function slice(str, start, end) {
   return Array.from(str).slice(start, end).join('');
