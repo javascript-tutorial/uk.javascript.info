@@ -1,8 +1,8 @@
-# Fetch: Cross-Origin Requests
+# Fetch: Запити між різними джерелами
 
-If we send a `fetch` request to another web-site, it will probably fail.
+Якщо ми надішлемо запит `fetch` на інший веб-сайт, він, ймовірно, завершиться невдало.
 
-For instance, let's try fetching `http://example.com`:
+Наприклад, спробуймо запросити `http://example.com`:
 
 ```js run async
 try {
@@ -12,39 +12,39 @@ try {
 }
 ```
 
-Fetch fails, as expected.
+Запит завершився невдало, як і очікувалося.
 
-The core concept here is *origin* -- a domain/port/protocol triplet.
+Основною концепцією тут є *джерело* (*origin*) -- триплет домен/порт/протокол.
 
-Cross-origin requests -- those sent to another domain (even a subdomain) or protocol or port -- require special headers from the remote side.
+Запити на інші сайти -- надіслані до іншого домену (навіть субдомену), протоколу чи порту -- потребують спеціальних заголовків від віддаленої сторони.
 
-That policy is called "CORS": Cross-Origin Resource Sharing.
+Ця політика називається "CORS": Cross-Origin Resource Sharing ("спільне використання ресурсів між різними джерелами").
 
-## Why is CORS needed? A brief history
+## Навіщо потрібен CORS? Коротка історія
 
-CORS exists to protect the internet from evil hackers.
+CORS існує для захисту інтернету від злісних хакерів.
 
-Seriously. Let's make a very brief historical digression.
+Серйозно. Зробімо дуже короткий історичний екскурс.
 
-**For many years a script from one site could not access the content of another site.**
+**Протягом багатьох років скрипт з одного сайту не міг отримати доступ до вмісту іншого сайту.**
 
-That simple, yet powerful rule was a foundation of the internet security. E.g. an evil script from website `hacker.com` could not access the user's mailbox at website `gmail.com`. People felt safe.
+Це просте, але потужне правило було основою інтернет-безпеки. Наприклад, шкідливий скрипт із веб-сайту `hacker.com` не міг отримати доступ до поштової скриньки користувача на веб-сайті `gmail.com`. Люди відчували себе в безпеці.
 
-JavaScript also did not have any special methods to perform network requests at that time. It was a toy language to decorate a web page.
+На той час JavaScript також не мав спеціальних методів для виконання мережевих запитів. Це була іграшкова мова для прикраси веб-сторінки.
 
-But web developers demanded more power. A variety of tricks were invented to work around the limitation and make requests to other websites.
+Але веб-розробники вимагали більшої потужності. Щоб обійти обмеження та надсилати запити на інші веб-сайти, було винайдено різноманітні прийоми.
 
-### Using forms
+### Використання форм
 
-One way to communicate with another server was to submit a `<form>` there. People submitted it into `<iframe>`, just to stay on the current page, like this:
+Одним із способів зв’язку з іншим сервером було відправлення туди `<form>`. Люди відправили його в `<iframe>`, просто щоб залишитися на поточній сторінці, ось так:
 
 ```html
-<!-- form target -->
+<!-- ціль форми -->
 *!*
 <iframe name="iframe"></iframe>
 */!*
 
-<!-- a form could be dynamically generated and submited by JavaScript -->
+<!-- форма могла бути динамічно згенерована та надіслана за допомогою JavaScript -->
 *!*
 <form target="iframe" method="POST" action="http://another.com/…">
 */!*
@@ -52,88 +52,88 @@ One way to communicate with another server was to submit a `<form>` there. Peopl
 </form>
 ```
 
-So, it was possible to make a GET/POST request to another site, even without networking methods, as forms can send data anywhere. But as it's forbidden to access the content of an `<iframe>` from another site, it wasn't possible to read the response.
+Таким чином, можна було зробити запит GET/POST на інший сайт, навіть без мережевих методів, оскільки форми можуть надсилати дані будь-куди. Але оскільки доступ до вмісту `<iframe>` з іншого сайту заборонено, прочитати відповідь було неможливо.
 
-To be precise, there were actually tricks for that, they required special scripts at both the iframe and the page. So the communication with the iframe was technically possible. Right now there's no point to go into details, let these dinosaurs rest in peace.
+Якщо бути точним, для цього насправді були хитрощі, вони вимагали спеціальних скриптів і в iframe, і на сторінці. Тож зв’язок із iframe був технічно можливим. Зараз немає сенсу вдаватися в подробиці, нехай ці динозаври спочивають з миром.
 
-### Using scripts
+### Використання скриптів
 
-Another trick was to use a `script` tag. A script could have any `src`, with any domain, like `<script src="http://another.com/…">`. It's possible to execute a script from any website.
+Іншим трюком було використання тегу `script`. Скрипт міг мати будь-який `src` з будь-яким доменом, наприклад `<script src="http://another.com/…">`. Такий скрипт можна виконати з будь-якого веб-сайту.
 
-If a website, e.g. `another.com` intended to expose data for this kind of access, then a so-called "JSONP (JSON with padding)" protocol was used.
+Якщо веб-сайт, наприклад `another.com`, мав на меті надавати дані для такого типу доступу, тоді використовувався так званий протокол "JSONP (JSON with padding)".
 
-Here's how it worked.
+Ось як це працювало.
 
-Let's say we, at our site, need to get the data from `http://another.com`, such as the weather:
+Скажімо, нам на нашому сайті потрібно отримати дані з `http://another.com`, наприклад погоду:
 
-1. First, in advance, we declare a global function to accept the data, e.g. `gotWeather`.
+1. По-перше, ми заздалегідь оголошуємо глобальну функцію для прийому даних, наприклад `gotWeather`.
 
     ```js
-    // 1. Declare the function to process the weather data
+    // 1. Оголошення функції для обробки даних про погоду
     function gotWeather({ temperature, humidity }) {
       alert(`temperature: ${temperature}, humidity: ${humidity}`);
     }
     ```
-2. Then we make a `<script>` tag with `src="http://another.com/weather.json?callback=gotWeather"`, using the name of our function as the `callback` URL-parameter.
+2. Потім ми створюємо тег `<script>` із `src="http://another.com/weather.json?callback=gotWeather"`, використовуючи назву нашої функції як URL-параметр `callback`.
 
     ```js
     let script = document.createElement('script');
     script.src = `http://another.com/weather.json?callback=gotWeather`;
     document.body.append(script);
     ```
-3. The remote server `another.com` dynamically generates a script that calls `gotWeather(...)` with the data it wants us to receive.
+3. Віддалений сервер `another.com` динамічно генерує скрипт, який викликає `gotWeather(...)` з даними, які він хоче, щоб ми отримали.
     ```js
-    // The expected answer from the server looks like this:
+    // Очікувана відповідь від сервера виглядає так:
     gotWeather({
       temperature: 25,
       humidity: 78
     });
     ```
-4. When the remote script loads and executes, `gotWeather` runs, and, as it's our function, we have the data.
+4. Коли віддалений скрипт завантажується та виконується, запускається `gotWeather`, і, оскільки це наша функція, ми отримуємо дані.
 
-That works, and doesn't violate security, because both sides agreed to pass the data this way. And, when both sides agree, it's definitely not a hack. There are still services that provide such access, as it works even for very old browsers.
+Це працює та не порушує безпеку, оскільки обидві сторони погодилися передавати дані таким чином. І, коли обидві сторони погоджуються, це точно не хак. Ще існують сервіси, які надають такий доступ, оскільки він працює навіть для дуже старих браузерів.
 
-After a while, networking methods appeared in browser JavaScript.
+Через деякий час мережеві методи з’явилися в браузерному JavaScript.
 
-At first, cross-origin requests were forbidden. But as a result of long discussions, cross-origin requests were allowed, but with any new capabilities requiring an explicit allowance by the server, expressed in special headers.
+Спочатку запити на інші джерела були заборонені. Але в результаті довгих обговорень було дозволено їх робити, але для будь-яких нових можливостей вимагався явний дозвіл від сервера, що виражений в спеціальних заголовках.
 
-## Safe requests
+## Безпечні запити
 
-There are two types of cross-origin requests:
+Існує два типи запитів на інші джерела:
 
-1. Safe requests.
-2. All the others.
+1. Безпечні запити.
+2. Всі інші.
 
-Safe Requests are simpler to make, so let's start with them.
+Безпечні запити зробити простіше, тому почнемо з них.
 
-A request is safe if it satisfies two conditions:
+Запит є безпечним, якщо він задовольняє дві умови:
 
-1. [Safe method](https://fetch.spec.whatwg.org/#cors-safelisted-method): GET, POST or HEAD
-2. [Safe headers](https://fetch.spec.whatwg.org/#cors-safelisted-request-header) -- the only allowed custom headers are:
+1. [Safe method](https://fetch.spec.whatwg.org/#cors-safelisted-method): GET, POST або HEAD
+2. [Safe headers](https://fetch.spec.whatwg.org/#cors-safelisted-request-header) -- єдині дозволені спеціальні заголовки:
     - `Accept`,
     - `Accept-Language`,
     - `Content-Language`,
-    - `Content-Type` with the value `application/x-www-form-urlencoded`, `multipart/form-data` or `text/plain`.
+    - `Content-Type` зі значенням `application/x-www-form-urlencoded`, `multipart/form-data` або `text/plain`.
 
-Any other request is considered "unsafe". For instance, a request with `PUT` method or with an `API-Key` HTTP-header does not fit the limitations.
+Будь-який інший запит вважається "небезпечним". Наприклад, запит із методом `PUT` або з HTTP-заголовком `API-Key` не відповідає обмеженням.
 
-**The essential difference is that a safe request can be made with a `<form>` or a `<script>`, without any special methods.**
+**Суттєвою відмінністю є те, що безпечний запит можна зробити за допомогою `<form>` або `<script>` без будь-яких спеціальних методів.**
 
-So, even a very old server should be ready to accept a safe request.
+Таким чином, навіть дуже старий сервер повинен бути готовий прийняти безпечний запит.
 
-Contrary to that, requests with non-standard headers or e.g. method `DELETE` can't be created this way. For a long time JavaScript was unable to do such requests. So an old server may assume that such requests come from a privileged source, "because a webpage is unable to send them".
+Навпаки, запити з нестандартними заголовками або наприклад метод `DELETE` не можна створити таким чином. Довгий час JavaScript не міг виконувати такі запити. Тож старий сервер може вважати, що такі запити надходять із привілейованого джерела, "оскільки веб-сторінка не може їх надіслати".
 
-When we try to make a unsafe request, the browser sends a special "preflight" request that asks the server -- does it agree to accept such cross-origin requests, or not?
+Коли ми намагаємося зробити небезпечний запит, веб-переглядач надсилає спеціальний попередній запит "preflight", який запитує сервер -- чи погоджується він приймати такі запити між різними джерелами чи ні?
 
-And, unless the server explicitly confirms that with headers, an unsafe request is not sent.
+І, якщо сервер явно не підтвердить це за допомогою заголовків, небезпечний запит не надсилається.
 
-Now we'll go into details.
+Тепер розберемося в деталях.
 
-## CORS for safe requests
+## CORS для безпечних запитів
 
-If a request is cross-origin, the browser always adds the `Origin` header to it.
+Якщо запит відбувається між різними джерелами, браузер завжди додає до нього заголовок `Origin`.
 
-For instance, if we request `https://anywhere.com/request` from `https://javascript.info/page`, the headers will look like:
+Наприклад, якщо ми запитуємо `https://anywhere.com/request` з `https://javascript.info/page`, заголовки виглядатимуть так:
 
 ```http
 GET /request
@@ -144,17 +144,17 @@ Origin: https://javascript.info
 ...
 ```
 
-As you can see, the `Origin` header contains exactly the origin (domain/protocol/port), without a path.
+Як бачите, заголовок `Origin` містить саме джерело (домен/протокол/порт) без шляху.
 
-The server can inspect the `Origin` and, if it agrees to accept such a request, add a special header `Access-Control-Allow-Origin` to the response. That header should contain the allowed origin (in our case `https://javascript.info`), or a star `*`. Then the response is successful, otherwise it's an error.
+Сервер може перевірити `Origin` і, якщо він погоджується прийняти такий запит, додати до відповіді спеціальний заголовок `Access-Control-Allow-Origin`. Цей заголовок має містити дозволене джерело (у нашому випадку `https://javascript.info`) або зірочку `*`. Тоді відповідь буде успішною, інакше -- помилка.
 
-The browser plays the role of a trusted mediator here:
-1. It ensures that the correct `Origin` is sent with a cross-origin request.
-2. It checks for permitting `Access-Control-Allow-Origin` in the response, if it exists, then JavaScript is allowed to access the response, otherwise it fails with an error.
+Браузер тут відіграє роль надійного посередника:
+1. Він забезпечує надсилання правильного `Origin` разом із запитом між джерелами.
+2. Він перевіряє дозвіл `Access-Control-Allow-Origin` у відповіді, і якщо він існує, то JavaScript має доступ до відповіді, інакше він завершується з помилкою.
 
 ![](xhr-another-domain.svg)
 
-Here's an example of a permissive server response:
+Ось приклад відповіді сервера, що дозволена:
 ```http
 200 OK
 Content-Type:text/html; charset=UTF-8
@@ -163,9 +163,9 @@ Access-Control-Allow-Origin: https://javascript.info
 */!*
 ```
 
-## Response headers
+## Заголовки відповіді
 
-For cross-origin request, by default JavaScript may only access so-called "safe" response headers:
+Для запиту між різними джереалми JavaScript за замовчуванням може мати доступ лише до так званих "безпечних" заголовків відповідей:
 
 - `Cache-Control`
 - `Content-Language`
@@ -174,17 +174,17 @@ For cross-origin request, by default JavaScript may only access so-called "safe"
 - `Last-Modified`
 - `Pragma`
 
-Accessing any other response header causes an error.
+Доступ до будь-якого іншого заголовка відповіді викликає помилку.
 
 ```smart
-There's no `Content-Length` header in the list!
+У списку немає заголовка `Content-Length`!
 
-This header contains the full response length. So, if we're downloading something and would like to track the percentage of progress, then an additional permission is required to access that header (see below).
+Цей заголовок містить повну довжину відповіді. Отже, якщо ми щось завантажуємо й хочемо відстежувати відсоток прогресу, тоді для доступу до цього заголовка потрібен додатковий дозвіл (дивись нижче).
 ```
 
-To grant JavaScript access to any other response header, the server must send the `Access-Control-Expose-Headers` header. It contains a comma-separated list of unsafe header names that should be made accessible.
+Щоб надати JavaScript доступ до будь-якого іншого заголовка відповіді, сервер повинен надіслати заголовок `Access-Control-Expose-Headers`. Він містить розділений комами список небезпечних імен заголовків, які мають бути доступними.
 
-For example:
+Наприклад:
 
 ```http
 200 OK
@@ -197,32 +197,32 @@ Access-Control-Expose-Headers: Content-Length,API-Key
 */!*
 ```
 
-With such an `Access-Control-Expose-Headers` header, the script is allowed to read the `Content-Length` and `API-Key` headers of the response.
+З таким заголовком, як `Access-Control-Expose-Headers`, скрипту дозволено читати заголовки `Content-Length` і `API-Key` відповідей.
 
-## "Unsafe" requests
+## "Небезпечні" запити
 
-We can use any HTTP-method: not just `GET/POST`, but also `PATCH`, `DELETE` and others.
+Ми можемо використовувати будь-який HTTP-метод: не тільки `GET/POST`, а й `PATCH`, `DELETE` та інші.
 
-Some time ago no one could even imagine that a webpage could make such requests. So there may still exist webservices that treat a non-standard method as a signal: "That's not a browser". They can take it into account when checking access rights.
+Деякий час тому ніхто навіть уявити не міг, що веб-сторінка може робити такі запити. Тому все ще можуть існувати веб-сервіси, які сприймають нестандартний метод як сигнал: "Це не браузер". Вони можуть це враховувати при перевірці прав доступу.
 
-So, to avoid misunderstandings, any "unsafe" request -- that couldn't be done in the old times, the browser does not make such requests right away. First, it sends a preliminary, so-called "preflight" request, to ask for permission.
+Тому, щоб уникнути непорозумінь, будь-які "небезпечні" запити, які не можна було зробити в старі часи, браузер не робить такі запити відразу. По-перше, він надсилає попередній, так званий «передпольотний» запит, щоб отримати дозвіл.
 
-A preflight request uses the method `OPTIONS`, no body and three headers:
+Запит перед друком використовує метод `OPTIONS`, без тіла та трьох заголовків:
 
-- `Access-Control-Request-Method` header has the method of the unsafe request.
-- `Access-Control-Request-Headers` header provides a comma-separated list of its unsafe HTTP-headers.
-- `Origin` header tells from where the request came. (such as `https://javascript.info`)
+- Заголовок `Access-Control-Request-Method` містить метод небезпечного запиту.
+- Заголовок `Access-Control-Request-Headers` надає список небезпечних HTTP-заголовків, що розділені комами.
+- Заголовок `Origin` повідомляє, звідки надійшов запит (наприклад, `https://javascript.info`).
 
-If the server agrees to serve the requests, then it should respond with empty body, status 200 and headers:
+Якщо сервер погоджується обслуговувати запити, він повинен відповісти порожнім тілом, статусом 200 і заголовками:
 
-- `Access-Control-Allow-Origin` must be either `*` or the requesting origin, such as `https://javascript.info`, to allow it.
-- `Access-Control-Allow-Methods` must have the allowed method.
-- `Access-Control-Allow-Headers` must have a list of allowed headers.
-- Additionally, the header `Access-Control-Max-Age` may specify a number of seconds to cache the permissions. So the browser won't have to send a preflight for subsequent requests that satisfy given permissions.
+- `Access-Control-Allow-Origin` має бути або `*`, або джерелом запиту, наприклад `https://javascript.info`, щоб дозволити це.
+- `Access-Control-Allow-Methods` повинен мати дозволений метод.
+- `Access-Control-Allow-Headers` повинен мати список дозволених заголовків.
+- Крім того, заголовок `Access-Control-Max-Age` може вказати кількість секунд для кешування дозволів. Тому веб-переглядачу не потрібно буде надсилати попередній запит для наступних запитів, які задовольняють надані дозволи.
 
 ![](xhr-preflight.svg)
 
-Let's see how it works step-by-step on the example of a cross-origin `PATCH` request (this method is often used to update data):
+Подивімося, як це працює крок за кроком на прикладі запиту між різними джерелами `PATCH` (цей метод часто використовується для оновлення даних):
 
 ```js
 let response = await fetch('https://site.com/service.json', {
@@ -234,14 +234,14 @@ let response = await fetch('https://site.com/service.json', {
 });
 ```
 
-There are three reasons why the request is unsafe (one is enough):
-- Method `PATCH`
-- `Content-Type` is not one of: `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`.
-- "Unsafe" `API-Key` header.
+Є три причини, чому запит є небезпечним (достатньо однієї):
+- Метод `PATCH`
+- `Content-Type` не є одним із: `application/x-www-form-urlencoded`, `multipart/form-data`, `text/plain`.
+- "Небезпечний" заголовок `API-Key`.
 
-### Step 1 (preflight request)
+### Крок 1 (попередній запит)
 
-Prior to sending such a request, the browser, on its own, sends a preflight request that looks like this:
+Перед надсиланням такого запиту браузер самостійно надсилає попередній запит, що виглядає так:
 
 ```http
 OPTIONS /service.json
@@ -251,25 +251,25 @@ Access-Control-Request-Method: PATCH
 Access-Control-Request-Headers: Content-Type,API-Key
 ```
 
-- Method: `OPTIONS`.
-- The path -- exactly the same as the main request: `/service.json`.
-- Cross-origin special headers:
-    - `Origin` -- the source origin.
-    - `Access-Control-Request-Method` -- requested method.
-    - `Access-Control-Request-Headers` -- a comma-separated list of "unsafe" headers.
+- Метод: `OPTIONS`.
+- Шлях -- такий самий, як і основний запит: `/service.json`.
+- Спеціальні заголовки різних джерел:
+    - `Origin` -- джерело походження.
+    - `Access-Control-Request-Method` -- метод, що запитується.
+    - `Access-Control-Request-Headers` -- розділений комами список "небезпечних" заголовків.
 
-### Step 2 (preflight response)
+### Крок 2 (попередня відповідь)
 
-The server should respond with status 200 and the headers:
+Сервер має відповісти зі статусом 200 і заголовками:
 - `Access-Control-Allow-Origin: https://javascript.info`
 - `Access-Control-Allow-Methods: PATCH`
 - `Access-Control-Allow-Headers: Content-Type,API-Key`.
 
-That allows future communication, otherwise an error is triggered.
+Це дозволяє майбутній зв’язок, інакше виникає помилка.
 
-If the server expects other methods and headers in the future, it makes sense to allow them in advance by adding them to the list.
+Якщо сервер очікує інших методів і заголовків у майбутньому, є сенс дозволити їх заздалегідь, додавши до списку.
 
-For example, this response also allows `PUT`, `DELETE` and additional headers:
+Наприклад, ця відповідь також дозволяє `PUT`, `DELETE` та додаткові заголовки:
 
 ```http
 200 OK
@@ -279,15 +279,15 @@ Access-Control-Allow-Headers: API-Key,Content-Type,If-Modified-Since,Cache-Contr
 Access-Control-Max-Age: 86400
 ```
 
-Now the browser can see that `PATCH` is in `Access-Control-Allow-Methods` and `Content-Type,API-Key` are in the list `Access-Control-Allow-Headers`, so it sends out the main request.
+Тепер браузер бачить, що `PATCH` знаходиться в `Access-Control-Allow-Methods`, а `Content-Type,API-Key` знаходиться в списку `Access-Control-Allow-Headers`, тому він надсилає основний запит.
 
-If there's the header `Access-Control-Max-Age` with a number of seconds, then the preflight permissions are cached for the given time. The response above will be cached for 86400 seconds (one day). Within this timeframe, subsequent requests will not cause a preflight. Assuming that they fit the cached allowances, they will be sent directly.
+Якщо є заголовок `Access-Control-Max-Age` із кількістю секунд, то дозволи попередньої перевірки кешуються протягом заданого часу. Відповідь вище буде кешована протягом 86400 секунд (один день). Упродовж цього терміну наступні запити не призведуть до попередньої перевірки. Якщо припустити, що вони відповідають кешованим дозволам, їх буде надіслано напряму.
 
-### Step 3 (actual request)
+### Крок 3 (фактичний запит)
 
-When the preflight is successful, the browser now makes the main request. The process here is the same as for safe requests.
+Після успішної перевірки браузер робить основний запит. Процес тут такий же, як і для безпечних запитів.
 
-The main request has the `Origin` header (because it's cross-origin):
+Головний запит має заголовок `Origin` (оскільки він перехресний):
 
 ```http
 PATCH /service.json
@@ -297,37 +297,37 @@ API-Key: secret
 Origin: https://javascript.info
 ```
 
-### Step 4 (actual response)
+### Крок 4 (фактична відповідь)
 
-The server should not forget to add `Access-Control-Allow-Origin` to the main response. A successful preflight does not relieve from that:
+Сервер не повинен забути додати `Access-Control-Allow-Origin` до основної відповіді. Успішна передпольотна перевірка не звільняє від такого:
 
 ```http
 Access-Control-Allow-Origin: https://javascript.info
 ```
 
-Then JavaScript is able to read the main server response.
+Тоді JavaScript зможе прочитати відповідь основного сервера.
 
 ```smart
-Preflight request occurs "behind the scenes", it's invisible to JavaScript.
+Попередній запит відбувається "за лаштунками", він невидимий для JavaScript.
 
-JavaScript only gets the response to the main request or an error if there's no server permission.
+JavaScript отримує лише відповідь на основний запит або помилку, якщо немає дозволу сервера.
 ```
 
-## Credentials
+## Облікові дані
 
-A cross-origin request initiated by JavaScript code by default does not bring any credentials (cookies or HTTP authentication).
+Запит між різними джерелами, що ініційований кодом JavaScript за замовчуванням, не приносить жодних облікових даних (файлів cookie або автентифікації HTTP).
 
-That's uncommon for HTTP-requests. Usually, a request to `http://site.com` is accompanied by all cookies from that domain. Cross-origin requests made by JavaScript methods on the other hand are an exception.
+Це незвично для HTTP-запитів. Зазвичай запит до `http://site.com` супроводжується всіма файлами cookie з цього домену. З іншого боку, запити між різними джерелами, зроблені методами JavaScript, є винятком.
 
-For example, `fetch('http://another.com')` does not send any cookies, even those  (!) that belong to `another.com` domain.
+Наприклад, `fetch('http://another.com')` не надсилає файли cookie, навіть ті (!), які належать до домену `another.com`.
 
-Why?
+Чому?
 
-That's because a request with credentials is much more powerful than without them. If allowed, it grants JavaScript the full power to act on behalf of the user and access sensitive information using their credentials.
+Тому, що запит з обліковими даними набагато потужніший, ніж без них. Якщо дозволено, це надає JavaScript повні повноваження діяти від імені користувача та отримувати доступ до конфіденційної інформації за допомогою його облікових даних.
 
-Does the server really trust the script that much? Then it must explicitly allow requests with credentials with an additional header.
+Чи дійсно сервер так сильно довіряє скрипту? Тоді він повинен явно дозволити запити з обліковими даними з додатковим заголовком.
 
-To send credentials in `fetch`, we need to add the option `credentials: "include"`, like this:
+Щоб надіслати облікові дані у `fetch`, нам потрібно додати параметр `credentials: "include"`, наприклад:
 
 ```js
 fetch('http://another.com', {
@@ -335,11 +335,11 @@ fetch('http://another.com', {
 });
 ```
 
-Now `fetch` sends cookies originating from `another.com` with request to that site.
+Тепер `fetch` надсилає файли cookie з `another.com` із запитом на цей сайт.
 
-If the server agrees to accept the request *with credentials*, it should add a header `Access-Control-Allow-Credentials: true` to the response, in addition to `Access-Control-Allow-Origin`.
+Якщо сервер погоджується прийняти запит *з обліковими даними*, він має додати до відповіді заголовок `Access-Control-Allow-Credentials: true` на додаток до `Access-Control-Allow-Origin`.
 
-For example:
+Наприклад:
 
 ```http
 200 OK
@@ -347,42 +347,42 @@ Access-Control-Allow-Origin: https://javascript.info
 Access-Control-Allow-Credentials: true
 ```
 
-Please note: `Access-Control-Allow-Origin` is prohibited from using a star `*` for requests with credentials. Like shown above, it must provide the exact origin there. That's an additional safety measure, to ensure that the server really knows who it trusts to make such requests.
+Зверніть увагу: в `Access-Control-Allow-Origin` заборонено використовувати зірочку `*` для запитів з обліковими даними. Як показано вище, він повинен надати точне походження. Це додатковий захід безпеки, який гарантує, що сервер дійсно знає, кому він довіряє робити такі запити.
 
-## Summary
+## Підсумки
 
-From the browser point of view, there are two kinds of cross-origin requests: "safe" and all the others.
+З точки зору браузера, існує два типи запитів між різними джерелами: "безпечні" та всі інші.
 
-"Safe" requests must satisfy the following conditions:
-- Method: GET, POST or HEAD.
-- Headers -- we can set only:
+"Безпечні" запити повинні задовольняти наступні умови:
+- Метод: GET, POST або HEAD.
+- Заголовки -- ми можемо встановити лише:
     - `Accept`
     - `Accept-Language`
     - `Content-Language`
-    - `Content-Type` to the value `application/x-www-form-urlencoded`, `multipart/form-data` or `text/plain`.
+    - `Content-Type` зі значенням `application/x-www-form-urlencoded`, `multipart/form-data` or `text/plain`.
 
-The essential difference is that safe requests were doable since ancient times using `<form>` or `<script>` tags, while unsafe were impossible for browsers for a long time.
+Суттєва відмінність полягає в тому, що безпечні запити можна було виконати з давніх часів за допомогою тегів `<form>` або `<script>`, тоді як небезпечні запити були неможливими для браузерів протягом тривалого часу.
 
-So, the practical difference is that safe requests are sent right away, with the `Origin` header, while for the other ones the browser makes a preliminary "preflight" request, asking for permission.
+Отже, практична різниця полягає в тому, що безпечні запити надсилаються одразу із заголовком `Origin`, тоді як для інших браузер робить попередній запит "preflight", запитуючи дозвіл.
 
-**For safe requests:**
+**Для безпечних запитів:**
 
-- → The browser sends the `Origin` header with the origin.
-- ← For requests without credentials (not sent by default), the server should set:
-    - `Access-Control-Allow-Origin` to `*` or same value as `Origin`
-- ← For requests with credentials, the server should set:
-    - `Access-Control-Allow-Origin` to same value as `Origin`
-    - `Access-Control-Allow-Credentials` to `true`
+- → Браузер надсилає заголовок `Origin` з джерелом.
+- ← Для запитів без облікових даних (не надсилаються за замовчуванням), сервер повинен встановити:
+    - `Access-Control-Allow-Origin` на `*` або те саме значення, що й `Origin`
+- ← Для запитів з обліковими даними сервер повинен встановити:
+    - `Access-Control-Allow-Origin` на те саме значення, що й `Origin`
+    - `Access-Control-Allow-Credentials` на `true`
 
-Additionally, to grant JavaScript access to any response headers except `Cache-Control`,  `Content-Language`, `Content-Type`, `Expires`, `Last-Modified` or `Pragma`, the server should list the allowed ones in `Access-Control-Expose-Headers` header.
+Крім того, щоб надати JavaScript доступ до будь-яких заголовків відповіді, окрім `Cache-Control`, `Content-Language`, `Content-Type`, `Expires`, `Last-Modified` або `Pragma`, сервер повинен перерахувати дозволені у заголовку `Access-Control-Expose-Headers`.
 
-**For unsafe requests, a preliminary "preflight" request is issued before the requested one:**
+**Для небезпечних запитів попередній запит "preflight" видається перед запитом:**
 
-- → The browser sends an `OPTIONS` request to the same URL, with the headers:
-    - `Access-Control-Request-Method` has requested method.
-    - `Access-Control-Request-Headers` lists unsafe requested headers.
-- ← The server should respond with status 200 and the headers:
-    - `Access-Control-Allow-Methods` with a list of allowed methods,
-    - `Access-Control-Allow-Headers` with a list of allowed headers,
-    - `Access-Control-Max-Age` with a number of seconds to cache the permissions.
-- Then the actual request is sent, and the previous "safe" scheme is applied.
+- → Браузер надсилає запит `OPTIONS` на ту саму URL-адресу із заголовками:
+    - `Access-Control-Request-Method` містить метод, що запитується.
+    - `Access-Control-Request-Headers` містить список небезпечних заголовків, що запитуються.
+- ← Сервер має відповісти статусом 200 і заголовками:
+    - `Access-Control-Allow-Methods` зі списком дозволених методів,
+    - `Access-Control-Allow-Headers` зі списком дозволених заголовків,
+    - `Access-Control-Max-Age` з кількістю секунд для кешування дозволів.
+- Потім відправляється фактичний запит, і застосовується попередня "безпечна" схема.
