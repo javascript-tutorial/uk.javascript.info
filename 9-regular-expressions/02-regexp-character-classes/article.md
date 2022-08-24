@@ -1,203 +1,203 @@
 # Character classes
 
-Consider a practical task -- we have a phone number like `"+7(903)-123-45-67"`, and we need to turn it into pure numbers: `79031234567`.
+Розглянемо практичне завдання -- у нас є номер телефону типу `"+1(703)-123-45-67"`, і нам потрібно перетворити його на рядок тільки з чисел: `17031234567`.
 
-To do so, we can find and remove anything that's not a number. Character classes can help with that.
+Для цього ми можемо знайти та видалити все, що не є числом. Із цим нам допоможуть символьні класи.
 
-A *character class* is a special notation that matches any symbol from a certain set.
+*Символьний клас* – це спеціальне позначення, яке відповідає будь-якому символу певного набору.
 
-For the start, let's explore the "digit" class. It's written as `pattern:\d` and corresponds to "any single digit".
+Для початку давайте розглянемо клас "цифра". Він позначається як `pattern:\d` і відповідає "будь-якій одній цифрі".
 
-For instance, let's find the first digit in the phone number:
+Наприклад, знайдемо першу цифру в номері телефону:
 
 ```js run
-let str = "+7(903)-123-45-67";
+let str = "+1(703)-123-45-67";
 
 let regexp = /\d/;
 
-alert( str.match(regexp) ); // 7
+alert( str.match(regexp) ); // 1
 ```
 
-Without the flag `pattern:g`, the regular expression only looks for the first match, that is the first digit `pattern:\d`.
+Без прапора `pattern:g` регулярний вираз шукає лише перший збіг, тобто першу цифру `pattern:\d`.
 
-Let's add the `pattern:g` flag to find all digits:
+Давайте додамо прапор `pattern:g`, щоб знайти всі цифри:
 
 ```js run
-let str = "+7(903)-123-45-67";
+let str = "+1(703)-123-45-67";
 
 let regexp = /\d/g;
 
-alert( str.match(regexp) ); // array of matches: 7,9,0,3,1,2,3,4,5,6,7
+alert( str.match(regexp) ); // масив збігів: 1,7,0,3,1,2,3,4,5,6,7
 
-// let's make the digits-only phone number of them:
-alert( str.match(regexp).join('') ); // 79031234567
+// давайте зробимо з них номер телефону лише цифрами:
+alert( str.match(regexp).join('') ); // 17031234567
 ```
 
-That was a character class for digits. There are other character classes as well.
+Це був символьний клас для цифр. Є й інші символьні класи.
 
-Most used are:
+Найбільш використовувані:
 
-`pattern:\d` ("d" is from "digit")
-: A digit: a character from `0` to `9`.
+`pattern:\d` ("d" від англійского "digit" означає "цифра")
+: Цифра: символ від `0` до `9`.
 
-`pattern:\s` ("s" is from "space")
-: A space symbol: includes spaces, tabs `\t`, newlines `\n` and few other rare characters, such as `\v`, `\f` and `\r`.
+`pattern:\s` ("s" від англійского "space" означає "пробіл")
+: Пробільні символи: включає символ пробілу, табуляції `\t`, перенесення рядка `\n` і деякі інші рідкісні пробілові символи, що позначаються як `\v`, `\f` і `\r`.
 
-`pattern:\w` ("w" is from "word")
-: A "wordly" character: either a letter of Latin alphabet or a digit or an underscore `_`. Non-Latin letters (like cyrillic or hindi) do not belong to `pattern:\w`.
+`pattern:\w` ("w" від англійского "word" означає "слово")
+: Символ «слова» – літера латинського алфавіту, цифра або підчеркування `_`. Нелатинські літери (наприклад, кирилиця чи хінді) не належать до `pattern:\w`.
 
-For instance, `pattern:\d\s\w` means a "digit" followed by a "space character" followed by a "wordly character", such as `match:1 a`.
+Наприклад, `pattern:\d\s\w` означає "цифру", за якою йде "символ пробілу", після якого йде "символ слова", наприклад `match:1 a`.
 
-**A regexp may contain both regular symbols and character classes.**
+**Регулярний вираз може містити як звичайні символи, так і символьні класи.**
 
-For instance, `pattern:CSS\d` matches a string `match:CSS` with a digit after it:
+Наприклад, `pattern:CSS\d` відповідає рядку `match:CSS` із цифрою після нього:
 
 ```js run
-let str = "Is there CSS4?";
+let str = "Чи існує CSS4?";
 let regexp = /CSS\d/
 
 alert( str.match(regexp) ); // CSS4
 ```
 
-Also we can use many character classes:
+Також ми можемо використовувати багато символьних класів:
 
 ```js run
 alert( "I love HTML5!".match(/\s\w\w\w\w\d/) ); // ' HTML5'
 ```
 
-The match (each regexp character class has the corresponding result character):
+Відповідність (кожному символьному класу відповідає один символ результату):
 
 ![](love-html5-classes.svg)
 
-## Inverse classes
+## Зворотні символьні класи
 
-For every character class there exists an "inverse class", denoted with the same letter, but uppercased.
+Для кожного символьного класу існує "зворотній клас", що позначається тією ж літерою, але у верхньому регістрі.
 
-The "inverse" means that it matches all other characters, for instance:
+"Зворотній" означає, що він відповідає всім іншим символам, наприклад:
 
 `pattern:\D`
-: Non-digit: any character except `pattern:\d`, for instance a letter.
+: Не цифра: будь-який символ, окрім `pattern:\d`, наприклад, літера.
 
 `pattern:\S`
-: Non-space: any character except `pattern:\s`, for instance a letter.
+: Не пробіл: будь-який символ, окрім `pattern:\s`, наприклад, літера.
 
 `pattern:\W`
-: Non-wordly character: anything but `pattern:\w`, e.g a non-latin letter or a space.
+: Будь-який символ, окрім `pattern:\w`, тобто не букви з латиниці, не знак підкреслення і цифра.
 
-In the beginning of the chapter we saw how to make a number-only phone number from a string like `subject:+7(903)-123-45-67`: find all digits and join them.
-
-```js run
-let str = "+7(903)-123-45-67";
-
-alert( str.match(/\d/g).join('') ); // 79031234567
-```
-
-An alternative, shorter way is to find non-digits `pattern:\D` and remove them from the string:
+На початку розділу ми бачили, як створити номер телефону з рядка виду `subject:+1(703)-123-45-67`: знайти всі цифри та з'єднати їх.
 
 ```js run
-let str = "+7(903)-123-45-67";
+let str = "+1(703)-123-45-67";
 
-alert( str.replace(/\D/g, "") ); // 79031234567
+alert( str.match(/\d/g).join('') ); // 17031234567
 ```
 
-## A dot is "any character"
-
-A dot `pattern:.` is a special character class that matches "any character except a newline".
-
-For instance:
+Альтернативний, коротший шлях – знайти нецифрові символи `pattern:\D` і видалити їх з рядка:
 
 ```js run
-alert( "Z".match(/./) ); // Z
+let str = "+1(703)-123-45-67";
+
+alert( str.replace(/\D/g, "") ); // 17031234567
 ```
 
-Or in the middle of a regexp:
+## Крапка – це будь-який символ
+
+Крапка `pattern:.` – це спеціальний символьний клас, який відповідає "будь-якому символу, крім нового рядка".
+
+Наприклад:
+
+```js run
+alert( "Y".match(/./) ); // Y
+```
+
+Або в середині регулярного виразу:
 
 ```js run
 let regexp = /CS.4/;
 
 alert( "CSS4".match(regexp) ); // CSS4
 alert( "CS-4".match(regexp) ); // CS-4
-alert( "CS 4".match(regexp) ); // CS 4 (space is also a character)
+alert( "CS 4".match(regexp) ); // CS 4 (пробіл також є символом)
 ```
 
-Please note that a dot means "any character", but not the "absence of a character". There must be a character to match it:
+Зверніть увагу, що точка означає "будь-який символ", але не "відсутність символу". Там має бути будь-який символ, щоб відповідати умові пошуку:
 
 ```js run
-alert( "CS4".match(/CS.4/) ); // null, no match because there's no character for the dot
+alert( "CS4".match(/CS.4/) ); // null, немає збігів тому що немає символу для точки
 ```
 
-### Dot as literally any character with "s" flag
+### Крапка, як буквально будь-який символ із прапорцем "s".
 
-By default, a dot doesn't match the newline character `\n`.
+За замовчуванням крапка не відповідає символу нового рядка `\n`.
 
-For instance, the regexp `pattern:A.B` matches `match:A`, and then `match:B` with any character between them, except a newline `\n`:
+Наприклад, регулярний вираз `pattern:A.B` відповідає `match:A`, а потім `match:B` з будь-яким символом між ними, крім символу нового рядка `\n`:
 
 ```js run
-alert( "A\nB".match(/A.B/) ); // null (no match)
+alert( "A\nB".match(/A.B/) ); // null (немає збігів)
 ```
 
-There are many situations when we'd like a dot to mean literally "any character", newline included.
+Є багато ситуацій, коли ми хотіли б, щоб крапка означала буквально "будь-який символ", включаючи новий рядок.
 
-That's what flag `pattern:s` does. If a regexp has it, then a dot `pattern:.` matches literally any character:
+Ось що робить прапор `pattern:s`. Якщо регулярний вираз містить його, то крапка `pattern:.` відповідає буквально будь-якому символу:
 
 ```js run
-alert( "A\nB".match(/A.B/s) ); // A\nB (match!)
+alert( "A\nB".match(/A.B/s) ); // A\nB (збіг!)
 ```
 
-````warn header="Not supported in IE"
-The `pattern:s` flag is not supported in IE.
+````warn header="Не підтримується в IE"
+Прапор `pattern:s` не підтримується в IE.
 
-Luckily, there's an alternative, that works everywhere. We can use a regexp like `pattern:[\s\S]` to match "any character" (this pattern will be covered in the article <info:regexp-character-sets-and-ranges>).
+На щастя, є альтернатива, яка працює всюди. Ми можемо використовувати регулярний вираз, як-от `pattern:[\s\S]`, щоб відповідати "будь-якому символу" (цей шаблон буде описано в статті <info:regexp-character-sets-and-ranges>).
 
 ```js run
-alert( "A\nB".match(/A[\s\S]B/) ); // A\nB (match!)
+alert( "A\nB".match(/A[\s\S]B/) ); // A\nB (збіг!)
 ```
 
-The pattern `pattern:[\s\S]` literally says: "a space character OR not a space character". In other words, "anything". We could use another pair of complementary classes, such as `pattern:[\d\D]`, that doesn't matter. Or even the `pattern:[^]` -- as it means match any character except nothing.
+Шаблон `pattern:[\s\S]` буквально говорить: "пробіл АБО не пробіл". Іншими словами, "що завгодно". Ми могли б використати іншу пару додаткових класів, наприклад `pattern:[\d\D]`, це не має значення. Або навіть `pattern:[^]` -- оскільки це означає збіг будь-якого символу, крім нічого.
 
-Also we can use this trick if we want both kind of "dots" in the same pattern: the actual dot `pattern:.` behaving the regular way ("not including a newline"), and also a way to match "any character" with `pattern:[\s\S]` or alike.
+Також ми можемо використати цей спосіб, якщо хочемо, щоб обидва типи "крапок" були в одному шаблоні: наявний шаблон `pattern:.` крапки, який поводиться звичайним способом ("без нового рядка"), а також спосіб відповідності "будь-якому символу" з `pattern:[\s\S]` або подібним.
 ````
 
-````warn header="Pay attention to spaces"
-Usually we pay little attention to spaces. For us strings `subject:1-5` and `subject:1 - 5` are nearly identical.
+````warn header="Зверніть увагу на пробіли"
+Зазвичай ми приділяємо мало уваги пробілам. Для нас рядки `subject:1-5` і `subject:1-5` майже ідентичні.
 
-But if a regexp doesn't take spaces into account, it may fail to work.
+Але якщо регулярний вираз не враховує пробіли, він може не працювати.
 
-Let's try to find digits separated by a hyphen:
-
-```js run
-alert( "1 - 5".match(/\d-\d/) ); // null, no match!
-```
-
-Let's fix it adding spaces into the regexp `pattern:\d - \d`:
+Спробуємо знайти цифри, розділені дефісом:
 
 ```js run
-alert( "1 - 5".match(/\d - \d/) ); // 1 - 5, now it works
-// or we can use \s class:
-alert( "1 - 5".match(/\d\s-\s\d/) ); // 1 - 5, also works
+alert( "1 - 5".match(/\d-\d/) ); // null, немає збігів!
 ```
 
-**A space is a character. Equal in importance with any other character.**
+Давайте виправимо це, додавши пробіли в регулярний вираз `pattern:\d - \d`:
 
-We can't add or remove spaces from a regular expression and expect it to work the same.
+```js run
+alert( "1 - 5".match(/\d - \d/) ); // 1 - 5, тепер працює
+// або ми можемо використати \s клас:
+alert( "1 - 5".match(/\d\s-\s\d/) ); // 1 - 5, також працює
+```
 
-In other words, in a regular expression all characters matter, spaces too.
+**Пробіл – це символ. Такий же важливий, як і будь-який інший.**
+
+Ми не можемо додавати або видаляти пробіли в регулярному виразі й сподіватися, що він працюватиме так само.
+
+Іншими словами, у регулярному виразі всі символи мають значення, пробіли також.
 ````
 
 ## Summary
 
-There exist following character classes:
+Існують такі класи символів:
 
-- `pattern:\d` -- digits.
-- `pattern:\D` -- non-digits.
-- `pattern:\s` -- space symbols, tabs, newlines.
-- `pattern:\S` -- all but `pattern:\s`.
-- `pattern:\w` -- Latin letters, digits, underscore `'_'`.
-- `pattern:\W` -- all but `pattern:\w`.
-- `pattern:.` -- any character if with the regexp `'s'` flag, otherwise any except a newline `\n`.
+- `pattern:\d` -- цифри.
+- `pattern:\D` -- нецифри.
+- `pattern:\s` -- символи пробілів, табуляції, символи нового рядка.
+- `pattern:\S` -- усі, крім `pattern:\s`.
+- `pattern:\w` -- латинські літери, цифри, підкреслення `'_'`.
+- `pattern:\W` -- усі, крім `pattern:\w`.
+- `pattern:.` -- будь-який символ, якщо з прапорцем регулярного виразу `'s'`, інакше будь-який, крім символу нового рядка `\n`.
 
-...But that's not all!
+...Але це ще не все!
 
-Unicode encoding, used by JavaScript for strings, provides many properties for characters, like: which language the letter belongs to (if it's a letter), is it a punctuation sign, etc.
+Кодування Юнікод, яке використовується JavaScript для рядків, надає багато властивостей для символів, наприклад: до якої мови належить літера (якщо це літера), чи це знак пунктуації тощо.
 
-We can search by these properties as well. That requires flag `pattern:u`, covered in the next article.
+Ми також можемо шукати за цими властивостями. Для цього потрібен прапорець `pattern:u`, який описано в наступній статті.
