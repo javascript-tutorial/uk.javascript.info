@@ -13,7 +13,7 @@
 ```js run
 let regexp = /html|php|css|java(script)?/gi;
 
-let str = "Першим з'явився HTML, потім CSS, далі JavaScript";
+let str = "Першим з’явився HTML, потім CSS, далі JavaScript";
 
 alert( str.match(regexp) ); // 'HTML', 'CSS', 'JavaScript'
 ```
