@@ -1,17 +1,17 @@
-The solution: `pattern:/"(\\.|[^"\\])*"/g`.
+Вирішення: `pattern:/"(\\.|[^"\\])*"/g`.
 
-Step by step:
+Крок за кроком:
 
-- First we look for an opening quote `pattern:"`
-- Then if we have a backslash `pattern:\\` (we have to double it in the pattern because it is a special character), then any character is fine after it (a dot).
-- Otherwise we take any character except a quote (that would mean the end of the string) and a backslash (to prevent lonely backslashes, the backslash is only used with some other symbol after it): `pattern:[^"\\]`
-- ...And so on till the closing quote.
+- Спочатку шукаємо відкриваючі лапки `pattern:"`
+- Потім, якщо є зворотній слеш `pattern:\\` (ми повинні подвоїти його у виразі, тому що це спеціальний символ), то після нього також підійде будь-який символ (крапка).
+- В іншому випадку, беремо будь-який символ, крім лапок (це означало б кінець рядка) та зворотнього слешу (щоб запобігти поодиноким зворотнім слешам, бо вони використовуються тільки з іншими символами після них): `pattern:[^"\\]`
+- ...І так далі, до закриваючих лапок.
 
-In action:
+У дії:
 
 ```js run
 let regexp = /"(\\.|[^"\\])*"/g;
-let str = ' .. "test me" .. "Say \\"Hello\\"!" .. "\\\\ \\"" .. ';
+let str = ' .. "протестуй мене" .. "Скажи \\"Привіт\\"!" .. "\\\\ \\"" .. ';
 
-alert( str.match(regexp) ); // "test me","Say \"Hello\"!","\\ \""
+alert( str.match(regexp) ); // "протестуй мене","Скажи \"Привіт\"!","\\ \""
 ```

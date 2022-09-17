@@ -1,47 +1,47 @@
-# Find bbtag pairs
+# Знайдіть пари ВВ-кодів
 
-A "bb-tag" looks like `[tag]...[/tag]`, where `tag` is one of: `b`, `url` or `quote`.
+ВВ-код має вигляд `[tag]...[/tag]`, де `tag` - це один з: `b`, `url` або `quote`.
 
-For instance:
+Наприклад:
 ```
-[b]text[/b]
+[b]текст[/b]
 [url]http://google.com[/url]
 ```
 
-BB-tags can be nested. But a tag can't be nested into itself, for instance:
+ВВ-коди можуть бути вкладеними. Але тег не може бути вкладеним сам у себе, наприклад:
 
 ```
-Normal:
+Може бути:
 [url] [b]http://google.com[/b] [/url]
-[quote] [b]text[/b] [/quote]
+[quote] [b]текст[/b] [/quote]
 
-Can't happen:
+Не може бути:
 [b][b]text[/b][/b]
 ```
 
-Tags can contain line breaks, that's normal:
+Теги можуть мати розрив рядків, це допустимо:
 
 ```
 [quote]
-  [b]text[/b]
+  [b]текст[/b]
 [/quote]
 ```
 
-Create a regexp to find all BB-tags with their contents.
+Створіть регулярний вираз для пошуку всіх BB-кодів та їх вмісту.
 
-For instance:
+Наприклад:
 
 ```js
-let regexp = /your regexp/flags;
+let regexp = /ваш регулярний вираз/прапорець;
 
 let str = "..[url]http://google.com[/url]..";
 alert( str.match(regexp) ); // [url]http://google.com[/url]
 ```
 
-If tags are nested, then we need the outer tag (if we want we can continue the search in its content):
+Якщо теки вкладені, тоді необхідно шукати зовнішній тег (за бажанням, можна продовжити пошук у його вмісті):
 
 ```js
-let regexp = /your regexp/flags;
+let regexp = /ваш регулярний вираз/прапорець;
 
 let str = "..[url][b]http://google.com[/b][/url]..";
 alert( str.match(regexp) ); // [url][b]http://google.com[/b][/url]
