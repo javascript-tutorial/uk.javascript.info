@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-47-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-48-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -137,6 +137,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center"><a href="https://github.com/patsO-0"><img src="https://avatars.githubusercontent.com/u/92182261?v=4?s=70" width="70px;" alt="patsO-0"/><br /><sub><b>patsO-0</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ApatsO-0" title="Bug reports">🐛</a></td>
       <td align="center"><a href="https://www.antoniuk.dev/"><img src="https://avatars.githubusercontent.com/u/17859567?v=4?s=70" width="70px;" alt="Oleksandr Antoniuk"/><br /><sub><b>Oleksandr Antoniuk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Agit-antonyuk" title="Bug reports">🐛</a> <a href="#translation-git-antonyuk" title="Translation">🌍</a></td>
       <td align="center"><a href="https://github.com/lanachayka"><img src="https://avatars.githubusercontent.com/u/83415983?v=4?s=70" width="70px;" alt="lanachayka"/><br /><sub><b>lanachayka</b></sub></a><br /><a href="#translation-lanachayka" title="Translation">🌍</a></td>
+      <td align="center"><a href="https://github.com/dmytro-botnarenko"><img src="https://avatars.githubusercontent.com/u/15910747?v=4?s=70" width="70px;" alt="Dmytro Botnarenko"/><br /><sub><b>Dmytro Botnarenko</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Admytro-botnarenko" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
