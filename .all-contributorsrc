@@ -442,6 +442,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "dmytro-botnarenko",
+      "name": "Dmytro Botnarenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15910747?v=4",
+      "profile": "https://github.com/dmytro-botnarenko",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
