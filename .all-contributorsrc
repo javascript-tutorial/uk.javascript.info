@@ -433,6 +433,16 @@
         "bug",
         "translation"
       ]
+    },
+    {
+      "login": "lanachayka",
+      "name": "lanachayka",
+      "avatar_url": "https://avatars.githubusercontent.com/u/83415983?v=4",
+      "profile": "https://github.com/lanachayka",
+      "contributions": [
+        "translation"
+      ]
     }
-  ]
+  ],
+  "commitConvention": "angular"
 }
