@@ -122,7 +122,7 @@ alert(longEar.jumps); // true (береться з об’єкта rabbit)
 
 ![](proto-animal-rabbit-chain.svg)
 
-І тепер, якщо ми хочемо взяти метод з об’єкта `longEar`, а його там не має, JavaScript буде шукати його в `rabbit`, далі в `animal`.
+І тепер, якщо ми хочемо взяти метод з об’єкта `longEar`, а його там немає, JavaScript буде шукати його в `rabbit`, далі в `animal`.
 
 Існує два обмеження:
 
@@ -249,7 +249,7 @@ let rabbit = {
 rabbit.sleep();
 
 alert(rabbit.isSleeping); // true
-alert(animal.isSleeping); // undefined (немає такого методу в прототипі)
+alert(animal.isSleeping); // undefined (немає такої властивості в прототипі)
 ```
 
 Остаточний вигляд:
