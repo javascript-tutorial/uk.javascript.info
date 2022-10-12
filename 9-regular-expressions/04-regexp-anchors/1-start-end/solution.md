@@ -1,5 +1,5 @@
-An empty string is the only match: it starts and immediately finishes.
+Порожній рядок є єдиним збігом: він починається і негайно закінчується.
 
-The task once again demonstrates that anchors are not characters, but tests.
+Задача ще раз доводить що якорі не являються символами, вони є тестами. 
 
-The string is empty `""`. The engine first matches the `pattern:^` (input start), yes it's there, and then immediately the end `pattern:$`, it's here too. So there's a match.
+Рядок порожній `""`. Механізм спочатку відповідає `pattern:^` (початок введення), так, він там, а потім одразу кінцевий `pattern:$`, він також є тут. Отже, збіг є.
