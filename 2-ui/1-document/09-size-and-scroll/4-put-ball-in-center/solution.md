@@ -1,53 +1,53 @@
-The ball has `position:absolute`. It means that its `left/top` coordinates are measured from the nearest positioned element, that is `#field` (because it has `position:relative`).
+М'яч має `position:absolute`. Це означає, що його `left/top` координати вимірюються від найближчого розташованого елемента(батька), тобто `#field` (тому що він має `position:relative`).
 
-The coordinates start from the inner left-upper corner of the field:
+Координати починаються з внутрішнього лівого верхнього кута поля:
 
 ![](field.svg)
 
-The inner field width/height is `clientWidth/clientHeight`. So the field center has coordinates `(clientWidth/2, clientHeight/2)`.
+Ширина/висота внутрішнього поля `clientWidth/clientHeight`. Отже, центр поля має координати `(clientWidth/2, clientHeight/2)`.
 
-...But if we set `ball.style.left/top` to such values, then not the ball as a whole, but the left-upper edge of the ball would be in the center:
+...Але якщо ми встановимо `ball.style.left/top` до таких значень, то в центрі буде не куля в цілому, а лівий верхній край кулі:
 
 ```js
 ball.style.left = Math.round(field.clientWidth / 2) + 'px';
 ball.style.top = Math.round(field.clientHeight / 2) + 'px';
 ```
 
-Here's how it looks:
+Ось як це виглядає:
 
 [iframe height=180 src="ball-half"]
 
-To align the ball center with the center of the field, we should move the ball to the half of its width to the left and to the half of its height to the top:
+Щоб вирівняти центр м'яча з центром поля, ми повинні перемістити м'яч на половину його ширини вліво і на половину його висоти вгору:
 
 ```js
 ball.style.left = Math.round(field.clientWidth / 2 - ball.offsetWidth / 2) + 'px';
 ball.style.top = Math.round(field.clientHeight / 2 - ball.offsetHeight / 2) + 'px';
 ```
 
-Now the ball is finally centered.
+Тепер м'яч нарешті відцентрований.
 
 ````warn header="Attention: the pitfall!"
 
-The code won't work reliably while `<img>` has no width/height:
+Код не працюватиме надійно, поки `<img>` не має ширини/висоти:
 
 ```html
 <img src="ball.png" id="ball">
 ```
 ````
 
-When the browser does not know the width/height of an image (from tag attributes or CSS), then it assumes them to equal `0` until the image finishes loading.
+Коли браузер не знає ширини/висоти зображення (з атрибутів тегів або CSS), він вважає, що вони дорівнюють `0` поки не закінчиться завантаження зображення.
 
-So the value of `ball.offsetWidth` will be `0` until the image loads. That leads to wrong coordinates in the code above.
+Отже, значення `ball.offsetWidth` буде `0` поки не завантажиться зображення. Це призводить до неправильних координат у коді вище.
 
-After the first load, the browser usually caches the image, and on reloads it will have the size immediately. But on the first load the value of `ball.offsetWidth` is `0`.
+Після першого завантаження браузер зазвичай кешує зображення, і при перезавантаженні воно відразу матиме розмір. Але при першому завантаженні значення `ball.offsetWidth` дорівнює `0`.
 
-We should fix that by adding `width/height` to `<img>`:
+Ми повинні це виправити, додавши `width/height` до `<img>`:
 
 ```html
 <img src="ball.png" *!*width="40" height="40"*/!* id="ball">
 ```
 
-...Or provide the size in CSS:
+...Або вкажіть розмір у CSS:
 
 ```css
 #ball {
