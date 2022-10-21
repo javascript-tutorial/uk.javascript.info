@@ -2,10 +2,10 @@ importance: 3
 
 ---
 
-# What is the scrollbar width?
+# Яка ширина смуги прокрутки?
 
-Write the code that returns the width of a standard scrollbar.
+Напишіть код, який повертає ширину стандартної смуги прокрутки.
 
-For Windows it usually varies between `12px` and `20px`. If the browser doesn't reserve any space for it (the scrollbar is half-translucent over the text, also happens), then it may be `0px`.
-
-P.S. The code should work for any HTML document, do not depend on its content.
+Для Windows це зазвичай `12px` або `20px`. Якщо браузер не резервує для прокрутки місця (смуга прокрутки напівпрозора над текстом), тоді може бути `0px`.
+ 
+P.S. Код повинен працювати для будь-якого HTML-документа, не залежно від його вмісту.
