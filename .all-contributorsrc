@@ -469,6 +469,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "VasylTsiutsyk",
+      "name": "Vasyl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57192331?v=4",
+      "profile": "https://github.com/VasylTsiutsyk",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
