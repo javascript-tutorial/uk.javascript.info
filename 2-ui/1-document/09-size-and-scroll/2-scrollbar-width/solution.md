@@ -1,16 +1,16 @@
-To get the scrollbar width, we can create an element with the scroll, but without borders and paddings.
+Щоб отримати ширину смуги прокрутки, ми можемо створити елемент із прокруткою, але без рамок і відступів.
 
-Then the difference between its full width `offsetWidth` and the inner content area width `clientWidth` will be exactly the scrollbar:
+Тоді різниця між його повною шириною `offsetWidth` і шириною внутрішньої області вмісту `clientWidth` буде саме смуга прокрутки:
 
 ```js run
-// create a div with the scroll
+// створюємо  div з прокруткою
 let div = document.createElement('div');
 
 div.style.overflowY = 'scroll';
 div.style.width = '50px';
 div.style.height = '50px';
 
-// must put it in the document, otherwise sizes will be 0
+// потрібно розмістити його в документі, інакше розміри будуть 0
 document.body.append(div);
 let scrollWidth = div.offsetWidth - div.clientWidth;
 
