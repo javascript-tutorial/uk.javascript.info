@@ -460,6 +460,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "bardachov",
+      "name": "Artem Bardachov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6798742?v=4",
+      "profile": "https://github.com/bardachov",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
