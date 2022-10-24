@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-52-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-53-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -144,6 +144,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center"><a href="https://github.com/bardachov"><img src="https://avatars.githubusercontent.com/u/6798742?v=4?s=70" width="70px;" alt="Artem Bardachov"/><br /><sub><b>Artem Bardachov</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Abardachov" title="Bug reports">🐛</a></td>
       <td align="center"><a href="https://github.com/VasylTsiutsyk"><img src="https://avatars.githubusercontent.com/u/57192331?v=4?s=70" width="70px;" alt="Vasyl"/><br /><sub><b>Vasyl</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AVasylTsiutsyk" title="Bug reports">🐛</a></td>
       <td align="center"><a href="https://github.com/holus-bolus"><img src="https://avatars.githubusercontent.com/u/93076661?v=4?s=70" width="70px;" alt="Oleksii Ustinov"/><br /><sub><b>Oleksii Ustinov</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Aholus-bolus" title="Bug reports">🐛</a></td>
+      <td align="center"><a href="https://www.linkedin.com/in/%F0%9F%87%BA%F0%9F%87%A6-vlad-korobko-425b76131/"><img src="https://avatars.githubusercontent.com/u/48758457?v=4?s=70" width="70px;" alt="Vlad Ko"/><br /><sub><b>Vlad Ko</b></sub></a><br /><a href="#translation-vladiuskor" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
