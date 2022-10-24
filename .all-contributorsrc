@@ -487,6 +487,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "vladiuskor",
+      "name": "Vlad Ko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48758457?v=4",
+      "profile": "https://www.linkedin.com/in/%F0%9F%87%BA%F0%9F%87%A6-vlad-korobko-425b76131/",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitConvention": "angular"
