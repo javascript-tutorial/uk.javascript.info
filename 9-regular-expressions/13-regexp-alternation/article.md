@@ -1,67 +1,67 @@
-# Alternation (OR) |
+# Альтернація (АБО) |
 
-Alternation is the term in regular expression that is actually a simple "OR".
+Альтернація -- це термін у регулярному виразі, який насправді є простим "АБО".
 
-In a regular expression it is denoted with a vertical line character `pattern:|`.
+Вона позначається символом вертикальної лінії `pattern:|`.
 
-For instance, we need to find programming languages: HTML, PHP, Java or JavaScript.
+Наприклад, нам треба знайти мови програмування: HTML, PHP, Java або JavaScript.
 
-The corresponding regexp: `pattern:html|php|java(script)?`.
+Відповідний регулярний вираз: `pattern:html|php|java(script)?`.
 
-A usage example:
+Приклад використання:
 
 ```js run
 let regexp = /html|php|css|java(script)?/gi;
 
-let str = "First HTML appeared, then CSS, then JavaScript";
+let str = "Першим з’явився HTML, потім CSS, далі JavaScript";
 
 alert( str.match(regexp) ); // 'HTML', 'CSS', 'JavaScript'
 ```
 
-We already saw a similar thing -- square brackets. They allow to choose between multiple characters, for instance `pattern:gr[ae]y` matches `match:gray` or `match:grey`.
+Ми вже бачили подібне -- квадратні дужки. Вони дозволяють обирати між декількома символами, наприклад `pattern:gr[ae]y` знайде `match:gray` або `match:grey`.
 
-Square brackets allow only characters or character classes. Alternation allows any expressions. A regexp `pattern:A|B|C` means one of expressions `A`, `B` or `C`.
+Квадратні дужки дозволяють працювати тільки з символами, або наборами символів. Натомість Альтернація працює з будь-якими виразами. Регулярний вираз `pattern:A|B|C` означає пошук одного з символів: `A`, `B` або `C`.
 
-For instance:
+Наприклад:
 
-- `pattern:gr(a|e)y` means exactly the same as `pattern:gr[ae]y`.
-- `pattern:gra|ey` means `match:gra` or `match:ey`.
+- `pattern:gr(a|e)y` означає те саме, що й `pattern:gr[ae]y`.
+- `pattern:gra|ey` означає `match:gra` або `match:ey`.
 
-To apply alternation to a chosen part of the pattern, we can enclose it in parentheses:
-- `pattern:I love HTML|CSS` matches `match:I love HTML` or `match:CSS`.
-- `pattern:I love (HTML|CSS)` matches `match:I love HTML` or `match:I love CSS`.
+Для того, щоб використати альтернацію з обраною частиною шаблону, ми можемо загорнути його у дужки:
+- `pattern:Я люблю HTML|CSS` знайде `match:Я люблю HTML` або `match:CSS`.
+- `pattern:Я люблю (HTML|CSS)` знайде `match:Я люблю HTML` або `match:Я люблю CSS`.
 
-## Example: regexp for time
+## Приклад: регулярний вираз для часу
 
-In previous articles there was a task to build a regexp for searching time in the form `hh:mm`, for instance `12:00`. But a simple `pattern:\d\d:\d\d` is too vague. It accepts `25:99` as the time (as 99 minutes match the pattern, but that time is invalid).
+У попередніх статтях було завдання написати регулярний вираз для пошуку часу у форматі `гг:хх`, наприклад `12:00`. Однак простий шаблон `pattern:\d\d:\d\d` недостатньо точний. Він приймає `25:99` як час (99 хвилин підходять до шаблону, однак цей час не є вірним).
 
-How can we make a better pattern?
+Як ми можемо написати кращий шаблон?
 
-We can use more careful matching. First, the hours:
+Можна зробити більш ретельне порівняння. Спочатку, години:
 
-- If the first digit is `0` or `1`, then the next digit can be any: `pattern:[01]\d`.
-- Otherwise, if the first digit is `2`, then the next must be `pattern:[0-3]`.
-- (no other first digit is allowed)
+- Якщо перша цифра `0` або `1`, тоді наступна може бути будь-якою цифрою: `pattern:[01]\d`.
+- В іншому випадку, якщо перша цифра `2`, тоді наступна має бути від 0 до 3 `pattern:[0-3]`.
+- (іншої першої цифри бути не може)
 
-We can write both variants in a regexp using alternation: `pattern:[01]\d|2[0-3]`.
+Ми можемо написати обидва варіанти у регулярному виразі за допомогою альтернації: `pattern:[01]\d|2[0-3]`.
 
-Next, minutes must be from `00` to `59`. In the regular expression language that can be written as `pattern:[0-5]\d`: the first digit `0-5`, and then any digit.
+Далі, хвилини мають бути від `00` до `59`. Мовою регулярних виразів це може бути написано таким чином `pattern:[0-5]\d`: перша цифра `0-5`, а за нею будь-яка.
 
-If we glue hours and minutes together, we get the pattern: `pattern:[01]\d|2[0-3]:[0-5]\d`.
+Якщо ми зберемо шаблони годин та хвилин докупи, то вийде ось так: `pattern:[01]\d|2[0-3]:[0-5]\d`.
 
-We're almost done, but there's a problem. The alternation `pattern:|` now happens to be between `pattern:[01]\d` and `pattern:2[0-3]:[0-5]\d`.
+Майже готово, однак тут є проблема. Альтернація `pattern:|` зараз відбувається між `pattern:[01]\d` та `pattern:2[0-3]:[0-5]\d`.
 
-That is: minutes are added to the second alternation variant, here's a clear picture:
+Тобто: хвилини додалися до другого варіанту альтернації, більш наочна картинка:
 
 ```
 [01]\d  |  2[0-3]:[0-5]\d
 ```
 
-That pattern looks for `pattern:[01]\d` or `pattern:2[0-3]:[0-5]\d`.
+Такий шаблон буде шукати `pattern:[01]\d` або `pattern:2[0-3]:[0-5]\d`.
 
-But that's wrong, the alternation should only be used in the "hours" part of the regular expression, to allow `pattern:[01]\d` OR `pattern:2[0-3]`. Let's correct that by enclosing "hours" into parentheses: `pattern:([01]\d|2[0-3]):[0-5]\d`.
+Але це невірно. Нам необхідно, щоб альтернація використовувалась тільки у частині регулярного виразу, який відноситься до "годин", щоб дозволити `pattern:[01]\d` АБО `pattern:2[0-3]`. Виправимо це, огорнувши "години" у дужки: `pattern:([01]\d|2[0-3]):[0-5]\d`.
 
-The final solution:
+Остаточне рішення:
 
 ```js run
 let regexp = /([01]\d|2[0-3]):[0-5]\d/g;

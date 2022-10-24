@@ -1,11 +1,11 @@
 
-Opening tag is `pattern:\[(b|url|quote)]`.
+Відкриваючий тег -- це `pattern:\[(b|url|quote)]`.
 
-Then to find everything till the closing tag -- let's use the pattern `pattern:.*?` with flag `pattern:s` to match any character including the newline and then add a backreference to the closing tag.
+Потім, щоб знайти все, до закриваючого тегу -- використаємо вираз `pattern:.*?` з прапорцем `pattern:s`  щоб знайти будь-які символи, включно з новим рядком, а потім додати зворотне посилання до закриваючого тегу.
 
-The full pattern: `pattern:\[(b|url|quote)\].*?\[/\1]`.
+Цілий вираз: `pattern:\[(b|url|quote)\].*?\[/\1]`.
 
-In action:
+У дії:
 
 ```js run
 let regexp = /\[(b|url|quote)].*?\[\/\1]/gs;
@@ -20,4 +20,4 @@ let str = `
 alert( str.match(regexp) ); // [b]hello![/b],[quote][url]http://google.com[/url][/quote]
 ```
 
-Please note that besides escaping `pattern:[`, we had to escape a slash for the closing tag `pattern:[\/\1]`, because normally the slash closes the pattern.
+Зверніть увагу, що крім екранування `pattern:[`, нам необхідно екранувати слеш у закриваючому тегу `pattern:[\/\1]`, бо зазвичай слеш завершує вираз.

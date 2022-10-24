@@ -1,32 +1,32 @@
-# Find quoted strings
+# Знайдіть рядки у лапках
 
-Create a regexp to find strings in double quotes `subject:"..."`.
+Створіть регулярний вираз для пошуку рядків у подвійних лапках `subject:"..."`.
 
-The strings should support escaping, the same way as JavaScript strings do. For instance, quotes can be inserted as `subject:\"` a newline as `subject:\n`, and the slash itself as `subject:\\`.
+Рядки повинні підтримувати екранування за допомогою зворотнього слеша, аналогічно з рядками в JavaScript. Наприклад, лапки можуть бути вставлені як `subject:\"`, новий рядок як `subject:\n`, та сам зворотній слеш як `subject:\\`.
 
 ```js
-let str = "Just like \"here\".";
+let str = "Як ось \"тут\".";
 ```
 
-Please note, in particular, that an escaped quote `subject:\"` does not end a string.
+Зокрема, зверніть увагу, що екрановані лапки `subject:\"` не завершують рядок.
 
-So we should search from one quote to the other ignoring escaped quotes on the way.
+Тому нам необхідно шукати від одних лапок до інших, ігноруючи екрановані лапки на нашому шляху.
 
-That's the essential part of the task, otherwise it would be trivial.
+У цьому і полягає основна складність завдання, адже без цієї умови -- рішення було б елементарним.
 
-Examples of strings to match:
+Приклади відповідних рядків:
 ```js
-.. *!*"test me"*/!* ..  
-.. *!*"Say \"Hello\"!"*/!* ... (escaped quotes inside)
-.. *!*"\\"*/!* ..  (double slash inside)
-.. *!*"\\ \""*/!* ..  (double slash and an escaped quote inside)
+.. *!*"протестуй мене"*/!* ..  
+.. *!*"Скажи \"Привіт\"!"*/!* ... (екрановані рядки всередині)
+.. *!*"\\"*/!* ..  (подвійний слеш всередині)
+.. *!*"\\ \""*/!* ..  (подвійний слеш та екрановані лапки всередині)
 ```
 
-In JavaScript we need to double the slashes to pass them right into the string, like this:
+У JavaScript нам потрібно подвоювати слеші, щоб передати їх в рядок, як тут:
 
 ```js run
-let str = ' .. "test me" .. "Say \\"Hello\\"!" .. "\\\\ \\"" .. ';
+let str = ' .. "протестуй мене" .. "Скажи \\"Привіт\\"!" .. "\\\\ \\"" .. ';
 
-// the in-memory string
-alert(str); //  .. "test me" .. "Say \"Hello\"!" .. "\\ \"" ..
+// Рядок у пам’яті
+alert(str); //  .. "протестуй мене" .. "Скажи \"Привіт\"!" .. "\\ \"" ..
 ```
