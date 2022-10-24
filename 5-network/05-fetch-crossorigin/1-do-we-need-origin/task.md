@@ -2,11 +2,11 @@ importance: 5
 
 ---
 
-# Why do we need Origin?
+# Навіщо нам Origin?
 
-As you probably know, there's HTTP-header `Referer`, that usually contains an url of the page which initiated a network request.
+Як ви, мабуть, знаєте, існує HTTP-заголовок `Referer`, який зазвичай містить URL-адресу сторінки, що ініціювала мережевий запит.
 
-For instance, when fetching `http://google.com` from `http://javascript.info/some/url`, the headers look like this:
+Наприклад, під час отримання `http://google.com` з `http://javascript.info/some/url` заголовки виглядають так:
 
 ```
 Accept: */*
@@ -20,9 +20,9 @@ Referer: http://javascript.info/some/url
 */!*
 ```
 
-As you can see, both `Referer` and `Origin` are present.
+Як бачите, присутні і `Referer`, і `Origin`.
 
-The questions:
+Питання:
 
-1. Why `Origin` is needed, if `Referer` has even more information?
-2. Is it possible that there's no `Referer` or `Origin`, or is it incorrect?
+1. Навіщо потрібен `Origin`, якщо `Referer` містить ще більше інформації?
+2. Чи можливо, що немає `Referer` чи `Origin`, або ж це неправильно?
