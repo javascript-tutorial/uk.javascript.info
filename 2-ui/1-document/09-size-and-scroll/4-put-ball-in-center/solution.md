@@ -6,7 +6,7 @@
 
 Ширина/висота внутрішнього поля `clientWidth/clientHeight`. Отже, центр поля має координати `(clientWidth/2, clientHeight/2)`.
 
-...Але якщо ми встановимо `ball.style.left/top` до таких значень, то в центрі буде не куля в цілому, а лівий верхній край кулі:
+...Але якщо ми встановимо `ball.style.left/top` до таких значень, то в центрі буде не м'яч в цілому, а його лівий верхній кут:
 
 ```js
 ball.style.left = Math.round(field.clientWidth / 2) + 'px';
@@ -47,7 +47,7 @@ ball.style.top = Math.round(field.clientHeight / 2 - ball.offsetHeight / 2) + 'p
 <img src="ball.png" *!*width="40" height="40"*/!* id="ball">
 ```
 
-...Або вкажіть розмір у CSS:
+...Або вказати розмір у CSS:
 
 ```css
 #ball {
