@@ -1,7 +1,7 @@
-The solution is:
+Рішення:
 
 ```js
 let scrollBottom = elem.scrollHeight - elem.scrollTop - elem.clientHeight;
 ```
 
-In other words: (full height) minus (scrolled out top part) minus (visible part) -- that's exactly the scrolled out bottom part.
+Іншими словами: (вся висота) мінус (прокручена верхня частина) мінус (видима частина) -- саме це і є прокручена нижня частина.
