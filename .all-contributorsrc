@@ -496,6 +496,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "jivk01",
+      "name": "Marchuk Dmytro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59064710?v=4",
+      "profile": "https://github.com/jivk01",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
