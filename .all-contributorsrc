@@ -514,6 +514,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "marketing-specv",
+      "name": "marketing-specv",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54738987?v=4",
+      "profile": "https://github.com/marketing-specv",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
