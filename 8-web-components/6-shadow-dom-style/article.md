@@ -1,21 +1,21 @@
-# Shadow DOM styling
+# Стилізація тіньового DOM
 
-Shadow DOM may include both `<style>` and `<link rel="stylesheet" href="…">` tags. In the latter case, stylesheets are HTTP-cached, so they are not redownloaded for multiple components that use same template.
+Тіньовий DOM може включати в себе обидва теги `<style>` та `<link rel="stylesheet" href="…">`. В останньому випадку, таблиці стилів зберігаються в кеші  HTTP, тому вони не завантажуються наново для кількох компонентів, які використовують один і той самий шаблон.
 
-As a general rule, local styles work only inside the shadow tree, and document styles work outside of it. But there are few exceptions.
+Як правило, локальні стилі працюють лише всередині тіньового дерева та стилі документу працюють ззовні. Але є декілька винятків.
 
 ## :host
 
-The `:host` selector allows to select the shadow host (the element containing the shadow tree).
+Селектор `:host` дозволяє обрати тіньовий хост (елемент, що містить в собі тіньове дерево).
 
-For instance, we're making `<custom-dialog>` element that should be centered. For that we need to style the `<custom-dialog>` element itself.
+Наприклад, ми створюємо елемент `<custom-dialog>`, який має бути центрованим. Для цього нам треба стилізувати безпосередньо елемент `<custom-dialog>`.
 
-That's exactly what `:host` does:
+Саме це робить `:host`:
 
 ```html run autorun="no-epub" untrusted height=80
 <template id="tmpl">
   <style>
-    /* the style will be applied from inside to the custom-dialog element */
+    /* стиль буде застосовано зсередини до елементу custom-dialog */
     :host {
       position: fixed;
       left: 50%;
@@ -38,17 +38,17 @@ customElements.define('custom-dialog', class extends HTMLElement {
 </script>
 
 <custom-dialog>
-  Hello!
+  Привіт!
 </custom-dialog>
 ```
 
-## Cascading
+## Каскад
 
-The shadow host (`<custom-dialog>` itself) resides in the light DOM, so it's affected by document CSS rules.
+Тіньовий хост (безпосередньо `<custom-dialog>`) розташований в світлому DOM, тому на нього впливають CSS-правила документу.
 
-If there's a property styled both in `:host` locally, and in the document, then the document style takes precedence.
+Якщо деяка властивість має стилі в `:host` локально та в документі, тоді пріоритет мають стилі документу.
 
-For instance, if in the document we had:
+Наприклад, якщо в документі ми маємо:
 ```html
 <style>
 custom-dialog {
@@ -56,18 +56,18 @@ custom-dialog {
 }
 </style>
 ```
-...Then the `<custom-dialog>` would be without padding.
+...Тоді `<custom-dialog>` не матиме відступів.
 
-It's very convenient, as we can setup "default" component styles in its `:host` rule, and then easily override them in the document.
+Це дуже зручно, оскільки ми можемо встановити типові стилі компоненту всередині його `:host` правила, та легко перевизначити їх в документі опісля.
 
-The exception is when a local property is labelled `!important`, for such properties, local styles take precedence.
+Винятком є ситуація, в якій локальна властивість позначена як `!important`, для таких властивостей, пріоритет надається локальним стилям.
 
 
 ## :host(selector)
 
-Same as `:host`, but applied only if the shadow host matches the `selector`.
+Теж саме, що й `:host`, але застосовується лише у випадку, коли тіньовий хост співпадає з  `selector`.
 
-For example, we'd like to center the `<custom-dialog>` only if it has `centered` attribute:
+Наприклад, ми бажаємо центрувати `<custom-dialog>`, тільки якщо він має атрибут `centered`:
 
 ```html run autorun="no-epub" untrusted height=80
 <template id="tmpl">
@@ -101,25 +101,25 @@ customElements.define('custom-dialog', class extends HTMLElement {
 
 
 <custom-dialog centered>
-  Centered!
+  Центровано!
 </custom-dialog>
 
 <custom-dialog>
-  Not centered.
+  Не центровано.
 </custom-dialog>
 ```
 
-Now the additional centering styles are only applied to the first dialog: `<custom-dialog centered>`.
+Тепер додаткові стилі центрування застосовуються лише до першого діалогу: `<custom-dialog centered>`.
 
-To summarize, we can use `:host`-family of selectors to style the main element of the component. These styles (unless `!important`) can be overridden by the document.
+Підсумовуючи, ми можемо використовувати сімейство селекторів `:host` для стилізації основного елементу компоненту. Ці стилі (окрім позначених як `!important`) можуть бути перевизначені всередині документу.
 
-## Styling slotted content
+## Стилізація контенту слотів
 
-Now let's consider the situation with slots.
+Розглянемо ситуацію зі слотами.
 
-Slotted elements come from light DOM, so they use document styles. Local styles do not affect slotted content.
+Елементи слотів приходять зі світлого DOM, тому вони використовують стилі документу. Локальні стилі не впливають на вміст слотів.
 
-In the example below, slotted `<span>` is bold, as per document style, but does not take `background` from the local style:
+У наведеному нижче прикладі , `<span>` має жирний шрифт, згідно стилю документу, але не приймає `background` з локального стилю:
 ```html run autorun="no-epub" untrusted height=80
 <style>
 *!*
@@ -128,7 +128,7 @@ In the example below, slotted `<span>` is bold, as per document style, but does 
 </style>
 
 <user-card>
-  <div slot="username">*!*<span>John Smith</span>*/!*</div>
+  <div slot="username">*!*<span>Петро Щур</span>*/!*</div>
 </user-card>
 
 <script>
@@ -148,15 +148,15 @@ customElements.define('user-card', class extends HTMLElement {
 </script>
 ```
 
-The result is bold, but not red.
+Результат має жирний шрифт, але не червоний фон.
 
-If we'd like to style slotted elements in our component, there are two choices.
+Якщо б ми забажали стилізувати елементи в нашому компоненті, ми б мали два варіанти.
 
-First, we can style the `<slot>` itself and rely on CSS inheritance:
+Перший: стилізувати конкретно `<slot>` та розраховувати на CSS успадкування:
 
 ```html run autorun="no-epub" untrusted height=80
 <user-card>
-  <div slot="username">*!*<span>John Smith</span>*/!*</div>
+  <div slot="username">*!*<span>Петро Щур</span>*/!*</div>
 </user-card>
 
 <script>
@@ -176,19 +176,19 @@ customElements.define('user-card', class extends HTMLElement {
 </script>
 ```
 
-Here `<p>John Smith</p>` becomes bold, because CSS inheritance is in effect between the `<slot>` and its contents. But in CSS itself not all properties are inherited.
+В даному випадку, `<p>Петро Щур</p>` має жирний шрифт, оскільки CSS успадкування діє між `<slot>` та його наповненням. Але в самому CSS не всі властивості успадковуються.
 
-Another option is to use `::slotted(selector)` pseudo-class. It matches elements based on two conditions:
+Другою опцією є використання псевдо-класу `::slotted(selector)`. Він співвідносить елементи відповідно двом умовам:
 
-1. That's a slotted element, that comes from the light DOM. Slot name doesn't matter. Just any slotted element, but only the element itself, not its children.
-2. The element matches the `selector`.
+1. Це елемент, що приходить зі світлого DOM. Назва слоту не має значення. Будь-який елемент, але лише цей елемент, а не його діти.
+2. Елемент збігається з `selector`.
 
-In our example, `::slotted(div)` selects exactly `<div slot="username">`, but not its children:
+В нашому прикладі, `::slotted(div)` обирає саме `<div slot="username">`, без дочірніх елементів:
 
 ```html run autorun="no-epub" untrusted height=80
 <user-card>
   <div slot="username">
-    <div>John Smith</div>
+    <div>Петро Щур</div>
   </div>
 </user-card>
 
@@ -209,44 +209,44 @@ customElements.define('user-card', class extends HTMLElement {
 </script>
 ```
 
-Please note, `::slotted` selector can't descend any further into the slot. These selectors are invalid:
+Зверніть увагу, селектор `::slotted` не може спускатися вниз структурою слоту. Такі селектори є невалідними:
 
 ```css
 ::slotted(div span) {
-  /* our slotted <div> does not match this */
+  /* наш <div> з цим не збігається */
 }
 
 ::slotted(div) p {
-  /* can't go inside light DOM */
+  /* не може потрапити всередину світлого DOM */
 }
 ```
 
-Also, `::slotted` can only be used in CSS. We can't use it in `querySelector`.
+Також, `::slotted` може використовуватись лише в CSS. Ми не можемо ним користуватись в `querySelector`.
 
-## CSS hooks with custom properties
+## CSS хуки з кастомними властивостями
 
-How do we style internal elements of a component from the main document?
+Як ми можемо стилізувати внутрішні елементи компоненту з основного документу?
 
-Selectors like `:host` apply rules to `<custom-dialog>` element or `<user-card>`, but how to style shadow DOM elements inside them?
+Селектори по типу `:host` застосовують правила до елементу `<custom-dialog>` чи `<user-card>`, але як стилізувати елементи тіньового DOM всередині нього?
 
-There's no selector that can directly affect shadow DOM styles from the document. But just as we expose methods to interact with our component, we can expose CSS variables (custom CSS properties) to style it.
+Жоден селектор не може напряму вплинути на стилі тіньового DOM зсередини документу. Але так само, як ми надали доступ до методів, аби ті взаємодіяли з нашим компонентом, ми можемо відкрити для стилізації CSS змінні(кастомні CSS властивості).
 
-**Custom CSS properties exist on all levels, both in light and shadow.**
+**Кастомні CSS властивості існують на всіх рівнях, як в світловому, так і в тіньовому.**
 
-For example, in shadow DOM we can use `--user-card-field-color` CSS variable to  style fields, and the outer document can set its value:
+Наприклад, в тіньовому DOM ми можемо використовувати CSS змінну `--user-card-field-color` для стилізації полів, а зовнішній документ може призначати їй значення:
 
 ```html
 <style>
   .field {
     color: var(--user-card-field-color, black);
-    /* if --user-card-field-color is not defined, use black color */
+    /* якщо --user-card-field-color не призначено, використовуємо чорний колір */
   }
 </style>
-<div class="field">Name: <slot name="username"></slot></div>
-<div class="field">Birthday: <slot name="birthday"></slot></div>
+<div class="field">Ім’я: <slot name="username"></slot></div>
+<div class="field">День народження: <slot name="birthday"></slot></div>
 ```
 
-Then, we can declare this property in the outer document for `<user-card>`:
+Після того, ми можемо оголосити цю властивість в зовнішньому документі для `<user-card>`:
 
 ```css
 user-card {
@@ -254,9 +254,9 @@ user-card {
 }
 ```
 
-Custom CSS properties pierce through shadow DOM, they are visible everywhere, so the inner `.field` rule will make use of it.
+Кастомні CSS властивості пронизують тіньовий DOM, вони є видимими усюди, тож внутрішнє правило `.field` їх використає.
 
-Here's the full example:
+Нижче наведений повний приклад:
 
 ```html run autorun="no-epub" untrusted height=80
 <style>
@@ -275,8 +275,8 @@ Here's the full example:
     }
 */!*
   </style>
-  <div class="field">Name: <slot name="username"></slot></div>
-  <div class="field">Birthday: <slot name="birthday"></slot></div>
+  <div class="field">Ім’я: <slot name="username"></slot></div>
+  <div class="field">День народження: <slot name="birthday"></slot></div>
 </template>
 
 <script>
@@ -289,31 +289,31 @@ customElements.define('user-card', class extends HTMLElement {
 </script>
 
 <user-card>
-  <span slot="username">John Smith</span>
+  <span slot="username">Петро Щур</span>
   <span slot="birthday">01.01.2001</span>
 </user-card>
 ```
 
 
 
-## Summary
+## Підсумки
 
-Shadow DOM can include styles, such as `<style>` or `<link rel="stylesheet">`.
+Тіньовий DOM може включати в себе стилі, як то `<style>` чи `<link rel="stylesheet">`.
 
-Local styles can affect:
-- shadow tree,
-- shadow host with `:host` and `:host()` pseudoclasses,
-- slotted elements (coming from light DOM), `::slotted(selector)` allows to select  slotted elements themselves, but not their children.
+Локальні стилі можуть впливати на:
+- тіньове дерево,
+- тіньовий хост з псевдокласами `:host` та `:host()`,
+- елементи(приходять зі світлого DOM), `::slotted(selector)` дозволяє обрати лише їх, без дочірніх елементів.
 
-Document styles can affect:
-- shadow host (as it lives in the outer document)
-- slotted elements and their contents (as that's also in the outer document)
+Стилі документу можуть впливати на:
+- тіньовий хост (через його перебування в зовнішньому документі)
+- елементи та їх вміст (також через перебування в зовнішньому документі)
 
-When CSS properties conflict, normally document styles have precedence, unless the property is labelled as `!important`. Then local styles have precedence.
+Коли CSS властивості суперечать одна одній, зазвичай стилі документу мають перевагу, якщо дана властивість не позначена як `!important`. Тоді перевага надається локальним стилям.
 
-CSS custom properties pierce through shadow DOM. They are used as "hooks" to style the component:
+CSS кастомні властивості пронизують тіньовий DOM. Вони використовуються в якості хуків, аби стилізувати компонент:
 
-1. The component uses a custom CSS property to style key elements, such as `var(--component-name-title, <default value>)`.
-2. Component author publishes these properties for developers, they are same important as other public component methods.
-3. When a developer wants to style a title, they assign `--component-name-title` CSS property for the shadow host or above.
-4. Profit!
+1. Компонент використовує кастомну CSS властивість задля стилізації ключових елементів, таких як `var(--component-name-title, <default value>)`.
+2. Автор компоненту робить ці властивості публічними для розробників, вони так само важливі як й інші публічні методи компоненту.
+3. Коли розробник хоче стилізувати заголовок, вони присвоюють CSS властивість `--component-name-title` тіньовому хосту або рівню вище.
+4. Профіт!
