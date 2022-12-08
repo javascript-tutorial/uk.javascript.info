@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-57-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-58-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -151,6 +151,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     </tr>
     <tr>
       <td align="center"><a href="https://github.com/AndruhaMan"><img src="https://avatars.githubusercontent.com/u/25157075?v=4?s=70" width="70px;" alt="AndruhaMan"/><br /><sub><b>AndruhaMan</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AAndruhaMan" title="Bug reports">🐛</a></td>
+      <td align="center"><a href="https://github.com/SamGreenberg"><img src="https://avatars.githubusercontent.com/u/22919988?v=4?s=70" width="70px;" alt="SamGreenberg"/><br /><sub><b>SamGreenberg</b></sub></a><br /><a href="#translation-SamGreenberg" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
