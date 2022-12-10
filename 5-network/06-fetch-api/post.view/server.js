@@ -46,7 +46,7 @@ function accept(req, res) {
 }
 
 
-// ------ запустить сервер -------
+// ------ запустити сервер -------
 
 if (!module.parent) {
   http.createServer(accept).listen(8080);
