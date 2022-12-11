@@ -10,7 +10,7 @@
 - Між двома символами в рядку, де один є буквенним символом `pattern:\w`, а інший -- ні.
 - В кінці рядка, якщо його останній символ представляє собою буквенний символ `pattern:\w`.
 
-Наприклад, регулярний вираз `pattern:\bJava\b` буде знайдено в `subject:Hello, Java!`, де `subject:Java` - окреме слово, але не буде знайдено в `subject:Hello, JavaScript!`.
+Наприклад, регулярний вираз `pattern:\bJava\b` буде знайдено в `subject:Hello, Java!`, де `subject:Java` -- окреме слово, але не буде знайдено в `subject:Hello, JavaScript!`.
 
 ```js run
 alert( "Hello, Java!".match(/\bJava\b/) ); // Java
