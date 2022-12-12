@@ -1,33 +1,33 @@
-# Word boundary: \b
+# Межа слова: \b
 
-A word boundary `pattern:\b` is a test, just like `pattern:^` and `pattern:$`.
+Межа слова `pattern:\b` -- це така ж сама перевірка як і `pattern:^` та `pattern:$`.
 
-When the regexp engine (program module that implements searching for regexps) comes across `pattern:\b`, it checks that the position in the string is a word boundary.
+Коли механізм регулярних виразів (програмний модуль, який здійснює пошук регулярних виразів) стикається з `pattern:\b`, він перевіряє, чи є позиція в рядку межею слова.
 
-There are three different positions that qualify as word boundaries:
+Є три різні позиції, які кваліфікуються як межі слова:
 
-- At string start, if the first string character is a word character `pattern:\w`.
-- Between two characters in the string, where one is a word character `pattern:\w` and the other is not.
-- At string end, if the last string character is a word character `pattern:\w`.
+- На початку рядка, якщо його перший символ представляє собою буквенний символ `pattern:\w`.
+- Між двома символами в рядку, де один є буквенним символом `pattern:\w`, а інший -- ні.
+- В кінці рядка, якщо його останній символ представляє собою буквенний символ `pattern:\w`.
 
-For instance, regexp `pattern:\bJava\b` will be found in `subject:Hello, Java!`, where `subject:Java` is a standalone word, but not in `subject:Hello, JavaScript!`.
+Наприклад, регулярний вираз `pattern:\bJava\b` буде знайдено в `subject:Hello, Java!`, де `subject:Java` -- окреме слово, але не буде знайдено в `subject:Hello, JavaScript!`.
 
 ```js run
 alert( "Hello, Java!".match(/\bJava\b/) ); // Java
 alert( "Hello, JavaScript!".match(/\bJava\b/) ); // null
 ```
 
-In the string `subject:Hello, Java!` following positions correspond to `pattern:\b`:
+У рядку `subject:Hello, Java!` наступні позиції будуть відповідати межам слова `pattern:\b`:
 
 ![](hello-java-boundaries.svg)
 
-So, it matches the pattern `pattern:\bHello\b`, because:
+Виходить, що воно відповідає шаблону `pattern:\bHello\b` за наступними критеріями:
 
-1. At the beginning of the string matches the first test `pattern:\b`.
-2. Then matches the word `pattern:Hello`.
-3. Then the test `pattern:\b` matches again, as we're between `subject:o` and a comma.
+1. На початку рядка відповідає першій перевірці `pattern:\b`.
+2. Потім відповідає цілому слову `pattern:Hello`.
+3. І, врешті-решт, перевірка `pattern:\b` також збігається, оскільки ми знаходимось між символом `subject:o` і комою.
 
-So the pattern `pattern:\bHello\b` would match, but not `pattern:\bHell\b` (because there's no word boundary after `l`) and not `Java!\b` (because the exclamation sign is not a wordly character `pattern:\w`, so there's no word boundary after it).
+Отже, шаблон `pattern:\bHello\b` буде збігатися, при цьому, `pattern:\bHell\b` -- ні (оскільки немає закінчення слова після символу `l`), а також не буде збігатися `pattern:Java!\b` (оскільки знак оклику не буквенний символ `pattern:\w`, тому після нього немає й межі слова).
 
 ```js run
 alert( "Hello, Java!".match(/\bHello\b/) ); // Hello
@@ -36,17 +36,17 @@ alert( "Hello, Java!".match(/\bHell\b/) );  // null (no match)
 alert( "Hello, Java!".match(/\bJava!\b/) ); // null (no match)
 ```
 
-We can use `pattern:\b` not only with words, but with digits as well.
+Ми можемо використовувати `pattern:\b` не тільки зі словами, а й з цифрами.
 
-For example, the pattern `pattern:\b\d\d\b` looks for standalone 2-digit numbers. In other words, it looks for 2-digit numbers that are surrounded by characters different from `pattern:\w`, such as spaces or punctuation (or text start/end).
+Наприклад, шаблон `pattern:\b\d\d\b` шукає окремі двозначні числа. Іншими словами, він шукає двозначні числа, які оточені символами, відмінними від буквенних `pattern:\w`, такі як пробіли чи знаки пунктуації (чи початок/кінець тексту).
 
 ```js run
 alert( "1 23 456 78".match(/\b\d\d\b/g) ); // 23,78
 alert( "12,34,56".match(/\b\d\d\b/g) ); // 12,34,56
 ```
 
-```warn header="Word boundary `pattern:\b` doesn't work for non-latin alphabets"
-The word boundary test `pattern:\b` checks that there should be `pattern:\w` on the one side from the position and "not `pattern:\w`" - on the other side.
+```warn header="Межа слова `pattern:\b` не працює з алфавітами, відмінними від латинського"
+Перевірка межі слова `pattern:\b` звіряє чи є `pattern:\w` з однієї сторони і "не `pattern:\w`" - з іншої.
 
-But `pattern:\w` means a latin letter `a-z` (or a digit or an underscore), so the test doesn't work for other characters, e.g. cyrillic letters or hieroglyphs.
+Але `pattern:\w` позначає латинську літеру `a-z` (або цифру чи нижнє підкреслення), тому перевірка не працює для інших символів, наприклад, кирилиці чи ієрогліфів.
 ```
