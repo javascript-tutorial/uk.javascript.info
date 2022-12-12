@@ -541,6 +541,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "vitaliimalynka",
+      "name": "Vitalii Malynka",
+      "avatar_url": "https://avatars.githubusercontent.com/u/68515525?v=4",
+      "profile": "http://linkedin.com/in/malynkavit",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitConvention": "angular"
