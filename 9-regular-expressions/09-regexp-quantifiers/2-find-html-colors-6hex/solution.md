@@ -1,10 +1,10 @@
-We need to look for `#` followed by 6 hexadecimal characters.
+Нам потрбіно знайти символ `#` за яким слідують 6 шістнадцяткових символів.
 
-A hexadecimal character can be described as `pattern:[0-9a-fA-F]`. Or if we use the `pattern:i` flag, then just  `pattern:[0-9a-f]`.
+Шістнадцятковий символ можна описати як `pattern:[0-9a-fA-F]`. Або, якщо застосувати прапорець `pattern:i` , то запис скоротиться до `pattern:[0-9a-f]`.
 
-Then we can look for 6 of them using the quantifier `pattern:{6}`.
+Далі ми позначимо за допомогою квантифікатора, що нам потрібно саме 6 таких шістнадцяткових символів `pattern:{6}`.
 
-As a result, we have the regexp: `pattern:/#[a-f0-9]{6}/gi`.
+І у результаті, отримаємо такий регулярний вираз: `pattern:/#[a-f0-9]{6}/gi`.
 
 ```js run
 let regexp = /#[a-f0-9]{6}/gi;
@@ -14,18 +14,17 @@ let str = "color:#121212; background-color:#AA00ef bad-colors:f#fddee #fd2"
 alert( str.match(regexp) );  // #121212,#AA00ef
 ```
 
-The problem is that it finds the color in longer sequences:
-
+Проблема в тому, що вищевказаний регулярний вираз знаходитиме код кольору навіть у довших послідовностях.
 ```js run
 alert( "#12345678".match( /#[a-f0-9]{6}/gi ) ) // #123456
 ```
 
-To fix that, we can add `pattern:\b` to the end:
+Щоб виправити це, ми додамо `pattern:\b` на кінці виразу:
 
 ```js run
-// color
+// колір
 alert( "#123456".match( /#[a-f0-9]{6}\b/gi ) ); // #123456
 
-// not a color
+// не колір
 alert( "#12345678".match( /#[a-f0-9]{6}\b/gi ) ); // null
 ```
