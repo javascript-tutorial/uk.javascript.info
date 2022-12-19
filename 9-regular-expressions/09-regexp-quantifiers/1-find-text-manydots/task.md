@@ -10,5 +10,5 @@ importance: 5
 
 ```js
 let regexp = /your regexp/g;
-alert( "Hello!... How goes?.....".match(regexp) ); // ..., .....
+alert( "Привіт!... Як справи?.....".match(regexp) ); // ..., .....
 ```
