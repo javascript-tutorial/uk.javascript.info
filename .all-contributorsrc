@@ -550,6 +550,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "MrsMelnychenko",
+      "name": "Mariana Melnychenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/110090508?v=4",
+      "profile": "https://github.com/MrsMelnychenko",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitConvention": "angular"
