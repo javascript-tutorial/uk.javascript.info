@@ -1,169 +1,169 @@
-# Sets and ranges [...]
+# Набори та діапазони [...]
 
-Several characters or character classes inside square brackets `[…]` mean to "search for any character among given".
+Декільки символів, або класи символів всередині квадратних дужок `[…]` означають "шукати будь-який символ з-поміж заданих".
 
-## Sets
+## Набори
 
-For instance, `pattern:[eao]` means any of the 3 characters: `'a'`, `'e'`, or `'o'`.
+До прикладу, `pattern:[eao]` означає будь-який з трьох символів: `'a'`, `'e'`, or `'o'`.
 
-That's called a *set*. Sets can be used in a regexp along with regular characters:
+У такий спосіб записується так званий *набір*. Набір може використовуватись в регулярних виразах разом зі звичайними символами:
 
 ```js run
-// find [t or m], and then "op"
+// знайти [t або m], а потім "op"
 alert( "Mop top".match(/[tm]op/gi) ); // "Mop", "top"
 ```
 
-Please note that although there are multiple characters in the set, they correspond to exactly one character in the match.
+Зверніть увагу, що незважаючи на те, що в наборі вказано два символи, в результаті є співпадіння лише по одному з них.
 
-So the example below gives no matches:
+Тож нижченаведений приклад не знайде співпадінь:
 
 ```js run
-// find "V", then [o or i], then "la"
+// знайти "V", потім [o чи i], потім "la"
 alert( "Voila".match(/V[oi]la/) ); // null, no matches
 ```
 
-The pattern searches for:
+Шаблон шукає:
 
 - `pattern:V`,
-- then *one* of the letters `pattern:[oi]`,
-- then `pattern:la`.
+- потім *одна* з літер набору `pattern:[oi]`,
+- потім `pattern:la`.
 
-So there would be a match for `match:Vola` or `match:Vila`.
+Результатом такого пошуку могли б стати варіанти `match:Vola` або `match:Vila`.
 
-## Ranges
+## Діапазони
 
-Square brackets may also contain *character ranges*.
+Квадратні дужки також можуть містити *діапазони символів*.
 
-For instance, `pattern:[a-z]` is a character in range from `a` to `z`, and `pattern:[0-5]` is a digit from `0` to `5`.
+До прикладу, `pattern:[a-z]` шукатиме символу в діапазоні від `a` до `z`, а `pattern:[0-5]` дорівнює цифрам в діапазоні від `0` до `5`.
 
-In the example below we're searching for `"x"` followed by two digits or letters from `A` to `F`:
+В нижченаведеному прикладі ми шукатимемо літеру `"x"` за якою слідують дві цифри, або літери від `A` до `F`:
 
 ```js run
 alert( "Exception 0xAF".match(/x[0-9A-F][0-9A-F]/g) ); // xAF
 ```
 
-Here `pattern:[0-9A-F]` has two ranges: it searches for a character that is either a digit from `0` to `9` or a letter from `A` to `F`.
+Тут `pattern:[0-9A-F]` має в собі одразу два діапазони: він шукає символ, який є або цифрою від `0` до `9` , або літерою від `A` до `F`.
 
-If we'd like to look for lowercase letters as well, we can add the range `a-f`: `pattern:[0-9A-Fa-f]`. Or add the flag `pattern:i`.
+Якби ми захотіли шукати літери не тільки верхнього, а й нижнього регістру, ми могли б додати діапазон `a-f`: `pattern:[0-9A-Fa-f]`. Або додати флаг `pattern:i`.
 
-We can also use character classes inside `[…]`.
+Крім того, всередині `[…]` ми можемо використовувати символьні класи.
 
-For instance, if we'd like to look for a wordly character `pattern:\w` or a hyphen `pattern:-`, then the set is `pattern:[\w-]`.
+До прикладу, якщо ми захочемо знайти символ "слова"  `pattern:\w` , або дефіс `pattern:-`, набір виглядатиме наступним чином `pattern:[\w-]`.
 
-Combining multiple classes is also possible, e.g. `pattern:[\s\d]` means "a space character or a digit".
+Комбінувати декілька класів теж можливо, наприклад `pattern:[\s\d]` означає "пробіл, або цифра".
 
-```smart header="Character classes are shorthands for certain character sets"
-For instance:
+```smart header="Символьні класи це лише скорочення для деяких наборів символів"
+До прикладу:
 
-- **\d** -- is the same as `pattern:[0-9]`,
-- **\w** -- is the same as `pattern:[a-zA-Z0-9_]`,
-- **\s** -- is the same as `pattern:[\t\n\v\f\r ]`, plus few other rare Unicode space characters.
+- **\d** -- це те саме, що й `pattern:[0-9]`,
+- **\w** -- це те саме, що й `pattern:[a-zA-Z0-9_]`,
+- **\s** -- це те саме, що й `pattern:[\t\n\v\f\r ]`, плюс декілька інших рідкісних пробільних символів Unicode.
 ```
 
-### Example: multi-language \w
+### Приклад: \w в інших мовах світу
 
-As the character class `pattern:\w` is a shorthand for `pattern:[a-zA-Z0-9_]`, it can't find Chinese hieroglyphs, Cyrillic letters, etc.
+Оскільки символьний клас `pattern:\w` це лише скорочений запис `pattern:[a-zA-Z0-9_]`, він не зможе знайти китайські ієрогліфи, літери кирилицею тощо.
 
-We can write a more universal pattern, that looks for wordly characters in any language. That's easy with Unicode properties: `pattern:[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]`.
+Існує спосіб написати більш універсальний шаблон, що включатиме в себе буквенні символи будь-якої мови світу. Це легко реалізувати завдяки властивостям Unicode: `pattern:[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]`.
 
-Let's decipher it. Similar to `pattern:\w`, we're making a set of our own that includes characters with following Unicode properties:
+Давайте розшифруємо цей шаблон. Подібно до `pattern:\w`, ми створюємо свій діапазон, який включає в себе символи з наступними властивостями Unicode:
 
-- `Alphabetic` (`Alpha`) - for letters,
-- `Mark` (`M`) - for accents,
-- `Decimal_Number` (`Nd`) - for digits,
-- `Connector_Punctuation` (`Pc`) - for the underscore `'_'` and similar characters,
-- `Join_Control` (`Join_C`) - two special codes `200c` and `200d`, used in ligatures, e.g. in Arabic.
+- `Alphabetic` (`Alpha`) - для літер,
+- `Mark` (`M`) - для акцентів,
+- `Decimal_Number` (`Nd`) - для цифр,
+- `Connector_Punctuation` (`Pc`) - для нижнього підкреслення `'_'` і тому подібних символів,
+- `Join_Control` (`Join_C`) - два спеціальних коди `200c` та `200d`, які використовуються у лігатурах, зокрема в арабській мові.
 
-An example of use:
+Шаблон в дії:
 
 ```js run
 let regexp = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}]/gu;
 
 let str = `Hi 你好 12`;
 
-// finds all letters and digits:
+// знайти всі літери та цифри:
 alert( str.match(regexp) ); // H,i,你,好,1,2
 ```
 
-Of course, we can edit this pattern: add Unicode properties or remove them. Unicode properties are covered in more details in the article <info:regexp-unicode>.
+Звичайно, ми можемо редагувати вищенаведений шаблон: додавати Unicode властивості, або видаляти їх. Дізнатись більше про Unicode властивості можна за посиланням <info:regexp-unicode>.
 
-```warn header="Unicode properties aren't supported in IE"
-Unicode properties `pattern:p{…}` are not implemented in IE. If we really need them, we can use library [XRegExp](http://xregexp.com/).
+```warn header="Internet Explorer не підтримує Unicode властивості"
+Unicode властивості `pattern:p{…}` недоступні у Internet Explorer. Втім, якщо вони нам все ж потрібні, ми можемо скористатись бібліотекою [XRegExp](http://xregexp.com/).
 
-Or just use ranges of characters in a language that interests us, e.g.  `pattern:[а-я]` for Cyrillic letters.
+або просто вказати діапазон потрібних нам символів певною мовою, наприклад `pattern:[а-я]` для літер кирилицею.
 ```
 
-## Excluding ranges
+## Діапазони виключень
 
-Besides normal ranges, there are "excluding" ranges that look like `pattern:[^…]`.
+Окрім звичайних діапазонів, існують діапазони "виключень" які виглядають наступним чином: `pattern:[^…]`.
 
-They are denoted by a caret character `^` at the start and match any character *except the given ones*.
+Вони відрізняються символом каретки `^` на початку і знаходять будь-який символ *окрім вказаних в діапазоні*.
 
-For instance:
+До прикладу:
 
-- `pattern:[^aeyo]` -- any character except  `'a'`, `'e'`, `'y'` or `'o'`.
-- `pattern:[^0-9]` -- any character except a digit, the same as `pattern:\D`.
-- `pattern:[^\s]` -- any non-space character, same as `\S`.
+- `pattern:[^aeyo]` -- будь-який символ окрім  `'a'`, `'e'`, `'y'` or `'o'`.
+- `pattern:[^0-9]` -- будь-який символ окрім цифр, так само як і `pattern:\D`.
+- `pattern:[^\s]` -- будь-який не пробільний символ `\S`.
 
-The example below looks for any characters except letters, digits and spaces:
+Нижченаведений приклад шукає будь-який символ окрім літер латиницею, цифр та пробільних символів:
 
 ```js run
-alert( "alice15@gmail.com".match(/[^\d\sA-Z]/gi) ); // @ and .
+alert( "alice15@gmail.com".match(/[^\d\sA-Z]/gi) ); // @ та .
 ```
 
-## Escaping in […]
+## Екранування всередині […]
 
-Usually when we want to find exactly a special character, we need to escape it like `pattern:\.`. And if we need a backslash, then we use `pattern:\\`, and so on.
+Зазвичай, коли ми хочемо знайти один зі спецсимволів, нам потрібно екранувати його наступним чином `pattern:\.`. Тобто, якщо нам потрібна зворотня коса риска, ми маємо писати `pattern:\\`, і  так далі.
 
-In square brackets we can use the vast majority of special characters without escaping:
+В квадратних дужках ми можемо використовувати велику кількість спецсимволів без екранування:
 
-- Symbols `pattern:. + ( )` never need escaping.
-- A hyphen `pattern:-` is not escaped in the beginning or the end (where it does not define a range).
-- A caret `pattern:^` is only escaped in the beginning (where it means exclusion).
-- The closing square bracket `pattern:]` is always escaped (if we need to look for that symbol).
+- Символ `pattern:. + ( )` не потребує екранування.
+- Дефіс `pattern:-` не потребує екранування на початку, або в кінці (тобто коли не може означати діапазон).
+- Каретка `pattern:^` екранується лише на початку (без екранування означає набір символів-виключень).
+- Закриваюча квадратна дужка `pattern:]` завжди потребує екранування (у випадках, коли нам потрібно знайти цей символ).
 
-In other words, all special characters are allowed without escaping, except when they mean something for square brackets.
+Інакше кажучи, всі спецсимволи можна використовувати без екранування тоді, коли вони не мають додаткового значення в квадратних дужках.
 
-A dot `.` inside square brackets means just a dot. The pattern `pattern:[.,]` would look for one of characters: either a dot or a comma.
+Крапка `.` всередині квадратних дужок означає просто крапку. Шаблон `pattern:[.,]` шукатиме на один з двох символів, або крапку, або кому.
 
-In the example below the regexp `pattern:[-().^+]` looks for one of the characters `-().^+`:
+В нижченаведеному прикладі регулярний вираз `pattern:[-().^+]` шукає один з вказаних символів `-().^+`:
 
 ```js run
-// No need to escape
+// Не потрібно екранувати
 let regexp = /[-().^+]/g;
 
-alert( "1 + 2 - 3".match(regexp) ); // Matches +, -
+alert( "1 + 2 - 3".match(regexp) ); // Знаходить +, -
 ```
 
-...But if you decide to escape them "just in case", then there would be no harm:
+...Але якщо ви вирішите все ж таки екранувати їх, "про всяк випадок", гірше від того не буде:
 
 ```js run
-// Escaped everything
+// Всі символи екрановані
 let regexp = /[\-\(\)\.\^\+]/g;
 
-alert( "1 + 2 - 3".match(regexp) ); // also works: +, -
+alert( "1 + 2 - 3".match(regexp) ); // так само находить: +, -
 ```
 
-## Ranges and flag "u"
+## Діапазони і прапорець "u"
 
-If there are surrogate pairs in the set, flag `pattern:u` is required for them to work correctly.
+Якщо в діапазоні є сурогатні пари, для коректної роботи регулярного виразу, прапорець `pattern:u` є обов'язковим.
 
-For instance, let's look for `pattern:[𝒳𝒴]` in the string `subject:𝒳`:
+До прикладу, давайте знайдемо `pattern:[𝒳𝒴]` у рядку `subject:𝒳`:
 
 ```js run
-alert( '𝒳'.match(/[𝒳𝒴]/) ); // shows a strange character, like [?]
-// (the search was performed incorrectly, half-character returned)
+alert( '𝒳'.match(/[𝒳𝒴]/) ); // виводить дивний символ, схожий на [?]
+// (пошук було виконано некореткно, повернуто тільки половину символу)
 ```
 
-The result is incorrect, because by default regular expressions "don't know" about surrogate pairs.
+Результат є некоректним, оскільки типово регулярні вирази "не знають" про сурогатні пари.
 
-The regular expression engine thinks that `[𝒳𝒴]` -- are not two, but four characters:
-1. left half of `𝒳` `(1)`,
-2. right half of `𝒳` `(2)`,
-3. left half of `𝒴` `(3)`,
-4. right half of `𝒴` `(4)`.
+Регулярний вираз сприймає `[𝒳𝒴]` -- не як два, а як чотири символи:
+1. ліва половина `𝒳` `(1)`,
+2. права половина `𝒳` `(2)`,
+3. ліва половина `𝒴` `(3)`,
+4. права половина `𝒴` `(4)`.
 
-We can see their codes like this:
+Якщо вивести їх кодове значення ми побачимо наступне:
 
 ```js run
 for(let i=0; i<'𝒳𝒴'.length; i++) {
@@ -171,27 +171,27 @@ for(let i=0; i<'𝒳𝒴'.length; i++) {
 };
 ```
 
-So, the example above finds and shows the left half of `𝒳`.
+Отже, вищенаведений приклад знайшов і вивів ліву половину `𝒳`.
 
-If we add flag `pattern:u`, then the behavior will be correct:
+Якщо ми додамо прапорець `pattern:u`, то поведінка буде коректною:
 
 ```js run
 alert( '𝒳'.match(/[𝒳𝒴]/u) ); // 𝒳
 ```
 
-The similar situation occurs when looking for a range, such as `[𝒳-𝒴]`.
+Подібна ситуація складається коли ми шукаємо в діапазоні, наприклад `[𝒳-𝒴]`.
 
-If we forget to add flag `pattern:u`, there will be an error:
+Якщо ми забудемо додати прапорець `pattern:u`, то отримаємо помилку:
 
 ```js run
 '𝒳'.match(/[𝒳-𝒴]/); // Error: Invalid regular expression
 ```
 
-The reason is that without flag `pattern:u` surrogate pairs are perceived as two characters, so `[𝒳-𝒴]` is interpreted as `[<55349><56499>-<55349><56500>]` (every surrogate pair is replaced with its codes). Now it's easy to see that the range `56499-55349` is invalid: its starting code `56499` is greater than the end `55349`. That's the formal reason for the error.
+Причина в тому, що без прапорцю `pattern:u` сурогатні пари сприймаються як два окремих символи, тобто `[𝒳-𝒴]` обробляються як `[<55349><56499>-<55349><56500>]` (кожна сурогатна пара замінюється на набір кодів). Таким чином, ми бачимо, що діапазон `56499-55349` є некоректним: його початковий номер `56499` більший за останній `55349`. Це і є причиною помилки.
 
-With the flag `pattern:u` the pattern works correctly:
+З прапорцем `pattern:u` шаблон працює коректно:
 
 ```js run
-// look for characters from 𝒳 to 𝒵
+// шукає символи від 𝒳 до 𝒵
 alert( '𝒴'.match(/[𝒳-𝒵]/u) ); // 𝒴
 ```

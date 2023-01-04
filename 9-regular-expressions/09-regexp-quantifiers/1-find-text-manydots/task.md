@@ -2,13 +2,13 @@ importance: 5
 
 ---
 
-#  How to find an ellipsis "..." ?
+#  Як знайти розділовий знак три крапки "..." ?
 
-Create a regexp to find ellipsis: 3 (or more?) dots in a row.
+Створіть регулярний вираз, який знайде розділовий знак три крапки: 3 (чи навіть більше?) крапок поспіль.
 
-Check it:
+Перевірте:
 
 ```js
 let regexp = /your regexp/g;
-alert( "Hello!... How goes?.....".match(regexp) ); // ..., .....
+alert( "Привіт!... Як справи?.....".match(regexp) ); // ..., .....
 ```

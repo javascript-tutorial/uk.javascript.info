@@ -1,9 +1,9 @@
 
-Solution:
+Відповідь:
 
 ```js run
 let regexp = /\.{3,}/g;
-alert( "Hello!... How goes?.....".match(regexp) ); // ..., .....
+alert( "Привіт!... Як справи?.....".match(regexp) ); // ..., .....
 ```
 
-Please note that the dot is a special character, so we have to escape it and insert as `\.`.
+Зауважте, що крапка це спецсимвол, тож потребує екранування за допомогою `\.`.
