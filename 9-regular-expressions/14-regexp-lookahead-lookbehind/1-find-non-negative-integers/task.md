@@ -1,12 +1,12 @@
-# Find non-negative integers
+# Знайдіть цілі невід'ємні числа
 
-There's a string of integer numbers.
+Дано рядок з цілих чисел.
 
-Create a regexp that looks for only non-negative ones (zero is allowed).
+Напишіть регулярний вираз, який знаходить тільки цілі невід'ємні числа (нуль допускається).
 
-An example of use:
+Приклад використання:
 ```js
-let regexp = /your regexp/g;
+let regexp = /ваш регулярний вираз/g;
 
 let str = "0 12 -5 123 -18";
 
