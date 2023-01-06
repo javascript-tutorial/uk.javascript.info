@@ -1,9 +1,8 @@
+Регулярний вираз для цілого числа `pattern:\d+`.
 
-The regexp for an integer number is `pattern:\d+`.
+Ми можемо виключити від'ємні числа попередньо написавши регулярний вираз для негативного перегляду назад: `pattern:(?<!-)\d+`.
 
-We can exclude negatives by prepending it with the negative lookbehind: `pattern:(?<!-)\d+`.
-
-Although, if we try it now, we may notice one more "extra" result:
+Хоча, випробувавши його, ми побачимо одне "екстра" співпадіння:
 
 ```js run
 let regexp = /(?<!-)\d+/g;
@@ -13,11 +12,11 @@ let str = "0 12 -5 123 -18";
 console.log( str.match(regexp) ); // 0, 12, 123, *!*8*/!*
 ```
 
-As you can see, it matches `match:8`, from `subject:-18`. To exclude it, we need to ensure that the regexp starts matching a number not from the middle of another (non-matching) number.
+Як ви бачите, шаблон знаходить `match:8`, у `subject:-18`. Щоб виключит і його, нам необхідно переконатись, що регулярний вираз починає пошук не з середини іншого не піходящого числа.
 
-We can do it by specifying another negative lookbehind: `pattern:(?<!-)(?<!\d)\d+`. Now `pattern:(?<!\d)` ensures that a match does not start after another digit, just what we need.
+Ми можемо це реалізувати вказавши додатковий вираз для негативного перегляду назад: `pattern:(?<!-)(?<!\d)\d+`. Зараз `pattern:(?<!\d)` перевіряє, щоб пошук не починався одразу після іншого числа, як нам і було потрібно.
 
-We can also join them into a single lookbehind here:
+Ми можемо об'єднати вирази в один таким чином:
 
 ```js run
 let regexp = /(?<![-\d])\d+/g;
