@@ -1,134 +1,134 @@
-# Lookahead and lookbehind
+# Перегляд уперед та назад
 
-Sometimes we need to find only those matches for a pattern that are followed or preceded by another pattern.
+Іноді, нам потрібно знайти тільки такі співпадіння з шаблоном, за якими слідує, або яким передує інший шаблон.
 
-There's a special syntax for that, called "lookahead" and "lookbehind", together referred to as "lookaround".
+Для цього існують спеціальні синтаксичні конструкції, котрі називається "перегляд уперед" та "перегляд назад".
 
-For the start, let's find the price from the string like `subject:1 turkey costs 30€`. That is: a number, followed by `subject:€` sign.
+Для початку, давайте знайдемо ціну у рядку `subject:1 індичка коштує 30€`. Маємо: число, за яким йде символ `subject:€`.
 
-## Lookahead
+## Перегляд уперед
 
-The syntax is: `pattern:X(?=Y)`, it means "look for `pattern:X`, but match only if followed by `pattern:Y`". There may be any pattern instead of `pattern:X` and `pattern:Y`.
+Синтаксис виглядає наступнм чином: `pattern:X(?=Y)`, це означає "шукай `pattern:X`, але вважай його співпадінням, тільки якщо за ним слідує `pattern:Y`". Замість `pattern:X` та `pattern:Y` можуть бути будь-які інші шаблони.
 
-For an integer number followed by `subject:€`, the regexp will be `pattern:\d+(?=€)`:
+Для цілого числа, за яким слідує `subject:€`, регулярний вираз виглядатиме наступним чином `pattern:\d+(?=€)`:
 
 ```js run
-let str = "1 turkey costs 30€";
+let str = "1 індичка коштує 30€";
 
-alert( str.match(/\d+(?=€)/) ); // 30, the number 1 is ignored, as it's not followed by €
+alert( str.match(/\d+(?=€)/) ); // 30, число 1 ігнорується, оскільки після нього не стоїть символ €
 ```
 
-Please note: the lookahead is merely a test, the contents of the parentheses `pattern:(?=...)` is not included in the result `match:30`.
+Зверніть увагу: Перегляд уперед це свого роду тест, вміст в дужках `pattern:(?=...)` не входить до відображуваного регулярним виразом співпадіння `match:30`.
 
-When we look for `pattern:X(?=Y)`, the regular expression engine finds `pattern:X` and then checks if there's `pattern:Y` immediately after it. If it's not so, then the potential match is skipped, and the search continues.
+Коли ми шукаємо `pattern:X(?=Y)`, регулярний вираз знаходить `pattern:X` і далі перевіряє наявність `pattern:Y` одразу після нього. Якщо це не так, тоді потенційне співпадіння пропускається і регулярний вираз продовжує пошук.
 
-More complex tests are possible, e.g. `pattern:X(?=Y)(?=Z)` means:
+Можливі і більш складні тести, наприклад `pattern:X(?=Y)(?=Z)` означає:
 
-1. Find `pattern:X`.
-2. Check if `pattern:Y` is immediately after `pattern:X` (skip if isn't).
-3. Check if `pattern:Z` is also immediately after `pattern:X` (skip if isn't).
-4. If both tests passed, then the `pattern:X` is a match, otherwise continue searching.
+1. Знайди `pattern:X`.
+2. Перевір, чи `pattern:Y` йде одразу після `pattern:X` (пропускай, якщо це не так).
+3. Перевір, чи `pattern:Z` також йде одразу пысля `pattern:X` (пропускай, якщо це не так).
+4. Якщо обидва тести пройдено, тоді `pattern:X` відповідає умовам пошуку, в інщому випадку - продовжуй пошук.
 
-In other words, such pattern means that we're looking for `pattern:X` followed by `pattern:Y` and `pattern:Z` at the same time.
+Інакше кажучи, такий шаблон означає, що ми шукаємо на `pattern:X` за яким одночасно слідують `pattern:Y` та `pattern:Z`.
 
-That's only possible if patterns `pattern:Y` and `pattern:Z` aren't mutually exclusive.
+Це можливо тільки за умови, якщо шаблон `pattern:Y` та `pattern:Z` не взаємовиключні.
 
-For example, `pattern:\d+(?=\s)(?=.*30)` looks for `pattern:\d+` that is followed by a space `pattern:(?=\s)`, and there's `30` somewhere after it `pattern:(?=.*30)`:
+До прикладу, `pattern:\d+(?=\s)(?=.*30)` шукає на `pattern:\d+` за яким йде пробільний символ `pattern:(?=\s)`, а також `30` десь після нього `pattern:(?=.*30)`:
 
 ```js run
-let str = "1 turkey costs 30€";
+let str = "1 індичка коштує 30€";
 
 alert( str.match(/\d+(?=\s)(?=.*30)/) ); // 1
 ```
 
-In our string that exactly matches the number `1`.
+В нашому рядку цим параметрам повністю відповідає число `1`.
 
-## Negative lookahead
+## Негативний перегляд уперед
 
-Let's say that we want a quantity instead, not a price from the same string. That's a number `pattern:\d+`, NOT followed by `subject:€`.
+Скажімо, ми хочем знайти кількість, а не ціну в тому самому рядку. Тобто, шукаємо число `pattern:\d+`, за якийм НЕ слідує `subject:€`.
 
-For that, a negative lookahead can be applied.
+В такому випадку, доречним буде використання негативного перегляду уперед.
 
-The syntax is: `pattern:X(?!Y)`, it means "search `pattern:X`, but only if not followed by `pattern:Y`".
-
-```js run
-let str = "2 turkeys cost 60€";
-
-alert( str.match(/\d+\b(?!€)/g) ); // 2 (the price is not matched)
-```
-
-## Lookbehind
-
-```warn header="Lookbehind browser compatibility"
-Please Note: Lookbehind is not supported in non-V8 browsers, such as Safari, Internet Explorer.
-```
-
-Lookahead allows to add a condition for "what follows".
-
-Lookbehind is similar, but it looks behind. That is, it allows to match a pattern only if there's something before it.
-
-The syntax is:
-- Positive lookbehind: `pattern:(?<=Y)X`, matches `pattern:X`, but only if there's  `pattern:Y` before it.
-- Negative lookbehind: `pattern:(?<!Y)X`, matches `pattern:X`, but only if there's no `pattern:Y` before it.
-
-For example, let's change the price to US dollars. The dollar sign is usually before the number, so to look for `$30` we'll use `pattern:(?<=\$)\d+` -- an amount preceded by `subject:$`:
+Синатксис виглядає наступним чином: `pattern:X(?!Y)`, і означає "шукай `pattern:X`, але за умови, що після нього не йде `pattern:Y`".
 
 ```js run
-let str = "1 turkey costs $30";
+let str = "2 індички коштують 60€";
 
-// the dollar sign is escaped \$
-alert( str.match(/(?<=\$)\d+/) ); // 30 (skipped the sole number)
+alert( str.match(/\d+\b(?!€)/g) ); // 2 (ціна не відповідає вимогам шаблону і не відображається в результаті)
 ```
 
-And, if we need the quantity -- a number, not preceded by `subject:$`, then we can use a negative lookbehind `pattern:(?<!\$)\d+`:
+## Перегляд назад
 
-```js run
-let str = "2 turkeys cost $60";
-
-alert( str.match(/(?<!\$)\b\d+/g) ); // 2 (the price is not matched)
+```warn header="Сумісність браузерів з переглядом назад"
+Зверніть увагу: Перегляд назад не підтримується в браузерах з відміннимим від V8 двигунами, зокрема Safari, Internet Explorer.
 ```
 
-## Capturing groups
+Перегляд уперед дозволяє додати умову на кшталт "те, що слідує після".
 
-Generally, the contents inside lookaround parentheses does not become a part of the result.
+Перегляд назад подібний, але дивиться у зворотньому напрямку. Таким чином, він виводить результат, тільки якщо співпадає і шаблон і те, що йде до нього.
 
-E.g. in the pattern `pattern:\d+(?=€)`, the `pattern:€` sign doesn't get captured as a part of the match. That's natural: we look for a number `pattern:\d+`, while `pattern:(?=€)` is just a test that it should be followed by `subject:€`.
+Синтаксис наступний:
+- Позитивний перегляд назад: `pattern:(?<=Y)X`, співпадає з `pattern:X`, тільки за умови, якщо перед ним є `pattern:Y`.
+- Негативний перегляд назад: `pattern:(?<!Y)X`, співпадає `pattern:X`, тільки за умови, якщо перед ним немає `pattern:Y`.
 
-But in some situations we might want to capture the lookaround expression as well, or a part of it. That's possible. Just wrap that part into additional parentheses.
-
-In the example below the currency sign `pattern:(€|kr)` is captured, along with the amount:
+Наприклад, змінимо ціну з евро на американські долари. Знак долару зазвичай стоїть перед числом, тому, для пошуку `$30` ми використовуватимемо `pattern:(?<=\$)\d+` -- сума, перед якою є символ `subject:$`:
 
 ```js run
-let str = "1 turkey costs 30€";
-let regexp = /\d+(?=(€|kr))/; // extra parentheses around €|kr
+let str = "1 індичка коштує $30";
+
+// знак долара екрановано \$
+alert( str.match(/(?<=\$)\d+/) ); // 30 (число 1 пропущено через відсутність знаку долару перед ним)
+```
+
+Також, якщо нам потрібна кількість -- число, якому не передує `subject:$`, в такому випадку ми можемо використати негативний перегляд назад `pattern:(?<!\$)\d+`:
+
+```js run
+let str = "2 індички коштують $60";
+
+alert( str.match(/(?<!\$)\b\d+/g) ); // 2 (ціна не спвіпадає з умовами пошуку)
+```
+
+## Дужкові групи
+
+Зазвичай, вміст в дужках перегляду вперед та назад не є частиною співпадіння.
+
+Наприклад, у шаблоні `pattern:\d+(?=€)`, символ `pattern:€` не відображається при виведенні співпадінь. Це нормально: ми шукаємо на число `pattern:\d+`, тоді як `pattern:(?=€)` це лише перевірка на те, чи дійсно за ним йде символ `subject:€`.
+
+Але в деяких ситуаціях ми можемо поребувати виведення вмісту шаблону перегляду вперед та назад, або його частини. Це можливо. Просто огорніть потрібну частину в додаткові круглі дужки.
+
+В нижченаведеному прикладі знак валюти `pattern:(€|kr)` теж відображено у результаті, разом із сумою:
+
+```js run
+let str = "1 індичка коштує 30€";
+let regexp = /\d+(?=(€|kr))/; // додаткові круглі дужки навколо €|kr
 
 alert( str.match(regexp) ); // 30, €
 ```
 
-And here's the same for lookbehind:
+І так само для перегляду назад:
 
 ```js run
-let str = "1 turkey costs $30";
+let str = "1 індичка коштує $30";
 let regexp = /(?<=(\$|£))\d+/;
 
 alert( str.match(regexp) ); // 30, $
 ```
 
-## Summary
+## Підсумок
 
-Lookahead and lookbehind (commonly referred to as "lookaround") are useful when we'd like to match something depending on the context before/after it.
+Перегляд вперед на назад корисні, коли нам потрібно знайти щось, залежно від контексту до чи після потрібного шаблону.
 
-For simple regexps we can do the similar thing manually. That is: match everything, in any context, and then filter by context in the loop.
+Для простих регулярних виразів ми можемо виконати подібну задачу вручну. Тобто: відшукати всі спвіпадіння, у будь-якому контексті, а потім відфільтрувати їх за контекстом за допомогою циклу.
 
-Remember, `str.match` (without flag `pattern:g`) and `str.matchAll` (always) return matches as arrays with `index` property, so we know where exactly in the text it is, and can check the context.
+Пам'ятайте, `str.match` (без флажку `pattern:g`) і `str.matchAll` (всі) повертає співпадіння у вигляді масиву з властивістю `індекс`, тож ми точно знаємо де саме в тексті вони знаходяться і можемо перевірити контекст.
 
-But generally lookaround is more convenient.
+Але загалом перегляд уперед і назад більш підходящі.
 
-Lookaround types:
+Типи переглядів:
 
-| Pattern            | type             | matches |
+| Шаблон            | Тип             | Співпадіння |
 |--------------------|------------------|---------|
-| `X(?=Y)`   | Positive lookahead | `pattern:X` if followed by `pattern:Y` |
-| `X(?!Y)`   | Negative lookahead | `pattern:X` if not followed by `pattern:Y` |
-| `(?<=Y)X` |  Positive lookbehind | `pattern:X` if after `pattern:Y` |
-| `(?<!Y)X` | Negative lookbehind | `pattern:X` if not after `pattern:Y` |
+| `X(?=Y)`   | Позитивний перегляд уперед | `pattern:X` якщо за ним йде `pattern:Y` |
+| `X(?!Y)`   | Негативний перегляд уперед | `pattern:X` якщо за ним не йде `pattern:Y` |
+| `(?<=Y)X` |  Позитивний перегляд назад  | `pattern:X` якщо він йде після `pattern:Y` |
+| `(?<!Y)X` | Негативний перегляд назад | `pattern:X` якщо тільки він не йде після `pattern:Y` |
