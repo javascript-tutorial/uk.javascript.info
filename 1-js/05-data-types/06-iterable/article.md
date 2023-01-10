@@ -223,7 +223,7 @@ alert(arr); // 1,2,3,4,5 (array toString conversion works)
 Array.from(obj[, mapFn, thisArg])
 ```
 
-The optional second argument `mapFn` can be a function that will be applied to each element before adding it to the array, and `thisArg` allows us to set `this` for it.
+Необов'язковий другий аргумент `mapFn` може бути функцією, яка буде застосована до кожного елемента перед додаванням його в масив, і `thisArg` дозволяє нам встановити `this` для нього.
 
 Наприклад:
 
