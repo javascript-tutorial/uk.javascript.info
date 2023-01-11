@@ -1,12 +1,12 @@
-A regexp to search 3-digit color `#abc`: `pattern:/#[a-f0-9]{3}/i`.
+Регулярний вираз для пошуку тризначного коду кольору `#abc`: `pattern:/#[a-f0-9]{3}/i`.
 
-We can add exactly 3 more optional hex digits. We don't need more or less. The color has either 3 or 6 digits.
+Ми можемо додати рівно 3 додаткові шістнадцяткові цифри, не більше й не менше. Колір містить 3 або 6 цифр.
 
-Let's use the quantifier `pattern:{1,2}` for that: we'll have `pattern:/#([a-f0-9]{3}){1,2}/i`.
+Використаємо для цього квантифікатор `pattern:{1,2}`: отримаємо `pattern:/#([a-f0-9]{3}){1,2}/i`.
 
-Here the pattern `pattern:[a-f0-9]{3}` is enclosed in parentheses to apply the quantifier `pattern:{1,2}`.
+В цьому випадку, патерн `pattern:[a-f0-9]{3}` оточений дужками для застосування квантифікатора `pattern:{1,2}`.
 
-In action:
+На прикладі:
 
 ```js run
 let regexp = /#([a-f0-9]{3}){1,2}/gi;
@@ -16,7 +16,7 @@ let str = "color: #3f3; background-color: #AA00ef; and: #abcd";
 alert( str.match(regexp) ); // #3f3 #AA00ef #abc
 ```
 
-There's a minor problem here: the pattern found `match:#abc` in `subject:#abcd`. To prevent that we can add `pattern:\b` to the end:
+Бачимо невелику проблему: патерн знайшов `match:#abc` в `subject:#abcd`. Для запобігання цьому, додамо в кінці `pattern:\b`:
 
 ```js run
 let regexp = /#([a-f0-9]{3}){1,2}\b/gi;

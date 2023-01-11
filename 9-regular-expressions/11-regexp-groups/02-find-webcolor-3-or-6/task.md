@@ -1,14 +1,14 @@
-# Find color in the format #abc or #abcdef
+# Знайти колір у форматі #abc або #abcdef
 
-Write a RegExp that matches colors in the format `#abc` or `#abcdef`. That is: `#` followed by 3 or 6 hexadecimal digits.
+Напишіть регулярний вираз, що знаходить збіг по кольорам у форматі `#abc` або `#abcdef`. Формула є наступною: `#`, за яким знаходяться 3 або 6 шістнадцяткових цифр.
 
-Usage example:
+Приклад використання:
 ```js
-let regexp = /your regexp/g;
+let regexp = /ваш регулярний вираз/g;
 
 let str = "color: #3f3; background-color: #AA00ef; and: #abcd";
 
 alert( str.match(regexp) ); // #3f3 #AA00ef
 ```
 
-P.S. This should be exactly 3 or 6 hex digits. Values with 4 digits, such as `#abcd`, should not match.
+P.S. Має бути саме 3 або 6 шістнадцяткових цифр. Значення з 4 цифрами, такі як `#abcd`, не мають рахуватись за збіг.
