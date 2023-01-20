@@ -1,83 +1,83 @@
-# Catastrophic backtracking
+# Катастрофічний пошук з поверненням
 
-Some regular expressions are looking simple, but can execute a veeeeeery long time, and even "hang" the JavaScript engine.
+Деякі регулярні вирази виглядають простими, але можуть виконуватись дууууууже довгий час, та навіть змусити "зависнути" двигун JavaScript.
 
-Sooner or later most developers occasionally face such behavior. The typical symptom -- a regular expression works fine sometimes, but for certain strings it "hangs", consuming 100% of CPU.
+Рано чи пізно більшість розробників стикаються з подібною ситуацією. Типовий показник – часом регулярний вираз працює добре, але на конкретних рядках він "зависає", споживаючи 100% CPU.
 
-In such case a web-browser suggests to kill the script and reload the page. Not a good thing for sure.
+В такому випадку браузер пропонує зупинити скрипт та перезавантажити сторінку. Не найкращий розвиток подій.
 
-For server-side JavaScript such a regexp may hang the server process, that's even worse. So we definitely should take a look at it.
+Навіть гірше, для серверного JavaScript подібний регулярний вираз може спричинити зависання серверного процесу. Тож варто звернути увагу на цей момент.
 
-## Example
+## Приклад
 
-Let's say we have a string, and we'd like to check if it consists of words `pattern:\w+` with an optional space `pattern:\s?` after each.
+Скажімо, ми маємо рядок і хотіли б перевірити його на наявність слів `pattern:\w+` з необов’язковим пробілом `pattern:\s?` після кожного.
 
-An obvious way to construct a regexp would be to take a word followed by an optional space `pattern:\w+\s?` and then repeat it with `*`.
+Очевидний спосіб сконструювати регулярний вираз – взяти слово, за яким йде необов’язковий пробіл `pattern:\w+\s?`, та прописати повтор `*`.
 
-That leads us to the regexp `pattern:^(\w+\s?)*$`, it specifies zero or more such words, that start at the beginning `pattern:^` and finish at the end `pattern:$` of the line.
+Це приведе нас до регулярного виразу `pattern:^(\w+\s?)*$`, який описує 0+ таких слів, починається з `pattern:^` та закінчується на `pattern:$`.
 
-In action:
+На прикладі:
 
 ```js run
 let regexp = /^(\w+\s?)*$/;
 
-alert( regexp.test("A good string") ); // true
-alert( regexp.test("Bad characters: $@#") ); // false
+alert( regexp.test("Хороший рядок") ); // true
+alert( regexp.test("Погані символи: $@#") ); // false
 ```
 
-The regexp seems to work. The result is correct. Although, on certain strings it takes a lot of time. So long that JavaScript engine "hangs" with 100% CPU consumption.
+Регулярний вираз наче працює. Результат коректний. Та все ж, певні рядки забирають багато часу. Достатньо, аби двигун JavaScript "зависнув", споживаючи 100% CPU.
 
-If you run the example below, you probably won't see anything, as JavaScript will just "hang". A web-browser will stop reacting on events, the UI will stop working (most browsers allow only scrolling). After some time it will suggest to reload the page. So be careful with this:
+Якщо виконати приклад нижче, можливо, ви нічого не побачите, бо JavaScript просто "зависне". Браузер перестане реагувати на події, UI перестане працювати (більшість браузерів лишають лише можливість прокрутки). За деякий час, вам запропонують перезавантажити сторінку. Тож будьте обережними:
 
 ```js run
 let regexp = /^(\w+\s?)*$/;
-let str = "An input string that takes a long time or even makes this regexp hang!";
+let str = "Введений рядок, який оброблятиметься довго або навіть спровокує зависання регулярного виразу!";
 
-// will take a very long time
+// займе дуже багато часу
 alert( regexp.test(str) );
 ```
 
-To be fair, let's note that some regular expression engines can handle such a search effectively, for example V8 engine version starting from 8.8 can do that (so Google Chrome 88 doesn't hang here), while Firefox browser does hang. 
+Чесно кажучи, відмітимо, що деякі двигуни регулярних виразів можуть провести ефективно провести подібний пошук. Наприклад, версія двигуну V8 починаючи з 8.8 здатна на це(тобто Google Chrome 88 не зависне), а Firefox все ж матиме проблеми.
 
-## Simplified example
+## Спрощений приклад
 
-What's the matter? Why does the regular expression hang?
+В чому ж справа? Чому регулярний вираз спричинює зависання?
 
-To understand that, let's simplify the example: remove spaces `pattern:\s?`. Then it becomes `pattern:^(\w+)*$`.
+Аби це зрозуміти, спростимо приклад: приберемо пробіли `pattern:\s?`, отримаємо `pattern:^(\w+)*$`.
 
-And, to make things more obvious, let's replace `pattern:\w` with `pattern:\d`. The resulting regular expression still hangs, for instance:
+Також, для більшої очевидності, замінимо `pattern:\w` на `pattern:\d`. Отриманий регулярний вираз все одно зависає:
 
 ```js run
 let regexp = /^(\d+)*$/;
 
 let str = "012345678901234567890123456789z";
 
-// will take a very long time (careful!)
+// займе дуже багато часу (обережніше!)
 alert( regexp.test(str) );
 ```
 
-So what's wrong with the regexp?
+То що з ним не так?
 
-First, one may notice that the regexp `pattern:(\d+)*` is a little bit strange. The quantifier `pattern:*` looks extraneous. If we want a number, we can use `pattern:\d+`.
+По-перше, помітно, що регулярний вираз `pattern:(\d+)*` є трішки дивним. Квантифікатор `pattern:*` виглядає недоречним. Якщо нам потрібно число, можна використати `pattern:\d+`.
 
-Indeed, the regexp is artificial; we got it by simplifying the previous example. But the reason why it is slow is the same. So let's understand it, and then the previous example will become obvious.
+Дійсно, регулярний вираз is artificial, отриманий після спрощення попереднього прикладу. Але причина повільної роботи лишається тією ж. Зрозуміємо її джерело, тоді й попередній приклад стане очевидним.
 
-What happens during the search of `pattern:^(\d+)*$` in the line `subject:123456789z` (shortened a bit for clarity, please note a non-digit character `subject:z` at the end, it's important), why does it take so long?
+Що коїться під час пошуку `pattern:^(\d+)*$` в рядку `subject:123456789z` (трішки скорочений для ясності, відмітьте нецифровий символ `subject:z` наприкінці, він важливий), чому він триває так довго?
 
-Here's what the regexp engine does:
+Ось що робить двигун регулярних виразів:
 
-1. First, the regexp engine tries to find the content of the parentheses: the number `pattern:\d+`. The plus `pattern:+` is greedy by default, so it consumes all digits:
+1. Для початку, двигун регулярного виразу намагається знайти вміст дужок: число `pattern:\d+`. За замовчуванням, режим `pattern:+` є жадібним, тому він поглинає всі цифри:
 
     ```
     \d+.......
     (123456789)z
     ```
 
-    After all digits are consumed, `pattern:\d+` is considered found (as `match:123456789`).
+    Після поглинання всіх цифр, `pattern:\d+` вважається знайденим (як `match:123456789`).
 
-    Then the star quantifier `pattern:(\d+)*` applies. But there are no more digits in the text, so the star doesn't give anything.
+    Далі, застосовується квантифікатор `pattern:(\d+)*`. В тексті не залишилось цифр, тож зірка нічого не дає.
 
-    The next character in the pattern is the string end `pattern:$`. But in the text we have `subject:z` instead, so there's no match:
+    Наступний символ патерну – кінець рядку `pattern:$`. Але в тексті маємо `subject:z`, тож збігу немає:
 
     ```
                X
@@ -85,16 +85,16 @@ Here's what the regexp engine does:
     (123456789)z
     ```
 
-2. As there's no match, the greedy quantifier `pattern:+` decreases the count of repetitions, backtracks one character back.
+2. Без збігу, жадібний квантифікатор `pattern:+` зменшує кількість повторів та повертається на один символ назад.
 
-    Now `pattern:\d+` takes all digits except the last one (`match:12345678`):
+    Тепер `pattern:\d+` приймає усі цифри, окрім останньої(`match:12345678`):
     ```
     \d+.......
     (12345678)9z
     ```
-3. Then the engine tries to continue the search from the next position (right after `match:12345678`).
+3. Потім двигун намагається продовжити пошук з наступної позиції (одразу після `match:12345678`).
 
-    The star `pattern:(\d+)*` can be applied -- it gives one more match of `pattern:\d+`, the number `match:9`:
+    Можна застосувати `pattern:(\d+)*` -- це дасть ще один збіг для `pattern:\d+`, число `match:9`:
 
     ```
 
@@ -102,7 +102,7 @@ Here's what the regexp engine does:
     (12345678)(9)z
     ```
 
-    The engine tries to match `pattern:$` again, but fails, because it meets `subject:z` instead:
+    Двигун невдало намагається знову шукати збіг для `pattern:$`, натомість зустрічає `subject:z`:
 
     ```
                  X
@@ -111,11 +111,11 @@ Here's what the regexp engine does:
     ```
 
 
-4. There's no match, so the engine will continue backtracking, decreasing the number of repetitions. Backtracking generally works like this: the last greedy quantifier decreases the number of repetitions until it reaches the minimum. Then the previous greedy quantifier decreases, and so on.
+4. Збігу нема, тому двигун продовжить пошук з поверненням, зменшуючи кількість повторень. Зазвичай, це працює наступним чином: останній жадібний квантифікатор зменшує кількість повторень доти, доки не досягнутий мінімум. Потім спрацьовує попередній жадібний квантифікатор, і так далі.
 
-    All possible combinations are attempted. Here are their examples.
+    Ми спробували всі можливі комбінації. Далі – їх приклади.
 
-    The first number `pattern:\d+` has 7 digits, and then a number of 2 digits:
+    Перше число `pattern:\d+` має 7 цифр та двозначне число опісля:
 
     ```
                  X
@@ -123,7 +123,7 @@ Here's what the regexp engine does:
     (1234567)(89)z
     ```
 
-    The first number has 7 digits, and then two numbers of 1 digit each:
+    Перше число має 7 цифр та два одноцифрових числа опісля:
 
     ```
                    X
@@ -131,7 +131,7 @@ Here's what the regexp engine does:
     (1234567)(8)(9)z
     ```
 
-    The first number has 6 digits, and then a number of 3 digits:
+    Перше число має 6 цифр та трицифрове число за ними:
 
     ```
                  X
@@ -139,7 +139,7 @@ Here's what the regexp engine does:
     (123456)(789)z
     ```
 
-    The first number has 6 digits, and then 2 numbers:
+    Перше число має 6 цифр та два числа за ними:
 
     ```
                    X
@@ -147,22 +147,22 @@ Here's what the regexp engine does:
     (123456)(78)(9)z
     ```
 
-    ...And so on.
+    ...І так далі.
 
 
-There are many ways to split a sequence of digits `123456789` into numbers. To be precise, there are <code>2<sup>n</sup>-1</code>, where `n` is the length of the sequence.
+Існує багато шляхів поділу послідовності цифр `123456789` на номери. Казати точно, усього <code>2<sup>n</sup>-1</code>, де `n` - довжина послідовності.
 
-- For `123456789` we have `n=9`, that gives 511 combinations.
-- For a longer sequence with `n=20` there are about one million (1048575) combinations.
-- For `n=30` - a thousand times more (1073741823 combinations).
+- Для `123456789`, маємо `n=9`, що дає 511 комбінацій.
+- Довша послідовність `n=20` дасть приблизно мільйон (1048575) комбінацій.
+- Для `n=30` - в тисячу разів більше (1073741823 комбінацій).
 
-Trying each of them is exactly the reason why the search takes so long.
+Проходження кожною з них і є причиною повільного пошуку.
 
-## Back to words and strings
+## Повертаючись до слів та рядків
 
-The similar thing happens in our first example, when we look for words by pattern `pattern:^(\w+\s?)*$` in the string `subject:An input that hangs!`.
+Подібне відбувається в нашому першому прикладі, коли ми шукаємо слова за патерном `pattern:^(\w+\s?)*$` в рядку `subject:Рядок, що висне!`.
 
-The reason is that a word can be represented as one `pattern:\w+` or many:
+Причина в тому, що слово може бути представлене як один чи кілька `pattern:\w+`:
 
 ```
 (input)
@@ -172,63 +172,63 @@ The reason is that a word can be represented as one `pattern:\w+` or many:
 ...
 ```
 
-For a human, it's obvious that there may be no match, because the string ends with an exclamation sign `!`, but the regular expression expects a wordly character `pattern:\w` or a space `pattern:\s` at the end. But the engine doesn't know that.
+З точки зору людини, збігу не може бути, бо рядок закінчується знаком `!`, але регулярний вираз в кінці очікує символ “слова” `pattern:\w` або пробіл `pattern:\s`. Але двигун цього не знає.
 
-It tries all combinations of how the regexp `pattern:(\w+\s?)*` can "consume" the string, including variants with spaces `pattern:(\w+\s)*` and without them `pattern:(\w+)*` (because spaces `pattern:\s?` are optional). As there are many such combinations (we've seen it with digits), the search takes a lot of time.
+Він перебирає всі комбінації "поглинання" рядку регулярним виразом `pattern:(\w+\s?)*`, включаючи варіанти з пробілами `pattern:(\w+\s)*` та без `pattern:(\w+)*` (бо пробіли `pattern:\s?` необов’язкові). Пошук є тривалим через велику кількість комбінацій (як на прикладі цифр).
 
-What to do?
+Що робити?
 
-Should we turn on the lazy mode?
+Чи варто включати лінивий режим?
 
-Unfortunately, that won't help: if we replace `pattern:\w+` with `pattern:\w+?`, the regexp will still hang. The order of combinations will change, but not their total count.
+Нажаль, це не допоможе: якщо замінити `pattern:\w+` на `pattern:\w+?`, регулярний вираз все одно висне. Зміниться порядок комбінацій, але не загальна кількість.
 
-Some regular expression engines have tricky tests and finite automations that allow to avoid going through all combinations or make it much faster, but most engines don't, and it doesn't always help.
+Деякі двигуни регулярних виразів мають хитро побудовані тести та скінченні автомати, що дозволяють оминути проходження всіма комбінаціями або пришвидшити, але це стосується меншості двигунів та не завжди допомагає.
 
-## How to fix?
+## Як це виправити?
 
-There are two main approaches to fixing the problem.
+Існує два основних підходи до вирішення проблеми.
 
-The first is to lower the number of possible combinations.
+Перший – знизити кількість можливих комбінацій.
 
-Let's make the space non-optional by rewriting the regular expression as `pattern:^(\w+\s)*\w*$` - we'll look for any number of words followed by a space `pattern:(\w+\s)*`, and then (optionally) a final word `pattern:\w*`.
+Зробимо пробіл обов’язковим, переписавши регулярний вираз як `pattern:^(\w+\s)*\w*$` - ми шукатимемо будь-яку кількість слів та пробіл опісля `pattern:(\w+\s)*`, далі (необов’язково) останнє слово `pattern:\w*`.
 
-This regexp is equivalent to the previous one (matches the same) and works well:
+Цей регулярний вираз рівноцінний попередньому (збіг той самий) та працює відмінно:
 
 ```js run
 let regexp = /^(\w+\s)*\w*$/;
-let str = "An input string that takes a long time or even makes this regex hang!";
+let str = "Введений рядок, який оброблятиметься довго або навіть спровокує зависання регулярного виразу!";
 
 alert( regexp.test(str) ); // false
 ```
 
-Why did the problem disappear?
+Чому проблема зникла?
 
-That's because now the space is mandatory.
+Бо тепер пробіл є обов’язковим.
 
-The previous regexp, if we omit the space, becomes `pattern:(\w+)*`, leading to many combinations of `\w+` within a single word
+Попередній регулярний вираз, якщо не врахувати пробіл, стає `pattern:(\w+)*`, призводячи до багатьох комбінацій `\w+` посеред єдиного слова.
 
-So `subject:input` could be matched as two repetitions of `pattern:\w+`, like this:
+Тож `subject:input` може мати збіг у вигляді двох повторень `pattern:\w+`:
 
 ```
 \w+  \w+
 (inp)(ut)
 ```
 
-The new pattern is different: `pattern:(\w+\s)*` specifies repetitions of words followed by a space! The `subject:input` string can't be matched as two repetitions of `pattern:\w+\s`, because the space is mandatory.
+Новий патерн інший: `pattern:(\w+\s)*` описує повторення слів, за якими йде пробіл! Рядок `subject:input` не буде збігом для двох повторень `pattern:\w+\s`, оскільки пробіл є обов’язковим.
 
-The time needed to try a lot of (actually most of) combinations is now saved.
+Час проходження великою кількістю (взагалі-то, більшістю) комбінацій зекономлено.
 
-## Preventing backtracking
+## Запобігання поверненню
 
-It's not always convenient to rewrite a regexp though. In the example above it was easy, but it's not always obvious how to do it.
+Все ж, не завжди зручно переписувати регулярний вираз. Попередній приклад був простим, інші бувають не надто очевидними.
 
-Besides, a rewritten regexp is usually more complex, and that's not good. Regexps are complex enough without extra efforts.
+До того ж, змінений регулярний вираз зазвичай більш складний, що не є добре. Регулярні вирази й так достатньо складні.
 
-Luckily, there's an alternative approach. We can forbid backtracking for the quantifier.
+На щастя, мається альтернативний підхід. Можна заборонити повернення для квантифікатора.
 
-The root of the problem is that the regexp engine tries many combinations that are obviously wrong for a human.
+Корінь проблеми в двигуні регулярного виразу, що пробує багато очевидно невірних (для людини) комбінацій.
 
-E.g. in the regexp `pattern:(\d+)*$` it's obvious for a human, that `pattern:+` shouldn't backtrack. If we replace one `pattern:\d+` with two separate `pattern:\d+\d+`, nothing changes:
+Наприклад, для людини очевидно, що в `pattern:(\d+)*$`, `pattern:+` не потребує пошуку з поверненням. Якщо замінити `pattern:\d+` на два окремих `pattern:\d+\d+`, нічого не зміниться:
 
 ```
 \d+........
@@ -238,81 +238,81 @@ E.g. in the regexp `pattern:(\d+)*$` it's obvious for a human, that `pattern:+` 
 (1234)(56789)!
 ```
 
-And in the original example `pattern:^(\w+\s?)*$` we may want to forbid backtracking in `pattern:\w+`. That is: `pattern:\w+` should match a whole word, with the maximal possible length. There's no need to lower the repetitions count in `pattern:\w+` or to split it into two words `pattern:\w+\w+` and so on.
+Також, можливо, всередині початкового прикладу `pattern:^(\w+\s?)*$` ми б хотіли заборонити пошук з поверненням в `pattern:\w+`. Отже, `pattern:\w+` має знаходити збіг цілому слову, з максимально можливою довжиною. Нема потреби знижувати кількість повторень в `pattern:\w+`, ділити на два слова `pattern:\w+\w+`, і таке інше.
 
-Modern regular expression engines support possessive quantifiers for that. Regular quantifiers become possessive if we add `pattern:+` after them. That is, we use `pattern:\d++` instead of `pattern:\d+` to stop `pattern:+` from backtracking.
+Для цього, сучасні двигуни регулярних виразів підтримують присвійні квантифікатори. Звичайні квантифікатори стають присвійними, якщо після них додати `pattern:+`. Саме так, ми використаємо `pattern:\d++` замість `pattern:\d+`, аби зупинити пошук з поверненням для `pattern:+`.
 
-Possessive quantifiers are in fact simpler than "regular" ones. They just match as many as they can, without any backtracking. The search process without backtracking is simpler.
+Насправді, присвійні квантифікатори є простішими за "звичайні". Вони просто шукають стільки збігів, скільки можуть, без будь-якого повернення. Такий процес пошуку, звичайно, простіший.
 
-There are also so-called "atomic capturing groups" - a way to disable backtracking inside parentheses.
+Також існують так звані "атомні групи захоплення" – спосіб відключити повернення всередині дужок.
 
-...But the bad news is that, unfortunately, in JavaScript they are not supported.
+...Погані новини: нажаль, JavaScript їх не підтримує.
 
-We can emulate them though using a "lookahead transform".
+Замість них можна використати "перетворення переглядом вперед".
 
-### Lookahead to the rescue!
+### Вперед по допомогу!
 
-So we've come to real advanced topics. We'd like a quantifier, such as `pattern:+` not to backtrack, because sometimes backtracking makes no sense.
+Тож, ми підібрались до дійсно передової теми. Нам потрібен квантифікатор, як-то `pattern:+`, без пошуку з поверненням, тому що іноді це не має ніякого сенсу.
 
-The pattern to take as many repetitions of `pattern:\w` as possible without backtracking is: `pattern:(?=(\w+))\1`. Of course, we could take another pattern instead of `pattern:\w`.
+Патерн з максимальною кількістю повторів `pattern:\w` без повернення: `pattern:(?=(\w+))\1`. Звісно, можемо взяти інший патерн замість `pattern:\w`.
 
-That may seem odd, but it's actually a very simple transform.
+Здається дивним, але це дуже просте перетворення.
 
-Let's decipher it:
+Розберемо його:
 
-- Lookahead `pattern:?=` looks forward for the longest word `pattern:\w+` starting at the current position.
-- The contents of parentheses with `pattern:?=...` isn't memorized by the engine, so wrap `pattern:\w+` into parentheses. Then the engine will memorize their contents
-- ...And allow us to reference it in the pattern as `pattern:\1`.
+- Перегляд вперед `pattern:?=` шукає найдовше слово `pattern:\w+`, починаючи з поточної позиції.
+- Вміст дужок з `pattern:?=...` не запам’ятовується двигуном, тож огорнемо дужками `pattern:\w+`. В цьому випадку, двигун запам’ятає вміст дужок.
+- ...Це дозволяє нам посилатись на них всередині патерну: `pattern:\1`.
 
-That is: we look ahead - and if there's a word `pattern:\w+`, then match it as `pattern:\1`.
+Тобто, ми дивимось вперед – якщо там є слово `pattern:\w+`, то then match it as `pattern:\1`.
 
-Why? That's because the lookahead finds a word `pattern:\w+` as a whole and we capture it into the pattern with `pattern:\1`. So we essentially implemented a possessive plus `pattern:+` quantifier. It captures only the whole word `pattern:\w+`, not a part of it.
+Чому? Все через те, що перегляд вперед знаходить слово `pattern:\w+` повністю та ми беремо його в патерн разом з `pattern:\1`. Отож, по суті, ми застосовуємо присвійний квантифікатор `pattern:+`. Він охоплює все слово `pattern:\w+`, а не якусь частину.
 
-For instance, in the word `subject:JavaScript` it may not only match `match:Java`, but leave out `match:Script` to match the rest of the pattern.
+Для прикладу, в слові `subject:JavaScript` він не тільки знайде збіг `match:Java`, але й лишають `match:Script` для пошуку збігу з рештою патерну.
 
-Here's the comparison of two patterns:
+Порівняння двох патернів:
 
 ```js run
 alert( "JavaScript".match(/\w+Script/)); // JavaScript
 alert( "JavaScript".match(/(?=(\w+))\1Script/)); // null
 ```
 
-1. In the first variant `pattern:\w+` first captures the whole word `subject:JavaScript` but then `pattern:+` backtracks character by character, to try to match the rest of the pattern, until it finally succeeds (when `pattern:\w+` matches `match:Java`).
-2. In the second variant `pattern:(?=(\w+))` looks ahead and finds the word  `subject:JavaScript`, that is included into the pattern as a whole by `pattern:\1`, so there remains no way to find `subject:Script` after it.
+1. В першому випадку, `pattern:\w+` спочатку бере ціле слово `subject:JavaScript`, але потім `pattern:+` символ за символом проводить пошук з поверненням, намагаючись знайти збіг для решти патерну доти, доки не досягне цілі (коли `pattern:\w+` відповідає `match:Java`).
+2. В другому випадку, `pattern:(?=(\w+))` дивиться вперед та знаходить слово `subject:JavaScript`, повністю включене в патерн за допомогою `pattern:\1`, тож опісля нема ніякої можливості для пошуку `subject:Script`.
 
-We can put a more complex regular expression into `pattern:(?=(\w+))\1` instead of `pattern:\w`, when we need to forbid backtracking for `pattern:+` after it.
+Ми можемо помістити більш комплексний регулярний вираз у `pattern:(?=(\w+))\1` замість `pattern:\w`, коли нам потрібно заборонити пошук з поверненням для `pattern:+` після нього.
 
 ```smart
-There's more about the relation between possessive quantifiers and lookahead in articles [Regex: Emulate Atomic Grouping (and Possessive Quantifiers) with LookAhead](http://instanceof.me/post/52245507631/regex-emulate-atomic-grouping-with-lookahead) and [Mimicking Atomic Groups](http://blog.stevenlevithan.com/archives/mimic-atomic-groups).
+Більше про зв’язок між присвійними квантифікаторами та переглядом вперед в статтях [Regex: Emulate Atomic Grouping (and Possessive Quantifiers) with LookAhead](http://instanceof.me/post/52245507631/regex-emulate-atomic-grouping-with-lookahead) та [Mimicking Atomic Groups](http://blog.stevenlevithan.com/archives/mimic-atomic-groups).
 ```
 
-Let's rewrite the first example using lookahead to prevent backtracking:
+Перепишемо перший приклад, використовуючи перегляд вперед для запобігання пошуку з поверненням:
 
 ```js run
 let regexp = /^((?=(\w+))\2\s?)*$/;
 
-alert( regexp.test("A good string") ); // true
+alert( regexp.test("Хороший рядок") ); // true
 
-let str = "An input string that takes a long time or even makes this regex hang!";
+let str = "Введений рядок, який оброблятиметься довго або навіть спровокує зависання регулярного виразу!";
 
-alert( regexp.test(str) ); // false, works and fast!
+alert( regexp.test(str) ); // false, працює швидко!
 ```
 
-Here `pattern:\2` is used instead of `pattern:\1`, because there are additional outer parentheses. To avoid messing up with the numbers, we can give the parentheses a name, e.g. `pattern:(?<word>\w+)`.
+Як бачимо, `pattern:\2` використовується замість `pattern:\1` через додаткові зовнішні дужки. To avoid messing up with the numbers, ми можемо назвати дужки, наприклад, `pattern:(?<word>\w+)`.
 
 ```js run
-// parentheses are named ?<word>, referenced as \k<word>
+// дужки мають ім’я ?<word>, на що посилається \k<word>
 let regexp = /^((?=(?<word>\w+))\k<word>\s?)*$/;
 
-let str = "An input string that takes a long time or even makes this regex hang!";
+let str = "Введений рядок, який оброблятиметься довго або навіть спровокує зависання регулярного виразу!";
 
 alert( regexp.test(str) ); // false
 
-alert( regexp.test("A correct string") ); // true
+alert( regexp.test("Правильний рядок") ); // true
 ```
 
-The problem described in this article is called "catastrophic backtracking".
+Проблема, описана в статті, має назву "катастрофічний пошук з поверненням".
 
-We covered two ways how to solve it:
-- Rewrite the regexp to lower the possible combinations count.
-- Prevent backtracking.
+Ми розглянули два шляхи її вирішення:
+- Переписати регулярний вираз для зменшення кількості можливих комбінацій.
+- Запобігти поверненню.
