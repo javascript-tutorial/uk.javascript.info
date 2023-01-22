@@ -1,32 +1,32 @@
-# Methods of RegExp and String
+# Методи регулярних виразів та рядків
 
-In this article we'll cover various methods that work with regexps in-depth.
+В цій статті ми детально розглянемо різні методи для роботи з регулярними виразами.
 
 ## str.match(regexp)
 
-The method `str.match(regexp)` finds matches for `regexp` in the string `str`.
+Метод `str.match(regexp)` знаходить збіги для `regexp` в рядку `str`.
 
-It has 3 modes:
+Він має 3 режими:
 
-1. If the `regexp` doesn't have flag `pattern:g`, then it returns the first match as an array with capturing groups and properties `index` (position of the match), `input` (input string, equals `str`):
+1. Якщо `regexp` не має прапору `pattern:g`, тоді він повертає перший збіг у вигляді масиву з групами захоплення та властивостями `index` (позиція збігу), `input` (введений рядок, дорівнює `str`):
 
     ```js run
-    let str = "I love JavaScript";
+    let str = "Я люблю JavaScript";
 
     let result = str.match(/Java(Script)/);
 
-    alert( result[0] );     // JavaScript (full match)
-    alert( result[1] );     // Script (first capturing group)
+    alert( result[0] );     // JavaScript (повний збіг)
+    alert( result[1] );     // Script (перша група захоплення)
     alert( result.length ); // 2
 
-    // Additional information:
-    alert( result.index );  // 7 (match position)
-    alert( result.input );  // I love JavaScript (source string)
+    // Додаткова інформація:
+    alert( result.index );  // 7 (позиція збігу)
+    alert( result.input );  // Я люблю JavaScript (вихідний рядок)
     ```
 
-2. If the `regexp` has flag `pattern:g`, then it returns an array of all matches as strings, without capturing groups and other details.
+2. Якщо `regexp` має прапор `pattern:g`, тоді він повертає масив всіх збігів у вигляді рядків, без груп захоплення та інших деталей.
     ```js run
-    let str = "I love JavaScript";
+    let str = "Я люблю JavaScript";
 
     let result = str.match(/Java(Script)/g);
 
@@ -34,12 +34,12 @@ It has 3 modes:
     alert( result.length ); // 1
     ```
 
-3. If there are no matches, no matter if there's flag `pattern:g` or not, `null` is returned.
+3. Якщо збігів нема, повертається `null`, незалежно від наявності прапору `pattern:g`.
 
-    That's an important nuance. If there are no matches, we don't get an empty array, but `null`. It's easy to make a mistake forgetting about it, e.g.:
+    Це важливий нюанс. Якщо збігів нема, ми отримаємо не порожній масив, а `null`. Легко помилитись, забувши про це:
 
     ```js run
-    let str = "I love JavaScript";
+    let str = "Я люблю JavaScript";
 
     let result = str.match(/HTML/);
 
@@ -47,7 +47,7 @@ It has 3 modes:
     alert(result.length); // Error: Cannot read property 'length' of null
     ```
 
-    If we want the result to be an array, we can write like this:
+    Якщо ми хочемо, аби результат був масивом, ми можемо написати:
 
     ```js
     let result = str.match(regexp) || [];
@@ -57,48 +57,48 @@ It has 3 modes:
 
 [recent browser="new"]
 
-The method `str.matchAll(regexp)` is a "newer, improved" variant of `str.match`.
+Метод `str.matchAll(regexp)` - це "новіший, покращений" варіант `str.match`.
 
-It's used mainly to search for all matches with all groups.
+В основному, його використовують для пошуку всіх збігів з усіма групами.
 
-There are 3 differences from `match`:
+Існує 3 відмінності від `match`:
 
-1. It returns an iterable object with matches instead of an array. We can make a regular array from it using `Array.from`.
-2. Every match is returned as an array with capturing groups (the same format as `str.match` without flag `pattern:g`).
-3. If there are no results, it returns an empty iterable object instead of `null`.
+1. Він повертає ітерований об’єкт із збігами замість масиву. Ми можемо отримати з нього звичайний масив за допомогою `Array.from`.
+2. Кожен збіг повертається у вигляді масиву з групами захоплення (той самий формат, що й `str.match` без прапору `pattern:g`).
+3. Якщо результатів нема, метод повертає порожній ітерований об’єкт замість `null`.
 
-Usage example:
+Приклад використання:
 
 ```js run
-let str = '<h1>Hello, world!</h1>';
+let str = '<h1>Вітаю, світе!</h1>';
 let regexp = /<(.*?)>/g;
 
 let matchAll = str.matchAll(regexp);
 
-alert(matchAll); // [object RegExp String Iterator], not array, but an iterable
+alert(matchAll); // [object RegExp String Iterator], не масив, але ітерований
 
-matchAll = Array.from(matchAll); // array now
+matchAll = Array.from(matchAll); // тепер масив
 
 let firstMatch = matchAll[0];
 alert( firstMatch[0] );  // <h1>
 alert( firstMatch[1] );  // h1
 alert( firstMatch.index );  // 0
-alert( firstMatch.input );  // <h1>Hello, world!</h1>
+alert( firstMatch.input );  // <h1>Вітаю, світе!</h1>
 ```
 
-If we use `for..of` to loop over `matchAll` matches, then we don't need `Array.from` any more.
+Якщо ми використаємо `for..of` для циклічного проходження збігами `matchAll`, тоді ми більше не потребуємо `Array.from`.
 
 ## str.split(regexp|substr, limit)
 
-Splits the string using the regexp (or a substring) as a delimiter.
+Ділить рядок, використовуючи регулярний вираз (або підрядок) в якості роздільника.
 
-We can use `split` with strings, like this:
+Можна використовувати `split` з рядками, як-то:
 
 ```js run
 alert('12-34-56'.split('-')) // array of ['12', '34', '56']
 ```
 
-But we can split by a regular expression, the same way:
+Але ми так само можемо ділити за допомогою регулярного виразу:
 
 ```js run
 alert('12, 34, 56'.split(/,\s*/)) // array of ['12', '34', '56']
@@ -106,116 +106,116 @@ alert('12, 34, 56'.split(/,\s*/)) // array of ['12', '34', '56']
 
 ## str.search(regexp)
 
-The method `str.search(regexp)` returns the position of the first match or `-1` if none found:
+Метод `str.search(regexp)` повертає позицію першого збігу або `-1`, якщо нічого не знайдено:
 
 ```js run
-let str = "A drop of ink may make a million think";
+let str = "Чорнил краплина – мільйонів думок причина";
 
-alert( str.search( /ink/i ) ); // 10 (first match position)
+alert( str.search( /ink/i ) ); // 8 (позиція першого збігу)
 ```
 
-**The important limitation: `search` only finds the first match.**
+**Важливе обмеження: `search` знаходить лише перший збіг.**
 
-If we need positions of further matches, we should use other means, such as finding them all with `str.matchAll(regexp)`.
+Якщо нам потрібні позиції подальших збігів, нам слід пошукати інші варіанти, як-то повний пошук за допомогою `str.matchAll(regexp)`.
 
 ## str.replace(str|regexp, str|func)
 
-This is a generic method for searching and replacing, one of most useful ones. The swiss army knife for searching and replacing.  
+Це загальний метод для пошуку та заміни, один з найбільш корисних. «Швейцарський ніж» подібних операцій.  
 
-We can use it without regexps, to search and replace a substring:
+Ми можемо користуватись ним без регулярних виразів, шукаючи та замінюючи підрядок:
 
 ```js run
-// replace a dash by a colon
+// заміна дефіс на двокрапку
 alert('12-34-56'.replace("-", ":")) // 12:34-56
 ```
 
-There's a pitfall though.
+Але тут є своє підводне каміння.
 
-**When the first argument of `replace` is a string, it only replaces the first match.**
+**Коли перший аргумент `replace` є рядком, він замінює лише перший збіг.**
 
-You can see that in the example above: only the first `"-"` is replaced by `":"`.
+Ви можете побачити це в попередньому прикладі: лише перше `"-"` замінюється на `":"`.
 
-To find all hyphens, we need to use not the string `"-"`, but a regexp `pattern:/-/g`, with the obligatory `pattern:g` flag:
+Аби знайти всі дефіси, нам потрібно використати не рядок `"-"`, а регулярний вираз `pattern:/-/g`, з обов’язковим прапором `pattern:g`:
 
 ```js run
-// replace all dashes by a colon
+// заміна всіх дефісів на двокрапку
 alert( '12-34-56'.replace( *!*/-/g*/!*, ":" ) )  // 12:34:56
 ```
 
-The second argument is a replacement string. We can use special characters in it:
+Другий аргумент є рядком для заміни. В ньому можуть міститись спеціальні символи:
 
-| Symbols | Action in the replacement string |
+| Символи | Роль в рядку для заміни |
 |--------|--------|
-|`$&`|inserts the whole match|
-|<code>$&#096;</code>|inserts a part of the string before the match|
-|`$'`|inserts a part of the string after the match|
-|`$n`|if `n` is a 1-2 digit number, inserts the contents of n-th capturing group, for details see [](info:regexp-groups)|
-|`$<name>`|inserts the contents of the parentheses with the given `name`, for details see [](info:regexp-groups)|
-|`$$`|inserts character `$` |
+|`$&`|вставляє повний збіг|
+|<code>$&#096;</code>|вставляє частину рядку, що йшла перед збігом|
+|`$'`|вставляє частину рядку, що йшла після збігу|
+|`$n`|якщо`n` є одно-двоцифровим числом, вставляє вміст n-ної групи захоплення, детальніше тут [](info:regexp-groups)|
+|`$<name>`|вставляє вміст іменованих дужок `name`, детальніше тут [](info:regexp-groups)|
+|`$$`|вставляє символ `$` |
 
-For instance:
+Для прикладу:
 
 ```js run
-let str = "John Smith";
+let str = "Іван Сірко";
 
-// swap first and last name
-alert(str.replace(/(john) (smith)/i, '$2, $1')) // Smith, John
+// переставляє місцями ім’я та прізвище
+alert(str.replace(/(іван) (сірко)/i, '$2, $1')) // Сірко, Іван
 ```
 
-**For situations that require "smart" replacements, the second argument can be a function.**
+**Для ситуацій, які потребують "розумної" перестановки, другий аргумент може бути функцією.**
 
-It will be called for each match, and the returned value will be inserted as a replacement.
+Вона викликатиметься для кожного збігу, а повернене значення вставлятиметься як заміна.
 
-The function is called with arguments `func(match, p1, p2, ..., pn, offset, input, groups)`:
+Функція містить аргументи `func(match, p1, p2, ..., pn, offset, input, groups)`:
 
-1. `match` -- the match,
-2. `p1, p2, ..., pn` -- contents of capturing groups (if there are any),
-3. `offset` -- position of the match,
-4. `input` -- the source string,
-5. `groups` -- an object with named groups.
+1. `match` -- збіг,
+2. `p1, p2, ..., pn` -- вміст груп захоплення (якщо є в наявності),
+3. `offset` -- позиція збігу,
+4. `input` -- вихідний рядок,
+5. `groups` -- об’єкт з іменованими групами.
 
-If there are no parentheses in the regexp, then there are only 3 arguments: `func(str, offset, input)`.
+Якщо в регулярному виразі нема дужок, тоді є лише 3 аргументи: `func(str, offset, input)`.
 
-For example, let's uppercase all matches:
+Наприклад, приведемо всі збіги до верхнього регістру:
 
 ```js run
-let str = "html and css";
+let str = "html та css";
 
 let result = str.replace(/html|css/gi, str => str.toUpperCase());
 
-alert(result); // HTML and CSS
+alert(result); // HTML та CSS
 ```
 
-Replace each match by its position in the string:
+Замінимо кожен збіг на його позицію в рядку:
 
 ```js run
-alert("Ho-Ho-ho".replace(/ho/gi, (match, offset) => offset)); // 0-3-6
+alert("Хо-хо-хо".replace(/хо/gi, (match, offset) => offset)); // 0-3-6
 ```
 
-In the example below there are two parentheses, so the replacement function is called with 5 arguments: the first is the full match, then 2 parentheses, and after it (not used in the example) the match position and the source string:
+В прикладі нижче, наявні дві дужки, тож функція заміни матиме 5 аргументів: перший є повним збігом, далі 2 дужки, після цього (не використані в прикладі) позиція збігу та вихідний рядок:
 
 ```js run
-let str = "John Smith";
+let str = "Іван Сірко";
 
 let result = str.replace(/(\w+) (\w+)/, (match, name, surname) => `${surname}, ${name}`);
 
-alert(result); // Smith, John
+alert(result); // Сірко, Іван
 ```
 
-If there are many groups, it's convenient to use rest parameters to access them:
+Якщо груп багато, зручно використовувати залишкові параметри для доступу до них:
 
 ```js run
-let str = "John Smith";
+let str = "Іван Сірко";
 
 let result = str.replace(/(\w+) (\w+)/, (...match) => `${match[2]}, ${match[1]}`);
 
-alert(result); // Smith, John
+alert(result); // Сірко, Іван
 ```
 
-Or, if we're using named groups, then `groups` object with them is always the last, so we can obtain it like this:
+В іншому випадку, якщо ми використовуємо іменовані групи, тоді об’єкт `groups` завжди йде останнім після них, тож ми можемо отримати його наступним чином:
 
 ```js run
-let str = "John Smith";
+let str = "Іван Сірко";
 
 let result = str.replace(/(?<name>\w+) (?<surname>\w+)/, (...match) => {
   let groups = match.pop();
@@ -223,139 +223,139 @@ let result = str.replace(/(?<name>\w+) (?<surname>\w+)/, (...match) => {
   return `${groups.surname}, ${groups.name}`;
 });
 
-alert(result); // Smith, John
+alert(result); // Сірко, Іван
 ```
 
-Using a function gives us the ultimate replacement power, because it gets all the information about the match, has access to outer variables and can do everything.
+Використання функції максимально розкриває можливості заміни, тому що ми отримуємо всю інформацію про збіг, доступ до зовнішніх змінних та можемо робити все, що потрібно.
 
 ## str.replaceAll(str|regexp, str|func)
 
-This method is essentially the same as `str.replace`, with two major differences:
+Цей метод, по суті, такий самий, що й `str.replace`, з двома значними відмінностями:
 
-1. If the first argument is a string, it replaces *all occurences* of the string, while `replace` replaces only the *first occurence*.
-2. If the first argument is a regular expression without the `g` flag, there'll be an error. With `g` flag, it works the same as `replace`.
+1. Якщо перший аргумент є рядком, він замінює *всі входження* в рядку, тоді як `replace` замінює лише *перше входження*.
+2. Якщо перший аргумент є регулярним виразом без прапору `g`, виникне помилка. З прапором `g`, метод працюватиме аналогічно до `replace`.
 
-The main use case for `replaceAll` is replacing all occurences of a string.
+Основний випадок використання `replaceAll` - заміна всіх входжень збігу в рядку.
 
-Like this:
+Наприклад:
 
 ```js run
-// replace all dashes by a colon
+// замінює всі дефіси на двокрапку
 alert('12-34-56'.replaceAll("-", ":")) // 12:34:56
 ```
 
 
 ## regexp.exec(str)
 
-The `regexp.exec(str)` method returns a match for `regexp` in the string `str`.  Unlike previous methods, it's called on a regexp, not on a string.
+Метод `regexp.exec(str)` повертає збіг для `regexp` в рядку `str`.  На відміну від попередніх методів, він застосовується до регулярного виразу, а не рядку.
 
-It behaves differently depending on whether the regexp has flag `pattern:g`.
+Його поведінка залежить від наявності в регулярному виразі прапору `pattern:g`.
 
-If there's no `pattern:g`, then `regexp.exec(str)` returns the first match exactly as  `str.match(regexp)`. This behavior doesn't bring anything new.
+Якщо нема прапору `pattern:g`, тоді `regexp.exec(str)` повертає перший збіг у вигляді `str.match(regexp)`. Ця поведінка не додає нічого нового.
 
-But if there's flag `pattern:g`, then:
-- A call to `regexp.exec(str)` returns the first match and saves the position immediately after it in the property `regexp.lastIndex`.
-- The next such call starts the search from position `regexp.lastIndex`, returns the next match and saves the position after it in `regexp.lastIndex`.
-- ...And so on.
-- If there are no matches, `regexp.exec` returns `null` and resets `regexp.lastIndex` to `0`.
+Але за наявності `pattern:g`:
+- Виклик `regexp.exec(str)` повертає перший збіг та зберігає позицію після нього всередині властивості `regexp.lastIndex`.
+- Наступний виклик починає пошук з позиції `regexp.lastIndex`, повертає наступний збіг та зберігає позицію після в `regexp.lastIndex`.
+- ...І так далі.
+- Якщо збігів нема, `regexp.exec` повертає `null` та скидає `regexp.lastIndex` до `0`.
 
-So, repeated calls return all matches one after another, using property `regexp.lastIndex` to keep track of the current search position.
+Тож, повторювані виклики один за одним повертають всі збіги, використовуючи властивість `regexp.lastIndex` для відслідковування поточної позиції пошуку.
 
-In the past, before the method `str.matchAll` was added to JavaScript, calls of `regexp.exec` were used in the loop to get all matches with groups:
+В минулому, коли метод `str.matchAll` ще не був доданий в JavaScript, виклики `regexp.exec` використовувались в циклі для отримання всіх збігів, разом з групами:
 
 ```js run
-let str = 'More about JavaScript at https://javascript.info';
+let str = ''Детальніше про JavaScript тут https://javascript.info';
 let regexp = /javascript/ig;
 
 let result;
 
 while (result = regexp.exec(str)) {
-  alert( `Found ${result[0]} at position ${result.index}` );
-  // Found JavaScript at position 11, then
-  // Found javascript at position 33
+  alert( `${result[0]} знайдений на позиції ${result.index}` );
+  // JavaScript знайдений на позиції 11
+  // javascript знайдений на позиції 33
 }
 ```
 
-This works now as well, although for newer browsers `str.matchAll` is usually more convenient.
+Нині це теє працює, хоча для новіших браузерів `str.matchAll`, зазвичай, зручніший.
 
-**We can use `regexp.exec` to search from a given position by manually setting `lastIndex`.**
+**Можна використовувати `regexp.exec` для пошуку із зазначеної позиції, вручну змінивши `lastIndex`.**
 
-For instance:
+Для прикладу:
 
 ```js run
-let str = 'Hello, world!';
+let str = 'Вітаю, світе!';
 
-let regexp = /\w+/g; // without flag "g", lastIndex property is ignored
-regexp.lastIndex = 5; // search from 5th position (from the comma)
+let regexp = /\w+/g; // без прапору "g", властивість lastIndex ігнорується
+regexp.lastIndex = 5; // пошук з п’ятої позиції (з коми)
 
-alert( regexp.exec(str) ); // world
+alert( regexp.exec(str) ); // світе
 ```
 
-If the regexp has flag `pattern:y`, then the search will be performed exactly at the  position `regexp.lastIndex`, not any further.
+Якщо регулярний вираз має прапор `pattern:y`, тоді пошук проводитиметься абсолютно чітко з позиції `regexp.lastIndex`.
 
-Let's replace flag `pattern:g` with `pattern:y` in the example above. There will be no matches, as there's no word at position `5`:
+У прикладі зверху, замінимо прапор `pattern:g` на `pattern:y`. Збігів не буде, бо на 5 позиції нема слова:
 
 ```js run
-let str = 'Hello, world!';
+let str = 'Вітаю, світе!';
 
 let regexp = /\w+/y;
-regexp.lastIndex = 5; // search exactly at position 5
+regexp.lastIndex = 5; // пошук саме з 5 позиції
 
 alert( regexp.exec(str) ); // null
 ```
 
-That's convenient for situations when we need to "read" something from the string by a regexp at the exact position, not somewhere further.
+Це зручно для ситуацій, коли нам потрібно "зчитати" щось з рядку регулярним виразом з чітко визначеної позиції, не шукаючи далі.
 
 ## regexp.test(str)
 
-The method `regexp.test(str)` looks for a match and returns `true/false` whether it exists.
+Метод `regexp.test(str)` шукає збіг та повертає `true/false` в залежності від його наявності.
 
-For instance:
+Для прикладу:
 
 ```js run
-let str = "I love JavaScript";
+let str = "Я люблю JavaScript";
 
-// these two tests do the same
-alert( *!*/love/i*/!*.test(str) ); // true
-alert( str.search(*!*/love/i*/!*) != -1 ); // true
+// ці два тести роблять одне й те саме
+alert( *!*/люблю/i*/!*.test(str) ); // true
+alert( str.search(*!*/люблю/i*/!*) != -1 ); // true
 ```
 
-An example with the negative answer:
+Приклад з негативним результатом:
 
 ```js run
-let str = "Bla-bla-bla";
+let str = "Бла-бла-бла";
 
-alert( *!*/love/i*/!*.test(str) ); // false
-alert( str.search(*!*/love/i*/!*) != -1 ); // false
+alert( *!*/люблю/i*/!*.test(str) ); // false
+alert( str.search(*!*/люблю/i*/!*) != -1 ); // false
 ```
 
-If the regexp has flag `pattern:g`, then `regexp.test` looks from `regexp.lastIndex` property and updates this property, just like `regexp.exec`.
+Якщо регулярний вираз має прапор `pattern:g`, тоді `regexp.test` проводить пошук, починаючи з `regexp.lastIndex` та оновлює цю властивість, аналогічно до `regexp.exec`.
 
-So we can use it to search from a given position:
+Тож ми можемо використовувати його для пошуку з визначеної позиції:
 
 ```js run
-let regexp = /love/gi;
+let regexp = /люблю/gi;
 
-let str = "I love JavaScript";
+let str = "Я люблю JavaScript";
 
-// start the search from position 10:
+// починаємо пошук з позиції 10:
 regexp.lastIndex = 10;
-alert( regexp.test(str) ); // false (no match)
+alert( regexp.test(str) ); // false (збігу нема)
 ```
 
-````warn header="Same global regexp tested repeatedly on different sources may fail"
-If we apply the same global regexp to different inputs, it may lead to wrong result, because `regexp.test` call advances `regexp.lastIndex` property, so the search in another string may start from non-zero position.
+````warn header="Один і той самий глобальний регулярний вираз, протестований багато разів на різних даних, може помилятись"
+Якщо ми застосуємо один і той самий глобальний регулярний вираз до різних вхідних даних, можемо отримати неправильні результати, бо виклик `regexp.test` посуває властивість `regexp.lastIndex`, тож пошук в іншому рядку може початись з позиції, відмінною від нуля.
 
-For instance, here we call `regexp.test` twice on the same text, and the second time fails:
+Для прикладу, ми викликаємо `regexp.test` двічі для одного тексту, та другий раз повертається помилковий результат:
 
 ```js run
-let regexp = /javascript/g;  // (regexp just created: regexp.lastIndex=0)
+let regexp = /javascript/g;  // (новостворений регулярний вираз: regexp.lastIndex=0)
 
-alert( regexp.test("javascript") ); // true (regexp.lastIndex=10 now)
+alert( regexp.test("javascript") ); // true (наразі regexp.lastIndex=10)
 alert( regexp.test("javascript") ); // false
 ```
 
-That's exactly because `regexp.lastIndex` is non-zero in the second test.
+Проблема саме в `regexp.lastIndex`, що не є нульовим під час виконання другого тесту.
 
-To work around that, we can set `regexp.lastIndex = 0` before each search. Or instead of calling methods on regexp, use string methods `str.match/search/...`, they don't use `lastIndex`.
+Оминути це можна, встановлюючи `regexp.lastIndex = 0` перед кожним пошуком. Іншим рішенням є використання методів рядків `str.match/search/...` замість методів регулярних виразів, так як вони не використовують `lastIndex`.
 ````
