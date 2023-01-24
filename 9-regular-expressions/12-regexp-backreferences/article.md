@@ -1,21 +1,21 @@
-# Backreferences in pattern: \N and \k<name>
+# Зворотні посилання в шаблоні: \N і \k<ім’я>
 
-We can use the contents of capturing groups `pattern:(...)` not only in the result or in the replacement string, but also in the pattern itself.
+Вміст груп захоплення `pattern:(...)` можна використовувати не тільки в резульаті пошуку чи рядку заміни, а й також безпосередньо у самому шаблоні.
 
-## Backreference by number: \N
+## Зворотнє посилання за номером: \N
 
-A group can be referenced in the pattern using `pattern:\N`, where `N` is the group number.
+До групи можна посилатися в шаблоні використовуючи `pattern:\N`, де `N` - номер групи.
 
-To make clear why that's helpful, let's consider a task.
+Для того, аби зрозуміти, чим це може бути корисним, давайте розглянемо приклад.
 
-We need to find quoted strings: either single-quoted `subject:'...'` or a double-quoted `subject:"..."` -- both variants should match.
+Потрібно знайти рядки в лапках: або в одинарних `subject:'...'`, або в подвійних `subject:"..."` -- обидва варіанти повинні збігатися.
 
-How to find them?
+Як їх знайти?
 
-We can put both kinds of quotes in the square brackets: `pattern:['"](.*?)['"]`, but it would find strings with mixed quotes, like `match:"...'` and `match:'..."`. That would lead to incorrect matches when one quote appears inside other ones, like in the string `subject:"She's the one!"`:
+Ми можемо розмістити обидва типи лапок у квадратних дужках: `pattern:['"](.*?)['"]`, але цей вираз знайде рядки зі змішаними лапками, наприклад `match:"...'` і `match:'..."`. Це призведе до неправильних збігів, коли один тип лапок буде в середині інших, наприклад в рядку `subject:"She's the one!"`:
 
 ```js run
-let str = `He said: "She's the one!".`;
+let str = `Він сказав: "She's the one!".`;
 
 let regexp = /['"](.*?)['"]/g;
 
@@ -23,14 +23,14 @@ let regexp = /['"](.*?)['"]/g;
 alert( str.match(regexp) ); // "She'
 ```
 
-As we can see, the pattern found an opening quote `match:"`, then the text is consumed till the other quote `match:'`, that closes the match.
+Як видно, шаблон знайшов початкову подвійну лапку `match:"`, потім текст, включно до наступної одинарної лапки `match:'`, опісля чого пошук завершився.
 
-To make sure that the pattern looks for the closing quote exactly the same as the opening one, we can wrap it into a capturing group and backreference it: `pattern:(['"])(.*?)\1`.
+Щоб бути впевненим, що шаблон шукає таку ж кінцеву лапку, як і початкову, можемо обернути початкові лапки в групу захвату і задіяти зворотнє посилання: `pattern:(['"])(.*?)\1`.
 
-Here's the correct code:
+Ось правильний код:
 
 ```js run
-let str = `He said: "She's the one!".`;
+let str = `Він сказав: "She's the one!".`;
 
 *!*
 let regexp = /(['"])(.*?)\1/g;
@@ -39,30 +39,30 @@ let regexp = /(['"])(.*?)\1/g;
 alert( str.match(regexp) ); // "She's the one!"
 ```
 
-Now it works! The regular expression engine finds the first quote `pattern:(['"])` and memorizes its content. That's the first capturing group.
+Все працює! Механізм регулярних виразів знаходить першу лапку `pattern:(['"])` та запамʼятовує її. Це перша група захоплення.
 
-Further in the pattern `pattern:\1` means "find the same text as in the first group", exactly the same quote in our case.
+Далі в шаблоні `pattern:\1` означає: "знайти такий же текст, як і в першій групі", що в нашому випадку - таку ж саму лапку.
 
-Similar to that, `pattern:\2` would mean the contents of the second group, `pattern:\3` - the 3rd group, and so on.
+Подібно до цього, `pattern:\2` означало б вміст другої групи, `pattern:\3` - 3-ї групи, і так далі.
 
 ```smart
-If we use `?:` in the group, then we can't reference it. Groups that are excluded from capturing `(?:...)` are not memorized by the engine.
+Ми не можемо посилатися на групу, якщо в ній задіяно `?:`. Групи, які були виключені із захоплення `(?:...)`, не запамʼятовуються механізмом регулярних виразів.
 ```
 
-```warn header="Don't mess up: in the pattern `pattern:\1`, in the replacement: `pattern:$1`"
-In the replacement string we use a dollar sign: `pattern:$1`, while in the pattern - a backslash `pattern:\1`.
+```warn header="Не переплутайте: в шаблоні `pattern:\1`, при заміні: `pattern:$1`"
+У рядку заміни використовується знак долара: `pattern:$1`, а в шаблоні - обернена коса риска `pattern:\1`.
 ```
 
-## Backreference by name: `\k<name>`
+## Зворотнє посилання за назвою: `\k<імʼя>`
 
-If a regexp has many parentheses, it's convenient to give them names.
+Якщо регулярний вираз має багато дужок, досить зручно в такому випадку давати їм імена.
 
-To reference a named group we can use `pattern:\k<name>`.
+Для посилання на іменовану групу можна використовувати `pattern:\k<імʼя>`.
 
-In the example below the group with quotes is named `pattern:?<quote>`, so the backreference is `pattern:\k<quote>`:
+У наведенемо нижче прикладі група з лапками називається `pattern:?<quote>`, тому звернення до нього буде `pattern:\k<quote>`:
 
 ```js run
-let str = `He said: "She's the one!".`;
+let str = `Він сказав: "She's the one!".`;
 
 *!*
 let regexp = /(?<quote>['"])(.*?)\k<quote>/g;
