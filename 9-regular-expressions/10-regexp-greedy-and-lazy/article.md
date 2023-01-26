@@ -1,20 +1,20 @@
-# Greedy and lazy quantifiers
+# Жадібні та ліниві квантифікатори
 
-Quantifiers are very simple from the first sight, but in fact they can be tricky.
+На перший погляд, квантифікатори не викликають питань, але насправді все не так просто.
 
-We should understand how the search works very well if we plan to look for something more complex than `pattern:/\d+/`.
+Нам варто добре розуміти як працює пошук, якщо ми плануємо розглядати щось складніше за `pattern:/\d+/`.
 
-Let's take the following task as an example.
+Візьмемо за приклад наступну задачу.
 
-We have a text and need to replace all quotes `"..."` with guillemet marks: `«...»`. They are preferred for typography in many countries.
+Ми маємо текст та хочемо замінити всі лапки `"..."` на французькі лапки : `«...»`. Їм віддають перевагу для типографії у багатьох країнах.
 
-For instance: `"Hello, world"` should become `«Hello, world»`. There exist other quotes, such as `„Witam, świat!”` (Polish) or `「你好，世界」` (Chinese), but for our task let's choose `«...»`.
+Наприклад: `"Hello, world"` має перетворитись на `«Hello, world»`. Існують й інші види лапок, як-то `„Witam, świat!”` (польські) or `「你好，世界」` (китайські), але для нашої задачі виберемо `«...»`.
 
-The first thing to do is to locate quoted strings, and then we can replace them.
+Для початку, знайдемо рядки в лапках, аби потім їх замінити.
 
-A regular expression like `pattern:/".+"/g` (a quote, then something, then the other quote) may seem like a good fit, but it isn't!
+Регулярний вираз по типу `pattern:/".+"/g` (лапки з чимось всередині) виглядає підходящим, але це не так!
 
-Let's try it:
+Спробуємо його на практиці:
 
 ```js run
 let regexp = /".+"/g;
@@ -24,85 +24,85 @@ let str = 'a "witch" and her "broom" is one';
 alert( str.match(regexp) ); // "witch" and her "broom"
 ```
 
-...We can see that it works not as intended!
+...Як бачимо, вираз працює не так, як очікувалось!
 
-Instead of finding two matches `match:"witch"` and `match:"broom"`, it finds one: `match:"witch" and her "broom"`.
+Замість двох збігів `match:" witch "` та `match:" broom"`, він знайшов один: `match:"witch" and her "broom"`.
 
-That can be described as "greediness is the cause of all evil".
+Про це можна сказати "жадібність – причина всіх бід".
 
-## Greedy search
+## Жадібний пошук
 
-To find a match, the regular expression engine uses the following algorithm:
+Аби знайти збіг, рушій регулярного виразу використовує наступний алгоритм:
 
-- For every position in the string
-    - Try to match the pattern at that position.
-    - If there's no match, go to the next position.
+- Для кожної позиції в рядку
+    - Спробувати виявити збіг на цій позиції.
+    - Якщо збігу нема, перейти до наступної позиції.
 
-These common words do not make it obvious why the regexp fails, so let's elaborate how the search works for the pattern `pattern:".+"`.
+Ці загальні фрази не пояснюють, чому регулярний вираз працює неправильно, тож вточнимо, як пошук працює для патерну `pattern:".+"`.
 
-1. The first pattern character is a quote `pattern:"`.
+1. Першим символом патерну є одна з лапок `pattern:"`.
 
-    The regular expression engine tries to find it at the zero position of the source string `subject:a "witch" and her "broom" is one`, but there's `subject:a` there, so there's immediately no match.
+    Рушій регулярного виразу намагається знайти його на нульовій позиції вихідного рядку `subject:a "witch" and her "broom" is one`, але бачить `subject:a`, тож одразу зрозуміло, що збігу нема.
 
-    Then it advances: goes to the next positions in the source string and tries to find the first character of the pattern there, fails again, and finally finds the quote at the 3rd position:
+    Йдемо далі: бере наступну позицію рядку та намагається на ній знайти перший символ патерну, знову невдача, але, нарешті, необхідний символ знаходиться на третій позиції:
 
     ![](witch_greedy1.svg)
 
-2. The quote is detected, and then the engine tries to find a match for the rest of the pattern. It tries to see if the rest of the subject string conforms to `pattern:.+"`.
+2. Першу з лапок виявлено, після цього рушій намагається знайти збіг для решти патерну. Він намагається зрозуміти, чи відповідає решта рядку `pattern:.+"`.
 
-    In our case the next pattern character is `pattern:.` (a dot). It denotes "any character except a newline", so the next string letter `match:'w'` fits:
+    IВ нашому випадку, наступний символ патерну - це `pattern:.` (крапка). Він вказує на "будь-який символ, за винятком символу нового рядку", тож наступна літера рядку `match:'w'` підходить під опис:
 
     ![](witch_greedy2.svg)
 
-3. Then the dot repeats because of the quantifier `pattern:.+`. The regular expression engine adds to the match one character after another.
+3. Після цього, дія крапки повторюється через наявність квантифікатору `pattern:.+`. Рушій регулярного виразу додає до збігу символи один за одним.
 
-    ...Until when? All characters match the dot, so it only stops when it reaches the end of the string:
+    ...До якого моменту? Крапка приймає усі символи, таким чином зупиняючись тільки досягнувши кінця рядку:
 
     ![](witch_greedy3.svg)
 
-4. Now the engine finished repeating `pattern:.+` and tries to find the next character of the pattern. It's the quote `pattern:"`. But there's a problem: the string has finished, there are no more characters!
+4. Тепер рушій завершив повтори `pattern:.+` та намагається знайти наступний символ патерну – другу з лапок `pattern:"`. Але виникає проблема: рядок закінчився, символів більше нема!
 
-    The regular expression engine understands that it took too many `pattern:.+` and starts to *backtrack*.
+    Рушій регулярного виразу розуміє, що додав забагато `pattern:.+` та починає *повернення*.
 
-    In other words, it shortens the match for the quantifier by one character:
+    Іншими словами, він скорочує збіг для квантифікатора на один символ:
 
     ![](witch_greedy4.svg)
 
-    Now it assumes that `pattern:.+` ends one character before the string end and tries to match the rest of the pattern from that position.
+    Після цього, рушій припускає, що `pattern:.+` завершується одним символом раніше кінця рядку та намагається знайти збіг для решти патерну, починаючи з тієї позиції.
 
-    If there were a quote there, then the search would end, but the last character is `subject:'e'`, so there's no match.
+    Якби друга з лапок була на цьому місці, то пошук завершився б, але останній символ `subject:'e'` не відповідає цілі пошуку.
 
-5. ...So the engine decreases the number of repetitions of `pattern:.+` by one more character:
+5. ...Тому рушій зменшує кількість повторів `pattern:.+` на ще один символ:
 
     ![](witch_greedy5.svg)
 
-    The quote `pattern:'"'` does not match `subject:'n'`.
+    Друга з лапок `pattern:'"'` не співпадає з `subject:'n'`.
 
-6. The engine keep backtracking: it decreases the count of repetition for `pattern:'.'` until the rest of the pattern (in our case `pattern:'"'`) matches:
+6. Рушій продовжує процес повернення: число повторів `pattern:'.'` зменшується доти, доки решта патерну (в цьому випадку, `pattern:'"'`) не збігається:
 
     ![](witch_greedy6.svg)
 
-7. The match is complete.
+7. Збіг знайдено.
 
-8. So the first match is `match:"witch" and her "broom"`. If the regular expression has flag `pattern:g`, then the search will continue from where the first match ends. There are no more quotes in the rest of the string `subject:is one`, so no more results.
+8. Отож, першим збігом буде:"witch" and her "broom"`. Якщо регулярний вираз має прапор `pattern:g`, тоді пошук продовжиться з кінця першого збігу. Решта рядку `subject:is one` не містить лапок, тож інших збігів не буде.
 
-That's probably not what we expected, but that's how it works.
+Можливо, це протирічить нашим очікуванням, але так вже воно працює.
 
-**In the greedy mode (by default) a quantified character is repeated as many times as possible.**
+**В жадібному режимі (за замовчуванням) квантифікований символ повторюється максимально можливу кількість разів.**
 
-The regexp engine adds to the match as many characters as it can for `pattern:.+`, and then shortens that one by one, if the rest of the pattern doesn't match.
+Рушій регулярного виразу додає до збігу всі можливі символи для `pattern:.+`, а потім зменшує результат посимвольно, якщо решта патерну не знаходить збігу.
 
-For our task we want another thing. That's where a lazy mode can help.
+Наша таска потребує іншого підходу. Тут може стати в пригоді лінивий режим.
 
-## Lazy mode
+## Лінивий режим
 
-The lazy mode of quantifiers is an opposite to the greedy mode. It means: "repeat minimal number of times".
+Лінивий режим квантифікаторів є протилежним до жадібного режиму. Його алгоритм: "повторювати мінімальну кількість разів".
 
-We can enable it by putting a question mark `pattern:'?'` after the quantifier, so that it becomes  `pattern:*?` or `pattern:+?` or even `pattern:??` for `pattern:'?'`.
+Ми можемо включити його, поставивши знак питання `pattern:'?'` після квантифікатора, і отримати  `pattern:*?`, `pattern:+?` чи навіть `pattern:??` для `pattern:'?'`.
 
-To make things clear: usually a question mark `pattern:?` is a quantifier by itself (zero or one), but if added *after another quantifier (or even itself)* it gets another meaning -- it switches the matching mode from greedy to lazy.
+Пояснимо кілька моментів: зазвичай, знак питання `pattern:?` сам по собі є квантифікатором (0 чи 1), але змінює значення, якщо його додати *після іншого квантифікатора (або навіть самого себе)* -- він змінює режим пошуку з жадібного на лінивий.
 
-The regexp `pattern:/".+?"/g` works as intended: it finds `match:"witch"` and `match:"broom"`:
+Регулярний вираз `pattern:/".+?"/g` працюватиме, як потрібно: він знайде `match:"witch"` та `match:"broom"`:
 
 ```js run
 let regexp = /".+?"/g;
@@ -112,67 +112,67 @@ let str = 'a "witch" and her "broom" is one';
 alert( str.match(regexp) ); // "witch", "broom"
 ```
 
-To clearly understand the change, let's trace the search step by step.
+Аби чітко побачити різницю, відслідкуємо процес пошуку покроково.
 
-1. The first step is the same: it finds the pattern start `pattern:'"'` at the 3rd position:
+1. Перший крок той самий: знаходимо початок патерну `pattern:'"'` на третій позиції:
 
     ![](witch_greedy1.svg)
 
-2. The next step is also similar: the engine finds a match for the dot `pattern:'.'`:
+2. Наступний крок теж подібний: рушій знаходить збіг для крапки `pattern:'.'`:
 
     ![](witch_greedy2.svg)
 
-3. And now the search goes differently. Because we have a lazy mode for `pattern:+?`, the engine doesn't try to match a dot one more time, but stops and tries to match the rest of the pattern  `pattern:'"'` right now:
+3. З цього моменту пошук йде іншим шляхом. Для `pattern:+?` включений лінивий режим, тож тепер рушій більше не намагається знайти збіг для крапки, зупиняється та намагається знайти збіг для решти патерну  `pattern:'"'`:
 
     ![](witch_lazy3.svg)
 
-    If there were a quote there, then the search would end, but there's `'i'`, so there's no match.
-4. Then the regular expression engine increases the number of repetitions for the dot and tries one more time:
+    Якби на цьому місці була остання з лапок, тоді пошук закінчився б, але бачимо `'i'`, тож збігу немає.
+4. Далі, рушій регулярного виразу збільшує кількість повторів для крапки та ще раз проводить пошук:
 
     ![](witch_lazy4.svg)
 
-    Failure again. Then the number of repetitions is increased again and again...
-5. ...Till the match for the rest of the pattern is found:
+    Знову невдача, тож кількість повторів крок за кроком збільшується...
+5. ...До моменту знаходження збігу для решти патерну:
 
     ![](witch_lazy5.svg)
 
-6. The next search starts from the end of the current match and yield one more result:
+6. Наступний пошук починається з кінця поточного збігу та приносить ще один результат:
 
     ![](witch_lazy6.svg)
 
-In this example we saw how the lazy mode works for `pattern:+?`. Quantifiers `pattern:*?` and `pattern:??` work the similar way -- the regexp engine increases the number of repetitions only if the rest of the pattern can't match on the given position.
+В цьому прикладі, ми побачили, як працює лінивий режим для `pattern:+?`. Квантифікатори `pattern:*?` та `pattern:??` працюють за схожою схемою – рушій регулярного виразу збільшує кількість повторень, тільки якщо решта патерну не знаходить збігу на поточній позиції.
 
-**Laziness is only enabled for the quantifier with `?`.**
+**Лінивий режим можна включити лише за допомогою `?`.**
 
-Other quantifiers remain greedy.
+Інші квантифікатори залишаються жадібними.
 
-For instance:
+Для прикладу:
 
 ```js run
 alert( "123 456".match(/\d+ \d+?/) ); // 123 4
 ```
 
-1. The pattern `pattern:\d+` tries to match as many digits as it can (greedy mode), so it finds  `match:123` and stops, because the next character is a space `pattern:' '`.
-2. Then there's a space in the pattern, it matches.
-3. Then there's `pattern:\d+?`. The quantifier is in lazy mode, so it finds one digit `match:4` and tries to check if the rest of the pattern matches from there.
+1. Патерн `pattern:\d+` намагається додати в збіг якомога більше цифр (жадібний режим), тож він знаходить `match:123` та зупиняється, тому що наступним йде пробіл `pattern:' '`.
+2. Далі в патерні працює пробіл, він бачить збіг.
+3. Після цього, маємо `pattern:\d+?`. Квантифікатор в лінивому режимі, тож він знаходить одну цифру `match:4` та, починаючи з цієї позиції, переходить до перевірки на збіг для решти патерну.
 
-    ...But there's nothing in the pattern after `pattern:\d+?`.
+    ...Але після `pattern:\d+?` в патерні нічого не залишилось.
 
-    The lazy mode doesn't repeat anything without a need. The pattern finished, so we're done. We have a match `match:123 4`.
+    Лінивий режим не повторює нічого без потреби. Патерн завершився, а з ним і наша робота. Ми знайшли збіг `match:123 4`.
 
 ```smart header="Optimizations"
-Modern regular expression engines can optimize internal algorithms to work faster. So they may work a bit differently from the described algorithm.
+Сучасні рушії регулярних виразів можуть оптимізовувати внутрішні алгоритми задля швидшої роботи. Тож їх алгоритм роботи може трішки відрізнятись від щойно описаного.
 
-But to understand how regular expressions work and to build regular expressions, we don't need to know about that. They are only used internally to optimize things.
+Але, для розуміння принципу побудови та роботи регулярних виразів, нам все це знати не обов’язково. Вони використовуються виключно внутрішньо для оптимізації.
 
-Complex regular expressions are hard to optimize, so the search may work exactly as described as well.
+Складні регулярні вирази погано піддаються оптимізації, тож, взагалі-то, пошук може працювати й за описом.
 ```
 
-## Alternative approach
+## Інший підхід
 
-With regexps, there's often more than one way to do the same thing.
+Працюючи з регулярними виразами, часто можна знайти декілька способів зробити одну й ту саму річ.
 
-In our case we can find quoted strings without lazy mode using the regexp `pattern:"[^"]+"`:
+В нашому випадку, ми можемо знайти рядки в лапках без лінивого режиму, використовуючи `pattern:"[^"]+"`:
 
 ```js run
 let regexp = /"[^"]+"/g;
@@ -182,120 +182,120 @@ let str = 'a "witch" and her "broom" is one';
 alert( str.match(regexp) ); // "witch", "broom"
 ```
 
-The regexp `pattern:"[^"]+"` gives correct results, because it looks for a quote `pattern:'"'` followed by one or more non-quotes `pattern:[^"]`, and then the closing quote.
+Регулярний вираз `pattern:"[^"]+"` дає правильні результати, бо шукає першу з лапок `pattern:'"'`, за якою слідують один чи більше символів (не лапок) `pattern:[^"]` та друга з лапок в кінці.
 
-When the regexp engine looks for `pattern:[^"]+` it stops the repetitions when it meets the closing quote, and we're done.
+Коли рушій регулярного виразу шукає `pattern:[^"]+`, він припиняє повторення, як тільки зустрічає другу з лапок, і все.
 
-Please note, that this logic does not replace lazy quantifiers!
+Зверніть увагу, цей спосіб не замінює ліниві квантифікатори!
 
-It is just different. There are times when we need one or another.
+Він просто інший. Різні ситуації потребують різні підходи.
 
-**Let's see an example where lazy quantifiers fail and this variant works right.**
+**Розглянемо приклад, в якому ліниві квантифікатори помиляються, на відміну від другого варіанту.**
 
-For instance, we want to find links of the form `<a href="..." class="doc">`, with any `href`.
+Скажімо, ми хочемо знайти посилання форми `<a href="..." class="doc">`, з будь-яким `href`.
 
-Which regular expression to use?
+Який регулярний вираз використати?
 
-The first idea might be: `pattern:/<a href=".*" class="doc">/g`.
+Першим на думку приходить: `pattern:/<a href=".*" class="doc">/g`.
 
-Let's check it:
+Спробуємо:
 ```js run
 let str = '...<a href="link" class="doc">...';
 let regexp = /<a href=".*" class="doc">/g;
 
-// Works!
+// Працює!
 alert( str.match(regexp) ); // <a href="link" class="doc">
 ```
 
-It worked. But let's see what happens if there are many links in the text?
+Спрацювало. Але подивимось, що станеться, якщо текст містить багато посилань?
 
 ```js run
 let str = '...<a href="link1" class="doc">... <a href="link2" class="doc">...';
 let regexp = /<a href=".*" class="doc">/g;
 
-// Whoops! Two links in one match!
+// Йой! Два посилання в одному збігу!
 alert( str.match(regexp) ); // <a href="link1" class="doc">... <a href="link2" class="doc">
 ```
 
-Now the result is wrong for the same reason as our "witches" example. The quantifier `pattern:.*` took too many characters.
+Тепер результат неправильний з тієї ж причини, що й у прикладі про "witches". Квантифікатор `pattern:.*` бере забагато символів.
 
-The match looks like this:
+Збіг виглядає наступним чином:
 
 ```html
 <a href="....................................." class="doc">
 <a href="link1" class="doc">... <a href="link2" class="doc">
 ```
 
-Let's modify the pattern by making the quantifier `pattern:.*?` lazy:
+Змінимо патерн, зробивши квантифікатор `pattern:.*?` лінивим:
 
 ```js run
 let str = '...<a href="link1" class="doc">... <a href="link2" class="doc">...';
 let regexp = /<a href=".*?" class="doc">/g;
 
-// Works!
+// Працює!
 alert( str.match(regexp) ); // <a href="link1" class="doc">, <a href="link2" class="doc">
 ```
 
-Now it seems to work, there are two matches:
+Ніби працює, маємо два збіги:
 
 ```html
 <a href="....." class="doc">    <a href="....." class="doc">
 <a href="link1" class="doc">... <a href="link2" class="doc">
 ```
 
-...But let's test it on one more text input:
+...Але перевіримо на інших даних:
 
 ```js run
 let str = '...<a href="link1" class="wrong">... <p style="" class="doc">...';
 let regexp = /<a href=".*?" class="doc">/g;
 
-// Wrong match!
+// Хибна відповідь!
 alert( str.match(regexp) ); // <a href="link1" class="wrong">... <p style="" class="doc">
 ```
 
-Now it fails. The match includes not just a link, but also a lot of text after it, including `<p...>`.
+Маємо провал. Збіг не обмежується посиланням, а містить також купу тексту, разом з `<p...>`.
 
-Why?
+Чому?
 
-That's what's going on:
+Ось процес виконання:
 
-1. First the regexp finds a link start `match:<a href="`.
-2. Then it looks for `pattern:.*?`: takes one character (lazily!), check if there's a match for `pattern:" class="doc">` (none).
-3. Then takes another character into `pattern:.*?`, and so on... until it finally reaches `match:" class="doc">`.
+1. Спочатку, регулярний вираз знаходить початок посилання `match:<a href="`.
+2. Далі, він шукає `pattern:.*?`: бере один символ (ліниво!), перевіряє наявність збігу для `pattern:" class="doc">` (нема).
+3. Після того, перевіряє наступний символ відносно `pattern:.*?`, і так далі... доки він нарешті доходить до `match:" class="doc">`.
 
-But the problem is: that's already beyond the link `<a...>`, in another tag `<p>`. Not what we want.
+Але ось де проблема: він вже вийшов поза посилання `<a...>` в інший тег `<p>`. Зовсім не те.
 
-Here's the picture of the match aligned with the text:
+Ось візуалізація збігу поруч з текстом:
 
 ```html
 <a href="..................................." class="doc">
 <a href="link1" class="wrong">... <p style="" class="doc">
 ```
 
-So, we need the pattern to look for `<a href="...something..." class="doc">`, but both greedy and lazy variants have problems.
+Тож, патерн має шукати `<a href="...something..." class="doc">`, але що жадібний, що лінивий варіанти мають проблеми.
 
-The correct variant can be: `pattern:href="[^"]*"`. It will take all characters inside the `href` attribute till the nearest quote, just what we need.
+Правильним варіантом може бути: `pattern:href="[^"]*"`. Він обере всі символи всередині атрибуту `href` до найближчих закриваючих лапок, саме те, що нам потрібно.
 
-A working example:
+Коректний приклад:
 
 ```js run
 let str1 = '...<a href="link1" class="wrong">... <p style="" class="doc">...';
 let str2 = '...<a href="link1" class="doc">... <a href="link2" class="doc">...';
 let regexp = /<a href="[^"]*" class="doc">/g;
 
-// Works!
-alert( str1.match(regexp) ); // null, no matches, that's correct
+// Працює!
+alert( str1.match(regexp) ); // null, збігів нема, все правильно
 alert( str2.match(regexp) ); // <a href="link1" class="doc">, <a href="link2" class="doc">
 ```
 
-## Summary
+## Підсумки
 
-Quantifiers have two modes of work:
+Квантифікатори мають два режими роботи:
 
-Greedy
-: By default the regular expression engine tries to repeat the quantified character as many times as possible. For instance, `pattern:\d+` consumes all possible digits. When it becomes impossible to consume more (no more digits or string end), then it continues to match the rest of the pattern. If there's no match then it decreases the number of repetitions (backtracks) and tries again.
+Жадібний
+: За замовчуванням, рушій регулярного виразу намагається повторити квантифікований символ максимально можливу кількість разів. Для прикладу, `pattern:\d+` обирає всі можливі цифри. Коли продовжити цей процес неможливо (більше нема цифр/кінець рядку), тоді продовжується пошук збігу для решти патерну. Якщо збігу нема, він зменшує кількість повторень (повертається) та пробує наново.
 
-Lazy
-: Enabled by the question mark `pattern:?` after the quantifier. The regexp engine tries to match the rest of the pattern before each repetition of the quantified character.
+Лінивий
+: Включається знаком питання `pattern:?` після квантифікатору. Рушій намагається знайти збіг решти патерну перед кожним повторенням квантифікованого символу.
 
-As we've seen, the lazy mode is not a "panacea" from the greedy search. An alternative is a "fine-tuned" greedy search, with exclusions, as in the pattern `pattern:"[^"]+"`.
+Як бачимо, лінивий режим не є "панацеєю" від жадібного пошуку. Як альтернативу розглядають "добре налаштований" жадібний пошук, з виключенням, як в патерні `pattern:"[^"]+"`.
