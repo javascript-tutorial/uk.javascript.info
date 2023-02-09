@@ -559,6 +559,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "RiinaVi",
+      "name": "Arina Kysilova",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44338265?v=4",
+      "profile": "https://github.com/RiinaVi",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
