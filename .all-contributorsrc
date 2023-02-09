@@ -568,6 +568,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Yanyshpolska",
+      "name": "Yanyshpolska",
+      "avatar_url": "https://avatars.githubusercontent.com/u/109538078?v=4",
+      "profile": "https://github.com/Yanyshpolska",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
