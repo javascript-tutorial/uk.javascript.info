@@ -631,6 +631,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "nibbl",
+      "name": "nibbl3",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77545790?v=4",
+      "profile": "https://nibbl3.xyz/h3x",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
