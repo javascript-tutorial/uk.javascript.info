@@ -595,6 +595,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "MarstenyshenDmytro",
+      "name": "MarstenyshenDmytro",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31610911?v=4",
+      "profile": "https://github.com/MarstenyshenDmytro",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
