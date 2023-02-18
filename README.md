@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-63-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-64-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -157,6 +157,9 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/RiinaVi"><img src="https://avatars.githubusercontent.com/u/44338265?v=4?s=70" width="70px;" alt="Arina Kysilova"/><br /><sub><b>Arina Kysilova</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ARiinaVi" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Yanyshpolska"><img src="https://avatars.githubusercontent.com/u/109538078?v=4?s=70" width="70px;" alt="Yanyshpolska"/><br /><sub><b>Yanyshpolska</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AYanyshpolska" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/serhiiIgnatenko"><img src="https://avatars.githubusercontent.com/u/57037810?v=4?s=70" width="70px;" alt="Serhii Ihnatenko"/><br /><sub><b>Serhii Ihnatenko</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AserhiiIgnatenko" title="Bug reports">🐛</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Taras-SS"><img src="https://avatars.githubusercontent.com/u/44113481?v=4?s=70" width="70px;" alt="Taras Dyda"/><br /><sub><b>Taras Dyda</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ATaras-SS" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
