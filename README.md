@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-66-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -162,6 +162,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Taras-SS"><img src="https://avatars.githubusercontent.com/u/44113481?v=4?s=70" width="70px;" alt="Taras Dyda"/><br /><sub><b>Taras Dyda</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ATaras-SS" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/MarstenyshenDmytro"><img src="https://avatars.githubusercontent.com/u/31610911?v=4?s=70" width="70px;" alt="MarstenyshenDmytro"/><br /><sub><b>MarstenyshenDmytro</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AMarstenyshenDmytro" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/denyshon"><img src="https://avatars.githubusercontent.com/u/93614255?v=4?s=70" width="70px;" alt="Denys"/><br /><sub><b>Denys</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Adenyshon" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dmytroony"><img src="https://avatars.githubusercontent.com/u/11257323?v=4?s=70" width="70px;" alt="Dmytro Onysko"/><br /><sub><b>Dmytro Onysko</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Admytroony" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
