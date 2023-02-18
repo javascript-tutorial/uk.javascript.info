@@ -622,6 +622,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "skiff-dev",
+      "name": "Volodymyr Dunkin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/56679056?v=4",
+      "profile": "https://github.com/skiff-dev",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
