@@ -1,55 +1,55 @@
 
-# Sticky flag "y", searching at position
+# Липкий прапорець "y", пошук на заданій позиції
 
-The flag `pattern:y` allows to perform the search at the given position in the source string.
+Прапорець `pattern:y` дозволяє виконувати пошук на вказаній позиції у вихідному рядку.
 
-To grasp the use case of `pattern:y` flag, and better understand the ways of regexps, let's explore a practical example.
+Щоб дізнатись як використовувати прапорець `pattern:y`, і краще зрозуміти шляхи використання регулярних виразів, розгляньмо приклад з практики.
 
-One of common tasks for regexps is "lexical analysis": we get a text, e.g. in a programming language, and need to find its structural elements. For instance, HTML has tags and attributes, JavaScript code has functions, variables, and so on.
+Одним із поширених завдань для регулярних виразів є "лексичний аналіз": для прикладу ми розглядаємо тест написаний певною мовою програмування і хочемо виділити структурні елементи. Наприклад, HTML містить теги та атрибути, код JavaScript -- функції, змінні тощо.
 
-Writing lexical analyzers is a special area, with its own tools and algorithms, so we don't go deep in there, but there's a common task: to read something at the given position.
+Написання лексичних аналізаторів -- це особлива сфера, зі своїми інструментами та алгоритмами, тому ми не будемо заглиблюватись в неї, а зосередимось на звичайному завданні: прочитати щось на заданій позиції.
 
-E.g. we have a code string `subject:let varName = "value"`, and we need to read the variable name from it, that starts at position `4`.
+Наприклад, у нас є рядок коду `subject:let varName = "значення"`, і нам потрібно прочитати з нього назву змінної, яка починається з позиції `4`.
 
-We'll look for variable name using regexp `pattern:\w+`. Actually, JavaScript variable names need a bit more complex regexp for accurate matching, but here it doesn't matter.
+Ми шукатимемо назву змінної за допомогою регулярного виразу `pattern:\w+`. Насправді імена змінних JavaScript потребують трохи складніших регулярних виразів для точної відповідності, але тут це не важливо.
 
-- A call to `str.match(/\w+/)` will find only the first word in the line (`let`). That's not it.
-- We can add the flag `pattern:g`. But then the call `str.match(/\w+/g)` will look for all words in the text, while we need one word at position `4`. Again, not what we need.
+- Виклик `str.match(/\w+/)` знайде лише перше слово в рядку (`let`). А це не те що нам потрібно.
+- Ми можемо додати прапорець `pattern:g`. Але тоді виклик `str.match(/\w+/g)` шукатиме всі слова в тексті, тоді як нам потрібно лише одне слово на позиції `4`.
 
-**So, how to search for a regexp exactly at the given position?**
+**Отже, як змусити регулярний вираз шукати саме на заданій позиції?**
 
-Let's try using method `regexp.exec(str)`.
+Спробуймо використати метод `regexp.exec(str)`.
 
-For a `regexp` without flags `pattern:g` and `pattern:y`, this method looks only for the first match, it works exactly like `str.match(regexp)`.
+Для `regexp` без прапорців `pattern:g` і `pattern:y`, цей метод шукає лише перший збіг, він працює, так само як `str.match(regexp)`.
 
-...But if there's flag `pattern:g`, then it performs the search in `str`, starting from position stored in the `regexp.lastIndex` property. And, if it finds a match, then sets `regexp.lastIndex` to the index immediately after the match.
+...Але якщо є прапорець `pattern:g`, тоді він виконує пошук у `str`, починаючи з позиції, збереженої у властивості `regexp.lastIndex`. І, якщо він знаходить збіг, то змінює `regexp.lastIndex` на індекс одразу після збігу.
 
-In other words, `regexp.lastIndex` serves as a starting point for the search, that each `regexp.exec(str)` call resets to the new value ("after the last match"). That's only if there's `pattern:g` flag, of course.
+Іншими словами, `regexp.lastIndex` служить відправною точкою для пошуку, і кожен виклик `regexp.exec(str)` встановлює нове значення ("після останнього збігу"). Звичайно, якщо є прапорець `pattern:g`.
 
-So, successive calls to `regexp.exec(str)` return matches one after another.
+Отже, послідовні виклики `regexp.exec(str)` повертають збіги один за одним.
 
-Here's an example of such calls:
+Ось приклад таких викликів:
 
 ```js run
-let str = 'let varName'; // Let's find all words in this string
+let str = 'let varName'; // Знайдімо всі слова в цьому рядку
 let regexp = /\w+/g;
 
-alert(regexp.lastIndex); // 0 (initially lastIndex=0)
+alert(regexp.lastIndex); // 0 (спочатку lastIndex=0)
 
 let word1 = regexp.exec(str);
-alert(word1[0]); // let (1st word)
-alert(regexp.lastIndex); // 3 (position after the match)
+alert(word1[0]); // let (перше слово)
+alert(regexp.lastIndex); // 3 (позиція після збігу)
 
 let word2 = regexp.exec(str);
-alert(word2[0]); // varName (2nd word)
-alert(regexp.lastIndex); // 11 (position after the match)
+alert(word2[0]); // varName (друге слово)
+alert(regexp.lastIndex); // 11 (позиція після збігу)
 
 let word3 = regexp.exec(str);
-alert(word3); // null (no more matches)
-alert(regexp.lastIndex); // 0 (resets at search end)
+alert(word3); // null (більше немає збігів)
+alert(regexp.lastIndex); // 0 (скидається в кінці пошуку)
 ```
 
-We can get all matches in the loop:
+Ми можемо отримати всі збіги в циклі:
 
 ```js run
 let str = 'let varName';
@@ -59,23 +59,23 @@ let result;
 
 while (result = regexp.exec(str)) {
   alert( `Found ${result[0]} at position ${result.index}` );
-  // Found let at position 0, then
-  // Found varName at position 4
+  // Знайдено let на позиції 0, після
+  // Знайдено varName на позиції 4
 }
 ```
 
-Such use of `regexp.exec` is an alternative to method `str.matchAll`, with a bit more control over the process.
+Таке використання `regexp.exec` є альтернативою методу `str.matchAll`, з трохи більшим контролем над процесом.
 
-Let's go back to our task.
+Повернемося до нашого завдання.
 
-We can manually set `lastIndex` to `4`, to start the search from the given position!
+Ми можемо вручну встановити `lastIndex` на `4`, щоб почати пошук із заданої позиції!
 
-Like this:
+Ось так:
 
 ```js run
-let str = 'let varName = "value"';
+let str = 'let varName = "значення"';
 
-let regexp = /\w+/g; // without flag "g", property lastIndex is ignored
+let regexp = /\w+/g; // без прапорця "g", властивість lastIndex ігнорується
 
 *!*
 regexp.lastIndex = 4;
@@ -85,54 +85,54 @@ let word = regexp.exec(str);
 alert(word); // varName
 ```
 
-Hooray! Problem solved! 
+Ура! Проблема вирішена! 
 
-We performed a search of `pattern:\w+`, starting from position `regexp.lastIndex = 4`.
+Ми здійснили пошук `pattern:\w+`, починаючи з позиції `regexp.lastIndex = 4`.
 
-The result is correct.
+І результат нашого пошуку правильний.
 
-...But wait, not so fast.
+...Але заждіть, не так швидко.
 
-Please note: the `regexp.exec` call starts searching at position `lastIndex` and then goes further. If there's no word at position `lastIndex`, but it's somewhere after it, then it will be found:
+Зауважте: виклик `regexp.exec` починає пошук із позиції `lastIndex`, а потім продовжує пошук. Якщо на позиції `lastIndex` немає слова, але воно знаходиться десь після неї, тоді воно буде знайдено:
 
 ```js run
-let str = 'let varName = "value"';
+let str = 'let varName = "значення"';
 
 let regexp = /\w+/g;
 
 *!*
-// start the search from position 3
+// почати пошук з позиції 3
 regexp.lastIndex = 3;
 */!*
 
 let word = regexp.exec(str); 
-// found the match at position 4
+// знайдено збіг на позиції 4
 alert(word[0]); // varName
 alert(word.index); // 4
 ```
 
-For some tasks, including the lexical analysis, that's just wrong. We need to find a match exactly at the given position at the text, not somewhere after it. And that's what the flag `y` is for.
+Для деяких завдань, зокрема лексичного аналізу, це неправильно. Нам потрібно знайти збіг в заданій позиції в тексті, а не десь після неї. Це і є головне призначення прапорця `y`.
 
-**The flag `pattern:y` makes `regexp.exec` to search exactly at position `lastIndex`, not "starting from" it.**
+**Прапорець `pattern:y` змушує `regexp.exec` шукати саме на позиції `lastIndex`, а не "починаючи з" неї.**
 
-Here's the same search with flag `pattern:y`:
+Ось той самий пошук із прапорцем `pattern:y`:
 
 ```js run
-let str = 'let varName = "value"';
+let str = 'let varName = "значення"';
 
 let regexp = /\w+/y;
 
 regexp.lastIndex = 3;
-alert( regexp.exec(str) ); // null (there's a space at position 3, not a word)
+alert( regexp.exec(str) ); // null (на позиції 3 пробіл, а не слово)
 
 regexp.lastIndex = 4;
-alert( regexp.exec(str) ); // varName (word at position 4)
+alert( regexp.exec(str) ); // varName (слово на позиції 4)
 ```
 
-As we can see, regexp `pattern:/\w+/y` doesn't match at position `3` (unlike the flag  `pattern:g`), but matches at position `4`.
+Як ми бачимо, регулярний вираз `pattern:/\w+/y` не знаходить збігів на позиції `3` (на відміну від регулярного виразу з прапорцем `pattern:g`), але знаходить збіг на позиції `4`.
 
-Not only that's what we need, there's an important performance gain when using flag `pattern:y`.
+Але це не всі переваги використання прапорця `pattern:y`, він також збільшує продуктивність пошуку.
 
-Imagine, we have a long text, and there are no matches in it, at all. Then a search with flag `pattern:g` will go till the end of the text and find nothing, and this will take significantly more time than the search with flag `pattern:y`, that checks only the exact position.
+Уявіть, у нас довгий текст, а в ньому зовсім немає збігів. Тоді пошук із прапорцем `pattern:g` буде йти до кінця тексту й нічого не знайде, і це займе значно більше часу, ніж пошук із прапорцем `pattern:y`, який перевіряє лише на вказаній позиції.
 
-In tasks like lexical analysis, there are usually many searches at an exact position, to check what we have there. Using flag `pattern:y` is the key for correct implementations and a good performance.
+Лексичний аналіз часто вимагає пошук на конкретній позиції. Використання прапорця `pattern:y` є ключем до правильної реалізації та хорошої продуктивності при виконанні таких завдань.
