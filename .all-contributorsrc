@@ -658,6 +658,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "VZhyrytskiy",
+      "name": "Vitaliy Zhyrytskyy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13118358?v=4",
+      "profile": "https://github.com/VZhyrytskiy",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
