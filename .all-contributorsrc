@@ -667,6 +667,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "prooles",
+      "name": "Oles Matskiv",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13441453?v=4",
+      "profile": "https://github.com/prooles",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
