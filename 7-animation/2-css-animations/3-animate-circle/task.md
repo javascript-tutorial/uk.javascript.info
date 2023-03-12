@@ -2,15 +2,15 @@ importance: 5
 
 ---
 
-# Animated circle
+# Анімований круг
 
-Create a function `showCircle(cx, cy, radius)` that shows an animated growing circle.
+Створити функцію `showCircle(cx, cy, radius)`, яка покаже анімацію зростаючого круга, де:
 
-- `cx,cy` are window-relative coordinates of the center of the circle,
-- `radius` is the radius of the circle.
+- `cx,cy` координати центру круга відносно вікна браузера,
+- `radius` радіус круга.
 
-Click the button below to see how it should look like:
+Натисніть кнопку нижче, щоб побачити як повинен виглядати результат:
 
 [iframe src="solution" height=260]
 
-The source document has an example of a circle with right styles, so the task is precisely to do the animation right.
+Вихідний код має приклад круга з правильними CSS стилями, задача зробити таку саму анімацію.
