@@ -1,13 +1,13 @@
-# Insert After Head
+# Вставка після Head
 
-We have a string with an HTML Document.
+У нас є рядок з HTML-документом.
 
-Write a regular expression that inserts `<h1>Hello</h1>` immediately after `<body>` tag. The tag may have attributes.
+Напишіть регулярний вираз який вставляє `<h1>Привіт</h1>` одразу після тегу `<body>`. Тег може мати атрибути.
 
-For instance:
+Приклад:
 
 ```js
-let regexp = /your regular expression/;
+let regexp = /ваш регулярний вираз/;
 
 let str = `
 <html>
@@ -17,13 +17,13 @@ let str = `
 </html>
 `;
 
-str = str.replace(regexp, `<h1>Hello</h1>`);
+str = str.replace(regexp, `<h1>Привіт</h1>`);
 ```
 
-After that the value of `str` should be:
+Після цього значення `str` має бути:
 ```html
 <html>
-  <body style="height: 200px"><h1>Hello</h1>
+  <body style="height: 200px"><h1>Привіт</h1>
   ...
   </body>
 </html>
