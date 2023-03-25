@@ -1,11 +1,11 @@
-# Find all numbers
+# Знайти всі числа
 
-Write a regexp that looks for all decimal numbers including integer ones, with the floating point and negative ones.
+Напишіть регулярний вираз, який шукатиме всі десяткові числа, включно з числами цілими, з плаваючою комою та від’ємними.
 
-An example of use:
+Приклад використання:
 
 ```js
-let regexp = /your regexp/g;
+let regexp = /ваш регулярний вираз/g;
 
 let str = "-1.5 0 2 -123.4.";
 
