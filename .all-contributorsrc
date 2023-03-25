@@ -703,6 +703,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Lo-Riot",
+      "name": "LoRiot",
+      "avatar_url": "https://avatars.githubusercontent.com/u/95584571?v=4",
+      "profile": "https://github.com/Lo-Riot",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
