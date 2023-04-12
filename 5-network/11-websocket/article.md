@@ -1,57 +1,57 @@
 # WebSocket
 
-The `WebSocket` protocol, described in the specification [RFC 6455](https://datatracker.ietf.org/doc/html/rfc6455) provides a way to exchange data between browser and server via a persistent connection. The data can be passed in both directions as "packets", without breaking the connection and additional HTTP-requests.
+`WebSocket` -- це протокол, що описаний у специфікації [RFC 6455](https://datatracker.ietf.org/doc/html/rfc6455), забезпечує спосіб обміну даними між браузером і сервером через постійне з’єднання. Дані можна передавати в обох напрямках у вигляді "пакетів", без розриву з’єднання та додаткових HTTP-запитів.
 
-WebSocket is especially great for services that require continuous data exchange, e.g. online games, real-time trading systems and so on.
+WebSocket відмінно підходить для сервісів, що потребують безперервного обміну даними, наприклад онлайн-ігри, системи торгівлі в реальному часі тощо.
 
-## A simple example
+## Простий приклад
 
-To open a websocket connection, we need to create `new WebSocket` using the special protocol `ws` in the url:
+Щоб відкрити з’єднання websocket, нам потрібно створити об’єкт `new WebSocket` використовуючи спеціальний протокол `ws` в URL-адресі:
 
 ```js
 let socket = new WebSocket("*!*ws*/!*://javascript.info");
 ```
 
-There's also encrypted `wss://` protocol. It's like HTTPS for websockets.
+Також існує зашифрований протокол `wss://`. Це як HTTPS для вебсокетів.
 
-```smart header="Always prefer `wss://`"
-The `wss://` protocol is not only encrypted, but also more reliable.
+```smart header="Завжди віддавайте перевагу `wss://`"
+Протокол `wss://` не тільки зашифрований, але й більш надійний.
 
-That's because `ws://` data is not encrypted, visible for any intermediary. Old proxy servers do not know about WebSocket, they may see "strange" headers and abort the connection.
+Це тому, що дані `ws://` не зашифровані та видимі для будь-якого посередника. Старі проксі-сервери не знають про WebSocket, тож вони можуть побачити "дивні" заголовки та перервати з’єднання.
 
-On the other hand, `wss://` is WebSocket over TLS, (same as HTTPS is HTTP over TLS), the transport security layer encrypts the data at sender and decrypts at the receiver. So data packets are passed encrypted through proxies. They can't see what's inside and let them through.
+З іншого боку, `wss://` -- це WebSocket що використовує TLS (так само, як HTTPS -- це HTTP що використовує TLS), тобто рівень безпеки транспорту шифрує дані у відправника та розшифровує в одержувача. Таким чином, пакети даних передаються зашифрованими, проксі не можуть побачити, що всередині, і пропускають їх.
 ```
 
-Once the socket is created, we should listen to events on it. There are totally 4 events:
-- **`open`** -- connection established,
-- **`message`** -- data received,
-- **`error`** -- websocket error,
-- **`close`** -- connection closed.
+Після того, як сокет створено, ми повинні прослуховувати його події. Всьго їх 4:
+- **`open`** -- з’єднання встановлено,
+- **`message`** -- отримані дані,
+- **`error`** -- помилка websocket,
+- **`close`** -- з’єднання закрите.
 
-...And if we'd like to send something, then `socket.send(data)` will do that.
+...І якщо ми хочемо щось надіслати, то виклик `socket.send(data)` зробить це.
 
-Here's an example:
+Ось приклад:
 
 ```js run
 let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
 
 socket.onopen = function(e) {
-  alert("[open] Connection established");
-  alert("Sending to server");
-  socket.send("My name is John");
+  alert("[open] З’єднання встановлено");
+  alert("Відправка на сервер");
+  socket.send("Мене звати Джон");
 };
 
 socket.onmessage = function(event) {
-  alert(`[message] Data received from server: ${event.data}`);
+  alert(`[message] Дані отримані із сервера: ${event.data}`);
 };
 
 socket.onclose = function(event) {
   if (event.wasClean) {  
-    alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+    alert(`[close] З’єднання закрите чисто, код=${event.code} причина=${event.reason}`);
   } else {
-    // e.g. server process killed or network down
-    // event.code is usually 1006 in this case
-    alert('[close] Connection died');
+    // наприклад сервер завершив процес або мережа не працює
+    // у цьому випадку event.code зазвичай дорівнює 1006
+    alert('[close] З’єднання перервано');
   }
 };
 
@@ -60,23 +60,23 @@ socket.onerror = function(error) {
 };
 ```
 
-For demo purposes, there's a small server [server.js](demo/server.js) written in Node.js, for the example above, running. It responds with "Hello from server, John", then waits 5 seconds and closes the connection.
+Для демонстраційних цілей є невеликий сервер [server.js](demo/server.js), написаний на Node.js, для прикладу вище. Він відповідає "Привіт із сервера, Джон", потім чекає 5 секунд і закриває з’єднання.
 
-So you'll see events `open` -> `message` -> `close`.
+Таким чином, ви побачите події `open` -> `message` -> `close`.
 
-That's actually it, we can talk WebSocket already. Quite simple, isn't it?
+Ось і все, ми вже можемо використовувати WebSocket. Досить просто, чи не так?
 
-Now let's talk more in-depth.
+Тепер поговоримо глибше.
 
-## Opening a websocket
+## Відкриття веб-сокета
 
-When `new WebSocket(url)` is created, it starts connecting immediately.
+Коли створюється `new WebSocket(url)`, він починає підключатися негайно.
 
-During the connection the browser (using headers) asks the server: "Do you support Websocket?" And if the server replies "yes", then the talk continues in WebSocket protocol, which is not HTTP at all.
+Під час підключення браузер (за допомогою заголовків) запитує сервер: "Чи підтримуєте ви Websocket?" І якщо сервер відповідає "так", то розмова продовжується за протоколом WebSocket, який взагалі не є HTTP.
 
 ![](websocket-handshake.svg)
 
-Here's an example of browser headers for request made by `new WebSocket("wss://javascript.info/chat")`.
+Ось приклад заголовків браузера для запиту, зробленого `new WebSocket("wss://javascript.info/chat")`.
 
 ```
 GET /chat
@@ -88,17 +88,17 @@ Sec-WebSocket-Key: Iv8io/9s+lYFgZWcXczP8Q==
 Sec-WebSocket-Version: 13
 ```
 
-- `Origin` -- the origin of the client page, e.g. `https://javascript.info`. WebSocket objects are cross-origin by nature. There are no special headers or other limitations. Old servers are unable to handle WebSocket anyway, so there are no compatibility issues. But `Origin` header is important, as it allows the server to decide whether or not to talk WebSocket with this website.
-- `Connection: Upgrade` -- signals that the client would like to change the protocol.
-- `Upgrade: websocket` -- the requested protocol is "websocket".
-- `Sec-WebSocket-Key` -- a random browser-generated key for security.
-- `Sec-WebSocket-Version` -- WebSocket protocol version, 13 is the current one.
+- `Origin` -- джерело клієнтської сторінки, наприклад `https://javascript.info`. Об’єкти WebSocket є перехресними за своєю природою. Немає спеціальних заголовків чи інших обмежень. Старі сервери все одно не можуть обробляти WebSocket, тому проблем із сумісністю немає. Але заголовок "Origin" важливий, оскільки він дозволяє серверу вирішувати, спілкуватися чи ні WebSocket з цим веб-сайтом.
+- `Connection: Upgrade` -- сигналізує про те, що клієнт хоче змінити протокол.
+- `Upgrade: websocket` -- запитуваний протокол - "websocket".
+- `Sec-WebSocket-Key` -- випадковий ключ, згенерований браузером для забезпечення безпеки.
+- `Sec-WebSocket-Version` -- Версія протоколу WebSocket, 13 є поточною.
 
-```smart header="WebSocket handshake can't be emulated"
-We can't use `XMLHttpRequest` or `fetch` to make this kind of HTTP-request, because JavaScript is not allowed to set these headers.
+```smart header="Рукостискання WebSocket неможливо емулювати"
+Ми не можемо використати `XMLHttpRequest` або `fetch` для виконання такого роду HTTP-запитів, оскільки JavaScript заборонено встановлювати ці заголовки.
 ```
 
-If the server agrees to switch to WebSocket, it should send code 101 response:
+Якщо сервер погоджується перейти на WebSocket, він повинен надіслати відповідь з кодом 101:
 
 ```
 101 Switching Protocols
@@ -107,29 +107,29 @@ Connection: Upgrade
 Sec-WebSocket-Accept: hsBlbuDTkk24srzEOTBUlZAlC2g=
 ```
 
-Here `Sec-WebSocket-Accept` is `Sec-WebSocket-Key`, recoded using a special algorithm. The browser uses it to make sure that the response corresponds to the request.
+Тут `Sec-WebSocket-Accept` -- це `Sec-WebSocket-Key`, перекодований за допомогою спеціального алгоритму. Браузер використовує його, щоб переконатися, що відповідь відповідає запиту.
 
-Afterwards, the data is transfered using WebSocket protocol, we'll see its structure ("frames") soon. And that's not HTTP at all.
+Після цього дані передаються по протоколу WebSocket, скоро ми побачимо його структуру ("фрейми"). І це зовсім не HTTP.
 
-### Extensions and subprotocols
+### Розширення та підпротоколи
 
-There may be additional headers `Sec-WebSocket-Extensions` and `Sec-WebSocket-Protocol` that describe extensions and subprotocols.
+Можуть бути додаткові заголовки `Sec-WebSocket-Extensions` та `Sec-WebSocket-Protocol`, які описують розширення та підпротоколи.
 
-For instance:
+Наприклад:
 
-- `Sec-WebSocket-Extensions: deflate-frame` means that the browser supports data compression. An extension is something related to transferring the data, functionality that extends WebSocket protocol. The header `Sec-WebSocket-Extensions` is sent automatically by the browser, with the list of all extensions it supports.
+- `Sec-WebSocket-Extensions: deflate-frame` означає, що браузер підтримує стиснення даних. Розширення – це щось, пов’язане з передачею даних, тобто функціональність, яка розширює протокол WebSocket. Заголовок `Sec-WebSocket-Extensions` автоматично надсилається браузером зі списком усіх розширень, які він підтримує.
 
-- `Sec-WebSocket-Protocol: soap, wamp` means that we'd like to transfer not just any data, but the data in [SOAP](http://en.wikipedia.org/wiki/SOAP) or WAMP ("The WebSocket Application Messaging Protocol") protocols. WebSocket subprotocols are registered in the [IANA catalogue](http://www.iana.org/assignments/websocket/websocket.xml). So, this header describes data formats that we're going to use.
+- `Sec-WebSocket-Protocol: soap, wamp` означає, що ми хочемо передати не просто будь-які дані, а дані в [SOAP](http://en.wikipedia.org/wiki/SOAP) або WAMP ("The WebSocket Application Messaging Protocol"). Підпротоколи WebSocket зареєстровані в [каталозі IANA](http://www.iana.org/assignments/websocket/websocket.xml). Отже, цей заголовок описує формати даних, які ми збираємося використовувати.
 
-    This optional header is set using the second parameter of `new WebSocket`. That's the array of subprotocols, e.g. if we'd like to use SOAP or WAMP:
+    Цей необов’язковий заголовок встановлюється за допомогою другого параметра `new WebSocket` у вигляді масиву підпротоколів. Наприклад, якщо ми хочемо використовувати SOAP або WAMP:
 
     ```js
     let socket = new WebSocket("wss://javascript.info/chat", ["soap", "wamp"]);
     ```
 
-The server should respond with a list of protocols and extensions that it agrees to use.
+Сервер повинен відповісти зі списком протоколів і розширень, які він погоджується використовувати.
 
-For example, the request:
+Наприклад, запит:
 
 ```
 GET /chat
@@ -145,7 +145,7 @@ Sec-WebSocket-Protocol: soap, wamp
 */!*
 ```
 
-Response:
+Відповідь:
 
 ```
 101 Switching Protocols
@@ -158,49 +158,50 @@ Sec-WebSocket-Protocol: soap
 */!*
 ```
 
-Here the server responds that it supports the extension "deflate-frame", and only SOAP of the requested subprotocols.
+Тут сервер відповідає, що підтримує розширення "deflate-frame", і тільки SOAP із запитуваних підпротоколів.
 
-## Data transfer
+## Передача даних
 
-WebSocket communication consists of "frames" -- data fragments, that can be sent from either side, and can be of several kinds:
+Зв’язок WebSocket складається з "фреймів" -- фрагментів даних, які можуть бути відправлені будь-якою стороною і можуть бути кількох видів:
 
-- "text frames" -- contain text data that parties send to each other.
-- "binary data frames" -- contain binary data that parties send to each other.
-- "ping/pong frames" are used to check the connection, sent from the server, the browser responds to these automatically.
-- there's also "connection close frame" and a few other service frames.
+- "текстові фрейми" -- містять текстові дані, які сторони надсилають одна одній.
+- "фрейми двійкових даних" -- містять бінарні дані, які сторони надсилають одна одній.
+- "ping/pong фрейми" використовуються для перевірки з’єднання, надсилаються сервером, браузер реагує на них автоматично.
+- також існує "фрейм закриття з’єднання" та кілька інших сервісних фреймів.
 
-In the browser, we directly work only with text or binary frames.
+У браузері ми безпосередньо працюємо тільки з текстовими або двійковими фреймами.
 
-**WebSocket `.send()` method can send either text or binary data.**
+**Метод WebSocket `.send()` може надсилати текстові або двійкові дані.**
 
-A call `socket.send(body)` allows `body` in string or a binary format, including `Blob`, `ArrayBuffer`, etc. No settings required: just send it out in any format.
+Виклик `socket.send(body)` дозволяє відправляти `body` у вигляді рядка або двійковому форматі, включаючи `Blob`, `ArrayBuffer` тощо. Ніяких налаштувань не потрібно: просто надсилайте в будь-якому форматі.
 
-**When we receive the data, text always comes as string. And for binary data, we can choose between `Blob` and `ArrayBuffer` formats.**
+**Коли ми отримуємо дані, текст завжди надходить у вигляді рядка. А для двійкових даних ми можемо вибирати між форматами `Blob` і `ArrayBuffer`.**
 
-That's set by `socket.binaryType` property, it's `"blob"` by default, so binary data comes as `Blob` objects.
+Це встановлюється властивістю `socket.binaryType`, за замовчуванням використовується `"blob"`, тому двійкові дані надходять як об’єкти `Blob`.
 
-[Blob](info:blob) is a high-level binary object, it directly integrates with `<a>`, `<img>` and other tags, so that's a sane default. But for binary processing, to access individual data bytes, we can change it to `"arraybuffer"`:
+[Blob](info:blob) -- це двійковий об’єкт високого рівня, він безпосередньо інтегрується з тегами `<a>`, `<img>` та іншими тегами, тому це нормальне значення за замовчуванням. Але для двійкової обробки, щоб отримати доступ до окремих байтів даних, ми можемо змінити його на `"arraybuffer"`:
 
 ```js
 socket.binaryType = "arraybuffer";
 socket.onmessage = (event) => {
   // event.data is either a string (if text) or arraybuffer (if binary)
+  // event.data є або рядком (якщо текст) або arraybuffer (якщо двійковий)
 };
 ```
 
-## Rate limiting
+## Обмеження швидкості
 
-Imagine, our app is generating a lot of data to send. But the user has a slow network connection, maybe on a mobile internet, outside of a city.
+Уявіть, що наш додаток генерує багато даних для надсилання. Але у користувача повільне підключення до мережі, можливо, через мобільний Інтернет, та за містом.
 
-We can call `socket.send(data)` again and again. But the data will be buffered (stored) in memory and sent out only as fast as network speed allows.
+Ми можемо викликати `socket.send(data)` знову і знову. Але дані буферизуються (зберігаються) у пам’яті та надсилатимуться лише настільки швидко, наскільки це дозволяє швидкість мережі.
 
-The `socket.bufferedAmount` property stores how many bytes remain buffered at this moment, waiting to be sent over the network.
+Властивість `socket.bufferedAmount` зберігає, скільки байтів залишилося у буфері в цей момент, очікуючи відправлення мережею.
 
-We can examine it to see whether the socket is actually available for transmission.
+Ми можемо перевірити його, щоб побачити, чи дійсно сокет доступний для передачі.
 
 ```js
-// every 100ms examine the socket and send more data  
-// only if all the existing data was sent out
+// кожні 100 мс перевіряємо сокет і надсилаємо більше даних
+// тільки якщо були надіслані всі наявні дані
 setInterval(() => {
   if (socket.bufferedAmount == 0) {
     socket.send(moreData());
@@ -209,25 +210,25 @@ setInterval(() => {
 ```
 
 
-## Connection close
+## Закриття з’єднання
 
-Normally, when a party wants to close the connection (both browser and server have equal rights), they send a "connection close frame" with a numeric code and a textual reason.
+Зазвичай, коли она зі сторін хоче закрити з’єднання (і браузер, і сервер мають рівні права), вони надсилають "фрейм закриття з’єднання" з цифровим кодом і текстовою причиною.
 
-The method for that is:
+Метод для цього:
 ```js
 socket.close([code], [reason]);
 ```
 
-- `code` is a special WebSocket closing code (optional)
-- `reason` is a string that describes the reason of closing (optional)
+- `code` це спеціальний код закриття WebSocket (необов’язково)
+- `reason` це рядок, який описує причину закриття (необов’язково)
 
-Then the other party in `close` event handler gets the code and the reason, e.g.:
+Після цього інша сторона в обробнику події `close` отримує код і причину, наприклад:
 
 ```js
-// closing party:
+// закриваюча сторона:
 socket.close(1000, "Work complete");
 
-// the other party
+// інша сторона
 socket.onclose = event => {
   // event.code === 1000
   // event.reason === "Work complete"
@@ -235,70 +236,70 @@ socket.onclose = event => {
 };
 ```
 
-Most common code values:
+Найпоширеніші значення коду закриття:
 
-- `1000` -- the default, normal closure (used if no `code` supplied),
-- `1006` -- no way to set such code manually, indicates that the connection was lost (no close frame).
+- `1000` -- за замовчуванням, звичайне закриття (використовується, якщо не вказано `code`),
+- `1006` -- немає можливості встановити такий код вручну, вказує на те, що з’єднання було втрачено (немає закриваючого фрейму).
 
-There are other codes like:
+Є й інші коди, наприклад:
 
-- `1001` -- the party is going away, e.g. server is shutting down, or a browser leaves the page,
-- `1009` -- the message is too big to process,
-- `1011` -- unexpected error on server,
-- ...and so on.
+- `1001` -- одна зі сторін відключається, наприклад сервер вимикається або браузер залишає сторінку,
+- `1009` -- повідомлення завелике для обробки,
+- `1011` -- неочікувана помилка на сервері,
+- ...і так далі.
 
-The full list can be found in [RFC6455, §7.4.1](https://tools.ietf.org/html/rfc6455#section-7.4.1).
+Повний список можна знайти в [RFC6455, §7.4.1](https://tools.ietf.org/html/rfc6455#section-7.4.1).
 
-WebSocket codes are somewhat like HTTP codes, but different. In particular, any codes less than `1000` are reserved, there'll be an error if we try to set such a code.
+Коди WebSocket дещо схожі на коди HTTP, але відрізняються. Зокрема, будь-які коди менше `1000` зарезервовані. Якщо ми спробуємо встановити такий код, виникне помилка.
 
 ```js
-// in case connection is broken
+// у разі розриву зв’язку
 socket.onclose = event => {
   // event.code === 1006
   // event.reason === ""
-  // event.wasClean === false (no closing frame)
+  // event.wasClean === false (немає закриваючого фрейму)
 };
 ```
 
 
-## Connection state
+## Стан з’єднання
 
-To get connection state, additionally there's `socket.readyState` property with values:
+Щоб отримати стан підключення, додатково є властивість `socket.readyState` зі значеннями:
 
-- **`0`** -- "CONNECTING": the connection has not yet been established,
-- **`1`** -- "OPEN": communicating,
-- **`2`** -- "CLOSING": the connection is closing,
-- **`3`** -- "CLOSED": the connection is closed.
+- **`0`** -- "CONNECTING": з’єднання ще не встановлено,
+- **`1`** -- "OPEN": обмін даними,
+- **`2`** -- "CLOSING": з’єднання закривається,
+- **`3`** -- "CLOSED": з’єднання закрите.
 
 
-## Chat example
+## Приклад чату
 
-Let's review a chat example using browser WebSocket API and Node.js WebSocket module <https://github.com/websockets/ws>. We'll pay the main attention to the client side, but the server is also simple.
+Розгляньмо приклад чату з використанням WebSocket API браузера та модуля WebSocket Node.js <https://github.com/websockets/ws>. Ми приділимо основну увагу клієнтській стороні, але сервер також простий.
 
-HTML: we need a `<form>` to send messages and a `<div>` for incoming messages:
+HTML: нам потрібна форма `<form>` для надсилання повідомлень та `<div>` для вхідних повідомлень:
 
 ```html
-<!-- message form -->
+<!-- форма повідомлення -->
 <form name="publish">
   <input type="text" name="message">
   <input type="submit" value="Send">
 </form>
 
-<!-- div with messages -->
+<!-- div з повідомленнями -->
 <div id="messages"></div>
 ```
 
-From JavaScript we want three things:
-1. Open the connection.
-2. On form submission -- `socket.send(message)` for the message.
-3. On incoming message -- append it to `div#messages`.
+Від JavaScript ми хочемо трьох речей:
+1. Відкрити підключення.
+2. Під час надсилання форми -- викликати `socket.send(message)` для повідомлення.
+3. При вхідному повідомленні -- додайти його до `div#messages`.
 
-Here's the code:
+Ось код:
 
 ```js
 let socket = new WebSocket("wss://javascript.info/article/websocket/chat/ws");
 
-// send message from the form
+// надіслати повідомлення з форми
 document.forms.publish.onsubmit = function() {
   let outgoingMessage = this.message.value;
 
@@ -306,7 +307,7 @@ document.forms.publish.onsubmit = function() {
   return false;
 };
 
-// message received - show the message in div#messages
+// повідомлення отримано - показати повідомлення в div#messages
 socket.onmessage = function(event) {
   let message = event.data;
 
@@ -316,14 +317,14 @@ socket.onmessage = function(event) {
 }
 ```
 
-Server-side code is a little bit beyond our scope. Here we'll use Node.js, but you don't have to. Other platforms also have their means to work with WebSocket.
+Серверний код трохи виходить за рамки поточної теми. Тут ми будемо використовувати Node.js, але вам не обов’язково це робити. Інші платформи також мають свої засоби для роботи з WebSocket.
 
-The server-side algorithm will be:
+Алгоритм на стороні сервера буде таким:
 
-1. Create `clients = new Set()` -- a set of sockets.
-2. For each accepted websocket, add it to the set `clients.add(socket)` and setup `message` event listener to get its messages.
-3. When a message received: iterate over clients and send it to everyone.
-4. When a connection is closed: `clients.delete(socket)`.
+1. Створити `clients = new Set()` -- набір сокетів.
+2. Для кожного прийнятого веб-сокета додати його до набору `clients.add(socket)` і налаштувати прослуховувач події `message`, щоб отримати повідомлення.
+3. Коли отримано повідомлення: переглянути клієнтів та надіслати його всім.
+4. Коли з’єднання закрито: `clients.delete(socket)`.
 
 ```js
 const ws = new require('ws');
@@ -332,8 +333,8 @@ const wss = new ws.Server({noServer: true});
 const clients = new Set();
 
 http.createServer((req, res) => {
-  // here we only handle websocket connections
-  // in real project we'd have some other code here to handle non-websocket requests
+  // тут ми обробляємо лише з’єднання websocket
+  // у реальному проекті у нас був би також код для обробки запитів, які не є веб-сокетами
   wss.handleUpgrade(req, req.socket, Buffer.alloc(0), onSocketConnect);
 });
 
@@ -341,7 +342,7 @@ function onSocketConnect(ws) {
   clients.add(ws);
 
   ws.on('message', function(message) {
-    message = message.slice(0, 50); // max message length will be 50
+    message = message.slice(0, 50); // максимальна довжина повідомлення буде 50
 
     for(let client of clients) {
       client.send(message);
@@ -355,34 +356,34 @@ function onSocketConnect(ws) {
 ```
 
 
-Here's the working example:
+Ось робочий приклад:
 
 [iframe src="chat" height="100" zip]
 
-You can also download it (upper-right button in the iframe) and run locally. Just don't forget to install [Node.js](https://nodejs.org/en/) and `npm install ws` before running.
+Ви також можете завантажити його (кнопка вгорі справа в iframe) та запустити локально. Тільки не забудьте перед запуском встановити [Node.js](https://nodejs.org/en/) і `npm install ws`.
 
-## Summary
+## Підсумки
 
-WebSocket is a modern way to have persistent browser-server connections.
+WebSocket -- це сучасний спосіб мати постійне з’єднання браузер-сервер.
 
-- WebSockets don't have cross-origin limitations.
-- They are well-supported in browsers.
-- Can send/receive strings and binary data.
+- WebSockets не має кросдоменних обмежень.
+- Він добре підтримуються в браузерах.
+- Може надсилати/отримувати рядки та двійкові дані.
 
-The API is simple.
+API простий.
 
-Methods:
+Методи:
 - `socket.send(data)`,
 - `socket.close([code], [reason])`.
 
-Events:
+Події:
 - `open`,
 - `message`,
 - `error`,
 - `close`.
 
-WebSocket by itself does not include reconnection, authentication and many other high-level mechanisms. So there are client/server libraries for that, and it's also possible to implement these capabilities manually.
+WebSocket сам по собі не включає повторне підключення, аутентифікацію та багато інших високорівневих механізмів. Тому для цього існують клієнтські та серверні бібліотеки, а також ці можливості можна реалізувати вручну.
 
-Sometimes, to integrate WebSocket into existing project, people run WebSocket server in parallel with the main HTTP-server, and they share a single database. Requests to WebSocket use `wss://ws.site.com`, a subdomain that leads to WebSocket server, while `https://site.com` goes to the main HTTP-server.
+Іноді, щоб інтегрувати WebSocket в наявний проект, люди запускають WebSocket-сервер паралельно з основним HTTP-сервером, і вони спільно використовують єдину базу даних. Запити до WebSocket використовують `wss://ws.site.com`, субдомен, який веде до сервера WebSocket, а `https://site.com` спрямовується на основний HTTP-сервер.
 
-Surely, other ways of integration are also possible.
+Звісно, можливі й інші шляхи інтеграції.
