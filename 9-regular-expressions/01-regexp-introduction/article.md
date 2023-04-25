@@ -1,177 +1,177 @@
-# Patterns and flags
+# Вступ: шаблони та прапори
 
-Regular expressions are patterns that provide a powerful way to search and replace in text.
+Регулярні вирази – потужний засіб пошуку та заміни у рядку.
 
-In JavaScript, they are available via the [RegExp](mdn:js/RegExp) object, as well as being integrated in methods of strings.
+У JavaScript регулярні вирази реалізовані окремим об'єктом [RegExp](mdn:js/RegExp) та інтегровані у методи рядків.
 
-## Regular Expressions
+## Регулярні вирази
 
-A regular expression (also "regexp", or just "reg") consists of a *pattern* and optional *flags*.
+Регулярний вираз (воно ж "регексп", "регулярка" або просто "рег"), складається з *шаблону* (також кажуть "патерн") і необов'язкових *прапорів*.
 
-There are two syntaxes that can be used to create a regular expression object.
+Існує два синтаксиси для створення регулярного виразу.
 
-The "long" syntax:
-
-```js
-regexp = new RegExp("pattern", "flags");
-```
-
-And the "short" one, using slashes `"/"`:
+"Довгий" синтаксис:
 
 ```js
-regexp = /pattern/; // no flags
-regexp = /pattern/gmi; // with flags g,m and i (to be covered soon)
+regexp = new RegExp ("шаблон", "прапори");
 ```
 
-Slashes `pattern:/.../` tell JavaScript that we are creating a regular expression. They play the same role as quotes for strings.
-
-In both cases `regexp` becomes an instance of the built-in `RegExp` class.
-
-The main difference between these two syntaxes is that pattern using slashes `/.../` does not allow for expressions to be inserted (like string template literals with `${...}`). They are fully static.
-
-Slashes are used when we know the regular expression at the code writing time -- and that's the most common situation. While `new RegExp` is more often used when we need to create a regexp "on the fly" from a dynamically generated string. For instance:
+...І короткий синтаксис, що використовує слеши `//``:
 
 ```js
-let tag = prompt("What tag do you want to find?", "h2");
-
-let regexp = new RegExp(`<${tag}>`); // same as /<h2>/ if answered "h2" in the prompt above
+regexp = /шаблон/; // без прапорів
+regexp = /шаблон/gmi; // з прапорами gmi (будуть описані далі)
 ```
 
-## Flags
+Слеши `pattern:/.../` говорять JavaScript про те, що це регулярний вираз. Вони відіграють таку саму роль, як і лапки для позначення рядків.
 
-Regular expressions may have flags that affect the search.
+Регулярний вираз `regexp` в обох випадках є об'єктом вбудованого класу `RegExp`.
 
-There are only 6 of them in JavaScript:
+Основна різниця між цими двома способами створення полягає в тому, що слеши `pattern:/.../` не допускають жодних вставок змінних (на зразок можливих у рядках через `${...}`). Вони цілком статичні.
+
+Слеши використовуються, коли ми на момент написання коду точно знаємо, яким буде регулярний вираз - і це більшість ситуацій. А `new RegExp` - коли ми хочемо створити регулярний вираз "на льоту" з динамічно згенерованого рядка, наприклад:
+
+```js
+let tag = prompt("Який тег ви хочете знайти?", "h2");
+
+let regexp = new RegExp(`<${tag}>`); // те саме, що /<h2>/ при відповіді "h2" на prompt вище
+```
+
+## Прапори
+
+Регулярні вирази можуть мати прапори, які впливають на пошук.
+
+У JavaScript їх всього шість:
 
 `pattern:i`
-: With this flag the search is case-insensitive: no difference between `A` and `a` (see the example below).
+: З цим прапором пошук не залежить від регістру: немає різниці між `A` та `a` (див. приклад нижче).
 
 `pattern:g`
-: With this flag the search looks for all matches, without it -- only the first match is returned.
+: З цим прапором пошук шукає всі збіги, без нього - лише перше
 
 `pattern:m`
-: Multiline mode (covered in the chapter <info:regexp-multiline-mode>).
+: Багаторядковий режим (розглядається в розділі <info:regexp-multiline-mode>).
 
 `pattern:s`
-: Enables "dotall" mode, that allows a dot `pattern:.` to match newline character `\n` (covered in the chapter <info:regexp-character-classes>).
+: Включає режим "dotall", при якому точка `pattern:.` може відповідати символу перекладу рядка `\n` (розглядається у розділі <info:regexp-character-classes>).
 
 `pattern:u`
-: Enables full Unicode support. The flag enables correct processing of surrogate pairs. More about that in the chapter <info:regexp-unicode>.
+: Включає повну підтримку Юнікоду. Прапор дозволяє коректну обробку сурогатних пар (докладніше про це у розділі <info:regexp-unicode>).
 
 `pattern:y`
-: "Sticky" mode: searching at the exact position in the text  (covered in the chapter <info:regexp-sticky>)
+: Режим пошуку на конкретній позиції в тексті (описаний у розділі <info:regexp-sticky>)
 
-```smart header="Colors"
-From here on the color scheme is:
+```smart header="Кольорові позначення"
+Тут і далі в тексті використовується наступна колірна схема:
 
-- regexp -- `pattern:red`
-- string (where we search) -- `subject:blue`
-- result -- `match:green`
+- регулярний вираз - `pattern: червоний`
+- рядок (там, де відбувається пошук) - `subject:синій`
+- результат -- `match: зелений`
 ```
 
-## Searching: str.match
+## Пошук: str.match
 
-As mentioned previously, regular expressions are integrated with string methods.
+Як уже говорилося, використання регулярних виразів інтегровано у методи рядків.
 
-The method `str.match(regexp)` finds all matches of `regexp` in the string `str`.
+Метод `str.match(regexp)` для рядка `str` повертає збіги з регулярним виразом `regexp`.
 
-It has 3 working modes:
+У нього є три режими роботи:
 
-1. If the regular expression has flag `pattern:g`, it returns an array of all matches:
-    ```js run
-    let str = "We will, we will rock you";
+1. Якщо у регулярного виразу є прапор pattern: g, то він повертає масив всіх збігів:
+     ```js run
+     let str = "За Вас правда, за вас слава і воля святая!";
 
-    alert( str.match(/we/gi) ); // We,we (an array of 2 substrings that match)
-    ```
-    Please note that both `match:We` and `match:we` are found, because flag `pattern:i` makes the regular expression case-insensitive.
+     alert(str.match(/вас/gi)); // Вас, вас (масив із 2х підрядків-збігів)
+     ```
+     Зверніть увагу: знайдені і `match:Вас` та `match:Вас`, завдяки прапору `pattern:i`, який робить регулярний вираз реєстронезалежним.
 
-2. If there's no such flag it returns only the first match in the form of an array, with the full match at index `0` and some additional details in properties:
-    ```js run
-    let str = "We will, we will rock you";
+2. Якщо такого прапора немає, то повертається лише перший збіг у вигляді масиву, в якому за індексом `0` знаходиться збіг, і є властивості з додатковою інформацією про нього:
+     ```js run
+     let str = "За Вас правда, за вас слава і воля святая!";
 
-    let result = str.match(/we/i); // without flag g
+     let result = str.match(/вас/i); // без прапора g
 
-    alert( result[0] );     // We (1st match)
-    alert( result.length ); // 1
+     alert(result[0]); // Вас (перший збіг)
+     alert(result.length); // 1
 
-    // Details:
-    alert( result.index );  // 0 (position of the match)
-    alert( result.input );  // We will, we will rock you (source string)
-    ```
-    The array may have other indexes, besides `0` if a part of the regular expression is enclosed in parentheses. We'll cover that in the chapter  <info:regexp-groups>.
+     // Додаткова інформація:
+     alert(result.index); // 0 (позиція збігу)
+     alert(result.input); // За Вас правда, за вас слава і воля святая! (вихідний рядок)
+     ```
+     У цьому масиві можуть бути інші індекси, крім `0`, якщо частина регулярного вираження виділена в дужки. Ми розберемо це у розділі <info:regexp-groups>.
 
-3. And, finally, if there are no matches, `null` is returned (doesn't matter if there's flag `pattern:g` or not).
+3. І, нарешті, якщо збігів немає, то, незалежно від наявності прапора `pattern: g`, повертається `null`.
 
-    This a very important nuance. If there are no matches, we don't receive an empty array, but instead receive `null`. Forgetting about that may lead to errors, e.g.:
+     Це дуже важливий аспект. За відсутності збігів повертається не порожній масив, а саме null. Якщо про це забути, можна легко припуститися помилки, наприклад:
 
-    ```js run
-    let matches = "JavaScript".match(/HTML/); // = null
+     ```js run
+     let matches = "JavaScript". match(/HTML/); // = null
 
-    if (!matches.length) { // Error: Cannot read property 'length' of null
-      alert("Error in the line above");
-    }
-    ```
+     if (!matches.length) { // Помилка: у null немає властивості length
+       alert("Помилка у рядку вище");
+     }
+     ```
 
-    If we'd like the result to always be an array, we can write it this way:
+     Якщо хочеться, щоб результатом завжди був масив, можна написати так:
 
-    ```js run
-    let matches = "JavaScript".match(/HTML/)*!* || []*/!*;
+     ```js run
+     let matches = "JavaScript".match(/HTML/)*!* || []*/!*;
 
-    if (!matches.length) {
-      alert("No matches"); // now it works
-    }
-    ```
+     if (!matches.length) {
+       alert("Збігів немає"); // тепер працює
+     }
+     ```
 
-## Replacing: str.replace
+## Заміна: str.replace
 
-The method `str.replace(regexp, replacement)` replaces matches found using `regexp` in string `str` with `replacement` (all matches if there's flag `pattern:g`, otherwise, only the first one).
+Метод `str.replace(regexp, replacement)` замінює збіги з `regexp` у рядку `str` на `replacement` (всі, якщо є прапор `pattern:g`, інакше тільки перше).
 
-For instance:
+Наприклад:
 
 ```js run
-// no flag g
-alert( "We will, we will".replace(/we/i, "I") ); // I will, we will
+// без прапора g
+alert("We will, we will".replace(/we/i, "I")); // I will, we will
 
-// with flag g
-alert( "We will, we will".replace(/we/ig, "I") ); // I will, I will
+// з прапором g
+alert("We will, we will".replace(/we/ig, "I")); // I will, I will
 ```
 
-The second argument is the `replacement` string. We can use special character combinations in it to insert fragments of the match:
+В рядке заміни `replacement` ми можемо використовувати спеціальні комбінації символів для вставки фрагментів збігу:
 
-| Symbols | Action in the replacement string |
+| Спецсимволи | Дія у рядку заміни |
 |--------|--------|
-|`$&`|inserts the whole match|
-|<code>$&#096;</code>|inserts a part of the string before the match|
-|`$'`|inserts a part of the string after the match|
-|`$n`|if `n` is a 1-2 digit number, then it inserts the contents of n-th parentheses, more about it in the chapter <info:regexp-groups>|
-|`$<name>`|inserts the contents of the parentheses with the given `name`, more about it in the chapter <info:regexp-groups>|
-|`$$`|inserts character `$` |
+|`$&`|вставляє всі знайдені збіги|
+|<code>$&#096;</code>|вставляє частину рядка до збігу|
+|`$'`|вставляє частину рядка після збігу|
+|`$n`|якщо `n` це 1-2 значне число, вставляє вміст n-ї скобочної групи регулярного виразу, більше у розділі <info:regexp-groups>|
+|`$<name>`|вставляє вміст скобочної групи з ім'ям `name`, також вивчимо у розділі <info:regexp-groups>|
+|`$$`|вставляє символ `"$"` |
 
-An example with `pattern:$&`:
-
-```js run
-alert( "I love HTML".replace(/HTML/, "$& and JavaScript") ); // I love HTML and JavaScript
-```
-
-## Testing: regexp.test
-
-The method `regexp.test(str)` looks for at least one match, if found, returns `true`, otherwise `false`.
+Приклад з `pattern:$&`:
 
 ```js run
-let str = "I love JavaScript";
-let regexp = /LOVE/i;
-
-alert( regexp.test(str) ); // true
+alert( "Люблю HTML".replace(/HTML/, "$& і JavaScript") ); // Люблю HTML та JavaScript
 ```
 
-Later in this chapter we'll study more regular expressions, walk through more examples, and also meet other methods.
+## Перевірка: regexp.test
 
-Full information about the methods is given in the article <info:regexp-methods>.
+Метод `regexp.test(str)` перевіряє, чи є хоч один збіг, якщо так, то повертає `true`, інакше `false`.
 
-## Summary
+```js run
+let str = "Я люблю JavaScript";
+let regexp = /люблю/i;
 
-- A regular expression consists of a pattern and optional flags: `pattern:g`, `pattern:i`, `pattern:m`, `pattern:u`, `pattern:s`, `pattern:y`.
-- Without flags and special symbols  (that we'll study later), the search by a regexp is the same as a substring search.
-- The method `str.match(regexp)` looks for matches: all of them if there's `pattern:g` flag, otherwise, only the first one.
-- The method `str.replace(regexp, replacement)` replaces matches found using `regexp` with `replacement`: all of them if there's `pattern:g` flag, otherwise only the first one.
-- The method `regexp.test(str)` returns `true` if there's at least one match, otherwise, it returns `false`.
+alert(regexp.test(str)); // true
+```
+
+Далі в цьому розділі ми вивчатимемо регулярні вирази, побачимо ще багато прикладів їх використання, а також познайомимося з іншими методами.
+
+Повна інформація про різні методи наведена в розділі <info:regexp-methods>.
+
+## Разом
+
+- Регулярний вираз складається з шаблону і необов'язкових прапорів: `pattern: g`, `pattern: i`, `pattern: m`, `pattern: u`, `pattern: s`, `pattern: y`.
+- Без прапорів та спеціальних символів, які ми вивчимо пізніше, пошук за регулярним виразом аналогічний пошуку підрядка.
+- Метод `str.match(regexp)` шукає збіги: всі, якщо є прапор `pattern: g`, інакше тільки перше.
+- Метод `str.replace(regexp, replacement)` замінює збіги з `regexp` на `replacement`: всі, якщо у регулярного виразу є прапор `pattern: g`, інакше тільки перше.
+- Метод `regexp.test(str)` повертає `true`, якщо є хоч один збіг, інакше `false`.
