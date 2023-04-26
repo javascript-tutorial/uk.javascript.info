@@ -161,7 +161,7 @@ alert( "Люблю HTML".replace(/HTML/, "$& і JavaScript") ); // Люблю HT
 let str = "Я люблю JavaScript";
 let regexp = /люблю/i;
 
-alert(regexp.test(str)); // true
+alert( regexp.test(str) ); // true
 ```
 
 Далі в цьому розділі ми вивчатимемо регулярні вирази, побачимо ще багато прикладів їх використання, а також познайомимося з іншими методами.
