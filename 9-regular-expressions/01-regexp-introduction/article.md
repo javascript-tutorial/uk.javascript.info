@@ -150,7 +150,7 @@ alert("We will, we will".replace(/we/ig, "I")); // I will, I will
 Приклад з `pattern:$&`:
 
 ```js run
-alert( "Люблю HTML".replace(/HTML/, "$& і JavaScript") ); // Люблю HTML та JavaScript
+alert( "Люблю HTML".replace(/HTML/, "$& і JavaScript") ); // Люблю HTML і JavaScript
 ```
 
 ## Перевірка: regexp.test
