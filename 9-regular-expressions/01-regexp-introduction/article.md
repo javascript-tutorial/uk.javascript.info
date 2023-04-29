@@ -105,7 +105,6 @@ let regexp = new RegExp(`<${tag}>`); // те саме, що /<h2>/ при від
 
      ```js run
      let matches = "JavaScript". match(/HTML/); // = null
-
      if (!matches.length) { // Помилка: у null немає властивості length
        alert("Помилка у рядку вище");
      }
