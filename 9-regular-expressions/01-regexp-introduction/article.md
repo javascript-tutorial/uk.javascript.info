@@ -133,7 +133,7 @@ let regexp = new RegExp(`<${tag}>`); // те саме, що /<h2>/ при від
 alert("We will, we will".replace(/we/i, "I")); // I will, we will
 
 // з прапором g
-alert("We will, we will".replace(/we/ig, "I")); // I will, I will
+alert( "Ми будемо, ми будемо".replace(/ми/ig, "Я") ); // Я будемо, Я будемо
 ```
 
 У рядку заміни `replacement` ми можемо використовувати спеціальні комбінації символів для вставки фрагментів збігу:
