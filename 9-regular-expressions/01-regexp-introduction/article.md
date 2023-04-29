@@ -124,7 +124,7 @@ let regexp = new RegExp(`<${tag}>`); // те саме, що /<h2>/ при від
 
 ## Заміна: str.replace
 
-Метод `str.replace(regexp, replacement)` замінює збіги з `regexp` у рядку `str` на `replacement` (всі, якщо є прапор `pattern:g`, інакше тільки перше).
+Метод `str.replace(regexp, replacement)` замінює збіги з `regexp` у рядку `str` на `replacement` (всі збіги, якщо є прапор `pattern:g`, інакше тільки перше).
 
 Наприклад:
 
