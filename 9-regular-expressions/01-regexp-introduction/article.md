@@ -130,7 +130,7 @@ let regexp = new RegExp(`<${tag}>`); // те саме, що /<h2>/ при від
 
 ```js run
 // без прапора g
-alert("We will, we will".replace(/we/i, "I")); // I will, we will
+alert( "Ми будемо, ми будемо".replace(/ми/i, "Я") ); // Я будемо, я будемо
 
 // з прапором g
 alert( "Ми будемо, ми будемо".replace(/ми/ig, "Я") ); // Я будемо, Я будемо
