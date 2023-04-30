@@ -721,6 +721,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "mpodaniev",
+      "name": "Mykhailo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8547830?v=4",
+      "profile": "https://github.com/mpodaniev",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular"
