@@ -1,87 +1,87 @@
-# Multiline mode of anchors ^ $, flag "m"
+# Багаторядковий режим якорів ^ $, прапора "m"
 
-The multiline mode is enabled by the flag `pattern:m`.
+Багаторядковий режим включається прапором `pattern:m`.
 
-It only affects the behavior of `pattern:^` and `pattern:$`.
+Він впливає лише на поведінку `pattern:^` та `pattern:$`.
 
-In the multiline mode they match not only at the beginning and the end of the string, but also at start/end of line.
+У багаторядковому режимі вони збігаються не тільки на початку та в кінці тексту, а й на початку/кінці кожного рядка у тексті.
 
-## Searching at line start ^
+## Пошук на початку рядка ^
 
-In the example below the text has multiple lines. The pattern `pattern:/^\d/gm` takes a digit from the beginning of each line:
+У прикладі нижче текст складається з кількох рядків. Шаблон `pattern:/^\d/gm` бере цифру з початку кожного рядка:
 
-```js run
-let str = `1st place: Winnie
-2nd place: Piglet
-3rd place: Eeyore`;
+``js run
+let str = `1 місце: Вінні-Пух
+2 місце: Паць
+3 місце: Слонопотам`;
 
 *!*
 console.log( str.match(/^\d/gm) ); // 1, 2, 3
 */!*
-```
+````
 
-Without the flag `pattern:m` only the first digit is matched:
+Без прапора `pattern:m` було б знайдено лише перше число:
 
-```js run
-let str = `1st place: Winnie
-2nd place: Piglet
-3rd place: Eeyore`;
+``js run
+let str = `1 місце: Вінні
+2 місце: Паць
+3 місце: Слонопотам;
 
 *!*
 console.log( str.match(/^\d/g) ); // 1
 */!*
-```
+````
 
-That's because by default a caret `pattern:^` only matches at the beginning of the text, and in the multiline mode -- at the start of any line.
+Це тому, що за замовчуванням каретка `pattern:^` збігається лише на початку тексту, а в багаторядковому режимі -- на початку будь-якого рядка.
 
-```smart
-"Start of a line" formally means "immediately after a line break": the test  `pattern:^` in multiline mode matches at all positions preceded by a newline character `\n`.
+``smart
+"Початок рядка" формально означає "відразу після розриву рядка": тестовий `pattern:^` у багаторядковому режимі збігається в усіх позиціях, яким передує символ нового рядка `\n`.
 
-And at the text start.
-```
+І на початку тексту.
+````
 
-## Searching at line end $
+## Пошук у кінці рядка $
 
-The dollar sign `pattern:$` behaves similarly.
+Символ долара `pattern:$` поводиться аналогічно.
 
-The regular expression `pattern:\d$` finds the last digit in every line
+Регулярний вираз `pattern:\d$` шукає останню цифру у кожному рядку
 
-```js run
-let str = `Winnie: 1
-Piglet: 2
-Eeyore: 3`;
+``js run
+let str = `Вінні: 1
+Паць: 2
+Слонопотам: 3`;
 
 console.log( str.match(/\d$/gm) ); // 1,2,3
-```
+````
 
-Without the flag `pattern:m`, the dollar `pattern:$` would only match the end of the whole text, so only the very last digit would be found.
+Без прапора `pattern:m` якір `pattern:$` відповідатиме лише кінці всього тексту, тому буде знайдено лише останню цифру.
 
 ```smart
-"End of a line" formally means "immediately before a line break": the test  `pattern:$` in multiline mode matches at all positions succeeded by a newline character `\n`.
+"Кінець рядка" формально означає "безпосередньо перед розривом рядка": тестовий `pattern:$` у багаторядковому режимі збігається в усіх позиціях після символу нового рядка `\n`.
 
-And at the text end.
+І в кінці тексту.
 ```
 
-## Searching for \n instead of ^ $
+## Шукаємо \n замість ^ $
 
-To find a newline, we can use not only anchors `pattern:^` and `pattern:$`, but also the newline character `\n`.
+Щоб знайти кінець рядка, можна використовувати як якоря `pattern:^` і `pattern:$`, а й символ перекладу рядка `\n`.
 
-What's the difference? Let's see an example.
+В чому різниця? Подивімось на приклад.
 
-Here we search for `pattern:\d\n` instead of `pattern:\d$`:
+Тут ми шукаємо `pattern:\d\n` замість `pattern:\d$`:
 
-```js run
-let str = `Winnie: 1
-Piglet: 2
-Eeyore: 3`;
+``js run
+let str = `Вінні: 1
+Паць: 2
+Слонопотам: 3`;
 
-console.log( str.match(/\d\n/g) ); // 1\n,2\n
-```
+console.log(str.match(/\d\n/g)); // 1\n,2\n
+````
 
-As we can see, there are 2 matches instead of 3.
+Як бачимо, 2 збіги замість 3-х.
 
-That's because there's no newline after `subject:3` (there's text end though, so it matches `pattern:$`).
+Це тому, що після `subject:3` немає нового рядка (хоча є кінець тексту, тому він відповідає `pattern:$`).
 
-Another difference: now every match includes a newline character `match:\n`. Unlike the anchors `pattern:^` `pattern:$`, that only test the condition (start/end of a line), `\n` is a character, so it becomes a part of the result.
+Ще одна відмінність: тепер кожен збіг містить символ нового рядка `match:\n`. На відміну від якорів `pattern:^` `pattern:$`, які лише перевіряють умову (початок/кінець рядка), `\n` є символом, тому він стає частиною результату.
 
-So, a `\n` in the pattern is used when we need newline characters in the result, while anchors are used to find something at the beginning/end of a line.
+Отже, `\n` у шаблоні використовується, коли нам потрібні символи нового рядка в результаті, тоді як якорі використовуються, щоб знайти щось на початку/кінці рядка.
