@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-80-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-81-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -180,6 +180,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/daria-bromot-24b1a417b/"><img src="https://avatars.githubusercontent.com/u/80320446?v=4?s=70" width="70px;" alt="Daria Bromot"/><br /><sub><b>Daria Bromot</b></sub></a><br /><a href="#translation-bromotdi" title="Translation">🌍</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mpodaniev"><img src="https://avatars.githubusercontent.com/u/8547830?v=4?s=70" width="70px;" alt="Mykhailo"/><br /><sub><b>Mykhailo</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Ampodaniev" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ArtemBondarenko1997"><img src="https://avatars.githubusercontent.com/u/32524801?v=4?s=70" width="70px;" alt="ArtemBondarenko1997"/><br /><sub><b>ArtemBondarenko1997</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AArtemBondarenko1997" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/yokoole"><img src="https://avatars.githubusercontent.com/u/116198926?v=4?s=70" width="70px;" alt="yokoole"/><br /><sub><b>yokoole</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Ayokoole" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
