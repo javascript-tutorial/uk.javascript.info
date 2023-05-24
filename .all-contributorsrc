@@ -730,7 +730,17 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "ArtemBondarenko1997",
+      "name": "ArtemBondarenko1997",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32524801?v=4",
+      "profile": "https://github.com/ArtemBondarenko1997",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
