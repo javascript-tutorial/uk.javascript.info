@@ -270,7 +270,7 @@ alert( regexp.test(str) ); // false
 
 Для прикладу, в слові `subject:JavaScript` він не тільки знайде збіг `match:Java`, але й залише `match:Script` для пошуку збігу з рештою шаблону.
 
-Порівняння двох патернів:
+Порівняння двох шаблонів:
 
 ```js run
 alert( "JavaScript".match(/\w+Script/)); // JavaScript
