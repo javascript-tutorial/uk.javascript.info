@@ -712,7 +712,44 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "bromotdi",
+      "name": "Daria Bromot",
+      "avatar_url": "https://avatars.githubusercontent.com/u/80320446?v=4",
+      "profile": "https://www.linkedin.com/in/daria-bromot-24b1a417b/",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mpodaniev",
+      "name": "Mykhailo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8547830?v=4",
+      "profile": "https://github.com/mpodaniev",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "ArtemBondarenko1997",
+      "name": "ArtemBondarenko1997",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32524801?v=4",
+      "profile": "https://github.com/ArtemBondarenko1997",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "yokoole",
+      "name": "yokoole",
+      "avatar_url": "https://avatars.githubusercontent.com/u/116198926?v=4",
+      "profile": "https://github.com/yokoole",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
-  "commitConvention": "angular"
+  "commitConvention": "angular",
+  "commitType": "docs"
 }
