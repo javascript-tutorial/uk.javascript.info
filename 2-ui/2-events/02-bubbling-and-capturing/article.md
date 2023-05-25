@@ -88,7 +88,7 @@
 Наприклад, тут обробник `body.onclick` не працює, якщо ви натиснете на `<button>`:
 
 ```html run autorun height=60
-<body onclick="alert(`спливання не дійде сюди`)">
+<body onclick="alert(`the bubbling doesn't reach here`)">
   <button onclick="event.stopPropagation()">Click me</button>
 </body>
 ```
@@ -148,6 +148,7 @@ elem.addEventListener(..., true)
 
 - Якщо вона дорівнює `false` (типово), то обробник встановлюється на фазі спливання (bubbling phase).
 - Якщо вона дорівнює `true`, то обробник встановлюється на фазі занурення (capturing phase).
+
 
 Зверніть увагу, що хоча формально є 3 фази, друга фаза ("фаза цілі": подія досягла елемента) не обробляється окремо: обробники як на фазі занурення, так і на фазі спливання викликаються на цій фазі.
 
