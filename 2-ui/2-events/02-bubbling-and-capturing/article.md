@@ -85,10 +85,10 @@
 
 Для цього існує метод - `event.stopPropagation()`.
 
-Наприклад, тут обробник `body.onclick` не працює, якщо ви натиснете на `<button>`:
+Наприклад, тут обробник `body.onclick` не спрацює, якщо ви натиснете на `<button>`:
 
 ```html run autorun height=60
-<body onclick="alert(`the bubbling doesn't reach here`)">
+<body onclick="alert(`спливання не дійде сюди`)">
   <button onclick="event.stopPropagation()">Click me</button>
 </body>
 ```
