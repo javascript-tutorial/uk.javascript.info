@@ -179,7 +179,7 @@ drawHtmlTree(node5,  'div.domtree', 600, 200);
 *!*
     <!-- comment -->
 */!*
-    <li>...та хитрий звір!</li>
+    <li>...і хитрий звір!</li>
   </ol>
 </body>
 </html>
