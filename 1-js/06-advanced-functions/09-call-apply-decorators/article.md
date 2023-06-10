@@ -243,7 +243,7 @@ worker.slow = cachingDecorator(worker.slow);
 ```js run
 let worker = {
   slow(min, max) {
-    alert(`Викликаза з ${min},${max}`);
+    alert(`Викликана з ${min},${max}`);
     return min + max;
   }
 };
