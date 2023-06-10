@@ -46,6 +46,9 @@ range[Symbol.iterator] = function() {
 
   // 2. Далі, for..of працює тільки з цим ітератором, запитуючи у нього наступні значення
   return {
+   current: this.from,
+   last: this.to,
+      
     next() {
       // 4. він повинен повертати значення як об’єкт {done:.., value :...}
       if (this.current <= this.last) {
