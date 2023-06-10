@@ -286,7 +286,6 @@ alert( str.slice(1, 3) ); // сміття (дві частини різних с
 
 - Технічно ітеровані об’єкти повинні реалізовувати метод з назвою `Symbol.iterator`.
     - Результат `obj[Symbol.iterator]()` називається *ітератором*. Він забезпечує подальший процес ітерації.
-    - An iterator must have the method named `next()` that returns an object `{done: Boolean, value: any}`, here `done:true` denotes the end of the iteration process, otherwise the `value` is the next value.
     - Ітератор повинен мати метод з назвою `next()`, який повертає об’єкт `{done: Boolean, value: any}`, де `done: true` означає кінець процесу ітерації, інакше `value` є наступним значенням.
 - Метод `Symbol.iterator` автоматично викликається `for..of`, але ми також можемо це зробити безпосередньо.
 - Вбудовані ітеровані об’єкти, такі як рядки або масиви, також реалізують `Symbol.iterator`.
