@@ -77,6 +77,7 @@ customElements.define("my-element", MyElement);
 
 Давайте створимо елемент `<time-formatted>`, який відображатиме час у гарному, зрозумілому форматі:
 
+
 ```html run height=50 autorun="no-epub"
 <script>
 *!*
