@@ -162,4 +162,18 @@ eventLoop.svg:
   "queue":
     text: "макрозавдань"
     position: "left"
+    
+# 2-ui/99-ui-misc/03-event-loop/eventLoop-full.svg
+
+eventLoop-full.svg:
+  "event":
+    text: "цикл"
+    position: "center"
+  "loop":
+    text: "подій"
+    position: "center"
+  "microtasks":
+    text: "мікрозавдання"
+  "render":
+    text: "рендеринг"
 
