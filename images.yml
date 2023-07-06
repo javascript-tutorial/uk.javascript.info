@@ -148,32 +148,3 @@ demo.svg:
 before-prepend-append-after.svg: 
   (…nodes-or-strings): "(...вузли або рядки)"
 
-# 2-ui/99-ui-misc/03-event-loop/eventLoop.svg
-eventLoop.svg:
-  "event":
-    text: "цикл"
-    position: "center"
-  "loop":
-    text: "подій"
-    position: "center"
-  "macrotask":
-    text: "черга"
-    position: "left"
-  "queue":
-    text: "макрозавдань"
-    position: "left"
-    
-# 2-ui/99-ui-misc/03-event-loop/eventLoop-full.svg
-
-eventLoop-full.svg:
-  "event":
-    text: "цикл"
-    position: "center"
-  "loop":
-    text: "подій"
-    position: "center"
-  "microtasks":
-    text: "мікрозавдання"
-  "render":
-    text: "рендеринг"
-
