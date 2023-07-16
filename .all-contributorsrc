@@ -803,6 +803,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "AntonShevchuk",
+      "name": "Anton Shevchuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/142057?v=4",
+      "profile": "http://anton.shevchuk.name",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular",
