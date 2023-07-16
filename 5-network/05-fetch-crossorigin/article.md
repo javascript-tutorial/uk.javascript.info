@@ -169,18 +169,13 @@ Access-Control-Allow-Origin: https://javascript.info
 
 - `Cache-Control`
 - `Content-Language`
+- `Content-Length`
 - `Content-Type`
 - `Expires`
 - `Last-Modified`
 - `Pragma`
 
 Доступ до будь-якого іншого заголовка відповіді викликає помилку.
-
-```smart
-У списку немає заголовка `Content-Length`!
-
-Цей заголовок містить повну довжину відповіді. Отже, якщо ми щось завантажуємо й хочемо відстежувати прогрес у відсотках, тоді для доступу до цього заголовка потрібен додатковий дозвіл (дивись нижче).
-```
 
 Щоб надати JavaScript доступ до будь-якого іншого заголовка відповіді, сервер повинен надіслати заголовок `Access-Control-Expose-Headers`. Він містить розділений комами список небезпечних імен заголовків, які мають бути доступними.
 
@@ -190,14 +185,15 @@ Access-Control-Allow-Origin: https://javascript.info
 200 OK
 Content-Type:text/html; charset=UTF-8
 Content-Length: 12345
+Content-Encoding: gzip
 API-Key: 2c9de507f2c54aa1
 Access-Control-Allow-Origin: https://javascript.info
 *!*
-Access-Control-Expose-Headers: Content-Length,API-Key
+Access-Control-Expose-Headers: Content-Encoding,API-Key
 */!*
 ```
 
-З таким заголовком, як `Access-Control-Expose-Headers`, скрипту дозволено читати заголовки `Content-Length` і `API-Key` відповідей.
+З таким заголовком, як `Access-Control-Expose-Headers`, скрипту дозволено читати заголовки `Content-Encoding` і `API-Key` відповідей.
 
 ## "Небезпечні" запити
 

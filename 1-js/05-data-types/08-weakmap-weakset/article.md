@@ -1,8 +1,10 @@
+
 # WeakMap та WeakSet
 
 Як ми знаємо з розділу <info:garbage-collection>, рушій JavaScript зберігає значення в пам’яті, поки воно є "доступним" і потенційно може бути використаним.
 
 Наприклад:
+
 ```js
 let john = { name: "Іван" };
 
@@ -54,13 +56,13 @@ john = null; // перезапишемо посилання
 */!*
 ```
 
-`WeakMap` -- принципово відрізняється в цьому аспекті. Він не перешкоджає збиранню сміття серед об’єктів, що є ключами.
+[`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) -- принципово відрізняється в цьому аспекті. Він не перешкоджає збиранню сміття серед об’єктів, що є ключами.
 
 Подивимося, що це означає на прикладах.
 
 ## WeakMap
 
-Перша відмінність між `Map` та `WeakMap` -- це те, що ключі повинні бути об’єктами, а не примітивними значеннями:
+Перша відмінність між [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) та [`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) -- це те, що ключі повинні бути об’єктами, а не примітивними значеннями:
 
 ```js run
 let weakMap = new WeakMap();
@@ -94,10 +96,10 @@ john = null; // перезапишемо посилання
 
 `WeakMap` має лише такі методи:
 
-- `weakMap.get(key)`
-- `weakMap.set(key, value)`
-- `weakMap.delete(key)`
-- `weakMap.has(key)`
+- [`weakMap.set(key, value)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap/set)
+- [`weakMap.get(key)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap/get)
+- [`weakMap.delete(key)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap/delete)
+- [`weakMap.has(key)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap/has)
 
 Чому є таке обмеження? Це з технічних причин. Якщо об’єкт втратив всі інші посилання (наприклад, `john` у коді вище), то він буде автоматично видалений збирачем сміття. Але технічно немає точних вказівок *коли відбувається видалення*.
 
@@ -182,6 +184,7 @@ function process(obj) {
     let result = /* розрахунки результату для */ obj;
 
     cache.set(obj, result);
+    return result;
   }
 
   return cache.get(obj);
@@ -221,6 +224,7 @@ function process(obj) {
     let result = /* розрахувати результат для */ obj;
 
     cache.set(obj, result);
+    return result;
   }
 
   return cache.get(obj);
@@ -242,11 +246,11 @@ obj = null;
 
 ## WeakSet
 
-`WeakSet` поводитися аналогічно:
+[`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) поводитися аналогічно:
 
 - Це аналог `Set`, але ми можемо додати лише об’єкти до `WeakSet` (не примітиви).
 - Об’єкт існує в наборі, коли він доступний з де-небудь ще.
-- Так само як `Set`, він підтримує `add`, `has` і `delete`, але не підтримує `size`, `keys()` та ітерацію.
+- Так само як `Set`, він підтримує [`add`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Weakset/add), [`has`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Weakset/has) і [`delete`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Weakset/delete), але не підтримує `size`, `keys()` та ітерацію.
 
 Будучи "слабким", він також служить зберігання додаткових даних. Але не для довільних даних, а для фактів "так/ні". Приналежність до `WeakSet` може означати щось про об’єкт.
 
@@ -280,9 +284,9 @@ john = null;
 
 ## Підсумки
 
-`WeakMap` -- це подібна до `Map` колекція, яка дозволяє використовувати лише об’єкти, як ключі і видаляє їх разом з пов’язаним значенням, коли вони стануть недоступними іншим засобам.
+[`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) -- це подібна до `Map` колекція, яка дозволяє використовувати лише об’єкти, як ключі і видаляє їх разом з пов’язаним значенням, коли вони стануть недоступними іншим засобам.
 
-`WeakSet` -- це подібна до `Set` колекція, яка зберігає тільки об’єкти та видаляє їх після того, як вони стануть недоступними іншим засобам.
+[`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) -- це подібна до `Set` колекція, яка зберігає тільки об’єкти та видаляє їх після того, як вони стануть недоступними іншим засобам.
 
 Їх основна перевага полягає у тому, що вони мають слабке посилання на об’єкти, тому вони можуть бути легко видаленими збирачем сміття.
 

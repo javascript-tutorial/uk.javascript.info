@@ -101,7 +101,7 @@
 
 Ще раз, [event.clipboardData](https://www.w3.org/TR/clipboard-apis/#clipboardevent-clipboarddata) працює виключно в контексті ініційованих користувачем обробників подій.
 
-З іншого боку, [navigator.clipboard](https://www.w3.org/TR/clipboard-apis/#h-navigator-clipboard) -- це найновіший API, призначений для використання в будь-якому контексті. Він запитує дозвіл користувача, якщо потрібно. Не підтримується у Firefox.
+З іншого боку, [navigator.clipboard](https://www.w3.org/TR/clipboard-apis/#h-navigator-clipboard) -- це найновіший API, призначений для використання в будь-якому контексті. Він запитує дозвіл користувача, якщо потрібно.
 
 ## Підсумки
 

@@ -48,7 +48,7 @@
 
 3. Після цього ми можемо використати метод `slice` об’єкта `Blob`, щоб надіслати файл починаючи з байта вказаного в `startByte`:
     ```js
-    xhr.open("POST", "upload", true);
+    xhr.open("POST", "upload");
 
     // Ідентифікатор файлу, щоб сервер знав, який файл ми завантажуємо
     xhr.setRequestHeader('X-File-Id', fileId);

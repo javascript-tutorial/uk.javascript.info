@@ -234,11 +234,12 @@ arr.forEach(function(item, index, array) {
 
 ### indexOf/lastIndexOf та includes
 
-Методи [arr.indexOf](mdn:js/Array/indexOf), [arr.lastIndexOf](mdn:js/Array/lastIndexOf) та [arr.includes](mdn:js/Array/includes) мають однаковий синтаксис і роблять по суті те ж саме, що і їх рядкові аналоги, але працюють з елементами замість символів:
+Методи [arr.indexOf](mdn:js/Array/indexOf) та [arr.includes](mdn:js/Array/includes) мають однаковий синтаксис і роблять по суті те ж саме, що і їх рядкові аналоги, але працюють з елементами замість символів:
 
-- `arr.indexOf(item, from)` -- шукає `item`, починаючи з індексу `from`, і повертає індекс, на якому був знайдений шуканий елемент, в іншому випадку -1.
-- `arr.lastIndexOf(item, from)` -- те ж саме, але шукає справа наліво.
+- `arr.indexOf(item, from)` -- шукає `item`, починаючи з індексу `from`, і повертає індекс, на якому був знайдений шуканий елемент, в іншому випадку `-1`.
 - `arr.includes(item, from)` -- шукає `item`, починаючи з індексу `from`, і повертає `true`, якщо пошук успішний.
+
+Зазвичай ці методи використовуються лише з одним аргументом: `item` для пошуку. Типово пошук відбувається з самого початку.
 
 Наприклад:
 
@@ -252,19 +253,31 @@ alert( arr.indexOf(null) ); // -1
 alert( arr.includes(1) ); // true
 ```
 
-Зверніть увагу, що методи використовують суворе порівняння `===`. Таким чином, якщо ми шукаємо `false`, він знаходить саме `false`, а не нуль.
+Зверніть увагу, що метод `indexOf` використовує суворе порівняння `===`. Таким чином, якщо ми шукаємо `false`, він знаходить саме `false`, але не нуль.
 
-Якщо ми хочемо перевірити наявність елемента, і нема потреби знати його точний індекс, тоді кращим є `arr.includes`.
+Якщо ми хочемо перевірити наявність `item` в массиві, і нема потреби знати його точний індекс, тоді краще використати `arr.includes`.
 
-Крім того, дуже незначною відмінністю є те, що він правильно обробляє `NaN` на відміну від `indexOf/lastIndexOf`:
+Метод [arr.lastIndexOf](mdn:js/Array/lastIndexOf) такий самий, як `indexOf`, але шукає справа наліво.
+
+```js run
+let fruits = ['Apple', 'Orange', 'Apple']
+
+alert( fruits.indexOf('Apple') ); // 0 (перший Apple)
+alert( fruits.lastIndexOf('Apple') ); // 2 (останній Apple)
+```
+
+````smart header="Метод `includes` правильно обробляє `NaN`"
+Незначною, але вартою уваги властивістю `includes` є те, що він правильно обробляє `NaN`, на відміну від `indexOf`:
 
 ```js run
 const arr = [NaN];
 alert( arr.indexOf(NaN) ); // -1 (повинен бути 0, але === перевірка на рівність не працює з NaN)
 alert( arr.includes(NaN) );// true (вірно)
 ```
+That's because `includes` was added to JavaScript much later and uses the more up to date comparison algorithm internally.
+````
 
-### find і findIndex
+### find і findIndex/findLastIndex
 
 Уявіть, що у нас є масив обʼєктів. Як нам знайти обʼєкт за певною умовою? 
 
@@ -305,6 +318,25 @@ alert(user.name); // John
 Зверніть увагу, що в даному прикладі ми передаємо `find` функцію `item => item.id == 1`, з одним аргументом. Це типово, інші аргументи цієї функції використовуються рідко.
 
 Метод [arr.findIndex](mdn:js/Array/findIndex) -- по суті, те ж саме, але повертає індекс, на якому був знайдений елемент, а не сам елемент, і `-1`, якщо нічого не знайдено.
+
+Метод [arr.findLastIndex](mdn:js/Array/findLastIndex) схожий на `findIndex`, але шукає справа наліво, подібно до `lastIndexOf`.
+
+Ось приклад:
+
+```js run
+let users = [
+  {id: 1, name: "John"},
+  {id: 2, name: "Pete"},
+  {id: 3, name: "Mary"},
+  {id: 4, name: "John"}
+];
+
+// Знайдемо індекс першого John
+alert(users.findIndex(user => user.name == 'John')); // 0
+
+// Знайдемо індекс останнього John
+alert(users.findLastIndex(user => user.name == 'John')); // 3
+```
 
 ### filter
 
@@ -388,7 +420,8 @@ alert( arr );  // *!*1, 15, 2*/!*
 
 Щоб використовувати наш власний порядок сортування, нам потрібно надати функцію як аргумент `arr.sort()`. 
 
-Функція повинна для пари значень повертати:
+Функція має порівняти два довільних значення та повернути:
+
 ```js
 function compare(a, b) {
   if (a > b) return 1; // якщо перше значення більше за друге
@@ -633,7 +666,6 @@ arr.reduce((sum, current) => sum + current);
 
 Метод [arr.reduceRight](mdn:js/Array/reduceRight) працює аналогічно, але проходить по масиву справа наліво.
 
-
 ## Array.isArray
 
 Масиви не мають окремого типу в Javascript. Вони засновані на обʼєктах. 
@@ -733,7 +765,7 @@ alert(soldiers[1].age); // 23
   - `reduce(func, initial)` -- обчислює одне значення на основі всього масиву, викликаючи `func` для кожного елемента і передаючи проміжний результат між викликами.
 
 - Додатково:
-  - `Array.isArray(arr)` перевіряє, чи є `arr` масивом.
+  - `Array.isArray(value)` перевіряє, чи є `value` масивом, якщо так, повертає `true`, інакше `false`.
 
 Зверніть увагу, що методи `sort`, `reverse` та `splice` змінюють поточний масив. 
 
@@ -745,7 +777,8 @@ alert(soldiers[1].age); // 23
 
 Ці методи поводяться приблизно як оператори `||` та `&&`. Якщо `fn` повертає істинне значення, `arr.some()` негайно повертає `true` і припиняє ітерацію по решті елементів. Якщо `fn` повертає хибне значення, `arr.every()` негайно повертає `false` і припиняє ітерацію по решті елементів.
 
-Ми можемо використовувати `every` для порівняння масивів:
+  Ми можемо використовувати `every` для порівняння масивів:
+  
   ```js run
   function arraysEqual(arr1, arr2) {
     return arr1.length === arr2.length && arr1.every((value, index) => value === arr2[index]);
