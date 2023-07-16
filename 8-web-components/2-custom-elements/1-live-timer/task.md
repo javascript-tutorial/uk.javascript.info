@@ -1,14 +1,14 @@
 
-# Live timer element
+# Елемент таймера в режимі реального часу
 
-We already have `<time-formatted>` element to show a nicely formatted time.
+У нас вже є елемент `<time-formatted>` для відображення гарно відформатованого часу.
 
-Create `<live-timer>` element to show the current time:
-1. It should use `<time-formatted>` internally, not duplicate its functionality.
-2. Ticks (updates) every second.
-3. For every tick, a custom event named `tick` should be generated, with the current date in `event.detail` (see chapter <info:dispatch-events>).
+Створіть елемент `<live-timer>` для відображення поточного часу:
+1. Він повинен використовувати `<time-formatted>` всередині, а не дублювати його функціонал.
+2. Оновлюватися щосекунди.
+3. Для кожного оновлення має генеруватися користувацька подія з назвою `tick`, з поточною датою у `event.detail` (див. розділ <info:dispatch-events>).
 
-Usage:
+Використання:
 
 ```html
 <live-timer id="elem"></live-timer>
@@ -18,6 +18,6 @@ Usage:
 </script>
 ```
 
-Demo:
+Демонстрація:
 
 [iframe src="solution" height=40]
