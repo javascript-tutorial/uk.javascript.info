@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-87-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-88-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад <https://uk.javascript.info> з англійської на українську мову.
@@ -189,6 +189,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/savylovskij"><img src="https://avatars.githubusercontent.com/u/60821299?v=4?s=70" width="70px;" alt="savylovskij"/><br /><sub><b>savylovskij</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Asavylovskij" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ltlaitoff"><img src="https://avatars.githubusercontent.com/u/67638952?v=4?s=70" width="70px;" alt="Ivan Schedrovskiy"/><br /><sub><b>Ivan Schedrovskiy</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Altlaitoff" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/georgyna"><img src="https://avatars.githubusercontent.com/u/34685407?v=4?s=70" width="70px;" alt="georgyna"/><br /><sub><b>georgyna</b></sub></a><br /><a href="#translation-georgyna" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://anton.shevchuk.name"><img src="https://avatars.githubusercontent.com/u/142057?v=4?s=70" width="70px;" alt="Anton Shevchuk"/><br /><sub><b>Anton Shevchuk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AAntonShevchuk" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
