@@ -91,8 +91,8 @@ alert(document.body instanceof EventTarget); // true
 
 Це також легко побачити, якщо вивести елемент за допомогою `console.dir(elem)` у браузері. Там в консолі ви побачите `HTMLElement.prototype`, `Element.prototype` і так далі.
 
-```smart header="`console.dir(elem)`проти`console.log(elem)`"
-Більшість браузерів підтримують дві команди у своїх інструментах розробника: `console.log`та`console.dir`. Вони виводять свої аргументи в консоль. Для об’єктів JavaScript ці команди зазвичай працюють однаково.
+```smart header="`console.dir(elem)` проти `console.log(elem)`"
+Більшість браузерів підтримують дві команди у своїх інструментах розробника: `console.log` та `console.dir`. Вони виводять свої аргументи в консоль. Для об’єктів JavaScript ці команди зазвичай працюють однаково.
 
 Але для DOM елементів вони різні:
 
