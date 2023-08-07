@@ -1,3 +1,3 @@
-# Regular expressions
+# Регулярні вирази
 
-Regular expressions is a powerful way of doing search and replace in strings.
+Регулярні вирази - це могутній спосіб виконувати пошук і заміну в рядках.
