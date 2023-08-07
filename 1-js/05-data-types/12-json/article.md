@@ -172,7 +172,7 @@ JSON.stringify(meetup); // Помилка: Конвертування циклі
 ![](json-meetup.svg)
 
 
-## Виключаємо та перетворюємо: replacer
+## Виключення та перетворення: replacer
 
 Повний синтаксис `JSON.stringify`:
 
