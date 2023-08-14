@@ -1,74 +1,74 @@
 
 # Fetch
 
-JavaScript can send network requests to the server and load new information whenever it's needed.
+JavaScript може відправляти мережеві запити на сервер та підвантажувати нову інформацію за потребою.
 
-For example, we can use a network request to:
+Наприклад, можна використовувати мережевий запит, щоб:
 
-- Submit an order,
-- Load user information,
-- Receive latest updates from the server,
-- ...etc.
+- Відправляти замовлення,
+- Завантажити інформацію про користувача,
+- Отримати останні оновлення з сервера,
+- ...і т.д.
 
-...And all of that without reloading the page!
+...І все це без перезавантаження сторінки!
 
-There's an umbrella term "AJAX" (abbreviated <b>A</b>synchronous <b>J</b>avaScript <b>A</b>nd <b>X</b>ML) for network requests from JavaScript. We don't have to use XML though: the term comes from old times, that's why that word is there. You may have heard that term already.
+Є загальний термін "AJAX" (абревіатура від <b>A</b>synchronous <b>J</b>avaScript <b>A</b>nd <b>X</b>ML) для мережевих запитів від JavaScript коду. Але формат XML використовувати не обов’язково: цей термін застарілий, тому це слово (XML) тут. Можливо, ви вже його десь чули.
 
-There are multiple ways to send a network request and get information from the server.
+Є кілька способів надіслати мережевий запит і отримати інформацію з сервера.
 
-The `fetch()` method is modern and versatile, so we'll start with it. It's not supported by old browsers (can be polyfilled), but very well supported among the modern ones.
+Метод `fetch()` -- сучасний та дуже потужний, тому почнемо з нього. Він не підтримується старими (можна використовувати поліфіл), але підтримується всіма сучасними браузерами.
 
-The basic syntax is:
+Базовий синтаксис:
 
 ```js
 let promise = fetch(url, [options])
 ```
 
-- **`url`** -- the URL to access.
-- **`options`** -- optional parameters: method, headers etc.
+- **`url`** -- URL для відправлення запиту.
+- **`options`** -- додаткові параметри: метод, заголовки і т.д.
 
-Without `options`, this is a simple GET request, downloading the contents of the `url`.
+Без `options`, це просто GET запит, який завантажує зміст за адресою `url`.
 
-The browser starts the request right away and returns a promise that the calling code should use to get the result.
+Браузер одразу починає робити запит та повертає проміс, який зовнішний код використовує для отримання результату.
 
-Getting a response is usually a two-stage process.
+Процес отримання запиту зазвичай відбувається у два етапи.
 
-**First, the `promise`, returned by `fetch`, resolves with an object of the built-in [Response](https://fetch.spec.whatwg.org/#response-class) class as soon as the server responds with headers.**
+**По-перше, `promise` завершиться із об'єктом вбудованого класу [Response](https://fetch.spec.whatwg.org/#response-class) у якості результату, одразу коли сервер надішле заголовки відповіді.**
 
-At this stage we can check HTTP status, to see whether it is successful or not, check headers, but don't have the body yet.
+На цьому етапі можна перевірити статус HTTP-запиту, та визначити, чи виконався він успішно, а також переглянути заголовки, але покищо без тіла запиту.
 
-The promise rejects if the `fetch` was unable to make HTTP-request, e.g. network problems, or there's no such site. Abnormal HTTP-statuses, such as 404 or 500 do not cause an error.
+Проміс закінчується помилкою, якщо `fetch` не зміг виконати HTTP-запит, наприклад, через помилку мережі або, якщо такого сайту не існує. Ненормальні HTTP-статуси, як 404 та 500, не викликатимуть помилку.
 
-We can see HTTP-status in response properties:
+Ми можемо побачити HTTP-статус у властивостях відповіді:
 
-- **`status`** -- HTTP status code, e.g. 200.
-- **`ok`** -- boolean, `true` if the HTTP status code is 200-299.
+- **`status`** -- код статуса HTTP-запиту, наприклад, 200.
+- **`ok`** -- логічне значення, котре буде `true`, якщо код HTTP-статосу в діапазоні 200-299.
 
-For example:
+Наприклад:
 
 ```js
 let response = await fetch(url);
 
-if (response.ok) { // if HTTP-status is 200-299
-  // get the response body (the method explained below)
+if (response.ok) { // якщо HTTP-статус у діапазоні 200-299
+  // отримання тіла запиту (див. про цей метод нижче)
   let json = await response.json();
 } else {
   alert("HTTP-Error: " + response.status);
 }
 ```
 
-**Second, to get the response body, we need to use an additional method call.**
+**По друге, для отримання тіла запиту, потрібно використовувати додатковий виклик методу.**
 
-`Response` provides multiple promise-based methods to access the body in various formats:
+`Response` надає декілька методів, які повертають проміс, для доступу до тіла запиту в різних форматах:
 
-- **`response.text()`** -- read the response and return as text,
-- **`response.json()`** -- parse the response as JSON,
-- **`response.formData()`** -- return the response as `FormData` object (explained in the [next chapter](info:formdata)),
-- **`response.blob()`** -- return the response as [Blob](info:blob) (binary data with type),
-- **`response.arrayBuffer()`** -- return the response as [ArrayBuffer](info:arraybuffer-binary-arrays) (low-level representation of binary data),
-- additionally, `response.body` is a [ReadableStream](https://streams.spec.whatwg.org/#rs-class) object, it allows you to read the body chunk-by-chunk, we'll see an example later.
+- **`response.text()`** -- читає відповід та повертає, як звичайний текст,
+- **`response.json()`** -- декодує відповідь у форматі JSON,
+- **`response.formData()`** -- повертає відповідь, як об'єкт `FormData` (він буде розглянутий [у наступному розділі](info:formdata)),
+- **`response.blob()`** -- повертає відповідь, як [Blob](info:blob) (бінарні дані з типом),
+- **`response.arrayBuffer()`** -- повертає відповідь, як [ArrayBuffer](інформація: буфер масиву - бінарний масиви) (низькорівневе представлення двійкових даних),
+- крім того, `response.body` це об'єкт [ReadableStream](https://streams.spec.whatwg.org/#rs-class), за допомогою якого можна отримувати (зчитувати) тіло відповіді частинами. Такий приклад буде розглянуто трохи пізніше.
 
-For instance, let's get a JSON-object with latest commits from GitHub:
+Наприклад, буде отримано JSON-об'єкт з останніми комітами із репозиторію GitHub:
 
 ```js run async
 let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
@@ -81,7 +81,7 @@ let commits = await response.json(); // read response body and parse as JSON
 alert(commits[0].author.login);
 ```
 
-Or, the same without `await`, using pure promises syntax:
+Те саме буде отримано без `await`, із використанням промісів:
 
 ```js run
 fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits')
@@ -89,7 +89,7 @@ fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commi
   .then(commits => alert(commits[0].author.login));
 ```
 
-To get the response text, `await response.text()` instead of `.json()`:
+Для отримання відповіді у вигляді тексту, використано `await response.text()` замість `.json()`:
 
 ```js run async
 let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
@@ -99,61 +99,61 @@ let text = await response.text(); // read response body as text
 alert(text.slice(0, 80) + '...');
 ```
 
-As a show-case for reading in binary format, let's fetch and show a logo image of ["fetch" specification](https://fetch.spec.whatwg.org) (see chapter [Blob](info:blob) for details about operations on `Blob`):
+Для прикладу роботи із бінарними даними, буде зроблено запит та виведено на екран логотип [специфікації "fetch"](https://fetch.spec.whatwg.org) (див. розділ [Blob](info:blob), щоб дізнатись детальніше про операції із `Blob`):
 
 ```js async run
 let response = await fetch('/article/fetch/logo-fetch.svg');
 
 *!*
-let blob = await response.blob(); // download as Blob object
+let blob = await response.blob(); // скачати, як Blob об'єкт
 */!*
 
-// create <img> for it
+// створення <img> для нього
 let img = document.createElement('img');
 img.style = 'position:fixed;top:10px;left:10px;width:100px';
 document.body.append(img);
 
-// show it
+// виведення на екран
 img.src = URL.createObjectURL(blob);
 
-setTimeout(() => { // hide after three seconds
+setTimeout(() => { // приховування через три секунди
   img.remove();
   URL.revokeObjectURL(img.src);
 }, 3000);
 ```
 
-````warn
-We can choose only one body-reading method.
+````Важливо
+Можна вибрати тільки один метод читання відповіді.
 
-If we've already got the response with `response.text()`, then `response.json()` won't work, as the body content has already been processed.
+Якщо, було отримано відповід із `response.text()`, тоді `response.json()` не спрацює, бо дані вже були оброблені..
 
 ```js
-let text = await response.text(); // response body consumed
-let parsed = await response.json(); // fails (already consumed)
+let text = await response.text(); // читаємо тіло відповіді
+let parsed = await response.json(); // завершується помилкою, бо дані вже прочитані
 ```
 ````
 
-## Response headers
+## Заголовки відповіді
 
-The response headers are available in a Map-like headers object in `response.headers`.
+Заоголовки відповіді зберігаются у схожому на Map об'єкті `response.headers`.
 
-It's not exactly a Map, but it has similar methods to get individual headers by name or iterate over them:
+Це не зовсім `Map`, але можна використовувати такі самі методи, щоб отримати заголовок за його назвою або перебрати заголовки у циклі:
 
 ```js run async
 let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
 
-// get one header
+// отримання одного заголовку
 alert(response.headers.get('Content-Type')); // application/json; charset=utf-8
 
-// iterate over all headers
+// перебір усіх заголовків
 for (let [key, value] of response.headers) {
   alert(`${key} = ${value}`);
 }
 ```
 
-## Request headers
+## Заголовки запиту
 
-To set a request header in `fetch`, we can use the `headers` option. It has an object with outgoing headers, like this:
+Для встановлення заголовка запиту в `fetch`, можна використати властивість `headers` в об'єкті `options`. Вона містит об'єкт з вихідними заголовками, наприклад:
 
 ```js
 let response = fetch(protectedUrl, {
@@ -163,7 +163,7 @@ let response = fetch(protectedUrl, {
 });
 ```
 
-...But there's a list of [forbidden HTTP headers](https://fetch.spec.whatwg.org/#forbidden-header-name) that we can't set:
+...Але існує список [заборонених HTTP заголовків](https://fetch.spec.whatwg.org/#forbidden-header-name), які не можна встановити:
 
 - `Accept-Charset`, `Accept-Encoding`
 - `Access-Control-Request-Headers`
@@ -186,22 +186,22 @@ let response = fetch(protectedUrl, {
 - `Proxy-*`
 - `Sec-*`
 
-These headers ensure proper and safe HTTP, so they are controlled exclusively by the browser.
+Ці заголовки забезпечуют достовірність HTTP, через це вони контролюются і встановлюються лише браузером.
 
-## POST requests
+## POST запити
 
-To make a `POST` request, or a request with another method, we need to use `fetch` options:
+Для відправлення `POST` запиту або запиту з іншим методом, треба використати `fetch` параметри:
 
-- **`method`** -- HTTP-method, e.g. `POST`,
-- **`body`** -- the request body, one of:
-  - a string (e.g. JSON-encoded),
-  - `FormData` object, to submit the data as `multipart/form-data`,
-  - `Blob`/`BufferSource` to send binary data,
-  - [URLSearchParams](info:url), to submit the data in `x-www-form-urlencoded` encoding, rarely used.
+- **`method`** -- HTTP-метод, наприклад `POST`,
+- **`body`** -- тіло запиту, щось одне із списку:
+  - рядок (наприклад, у форматі JSON),
+  - об'єкт `FormData`, для відправки даних як `multipart/form-data`,
+  - `Blob`/`BufferSource` для відправлення бінарних даних,
+  - [URLSearchParams](info:url), для відправлення даних у кодуванні `x-www-form-urlencoded`, використовуєся рідко.
 
-The JSON format is used most of the time.
+Частіше використовуєся JSON формат.
 
-For example, this code submits `user` object as JSON:
+Наприклад, цей код відправляє об'єкт `user` як JSON:
 
 ```js run async
 let user = {
@@ -223,15 +223,15 @@ let result = await response.json();
 alert(result.message);
 ```
 
-Please note, if the request `body` is a string, then `Content-Type` header is set to `text/plain;charset=UTF-8` by default.
+Зверніть увагу, якщо тіло запиту `body` -- рядок, то заголовок `Content-Type` типово буде `text/plain;charset=UTF-8` .
 
-But, as we're going to send JSON, we use `headers` option to send `application/json` instead, the correct `Content-Type` for JSON-encoded data.
+Але, оскільки ми надсилаємо дані у форматі JSON, то через `headers` ми маємо встановити значення `application/json` -- правильний `Content-Type` для JSON формату.
 
-## Sending an image
+## Відправлення зображення
 
-We can also submit binary data with `fetch` using `Blob` or `BufferSource` objects.
+Можна відправити бінарні дані за допомогою `fetch`, використовуючи об'єкт `Blob` або `BufferSource`.
 
-In this example, there's a `<canvas>` where we can draw by moving a mouse over it. A click on the "submit" button sends the image to the server:
+У прикладі нище, є елемент `<canvas>`, на котрому можна малювати рух мишки. При натисканні на кнопку "відправити", то зображен буде відправлено на сервер:
 
 ```html run autorun height="90"
 <body style="margin:0">
@@ -253,7 +253,7 @@ In this example, there's a `<canvas>` where we can draw by moving a mouse over i
         body: blob
       });
 
-      // the server responds with confirmation and the image size
+      // сервер відповідає підтвердженням та розміром зображення
       let result = await response.json();
       alert(result.message);
     }
@@ -262,9 +262,9 @@ In this example, there's a `<canvas>` where we can draw by moving a mouse over i
 </body>
 ```
 
-Please note, here we don't set `Content-Type` header manually, because a `Blob` object has a built-in type (here `image/png`, as generated by `toBlob`). For `Blob` objects that type becomes the value of `Content-Type`.
+Зауваження, тут не потрібно вручну встановлювати заголовок `Content-Type`, бо об'єкт `Blob` вбудований тип (буде використано `image/png`, заданий через `toBlob`). Під час відправлення об'єктів `Blob`, він автоматично стає значенням `Content-Type`.
 
-The `submit()` function can be rewritten without `async/await` like this:
+Функція `submit()` може бути переписана без `async/await`, наприклад наступним чином:
 
 ```js
 function submit() {
@@ -279,16 +279,16 @@ function submit() {
 }
 ```
 
-## Summary
+## Підсумки
 
-A typical fetch request consists of two `await` calls:
+Типовий запит за допомогою `fetch` складаєся із двох операторів `await`:
 
 ```js
-let response = await fetch(url, options); // resolves with response headers
-let result = await response.json(); // read body as json
+let response = await fetch(url, options); // завершення із заголовками відповіді
+let result = await response.json(); // читання тіла у форматі json
 ```
 
-Or, without `await`:
+Або без `await`:
 
 ```js
 fetch(url, options)
@@ -296,21 +296,21 @@ fetch(url, options)
   .then(result => /* process result */)
 ```
 
-Response properties:
-- `response.status` -- HTTP code of the response,
-- `response.ok` -- `true` if the status is 200-299.
-- `response.headers` -- Map-like object with HTTP headers.
+Параметри відповіді:
+- `response.status` -- HTTP-статус відповіді,
+- `response.ok` -- `true`, якщо статус відповіді у діапазоні 200-299.
+- `response.headers` -- схожий на `Map`об'єкт із HTTP заголовками.
 
-Methods to get response body:
-- **`response.text()`** -- return the response as text,
-- **`response.json()`** -- parse the response as JSON object,
-- **`response.formData()`** -- return the response as `FormData` object (`multipart/form-data` encoding, see the next chapter),
-- **`response.blob()`** -- return the response as [Blob](info:blob) (binary data with type),
-- **`response.arrayBuffer()`** -- return the response as [ArrayBuffer](info:arraybuffer-binary-arrays) (low-level binary data),
+Методи для отримання тіла відповіді:
+- **`response.text()`** -- повертає відповід, як звичайний текст,
+- **`response.json()`** -- декодує відповідь у форматі JSON,
+- **`response.formData()`** -- повертає відповідь як об'єкт `FormData` (кодування `multipart/form-data`, див. у наступному розділі),
+- **`response.blob()`** -- повертає об'єкт як [Blob](info:blob) (бінарні дані з типом),
+- **`response.arrayBuffer()`** -- повертає відповідь як [ArrayBuffer](info:arraybuffer-binary-arrays) (низько рівневі бінарні дані),
 
-Fetch options so far:
-- `method` -- HTTP-method,
-- `headers` -- an object with request headers (not any header is allowed),
-- `body` -- the data to send (request body) as `string`, `FormData`, `BufferSource`, `Blob` or `UrlSearchParams` object.
+Опції `fetch`, які ми розглянули:
+- `method` -- HTTP-метод,
+- `headers` -- об'єкт із заголовками запиту (не всі заголовки дозволені),
+- `body` -- дані для відправлення (тіло запиту) у вигляді тексту `string`, `FormData`, `BufferSource`, `Blob` або `UrlSearchParams` об'єкт.
 
-In the next chapters we'll see more options and use cases of `fetch`.
+У наступних розділах буде розглянуто більше параметрів та варіантів використання `fetch`.

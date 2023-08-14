@@ -189,7 +189,7 @@ button.onclick = function() {
 document.body.setAttribute('onclick', function() { alert(1) });
 ```
 
-**Реєстр DOM-властивості має значення..**
+**Регістр DOM-властивості має значення..**
 
 Використовуйте `elem.onclick`, а не `elem.ONCLICK`, тому що DOM-властивості чутливі до регістру.
 

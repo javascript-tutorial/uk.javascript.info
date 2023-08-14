@@ -1,32 +1,32 @@
-# Shadow DOM
+# Тіньовий DOM (Shadow DOM)
 
-Shadow DOM serves for encapsulation. It allows a component to have its very own "shadow" DOM tree, that can't be accidentally accessed from the main document, may have local style rules, and more.
+Тіньовий DOM ('Shadow DOM') використовується для інкапсуляції. Він дозволяє компоненті мати своє власне "тіньове" DOM-дерево, що не може бути випадково змінено з головного документу, a також може мати власні локальні стилі, та ін.
 
-## Built-in shadow DOM
+## Вбудований тіньовий DOM
 
-Did you ever think how complex browser controls are created and styled?
+Чи замислювались ви коли-небудь, як влаштовані та стилізовані складні браузерні інтерактивні елементи?
 
-Such as `<input type="range">`:
+Такі як `<input type="range">`:
 
 <p>
 <input type="range">
 </p>
 
-The browser uses DOM/CSS internally to draw them. That DOM structure is normally hidden from us, but we can see it in developer tools. E.g. in Chrome, we need to enable in Dev Tools "Show user agent shadow DOM" option.
+Браузер використовує DOM/CSS на свій розсуд, щоб відобразити їх. Така структура DOM зазвичай прихована від нас, але ми можемо її побачити в інструментах розробника. Наприклад, у Chrome нам знадобиться активувати опцію "Show user agent shadow DOM".
 
-Then `<input type="range">` looks like this:
+Отже, `<input type="range">` виглядає так:
 
 ![](shadow-dom-range.png)
 
-What you see under `#shadow-root` is called "shadow DOM".
+Те, що відображено під `#shadow-root` і є "тіньовим DOM" (shadow DOM).
 
-We can't get built-in shadow DOM elements by regular JavaScript calls or selectors. These are not regular children, but a powerful encapsulation technique.
+Ми не можемо отримати доступ до тіньового DOM вбудованих елементів звичайними засобами JavaScript чи за допомогою селекторів. Це не просто дочірні елементи, а потужний спосіб інкапсуляції, тобто захисту від зовнішнього втручання у внутрішню структуру.
 
-In the example above, we can see a useful attribute `pseudo`. It's non-standard, exists for historical reasons. We can use it style subelements with CSS, like this:
+У вищенаведеному прикладі зверніть увагу на корисний атрибут `pseudo`. Він є нестандартним та існує через історичні причини. Його можна використовувати задля стилізації вкладених елементів через CSS, наприклад, так:
 
 ```html run autorun
 <style>
-/* make the slider track red */
+/* робимо слайдер повзунка червоним */
 input::-webkit-slider-runnable-track {
   background: red;
 }
@@ -35,22 +35,22 @@ input::-webkit-slider-runnable-track {
 <input type="range">
 ```
 
-Once again, `pseudo` is a non-standard attribute. Chronologically, browsers first started to experiment with internal DOM structures to implement controls, and then, after time, shadow DOM was standardized to allow us, developers, to do the similar thing.
+Наголошуємо, `pseudo` є нестандартним атрибутом. Історично, браузери спочатку почали експерементувати зі внутрішнімі DOM-структурами для створення інтерактивних елементів, і тільки потім, через певний час, тіньовий DOM було стандартизовано, щоб надати можливість нам, розробникам, робити те саме.
 
-Further on, we'll use the modern shadow DOM standard, covered by [DOM spec](https://dom.spec.whatwg.org/#shadow-trees) and other related specifications.
+Надалі ми використовуватимемо сучасний тіньовий стандарт DOM, відображений у [DOM специфікації](https://dom.spec.whatwg.org/#shadow-trees) та в інших споріднених специфікаціях.
 
-## Shadow tree
+## Тіньове дерево
 
-A DOM element can have two types of DOM subtrees:
+DOM-елемент може мати два типи DOM піддерев:
 
-1. Light tree -- a regular DOM subtree, made of HTML children. All subtrees that we've seen in previous chapters were "light".
-2. Shadow tree -- a hidden DOM subtree, not reflected in HTML, hidden from prying eyes.
+1. Light tree -- звичайне "cвітле" DOM піддерево, що складається з HTML-нащадків. Усі піддерева, про які йшлося у попередніх розділах, були "cвітлі".
+2. Shadow tree -- приховане "тіньове" DOM піддерево, не відображене у HTML та сховане від сторонніх очей.
 
-If an element has both, then the browser renders only the shadow tree. But we can setup a kind of composition between shadow and light trees as well. We'll see the details later in the chapter <info:slots-composition>.
+Якщо елемент має обидва, то браузер відображає тільки тіньове дерево. Також ми можемо встановити певний вид композиції (взаємодії) між тіньовим та світлим деревами. Ми обговоримо ці деталі надалі у розділі <info:slots-composition>.
 
-Shadow tree can be used in Custom Elements to hide component internals and apply component-local styles.
+Тіньове дерево може бути використаним в користувацьких елементах (сustom elements), щоб приховати внутрішню структуру компонента і застосувати до нього локальні стилі, захищені від зовнішнього втручання.
 
-For example, this `<show-hello>` element hides its internal DOM in shadow tree:
+Наприклад, цей `<show-hello>` елемент приховує свій внутрішній DOM у тіньовому дереві:
 
 ```html run autorun height=60
 <script>
@@ -67,46 +67,46 @@ customElements.define('show-hello', class extends HTMLElement {
 <show-hello name="John"></show-hello>
 ```
 
-That's how the resulting DOM looks in Chrome dev tools, all the content is under "#shadow-root":
+Ось так отриманий DOM виглядає в інструментах розробника Chrome, увесь контент всередині "#shadow-root":
 
 ![](shadow-dom-say-hello.png)
 
-First, the call to `elem.attachShadow({mode: …})` creates a shadow tree.
+По-перше, виклик `elem.attachShadow({mode: …})` створює тіньове дерево.
 
-There are two limitations:
-1. We can create only one shadow root per element.
-2. The `elem` must be either a custom element, or one of: "article", "aside", "blockquote", "body", "div", "footer", "h1..h6", "header", "main" "nav", "p", "section", or "span". Other elements, like `<img>`, can't host shadow tree.
+Існує два обмеження:
+1. Для одного елементу можливо створити тільки один тіньовий root.
+2. `elem` повинен бути або кастомним елементом, або одним з наступних:  "article", "aside", "blockquote", "body", "div", "footer", "h1..h6", "header", "main" "nav", "p", "section", or "span". Інші елементи, такі як `<img>`, не можуть містити тіньове дерево.
 
-The `mode` option sets the encapsulation level. It must have any of two values:
-- `"open"` -- the shadow root is available as `elem.shadowRoot`.
+Опція `mode` встановлює рівень інкапсуляції, вона повинна мати одне з двох значень:
+- `"open"` -- тіньовий root доступний як `elem.shadowRoot`.
 
-    Any code is able to access the shadow tree of `elem`.   
-- `"closed"` -- `elem.shadowRoot` is always `null`.
+    Будь-який код має доступ до тіньового дерева `elem`.   
+- `"closed"` -- `elem.shadowRoot` завжди `null`.
 
-    We can only access the shadow DOM by the reference returned by `attachShadow` (and probably hidden inside a class). Browser-native shadow trees, such as  `<input type="range">`, are closed. There's no way to access them.
+    Ми можемо отримати доступ до тіньового DOM тільки по посиланню, яке повертається `attachShadow` (і, можливо, приховане у класі). Вбудовані браузерні нативні дерева, такі, як `<input type="range">`, є закритими, до них не дістатись.
 
-The [shadow root](https://dom.spec.whatwg.org/#shadowroot), returned by `attachShadow`, is like an element: we can use `innerHTML` or DOM methods, such as `append`, to populate it.
+[Тіньовий root](https://dom.spec.whatwg.org/#shadowroot), який повертає `attachShadow`, поводиться як елемент: ми можемо використовувати `innerHTML` чи DOM-методи, такі як `append`, щоб заповнити його.
 
-The element with a shadow root is called a "shadow tree host", and is available as the shadow root `host` property:
+Елемент з тіньового root називається "shadow tree host" і доступний як властивість `host` у shadow root.
 
 ```js
-// assuming {mode: "open"}, otherwise elem.shadowRoot is null
+// за умови {mode: "open"}, інакше elem.shadowRoot це null
 alert(elem.shadowRoot.host === elem); // true
 ```
 
-## Encapsulation
+## Інкапсуляція
 
-Shadow DOM is strongly delimited from the main document:
+Тіньовий DOM цілковито відокремлений від основного документу:
 
-1. Shadow DOM elements are not visible to `querySelector` from the light DOM. In particular,  Shadow DOM elements may have ids that conflict with those in the light DOM. They must be unique only within the shadow tree.
-2. Shadow DOM has own stylesheets. Style rules from the outer DOM don't get applied.
+1. Елементи тіньового DOM невидимі для `querySelector` зі світлого DOM. Зокрема, тіньовий DOM елемент може мати всередині атрибути `id` зі значеннями, що конфліктують з однойменними зі світлого DOM. Вони повинні бути унікальними тільки всередині тіньового дерева.
+2. Тіньовий DOM має власні стилі. Стильові правила з зовнішнього DOM не застосовуються.
 
-For example:
+Наприклад:
 
 ```html run untrusted height=40
 <style>
 *!*
-  /* document style won't apply to the shadow tree inside #elem (1) */
+  /* стилі документа не застосовуються до тіньового дерева всередині #elem (1) */
 */!*
   p { color: red; }
 </style>
@@ -116,7 +116,7 @@ For example:
 <script>
   elem.attachShadow({mode: 'open'});
 *!*
-    // shadow tree has its own style (2)
+    // тіньове дерево має власні стилі (2)
 */!*
   elem.shadowRoot.innerHTML = `
     <style> p { font-weight: bold; } </style>
@@ -124,34 +124,34 @@ For example:
   `;
 
 *!*
-  // <p> is only visible from queries inside the shadow tree (3)
+  // <p> видимий тільки запитам зсередини тіньового дерева (3)
 */!*
   alert(document.querySelectorAll('p').length); // 0
   alert(elem.shadowRoot.querySelectorAll('p').length); // 1
 </script>  
 ```
 
-1. The style from the document does not affect the shadow tree.
-2. ...But the style from the inside works.
-3. To get elements in shadow tree, we must query from inside the tree.
+1. Стилі головного документу не впливають на тіньове дерево.
+2. ...Але стилі зсередини працюють.
+3. Щоб дістатися елементів тіньового дерева, запит повинен виконуватись зсередини дерева.
 
-## References
+## Довідки
 
 - DOM: <https://dom.spec.whatwg.org/#shadow-trees>
-- Compatibility: <https://caniuse.com/#feat=shadowdomv1>
-- Shadow DOM is mentioned in many other specifications, e.g. [DOM Parsing](https://w3c.github.io/DOM-Parsing/#the-innerhtml-mixin) specifies that shadow root has `innerHTML`.
+- Сумісність: <https://caniuse.com/#feat=shadowdomv1>
+- Тіньовий DOM згадується у багатьох інших специфікаціях, наприклад, [DOM Parsing](https://w3c.github.io/DOM-Parsing/#the-innerhtml-mixin) вказує на те, що у shadow root є `innerHTML`.
 
 
-## Summary
+## Підсумки
 
-Shadow DOM is a way to create a component-local DOM.
+Тіньовий DOM -- це спосіб створити ізольоване DOM-дерево для компоненти.
 
-1. `shadowRoot = elem.attachShadow({mode: open|closed})` -- creates shadow DOM for `elem`. If `mode="open"`, then it's accessible as `elem.shadowRoot` property.
-2. We can populate `shadowRoot` using `innerHTML` or other DOM methods.
+1. `shadowRoot = elem.attachShadow({mode: open|closed})` -- створює тіньовий DOM для `elem`. Якщо `mode="open"`, то він є досяжним як властивість `elem.shadowRoot`.
+2. Ми можемо записати щось всередину `shadowRoot`, використовуючи `innerHTML` чи інші DOM-методи.
 
-Shadow DOM elements:
-- Have their own ids space,
-- Invisible to JavaScript selectors from the main document, such as `querySelector`,
-- Use styles only from the shadow tree, not from the main document.
+Тіньові елементи DOM:
+- Мають окрему область для унікальності значень в атрибутах `id` HTML-елементів,
+- Невидимі для селекторів JavaScript з головного документу, таким методам, як `querySelector`;
+- Використовують стилі тільки з тіньового дерева, а не глобальні стилі документу.
 
-Shadow DOM, if exists, is rendered by the browser instead of so-called "light DOM" (regular children). In the chapter <info:slots-composition> we'll see how to compose them.
+Тіньовий DOM, якщо існує, рендериться браузером замість так званого "світлого DOM" (звичайних нащадків). У главі <info:slots-composition> ми розберемо, як поєднювати їх.

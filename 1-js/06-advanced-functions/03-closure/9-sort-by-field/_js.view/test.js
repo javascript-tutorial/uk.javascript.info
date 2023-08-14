@@ -8,8 +8,8 @@ describe("byField", function(){
 
   it("сортує користувачів за іменами", function(){
     let nameSortedKey = [
-      { name: "Енн", age: 19, surname: "Гетевей" },
       { name: "Іван", age: 20, surname: "Іванов"},
+      { name: "Енн", age: 19, surname: "Гетевей" },
       { name: "Петро", age: 18, surname: "Петров" },
     ];
     let nameSortedAnswer = users.sort(byField("name"));
@@ -28,8 +28,8 @@ describe("byField", function(){
 
   it("сортує користувачів за прізвищем", function(){
     let surnameSortedKey = [
-      { name: "Енн", age: 19, surname: "Гетевей" },
       { name: "Іван", age: 20, surname: "Іванов"},
+      { name: "Енн", age: 19, surname: "Гетевей" },
       { name: "Петро", age: 18, surname: "Петров" },
     ];
     let surnameSortedAnswer = users.sort(byField("surname"));

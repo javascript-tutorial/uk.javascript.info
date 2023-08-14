@@ -1,21 +1,21 @@
-A regexp for a number is: `pattern:-?\d+(\.\d+)?`. We created it in the previous task.
+Регулярний вираз для числа є наступним: `pattern:-?\d+(\.\d+)?`. Його ми створили в рамках попередньої задачі.
 
-An operator is `pattern:[-+*/]`. The hyphen `pattern:-` goes first in the square brackets, because in the middle it would mean a character range, while we just want a character `-`.
+Оператором слугуватиме `pattern:[-+*/]`. Дефіс `pattern:-` стоїть першим в квадратних дужках, бо позиція посередині означає діапазон знаків, тоді як нам потрібен лише `-`.
 
-The slash `/` should be escaped inside a JavaScript regexp `pattern:/.../`, we'll do that later.
+Символ `/` має бути екранованим всередині регулярного виразу JavaScript `pattern:/.../`, зробимо це потім.
 
-We need a number, an operator, and then another number. And optional spaces between them.
+Нам потрібне число, оператор, тоді ще одне число. Та можливі пробіли між ними.
 
-The full regular expression: `pattern:-?\d+(\.\d+)?\s*[-+*/]\s*-?\d+(\.\d+)?`.
+Повний регулярний вираз: `pattern:-?\d+(\.\d+)?\s*[-+*/]\s*-?\d+(\.\d+)?`.
 
-It has 3 parts, with `pattern:\s*` between them:
-1. `pattern:-?\d+(\.\d+)?` - the first number,
-1. `pattern:[-+*/]` - the operator,
-1. `pattern:-?\d+(\.\d+)?` - the second number.
+Він містить 3 частини, з `pattern:\s*` між ними:
+1. `pattern:-?\d+(\.\d+)?` - перше число,
+1. `pattern:[-+*/]` - оператор,
+1. `pattern:-?\d+(\.\d+)?` - друге число.
 
-To make each of these parts a separate element of the result array, let's enclose them in parentheses: `pattern:(-?\d+(\.\d+)?)\s*([-+*/])\s*(-?\d+(\.\d+)?)`.
+Аби зробити кожну з цих частин окремим елементом масиву результатів, помістимо їх в круглі дужки: `pattern:(-?\d+(\.\d+)?)\s*([-+*/])\s*(-?\d+(\.\d+)?)`.
 
-In action:
+Код у дії:
 
 ```js run
 let regexp = /(-?\d+(\.\d+)?)\s*([-+*\/])\s*(-?\d+(\.\d+)?)/;
@@ -23,22 +23,22 @@ let regexp = /(-?\d+(\.\d+)?)\s*([-+*\/])\s*(-?\d+(\.\d+)?)/;
 alert( "1.2 + 12".match(regexp) );
 ```
 
-The result includes:
+Розглянемо результат:
 
-- `result[0] == "1.2 + 12"` (full match)
-- `result[1] == "1.2"` (first group `(-?\d+(\.\d+)?)` -- the first number, including the decimal part)
-- `result[2] == ".2"` (second group`(\.\d+)?` -- the first decimal part)
-- `result[3] == "+"` (third group `([-+*\/])` -- the operator)
-- `result[4] == "12"` (forth group `(-?\d+(\.\d+)?)` -- the second number)
-- `result[5] == undefined` (fifth group `(\.\d+)?` -- the last decimal part is absent, so it's undefined)
+- `result[0] == "1.2 + 12"` (повний збіг)
+- `result[1] == "1.2"` (перша група `(-?\d+(\.\d+)?)` -- перше число, включаючи десяткову частину)
+- `result[2] == ".2"` (друга група `(\.\d+)?` -- перша десяткова частина)
+- `result[3] == "+"` (третя група `([-+*\/])` -- оператор)
+- `result[4] == "12"` (четверта група `(-?\d+(\.\d+)?)` -- друге число)
+- `result[5] == undefined` (п’ята група `(\.\d+)?` -- остання десяткова частина відсутня, тому вона undefined)
 
-We only want the numbers and the operator, without the full match or the decimal parts, so let's "clean" the result a bit.
+Нам потрібні лише числа та оператор, без повного збігу чи десяткових частин, тож проведемо невелику "чистку" результату.
 
-The full match (the arrays first item) can be removed by shifting the array `result.shift()`.
+Повний збіг (перший елемент масиву) можна прибрати методом масиву `result.shift()`.
 
-Groups that contain decimal parts (number 2 and 4) `pattern:(.\d+)` can be excluded by adding  `pattern:?:` to the beginning: `pattern:(?:\.\d+)?`.
+Групи 2 та 5, що містять десяткові частини `pattern:(.\d+)`, можна оминути, додавши `pattern:?:` на початку: `pattern:(?:\.\d+)?`.
 
-The final solution:
+Кінцевий варіант:
 
 ```js run
 function parse(expr) {

@@ -1,31 +1,31 @@
-# Capturing groups
+# Групи захоплення
 
-A part of a pattern can be enclosed in parentheses `pattern:(...)`. This is called a "capturing group".
+Частину виразу можна обгорнути в круглі дужки `pattern:(...)`. Це називається "група захоплення".
 
-That has two effects:
+Такий прийом має два наслідки:
 
-1. It allows to get a part of the match as a separate item in the result array.
-2. If we put a quantifier after the parentheses, it applies to the parentheses as a whole.
+1. Він дозволяє отримати частину збігу в якості окремого елементу в масиві результатів.
+2. Якщо ми поставимо квантифікатор після дужок, він застосується до всього їх вмісту.
 
-## Examples
+## Приклади
 
-Let's see how parentheses work in examples.
+Розглянемо як працюють круглі дужки на прикладах.
 
-### Example: gogogo
+### Приклад: gogogo
 
-Without parentheses, the pattern `pattern:go+` means `subject:g` character, followed by `subject:o` repeated one or more times. For instance, `match:goooo` or `match:gooooooooo`.
+Без круглих дужок, вираз `pattern:go+` означає символ `subject:g`, за яким слідує `subject:o` на повторі один чи кілька разів. Тобто, `match:goooo` чи `match:gooooooooo`.
 
-Parentheses group characters together, so `pattern:(go)+` means `match:go`, `match:gogo`, `match:gogogo` and so on.
+Круглі дужки об’єднують символи в групи, тож `pattern:(go)+` означає `match:go`, `match:gogo`, `match:gogogo` і так далі.
 
 ```js run
 alert( 'Gogogo now!'.match(/(go)+/ig) ); // "Gogogo"
 ```
 
-### Example: domain
+### Приклад: домен
 
-Let's make something more complex -- a regular expression to search for a website domain.
+Зробимо дещо складніше -- регулярний вираз для пошуку домену сайту.
 
-For example:
+Наприклад:
 
 ```
 mail.com
@@ -33,9 +33,9 @@ users.mail.com
 smith.users.mail.com
 ```
 
-As we can see, a domain consists of repeated words, a dot after each one except the last one.
+Як бачимо, домен складається з повторюваних слів та крапки після кожного з них (окрім останнього).
 
-In regular expressions that's `pattern:(\w+\.)+\w+`:
+В регулярних виразах це `pattern:(\w+\.)+\w+`:
 
 ```js run
 let regexp = /(\w+\.)+\w+/g;
@@ -43,17 +43,17 @@ let regexp = /(\w+\.)+\w+/g;
 alert( "site.com my.site.com".match(regexp) ); // site.com,my.site.com
 ```
 
-The search works, but the pattern can't match a domain with a hyphen, e.g. `my-site.com`, because the hyphen does not belong to class `pattern:\w`.
+Пошук працює, але патерн не збігатиметься з доменом з дефісом: наприклад, `my-site.com`, бо дефіс не належить до класу `pattern:\w`.
 
-We can fix it by replacing `pattern:\w` with `pattern:[\w-]` in every word except the last one: `pattern:([\w-]+\.)+\w+`.
+Ми можемо виправити це, замінивши `pattern:\w` на `pattern:[\w-]` в кожному слові (окрім останнього): `pattern:([\w-]+\.)+\w+`.
 
-### Example: email
+### Приклад: email
 
-The previous example can be extended. We can create a regular expression for emails based on it.
+Попередній приклад можна розширити. Спираючись на нього, ми можемо створити регулярний вираз для адрес електронної пошти.
 
-The email format is: `name@domain`. Any word can be the name, hyphens and dots are allowed. In regular expressions that's `pattern:[-.\w]+`.
+Формат електронної пошти: `name@domain`. Name може бути будь-яким словом, дефіси та крапки допускаються. В регулярних виразах це `pattern:[-.\w]+`.
 
-The pattern:
+Вираз є наступним:
 
 ```js run
 let regexp = /[-.\w]+@([\w-]+\.)+[\w-]+/g;
@@ -61,27 +61,27 @@ let regexp = /[-.\w]+@([\w-]+\.)+[\w-]+/g;
 alert("my@mail.com @ his@site.com.uk".match(regexp)); // my@mail.com, his@site.com.uk
 ```
 
-That regexp is not perfect, but mostly works and helps to fix accidental mistypes. The only truly reliable check for an email can only be done by sending a letter.
+Це неідеальний регулярний вираз, але здебільшого робочий та здатний виправити випадкові помилки. Єдина справді надійна перевірка електронної пошти -- відправка листа.
 
-## Parentheses contents in the match
+## Вміст дужок всередині збігу
 
-Parentheses are numbered from left to right. The search engine memorizes the content matched by each of them and allows to get it in the result.
+Дужки нумеруються зліва направо. Пошукова система запам'ятовує вміст збігу для кожної з них та дозволяє отримати його всередині результату.
 
-The method `str.match(regexp)`, if `regexp` has no flag `g`, looks for the first match and returns it as an array:
+У випадку, якщо `regexp` не містить прапорця `g`, метод `str.match(regexp)` шукає перший збіг та повертає його як масив:
 
-1. At index `0`: the full match.
-2. At index `1`: the contents of the first parentheses.
-3. At index `2`: the contents of the second parentheses.
-4. ...and so on...
+1. Індекс `0`: повний збіг.
+2. Індекс `1`: вміст перших дужок.
+3. Індекс `2`: вміст других дужок.
+4. ...і так далі...
 
-For instance, we'd like to find HTML tags `pattern:<.*?>`, and process them. It would be convenient to have tag content (what's inside the angles), in a separate variable.
+Для прикладу, ми б хотіли знайти HTML теги `pattern:<.*?>` та обробити їх. Було б зручно мати вміст тегу (все, що всередині кутових дужок) в окремій змінній.
 
-Let's wrap the inner content into parentheses, like this: `pattern:<(.*?)>`.
+Огорнемо внутрішній вміст у круглі дужки, ось так: `pattern:<(.*?)>`.
 
-Now we'll get both the tag as a whole `match:<h1>` and its contents `match:h1` in the resulting array:
+Тепер ми отримаємо як тег в цілому `match:<h1>`, так і його вміст `match:h1` в отриманому масиві:
 
 ```js run
-let str = '<h1>Hello, world!</h1>';
+let str = '<h1>Вітаю, світе!</h1>';
 
 let tag = str.match(/<(.*?)>/);
 
@@ -89,23 +89,23 @@ alert( tag[0] ); // <h1>
 alert( tag[1] ); // h1
 ```
 
-### Nested groups
+### Вкладені групи
 
-Parentheses can be nested. In this case the numbering also goes from left to right.
+Дужки можуть бути вкладеними. В нашому випадку, нумерація також проводиться зліва направо.
 
-For instance, when searching a tag in `subject:<span class="my">` we may be interested in:
+Наприклад, під час пошуку тегу в `subject:<span class="my">`, нас може цікавити:
 
-1. The tag content as a whole: `match:span class="my"`.
-2. The tag name: `match:span`.
-3. The tag attributes: `match:class="my"`.
+1. Вміст тегу загалом: `match:span class="my"`.
+2. Ім'я тегу: `match:span`.
+3. Атрибути тегу: `match:class="my"`.
 
-Let's add parentheses for them: `pattern:<(([a-z]+)\s*([^>]*))>`.
+Додамо до них дужки: `pattern:<(([a-z]+)\s*([^>]*))>`.
 
-Here's how they are numbered (left to right, by the opening paren):
+Ось як вони нумеруються (зліва направо, за відкриваючою дужкою):
 
 ![](regexp-nested-groups-pattern.svg)
 
-In action:
+Код у дії:
 
 ```js run
 let str = '<span class="my">';
@@ -119,59 +119,59 @@ alert(result[2]); // span
 alert(result[3]); // class="my"
 ```
 
-The zero index of `result` always holds the full match.
+Повний збіг завжди представлений в елементі з нульовим індексом в `result`.
 
-Then groups, numbered from left to right by an opening paren. The first group is returned as `result[1]`. Here it encloses the whole tag content.
+Далі йдуть групи, нумеровані зліва направо за відкриваючою дужкою. Перша група розміщена в `result[1]`. В даному випадку, вона охоплює весь вміст тегу.
 
-Then in `result[2]` goes the group from the second opening paren `pattern:([a-z]+)` - tag name, then in `result[3]` the tag: `pattern:([^>]*)`.
+Далі, в `result[2]` отримуємо групу з других дужок `pattern:([a-z]+)` - ім’я тегу, в `result[3]` - тег `pattern:([^>]*)`.
 
-The contents of every group in the string:
+Вміст кожної групи в рядку:
 
 ![](regexp-nested-groups-matches.svg)
 
-### Optional groups
+### Необов’язкові групи
 
-Even if a group is optional and doesn't exist in the match (e.g. has the quantifier `pattern:(...)?`), the corresponding `result` array item is present and equals `undefined`.
+Навіть якщо група необов’язкова та не існує всередині збігу (тобто має квантифікатор `pattern:(...)?`), відповідний елемент масиву `result` наявний та дорівнює `undefined`.
 
-For instance, let's consider the regexp `pattern:a(z)?(c)?`. It looks for `"a"` optionally followed by `"z"` optionally followed by `"c"`.
+Для прикладу, розглянемо регулярний вираз `pattern:a(z)?(c)?`. Він шукає `"a"`, після якої може йти `"z"`, після якої може йти `"c"`.
 
-If we run it on the string with a single letter `subject:a`, then the result is:
+Якщо використати цей вираз для рядку з єдиною літерою `subject:a`, тоді результатом буде:
 
 ```js run
 let match = 'a'.match(/a(z)?(c)?/);
 
 alert( match.length ); // 3
-alert( match[0] ); // a (whole match)
+alert( match[0] ); // a (повний збіг)
 alert( match[1] ); // undefined
 alert( match[2] ); // undefined
 ```
 
-The array has the length of `3`, but all groups are empty.
+Довжина масиву дорівнює `3`, але всі групи порожні.
 
-And here's a more complex match for the string `subject:ac`:
+Ось приклад більш комплексного збігу для рядку `subject:ac`:
 
 ```js run
 let match = 'ac'.match(/a(z)?(c)?/)
 
 alert( match.length ); // 3
-alert( match[0] ); // ac (whole match)
-alert( match[1] ); // undefined, because there's nothing for (z)?
+alert( match[0] ); // ac (повний збіг)
+alert( match[1] ); // undefined, бо для (z)? нічого не знайшлось
 alert( match[2] ); // c
 ```
 
-The array length is permanent: `3`. But there's nothing for the group `pattern:(z)?`, so the result is `["ac", undefined, "c"]`.
+Довжина масиву є незмінною: `3`. Але для групи `pattern:(z)?` нічого не знайшлось, тому в результаті отримуємо `["ac", undefined, "c"]`.
 
-## Searching for all matches with groups: matchAll
+## Пошук усіх збігів з групами: matchAll
 
-```warn header="`matchAll` is a new method, polyfill may be needed"
-The method `matchAll` is not supported in old browsers.
+```warn header="`matchAll` є новим методом, може знадобитись поліфіл"
+Метод `matchAll` не підтримується старими браузерами.
 
-A polyfill may be required, such as <https://github.com/ljharb/String.prototype.matchAll>.
+Поліфіл може бути обов’язковим, такий як <https://github.com/ljharb/String.prototype.matchAll>.
 ```
 
-When we search for all matches (flag `pattern:g`), the `match` method does not return contents for groups.
+Коли ми шукаємо всі збіги (прапорець `pattern:g`), метод `match` не повертає вміст для груп.
 
-For example, let's find all tags in a string:
+Для прикладу, знайдемо всі теги в рядку:
 
 ```js run
 let str = '<h1> <h2>';
@@ -181,55 +181,55 @@ let tags = str.match(/<(.*?)>/g);
 alert( tags ); // <h1>,<h2>
 ```
 
-The result is an array of matches, but without details about each of them. But in practice we usually need contents of capturing groups in the result.
+Як результат отримуємо масив збігів, але без індивідуальних деталей. На практиці ж ми зазвичай потребуємо вміст груп захоплення.
 
-To get them, we should search using the method `str.matchAll(regexp)`.
+Аби їх отримати, ми маємо здійснювати пошук методом `str.matchAll(regexp)`.
 
-It was added to JavaScript language long after `match`, as its "new and improved version".
+Його додали в JavaScript набагато пізніше за `match` в якості "нової та покращеної версії".
 
-Just like `match`, it looks for matches, but there are 3 differences:
+Як і `match`, метод шукає збіги, але з урахуванням 3-ьох відмінностей:
 
-1. It returns not an array, but an iterable object.
-2. When the flag `pattern:g` is present, it returns every match as an array with groups.
-3. If there are no matches, it returns not `null`, but an empty iterable object.
+1. Він повертає не масив, а ітерований об’єкт.
+2. За наявності прапорцю `pattern:g`, він повертає кожен збіг у вигляді масиву з групами.
+3. Якщо збігів немає, він повертає замість `null` порожній ітерований об’єкт.
 
-For instance:
+Наприклад:
 
 ```js run
 let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
 
-// results - is not an array, but an iterable object
+// results - є не масивом, а ітерованим об’єктом
 alert(results); // [object RegExp String Iterator]
 
 alert(results[0]); // undefined (*)
 
-results = Array.from(results); // let's turn it into array
+results = Array.from(results); // перетворимо його на масив
 
-alert(results[0]); // <h1>,h1 (1st tag)
-alert(results[1]); // <h2>,h2 (2nd tag)
+alert(results[0]); // <h1>,h1 (перший тег)
+alert(results[1]); // <h2>,h2 (другий тег)
 ```
 
-As we can see, the first difference is very important, as demonstrated in the line `(*)`. We can't get the match as `results[0]`, because that object isn't pseudoarray. We can turn it into a real `Array` using `Array.from`. There are more details about pseudoarrays and iterables in the article <info:iterable>.
+Як можемо бачити, перша відмінність дуже важлива, як демонструється в рядку `(*)`. Ми не можемо отримати збіг у вигляді `results[0]`, бо цей об’єкт не є псевдомасивом. Ми можемо перетворити його на реальний `Array`, використовуючи `Array.from`. Детальніше про псевдомасиви та ітеровані об’єкти в статті <info:iterable>.
 
-There's no need in `Array.from` if we're looping over results:
+Нема потреби в `Array.from`, якщо ми циклічно проходимось по результатам:
 
 ```js run
 let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
 
 for(let result of results) {
   alert(result);
-  // first alert: <h1>,h1
-  // second: <h2>,h2
+  // перший alert: <h1>,h1
+  // другий: <h2>,h2
 }
 ```
 
-...Or using destructuring:
+...Або використаємо деструктуроване присвоєння:
 
 ```js
 let [tag1, tag2] = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
 ```
 
-Every match, returned by `matchAll`, has the same format as returned by `match` without flag `pattern:g`: it's an array with additional properties `index` (match index in the string) and `input` (source string):
+Кожен збіг, повернутий `matchAll`, форматується аналогічно до результату функції `match` без прапору `pattern:g`: масив з додатковими властивостями `index` (позиція збігу в рядку) та `input` (вихідний рядок):
 
 ```js run
 let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
@@ -242,23 +242,23 @@ alert( tag1.index ); // 0
 alert( tag1.input ); // <h1> <h2>
 ```
 
-```smart header="Why is a result of `matchAll` an iterable object, not an array?"
-Why is the method designed like that? The reason is simple - for the optimization.
+```smart header="Чому результатом `matchAll` є ітерований об’єкт, а не масив?"
+Чому цей метод так спроектовано? Причина проста - заради оптимізації.
 
-The call to `matchAll` does not perform the search. Instead, it returns an iterable object, without the results initially. The search is performed each time we iterate over it, e.g. in the loop.
+Виклик `matchAll` не проводить пошуку. Натомість, повертається ітерований об’єкт, спочатку без результатів. Пошук проводиться кожного разу ми проходимось об’єктом, наприклад, всередині циклу.
 
-So, there will be found as many results as needed, not more.
+Тобто, буде знайдено потрібну кількість результатів, не більше.
 
-E.g. there are potentially 100 matches in the text, but in a `for..of` loop we found 5 of them, then decided it's enough and made a `break`. Then the engine won't spend time finding other 95 matches.
+Наведемо приклад: потенційно, в тексті існує 100 збігів, але всередині циклу `for..of` ми знайшли лише 5, тоді вирішили, що цього достатньо, та викликали `break`. Тоді система не витрачатиме час на пошук 95 інших збігів.
 ```
 
-## Named groups
+## Іменовані групи
 
-Remembering groups by their numbers is hard. For simple patterns it's doable, but for more complex ones counting parentheses is inconvenient. We have a much better option: give names to parentheses.
+Пам’ятати групи за номерами важко. З простими виразами впоратись можна, але з підвищенням рівня складності рахувати дужки стає незручно. Існує кращий варіант: дати імена круглим дужкам.
 
-That's done by putting `pattern:?<name>` immediately after the opening paren.
+Робиться це за допомогою `pattern:?<name>` одразу після відкриваючої дужки.
 
-For example, let's look for a date in the format "year-month-day":
+На прикладі нижче, пошукаємо дату в форматі "year-month-day":
 
 ```js run
 *!*
@@ -273,11 +273,11 @@ alert(groups.month); // 04
 alert(groups.day); // 30
 ```
 
-As you can see, the groups reside in the `.groups` property of the match.
+Як ви можете бачити, групи розташовані всередині властивості збігу `.groups`.
 
-To look for all dates, we can add flag `pattern:g`.
+Аби зробити пошук по всіх датах, ми можемо додати прапор `pattern:g`.
 
-We'll also need `matchAll` to obtain full matches, together with groups:
+Нам також знадобиться `matchAll` для отримання повних збігів, разом з групами:
 
 ```js run
 let dateRegexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/g;
@@ -290,16 +290,16 @@ for(let result of results) {
   let {year, month, day} = result.groups;
 
   alert(`${day}.${month}.${year}`);
-  // first alert: 30.10.2019
-  // second: 01.01.2020
+  // перший alert: 30.10.2019
+  // другий: 01.01.2020
 }
 ```
 
-## Capturing groups in replacement
+## Групи захоплення для заміни
 
-Method `str.replace(regexp, replacement)` that replaces all matches with `regexp` in `str` allows to use parentheses contents in the `replacement` string. That's done using `pattern:$n`, where `pattern:n` is the group number.
+Метод `str.replace(regexp, replacement)` замінює всі збіги з `regexp` всередині `str` дозволяє користуватись вмістом дужок в рядку `replacement`. Це зроблено за допомогою `pattern:$n`, де `pattern:n` - номер групи.
 
-For example,
+Наприклад,
 
 ```js run
 let str = "John Bull";
@@ -308,9 +308,9 @@ let regexp = /(\w+) (\w+)/;
 alert( str.replace(regexp, '$2, $1') ); // Bull, John
 ```
 
-For named parentheses the reference will be `pattern:$<name>`.
+Посилання на іменовані дужки можливе через `pattern:$<name>`.
 
-For example, let's reformat dates from "year-month-day" to "day.month.year":
+Наприклад, реформатуємо дати з "year-month-day" на "day.month.year":
 
 ```js run
 let regexp = /(?<year>[0-9]{4})-(?<month>[0-9]{2})-(?<day>[0-9]{2})/g;
@@ -321,44 +321,44 @@ alert( str.replace(regexp, '$<day>.$<month>.$<year>') );
 // 30.10.2019, 01.01.2020
 ```
 
-## Non-capturing groups with ?:
+## Групи без захоплення з ?:
 
-Sometimes we need parentheses to correctly apply a quantifier, but we don't want their contents in results.
+Іноді ми потребуємо дужки для коректного застосування квантифікатора, але не хочемо бачити їх вміст в результатах.
 
-A group may be excluded by adding `pattern:?:` in the beginning.
+Групу можна виключити, додавши на початку `pattern:?:`.
 
-For instance, if we want to find `pattern:(go)+`, but don't want the parentheses contents (`go`) as a separate array item, we can write: `pattern:(?:go)+`.
+Для прикладу, якщо ми хочемо знайти `pattern:(go)+`, але не потребуємо вміст дужок (`go`) окремим елементом масиву, ми можемо написати: `pattern:(?:go)+`.
 
-In the example below we only get the name `match:John` as a separate member of the match:
+В прикладі нижче, ми отримуємо лише ім’я `match:John` окремим елементом збігу:
 
 ```js run
 let str = "Gogogo John!";
 
 *!*
-// ?: excludes 'go' from capturing
+// ?: захоплення не включає в себе 'go'
 let regexp = /(?:go)+ (\w+)/i;
 */!*
 
 let result = str.match(regexp);
 
-alert( result[0] ); // Gogogo John (full match)
+alert( result[0] ); // Gogogo John (повний збіг)
 alert( result[1] ); // John
-alert( result.length ); // 2 (no more items in the array)
+alert( result.length ); // 2 (інших елементів у масиві немає)
 ```
 
-## Summary
+## Підсумки
 
-Parentheses group together a part of the regular expression, so that the quantifier applies to it as a whole.
+Круглі дужки об’єднують в групу частину регулярного виразу, аби повноцінно застосувати до неї квантифікатор.
 
-Parentheses groups are numbered left-to-right, and can optionally be named with  `(?<name>...)`.
+Групи дужок нумеруються зліва направо та за бажанням можуть бути іменовані за допомогою `(?<name>...)`.
 
-The content, matched by a group, can be obtained in the results:
+Вміст, що збігається з групою, може бути отриманий в результатах:
 
-- The method `str.match` returns capturing groups only without flag `pattern:g`.
-- The method `str.matchAll` always returns capturing groups.
+- Метод `str.match` повертає групи захоплення лише без прапорцю `pattern:g`.
+- Метод `str.matchAll` завжди повертає групи захоплення.
 
-If the parentheses have no name, then their contents is available in the match array by its number. Named parentheses are also available in the property `groups`.
+Якщо в дужок нема імені, їх вміст доступний в масиві збігу за їх номером. Іменовані дужки також доступні через властивість `groups`.
 
-We can also use parentheses contents in the replacement string in `str.replace`: by the number `$n` or the name `$<name>`.
+Ми також можемо використовувати вміст дужок в рядку для заміни в `str.replace`: за номером `$n` або ім’ям `$<name>`.
 
-A group may be excluded from numbering by adding `pattern:?:` in its start. That's used when we need to apply a quantifier to the whole group, but don't want it as a separate item in the results array. We also can't reference such parentheses in the replacement string.
+Групу можна виключити з нумерації, додавши `pattern:?:` на її початку. Цей прийом використовується за необхідності застосувати квантифікатор до всієї групи, але без появи окремого елементу в масиві результатів. Також, ми не можемо посилатись на такі дужки в рядку для заміни.
