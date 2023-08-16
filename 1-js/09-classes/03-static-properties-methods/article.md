@@ -109,6 +109,17 @@ alert( article.title ); // Сьогоднішній дайджест
 Article.remove({id: 12345});
 ```
 
+````warn header="Статичні методи недоступні для окремих об’єктів"
+Статичні методи викликаються для класів, а не для окремих об’єктів.
+
+Наприклад такий код не працюватиме:
+
+```js
+// ...
+article.createTodays(); /// Error: article.createTodays is not a function
+```
+````
+
 ## Статичні властивості
 
 [recent browser=Chrome]

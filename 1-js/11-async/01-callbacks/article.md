@@ -77,6 +77,9 @@ function loadScript(src, *!*callback*/!*) {
 }
 ```
 
+Подія `onload` описана в статті <info:onload-onerror#loading-a-script>, 
+і це спосіб виконати функцію після завантаження та виконання скрипту.
+
 Тепер, якщо ми хочемо викликати нові функції зі скрипту, то повинні написати це у колбеку:
 
 ```js
@@ -102,7 +105,7 @@ function loadScript(src, callback) {
 *!*
 loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', script => {
   alert(`Cool, the script ${script.src} is loaded`);
-  alert( _ ); // функція, що оголошена в завантаженому скрипті
+  alert( _ ); // _ функція, що оголошена в завантаженому скрипті
 });
 */!*
 ```

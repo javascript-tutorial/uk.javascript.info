@@ -202,7 +202,7 @@ for (let key in user) {
 }
 ```
 
-JavaScript бібліотеки також пропонуються функції для зручної масової прив’язки, наприклад [_.bindAll(object, methodNames)](http://lodash.com/docs#bindAll) в бібліотеці lodash.
+JavaScript бібліотеки також пропонуються функції для зручної масової прив’язки, наприклад [_.bindAll(object, methodNames)](https://lodash.com/docs#bindAll) в бібліотеці lodash.
 ````
 
 ## Часткове застосування

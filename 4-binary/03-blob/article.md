@@ -238,7 +238,7 @@ const stream = readableStream.getReader();
 
 while (true) {
   // для кожної ітерації: дані є наступним фрагментом(частиною) blob
-  let { done, data } = await stream.read();
+  let { done, value } = await stream.read();
   if (done) {
     // більше немає даних у потоці
     console.log('all blob processed.');
@@ -246,7 +246,7 @@ while (true) {
   }
 
    // зробити щось із частиною даних, яку ми щойно прочитали з blob
-  console.log(data);
+  console.log(value);
 }
 ```
 

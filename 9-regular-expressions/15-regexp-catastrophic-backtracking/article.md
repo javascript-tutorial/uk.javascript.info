@@ -283,7 +283,7 @@ alert( "JavaScript".match(/(?=(\w+))\1Script/)); // null
 Ми можемо помістити більш комплексний регулярний вираз у `pattern:(?=(\w+))\1` замість `pattern:\w`, коли нам потрібно заборонити пошук з поверненням для `pattern:+` після нього.
 
 ```smart
-Більше про зв’язок між присвійними квантифікаторами та переглядом вперед в статтях [Regex: Emulate Atomic Grouping (and Possessive Quantifiers) with LookAhead](http://instanceof.me/post/52245507631/regex-emulate-atomic-grouping-with-lookahead) та [Mimicking Atomic Groups](http://blog.stevenlevithan.com/archives/mimic-atomic-groups).
+Більше про зв’язок між присвійними квантифікаторами та переглядом вперед в статтях [Regex: Emulate Atomic Grouping (and Possessive Quantifiers) with LookAhead](https://instanceof.me/post/52245507631/regex-emulate-atomic-grouping-with-lookahead) та [Mimicking Atomic Groups](https://blog.stevenlevithan.com/archives/mimic-atomic-groups).
 ```
 
 Перепишемо перший приклад, використовуючи перегляд вперед для запобігання пошуку з поверненням:
