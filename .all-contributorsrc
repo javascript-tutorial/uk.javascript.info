@@ -812,6 +812,24 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Alexandre887",
+      "name": "Aleksandras",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74434545?v=4",
+      "profile": "https://github.com/Alexandre887",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "KhirovSasha",
+      "name": "Khirov Sasha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75026042?v=4",
+      "profile": "https://github.com/KhirovSasha",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular",

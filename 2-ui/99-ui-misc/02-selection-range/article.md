@@ -217,7 +217,7 @@ The range object that we created in the example above has following properties:
 
 ## Range selection methods
 
-There are many convenience methods to manipulate ranges.
+There are many convenient methods to manipulate ranges.
 
 We've already seen `setStart` and `setEnd`, here are other similar methods.
 
@@ -408,7 +408,7 @@ From <input id="from" disabled> – To <input id="to" disabled>
 There are two approaches to copying the selected content:
 
 1. We can use `document.getSelection().toString()` to get it as text.
-2. Otherwise, to copy the full DOM, e.g. if we need to keep formatting, we can get the underlying ranges with `getRangesAt(...)`. A `Range` object, in turn, has `cloneContents()` method that clones its content and returns as `DocumentFragment` object, that we can insert elsewhere.
+2. Otherwise, to copy the full DOM, e.g. if we need to keep formatting, we can get the underlying ranges with `getRangeAt(...)`. A `Range` object, in turn, has `cloneContents()` method that clones its content and returns as `DocumentFragment` object, that we can insert elsewhere.
 
 Here's the demo of copying the selected content both as text and as DOM nodes:
 
@@ -438,7 +438,7 @@ As text: <span id="astext"></span>
 
 ## Selection methods
 
-We can work with the selection by addding/removing ranges:
+We can work with the selection by adding/removing ranges:
 
 - `getRangeAt(i)` -- get i-th range, starting from `0`. In all browsers except Firefox, only `0` is used.
 - `addRange(range)` -- add `range` to selection. All browsers except Firefox ignore the call, if the selection already has an associated range.

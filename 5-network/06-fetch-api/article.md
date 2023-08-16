@@ -24,7 +24,7 @@ let promise = fetch(url, {
   body: undefined // string, FormData, Blob, BufferSource або URLSearchParams
   referrer: "about:client", // або "", щоб не посилати заголовок Referer,
   // або URL з поточного джерела
-  referrerPolicy: "no-referrer-when-downgrade", // no-referrer, origin, same-origin...
+  referrerPolicy: "strict-origin-when-cross-origin", // no-referrer-when-downgrade, no-referrer, origin, same-origin...
   mode: "cors", // same-origin, no-cors
   credentials: "same-origin", // omit, include
   cache: "default", // no-store, reload, no-cache, force-cache або only-if-cached
@@ -85,27 +85,27 @@ fetch('/page', {
 
 Можливі значення описані у [Referrer Policy specification](https://w3c.github.io/webappsec-referrer-policy/):
 
+- **`"strict-origin-when-cross-origin"`** -- для запитів до однакового джерела надсилати повний `Referer`, для запитів між різними джерелами надсилати лише джерело, якщо це не HTTPS→HTTP запит, тоді нічого не надсилати.
 - **`"no-referrer-when-downgrade"`** -- типове значення: повний `Referer` надсилається завжди, хіба що ми не надсилаємо запит із HTTPS на HTTP (на менш безпечний протокол).
 - **`"no-referrer"`** -- ніколи не надсилати `Referer`.
 - **`"origin"`** -- надсилати лише джерело в `Referer`, а не повну URL-адресу сторінки, наприклад лише `http://site.com` замість `http://site.com/path`.
 - **`"origin-when-cross-origin"`** -- надсилати повний `Referer` для запитів до однакового джерела, але лише частину джерела для запитів між різними джерелами (як показано вище).
 - **`"same-origin"`** -- надсилати повний `Referer` для запитів до однакового джерела, але без `Referer` для запитів між різними джерелами.
 - **`"strict-origin"`** -- надсилати лише джерело, а не `Referer` для HTTPS→HTTP запитів.
-- **`"strict-origin-when-cross-origin"`** -- для запитів до однакового джерела надсилати повний `Referer`, для запитів між різними джерелами надсилати лише джерело, якщо це не HTTPS→HTTP запит, тоді нічого не надсилати.
 - **`"unsafe-url"`** -- завжди надсилати повну URL-адресу в `Referer`, навіть для HTTPS→HTTP запитів.
 
 Ось таблиця зі всіма комбінаціями:
 
-| Значення                                                   | До того ж джерела | До іншого джерела | HTTPS→HTTP |
-|------------------------------------------------------------|-------------------|-------------------|------------|
-| `"no-referrer"`                                            | -                 | -                 | -          |
-| `"no-referrer-when-downgrade"` або `""` (типове значення) | full              | full              | -          |
-| `"origin"`                                                 | origin            | origin            | origin     |
-| `"origin-when-cross-origin"`                               | full              | origin            | origin     |
-| `"same-origin"`                                            | full              | -                 | -          |
-| `"strict-origin"`                                          | origin            | origin            | -          |
-| `"strict-origin-when-cross-origin"`                        | full              | origin            | -          |
-| `"unsafe-url"`                                             | full              | full              | full       |
+| Значення | До того ж джерела | До іншого джерела | HTTPS→HTTP |
+|-------|----------------|-------------------|------------|
+| `"no-referrer"` | - | - | - |
+| `"no-referrer-when-downgrade"` | full | full | - |
+| `"origin"` | origin | origin | origin |
+| `"origin-when-cross-origin"` | full | origin | origin |
+| `"same-origin"` | full | - | - |
+| `"strict-origin"` | origin | origin | - |
+| `"strict-origin-when-cross-origin"` або `""` (типове значення) | full | origin | - |
+| `"unsafe-url"` | full | full | full |
 
 Припустімо, у нас є зона адміністрування зі структурою URL-адреси, яка не повинна бути відома за межами сайту.
 

@@ -56,7 +56,7 @@ socket.onclose = function(event) {
 };
 
 socket.onerror = function(error) {
-  alert(`[error] ${error.message}`);
+  alert(`[error]`);
 };
 ```
 
@@ -88,11 +88,11 @@ Sec-WebSocket-Key: Iv8io/9s+lYFgZWcXczP8Q==
 Sec-WebSocket-Version: 13
 ```
 
-- `Origin` -- джерело клієнтської сторінки, наприклад `https://javascript.info`. Об’єкти WebSocket є перехресними за своєю природою. Немає спеціальних заголовків чи інших обмежень. Старі сервери все одно не можуть обробляти WebSocket, тому проблем із сумісністю немає. Але заголовок "Origin" важливий, оскільки він дозволяє серверу вирішувати, спілкуватися чи ні WebSocket з цим веб-сайтом.
+- `Origin` -- джерело клієнтської сторінки, наприклад `https://javascript.info`. Об’єкти WebSocket є перехресними за своєю природою. Немає спеціальних заголовків чи інших обмежень. Старі сервери все одно не можуть обробляти WebSocket, тому проблем із сумісністю немає. Але заголовок `Origin` важливий, оскільки він дозволяє серверу вирішувати, спілкуватися чи ні WebSocket з цим веб-сайтом.
 - `Connection: Upgrade` -- сигналізує про те, що клієнт хоче змінити протокол.
 - `Upgrade: websocket` -- запитуваний протокол - "websocket".
-- `Sec-WebSocket-Key` -- випадковий ключ, згенерований браузером для забезпечення безпеки.
-- `Sec-WebSocket-Version` -- Версія протоколу WebSocket, 13 є поточною.
+- `Sec-WebSocket-Key` -- випадковий ключ, згенерований браузером, який використовується для забезпечення підтримки сервером протоколу WebSocket. Він є випадковим, щоб проксі-сервери не кешували будь-які наступні повідомлення.
+- `Sec-WebSocket-Version` -- версія протоколу WebSocket, 13 є поточною.
 
 ```smart header="Рукостискання WebSocket неможливо емулювати"
 Ми не можемо використати `XMLHttpRequest` або `fetch` для виконання такого роду HTTP-запитів, оскільки JavaScript заборонено встановлювати ці заголовки.
@@ -117,9 +117,9 @@ Sec-WebSocket-Accept: hsBlbuDTkk24srzEOTBUlZAlC2g=
 
 Наприклад:
 
-- `Sec-WebSocket-Extensions: deflate-frame` означає, що браузер підтримує стиснення даних. Розширення -- це щось, пов’язане з передачею даних, тобто функціональність, яка розширює протокол WebSocket. Заголовок `Sec-WebSocket-Extensions` автоматично надсилається браузером зі списком усіх розширень, які він підтримує.
+- `Sec-WebSocket-Extensions: deflate-frame` означає, що браузер підтримує стиснення даних. Розширення(extension) -- це щось, пов’язане з передачею даних, тобто функціональність, яка розширює протокол WebSocket. Заголовок `Sec-WebSocket-Extensions` автоматично надсилається браузером зі списком усіх розширень, які він підтримує.
 
-- `Sec-WebSocket-Protocol: soap, wamp` означає, що ми хочемо передати не просто будь-які дані, а дані в [SOAP](http://en.wikipedia.org/wiki/SOAP) або WAMP ("The WebSocket Application Messaging Protocol"). Підпротоколи WebSocket зареєстровані в [каталозі IANA](http://www.iana.org/assignments/websocket/websocket.xml). Отже, цей заголовок описує формати даних, які ми збираємося використовувати.
+- `Sec-WebSocket-Protocol: soap, wamp` означає, що ми хочемо передати не просто будь-які дані, а дані в [SOAP](http://en.wikipedia.org/wiki/SOAP) або WAMP ("The WebSocket Application Messaging Protocol"). Підпротоколи WebSocket зареєстровані в [каталозі IANA](https://www.iana.org/assignments/websocket/websocket.xml). Отже, цей заголовок описує формати даних, які ми збираємося використовувати.
 
     Цей необов’язковий заголовок встановлюється за допомогою другого параметра `new WebSocket` у вигляді масиву підпротоколів. Наприклад, якщо ми хочемо використовувати SOAP або WAMP:
 
