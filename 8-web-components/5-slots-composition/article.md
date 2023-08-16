@@ -130,6 +130,7 @@ alert( document.querySelectorAll('user-card span').length ); // 2
 Якщо у світлому DOM є декілька елементів з однаковим іменем слота, вони поміщаються у слот один за одним.
 
 Наприклад такий код:
+
 ```html
 <user-card>
   <span slot="username">Тарас</span>

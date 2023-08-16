@@ -1,4 +1,4 @@
 
-Please note:
-1. We clear `setInterval` timer when the element is removed from the document. That's important, otherwise it continues ticking even if not needed any more. And the browser can't clear the memory from this element and referenced by it.
-2. We can access current date as `elem.date` property. All class methods and properties are naturally element methods and properties.
+Зверніть увагу:
+1. Ми очищаємо таймер `setInterval`, коли елемент видаляється з документа. Це важливо, інакше він продовжує працювати, навіть якщо більше не потрібен. І браузер не зможе очистити пам'ять від цього елемента і посилань на нього.
+2. Ми можемо отримати доступ до поточної дати через властивість `elem.date`. Усі методи та властивості класу є методами та властивостями елементів.

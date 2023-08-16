@@ -103,7 +103,7 @@ new User("Іван").sayHi(); // Привіт, Іван!
 
 Це тому, що методи `sayHi` і `sayBye` були спочатку створені в `sayHiMixin`. Таким чином, хоча вони були скопійовані, але їх внутрішня власність `[[HomeObject]]` посилається на `sayHiMixin`, як показано на малюнку вище.
 
-Оскільки `super` шукає батьківські методи в `[[HomeObject]].[[Prototype]]`, то це означає, що воно шукає `sayHiMixin.[[Prototype]]`, а не `User.[[Prototype]]`.
+Оскільки `super` шукає батьківські методи в `[[HomeObject]].[[Prototype]]`, то це означає, що воно шукає `sayHiMixin.[[Prototype]]`.
 
 ## EventMixin
 

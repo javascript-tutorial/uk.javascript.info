@@ -29,21 +29,21 @@
 
 
   <div id="example">
-    <h3>Introduction</h3>
-    <p>This Ecma Standard is based on several originating technologies, the most well known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.
-      It has appeared in all subsequent browsers from Netscape and in all browsers from Microsoft starting with Internet Explorer 3.0. The development of this Standard started in November 1996. The first edition of this Ecma Standard was adopted by the
-      Ecma General Assembly of June 1997.</p>
+    <h3>Вступ</h3>
+    <p>Цей стандарт Ecma базується на кількох вихідних технологіях, найбільш відомі з яких - JavaScript (Netscape) і JScript (Microsoft). Мову винайшов Брендан Айк в компанії Netscape і вперше з'явилася у браузері Navigator 2.0 цієї компанії.
+    Вона з'явилася у всіх наступних браузерах від Netscape і у всіх браузерах від Microsoft, починаючи з Internet Explorer 3.0. Розробка цього стандарту розпочалася у листопаді 1996 року. Перша редакція цього стандарту була прийнята на загальній асамблеї 
+    Ecma в червні 1997 року.</p>
 
-    <p>That Ecma Standard was submitted to ISO/IEC JTC 1 for adoption under the fast-track procedure, and approved as international standard ISO/IEC 16262, in April 1998. The Ecma General Assembly of June 1998 approved the second edition of ECMA-262 to keep
-      it fully aligned with ISO/IEC 16262. Changes between the first and the second edition are editorial in nature.</p>
+    <p>Той стандарт Ecma був переданий для прийняття до ISO/IEC JTC 1 за прискореною процедурою і схвалений як міжнародний стандарт ISO/IEC 16262 в квітні 1998 року. Загальна асамблея Ecma в червні 1998 року затвердила друге видання ECMA-262 для того,
+      щоб повністю його узгодити з ISO/IEC 16262. Зміни між першим і другим виданнями мають редакційний характер.</p>
 
-    <p>The third edition of the Standard introduced powerful regular expressions, better string handling, new control statements, try/catch exception handling, tighter definition of errors, formatting for numeric output and minor changes in anticipation
-      of forthcoming internationalisation facilities and future language growth. The third edition of the ECMAScript standard was adopted by the Ecma General Assembly of December 1999 and published as ISO/IEC 16262:2002 in June 2002.</p>
+    <p>Третє видання стандарту внесло потужні регулярні вирази, кращу обробку рядків, нові оператори управління, обробку винятків try/catch, більш точне визначення помилок, форматування числових значень та дрібні зміни в очікуванні 
+    майбутніх можливостей інтернаціоналізації та розвитку мови. Третє видання стандарту ECMAScript було прийняте на загальній асамблеї Ecma в грудні 1999 року і опубліковане як ISO/IEC 16262:2002 в червні 2002 року.</p>
 
-  </div>
+</div>
 
 
-  <div id="mouse-wrap">Mouse coordinates: <span id="mouse">...</span></div>
+  <div id="mouse-wrap">Координати миші: <span id="mouse">...</span></div>
   <div id="info"></div>
 
 
@@ -54,7 +54,7 @@
       offsetParent: ['offsetParent', 'offsetLeft', 'offsetTop']
     };
 
-    info.innerHTML = '<h3>Click to see the value:</h3>';
+    info.innerHTML = '<h3>Нажміть, щоб побачити значення:</h3>';
     for (let k in props) {
       info.innerHTML += `<h4>${k}</h4>`;
       let prop = props[k];

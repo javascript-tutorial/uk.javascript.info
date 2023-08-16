@@ -46,6 +46,9 @@ range[Symbol.iterator] = function() {
 
   // 2. Далі, for..of працює тільки з цим ітератором, запитуючи у нього наступні значення
   return {
+   current: this.from,
+   last: this.to,
+      
     next() {
       // 4. він повинен повертати значення як об’єкт {done:.., value :...}
       if (this.current <= this.last) {
@@ -212,7 +215,7 @@ alert(arr.pop()); // Світ (метод працює)
 
 Те ж саме відбувається і з ітерованим об’єктом:
 
-```js
+```js run
 // припустимо, що діапазон взятий з наведеного вище прикладу
 let arr = Array.from(range);
 alert(arr); // 1,2,3,4,5 (array toString conversion works)
@@ -227,7 +230,7 @@ Array.from(obj[, mapFn, thisArg])
 
 Наприклад:
 
-```js
+```js run
 // припустимо, що діапазон взятий з наведеного вище прикладу
 
 // порахуємо квадрат кожного числа
@@ -286,7 +289,6 @@ alert( str.slice(1, 3) ); // сміття (дві частини різних с
 
 - Технічно ітеровані об’єкти повинні реалізовувати метод з назвою `Symbol.iterator`.
     - Результат `obj[Symbol.iterator]()` називається *ітератором*. Він забезпечує подальший процес ітерації.
-    - An iterator must have the method named `next()` that returns an object `{done: Boolean, value: any}`, here `done:true` denotes the end of the iteration process, otherwise the `value` is the next value.
     - Ітератор повинен мати метод з назвою `next()`, який повертає об’єкт `{done: Boolean, value: any}`, де `done: true` означає кінець процесу ітерації, інакше `value` є наступним значенням.
 - Метод `Symbol.iterator` автоматично викликається `for..of`, але ми також можемо це зробити безпосередньо.
 - Вбудовані ітеровані об’єкти, такі як рядки або масиви, також реалізують `Symbol.iterator`.

@@ -776,6 +776,60 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "savylovskij",
+      "name": "savylovskij",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60821299?v=4",
+      "profile": "https://github.com/savylovskij",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "ltlaitoff",
+      "name": "Ivan Schedrovskiy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/67638952?v=4",
+      "profile": "https://github.com/ltlaitoff",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "georgyna",
+      "name": "georgyna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34685407?v=4",
+      "profile": "https://github.com/georgyna",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "AntonShevchuk",
+      "name": "Anton Shevchuk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/142057?v=4",
+      "profile": "http://anton.shevchuk.name",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Alexandre887",
+      "name": "Aleksandras",
+      "avatar_url": "https://avatars.githubusercontent.com/u/74434545?v=4",
+      "profile": "https://github.com/Alexandre887",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "KhirovSasha",
+      "name": "Khirov Sasha",
+      "avatar_url": "https://avatars.githubusercontent.com/u/75026042?v=4",
+      "profile": "https://github.com/KhirovSasha",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular",
