@@ -1,165 +1,165 @@
 
-# Unicode, String internals
+# Юнікод, внутрішня будова рядків
 
-```warn header="Advanced knowledge"
-The section goes deeper into string internals. This knowledge will be useful for you if you plan to deal with emoji, rare mathematical or hieroglyphic characters, or other rare symbols.
+```warn header="Передові знання"
+В цьому розділі ми зануримося у внутрішню будову рядків. Ці знання знадобляться вам, якщо ви плануєте мати справу з емодзі, рідкісними математичними чи ієрогліфічними символами та іншими винятковими символами.
 ```
 
-As we already know, JavaScript strings are based on [Unicode](https://en.wikipedia.org/wiki/Unicode): each character is represented by a byte sequence of 1-4 bytes.
+Як вже відомо, рядки в JavaScript базуються на [Юнікоді](https://uk.wikipedia.org/wiki/Юнікод): кожен символ -- це послідовність з 1-4 байтів.
 
-JavaScript allows us to insert a character into a string by specifying its hexadecimal Unicode code with one of these three notations:
+JavaScript дозволяє нам вставляти символ в рядок, вказуючи його шістнадцятковий код Юнікод за допомогою однієї з трьох нотацій нижче:
 
 - `\xXX`
 
-    `XX` must be two hexadecimal digits with a value between `00` and `FF`, then `\xXX` is the character whose Unicode code is `XX`.
+    де `XX` повинно бути двома шістнадцятковими цифрами зі значенням між `00` та `FF`, як наслідок, `\xXX` -- це символ, код якого в Юнікоді відповідає`XX`.
 
-    Because the `\xXX` notation supports only two hexadecimal digits, it can be used only for the first 256 Unicode characters.
+    Оскільки `\xXX` нотація підтримує тільки дві шістнадцяткові цифри, її можна використовувати лише для перших 256 символів Юнікоду.
 
-    These first 256 characters include the Latin alphabet, most basic syntax characters, and some others. For example, `"\x7A"` is the same as `"z"` (Unicode `U+007A`).
+    Ці перші 256 символів включають у себе латинський алфавіт, більшість синтаксичних символів і деякі інші. Для прикладу, `"\x7A"` -- це те ж саме, що й `"z"` (Юнікод `U+007A`).
 
     ```js run
     alert( "\x7A" ); // z
-    alert( "\xA9" ); // ©, the copyright symbol
+    alert( "\xA9" ); // ©, символ авторського права
     ```
 
 - `\uXXXX`
-    `XXXX` must be exactly 4 hex digits with the value between `0000` and `FFFF`, then `\uXXXX` is the character whose Unicode code is `XXXX`.
+    де `XXXX` повинно складатися з рівно 4-ох шістнадцяткових цифр із значеннями між `0000` та `FFFF`, як наслідок, `\uXXXX` - це символ, код якого в Юнікоді відповідає `XXXX`.
 
-    Characters with Unicode values greater than `U+FFFF` can also be represented with this notation, but in this case, we will need to use a so called surrogate pair (we will talk about surrogate pairs later in this chapter).
+    Символи з Юнікод значеннями , більшими за `U+FFFF`, також можуть бути представлені за допомогою цієї нотації, але в цьому випадку нам потрібно буде використовувати так звану сурогатну пару (про сурогатні пари ми поговоримо пізніше в цій главі).
 
     ```js run
-    alert( "\u00A9" ); // ©, the same as \xA9, using the 4-digit hex notation
-    alert( "\u044F" ); // я, the Cyrillic alphabet letter
-    alert( "\u2191" ); // ↑, the arrow up symbol
+    alert( "\u00A9" ); // ©, те ж саме, що й \xA9, тільки з використанням 4-ох символьної шістнадцяткової нотації
+    alert( "\u044F" ); // я, буква кирилиці
+    alert( "\u2191" ); // ↑, символ стрілки вгору
     ```
 
 - `\u{X…XXXXXX}`
 
-    `X…XXXXXX` must be a hexadecimal value of 1 to 6 bytes between `0` and `10FFFF` (the highest code point defined by Unicode). This notation allows us to easily represent all existing Unicode characters.
+    де `X…XXXXXX` повинно бути шістнадцятковим значенням від 1 до 6 байтів між `0` та `10FFFF` (найвища кодова точка, визначена стандартом Юнікод). Ця нотація дозволяє нам легко представити всі існуючі символи Юнікоду.
 
     ```js run
-    alert( "\u{20331}" ); // 佫, a rare Chinese character (long Unicode)
-    alert( "\u{1F60D}" ); // 😍, a smiling face symbol (another long Unicode)
+    alert( "\u{20331}" ); // 佫, рідкісний китайський ієрогліф (довгий Юнікод)
+    alert( "\u{1F60D}" ); // 😍, символ усміхненного обличчя (ще один довгий Юнікод)
     ```
 
-## Surrogate pairs
+## Сурогатні пари
 
-All frequently used characters have 2-byte codes (4 hex digits). Letters in most European languages, numbers, and the basic unified CJK ideographic sets (CJK -- from Chinese, Japanese, and Korean writing systems), have a 2-byte representation.
+Усі найпошириніші символи мають 2-байтові коди (4 шістнадцяткові цифри). Букви в більшості європейських мов, цифри та основні уніфіковані ідеографічні набори CJK (CJK -- китайська, японська та корейська системи письма) мають 2-байтове представлення.
 
-Initially, JavaScript was based on UTF-16 encoding that only allowed 2 bytes per character. But 2 bytes only allow 65536 combinations and that's not enough for every possible symbol of Unicode.
+Спочатку JavaScript базувався на кодуванні UTF-16, яке допускало лише 2 байти на символ. Але 2 байти забезпечують лише 65536 комбінацій, а цього недостатньо для кожного можливого символу Юнікоду.
 
-So rare symbols that require more than 2 bytes are encoded with a pair of 2-byte characters called "a surrogate pair".
+Тож рідкісні символи, які потребують більше 2-ох байтів, кодуються парою 2-байтових символів, які називаються "сурогатною парою".
 
-As a side effect, the length of such symbols is `2`:
+Побічним ефектом є те, що довжина таких символів рівна `2`:
 
 ```js run
-alert( '𝒳'.length ); // 2, MATHEMATICAL SCRIPT CAPITAL X
-alert( '😂'.length ); // 2, FACE WITH TEARS OF JOY
-alert( '𩷶'.length ); // 2, a rare Chinese character
+alert( '𝒳'.length ); // 2, математичний символ, велика X
+alert( '😂'.length ); // 2, обличчя зі сльозами радості
+alert( '𩷶'.length ); // 2, рідкісний китайський ієрогліф
 ```
 
-That's because surrogate pairs did not exist at the time when JavaScript was created, and thus are not correctly processed by the language!
+Це працює таким чином, бо сурогатних пар не існувало в той час, коли був створений JavaScript, і тому вони не обробляються мовою належним чином!
 
-We actually have a single symbol in each of the strings above, but the `length` property shows a length of `2`.
+Фактично ми маємо один символ у кожному з наведених вище рядків, але властивість `length` показує довжину `2`.
 
-Getting a symbol can also be tricky, because most language features treat surrogate pairs as two characters.
+Отримання символу також може бути складним, оскільки більшість мовних функцій розглядають сурогатні пари як два символи.
 
-For example, here we can see two odd characters in the output:
+Наприклад, тут ми бачимо два дивних символа при виводі:
 
 ```js run
-alert( '𝒳'[0] ); // shows strange symbols...
-alert( '𝒳'[1] ); // ...pieces of the surrogate pair
+alert( '𝒳'[0] ); // показує дивні символи...
+alert( '𝒳'[1] ); // ...частини сурогатної пари
 ```
 
-Pieces of a surrogate pair have no meaning without each other. So the alerts in the example above actually display garbage.
+Частини сурогатної пари не мають значення одна без одної. Отже, сповіщення у наведеному вище прикладі фактично відображають тарабарщину.
 
-Technically, surrogate pairs are also detectable by their codes: if a character has the code in the interval of `0xd800..0xdbff`, then it is the first part of the surrogate pair. The next character (second part) must have the code in interval `0xdc00..0xdfff`. These intervals are reserved exclusively for surrogate pairs by the standard.
+Технічно сурогатні пари також можна визначити за їхніми кодами: якщо символ має код в інтервалі `0xd800..0xdbff`, то це перша частина сурогатної пари. Наступний символ (друга частина) повинен мати код в інтервалі `0xdc00..0xdfff`. Ці інтервали зарезервовані стандартом виключно для сурогатних пар.
 
-So the methods [String.fromCodePoint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint) and [str.codePointAt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt) were added in JavaScript to deal with surrogate pairs.
+Тому для роботи з сурогатними парами в JavaScript були добавлені методи [String.fromCodePoint](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/fromCodePoint) та [str.codePointAt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt).
 
-They are essentially the same as [String.fromCharCode](mdn:js/String/fromCharCode) and [str.charCodeAt](mdn:js/String/charCodeAt), but they treat surrogate pairs correctly.
+По суті, вони такі ж, як і [String.fromCharCode](mdn:js/String/fromCharCode) та [str.charCodeAt](mdn:js/String/charCodeAt), але з сурогатними парами поводяться коректно.
 
-One can see the difference here:
+Тут можна побачити різницю:
 
 ```js run
-// charCodeAt is not surrogate-pair aware, so it gives codes for the 1st part of 𝒳:
+// charCodeAt не знає про сурогатну пару, тому надає коди для 1-ї частини 𝒳:
 
 alert( '𝒳'.charCodeAt(0).toString(16) ); // d835
 
-// codePointAt is surrogate-pair aware
-alert( '𝒳'.codePointAt(0).toString(16) ); // 1d4b3, reads both parts of the surrogate pair
+// codePointAt знає про сурогатну пару
+alert( '𝒳'.codePointAt(0).toString(16) ); // 1d4b3, зчитує обидві частини сурогатної пари
 ```
 
-That said, if we take from position 1 (and that's rather incorrect here), then they both return only the 2nd part of the pair:
+Тим не менш, якщо ми намагаємось отримати результат з позиції 1 (це тільки для прикладу, так робити неправильно), то вони обидва повертають лише 2-гу частину пари:
 
 ```js run
 alert( '𝒳'.charCodeAt(1).toString(16) ); // dcb3
 alert( '𝒳'.codePointAt(1).toString(16) ); // dcb3
-// meaningless 2nd half of the pair
+// беззмістовна 2-а половина пари
 ```
 
-You will find more ways to deal with surrogate pairs later in the chapter <info:iterable>. There are probably special libraries for that too, but nothing famous enough to suggest here.
+Ви знайдете більше способів роботи із сурогатними парами пізніше в розділі <info:iterable>. Ймовірно, для цього також існують спеціальні бібліотеки, але вони не настільки відомі, щоб можна було їх тут запропонувати.
 
-````warn header="Takeaway: splitting strings at an arbitrary point is dangerous"
-We can't just split a string at an arbitrary position, e.g. take `str.slice(0, 4)` and expect it to be a valid string, e.g.:
+````warn header="Висновок: розбивати рядки в довільній точці небезпечно"
+Ми не можемо просто розділити рядок у довільній позиції, наприклад, за допомогою `str.slice(0, 8)` і очікувати, що це буде дійсний рядок, наприклад:
 
 ```js run
-alert( 'hi 😂'.slice(0, 4) ); //  hi [?]
+alert( 'Привіт 😂'.slice(0, 8) ); // Привіт [?]
 ```
 
-Here we can see a garbage character (first half of the smile surrogate pair) in the output.
+Тут ми можемо побачити незрозумілий символ (першу половину сурогатної пари посмішки) у виведених даних.
 
-Just be aware of it if you intend to reliably work with surrogate pairs. May not be a big problem, but at least you should understand what happens.
+Просто пам’ятайте про це, якщо ви хочете надійно працювати із сурогатними парами. Можливо, це не велика проблема, але принаймні ви повинні розуміти, що відбувається.
 ````
 
-## Diacritical marks and normalization
+## Діакритичні знаки та нормалізація
 
-In many languages, there are symbols that are composed of the base character with a mark above/under it.
+У багатьох мовах є символи, які складаються з основного символу та знаку над/під ним.
 
-For instance, the letter `a` can be the base character for these characters: `àáâäãåā`.
+Наприклад, літера `a` може бути базовим символом для таких символів: `àáâäãåā`.
 
-Most common "composite" characters have their own code in the Unicode table. But not all of them, because there are too many possible combinations.
+Більшість поширених "складених" символів мають власний код у таблиці Юнікод. Але не всі, тому що можливих комбінацій занадто багато.
 
-To support arbitrary compositions, the Unicode standard allows us to use several Unicode characters: the base character followed by one or many "mark" characters that "decorate" it.
+Щоб підтримувати довільні композиції, стандарт Юнікод дозволяє нам використовувати кілька символів Юнікод: базовий символ, за яким іде один або декілька символів-позначок, які "прикрашають" його.
 
-For instance, if we have `S` followed by the special "dot above" character (code `\u0307`), it is shown as Ṡ.
+Наприклад, якщо ми маємо символ `S`, за яким іде спеціальний символ "крапка зверху" (код `\u0307`), в підсумку ми отримаємо Ṡ.
 
 ```js run
 alert( 'S\u0307' ); // Ṡ
 ```
 
-If we need an additional mark above the letter (or below it) -- no problem, just add the necessary mark character.
+Якщо нам потрібна додаткова позначка над літерою (або під нею) -- не проблема, просто додайте необхідний символ позначки.
 
-For instance, if we append a character "dot below" (code `\u0323`), then we'll have "S with dots above and below": `Ṩ`.
+Наприклад, якщо ми додамо символ "крапка знизу" (код `\u0323`), то ми матимемо "S з крапками зверху та знизу": `Ṩ`.
 
-For example:
+Наприклад:
 
 ```js run
 alert( 'S\u0307\u0323' ); // Ṩ
 ```
 
-This provides great flexibility, but also an interesting problem: two characters may visually look the same, but be represented with different Unicode compositions.
+Це забезпечує велику гнучкість, але при цьому виникає цікава проблема: два символи можуть візуально виглядати однаково, але бути представлені різними композиціями Юнікоду.
 
-For instance:
+Наприклад:
 
 ```js run
-let s1 = 'S\u0307\u0323'; // Ṩ, S + dot above + dot below
-let s2 = 'S\u0323\u0307'; // Ṩ, S + dot below + dot above
+let s1 = 'S\u0307\u0323'; // Ṩ, S + крапка зверху + крапка знизу
+let s2 = 'S\u0323\u0307'; // Ṩ, S + крапка знизу + карпка зверху
 
 alert( `s1: ${s1}, s2: ${s2}` );
 
-alert( s1 == s2 ); // false though the characters look identical (?!)
+alert( s1 == s2 ); // false, хоча символи виглядають однаково (?!)
 ```
 
-To solve this, there exists a "Unicode normalization" algorithm that brings each string to the single "normal" form.
+Щоб вирішити цю проблему, існує алгоритм "нормалізації Юнікоду", який приводить кожен рядок до єдиної "нормальної" форми.
 
-It is implemented by [str.normalize()](mdn:js/String/normalize).
+Це реалізовується за допомогою [str.normalize()](mdn:js/String/normalize).
 
 ```js run
 alert( "S\u0307\u0323".normalize() == "S\u0323\u0307".normalize() ); // true
 ```
 
-It's funny that in our situation `normalize()` actually brings together a sequence of 3 characters to one: `\u1e68` (S with two dots).
+Цікаво, що в нашій ситуації `normalize()` фактично об’єднує послідовність із 3 символів в один: `\u1e68` (S з двома крапками).
 
 ```js run
 alert( "S\u0307\u0323".normalize().length ); // 1
@@ -167,6 +167,6 @@ alert( "S\u0307\u0323".normalize().length ); // 1
 alert( "S\u0307\u0323".normalize() == "\u1e68" ); // true
 ```
 
-In reality, this is not always the case. The reason is that the symbol `Ṩ` is "common enough", so Unicode creators included it in the main table and gave it the code.
+Насправді, це не завжди так. Причина в тому, що символ `Ṩ` є "достатньо поширеним", тому творці Юнікоду включили його в основну таблицю та дали йому окремий код.
 
-If you want to learn more about normalization rules and variants -- they are described in the appendix of the Unicode standard: [Unicode Normalization Forms](https://www.unicode.org/reports/tr15/), but for most practical purposes the information from this section is enough.
+Якщо ви хочете дізнатися більше про правила та варіанти нормалізації -- вони описані в додатку до стандарту Юнікод: [Unicode Normalization Forms](https://www.unicode.org/reports/tr15/), але для більшості практичних задач інформації з цього розділу достатньо.
