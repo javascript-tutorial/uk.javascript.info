@@ -142,7 +142,7 @@ alert( str.match(regexp) ); // 你,好
 ```js run
 let regexp = /\p{Sc}\d/gu;
 
-let  str = `Ціни: $2, €1, ¥9`;
+let str = `Ціни: $2, €1, ¥9`;
 
 alert( str.match(regexp) ); // $2,€1,¥9
 ```

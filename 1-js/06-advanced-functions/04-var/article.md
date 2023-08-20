@@ -58,7 +58,7 @@ alert(test); // ReferenceError: test не визначена
 
 Те саме і для циклів: змінна, оголошена за допомогою `var`, не може бути блочною або локальною всередині цикла:
 
-```js
+```js run
 for (var i = 0; i < 10; i++) {
   var one = 1;
   // ...
@@ -170,7 +170,7 @@ sayHi();
 
 ```js run
 function sayHi() {
-  alert(phrase);  
+  alert(phrase);
 
 *!*
   var phrase = "Привіт";
