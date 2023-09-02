@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-90-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-91-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -198,6 +198,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="http://anton.shevchuk.name"><img src="https://avatars.githubusercontent.com/u/142057?v=4?s=70" width="70px;" alt="Anton Shevchuk"/><br /><sub><b>Anton Shevchuk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AAntonShevchuk" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Alexandre887"><img src="https://avatars.githubusercontent.com/u/74434545?v=4?s=70" width="70px;" alt="Aleksandras"/><br /><sub><b>Aleksandras</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AAlexandre887" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/KhirovSasha"><img src="https://avatars.githubusercontent.com/u/75026042?v=4?s=70" width="70px;" alt="Khirov Sasha"/><br /><sub><b>Khirov Sasha</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AKhirovSasha" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/taleksina"><img src="https://avatars.githubusercontent.com/u/73138862?v=4?s=70" width="70px;" alt="Tetiana Aleksina"/><br /><sub><b>Tetiana Aleksina</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Ataleksina" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
