@@ -1,14 +1,12 @@
-# Shadow DOM and events
+# Тіньовий DOM та події
 
-The idea behind shadow tree is to encapsulate internal implementation details of a component.
+Головна мета створення тіньового дерева – це інкапсуляція внутрішньої реалізації компоненту.
 
-Let's say, a click event happens inside a shadow DOM of `<user-card>` component. But scripts in the main document have no idea about the shadow DOM internals, especially if the component comes from a 3rd-party library.  
+Скажімо, було виконано подію click всередині тіньового DOM компоненту `<user-card>`. Але ж скріпти в головному документі і гадки не мають про внутрішню будову тіньового DOM, особливо, якщо компонент походить зі сторонньої бібліотеки. Отже, для збереження інкапсуляції вмісту, браузер *змінює у цієї події цільовий елемент*.
 
-So, to keep the details encapsulated, the browser *retargets* the event.
+**Події, що відбуваються у тіньовому DOM, впливають на батьківський елемент, навіть якщо відбулися за межами компоненту.**
 
-**Events that happen in shadow DOM have the host element as the target, when caught outside of the component.**
-
-Here's a simple example:
+Розглянемо простий приклад:
 
 ```html run autorun="no-epub" untrusted height=60
 <user-card></user-card>
@@ -21,30 +19,31 @@ customElements.define('user-card', class extends HTMLElement {
       <button>Click me</button>
     </p>`;
     this.shadowRoot.firstElementChild.onclick =
-      e => alert("Inner target: " + e.target.tagName);
+      e => alert("Внутрішній цільовий елемент: " + e.target.tagName);
   }
 });
 
 document.onclick =
-  e => alert("Outer target: " + e.target.tagName);
+  e => alert("Зовнішній цільовий елемент: " + e.target.tagName);
 </script>
 ```
 
-If you click on the button, the messages are:
+Клікнувши на кнопку, отримаємо наступні повідомлення:
 
-1. Inner target: `BUTTON` -- internal event handler gets the correct target, the element inside shadow DOM.
-2. Outer target: `USER-CARD` -- document event handler gets shadow host as the target.
+1. Внутрішній цільовий елемент: `BUTTON` – внутрішній обробник подій отримує правильну ціль – елемент всередині тіньового DOM
+2. Зовнішній цільовий елемент: `USER-CARD` – обробник подій документу отримує тіньовий хост в якості цільового елементу
 
-Event retargeting is a great thing to have, because the outer document doesn't have to know  about component internals. From its point of view, the event happened on `<user-card>`.
 
-**Retargeting does not occur if the event occurs on a slotted element, that physically lives in the light DOM.**
+Зміна цільового елементу – чудова річ, тому що зовнішній документ не повинен знати про внутрішній вміст компоненту. З цієї точки зору, подія відбулась в `<user-card>`.
 
-For example, if a user clicks on `<span slot="username">` in the example below, the event target is exactly this `span` element, for both shadow and light handlers:
+**Зміна цільового елементу не відбувається, якщо подія починається з елементу зі слота, що фактично знаходиться в звичайному світлому DOM.**
+
+Наприклад, якщо користувач клікає на `<span slot="username">` у прикладі, наведеному нижче, цільовим елементом є саме цей `span` елемент, для обох обробників – звичайного (світлого) та тіньового:
 
 ```html run autorun="no-epub" untrusted height=60
 <user-card id="userCard">
 *!*
-  <span slot="username">John Smith</span>
+  <span slot="username">Іван Коваль</span>
 */!*
 </user-card>
 
@@ -57,27 +56,27 @@ customElements.define('user-card', class extends HTMLElement {
     </div>`;
 
     this.shadowRoot.firstElementChild.onclick =
-      e => alert("Inner target: " + e.target.tagName);
+      e => alert("Внутрішній цільовий елемент: " + e.target.tagName);
   }
 });
 
-userCard.onclick = e => alert(`Outer target: ${e.target.tagName}`);
+userCard.onclick = e => alert(`Зовнішній цільовий елемент: ${e.target.tagName}`);
 </script>
 ```
 
-If a click happens on `"John Smith"`, for both inner and outer handlers the target is `<span slot="username">`. That's an element from the light DOM, so no retargeting.
+Якщо клік відбувся на `"Іван Коваль"`, для обох – внутрішнього та зовнішнього – обробників цільовим елементом є `<span slot="username">`. Так як це елемент зі світлого DOM, то зміни цільового елементу не відбувається.
 
-On the other hand, if the click occurs on an element originating from shadow DOM, e.g. on `<b>Name</b>`, then, as it bubbles out of the shadow DOM, its `event.target` is reset to `<user-card>`.
+З іншого боку, якщо клік відбувся на елементі з тіньового DOM, т.я.`<b>Name</b>`, тоді він вспливає з тіньового DOM, a його цільовим елементом `event.target` стає `<user-card>`.
 
-## Bubbling, event.composedPath()
+## Спливання, event.composedPath()
 
-For purposes of event bubbling, flattened DOM is used.
+Для цілей спливання подій (бульбашковий механізм) використовується розгорнутий DOM.
 
-So, if we have a slotted element, and an event occurs somewhere inside it, then it bubbles up to the `<slot>` and upwards.
+Отже, якщо у нас є елемент у слоті, і подія відбувається десь усередині цього елементу, тоді вона підіймається до `<slot>` і вище.
 
-The full path to the original event target, with all the shadow elements, can be obtained using `event.composedPath()`. As we can see from the name of the method, that path is taken after the composition.
+Повний шлях до початкового цільового елементу з усіма тіньовими елементами можна отримати за допомогою `event.composedPath()`. Як видно з назви методу, він повертає шлях після композиції.
 
-In the example above, the flattened DOM is:
+У наведеному вище прикладі зведений DOM виглядає так:
 
 ```html
 <user-card id="userCard">
@@ -85,29 +84,29 @@ In the example above, the flattened DOM is:
     <div>
       <b>Name:</b>
       <slot name="username">
-        <span slot="username">John Smith</span>
+        <span slot="username">Іван Коваль</span>
       </slot>
     </div>
 </user-card>
 ```
 
 
-So, for a click on `<span slot="username">`, a call to `event.composedPath()` returns an array: [`span`, `slot`, `div`, `shadow-root`, `user-card`, `body`, `html`, `document`, `window`]. That's exactly the parent chain from the target element in the flattened DOM, after the composition.
+Отже, для кліку по `<span slot="username">` виклик `event.composedPath()` повертає масив: [`span`, `slot`, `div`, `shadow-root`, `user-card`, `body`, `html`, `document`, `window`], що цілковито відображає батьківський ланцюжок, починаючи з цільового елемента у зведеному DOM після композиції.
 
-```warn header="Shadow tree details are only provided for `{mode:'open'}` trees"
-If the shadow tree was created with `{mode: 'closed'}`, then the composed path starts from the host: `user-card` and upwards.
+```warn header="Деталі тіньового дерева надаються лише для дерев з `{mode:'open'}`"
+Якщо тіньове дерево було створено з `{mode: 'closed'}`, то тоді складений (composed) шлях починається від хоста: `user-card` і вище.
 
-That's the similar principle as for other methods that work with shadow DOM. Internals of closed trees are completely hidden.
+Це той самий принцип, що і для інших методів, які працюють із тіньовим DOM. Внутрішні частини закритих дерев повністю приховані.
 ```
 
 
-## event.composed
+## Властивість event.composed
 
-Most events successfully bubble through a shadow DOM boundary. There are few events that do not.
+Більшість подій успішно проходять через тіньову межу DOM. Є кілька подій, які цього не роблять.
 
-This is governed by the `composed` event object property. If it's `true`, then the event does cross the boundary. Otherwise, it only can be caught from inside the shadow DOM.
+Це регулюється властивістю об’єкта події `composed`. Якщо це `true`, то подія дійсно перетинає межу. В іншому випадку його можна буде перехопити лише зсередини тіньового DOM.
 
-If you take a look at [UI Events specification](https://www.w3.org/TR/uievents), most events have `composed: true`:
+Якщо ви подивитесь на [UI Events specification](https://www.w3.org/TR/uievents), більшість подій мають `composed: true`:
 
 - `blur`, `focus`, `focusin`, `focusout`,
 - `click`, `dblclick`,
@@ -115,22 +114,22 @@ If you take a look at [UI Events specification](https://www.w3.org/TR/uievents),
 - `wheel`,
 - `beforeinput`, `input`, `keydown`, `keyup`.
 
-All touch events and pointer events also have `composed: true`.
+Усі сенсорні події та події курсору також мають `composed: true`.
 
-There are some events that have `composed: false` though:
+Та існують деякі події, що мають `composed: false`:
 
-- `mouseenter`, `mouseleave` (they do not bubble at all),
+- `mouseenter`, `mouseleave` (ці події взагалі не спливають вгору),
 - `load`, `unload`, `abort`, `error`,
 - `select`,
 - `slotchange`.
 
-These events can be caught only on elements within the same DOM, where the event target resides.
+Ці події можна перехопити лише на елементах у межах того ж самого DOM, де знаходиться цільовий елемент події.
 
-## Custom events
+## Генерація подій (сustom events)
 
-When we dispatch custom events, we need to set both `bubbles` and `composed` properties to `true` for it to bubble up and out of the component.
+Коли ми генеруємо користувацькі події, нам потрібно встановити для властивостей `bubbles` і `composed` значення `true`, щоб вони спливали та виходили за межі компонента.
 
-For example, here we create `div#inner` in the shadow DOM of `div#outer` and trigger two events on it. Only the one with `composed: true` makes it outside to the document:
+Наприклад, тут ми створюємо `div#inner` у тіньовому DOM `div#outer` і запускаємо дві події для нього. Лише та, що має `composed: true`, виходить за межі документа:
 
 ```html run untrusted height=0
 <div id="outer"></div>
@@ -167,26 +166,26 @@ inner.dispatchEvent(new CustomEvent('test', {
 </script>
 ```
 
-## Summary
+## Підсумки
 
-Events only cross shadow DOM boundaries if their `composed` flag is set to `true`.
+Лише ті події перетинають тіньові межі DOM, для прапорця `composed` яких встановлено значення `true`.
 
-Built-in events mostly have `composed: true`, as described in the relevant specifications:
+Вбудовані події здебільшого мають `composed: true`, як описано у відповідних специфікаціях:
 
-- UI Events <https://www.w3.org/TR/uievents>.
-- Touch Events <https://w3c.github.io/touch-events>.
-- Pointer Events <https://www.w3.org/TR/pointerevents>.
-- ...And so on.
+- Події інтерфейсу користувача (UI Events) <https://www.w3.org/TR/uievents>.
+- Сенсорні події (Touch Events) <https://w3c.github.io/touch-events>.
+- Події курсору (Pointer Events) <https://www.w3.org/TR/pointerevents>.
+- ...тощо.
 
-Some built-in events that have `composed: false`:
+Деякі вбудовані події, що мають `composed: false`:
 
-- `mouseenter`, `mouseleave` (also do not bubble),
+- `mouseenter`, `mouseleave` (зовсім не спливають),
 - `load`, `unload`, `abort`, `error`,
 - `select`,
 - `slotchange`.
 
-These events can be caught only on elements within the same DOM.
+Ці події можуть бути перехоплені тільки на елементах у межах того самого DOM.
 
-If we dispatch a `CustomEvent`, then we should explicitly set `composed: true`.
+Якщо ми генеруємо `CustomEvent`, тоді нам слід явно встановити `composed: true`.
 
-Please note that in case of nested components, one shadow DOM may be nested into another. In that case composed events bubble through all shadow DOM boundaries. So, if an event is intended only for the immediate enclosing component, we can also dispatch it on the shadow host and set `composed: false`. Then it's out of the component shadow DOM, but won't bubble up to higher-level DOM.
+Зверніть увагу, що у випадку вкладених компонентів один тіньовий DOM може бути вкладений в інший. У цьому випадку складені події проходять через усі тіньові межі DOM. Отже, якщо подія призначена лише для безпосередньо найближчого зовнішнього батьківського компонента, ми також можемо ініціювати її на тіньовому хості і встановити `composed: false`. В такому разі подія виходить із тіньової DOM компонента, але не переходить до DOM вищого рівня.
