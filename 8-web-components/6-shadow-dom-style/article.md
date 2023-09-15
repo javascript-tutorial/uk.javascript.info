@@ -242,7 +242,7 @@ customElements.define('user-card', class extends HTMLElement {
     /* якщо --user-card-field-color не призначено, використовуємо чорний колір */
   }
 </style>
-<div class="field">Ім’я: <slot name="username"></slot></div>
+<div class="field">Ім'я: <slot name="username"></slot></div>
 <div class="field">День народження: <slot name="birthday"></slot></div>
 ```
 
@@ -275,7 +275,7 @@ user-card {
     }
 */!*
   </style>
-  <div class="field">Ім’я: <slot name="username"></slot></div>
+  <div class="field">Ім'я: <slot name="username"></slot></div>
   <div class="field">День народження: <slot name="birthday"></slot></div>
 </template>
 
