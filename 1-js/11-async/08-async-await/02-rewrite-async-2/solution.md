@@ -19,12 +19,12 @@ async function loadJson(url) {
   }
 }
 
-// Запитуйте ім’я користувача, поки github не поверне дійсного користувача
+// Запитуйте ім'я користувача, поки github не поверне дійсного користувача
 async function demoGithubUser() {
 
   let user;
   while(true) {
-    let name = prompt("Введіть ім’я?", "iliakan");
+    let name = prompt("Введіть ім'я?", "iliakan");
 
     try {
       user = await loadJson(`https://api.github.com/users/${name}`);
@@ -41,7 +41,7 @@ async function demoGithubUser() {
   }
 
 
-  alert(`Ім’я та прізвище: ${user.name}.`);
+  alert(`Ім'я та прізвище: ${user.name}.`);
   return user;
 }
 
