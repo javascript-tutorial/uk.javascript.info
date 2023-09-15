@@ -37,12 +37,12 @@
   // elem -- це посилання на елемент DOM з id="elem"
   elem.style.background = 'red';
 
-  // id="elem-content" містить дефіс всередині, тому не може бути ім’ям змінної
+  // id="elem-content" містить дефіс всередині, тому не може бути ім'ям змінної
   // ...але ми можемо отримати доступ до нього за допомогою квадратних дужок: window['elem-content']
 </script>
 ```
 
-...Але це лише якщо ми не оголосили змінну JavaScript з таким же ім’ям, інакше вона матиме пріоритет:
+...Але це лише якщо ми не оголосили змінну JavaScript з таким же ім'ям, інакше вона матиме пріоритет:
 
 ```html run untrusted height=0
 <div id="elem"></div>
@@ -71,7 +71,7 @@
 ```
 
 ```warn header="Лише `document.getElementById`, а не `anyElem.getElementById`"
-Метод `getElementById` може бути викликаний лише на об’єкті `document`. Він шукає вказаний `id` у всьому документі.
+Метод `getElementById` може бути викликаний лише на об'єкті `document`. Він шукає вказаний `id` у всьому документі.
 ```
 
 ## querySelectorAll [#querySelectorAll]
@@ -251,7 +251,7 @@ document.getElementsByTagName('input')[0].value = 5;
 </form>
 
 <script>
-  // шукаємо за ім’ям атрибуту
+  // шукаємо за ім'ям атрибуту
   let form = document.getElementsByName('my-form')[0];
 
   // шукаємо за класом всередині form
@@ -344,7 +344,7 @@ document.getElementsByTagName('input')[0].value = 5;
 </tr>
 <tr>
 <td><code>getElementsByName</code></td>
-<td><code>ім’я</code></td>
+<td><code>ім'я</code></td>
 <td>-</td>
 <td>✔</td>
 </tr>

@@ -25,4 +25,4 @@ positionAt(blockquote, "top-in", note);
 
 [iframe src="solution" height="310" border="1" link]
 
-Для початку візьміть розв’язання задачі <info:task/position-at-absolute>.
+Для початку візьміть розв'язання задачі <info:task/position-at-absolute>.
