@@ -274,13 +274,13 @@ new Promise((resolve, reject) => {
 
     Єдиним винятком із цього правила є випадки, коли обробник `finally` видає помилку. Бл потім ця помилка переходить до наступного обробника замість будь-якого попереднього результату проміса.
 
-To summarize:
+У підсумку:
 
-- A `finally` handler doesn't get the outcome of the previous handler (it has no arguments). This outcome is passed through instead, to the next suitable handler.
-- If a `finally` handler returns something, it's ignored.
-- When `finally` throws an error, then the execution goes to the nearest error handler.
+- Обробник `finally` не отримує результат попереднього обробника (у нього немає аргументів). Замість цього цей результат передається наступному підходящому обробнику.
+- Якщо обробник `finally` щось повертає, це буде ігноруватися.
+- Якщо виникає помилка в `finally`, виконання переходить до найближчого обробника помилок.
 
-These features are helpful and make things work just the right way if we use `finally` how it's supposed to be used: for generic cleanup procedures.
+Ці особливості є корисними і забезпечують правильну роботу, якщо ми використовуємо `finally` так, як це передбачено: для загальних процедур очищення.
 
 ````smart header="На завершених промісах обробники запускаються одразу"
 Якщо проміс в стані очікування, `.then/catch/finally` будуть на нього чекати.
