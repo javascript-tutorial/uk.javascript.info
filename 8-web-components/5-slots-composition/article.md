@@ -35,7 +35,7 @@ customElements.define('user-card', class extends HTMLElement {
   connectedCallback() {
     this.attachShadow({mode: 'open'});
     this.shadowRoot.innerHTML = `
-      <div>Ім’я:
+      <div>Ім'я:
 *!*
         <slot name="username"></slot>
 */!*
@@ -65,7 +65,7 @@ customElements.define('user-card', class extends HTMLElement {
 ```html
 <user-card>
   #shadow-root
-    <div>Ім’я:
+    <div>Ім'я:
       <slot name="username"></slot>
     </div>
     <div>Дата народження:
@@ -143,7 +143,7 @@ alert( document.querySelectorAll('user-card span').length ); // 2
 ```html
 <user-card>
   #shadow-root
-    <div>Ім’я:
+    <div>Ім'я:
       <slot name="username">
         <span slot="username">Тарас</span>
         <span slot="username">Мельник</span>
@@ -162,7 +162,7 @@ alert( document.querySelectorAll('user-card span').length ); // 2
 Наприклад, у цьому шматку shadow DOM, буде відображено `Анонім`, якщо у світлому DOM немає `slot="username"`.
 
 ```html
-<div>Ім’я:
+<div>Ім'я:
   <slot name="username">Анонім</slot>
 </div>
 ```
@@ -179,7 +179,7 @@ customElements.define('user-card', class extends HTMLElement {
   connectedCallback() {
     this.attachShadow({mode: 'open'});
     this.shadowRoot.innerHTML = `
-    <div>Ім’я:
+    <div>Ім'я:
       <slot name="username"></slot>
     </div>
     <div>День народження:
@@ -217,7 +217,7 @@ customElements.define('user-card', class extends HTMLElement {
 ```html
 <user-card>
   #shadow-root
-    <div>Ім’я:
+    <div>Ім'я:
       <slot name="username">
         <span slot="username">Тарас Мельник</span>
       </slot>
@@ -379,7 +379,7 @@ setTimeout(() => {
 
 ## API слотів
 
-Зрештою, давайте зачепимо методи JavaScript, що пов’язані зі слотами.
+Зрештою, давайте зачепимо методи JavaScript, що пов'язані зі слотами.
 
 Як ми вже бачили, JavaScript дивиться на "справжній" DOM, без розгортання. Але якщо тіньове дерево має `{mode: 'open'}`, тоді ми можемо визначити які елементи призначені до слота і навпаки, знайти слот за елементом всередині нього:
 

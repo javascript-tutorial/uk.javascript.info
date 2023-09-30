@@ -162,7 +162,7 @@
 ```html autorun height=80
 <!-- додати класс при фокусуванні на формі -->
 <form *!*onfocus="this.className='focused'"*/!*>
-  <input type="text" name="name" value="Ім’я">
+  <input type="text" name="name" value="Ім'я">
   <input type="text" name="surname" value="Прізвище">
 </form>
 
@@ -202,7 +202,7 @@
 
 ```html autorun height=80
 <form id="form">
-  <input type="text" name="name" value="Ім’я">
+  <input type="text" name="name" value="Ім'я">
   <input type="text" name="surname" value="Прізвище">
 </form>
 

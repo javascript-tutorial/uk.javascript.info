@@ -4,7 +4,7 @@ importance: 5
 
 # Різниця між викликами
 
-Створимо новий об’єкт `rabbit`:
+Створимо новий об'єкт `rabbit`:
 
 ```js
 function Rabbit(name) {

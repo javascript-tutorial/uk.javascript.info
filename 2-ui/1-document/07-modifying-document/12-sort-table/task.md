@@ -10,7 +10,7 @@ importance: 5
 <table>
 <thead>
   <tr>
-    <th>Ім’я</th><th>Прізвище</th><th>Вік</th>
+    <th>Ім'я</th><th>Прізвище</th><th>Вік</th>
   </tr>
 </thead>
 <tbody>

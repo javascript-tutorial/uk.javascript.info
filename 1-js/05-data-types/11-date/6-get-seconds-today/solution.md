@@ -6,7 +6,7 @@
 function getSecondsToday() {
   let now = new Date();
 
-  // створити об’єкт, використовуючи поточний день/місяць/рік
+  // створити об'єкт, використовуючи поточний день/місяць/рік
   let today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
   let diff = now - today; // мс різниця

@@ -30,7 +30,7 @@ function formatDate(date) {
     '0' + d.getMinutes()
   ].map(component => component.slice(-2)); // отримати останні 2 цифри кожного компоненту
 
-  // з’єднати компоненти в дату
+  // з'єднати компоненти в дату
   return d.slice(0, 3).join('.') + ' ' + d.slice(3).join(':');
 }
 
