@@ -217,7 +217,7 @@ let sayHi = function(who) {
 };
 ```
 
-And add a name to it:
+І додайте до нього назву:
 
 ```js
 let sayHi = function *!*func*/!*(who) {
