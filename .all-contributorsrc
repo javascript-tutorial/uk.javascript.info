@@ -848,6 +848,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Babrov",
+      "name": "Illia Babrov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60341182?v=4",
+      "profile": "https://www.linkedin.com/in/ibabrov/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular",
