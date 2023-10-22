@@ -16,41 +16,13 @@
 
 ![](dom-class-hierarchy.svg)
 
-Класи:
+Ці класи:
 
 - [EventTarget](https://dom.spec.whatwg.org/#eventtarget) -- це кореневий "абстрактний" клас клас для всього. 
 
-    Об’єкти цього класу ніколи не створюються. Він служить основою, тому всі вузли DOM підтримують так звані "події", які ми розглянемо пізніше.
+  Об’єкти цього класу ніколи не створюються. Він служить основою, тому всі вузли DOM підтримують так звані "події", які ми розглянемо пізніше.
 
-- [Node](https://dom.spec.whatwg.org/#interface-node) -- це також "абстрактний" клас, що служить базою для вузлів DOM. 
-
-    Він забезпечує основну функціональність дерева: `parentNode`, `nextSibling`, `childNodes` і так далі (це гетери). Об’єкти класу `Node` ніколи не створюються. Але є конкретні класи вузлів, які успадковуються від нього, і таким чином успадковують функціональність `Node`.
-
-- [Document](https://dom.spec.whatwg.org/#interface-document), з історичних причин часто успадковується `HTMLDocument` (хоча остання специфікація цього не диктує) -- це документ як ціле.
-
-    Глобальний об’єкт `document` належить саме цьому класу. Він служить точкою входу в DOM.
-
-- [CharacterData](https://dom.spec.whatwg.org/#interface-characterdata) -- "абстрактний" клас, успадкований:
-    - [Text](https://dom.spec.whatwg.org/#interface-text) -- клас, що відповідає тексту всередині елементів, напр. `Hello` в `<p>Hello</p>`.
-    - [Comment](https://dom.spec.whatwg.org/#interface-comment) -- клас для коментарів. Вони не відображаються, але кожен коментар стає членом DOM.
-
-- [Element](https://dom.spec.whatwg.org/#interface-element) -- це базовий клас для елементів DOM. 
-
-    Він забезпечує навігацію на рівні елементів, таку як `nextElementSibling`, `children` та пошукові методи, такі як `getElementsByTagName`, `querySelector`. 
-    
-    Браузер підтримує не тільки HTML, але й XML та SVG. Клас `Element` служить базою для більш специфічних класів: `SVGElement`, `XMLElement` (вони нам тут не потрібні) та `HTMLElement`.
-
-- Нарешті, [HTMLElement](https://html.spec.whatwg.org/multipage/dom.html#htmlelement) -- це, основний клас для всіх елементів HTML. Ми будемо працювати з ним більшу частину часу.
-
-    Він успадковується конкретними елементами HTML:
-    - [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement) -- це клас для `<input>` елементів,
-    - [HTMLBodyElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlbodyelement) -- це клас для `<body>` елементів,
-    - [HTMLAnchorElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlanchorelement) -- це клас для `<a>` елементів,
-    - ...тощо.
-
-  Об'єкти цього класу ніколи не створюються. Він служить базою, щоб всі вузли DOM підтримували так звані "події", які ми розглянемо пізніше.
-
-- [Node](https://dom.spec.whatwg.org/#interface-node) - також "абстрактний" клас, який є базовим для вузлів DOM.
+- [Node](https://dom.spec.whatwg.org/#interface-node) -- також "абстрактний" клас, який є базовим для вузлів DOM.
 
   Він надає основні функціональні можливості дерева: `parentNode`, `nextSibling`, `childNodes` та інші (це геттери). Об'єкти класу `Node` ніколи не створюються, але існують інші класи, які успадковують його (і таким чином успадковують функціональність `Node`).
 
@@ -60,27 +32,27 @@
 
 - [CharacterData](https://dom.spec.whatwg.org/#interface-characterdata) - "абстрактний" клас, успадковується:
 
-  - [Text](https://dom.spec.whatwg.org/#interface-text) - клас, що відповідає тексту всередині елементів, наприклад, `Привіт` у `<p>Привіт</p>`.
-  - [Comment](https://dom.spec.whatwg.org/#interface-comment) - клас для коментарів. Вони не показуються, але кожен коментар стає частиною DOM.
+  - [Text](https://dom.spec.whatwg.org/#interface-text) -- клас, що відповідає тексту всередині елементів, наприклад, `Привіт` у `<p>Привіт</p>`.
+  - [Comment](https://dom.spec.whatwg.org/#interface-comment) -- клас для коментарів. Вони скриті від користувача, але кожен коментар стає частиною DOM.
 
-- [Element](https://dom.spec.whatwg.org/#interface-element) - базовий клас для елементів DOM.
+- [Element](https://dom.spec.whatwg.org/#interface-element) -- базовий клас для елементів DOM.
 
   Він надає навігаційні можливості на рівні елементів, такі як `nextElementSibling`, `children` та методи пошуку, такі як `getElementsByTagName`, `querySelector`.
 
-  Браузер підтримує не лише HTML, а також XML та SVG. Тому клас `Element` служить базою для більш конкретних класів: `SVGElement`, `XMLElement` (ми їх тут не потрібні) та `HTMLElement`.
+  Браузер підтримує не лише HTML, а також XML та SVG. Тому клас `Element` служить базою для більш конкретних класів: `SVGElement`, `XMLElement` (вони нам тут не потрібні) та `HTMLElement`.
 
 - Нарешті, [HTMLElement](https://html.spec.whatwg.org/multipage/dom.html#htmlelement) - це базовий клас для всіх HTML-елементів. Ми будемо працювати з ним більшість часу.
 
   Він успадковується класами конкретних HTML-елементів:
 
-  - [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement) - клас для елементів `<input>`,
-  - [HTMLBodyElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlbodyelement) - клас для елементів `<body>`,
-  - [HTMLAnchorElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlanchorelement) - клас для елементів `<a>`,
+  - [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement) -- клас для елементів `<input>`,
+  - [HTMLBodyElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlbodyelement) -- клас для елементів `<body>`,
+  - [HTMLAnchorElement](https://html.spec.whatwg.org/multipage/semantics.html#htmlanchorelement) -- клас для елементів `<a>`,
   - ...тощо.
 
 Існує багато інших тегів з власними класами, які можуть мати певні властивості та методи, тоді як деякі елементи, такі як `<span>`, `<section>`, `<article>` не мають специфічних властивостей і, тому, вони є екземплярами класу `HTMLElement`.
 
-Таким чином, повний набір властивостей та методів для певного вузла формується в результаті ланцюга успадкування.
+Таким чином, повний набір властивостей та методів для певного вузла формується в результаті ланцюжка успадкування.
 
 Наприклад, давайте розглянемо об’єкт DOM для елемента `<input>`. Він належить до класу [HTMLInputElement](https://html.spec.whatwg.org/multipage/forms.html#htmlinputelement).
 
