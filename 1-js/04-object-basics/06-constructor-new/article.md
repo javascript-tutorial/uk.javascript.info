@@ -51,7 +51,7 @@ function User(name) {
 }
 ```
 
-Отже, `let user = new User("Джек"ction() { ... }")` дає той самий результат, що:
+Отже, `let user = new User("Джек")` дає той самий результат, що:
 
 ```js
 let user = {
