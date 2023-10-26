@@ -4,15 +4,15 @@ libs:
 
 ---
 
-# Selection and Range
+# Selection і Range
 
-In this chapter we'll cover selection in the document, as well as selection in form fields, such as `<input>`.
+У цьому розділі ми розглянемо виділення у документі, або в полях форми, наприклад в ,`<input>`.
 
-JavaScript can access an existing selection, select/deselect DOM nodes as a whole or partially, remove the selected content from the document, wrap it into a tag, and so on.
+JavaScript може отримати доступ до наявного виділення тексту, вибирати/скасовувати виділення вузлів DOM повністю або частково, видаляти вибраний вміст із документа, або обгорнути його в тег тощо.
 
-You can find some recipes for common tasks at the end of the chapter, in "Summary" section. Maybe that covers your current needs, but you'll get much more if you read the whole text.
+В кінці розділу ми підготували кілька готових рішень для типових задач (розділ "Підсумки"). Цілком можливо, цього буде достатньо щоб задовольнити всі ваші поточні потреби, проте ви отримаєте набагато більше, якщо прочитаєте статтю повністю.
 
-The underlying `Range` and `Selection` objects are easy to grasp, and then you'll need no recipes to make them do what you want.
+З об’єктами `Range` та `Selection` досить легко можнарозібратись, і тоді вам не знадобляться готові рішення для розв'язання будь-якої задачі.
 
 ## Range
 
