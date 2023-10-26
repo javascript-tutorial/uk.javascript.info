@@ -25,7 +25,7 @@ let lazy = {
   __proto__: hamster
 };
 
-// Цей хом’ячок знайшов їду
+// Цей хом’ячок знайшов їжу
 speedy.eat("apple");
 alert( speedy.stomach ); // apple
 
