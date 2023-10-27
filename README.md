@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-93-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-94-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -203,6 +203,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Andygol"><img src="https://avatars.githubusercontent.com/u/369696?v=4?s=70" width="70px;" alt="Andrii Holovin"/><br /><sub><b>Andrii Holovin</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AAndygol" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/ibabrov/"><img src="https://avatars.githubusercontent.com/u/60341182?v=4?s=70" width="70px;" alt="Illia Babrov"/><br /><sub><b>Illia Babrov</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ABabrov" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/milax"><img src="https://avatars.githubusercontent.com/u/432327?v=4?s=70" width="70px;" alt="Yevhen Kuzmin"/><br /><sub><b>Yevhen Kuzmin</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Amilax" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
