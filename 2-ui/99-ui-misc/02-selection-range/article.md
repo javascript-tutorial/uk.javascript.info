@@ -6,7 +6,7 @@ libs:
 
 # Selection і Range
 
-У цьому розділі ми розглянемо виділення у документі, або в полях форми, наприклад в ,`<input>`.
+У цьому розділі ми розглянемо виділення у документі та в полях форми, наприклад в ,`<input>`.
 
 JavaScript може отримати доступ до наявного виділення тексту, вибирати/скасовувати виділення вузлів DOM повністю або частково, видаляти вибраний вміст із документа, або обгорнути його в тег тощо.
 
@@ -16,25 +16,25 @@ JavaScript може отримати доступ до наявного виді
 
 ## Range
 
-The basic concept of selection is [Range](https://dom.spec.whatwg.org/#ranges), that is essentially a pair of "boundary points": range start and range end.
+Основою виділення є [Range](https://dom.spec.whatwg.org/#ranges), який по своїй суті є парою "граничних точок": початком і кінцем діапазону.
 
-A `Range` object is created without parameters:
+Об'єкт `Range`(діапазон) створюється без параметрів:
 
 ```js
 let range = new Range();
 ```
 
-Then we can set the selection boundaries using `range.setStart(node, offset)` and `range.setEnd(node, offset)`.
+Далі ми можемо встановити межі виділення за допомогою `range.setStart(node, offset)` і `range.setEnd(node, offset)`.
 
-As you might guess, further we'll use the `Range` objects for selection, but first let's create few such objects.
+Як ви могли здогадатися, ми будемо використовувати об’єкти `Range` для виділення, але спочатку давайте створимо декілька таких об’єктів.
 
-### Selecting the text partially
+### Часткове виділення тексту
 
-The interesting thing is that the first argument `node` in both methods can be either a text node or an element node, and the meaning of the second argument depends on that.
+Цікаво те, що перший аргумент `node` в обох методах може бути або текстовим вузлом, або вузлом елементом, і від цього залежить значення другого аргументу.
 
-**If `node` is a text node, then `offset` must be the position in its text.**
+**Якщо `node` -- це текстовий вузол, то `offset` має бути позицією в його тексті.**
 
-For example, given the element `<p>Hello</p>`, we can create the range containing the letters "ll" as follows:
+Наприклад, в елементі `<p>Hello</p>`, ми можемо створити діапазон, що містить літери "ll" таким чином:
 
 ```html run
 <p id="p">Hello</p>
@@ -43,28 +43,28 @@ For example, given the element `<p>Hello</p>`, we can create the range containin
   range.setStart(p.firstChild, 2);
   range.setEnd(p.firstChild, 4);
   
-  // toString of a range returns its content as text
+  // toString діапазону повертає його вміст як текст
   console.log(range); // ll
 </script>
 ```
 
-Here we take the first child of `<p>` (that's the text node) and specify the text positions inside it:
+Тут ми беремо перший дочірній елемент всередині `<p>` (це текстовий вузол) і вказуємо позиції тексту для виділення:
 
 ![](range-hello-1.svg)
 
-### Selecting element nodes
+### Виділення вузлів елементів
 
-**Alternatively, if `node` is an element node, then `offset` must be the child number.** 
+**Проте, якщо `node` є вузлом елементом, тоді `offset` має бути номером дочірнього елементу.** 
 
-That's handy for making ranges that contain nodes as a whole, not stop somewhere inside their text.
+Це зручно для створення діапазонів, які містять вузли в цілому, а не зупиняються десь усередині їхнього тексту.
 
-For example, we have a more complex document fragment:
+Наприклад, маємо більш складний фрагмент документу:
 
 ```html autorun
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
 ```
 
-Here's its DOM structure with both element and text nodes:
+Ось його структура DOM з елементами та текстовими вузлами:
 
 <div class="select-p-domtree"></div>
 
@@ -102,9 +102,9 @@ let selectPDomtree = {
 drawHtmlTree(selectPDomtree, 'div.select-p-domtree', 690, 320);
 </script>
 
-Let's make a range for `"Example: <i>italic</i>"`.
+Зробимо діапазон для `"Example: <i>italic</i>"`.
 
-As we can see, this phrase consists of exactly two children of `<p>`, with indexes `0` and `1`:
+Як ми бачимо, ця фраза складається рівно з двох нащадків `<p>` з індексами `0` і `1`:
 
 ![](range-example-p-0-1.svg)
 
