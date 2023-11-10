@@ -48,12 +48,12 @@ let user = {
 };
 
 *!*
-// first, declare
+// спочатку оголосімо функцію
 function sayHi() {
   alert("Привіт!");
 }
 
-// then add as a method
+// потім додамо як метод
 user.sayHi = sayHi;
 */!*
 
