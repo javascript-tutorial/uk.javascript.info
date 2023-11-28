@@ -140,7 +140,7 @@ Rabbit.prototype.jumps = true
 // а тому дефолтне Rabbit.prototype.constructor зберігається
 ```
 
-чи по іншоу, відновлюємо `constructor` ручним способом:
+чи по іншому, відновлюємо `constructor` ручним способом:
 
 ```js
 Rabbit.prototype = {
