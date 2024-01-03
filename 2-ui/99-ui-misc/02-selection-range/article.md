@@ -6,13 +6,13 @@ libs:
 
 # Selection і Range
 
-У цьому розділі ми розглянемо виділення у документі та в полях форми, наприклад в ,`<input>`.
+У цьому розділі ми розглянемо виділення у документі та в полях форми, наприклад, в `<input>`.
 
 JavaScript може отримати доступ до наявного виділення тексту, вибирати/скасовувати виділення вузлів DOM повністю або частково, видаляти вибраний вміст із документа, або обгорнути його в тег тощо.
 
 В кінці розділу ми підготували кілька готових рішень для типових задач (розділ "Підсумки"). Цілком можливо, цього буде достатньо щоб задовольнити всі ваші поточні потреби, проте ви отримаєте набагато більше, якщо прочитаєте статтю повністю.
 
-З об’єктами `Range` та `Selection` досить легко можнарозібратись, і тоді вам не знадобляться готові рішення для розв'язання будь-якої задачі.
+З об’єктами `Range` та `Selection` можна розібратись досить легко, і тоді вам не знадобляться готові рішення для розв'язання задач.
 
 ## Range
 
@@ -108,14 +108,14 @@ drawHtmlTree(selectPDomtree, 'div.select-p-domtree', 690, 320);
 
 ![](range-example-p-0-1.svg)
 
-- The starting point has `<p>` as the parent `node`, and `0` as the offset.
+- Початкова точка має `<p>` як батьківський `node` і `0` як `offset`.
 
-    So we can set it as `range.setStart(p, 0)`.
-- The ending point also has `<p>` as the parent `node`, but `2` as the offset (it specifies the range up to, but not including `offset`).
+    Тому ми можемо встановити його як `range.setStart(p, 0)`.
+- Кінцева точка також має `<p>` як батьківський `node`, але `2` як `offset` (вона вказує діапазон до, але не включаючи `offset`).
 
-    So we can set it as `range.setEnd(p, 2)`.
+    Тому ми можемо встановити його як `range.setEnd(p, 2)`.
 
-Here's the demo. If you run it, you can see that the text gets selected:
+Ось демо. Якщо ви запустите його, ви побачите, що текст буде виділено:
 
 ```html run
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
@@ -128,15 +128,15 @@ Here's the demo. If you run it, you can see that the text gets selected:
   range.setEnd(p, 2);
 */!*
 
-  // toString of a range returns its content as text, without tags
+  // toString діапазону повертає його вміст у вигляді тексту без тегів
   console.log(range); // Example: italic
 
-  // apply this range for document selection (explained later below)
+  // застосуємо цей діапазон для виділення в document (пояснюється нижче)
   document.getSelection().addRange(range);
 </script>
 ```
 
-Here's a more flexible test stand where you can set range start/end numbers and explore other variants:
+Ось гнучкіший тестовий приклад, де ви можете встановити початкові/кінцеві номери діапазону та дослідити інші варіанти:
 
 ```html run autorun
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
@@ -152,32 +152,32 @@ From <input id="start" type="number" value=1> – To <input id="end" type="numbe
     range.setEnd(p, end.value);
   */!*
 
-    // apply the selection, explained later below
+    // застосувати виділення, поясненюється нижче
     document.getSelection().removeAllRanges();
     document.getSelection().addRange(range);
   };
 </script>
 ```
 
-E.g. selecting in the same `<p>` from offset `1` to `4` gives us the range `<i>italic</i> and <b>bold</b>`:
+Наприклад, виділення у тому самому `<p>` від `offset` `1` до `4` дає нам діапазон `<i>курсив</i> і <b>жирний</b>`:
 
 ![](range-example-p-1-3.svg)
 
-```smart header="Starting and ending nodes can be different"
-We don't have to use the same node in `setStart` and `setEnd`. A range may span across many unrelated nodes. It's only important that the end is after the start in the document.
+```smart header="Початковий і кінцевий вузли можуть бути різними"
+Нам не потрібно використовувати однаковий вузол у `setStart` і `setEnd`. Діапазон може охоплювати багато непов’язаних вузлів. Важливо лише, щоб кінець був після початку в документі.
 ```
 
-### Selecting a bigger fragment
+### Виділення більшого фрагмента
 
-Let's make a bigger selection in our example, like this:
+Давайте збільшемо розмір виділеного фрагмента:
 
 ![](range-example-p-2-b-3.svg)
 
-We already know how to do that. We just need to set the start and the end as a relative offset in text nodes.
+Ми вже знаємо, як це зробити. Нам просто потрібно встановити початок і кінець як відносне зміщення в текстових вузлах.
 
-We need to create a range, that:
-- starts from position 2 in `<p>` first child (taking all but two first letters of "Ex<b>ample:</b> ")
-- ends at the position 3 in `<b>` first child (taking first three letters of "<b>bol</b>d", but no more):
+Нам потрібно створити діапазон, який:
+- починається з позиції 2 у першому дочірньому вузлі елемента `<p>` (беручи всі, крім двох перших літер "Ex<b>ample:</b> ")
+- закінчується на позиції 3 у `<b>` в першому дочірньому вузлі (бере перші три літери "<b>bol</b>d", але не більше):
 
 ```html run
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
@@ -190,14 +190,14 @@ We need to create a range, that:
 
   console.log(range); // ample: italic and bol
 
-  // use this range for selection (explained later)
+  // застосуємо цей діапазон для виділення в document (пояснюється нижче)
   window.getSelection().addRange(range);
 </script>
 ```
 
-As you can see, it's fairly easy to make a range of whatever we want.
+Як бачите, досить легко створити діапазон для будь-чого.
 
-If we'd like to take nodes as a whole, we can pass elements in `setStart/setEnd`. Otherwise, we can work on the text level. 
+Ба більше, якщо ми хочемо взяти вузли як ціле, треба передати елементи замість текстових вузлів в `setStart/setEnd`. Інакше це буде працювати на рівні тексту.
 
 ## Range properties
 
