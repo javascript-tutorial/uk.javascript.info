@@ -199,66 +199,66 @@ From <input id="start" type="number" value=1> – To <input id="end" type="numbe
 
 Ба більше, якщо ми хочемо взяти вузли як ціле, треба передати елементи замість текстових вузлів в `setStart/setEnd`. Інакше це буде працювати на рівні тексту.
 
-## Range properties
+## Властивості Range 
 
-The range object that we created in the example above has following properties:
+Об’єкт діапазону, який ми використовували у прикладі вище, має такі властивості:
 
 ![](range-example-p-2-b-3-range.svg)
 
-- `startContainer`, `startOffset` -- node and offset of the start,
-  - in the example above: first text node inside `<p>` and `2`.
-- `endContainer`, `endOffset` -- node and offset of the end,
-  - in the example above: first text node inside `<b>` and `3`.
-- `collapsed` -- boolean, `true` if the range starts and ends on the same point (so there's no content inside the range),
-  - in the example above: `false`
-- `commonAncestorContainer` -- the nearest common ancestor of all nodes within the range,
-  - in the example above: `<p>`
+- `startContainer`, `startOffset` -- node і offset початку,
+  - у наведеному вище прикладі: перший текстовий вузол всередині `<p>` і `2`.
+- `endContainer`, `endOffset` -- node і offset кінця,
+  - у прикладі вище: перший текстовий вузол всередині `<b>` і `3`.
+- `collapsed` -- значення логічного типу, `true` якщо діапазон починається і закінчується в одній точці (тому всередині діапазону немає вмісту),
+  - у прикладі вище: `false`
+- `commonAncestorContainer` -- найближчий спільний предок усіх вузлів у діапазоні,
+  - у прикладі вище: `<p>`
 
 
-## Range selection methods
+## Методи виділення в Range
 
-There are many convenient methods to manipulate ranges.
+Існує багато зручних методів по роботі з діапазонами.
 
-We've already seen `setStart` and `setEnd`, here are other similar methods.
+Ми вже бачили `setStart` і `setEnd`, ось інші подібні методи.
 
-Set range start:
+Встановити початок діапазону:
 
-- `setStart(node, offset)` set start at: position `offset` in `node`
-- `setStartBefore(node)` set start at: right before `node`
-- `setStartAfter(node)` set start at: right after `node`
+- `setStart(node, offset)` встановити початок у: позиції `offset` в `node`
+- `setStartBefore(node)` встановити початок о: безпосередньо перед `node`
+- `setStartAfter(node)` встановити початок о: відразу після `node`
 
-Set range end (similar methods):
+Встановити кінець діапазону (подібні методи):
 
-- `setEnd(node, offset)` set end at: position `offset` in `node`
-- `setEndBefore(node)` set end at: right before `node`
-- `setEndAfter(node)` set end at: right after `node`
+- `setEnd(node, offset)` встановити кінець у: позиції `offset` в `node`
+- `setEndBefore(node)` встановити кінець о: безпосередньо перед `node`
+- `setEndAfter(node)` встановити кінець о: одразу після `node`
 
-Technically, `setStart/setEnd` can do anything, but more methods provide more convenience.
+Технічно `setStart/setEnd` можуть робити що завгодно, але більше методів забезпечують більшу зручність.
 
-In all these methods, `node` can be both a text or element node: for text nodes `offset` skips that many of characters, while for element nodes that many child nodes.
+У всіх цих методах `node` може бути як текстовим, так і вузлом елементом: для текстових вузлів `offset` пропускає таку кількість символів, тоді як для вузлів елементів стільки ж дочірніх вузлів.
 
-Even more methods to create ranges:
-- `selectNode(node)` set range to select the whole `node`
-- `selectNodeContents(node)` set range to select the whole `node` contents
-- `collapse(toStart)` if `toStart=true` set end=start, otherwise set start=end, thus collapsing the range
-- `cloneRange()` creates a new range with the same start/end
+Ще більше методів створення діапазонів:
+- `selectNode(node)` встановити діапазон для виділення всього `node`
+- `selectNodeContents(node)` встановити діапазон для виділення всього вмісту `node`
+- `collapse(toStart)` якщо `toStart=true` встановити кінець=початок, інакше встановити початок=кінець, таким чином згорнувши діапазон
+- `cloneRange()` створює новий діапазон із тим самим початком/кінцем
 
-## Range editing methods
+## Методи редагування Range
 
-Once the range is created, we can manipulate its content using these methods:
+Після створення діапазону ми можемо маніпулювати його вмістом за допомогою таких методів:
 
-- `deleteContents()` -- remove range content from the document
-- `extractContents()` -- remove range content from the document and return as [DocumentFragment](info:modifying-document#document-fragment)
-- `cloneContents()` -- clone range content and return as [DocumentFragment](info:modifying-document#document-fragment)
-- `insertNode(node)` -- insert `node` into the document at the beginning of the range
-- `surroundContents(node)` -- wrap `node` around range content. For this to work, the range must contain both opening and closing tags for all elements inside it: no partial ranges like `<i>abc`.
+- `deleteContents()` -- видалити вміст діапазону з документа
+- `extractContents()` -- видалити вміст діапазону з документа та повернутися як [DocumentFragment](info:modifying-document#document-fragment)
+- `cloneContents()` -- клонувати вміст діапазону та повернутися як [DocumentFragment](info:modifying-document#document-fragment)
+- `insertNode(node)` -- вставити `node` в документ на початку діапазону
+- `surroundContents(node)` -- обернути `node` навколо вмісту діапазону. Щоб це працювало, діапазон має містити відкриваючі та закриваючі теги для всіх елементів у ньому: жодних часткових діапазонів, як-от `<i>abc`.
 
-With these methods we can do basically anything with selected nodes.
+За допомогою цих методів ми можемо робити що завгодно з виділенними вузлами.
 
-Here's the test stand to see them in action:
+Ось тестовий приклад, щоб побачити їх у дії:
 
 ```html run refresh autorun height=260
-Click buttons to run methods on the selection, "resetExample" to reset it.
+Натисніть кнопки, щоб запустити методи для виділення, "resetExample", щоб скинути його.
 
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
 
@@ -266,7 +266,7 @@ Click buttons to run methods on the selection, "resetExample" to reset it.
 <script>
   let range = new Range();
 
-  // Each demonstrated method is represented here:
+  // Кожен продемонстрований метод представлений тут:
   let methods = {
     deleteContents() {
       range.deleteContents()
@@ -312,45 +312,46 @@ Click buttons to run methods on the selection, "resetExample" to reset it.
 </script>
 ```
 
-There also exist methods to compare ranges, but these are rarely used. When you need them, please refer to the [spec](https://dom.spec.whatwg.org/#interface-range) or [MDN manual](mdn:/api/Range).
+Існують також методи порівняння діапазонів, але вони використовуються рідко. Коли вони вам знадобляться, ви можете з ними познайомитись ось тут [spec](https://dom.spec.whatwg.org/#interface-range), або тут [MDN manual](mdn:/api/Range).
 
 
 ## Selection
 
-`Range` is a generic object for managing selection ranges. Although, creating a `Range` doesn't mean that we see a selection on screen.
+`Range` -- це загальний об'єкт для керування діапазонами виділення. Хоча створення `Range` не означає, що ми бачимо виділення на екрані.
 
-We may create `Range` objects, pass them around -- they do not visually select anything on their own.
+Ми можемо створювати об’єкти `Range`, передавати їх -- вони самі по собі нічого візуально не виділяють.
 
-The document selection is represented by `Selection` object, that can be obtained as `window.getSelection()` or `document.getSelection()`. A selection may include zero or more ranges. At least, the [Selection API specification](https://www.w3.org/TR/selection-api/) says so. In practice though, only Firefox allows to select multiple ranges in the document by using `key:Ctrl+click` (`key:Cmd+click` for Mac).
+Вибраний документ представлений об’єктом `Selection`, який можна отримати як `window.getSelection()` або `document.getSelection()`. Виділення може містити нуль або більше діапазонів. Принаймні, [Selection API specification](https://www.w3.org/TR/selection-api/) каже саме так. Однак на практиці лише Firefox дозволяє вибирати кілька діапазонів у документі за допомогою `key:Ctrl+click` (`key:Cmd+click` для Mac).
 
-Here's a screenshot of a selection with 3 ranges, made in Firefox:
+Ось скріншот вибору з 3 діапазонами, зроблений у Firefox:
 
 ![](selection-firefox.svg)
 
-Other browsers support at maximum 1 range. As we'll see, some of `Selection` methods imply that there may be many ranges, but again, in all browsers except Firefox, there's at maximum 1.
+Інші браузери підтримують максимум 1 діапазон. Як ми побачимо, деякі з методів `Selection` означають, що може бути багато діапазонів, але знову ж таки, у всіх браузерах, крім Firefox, їх не більше 1.
 
-Here's a small demo that shows the current selection (select something and click) as text:
+Ось невеликий приклад, який показує поточний вибір (виберіть щось і натисніть) у вигляді тексту:
 
 <button onclick="alert(document.getSelection())">alert(document.getSelection())</button>
 
-## Selection properties
+## Властивості Selection
 
-As said, a selection may in theory contain multiple ranges. We can get these range objects using the method:
+Як було сказано, об'єкт `Selection` теоретично може містити кілька діапазонів. Ми можемо отримати ці діапазони за допомогою методу:
 
-- `getRangeAt(i)` -- get i-th range, starting from `0`. In all browsers except Firefox, only `0` is used.
+- `getRangeAt(i)` -- отримати i-й діапазон, починаючи з `0`. У всіх браузерах, крім Firefox, використовується лише `0`.
 
-Also, there exist properties that often provide better convenience.
+Крім того, існують зручніші властивості.
 
-Similar to a range, a selection object has a start, called "anchor", and the end, called "focus".
+Подібно до діапазону, об’єкт виділення має початок, який називається "anchor", і кінець, який називається "focus".
 
-The main selection properties are:
+Основними властивостями `Selection` є:
 
-- `anchorNode` -- the node where the selection starts,
-- `anchorOffset` -- the offset in `anchorNode` where the selection starts,
-- `focusNode` -- the node where the selection ends,
-- `focusOffset` -- the offset in `focusNode` where the selection ends,
-- `isCollapsed` -- `true` if selection selects nothing (empty range), or doesn't exist.
-- `rangeCount` -- count of ranges in the selection, maximum `1` in all browsers except Firefox.
+- `anchorNode` -- вузол, де починається виділення,
+- `anchorOffset` -- зміщення в `anchorNode`, де починається виділення,
+- `focusNode` -- вузол, де закінчується виділення,
+- `focusOffset` -- зсув у `focusNode`, де закінчується виділення,
+
+- `isCollapsed` -- `true` якщо нічого не виділено (порожній діапазон) або не існує.
+- `rangeCount` -- кількість діапазонів у виділенні, максимум `1` у всіх браузерах, крім Firefox.
 
 ```smart header="Selection end/start vs Range"
 
