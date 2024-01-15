@@ -353,39 +353,39 @@ From <input id="start" type="number" value=1> – To <input id="end" type="numbe
 - `isCollapsed` -- `true` якщо нічого не виділено (порожній діапазон) або не існує.
 - `rangeCount` -- кількість діапазонів у виділенні, максимум `1` у всіх браузерах, крім Firefox.
 
-```smart header="Selection end/start vs Range"
+```smart header="Selection кінець/початок vs Range"
 
-There's an important differences of a selection anchor/focus compared with a `Range` start/end.
+Існують важливі відмінності `Selection` anchor/focus порівняно з `Range` start/end.
 
-As we know, `Range` objects always have their start before the end. 
+Як ми знаємо, об’єкти `Range` завжди мають початок(start) перед кінцем(end).
 
-For selections, that's not always the case.
+Для `Selection` це не завжди так.
 
-Selecting something with a mouse can be done in both directions: either "left-to-right" or "right-to-left".
+Виділяти щось за допомогою миші можна в обох напрямках: або "зліва направо", або "справа наліво".
 
-In other words, when the mouse button is pressed, and then it moves forward in the document, then its end (focus) will be after its start (anchor).
+Іншими словами, коли кнопку миші натиснуто, а потім вона переміщується вперед у документі, то її кінець (focus) буде після її початку (anchor).
 
-E.g. if the user starts selecting with mouse and goes from "Example" to "italic":
+Наприклад якщо користувач починає виділяти мишею та переходить від "Example" до "italic":
 
 ![](selection-direction-forward.svg)
 
-...But the same selection could be done backwards: starting from  "italic" to "Example" (backward direction), then its end (focus) will be before the start (anchor):
+...Але те саме виділення можна зробити і в зворотному напрямку: починаючи від "italic" до "Example" (напрямок назад), тоді його кінець (focus) буде перед початком (anchor):
 
 ![](selection-direction-backward.svg)
 ```
 
-## Selection events
+## Події Selection
 
-There are events on to keep track of selection:
+Існують події, щоб слідкувати за виділенням:
 
-- `elem.onselectstart` -- when a selection *starts* specifically on element `elem` (or inside it). For instance, when the user presses the mouse button on it and starts to move the pointer.
-    - Preventing the default action cancels the selection start. So starting a selection from this element becomes impossible, but the element is still selectable. The visitor just needs to start the selection from elsewhere.
-- `document.onselectionchange` -- whenever a selection changes or starts.
-    - Please note: this handler can be set only on `document`, it tracks all selections in it.
+- `elem.onselectstart` -- коли виділення *починається* саме на елементі `elem` (або всередині нього). Наприклад, коли користувач натискає на ньому кнопку миші та починає рухати вказівник.
+    - Запобігання типової дії скасовує початок виділення. Таким чином, почати виділення з цього елемента стає неможливо, але елемент все ще доступний для виділення загалом. Користувачу просто потрібно почати виділення з іншого місця.
+- `document.onselectionchange` -- кожного разу, коли виділення змінюється або починається.
+    - Зверніть увагу: цей обробник можна встановити лише на `document`, він відстежує всі виділення в ньому.
 
-### Selection tracking demo
+### Приклад з відстеження Selection
 
-Here's a small demo. It tracks the current selection on the `document` and shows its boundaries:
+Ось невелика демонстрація, яка відстежує поточний вибір у `document` та показує його межі:
 
 ```html run height=80
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
@@ -397,7 +397,7 @@ From <input id="from" disabled> – To <input id="to" disabled>
 
     let {anchorNode, anchorOffset, focusNode, focusOffset} = selection;
 
-    // anchorNode and focusNode are text nodes usually
+    // anchorNode і focusNode зазвичай є текстовими вузлами
     from.value = `${anchorNode?.data}, offset ${anchorOffset}`;
     to.value = `${focusNode?.data}, offset ${focusOffset}`;
   };
