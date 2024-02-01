@@ -404,14 +404,14 @@ From <input id="from" disabled> – To <input id="to" disabled>
 </script>
 ```
 
-### Selection copying demo
+### Виділення з копіюванням
 
-There are two approaches to copying the selected content:
+Є два підходи до копіювання виділенного вмісту:
 
-1. We can use `document.getSelection().toString()` to get it as text.
-2. Otherwise, to copy the full DOM, e.g. if we need to keep formatting, we can get the underlying ranges with `getRangeAt(...)`. A `Range` object, in turn, has `cloneContents()` method that clones its content and returns as `DocumentFragment` object, that we can insert elsewhere.
+1. Ми можемо використати `document.getSelection().toString()`, щоб отримати його як текст.
+2. В іншому випадку, щоб скопіювати повний DOM, напр. якщо нам потрібно продовжити форматування, ми можемо отримати виділенні діапазони за допомогою `getRangeAt(...)`. Об’єкт `Range`, у свою чергу, має метод `cloneContents()`, який клонує його вміст і повертає як об’єкт `DocumentFragment`, який ми можемо вставити в інше місце.
 
-Here's the demo of copying the selected content both as text and as DOM nodes:
+Ось приклад копіювання вибраного вмісту як тексту і як вузлів DOM:
 
 ```html run height=100
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
@@ -426,83 +426,83 @@ As text: <span id="astext"></span>
 
     cloned.innerHTML = astext.innerHTML = "";
 
-    // Clone DOM nodes from ranges (we support multiselect here)
+    // Клонувати вузли DOM із діапазонів (тут ми підтримуємо множинне виділення)
     for (let i = 0; i < selection.rangeCount; i++) {
       cloned.append(selection.getRangeAt(i).cloneContents());
     }
 
-    // Get as text
+    // Отримати як текст
     astext.innerHTML += selection;
   };
 </script>
 ```
 
-## Selection methods
+## Методи Selection
 
-We can work with the selection by adding/removing ranges:
+Ми можемо працювати з виділенням, додаючи/вилучаючи діапазони:
 
-- `getRangeAt(i)` -- get i-th range, starting from `0`. In all browsers except Firefox, only `0` is used.
-- `addRange(range)` -- add `range` to selection. All browsers except Firefox ignore the call, if the selection already has an associated range.
-- `removeRange(range)` -- remove `range` from the selection.
-- `removeAllRanges()` -- remove all ranges.
-- `empty()` -- alias to `removeAllRanges`.
+- `getRangeAt(i)` -- отримати i-й діапазон, починаючи з `0`. У всіх браузерах, крім Firefox, використовується лише `0`.
+- `addRange(range)` -- додати `range` до виділення. Усі браузери, крім Firefox, ігнорують виклик, якщо у виділенні вже є діапазон.
+- `removeRange(range)` -- видалити `range` з виділення.
+- `removeAllRanges()` -- видалити всі діапазони.
+- `empty()` -- метод аналогічний `removeAllRanges`.
 
-There are also convenience methods to manipulate the selection range directly, without intermediate `Range` calls:
+Існують також зручні методи для безпосереднього керування діапазоном вибору без проміжних викликів `Range`:
 
-- `collapse(node, offset)` -- replace selected range with a new one that starts and ends at the given `node`, at position `offset`.
-- `setPosition(node, offset)` -- alias to `collapse`.
-- `collapseToStart()` - collapse (replace with an empty range) to selection start,
-- `collapseToEnd()` - collapse to selection end,
-- `extend(node, offset)` - move focus of the selection to the given `node`, position `offset`,
-- `setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset)` - replace selection range with the given start `anchorNode/anchorOffset` and end `focusNode/focusOffset`. All content in-between them is selected.
-- `selectAllChildren(node)` -- select all children of the `node`.
-- `deleteFromDocument()` -- remove selected content from the document.
-- `containsNode(node, allowPartialContainment = false)` -- checks whether the selection contains `node` (partially if the second argument is `true`)
+- `collapse(node, offset)` -- замінити вибраний діапазон на новий, який починається і закінчується на заданому `node`, на позиції `offset`.
+- `setPosition(node, offset)` -- метод аналогічний `collapse`.
+- `collapseToStart()` -- згорнути (замінити порожнім діапазоном) до початку виділення,
+- `collapseToEnd()` -- згорнути до кінця виділення,
+- `extend(node, offset)` -- перемістити фокус виділення на заданий `node`, положення `offset`,
+- `setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset)` -- замінити діапазон виділення заданим початковим `anchorNode/anchorOffset` і кінцевим `focusNode/focusOffset`. Весь вміст між ними виділено.
+- `selectAllChildren(node)` -- вибрати всі дочірні елементи `node`.
+- `deleteFromDocument()` -- видалити виділений вміст із документа.
+- `containsNode(node, allowPartialContainment = false)` -- перевіряє, чи містить виділення заданий `node` (або частково, якщо другий аргумент `true`)
 
-For most tasks these methods are just fine, there's no need to access the underlying `Range` object.
+Для більшості завдань ці методи чудово підходять, немає необхідності звертатися до базового об’єкта `Range`.
 
-For example, selecting the whole contents of the paragraph `<p>`:
+Наприклад, виділення всього вмісту абзацу `<p>`:
 
 ```html run
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
 
 <script>
-  // select from 0th child of <p> to the last child
+  // виділити від 0-го дочірнього елемента <p> до останнього дочірнього
   document.getSelection().setBaseAndExtent(p, 0, p, p.childNodes.length);
 </script>
 ```
 
-The same thing using ranges:
+Те саме з використанням діапазонів:
 
 ```html run
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
 
 <script>
   let range = new Range();
-  range.selectNodeContents(p); // or selectNode(p) to select the <p> tag too
+  range.selectNodeContents(p); // або selectNode(p), щоб також виділити тег <p>
 
-  document.getSelection().removeAllRanges(); // clear existing selection if any
+  document.getSelection().removeAllRanges(); // скинути наявне виділення, якщо воно є
   document.getSelection().addRange(range);
 </script>
 ```
 
-```smart header="To select something, remove the existing selection first"
-If a document selection already exists, empty it first with `removeAllRanges()`. And then add ranges. Otherwise, all browsers except Firefox ignore new ranges.
+```smart header="Щоб зробити нове виділення, спочатку приберіть поточне"
+Якщо вже щось виділене, спочатку приберіть це за допомогою `removeAllRanges()`. А потім додавайте діапазони. В іншому випадку всі браузери, крім Firefox, ігнорують нові діапазони.
 
-The exception is some selection methods, that replace the existing selection, such as `setBaseAndExtent`.
+Виняток становлять деякі методи, які замінюють існуюче виділення, наприклад `setBaseAndExtent`.
 ```
 
-## Selection in form controls
+## Виділення в інтерактивних елементах форми
 
-Form elements, such as `input` and `textarea` provide [special API for selection](https://html.spec.whatwg.org/#textFieldSelection), without `Selection` or `Range` objects. As an input value is a pure text, not HTML, there's no need for such objects, everything's much simpler.
+Такі елементи форми, як `input` і `textarea`, надають [спеціальний API для виділення](https://html.spec.whatwg.org/#textFieldSelection) без об’єктів `Selection` або `Range`. Ба більше, оскільки на вході завжди чистий текст, а не HTML, такі об’єкти просто не потрібні, все працює значно простіше.
 
-Properties:
-- `input.selectionStart` -- position of selection start (writeable),
-- `input.selectionEnd` -- position of selection end (writeable),
-- `input.selectionDirection` -- selection direction, one of: "forward", "backward" or "none" (if e.g. selected with a double mouse click),
+Властивості:
+- `input.selectionStart` -- позиція початку виділення (працює на запис),
+- `input.selectionEnd` -- позиція кінця виділення (працює на запис),
+- `input.selectionDirection` -- напрямок виділення, одне з: "forward", "backward" або "none" (якщо напр. виділено подвійним клацанням миші),
 
-Events:
-- `input.onselect` -- triggers when something is selected.
+Події:
+- `input.onselect` -- запускається, коли щось виділено.
 
 Methods:
 
