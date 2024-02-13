@@ -504,26 +504,26 @@ As text: <span id="astext"></span>
 Події:
 - `input.onselect` -- запускається, коли щось виділено.
 
-Methods:
+Методи:
 
-- `input.select()` -- selects everything in the text control (can be `textarea` instead of `input`),
-- `input.setSelectionRange(start, end, [direction])` -- change the selection to span from position `start` till `end`, in the given direction (optional).
-- `input.setRangeText(replacement, [start], [end], [selectionMode])` -- replace a range of text with the new text.
+- `input.select()` -- виділяє все в текстовому елементі (може бути `textarea` замість `input`),
+- `input.setSelectionRange(start, end, [direction])` -- змінити виділення на діапазон від позиції `start` до `end` у вказаному `direction` (необов’язковий параметер).
+- `input.setRangeText(replacement, [start], [end], [selectionMode])` -- замінити діапазон тексту новим текстом.
 
-    Optional arguments `start` and `end`, if provided, set the range start and end, otherwise user selection is used.
+    Необов’язкові аргументи `start` і `end`, якщо вони надані, встановлюють початок і кінець діапазону, інакше використовується виділення від користувача.
 
-    The last argument, `selectionMode`, determines how the selection will be set after the text has been replaced. The possible values are:
+    Останній аргумент, `selectionMode`, визначає, як буде встановлено виділення після заміни тексту. Можливі значення:
 
-    - `"select"` -- the newly inserted text will be selected.
-    - `"start"` -- the selection range collapses just before the inserted text (the cursor will be immediately before it).
-    - `"end"` -- the selection range collapses just after the inserted text (the cursor will be right after it).
-    - `"preserve"` -- attempts to preserve the selection. This is the default.
+    - `"select"` -- буде виділено щойно вставлений текст.
+    - `"start"` -- діапазон виділення згортається безпосередньо перед вставленим текстом (курсор буде перед ним).
+    - `"end"` -- діапазон виділення згортається відразу після вставленого тексту (курсор буде відразу за ним).
+    - `"preserve"` -- спробує зберегти виділення. Це типове значення.
 
-Now let's see these methods in action.
+Тепер давайте подивимося на ці методи в дії.
 
-### Example: tracking selection
+### Приклад: відстеження виділення
 
-For example, this code uses `onselect` event to track selection:
+Наприклад, цей код використовує подію `onselect` для відстеження виділення:
 
 ```html run autorun
 <textarea id="area" style="width:80%;height:60px">
@@ -540,20 +540,20 @@ From <input id="from" disabled> – To <input id="to" disabled>
 </script>
 ```
 
-Please note:
-- `onselect` triggers when something is selected, but not when the selection is removed.
-- `document.onselectionchange` event should not trigger for selections inside a form control, according to the [spec](https://w3c.github.io/selection-api/#dfn-selectionchange), as it's not related to `document` selection and ranges. Some browsers generate it, but we shouldn't rely on it.
+Будь ласка, зверніть увагу:
+- `onselect` спрацьовує, коли щось виділено, але не коли його прибрано.
+- подія `document.onselectionchange` відповідно до [spec](https://w3c.github.io/selection-api/#dfn-selectionchange) не має ініціювати виділення всередині елемента форми, оскільки вона не пов’язана з виділенням і діапазонами в `document `. Деякі браузери генерують її, але ми не маємо покладатися на це.
 
 
-### Example: moving cursor
+### Приклад: рух курсору
 
-We can change `selectionStart` and `selectionEnd`, that sets the selection.
+Ми можемо змінити `selectionStart` і `selectionEnd`, які встановлюють виділення.
 
-An important edge case is when `selectionStart` and `selectionEnd` equal each other. Then it's exactly the cursor position. Or, to rephrase, when nothing is selected, the selection is collapsed at the cursor position.
+Важливим граничним випадком є ​​коли `selectionStart` і `selectionEnd` дорівнюють один одному. Тоді це точно положення курсора. Або, якщо перефразувати, коли нічого не виділено, виділення згортається в позиції курсора.
 
-So, by setting `selectionStart` and `selectionEnd` to the same value, we move the cursor.
+Отже, встановивши `selectionStart` і `selectionEnd` однакові значення, ми переміщуємо курсор.
 
-For example:
+Наприклад:
 
 ```html run autorun
 <textarea id="area" style="width:80%;height:60px">
@@ -562,23 +562,23 @@ Focus on me, the cursor will be at position 10.
 
 <script>
   area.onfocus = () => {
-    // zero delay setTimeout to run after browser "focus" action finishes
+    // setTimeout з нульовою затримкою для запуску після завершення дії "focus"
     setTimeout(() => {
-      // we can set any selection
-      // if start=end, the cursor is exactly at that place
+      // ми можемо встановити будь-яке виділення
+      // якщо start=end, курсор знаходиться саме в цьому місці
       area.selectionStart = area.selectionEnd = 10;
     });
   };
 </script>
 ```
 
-### Example: modifying selection
+### Приклад: зміна виділення
 
-To modify the content of the selection, we can use `input.setRangeText()` method. Of course, we can read `selectionStart/End` and, with the knowledge of the selection, change the corresponding substring of `value`, but `setRangeText` is more powerful and often more convenient.
+Щоб змінити вміст виділення, ми можемо використати метод `input.setRangeText()`. Звичайно, ми можемо взяти `selectionStart/End` і, знаючи виділення, змінити відповідний підрядок `value`, але `setRangeText` є потужнішим і часто зручнішим.
 
-That's a somewhat complex method. In its simplest one-argument form it replaces the user selected range and removes the selection.
+Проте це дещо складний метод. У своїй найпростішій формі з одним аргументом він замінює вибраний користувачем діапазон і видаляє виділення.
 
-For example, here the user selection will be wrapped by `*...*`:
+Наприклад, тут виділення від користувача буде обгорнуто в `*...*`:
 
 ```html run autorun
 <input id="input" style="width:200px" value="Select here and click the button">
@@ -587,7 +587,7 @@ For example, here the user selection will be wrapped by `*...*`:
 <script>
 button.onclick = () => {
   if (input.selectionStart == input.selectionEnd) {
-    return; // nothing is selected
+    return; // нічого не виділено
   }
 
   let selected = input.value.slice(input.selectionStart, input.selectionEnd);
@@ -596,9 +596,9 @@ button.onclick = () => {
 </script>
 ```
 
-With more arguments, we can set range `start` and `end`.
+Маючи більше аргументів, ми можемо встановити діапазон `start` і `end`.
 
-In this example we find `"THIS"` in the input text, replace it and keep the replacement selected:
+У цьому прикладі ми знаходимо `"THIS"` у вхідному тексті, замінюємо його та залишаємо виділеною заміну:
 
 ```html run autorun
 <input id="input" style="width:200px" value="Replace THIS in text">
@@ -609,19 +609,19 @@ button.onclick = () => {
   let pos = input.value.indexOf("THIS");
   if (pos >= 0) {
     input.setRangeText("*THIS*", pos, pos + 4, "select");
-    input.focus(); // focus to make selection visible
+    input.focus(); // фокус, щоб зробити виділення видимим
   }
 };
 </script>
 ```
 
-### Example: insert at cursor
+### Приклад: вставити під курсор
 
-If nothing is selected, or we use equal `start` and `end` in `setRangeText`, then the new text is just inserted, nothing is removed.
+Якщо нічого не виділено або ми використовуємо однакові `start` і `end` у `setRangeText`, тоді новий текст просто вставляється, нічого не видаляється.
 
-We can also insert something "at the cursor" using `setRangeText`.
+Ми також можемо вставити щось "за курсором", використовуючи `setRangeText`.
 
-Here's a button that inserts `"HELLO"` at the cursor position and puts the cursor immediately after it. If the selection is not empty, then it gets replaced (we can detect it by comparing `selectionStart!=selectionEnd` and do something else instead):
+Ось кнопка, яка вставляє `"HELLO"` на позицію курсора та розміщує курсор одразу після нього. Якщо виділення не порожнє, воно замінюється (ми можемо виявити це, порівнявши `selectionStart!=selectionEnd` і натомість зробити щось інше):
 
 ```html run autorun
 <input id="input" style="width:200px" value="Text Text Text Text Text">
@@ -636,11 +636,11 @@ Here's a button that inserts `"HELLO"` at the cursor position and puts the curso
 ```
 
 
-## Making unselectable
+## Заборона виділення
 
-To make something unselectable, there are three ways:
+Щоб заборонити виділення, є три способи:
 
-1. Use CSS property `user-select: none`.
+1. Задайте CSS властивість `user-select: none`.
 
     ```html run
     <style>
@@ -651,12 +651,12 @@ To make something unselectable, there are three ways:
     <div>Selectable <div id="elem">Unselectable</div> Selectable</div>
     ```
 
-    This doesn't allow the selection to start at `elem`. But the user may start the selection elsewhere and include `elem` into it.
+    Це не дозволяє виділенню починатися з `elem`. Але користувач може почати з іншого місця і вже потім включити до нього `elem`.
 
-    Then `elem` will become a part of `document.getSelection()`, so the selection actually happens, but its content is usually ignored in copy-paste.
+    Тоді `elem` стане частиною `document.getSelection()`, тому виділення фактично відбувається, але його вміст зазвичай ігнорується під час копіювання та вставки.
 
 
-2. Prevent default action in `onselectstart` or `mousedown` events.
+2. Запобігання типової дії для подій `onselectstart` або `mousedown`.
 
     ```html run
     <div>Selectable <div id="elem">Unselectable</div> Selectable</div>
@@ -666,52 +666,52 @@ To make something unselectable, there are three ways:
     </script>
     ```
 
-    This prevents starting the selection on `elem`, but the visitor may start it at another element, then extend to `elem`.
+    Це запобігає старту виділення з `elem`, але користувач може почати його з іншого елемента, а потім продовжити до `elem`.
 
-    That's convenient when there's another event handler on the same action that triggers the select (e.g. `mousedown`). So we disable the selection to avoid conflict, still allowing `elem` contents to be copied.
+    Це зручно, коли для тієї самої дії є інший обробник події, який ініціює виділення (наприклад, `mousedown`). Тому ми забороняємо виділення, щоб уникнути конфлікту, але все ще дозволяємо копіювати вміст `elem`.
 
-3. We can also clear the selection post-factum after it happens with `document.getSelection().empty()`. That's rarely used, as this causes unwanted blinking as the selection appears-disappears.
+3. Ми також можемо очистити виділення постфактум після того, як це вже сталося, за допомогою `document.getSelection().empty()`. Це рідко використовується, оскільки це спричиняє небажане блимання під час появи та зникнення виділення.
 
-## References
+## Посилання
 
 - [DOM spec: Range](https://dom.spec.whatwg.org/#ranges)
 - [Selection API](https://www.w3.org/TR/selection-api/#dom-globaleventhandlers-onselectstart)
 - [HTML spec: APIs for the text control selections](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#textFieldSelection)
 
 
-## Summary
+## Підсумки
 
-We covered two different APIs for selections:
+Ми розглянули два різних API для виділення:
 
-1. For document: `Selection` and `Range` objects.
-2. For `input`, `textarea`: additional methods and properties.
+1. Для документа: об’єкти `Selection` і `Range`.
+2. Для `input`, `textarea`: додаткові методи та властивості.
 
-The second API is very simple, as it works with text.
+Другий API дуже простий, оскільки працює з текстом.
 
-The most used recipes are probably:
+Серед найбільш типових задач:
 
-1. Getting the selection:
+1. Отримання поточного виділення:
     ```js
     let selection = document.getSelection();
 
-    let cloned = /* element to clone the selected nodes to */;
+    let cloned = /* елемент для клонування виділенних вузлів */;
 
-    // then apply Range methods to selection.getRangeAt(0)
-    // or, like here, to all ranges to support multi-select
+    // потім застосуйте методи Range до selection.getRangeAt(0)
+    // або, як тут, до всіх діапазонів для підтримки множинного виділення
     for (let i = 0; i < selection.rangeCount; i++) {
       cloned.append(selection.getRangeAt(i).cloneContents());
     }
     ```
-2. Setting the selection:
+2. Налаштування виділення:
     ```js
     let selection = document.getSelection();
 
-    // directly:
+    // безпосередньо:
     selection.setBaseAndExtent(...from...to...);
 
-    // or we can create a range and:
+    // або ми можемо створити діапазон і:
     selection.removeAllRanges();
     selection.addRange(range);
     ```
 
-And finally, about the cursor. The cursor position in editable elements, like `<textarea>` is always at the start or the end of the selection. We can use it  to get cursor position or to move the cursor by setting `elem.selectionStart` and `elem.selectionEnd`.
+І нарешті про курсор. Позиція курсору в елементах, які можна редагувати, наприклад `<textarea>`, завжди знаходиться на початку або в кінці виділення. Ми можемо використовувати його, щоб отримати позицію курсору або перемістити курсор, встановивши `elem.selectionStart` і `elem.selectionEnd`.
