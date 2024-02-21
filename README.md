@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-96-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-97-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -206,6 +206,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/milax"><img src="https://avatars.githubusercontent.com/u/432327?v=4?s=70" width="70px;" alt="Yevhen Kuzmin"/><br /><sub><b>Yevhen Kuzmin</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Amilax" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/CodyMaster007"><img src="https://avatars.githubusercontent.com/u/82391244?v=4?s=70" width="70px;" alt="Danylo"/><br /><sub><b>Danylo</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ACodyMaster007" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/BogSala"><img src="https://avatars.githubusercontent.com/u/90139360?v=4?s=70" width="70px;" alt="BogSala"/><br /><sub><b>BogSala</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ABogSala" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/darynaplrs"><img src="https://avatars.githubusercontent.com/u/90515799?v=4?s=70" width="70px;" alt="Daryna Poliarush"/><br /><sub><b>Daryna Poliarush</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Adarynaplrs" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
