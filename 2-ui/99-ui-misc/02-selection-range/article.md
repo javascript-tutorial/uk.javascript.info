@@ -4,37 +4,37 @@ libs:
 
 ---
 
-# Selection and Range
+# Selection і Range
 
-In this chapter we'll cover selection in the document, as well as selection in form fields, such as `<input>`.
+У цьому розділі ми розглянемо виділення у документі та в полях форми, наприклад, в `<input>`.
 
-JavaScript can access an existing selection, select/deselect DOM nodes as a whole or partially, remove the selected content from the document, wrap it into a tag, and so on.
+JavaScript може отримати доступ до наявного виділення тексту, вибирати/скасовувати виділення вузлів DOM повністю або частково, видаляти виділений вміст із документа, або обгорнути його в тег тощо.
 
-You can find some recipes for common tasks at the end of the chapter, in "Summary" section. Maybe that covers your current needs, but you'll get much more if you read the whole text.
+В кінці розділу ми підготували кілька готових рішень для типових задач (розділ "Підсумки"). Цілком можливо, цього буде достатньо щоб задовольнити всі ваші поточні потреби, проте ви отримаєте набагато більше, якщо прочитаєте статтю повністю.
 
-The underlying `Range` and `Selection` objects are easy to grasp, and then you'll need no recipes to make them do what you want.
+З об’єктами `Range` та `Selection` можна розібратись досить легко, і тоді вам не знадобляться готові рішення для розв'язання задач.
 
 ## Range
 
-The basic concept of selection is [Range](https://dom.spec.whatwg.org/#ranges), that is essentially a pair of "boundary points": range start and range end.
+Основою виділення є [Range](https://dom.spec.whatwg.org/#ranges), який по своїй суті є парою "граничних точок": початком і кінцем діапазону.
 
-A `Range` object is created without parameters:
+Об'єкт `Range`(діапазон) створюється без параметрів:
 
 ```js
 let range = new Range();
 ```
 
-Then we can set the selection boundaries using `range.setStart(node, offset)` and `range.setEnd(node, offset)`.
+Далі ми можемо встановити межі виділення за допомогою `range.setStart(node, offset)` і `range.setEnd(node, offset)`.
 
-As you might guess, further we'll use the `Range` objects for selection, but first let's create few such objects.
+Як ви могли здогадатися, ми будемо використовувати об’єкти `Range` для виділення, але спочатку давайте створимо декілька таких об’єктів.
 
-### Selecting the text partially
+### Часткове виділення тексту
 
-The interesting thing is that the first argument `node` in both methods can be either a text node or an element node, and the meaning of the second argument depends on that.
+Цікаво те, що перший аргумент `node` в обох методах може бути або текстовим вузлом, або вузлом елементом, і від цього залежить значення другого аргументу.
 
-**If `node` is a text node, then `offset` must be the position in its text.**
+**Якщо `node` -- це текстовий вузол, то `offset` має бути позицією в його тексті.**
 
-For example, given the element `<p>Hello</p>`, we can create the range containing the letters "ll" as follows:
+Наприклад, в елементі `<p>Hello</p>`, ми можемо створити діапазон, що містить літери "ll" таким чином:
 
 ```html run
 <p id="p">Hello</p>
@@ -43,28 +43,28 @@ For example, given the element `<p>Hello</p>`, we can create the range containin
   range.setStart(p.firstChild, 2);
   range.setEnd(p.firstChild, 4);
   
-  // toString of a range returns its content as text
+  // toString діапазону повертає його вміст як текст
   console.log(range); // ll
 </script>
 ```
 
-Here we take the first child of `<p>` (that's the text node) and specify the text positions inside it:
+Тут ми беремо перший дочірній елемент всередині `<p>` (це текстовий вузол) і вказуємо позиції в тексті для виділення:
 
 ![](range-hello-1.svg)
 
-### Selecting element nodes
+### Виділення вузлів елементів
 
-**Alternatively, if `node` is an element node, then `offset` must be the child number.** 
+**Проте, якщо `node` є вузлом елементом, тоді `offset` має бути номером дочірнього елементу.** 
 
-That's handy for making ranges that contain nodes as a whole, not stop somewhere inside their text.
+Це зручно для створення діапазонів, які містять вузли в цілому, а не зупиняються десь усередині їхнього тексту.
 
-For example, we have a more complex document fragment:
+Наприклад, маємо більш складний фрагмент документу:
 
 ```html autorun
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
 ```
 
-Here's its DOM structure with both element and text nodes:
+Ось його структура DOM з вузлами елементами та текстовими вузлами:
 
 <div class="select-p-domtree"></div>
 
@@ -102,20 +102,20 @@ let selectPDomtree = {
 drawHtmlTree(selectPDomtree, 'div.select-p-domtree', 690, 320);
 </script>
 
-Let's make a range for `"Example: <i>italic</i>"`.
+Зробимо діапазон для `"Example: <i>italic</i>"`.
 
-As we can see, this phrase consists of exactly two children of `<p>`, with indexes `0` and `1`:
+Як ми бачимо, ця фраза складається рівно з двох нащадків `<p>` з індексами `0` і `1`:
 
 ![](range-example-p-0-1.svg)
 
-- The starting point has `<p>` as the parent `node`, and `0` as the offset.
+- Початкова точка має `<p>` як батьківський `node` і `0` як `offset`.
 
-    So we can set it as `range.setStart(p, 0)`.
-- The ending point also has `<p>` as the parent `node`, but `2` as the offset (it specifies the range up to, but not including `offset`).
+    Тому ми можемо встановити його як `range.setStart(p, 0)`.
+- Кінцева точка також має `<p>` як батьківський `node`, але `2` як `offset` (вона вказує діапазон до, але не включаючи `offset`).
 
-    So we can set it as `range.setEnd(p, 2)`.
+    Тому ми можемо встановити його як `range.setEnd(p, 2)`.
 
-Here's the demo. If you run it, you can see that the text gets selected:
+Нижче ми підготували приклад з демонстрацією. Якщо ви запустите його, то текст буде виділено:
 
 ```html run
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
@@ -128,15 +128,15 @@ Here's the demo. If you run it, you can see that the text gets selected:
   range.setEnd(p, 2);
 */!*
 
-  // toString of a range returns its content as text, without tags
+  // toString діапазону повертає його вміст у вигляді тексту без тегів
   console.log(range); // Example: italic
 
-  // apply this range for document selection (explained later below)
+  // застосуємо цей діапазон для виділення в document (пояснюється нижче)
   document.getSelection().addRange(range);
 </script>
 ```
 
-Here's a more flexible test stand where you can set range start/end numbers and explore other variants:
+Ось гнучкіший тестовий приклад, де ви можете встановити початкові/кінцеві точки діапазону та дослідити інші варіанти:
 
 ```html run autorun
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
@@ -152,32 +152,32 @@ From <input id="start" type="number" value=1> – To <input id="end" type="numbe
     range.setEnd(p, end.value);
   */!*
 
-    // apply the selection, explained later below
+    // застосувати виділення, поясненюється нижче
     document.getSelection().removeAllRanges();
     document.getSelection().addRange(range);
   };
 </script>
 ```
 
-E.g. selecting in the same `<p>` from offset `1` to `4` gives us the range `<i>italic</i> and <b>bold</b>`:
+Наприклад, виділення у тому самому `<p>` від `offset` `1` до `4` дає нам діапазон `<i>italic</i> і <b>bold</b>`:
 
 ![](range-example-p-1-3.svg)
 
-```smart header="Starting and ending nodes can be different"
-We don't have to use the same node in `setStart` and `setEnd`. A range may span across many unrelated nodes. It's only important that the end is after the start in the document.
+```smart header="Початковий і кінцевий вузли можуть бути різними"
+Нам не потрібно використовувати однаковий вузол у `setStart` і `setEnd`. Діапазон може охоплювати багато непов’язаних вузлів. Важливо лише, щоб кінець був розташований в документі після початку.
 ```
 
-### Selecting a bigger fragment
+### Виділення більшого фрагмента
 
-Let's make a bigger selection in our example, like this:
+Давайте збільшемо розмір виділеного фрагмента:
 
 ![](range-example-p-2-b-3.svg)
 
-We already know how to do that. We just need to set the start and the end as a relative offset in text nodes.
+Ми вже знаємо, як це зробити. Нам просто потрібно встановити початок і кінець як відносне зміщення в текстових вузлах.
 
-We need to create a range, that:
-- starts from position 2 in `<p>` first child (taking all but two first letters of "Ex<b>ample:</b> ")
-- ends at the position 3 in `<b>` first child (taking first three letters of "<b>bol</b>d", but no more):
+Нам потрібно створити діапазон, який:
+- починається з позиції 2 у першому дочірньому вузлі елемента `<p>` (беручи всі, крім двох перших літер "Ex<b>ample:</b> ")
+- закінчується на позиції 3 у `<b>` в першому дочірньому вузлі (бере перші три літери "<b>bol</b>d", але не більше):
 
 ```html run
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
@@ -190,75 +190,75 @@ We need to create a range, that:
 
   console.log(range); // ample: italic and bol
 
-  // use this range for selection (explained later)
+  // застосуємо цей діапазон для виділення в document (пояснюється нижче)
   window.getSelection().addRange(range);
 </script>
 ```
 
-As you can see, it's fairly easy to make a range of whatever we want.
+Як бачите, досить легко створити діапазон для будь-чого.
 
-If we'd like to take nodes as a whole, we can pass elements in `setStart/setEnd`. Otherwise, we can work on the text level. 
+Ба більше, якщо ми хочемо взяти вузли як ціле, треба передати елементи замість текстових вузлів в `setStart/setEnd`. Інакше це буде працювати на рівні тексту.
 
-## Range properties
+## Властивості Range 
 
-The range object that we created in the example above has following properties:
+Об’єкт діапазону, який ми використовували у прикладі вище, має такі властивості:
 
 ![](range-example-p-2-b-3-range.svg)
 
-- `startContainer`, `startOffset` -- node and offset of the start,
-  - in the example above: first text node inside `<p>` and `2`.
-- `endContainer`, `endOffset` -- node and offset of the end,
-  - in the example above: first text node inside `<b>` and `3`.
-- `collapsed` -- boolean, `true` if the range starts and ends on the same point (so there's no content inside the range),
-  - in the example above: `false`
-- `commonAncestorContainer` -- the nearest common ancestor of all nodes within the range,
-  - in the example above: `<p>`
+- `startContainer`, `startOffset` -- node і offset початку,
+  - у наведеному вище прикладі: перший текстовий вузол всередині `<p>` і `2`.
+- `endContainer`, `endOffset` -- node і offset кінця,
+  - у прикладі вище: перший текстовий вузол всередині `<b>` і `3`.
+- `collapsed` -- значення логічного типу, `true` якщо діапазон починається і закінчується в одній точці (тому всередині діапазону немає вмісту),
+  - у прикладі вище: `false`
+- `commonAncestorContainer` -- найближчий спільний предок усіх вузлів у діапазоні,
+  - у прикладі вище: `<p>`
 
 
-## Range selection methods
+## Методи виділення в Range
 
-There are many convenient methods to manipulate ranges.
+Існує багато зручних методів по роботі з діапазонами.
 
-We've already seen `setStart` and `setEnd`, here are other similar methods.
+Ми вже бачили `setStart` і `setEnd`, ось інші подібні методи.
 
-Set range start:
+Встановити початок діапазону:
 
-- `setStart(node, offset)` set start at: position `offset` in `node`
-- `setStartBefore(node)` set start at: right before `node`
-- `setStartAfter(node)` set start at: right after `node`
+- `setStart(node, offset)` встановити початок у: позиції `offset` в `node`
+- `setStartBefore(node)` встановити початок: безпосередньо перед `node`
+- `setStartAfter(node)` встановити початок: відразу після `node`
 
-Set range end (similar methods):
+Встановити кінець діапазону (подібні методи):
 
-- `setEnd(node, offset)` set end at: position `offset` in `node`
-- `setEndBefore(node)` set end at: right before `node`
-- `setEndAfter(node)` set end at: right after `node`
+- `setEnd(node, offset)` встановити кінець у: позиції `offset` в `node`
+- `setEndBefore(node)` встановити кінець: безпосередньо перед `node`
+- `setEndAfter(node)` встановити кінець: одразу після `node`
 
-Technically, `setStart/setEnd` can do anything, but more methods provide more convenience.
+Технічно `setStart/setEnd` можуть робити що завгодно, але більше методів забезпечують більшу зручність.
 
-In all these methods, `node` can be both a text or element node: for text nodes `offset` skips that many of characters, while for element nodes that many child nodes.
+У всіх цих методах `node` може бути як текстовим, так і вузлом елементом: для текстових вузлів `offset` пропускає таку кількість символів, тоді як для вузлів елементів стільки ж дочірніх вузлів.
 
-Even more methods to create ranges:
-- `selectNode(node)` set range to select the whole `node`
-- `selectNodeContents(node)` set range to select the whole `node` contents
-- `collapse(toStart)` if `toStart=true` set end=start, otherwise set start=end, thus collapsing the range
-- `cloneRange()` creates a new range with the same start/end
+Ще більше методів створення діапазонів:
+- `selectNode(node)` встановити діапазон для виділення всього `node`
+- `selectNodeContents(node)` встановити діапазон для виділення всього вмісту `node`
+- `collapse(toStart)` якщо `toStart=true` встановити кінець=початок, інакше встановити початок=кінець, таким чином згорнувши діапазон
+- `cloneRange()` створює новий діапазон із тим самим початком/кінцем
 
-## Range editing methods
+## Методи редагування Range
 
-Once the range is created, we can manipulate its content using these methods:
+Після створення діапазону ми можемо маніпулювати його вмістом за допомогою таких методів:
 
-- `deleteContents()` -- remove range content from the document
-- `extractContents()` -- remove range content from the document and return as [DocumentFragment](info:modifying-document#document-fragment)
-- `cloneContents()` -- clone range content and return as [DocumentFragment](info:modifying-document#document-fragment)
-- `insertNode(node)` -- insert `node` into the document at the beginning of the range
-- `surroundContents(node)` -- wrap `node` around range content. For this to work, the range must contain both opening and closing tags for all elements inside it: no partial ranges like `<i>abc`.
+- `deleteContents()` -- видалити вміст діапазону з документа
+- `extractContents()` -- видалити вміст діапазону з документа та повернути як [DocumentFragment](info:modifying-document#document-fragment)
+- `cloneContents()` -- клонувати вміст діапазону та повернути як [DocumentFragment](info:modifying-document#document-fragment)
+- `insertNode(node)` -- вставити `node` в документ на початку діапазону
+- `surroundContents(node)` -- обернути `node` навколо вмісту діапазону. Щоб це працювало, діапазон має містити відкриваючі та закриваючі теги для всіх елементів у ньому: жодних часткових діапазонів, як-от `<i>abc`.
 
-With these methods we can do basically anything with selected nodes.
+За допомогою цих методів ми можемо робити що завгодно з виділенними вузлами.
 
-Here's the test stand to see them in action:
+Ось тестовий приклад, щоб побачити їх у дії:
 
 ```html run refresh autorun height=260
-Click buttons to run methods on the selection, "resetExample" to reset it.
+Натисніть кнопки, щоб запустити методи для виділення, "resetExample", щоб скинути його.
 
 <p id="p">Example: <i>italic</i> and <b>bold</b></p>
 
@@ -266,7 +266,7 @@ Click buttons to run methods on the selection, "resetExample" to reset it.
 <script>
   let range = new Range();
 
-  // Each demonstrated method is represented here:
+  // Кожен продемонстрований метод представлений тут:
   let methods = {
     deleteContents() {
       range.deleteContents()
@@ -312,79 +312,79 @@ Click buttons to run methods on the selection, "resetExample" to reset it.
 </script>
 ```
 
-There also exist methods to compare ranges, but these are rarely used. When you need them, please refer to the [spec](https://dom.spec.whatwg.org/#interface-range) or [MDN manual](mdn:/api/Range).
+Існують також методи порівняння діапазонів, але вони використовуються рідко. Коли вони вам знадобляться, ви можете з ними познайомитись ось тут [spec](https://dom.spec.whatwg.org/#interface-range), або тут [MDN manual](mdn:/api/Range).
 
 
 ## Selection
 
-`Range` is a generic object for managing selection ranges. Although, creating a `Range` doesn't mean that we see a selection on screen.
+`Range` -- це загальний об'єкт для керування діапазонами виділення. Хоча створення `Range` не означає, що ми бачимо виділення на екрані.
 
-We may create `Range` objects, pass them around -- they do not visually select anything on their own.
+Ми можемо створювати об’єкти `Range`, передавати їх -- вони самі по собі нічого візуально не виділяють.
 
-The document selection is represented by `Selection` object, that can be obtained as `window.getSelection()` or `document.getSelection()`. A selection may include zero or more ranges. At least, the [Selection API specification](https://www.w3.org/TR/selection-api/) says so. In practice though, only Firefox allows to select multiple ranges in the document by using `key:Ctrl+click` (`key:Cmd+click` for Mac).
+Виділення в документі представлено об’єктом `Selection`, який можна отримати як `window.getSelection()` або `document.getSelection()`. Виділення може містити нуль або більше діапазонів. Принаймні, [Selection API specification](https://www.w3.org/TR/selection-api/) каже саме так. Однак на практиці лише Firefox дозволяє вибирати кілька діапазонів у документі за допомогою `key:Ctrl+click` (`key:Cmd+click` для Mac).
 
-Here's a screenshot of a selection with 3 ranges, made in Firefox:
+Ось скріншот виділення з 3-ьома діапазонами, зроблений у Firefox:
 
 ![](selection-firefox.svg)
 
-Other browsers support at maximum 1 range. As we'll see, some of `Selection` methods imply that there may be many ranges, but again, in all browsers except Firefox, there's at maximum 1.
+Інші браузери підтримують максимум 1 діапазон. Як ми побачимо, деякі з методів `Selection` означають, що може бути багато діапазонів, але знову ж таки, у всіх браузерах, крім Firefox, їх не більше 1.
 
-Here's a small demo that shows the current selection (select something and click) as text:
+Ось невеликий приклад, який показує поточне виділення (виділіть щось і натисніть) як текст:
 
 <button onclick="alert(document.getSelection())">alert(document.getSelection())</button>
 
-## Selection properties
+## Властивості Selection
 
-As said, a selection may in theory contain multiple ranges. We can get these range objects using the method:
+Як було сказано, об'єкт `Selection` теоретично може містити кілька діапазонів. Ми можемо отримати ці діапазони за допомогою методу:
 
-- `getRangeAt(i)` -- get i-th range, starting from `0`. In all browsers except Firefox, only `0` is used.
+- `getRangeAt(i)` -- отримати i-й діапазон, починаючи з `0`. У всіх браузерах, крім Firefox, використовується лише `0`.
 
-Also, there exist properties that often provide better convenience.
+Крім того, існують зручніші властивості.
 
-Similar to a range, a selection object has a start, called "anchor", and the end, called "focus".
+Подібно до діапазону, об’єкт виділення має початок, який називається "anchor", і кінець, який називається "focus".
 
-The main selection properties are:
+Основними властивостями `Selection` є:
 
-- `anchorNode` -- the node where the selection starts,
-- `anchorOffset` -- the offset in `anchorNode` where the selection starts,
-- `focusNode` -- the node where the selection ends,
-- `focusOffset` -- the offset in `focusNode` where the selection ends,
-- `isCollapsed` -- `true` if selection selects nothing (empty range), or doesn't exist.
-- `rangeCount` -- count of ranges in the selection, maximum `1` in all browsers except Firefox.
+- `anchorNode` -- вузол, де починається виділення,
+- `anchorOffset` -- зміщення в `anchorNode`, де починається виділення,
+- `focusNode` -- вузол, де закінчується виділення,
+- `focusOffset` -- зсув у `focusNode`, де закінчується виділення,
+- `isCollapsed` -- `true` якщо нічого не виділено (порожній діапазон) або не існує.
+- `rangeCount` -- кількість діапазонів у виділенні, максимум `1` у всіх браузерах, крім Firefox.
 
-```smart header="Selection end/start vs Range"
+```smart header="Selection кінець/початок у порівнянні з Range"
 
-There's an important differences of a selection anchor/focus compared with a `Range` start/end.
+Існують важливі відмінності `Selection` anchor/focus порівняно з `Range` start/end.
 
-As we know, `Range` objects always have their start before the end. 
+Як ми знаємо, об’єкти `Range` завжди мають початок(start) перед кінцем(end).
 
-For selections, that's not always the case.
+Для `Selection` це не завжди так.
 
-Selecting something with a mouse can be done in both directions: either "left-to-right" or "right-to-left".
+Виділяти щось за допомогою миші можна в обох напрямках: або "зліва направо", або "справа наліво".
 
-In other words, when the mouse button is pressed, and then it moves forward in the document, then its end (focus) will be after its start (anchor).
+Іншими словами, коли кнопку миші натиснуто, а потім вона переміщується вперед у документі, то її кінець (focus) буде після її початку (anchor).
 
-E.g. if the user starts selecting with mouse and goes from "Example" to "italic":
+Наприклад якщо користувач починає виділяти мишею та переходить від "Example" до "italic":
 
 ![](selection-direction-forward.svg)
 
-...But the same selection could be done backwards: starting from  "italic" to "Example" (backward direction), then its end (focus) will be before the start (anchor):
+...Але те саме виділення можна зробити і в зворотному напрямку: починаючи від "italic" до "Example" (напрямок назад), тоді його кінець (focus) буде перед початком (anchor):
 
 ![](selection-direction-backward.svg)
 ```
 
-## Selection events
+## Події Selection
 
-There are events on to keep track of selection:
+Існують події, щоб слідкувати за виділенням:
 
-- `elem.onselectstart` -- when a selection *starts* specifically on element `elem` (or inside it). For instance, when the user presses the mouse button on it and starts to move the pointer.
-    - Preventing the default action cancels the selection start. So starting a selection from this element becomes impossible, but the element is still selectable. The visitor just needs to start the selection from elsewhere.
-- `document.onselectionchange` -- whenever a selection changes or starts.
-    - Please note: this handler can be set only on `document`, it tracks all selections in it.
+- `elem.onselectstart` -- коли виділення *починається* саме на елементі `elem` (або всередині нього). Наприклад, коли користувач натискає на ньому кнопку миші та починає рухати вказівник.
+    - Запобігання типової дії скасовує початок виділення. Таким чином, почати виділення з цього елемента стає неможливо, але елемент все ще доступний для виділення загалом. Користувачу просто потрібно почати виділення з іншого місця.
+- `document.onselectionchange` -- кожного разу, коли виділення змінюється або починається.
+    - Зверніть увагу: цей обробник можна встановити лише на `document`, він відстежує всі виділення в ньому.
 
-### Selection tracking demo
+### Приклад з відстеженням Selection
 
-Here's a small demo. It tracks the current selection on the `document` and shows its boundaries:
+Ось невелика демонстрація, яка показує поточний вибір та його межі у `document`:
 
 ```html run height=80
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
@@ -396,21 +396,21 @@ From <input id="from" disabled> – To <input id="to" disabled>
 
     let {anchorNode, anchorOffset, focusNode, focusOffset} = selection;
 
-    // anchorNode and focusNode are text nodes usually
+    // anchorNode і focusNode зазвичай є текстовими вузлами
     from.value = `${anchorNode?.data}, offset ${anchorOffset}`;
     to.value = `${focusNode?.data}, offset ${focusOffset}`;
   };
 </script>
 ```
 
-### Selection copying demo
+### Виділення з копіюванням
 
-There are two approaches to copying the selected content:
+Є два підходи до копіювання виділенного вмісту:
 
-1. We can use `document.getSelection().toString()` to get it as text.
-2. Otherwise, to copy the full DOM, e.g. if we need to keep formatting, we can get the underlying ranges with `getRangeAt(...)`. A `Range` object, in turn, has `cloneContents()` method that clones its content and returns as `DocumentFragment` object, that we can insert elsewhere.
+1. Ми можемо використати `document.getSelection().toString()`, щоб отримати його як текст.
+2. В іншому випадку, щоб скопіювати повний DOM, напр. якщо нам потрібно продовжити форматування, ми можемо отримати виділенні діапазони за допомогою `getRangeAt(...)`. Об’єкт `Range`, у свою чергу, має метод `cloneContents()`, який клонує його вміст і повертає як об’єкт `DocumentFragment`, який ми можемо вставити в інше місце.
 
-Here's the demo of copying the selected content both as text and as DOM nodes:
+Ось приклад копіювання виділеного вмісту як тексту і як вузлів DOM:
 
 ```html run height=100
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
@@ -425,104 +425,104 @@ As text: <span id="astext"></span>
 
     cloned.innerHTML = astext.innerHTML = "";
 
-    // Clone DOM nodes from ranges (we support multiselect here)
+    // Клонувати вузли DOM із діапазонів (тут ми підтримуємо множинне виділення)
     for (let i = 0; i < selection.rangeCount; i++) {
       cloned.append(selection.getRangeAt(i).cloneContents());
     }
 
-    // Get as text
+    // Отримати як текст
     astext.innerHTML += selection;
   };
 </script>
 ```
 
-## Selection methods
+## Методи Selection
 
-We can work with the selection by adding/removing ranges:
+Ми можемо працювати з виділенням, додаючи/вилучаючи діапазони:
 
-- `getRangeAt(i)` -- get i-th range, starting from `0`. In all browsers except Firefox, only `0` is used.
-- `addRange(range)` -- add `range` to selection. All browsers except Firefox ignore the call, if the selection already has an associated range.
-- `removeRange(range)` -- remove `range` from the selection.
-- `removeAllRanges()` -- remove all ranges.
-- `empty()` -- alias to `removeAllRanges`.
+- `getRangeAt(i)` -- отримати i-й діапазон, починаючи з `0`. У всіх браузерах, крім Firefox, використовується лише `0`.
+- `addRange(range)` -- додати `range` до виділення. Усі браузери, крім Firefox, ігнорують виклик, якщо у виділенні вже є діапазон.
+- `removeRange(range)` -- видалити `range` з виділення.
+- `removeAllRanges()` -- видалити всі діапазони.
+- `empty()` -- метод аналогічний `removeAllRanges`.
 
-There are also convenience methods to manipulate the selection range directly, without intermediate `Range` calls:
+Існують також зручні методи для безпосереднього керування діапазоном вибору без проміжних викликів `Range`:
 
-- `collapse(node, offset)` -- replace selected range with a new one that starts and ends at the given `node`, at position `offset`.
-- `setPosition(node, offset)` -- alias to `collapse`.
-- `collapseToStart()` - collapse (replace with an empty range) to selection start,
-- `collapseToEnd()` - collapse to selection end,
-- `extend(node, offset)` - move focus of the selection to the given `node`, position `offset`,
-- `setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset)` - replace selection range with the given start `anchorNode/anchorOffset` and end `focusNode/focusOffset`. All content in-between them is selected.
-- `selectAllChildren(node)` -- select all children of the `node`.
-- `deleteFromDocument()` -- remove selected content from the document.
-- `containsNode(node, allowPartialContainment = false)` -- checks whether the selection contains `node` (partially if the second argument is `true`)
+- `collapse(node, offset)` -- замінити діапазон виділення на новий, який починається і закінчується на заданому `node`, на позиції `offset`.
+- `setPosition(node, offset)` -- метод аналогічний `collapse`.
+- `collapseToStart()` -- згорнути (замінити порожнім діапазоном) до початку виділення,
+- `collapseToEnd()` -- згорнути до кінця виділення,
+- `extend(node, offset)` -- перемістити фокус виділення на заданий `node`, положення `offset`,
+- `setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset)` -- замінити діапазон виділення заданим початковим `anchorNode/anchorOffset` і кінцевим `focusNode/focusOffset`. Весь вміст між ними буде виділено.
+- `selectAllChildren(node)` -- виділити всі дочірні елементи `node`.
+- `deleteFromDocument()` -- видалити виділений вміст із документа.
+- `containsNode(node, allowPartialContainment = false)` -- перевіряє, чи містить виділення заданий `node` (або частково, якщо другий аргумент `true`)
 
-For most tasks these methods are just fine, there's no need to access the underlying `Range` object.
+Для більшості завдань ці методи чудово підходять, немає необхідності звертатися до базового об’єкта `Range`.
 
-For example, selecting the whole contents of the paragraph `<p>`:
+Наприклад, виділення всього вмісту абзацу `<p>`:
 
 ```html run
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
 
 <script>
-  // select from 0th child of <p> to the last child
+  // виділити від 0-го дочірнього елемента <p> до останнього дочірнього
   document.getSelection().setBaseAndExtent(p, 0, p, p.childNodes.length);
 </script>
 ```
 
-The same thing using ranges:
+Те саме з використанням діапазонів:
 
 ```html run
 <p id="p">Select me: <i>italic</i> and <b>bold</b></p>
 
 <script>
   let range = new Range();
-  range.selectNodeContents(p); // or selectNode(p) to select the <p> tag too
+  range.selectNodeContents(p); // або selectNode(p), щоб також виділити тег <p>
 
-  document.getSelection().removeAllRanges(); // clear existing selection if any
+  document.getSelection().removeAllRanges(); // скинути наявне виділення, якщо воно є
   document.getSelection().addRange(range);
 </script>
 ```
 
-```smart header="To select something, remove the existing selection first"
-If a document selection already exists, empty it first with `removeAllRanges()`. And then add ranges. Otherwise, all browsers except Firefox ignore new ranges.
+```smart header="Щоб зробити нове виділення, спочатку приберіть поточне"
+Якщо вже щось виділене, спочатку приберіть це за допомогою `removeAllRanges()`. А потім додавайте діапазони. В іншому випадку всі браузери, крім Firefox, ігнорують нові діапазони.
 
-The exception is some selection methods, that replace the existing selection, such as `setBaseAndExtent`.
+Виняток становлять деякі методи, які замінюють існуюче виділення, наприклад `setBaseAndExtent`.
 ```
 
-## Selection in form controls
+## Виділення в інтерактивних елементах форми
 
-Form elements, such as `input` and `textarea` provide [special API for selection](https://html.spec.whatwg.org/#textFieldSelection), without `Selection` or `Range` objects. As an input value is a pure text, not HTML, there's no need for such objects, everything's much simpler.
+Такі елементи форми, як `input` і `textarea`, надають [спеціальний API для виділення](https://html.spec.whatwg.org/#textFieldSelection) без об’єктів `Selection` або `Range`. Ба більше, оскільки на вході завжди чистий текст, а не HTML, такі об’єкти просто не потрібні, все працює значно простіше.
 
-Properties:
-- `input.selectionStart` -- position of selection start (writeable),
-- `input.selectionEnd` -- position of selection end (writeable),
-- `input.selectionDirection` -- selection direction, one of: "forward", "backward" or "none" (if e.g. selected with a double mouse click),
+Властивості:
+- `input.selectionStart` -- позиція початку виділення (працює на запис),
+- `input.selectionEnd` -- позиція кінця виділення (працює на запис),
+- `input.selectionDirection` -- напрямок виділення, одне з: "forward", "backward" або "none" (якщо напр. виділено подвійним клацанням миші),
 
-Events:
-- `input.onselect` -- triggers when something is selected.
+Події:
+- `input.onselect` -- запускається, коли щось виділено.
 
-Methods:
+Методи:
 
-- `input.select()` -- selects everything in the text control (can be `textarea` instead of `input`),
-- `input.setSelectionRange(start, end, [direction])` -- change the selection to span from position `start` till `end`, in the given direction (optional).
-- `input.setRangeText(replacement, [start], [end], [selectionMode])` -- replace a range of text with the new text.
+- `input.select()` -- виділяє все в текстовому елементі (може бути `textarea` замість `input`),
+- `input.setSelectionRange(start, end, [direction])` -- змінити виділення на діапазон від позиції `start` до `end` у вказаному `direction` (необов’язковий параметер).
+- `input.setRangeText(replacement, [start], [end], [selectionMode])` -- замінити діапазон тексту новим текстом.
 
-    Optional arguments `start` and `end`, if provided, set the range start and end, otherwise user selection is used.
+    Необов’язкові аргументи `start` і `end`, якщо вони надані, встановлюють початок і кінець діапазону, інакше використовується виділення від користувача.
 
-    The last argument, `selectionMode`, determines how the selection will be set after the text has been replaced. The possible values are:
+    Останній аргумент, `selectionMode`, визначає, як буде встановлено виділення після заміни тексту. Можливі значення:
 
-    - `"select"` -- the newly inserted text will be selected.
-    - `"start"` -- the selection range collapses just before the inserted text (the cursor will be immediately before it).
-    - `"end"` -- the selection range collapses just after the inserted text (the cursor will be right after it).
-    - `"preserve"` -- attempts to preserve the selection. This is the default.
+    - `"select"` -- буде виділено щойно вставлений текст.
+    - `"start"` -- діапазон виділення згортається безпосередньо перед вставленим текстом (курсор буде перед ним).
+    - `"end"` -- діапазон виділення згортається відразу після вставленого тексту (курсор буде відразу за ним).
+    - `"preserve"` -- спробує зберегти виділення. Це типове значення.
 
-Now let's see these methods in action.
+Тепер давайте подивимося на ці методи в дії.
 
-### Example: tracking selection
+### Приклад: відстеження виділення
 
-For example, this code uses `onselect` event to track selection:
+Наприклад, цей код використовує подію `onselect` для відстеження виділення:
 
 ```html run autorun
 <textarea id="area" style="width:80%;height:60px">
@@ -539,20 +539,20 @@ From <input id="from" disabled> – To <input id="to" disabled>
 </script>
 ```
 
-Please note:
-- `onselect` triggers when something is selected, but not when the selection is removed.
-- `document.onselectionchange` event should not trigger for selections inside a form control, according to the [spec](https://w3c.github.io/selection-api/#dfn-selectionchange), as it's not related to `document` selection and ranges. Some browsers generate it, but we shouldn't rely on it.
+Будь ласка, зверніть увагу:
+- `onselect` спрацьовує, коли щось виділено, але не коли його прибрано.
+- подія `document.onselectionchange` відповідно до [spec](https://w3c.github.io/selection-api/#dfn-selectionchange) не має ініціювати виділення всередині елемента форми, оскільки вона не пов’язана з виділенням і діапазонами в `document`. Деякі браузери генерують її, але ми не маємо покладатися на це.
 
 
-### Example: moving cursor
+### Приклад: рух курсору
 
-We can change `selectionStart` and `selectionEnd`, that sets the selection.
+Ми можемо змінити `selectionStart` і `selectionEnd`, які встановлюють виділення.
 
-An important edge case is when `selectionStart` and `selectionEnd` equal each other. Then it's exactly the cursor position. Or, to rephrase, when nothing is selected, the selection is collapsed at the cursor position.
+Важливим граничним випадком є ​​коли `selectionStart` і `selectionEnd` дорівнюють один одному. Тоді це точно положення курсора. Або, якщо перефразувати, коли нічого не виділено, виділення згортається в позиції курсора.
 
-So, by setting `selectionStart` and `selectionEnd` to the same value, we move the cursor.
+Отже, встановивши `selectionStart` і `selectionEnd` однакові значення, ми переміщуємо курсор.
 
-For example:
+Наприклад:
 
 ```html run autorun
 <textarea id="area" style="width:80%;height:60px">
@@ -561,23 +561,23 @@ Focus on me, the cursor will be at position 10.
 
 <script>
   area.onfocus = () => {
-    // zero delay setTimeout to run after browser "focus" action finishes
+    // setTimeout з нульовою затримкою для запуску після завершення дії "focus"
     setTimeout(() => {
-      // we can set any selection
-      // if start=end, the cursor is exactly at that place
+      // ми можемо встановити будь-яке виділення
+      // якщо start=end, курсор знаходиться саме в цьому місці
       area.selectionStart = area.selectionEnd = 10;
     });
   };
 </script>
 ```
 
-### Example: modifying selection
+### Приклад: зміна виділення
 
-To modify the content of the selection, we can use `input.setRangeText()` method. Of course, we can read `selectionStart/End` and, with the knowledge of the selection, change the corresponding substring of `value`, but `setRangeText` is more powerful and often more convenient.
+Щоб змінити вміст виділення, ми можемо використати метод `input.setRangeText()`. Звичайно, ми можемо взяти `selectionStart/End` і, знаючи виділення, змінити відповідний підрядок `value`, але метод `setRangeText` є потужнішим і часто зручнішим.
 
-That's a somewhat complex method. In its simplest one-argument form it replaces the user selected range and removes the selection.
+Проте це дещо складний метод. У своїй найпростішій формі з одним аргументом він замінює виділений користувачем діапазон і видаляє виділення.
 
-For example, here the user selection will be wrapped by `*...*`:
+Наприклад, тут виділення від користувача буде обгорнуто в `*...*`:
 
 ```html run autorun
 <input id="input" style="width:200px" value="Select here and click the button">
@@ -586,7 +586,7 @@ For example, here the user selection will be wrapped by `*...*`:
 <script>
 button.onclick = () => {
   if (input.selectionStart == input.selectionEnd) {
-    return; // nothing is selected
+    return; // нічого не виділено
   }
 
   let selected = input.value.slice(input.selectionStart, input.selectionEnd);
@@ -595,9 +595,9 @@ button.onclick = () => {
 </script>
 ```
 
-With more arguments, we can set range `start` and `end`.
+Маючи більше аргументів, ми можемо встановити діапазон `start` і `end`.
 
-In this example we find `"THIS"` in the input text, replace it and keep the replacement selected:
+У цьому прикладі ми знаходимо `"THIS"` у вхідному тексті, замінюємо його та залишаємо виділеною заміну:
 
 ```html run autorun
 <input id="input" style="width:200px" value="Replace THIS in text">
@@ -608,19 +608,19 @@ button.onclick = () => {
   let pos = input.value.indexOf("THIS");
   if (pos >= 0) {
     input.setRangeText("*THIS*", pos, pos + 4, "select");
-    input.focus(); // focus to make selection visible
+    input.focus(); // фокус, щоб зробити виділення видимим
   }
 };
 </script>
 ```
 
-### Example: insert at cursor
+### Приклад: вставити під курсор
 
-If nothing is selected, or we use equal `start` and `end` in `setRangeText`, then the new text is just inserted, nothing is removed.
+Якщо нічого не виділено або ми використовуємо однакові `start` і `end` у `setRangeText`, тоді новий текст просто вставляється, нічого не видаляється.
 
-We can also insert something "at the cursor" using `setRangeText`.
+Ми також можемо вставити щось "за курсором", використовуючи `setRangeText`.
 
-Here's a button that inserts `"HELLO"` at the cursor position and puts the cursor immediately after it. If the selection is not empty, then it gets replaced (we can detect it by comparing `selectionStart!=selectionEnd` and do something else instead):
+Ось кнопка, яка вставляє `"HELLO"` на позицію курсора та розміщує курсор одразу після нього. Якщо виділення не порожнє, воно замінюється (ми можемо виявити це, порівнявши `selectionStart!=selectionEnd` і натомість зробити щось інше):
 
 ```html run autorun
 <input id="input" style="width:200px" value="Text Text Text Text Text">
@@ -635,11 +635,11 @@ Here's a button that inserts `"HELLO"` at the cursor position and puts the curso
 ```
 
 
-## Making unselectable
+## Заборона виділення
 
-To make something unselectable, there are three ways:
+Щоб заборонити виділення, є три способи:
 
-1. Use CSS property `user-select: none`.
+1. Задайте CSS властивість `user-select: none`.
 
     ```html run
     <style>
@@ -650,12 +650,12 @@ To make something unselectable, there are three ways:
     <div>Selectable <div id="elem">Unselectable</div> Selectable</div>
     ```
 
-    This doesn't allow the selection to start at `elem`. But the user may start the selection elsewhere and include `elem` into it.
+    Це не дозволяє виділенню починатися з `elem`. Але користувач може почати з іншого місця і вже потім включити до нього `elem`.
 
-    Then `elem` will become a part of `document.getSelection()`, so the selection actually happens, but its content is usually ignored in copy-paste.
+    Тоді `elem` стане частиною `document.getSelection()`, тому виділення фактично відбувається, але його вміст зазвичай ігнорується під час копіювання та вставки.
 
 
-2. Prevent default action in `onselectstart` or `mousedown` events.
+2. Запобігання типової дії для подій `onselectstart` або `mousedown`.
 
     ```html run
     <div>Selectable <div id="elem">Unselectable</div> Selectable</div>
@@ -665,52 +665,52 @@ To make something unselectable, there are three ways:
     </script>
     ```
 
-    This prevents starting the selection on `elem`, but the visitor may start it at another element, then extend to `elem`.
+    Це запобігає старту виділення з `elem`, але користувач може почати його з іншого елемента, а потім продовжити до `elem`.
 
-    That's convenient when there's another event handler on the same action that triggers the select (e.g. `mousedown`). So we disable the selection to avoid conflict, still allowing `elem` contents to be copied.
+    Це зручно, коли для тієї самої дії є інший обробник події, який ініціює виділення (наприклад, `mousedown`). Тому ми забороняємо виділення, щоб уникнути конфлікту, але все ще дозволяємо копіювати вміст `elem`.
 
-3. We can also clear the selection post-factum after it happens with `document.getSelection().empty()`. That's rarely used, as this causes unwanted blinking as the selection appears-disappears.
+3. Ми також можемо очистити виділення постфактум після того, як це вже сталося, за допомогою `document.getSelection().empty()`. Це рідко використовується, оскільки це спричиняє небажане блимання під час появи та зникнення виділення.
 
-## References
+## Посилання
 
 - [DOM spec: Range](https://dom.spec.whatwg.org/#ranges)
 - [Selection API](https://www.w3.org/TR/selection-api/#dom-globaleventhandlers-onselectstart)
 - [HTML spec: APIs for the text control selections](https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#textFieldSelection)
 
 
-## Summary
+## Підсумки
 
-We covered two different APIs for selections:
+Ми розглянули два різних API для виділення:
 
-1. For document: `Selection` and `Range` objects.
-2. For `input`, `textarea`: additional methods and properties.
+1. Для документа: об’єкти `Selection` і `Range`.
+2. Для `input`, `textarea`: додаткові методи та властивості.
 
-The second API is very simple, as it works with text.
+Другий API дуже простий, оскільки працює з текстом.
 
-The most used recipes are probably:
+Серед найбільш типових задач:
 
-1. Getting the selection:
+1. Отримання поточного виділення:
     ```js
     let selection = document.getSelection();
 
-    let cloned = /* element to clone the selected nodes to */;
+    let cloned = /* елемент для клонування виділенних вузлів */;
 
-    // then apply Range methods to selection.getRangeAt(0)
-    // or, like here, to all ranges to support multi-select
+    // потім застосуйте методи Range до selection.getRangeAt(0)
+    // або, як тут, до всіх діапазонів для підтримки множинного виділення
     for (let i = 0; i < selection.rangeCount; i++) {
       cloned.append(selection.getRangeAt(i).cloneContents());
     }
     ```
-2. Setting the selection:
+2. Налаштування виділення:
     ```js
     let selection = document.getSelection();
 
-    // directly:
+    // безпосередньо:
     selection.setBaseAndExtent(...from...to...);
 
-    // or we can create a range and:
+    // або ми можемо створити діапазон і:
     selection.removeAllRanges();
     selection.addRange(range);
     ```
 
-And finally, about the cursor. The cursor position in editable elements, like `<textarea>` is always at the start or the end of the selection. We can use it  to get cursor position or to move the cursor by setting `elem.selectionStart` and `elem.selectionEnd`.
+І нарешті про курсор. Позиція курсору в елементах, які можна редагувати, наприклад `<textarea>`, завжди знаходиться на початку або в кінці виділення. Ми можемо використовувати його, щоб отримати позицію курсору або перемістити курсор, встановивши `elem.selectionStart` і `elem.selectionEnd`.
