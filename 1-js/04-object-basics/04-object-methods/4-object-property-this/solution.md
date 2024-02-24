@@ -1,6 +1,7 @@
 **Відповідь: помилка.**
 
-Try it:
+Спробуйте це:
+
 ```js run
 function makeUser() {
   return {

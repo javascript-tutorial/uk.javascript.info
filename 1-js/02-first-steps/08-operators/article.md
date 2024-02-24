@@ -304,7 +304,7 @@ alert( n ); // 14
 ```js run
 let n = 2;
 
-n *= 3 + 5; // right part evaluated first, same as n *= 8
+n *= 3 + 5; // права частина обчислюється першою, так само як і n *= 8
 
 alert( n ); // 16
 ```
