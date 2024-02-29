@@ -41,7 +41,7 @@ alert( arr.length ); // 3
 Його синтаксис:
 
 ```js
-arr.splice(start[, deleteCount, elem1, ..., elemN])
+arr.splice(start, deleteCount, elem1, ..., elemN)
 ```
 
 Він змінює `arr` починаючи з позиції `start`: видаляє `deleteCount` елементів і вставляє `elem1, ..., elemN` на їх місце. Повертається масив з видалених елементів.
