@@ -9,15 +9,14 @@ startMessagesBtn.addEventListener('click', () => { // (4)
 
 closeWindowBtn.addEventListener('click', () =>  document.querySelector(".window__body").remove()); // (5)
 
-
 const startMessages = (element) => {
     const timerId = setInterval(() => { // (6)
         if (element.deref()) { // (7)
             const payload = document.createElement("p");
-            payload.textContent = `Message: System status OK: ${new Date().toLocaleTimeString()}`;
+            payload.textContent = `Повідомлення: Статус системи OK: ${new Date().toLocaleTimeString()}`;
             element.deref().append(payload);
         } else { // (8)
-            alert("The element has been deleted."); // (9)
+            alert("Елемент було видалено."); // (9)
             clearInterval(timerId);
         }
     }, 1000);
