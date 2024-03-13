@@ -144,7 +144,7 @@ alert(elem.shadowRoot.host === elem); // true
 
 ## Підсумки
 
-Тіньовий DOM -- це спосіб створити ізольоване DOM-дерево для компоненти.
+Тіньовий DOM -- це спосіб створити ізольоване DOM-дерево для компонента.
 
 1. `shadowRoot = elem.attachShadow({mode: open|closed})` -- створює тіньовий DOM для `elem`. Якщо `mode="open"`, то він є досяжним як властивість `elem.shadowRoot`.
 2. Ми можемо записати щось всередину `shadowRoot`, використовуючи `innerHTML` чи інші DOM-методи.
