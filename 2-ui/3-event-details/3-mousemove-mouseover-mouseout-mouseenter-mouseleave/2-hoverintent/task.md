@@ -2,30 +2,30 @@ importance: 5
 
 ---
 
-# "Smart" tooltip
+# "Розумна" підказка
 
-Write a function that shows a tooltip over an element only if the visitor moves the mouse *to it*, but not *through it*.
+Напишіть функцію, яка показуватиме спливаючу підказку над елементом лише тоді, коли відвідувач прямую вказівник миші безпосередньо *до нього*, але не *крізь нього*.
 
-In other words, if the visitor moves the mouse to the element and stops there -- show the tooltip. And if they just moved the mouse through, then no need, who wants extra blinking?
+Іншими словами, якщо відвідувач наводить вказівник миші на елемент і зупиняється на ньому, показується підказка. І якщо просто провели мишею, то показувати підказку взагалі не потрібно, кому може сподобатись додаткове миготіння?
 
-Technically, we can measure the mouse speed over the element, and if it's slow then we assume that it comes "over the element" and show the tooltip, if it's fast -- then we ignore it.
+Технічно ми можемо виміряти швидкість я кою рухається вказівник над елементом, і якщо вона швидкість повільна, ми припускаємо, що вказівник проходить "над елементом" і показуємо спливаючу підказку, якщо вона швидка, ми ігноруємо цей прохід вказівника.
 
-Make a universal object `new HoverIntent(options)` for it.
+У цьому завданні ви маєте описати клас і створити універсальний об’єкт `new HoverIntent(options)`
 
-Its `options`:
-- `elem` -- element to track.
-- `over` -- a function to call if the mouse came to the element: that is, it moves slowly or stopped over it.
-- `out` -- a function to call when the mouse leaves the element (if `over` was called).
+Його `options`:
+- `elem` -- елемент для відстеження.
+- `over` -- функція, яка викликається, якщо миша підійшла до елемента: тобто вона повільно рухається або зупиняється над ним.
+- `out` -- функція для виклику, коли вказівник залишає елемент (якщо було викликано `over`).
 
-An example of using such object for the tooltip:
+Приклад використання такого об'єкта для підказки:
 
 ```js
-// a sample tooltip
+// зразок підказки
 let tooltip = document.createElement('div');
 tooltip.className = "tooltip";
 tooltip.innerHTML = "Tooltip";
 
-// the object will track mouse and call over/out
+// об'єкт буде стежити за мишею та викликатиме over/out
 new HoverIntent({
   elem,
   over() {
@@ -39,10 +39,10 @@ new HoverIntent({
 });
 ```
 
-The demo:
+Як це має працювати:
 
 [iframe src="solution" height=140]
 
-If you move the mouse over the "clock" fast then nothing happens, and if you do it slow or stop on them, then there will be a tooltip.
+Якщо наводити мишу на елемент "clock" швидко, то нічого не відбувається, а якщо ви робите це повільно або зупиняєтеся на ньому, то з'явиться спливаюча підказка.
 
-Please note: the tooltip doesn't "blink" when the cursor moves between the clock subelements.
+Зверніть увагу: спливаюча підказка не "блимає", коли вказівник переміщується між вкладенними елементами всередині "clock".
