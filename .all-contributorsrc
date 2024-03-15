@@ -894,6 +894,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Made1ra",
+      "name": "Vadym Pavlyk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/71404100?v=4",
+      "profile": "https://www.linkedin.com/in/vadym-pavlyk-a2ba04215/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular",
