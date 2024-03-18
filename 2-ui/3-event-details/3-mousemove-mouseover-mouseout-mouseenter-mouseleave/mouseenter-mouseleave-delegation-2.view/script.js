@@ -1,54 +1,54 @@
-// <td> under the mouse right now (if any)
+// <td> під вказівником прямо зараз (якщо є)
 let currentElem = null;
 
 table.onmouseover = function(event) {
-  // before entering a new element, the mouse always leaves the previous one
-  // if currentElem is set, we didn't leave the previous <td>,
-  // that's a mouseover inside it, ignore the event
+  // перед переходом до нового елемента миша завжди залишає попередній
+  // якщо вже встановлено currentElem, то ми ще не залишили попередній <td>,
+  // і цей mouseover відбувається всередині, тому ігноруємо подію
   if (currentElem) return;
 
   let target = event.target.closest('td');
 
-  // we moved not into a <td> - ignore
+  // ми перейшли не в <td> - ігнорувати
   if (!target) return;
 
-  // moved into <td>, but outside of our table (possible in case of nested tables)
-  // ignore
+  // переміщено в <td>, але за межами нашої таблиці (можливо у випадку вкладених таблиць)
+  // ігнорувати
   if (!table.contains(target)) return;
 
-  // hooray! we entered a new <td>
+  // ура! ми перейшли до нового <td>
   currentElem = target;
   onEnter(currentElem);
 };
 
 
 table.onmouseout = function(event) {
-  // if we're outside of any <td> now, then ignore the event
-  // that's probably a move inside the table, but out of <td>,
-  // e.g. from <tr> to another <tr>
+  // якщо ми зараз поза будь-яким <td>, тоді ігноруємо подію
+  // це, мабуть, переміщення всередину таблиці, але поза <td>,
+  // напр. від <tr> до іншого <tr>
   if (!currentElem) return;
 
-  // we're leaving the element – where to? Maybe to a descendant?
+  // покидаємо елемент – але куди? Може ідемо до дочірнього елемента?
   let relatedTarget = event.relatedTarget;
 
   while (relatedTarget) {
-    // go up the parent chain and check – if we're still inside currentElem
-    // then that's an internal transition – ignore it
+    // піднімаємось батьківським ланцюжком і перевіряємо – чи ми все ще всередині currentElem
+    // тоді це внутрішній перехід – ігноруємо його
     if (relatedTarget == currentElem) return;
 
     relatedTarget = relatedTarget.parentNode;
   }
 
-  // we left the <td>. really.
+  // ми залишили <td>. насправді.
   onLeave(currentElem);
   currentElem = null;
 };
 
-// any functions to handle entering/leaving an element
+// будь-які функції для обробки входу/виходу з елемента
 function onEnter(elem) {
   elem.style.background = 'pink';
 
-  // show that in textarea
+  // показати це в textarea
   text.value += `over -> ${currentElem.tagName}.${currentElem.className}\n`;
   text.scrollTop = 1e6;
 }
@@ -56,7 +56,7 @@ function onEnter(elem) {
 function onLeave(elem) {
   elem.style.background = '';
 
-  // show that in textarea
+  // показати це в textarea
   text.value += `out <- ${elem.tagName}.${elem.className}\n`;
   text.scrollTop = 1e6;
 }
