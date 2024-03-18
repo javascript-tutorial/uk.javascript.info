@@ -3,7 +3,7 @@ let currentElem = null;
 
 table.onmouseover = function(event) {
   // перед переходом до нового елемента миша завжди залишає попередній
-  // якщо вже встановлено currentElem, то ми не залишили попередній <td>,
+  // якщо вже встановлено currentElem, то ми ще не залишили попередній <td>,
   // і цей mouseover відбувається всередині, тому ігноруємо подію
   if (currentElem) return;
 
@@ -16,7 +16,7 @@ table.onmouseover = function(event) {
   // ігнорувати
   if (!table.contains(target)) return;
 
-  // ура! ми перейщли до нового <td>
+  // ура! ми перейшли до нового <td>
   currentElem = target;
   onEnter(currentElem);
 };
