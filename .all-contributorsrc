@@ -903,6 +903,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "rostag",
+      "name": "Rosty",
+      "avatar_url": "https://avatars.githubusercontent.com/u/451410?v=4",
+      "profile": "http://facebook.com/rastislavr",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular",
