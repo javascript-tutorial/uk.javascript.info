@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-98-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-99-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -208,6 +208,9 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/BogSala"><img src="https://avatars.githubusercontent.com/u/90139360?v=4?s=70" width="70px;" alt="BogSala"/><br /><sub><b>BogSala</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3ABogSala" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/darynaplrs"><img src="https://avatars.githubusercontent.com/u/90515799?v=4?s=70" width="70px;" alt="Daryna Poliarush"/><br /><sub><b>Daryna Poliarush</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Adarynaplrs" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/vadym-pavlyk-a2ba04215/"><img src="https://avatars.githubusercontent.com/u/71404100?v=4?s=70" width="70px;" alt="Vadym Pavlyk"/><br /><sub><b>Vadym Pavlyk</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AMade1ra" title="Bug reports">🐛</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://facebook.com/rastislavr"><img src="https://avatars.githubusercontent.com/u/451410?v=4?s=70" width="70px;" alt="Rosty"/><br /><sub><b>Rosty</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Arostag" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
