@@ -792,7 +792,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/67638952?v=4",
       "profile": "https://github.com/ltlaitoff",
       "contributions": [
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -836,6 +837,97 @@
       "name": "Tetiana Aleksina",
       "avatar_url": "https://avatars.githubusercontent.com/u/73138862?v=4",
       "profile": "https://github.com/taleksina",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Andygol",
+      "name": "Andrii Holovin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/369696?v=4",
+      "profile": "https://github.com/Andygol",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Babrov",
+      "name": "Illia Babrov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60341182?v=4",
+      "profile": "https://www.linkedin.com/in/ibabrov/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "milax",
+      "name": "Yevhen Kuzmin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/432327?v=4",
+      "profile": "https://github.com/milax",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "CodyMaster007",
+      "name": "Danylo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/82391244?v=4",
+      "profile": "https://github.com/CodyMaster007",
+      "contributions": [
+        "bug",
+        "translation"
+      ]
+    },
+    {
+      "login": "BogSala",
+      "name": "BogSala",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90139360?v=4",
+      "profile": "https://github.com/BogSala",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "darynaplrs",
+      "name": "Daryna Poliarush",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90515799?v=4",
+      "profile": "https://github.com/darynaplrs",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "Made1ra",
+      "name": "Vadym Pavlyk",
+      "avatar_url": "https://avatars.githubusercontent.com/u/71404100?v=4",
+      "profile": "https://www.linkedin.com/in/vadym-pavlyk-a2ba04215/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "rostag",
+      "name": "Rosty",
+      "avatar_url": "https://avatars.githubusercontent.com/u/451410?v=4",
+      "profile": "http://facebook.com/rastislavr",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "lylich0",
+      "name": "lylich ",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81174724?v=4",
+      "profile": "https://lylich0.github.io/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "mr-corp",
+      "name": "mr-corp",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19779178?v=4",
+      "profile": "https://github.com/mr-corp",
       "contributions": [
         "bug"
       ]
