@@ -2,9 +2,9 @@
   "files": [
     "README.md"
   ],
-  "imageSize": 70,
+  "imageSize": 75,
   "commit": false,
-  "contributorsPerLine": 7,
+  "contributorsPerLine": 6,
   "projectName": "uk.javascript.info",
   "projectOwner": "javascript-tutorial",
   "repoType": "github",
