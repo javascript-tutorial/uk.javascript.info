@@ -921,6 +921,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "mr-corp",
+      "name": "mr-corp",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19779178?v=4",
+      "profile": "https://github.com/mr-corp",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitConvention": "angular",
