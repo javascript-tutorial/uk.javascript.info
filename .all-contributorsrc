@@ -13,6 +13,17 @@
   "badgeTemplate": "[![Перекладачі](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#подяка-)",
   "contributors": [
     {
+      "login": "dolgachio",
+      "name": "Stanislav Dolgachov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
+      "profile": "https://github.com/dolgachio",
+      "contributions": [
+        "maintenance",
+        "translation",
+        "review"
+      ]
+    },
+    {
       "login": "MykolaSopiha",
       "name": "Mykola Sopiha",
       "avatar_url": "https://avatars.githubusercontent.com/u/20689588?v=4",
@@ -23,13 +34,13 @@
     },
     {
       "login": "tarasyyyk",
-      "name": "Taras",
+      "name": "Taras Korzhak",
       "avatar_url": "https://avatars0.githubusercontent.com/u/20100011?v=4",
       "profile": "https://github.com/tarasyyyk",
       "contributions": [
         "maintenance",
-        "review",
-        "translation"
+        "translation",
+        "review"
       ]
     },
     {
@@ -70,18 +81,8 @@
       ]
     },
     {
-      "login": "stas-dolgachov",
-      "name": "Stanislav",
-      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
-      "profile": "https://github.com/stas-dolgachov",
-      "contributions": [
-        "translation",
-        "review"
-      ]
-    },
-    {
       "login": "hordiienko-tatiana",
-      "name": "hordiienko-tatiana",
+      "name": "Tatiana Hordiienko",
       "avatar_url": "https://avatars.githubusercontent.com/u/49336627?v=4",
       "profile": "https://github.com/hordiienko-tatiana",
       "contributions": [
