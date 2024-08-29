@@ -2,16 +2,21 @@
   "files": [
     "README.md"
   ],
-  "imageSize": 70,
-  "commit": false,
-  "contributorsPerLine": 7,
   "projectName": "uk.javascript.info",
   "projectOwner": "javascript-tutorial",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "skipCi": true,
   "badgeTemplate": "[![Перекладачі](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square)](#подяка-)",
   "contributors": [
+    {
+      "login": "dolgachio",
+      "name": "Stanislav Dolgachov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
+      "profile": "https://github.com/dolgachio",
+      "contributions": [
+        "maintenance",
+        "translation",
+        "review"
+      ]
+    },
     {
       "login": "MykolaSopiha",
       "name": "Mykola Sopiha",
@@ -23,13 +28,13 @@
     },
     {
       "login": "tarasyyyk",
-      "name": "Taras",
+      "name": "Taras Korzhak",
       "avatar_url": "https://avatars0.githubusercontent.com/u/20100011?v=4",
       "profile": "https://github.com/tarasyyyk",
       "contributions": [
         "maintenance",
-        "review",
-        "translation"
+        "translation",
+        "review"
       ]
     },
     {
@@ -70,18 +75,8 @@
       ]
     },
     {
-      "login": "stas-dolgachov",
-      "name": "Stanislav",
-      "avatar_url": "https://avatars.githubusercontent.com/u/9461925?v=4",
-      "profile": "https://github.com/stas-dolgachov",
-      "contributions": [
-        "translation",
-        "review"
-      ]
-    },
-    {
       "login": "hordiienko-tatiana",
-      "name": "hordiienko-tatiana",
+      "name": "Tatiana Hordiienko",
       "avatar_url": "https://avatars.githubusercontent.com/u/49336627?v=4",
       "profile": "https://github.com/hordiienko-tatiana",
       "contributions": [
@@ -99,7 +94,7 @@
     },
     {
       "login": "chizzzy",
-      "name": "Chystiakov Andrei",
+      "name": "Andrei Chystiakov",
       "avatar_url": "https://avatars.githubusercontent.com/u/34280137?v=4",
       "profile": "https://github.com/chizzzy",
       "contributions": [
@@ -145,7 +140,7 @@
     },
     {
       "login": "gingano",
-      "name": "gingano",
+      "name": "Alex Kovalenko",
       "avatar_url": "https://avatars.githubusercontent.com/u/47160813?v=4",
       "profile": "https://github.com/gingano",
       "contributions": [
@@ -172,7 +167,7 @@
     },
     {
       "login": "lobanov-oleh",
-      "name": "lobanov-oleh",
+      "name": "Oleh Lobanov",
       "avatar_url": "https://avatars0.githubusercontent.com/u/53055773?v=4",
       "profile": "https://github.com/lobanov-oleh",
       "contributions": [
@@ -217,7 +212,7 @@
     },
     {
       "login": "ArtemZununov",
-      "name": "ArtemZununov",
+      "name": "Artem Zununov",
       "avatar_url": "https://avatars1.githubusercontent.com/u/12086644?v=4",
       "profile": "https://github.com/ArtemZununov",
       "contributions": [
@@ -245,7 +240,7 @@
     },
     {
       "login": "UkrainianCitizen",
-      "name": "UkrainianCitizen",
+      "name": "Ukrainian Citizen",
       "avatar_url": "https://avatars2.githubusercontent.com/u/31314423?v=4",
       "profile": "https://github.com/UkrainianCitizen",
       "contributions": [
@@ -282,7 +277,7 @@
     },
     {
       "login": "astropsy999",
-      "name": "Yevhenii Stuzhuk",
+      "name": "Yevhen Stuzhuk",
       "avatar_url": "https://avatars.githubusercontent.com/u/10748203?v=4",
       "profile": "https://github.com/astropsy999",
       "contributions": [
@@ -300,7 +295,7 @@
     },
     {
       "login": "DmytroSkrypnyk",
-      "name": "DmytroSkrypnyk",
+      "name": "Dmytro Skrypnyk",
       "avatar_url": "https://avatars.githubusercontent.com/u/46841342?v=4",
       "profile": "https://github.com/DmytroSkrypnyk",
       "contributions": [
@@ -309,7 +304,7 @@
     },
     {
       "login": "yaroslavom",
-      "name": "Yaroslav",
+      "name": "Yaroslav Omelchuk",
       "avatar_url": "https://avatars.githubusercontent.com/u/72073598?v=4",
       "profile": "http://Instagram.com/yaroslavom",
       "contributions": [
@@ -317,10 +312,10 @@
       ]
     },
     {
-      "login": "ilvl",
-      "name": "ilvl",
+      "login": "itsJohnnyGrid",
+      "name": "Johnny Grid",
       "avatar_url": "https://avatars.githubusercontent.com/u/16276298?v=4",
-      "profile": "https://github.com/ilvl",
+      "profile": "https://github.com/itsJohnnyGrid",
       "contributions": [
         "bug"
       ]
@@ -336,7 +331,7 @@
     },
     {
       "login": "PavloKokhaniuk",
-      "name": "PavloKokhaniuk",
+      "name": "Pavlo Kokhaniuk",
       "avatar_url": "https://avatars.githubusercontent.com/u/81250556?v=4",
       "profile": "https://github.com/PavloKokhaniuk",
       "contributions": [
@@ -354,7 +349,7 @@
     },
     {
       "login": "MaxiManBW",
-      "name": "MaxiManBW",
+      "name": "Maksym Karamanov",
       "avatar_url": "https://avatars.githubusercontent.com/u/7721739?v=4",
       "profile": "https://github.com/MaxiManBW",
       "contributions": [
@@ -399,7 +394,7 @@
     },
     {
       "login": "Numed",
-      "name": "Eugene",
+      "name": "Eugene Rushynets",
       "avatar_url": "https://avatars.githubusercontent.com/u/70485845?v=4",
       "profile": "https://github.com/Numed",
       "contributions": [
@@ -454,7 +449,7 @@
     },
     {
       "login": "kvnvit",
-      "name": "Vitalii Kobylka",
+      "name": "Vitaliy Kobylka",
       "avatar_url": "https://avatars.githubusercontent.com/u/110344172?v=4",
       "profile": "https://github.com/kvnvit",
       "contributions": [
@@ -472,7 +467,7 @@
     },
     {
       "login": "VasylTsiutsyk",
-      "name": "Vasyl",
+      "name": "Vasyl Tsiutsyk",
       "avatar_url": "https://avatars.githubusercontent.com/u/57192331?v=4",
       "profile": "https://github.com/VasylTsiutsyk",
       "contributions": [
@@ -490,7 +485,7 @@
     },
     {
       "login": "vladiuskor",
-      "name": "Vlad Ko",
+      "name": "Vlad Korobko",
       "avatar_url": "https://avatars.githubusercontent.com/u/48758457?v=4",
       "profile": "https://www.linkedin.com/in/%F0%9F%87%BA%F0%9F%87%A6-vlad-korobko-425b76131/",
       "contributions": [
@@ -499,7 +494,7 @@
     },
     {
       "login": "jivk01",
-      "name": "Marchuk Dmytro",
+      "name": "Dmytro Marchuk",
       "avatar_url": "https://avatars.githubusercontent.com/u/59064710?v=4",
       "profile": "https://github.com/jivk01",
       "contributions": [
@@ -516,17 +511,17 @@
       ]
     },
     {
-      "login": "marketing-specv",
-      "name": "marketing-specv",
+      "login": "lazarchuk-v",
+      "name": "lazarchuk-v",
       "avatar_url": "https://avatars.githubusercontent.com/u/54738987?v=4",
-      "profile": "https://github.com/marketing-specv",
+      "profile": "https://github.com/lazarchuk-v",
       "contributions": [
         "bug"
       ]
     },
     {
       "login": "AndruhaMan",
-      "name": "AndruhaMan",
+      "name": "Andrii Sutchenko",
       "avatar_url": "https://avatars.githubusercontent.com/u/25157075?v=4",
       "profile": "https://github.com/AndruhaMan",
       "contributions": [
@@ -535,7 +530,7 @@
     },
     {
       "login": "SamGreenberg",
-      "name": "SamGreenberg",
+      "name": "Sam Greenberg",
       "avatar_url": "https://avatars.githubusercontent.com/u/22919988?v=4",
       "profile": "https://github.com/SamGreenberg",
       "contributions": [
@@ -598,7 +593,7 @@
     },
     {
       "login": "MarstenyshenDmytro",
-      "name": "MarstenyshenDmytro",
+      "name": "Dmytro Marstenyshen",
       "avatar_url": "https://avatars.githubusercontent.com/u/31610911?v=4",
       "profile": "https://github.com/MarstenyshenDmytro",
       "contributions": [
@@ -633,17 +628,17 @@
       ]
     },
     {
-      "login": "nibbl",
+      "login": "niiiibl",
       "name": "nibbl3",
       "avatar_url": "https://avatars.githubusercontent.com/u/77545790?v=4",
-      "profile": "https://nibbl3.xyz/h3x",
+      "profile": "https://github.com/niiiibl",
       "contributions": [
         "bug"
       ]
     },
     {
       "login": "Neschadin",
-      "name": "Neschadin Oleksandr",
+      "name": "Oleksandr Neschadin",
       "avatar_url": "https://avatars.githubusercontent.com/u/73835274?v=4",
       "profile": "https://github.com/Neschadin",
       "contributions": [
@@ -689,7 +684,7 @@
     },
     {
       "login": "adudyak",
-      "name": "adudyak",
+      "name": "Alexander Dudyak",
       "avatar_url": "https://avatars.githubusercontent.com/u/19595492?v=4",
       "profile": "https://github.com/adudyak",
       "contributions": [
@@ -698,7 +693,7 @@
     },
     {
       "login": "davidmovsesian",
-      "name": "davidmovsesian",
+      "name": "David Movsesian",
       "avatar_url": "https://avatars.githubusercontent.com/u/44215072?v=4",
       "profile": "https://github.com/davidmovsesian",
       "contributions": [
@@ -725,7 +720,7 @@
     },
     {
       "login": "mpodaniev",
-      "name": "Mykhailo",
+      "name": "Mykhailo Podaniev",
       "avatar_url": "https://avatars.githubusercontent.com/u/8547830?v=4",
       "profile": "https://github.com/mpodaniev",
       "contributions": [
@@ -734,7 +729,7 @@
     },
     {
       "login": "ArtemBondarenko1997",
-      "name": "ArtemBondarenko1997",
+      "name": "Artem Bondarenko",
       "avatar_url": "https://avatars.githubusercontent.com/u/32524801?v=4",
       "profile": "https://github.com/ArtemBondarenko1997",
       "contributions": [
@@ -761,7 +756,7 @@
     },
     {
       "login": "RostyslavNihrutsa",
-      "name": "RostyslavNihrutsa",
+      "name": "Rostyslav Nihrutsa",
       "avatar_url": "https://avatars.githubusercontent.com/u/82962343?v=4",
       "profile": "https://github.com/RostyslavNihrutsa",
       "contributions": [
@@ -825,7 +820,7 @@
     },
     {
       "login": "KhirovSasha",
-      "name": "Khirov Sasha",
+      "name": "Sasha Khirov",
       "avatar_url": "https://avatars.githubusercontent.com/u/75026042?v=4",
       "profile": "https://github.com/KhirovSasha",
       "contributions": [
@@ -875,8 +870,7 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/82391244?v=4",
       "profile": "https://github.com/CodyMaster007",
       "contributions": [
-        "bug",
-        "translation"
+        "bug"
       ]
     },
     {
@@ -908,7 +902,7 @@
     },
     {
       "login": "rostag",
-      "name": "Rosty",
+      "name": "Rostyslav Siryk",
       "avatar_url": "https://avatars.githubusercontent.com/u/451410?v=4",
       "profile": "http://facebook.com/rastislavr",
       "contributions": [
@@ -935,7 +929,7 @@
     },
     {
       "login": "YevhenOstrovskiy",
-      "name": "Yevhen",
+      "name": "Yevhen Ostrovskiy",
       "avatar_url": "https://avatars.githubusercontent.com/u/92674052?v=4",
       "profile": "https://github.com/YevhenOstrovskiy",
       "contributions": [
@@ -944,14 +938,30 @@
     },
     {
       "login": "gawanyn",
-      "name": "gawanyn",
+      "name": "Taras Shcherban",
       "avatar_url": "https://avatars.githubusercontent.com/u/47538446?v=4",
       "profile": "https://github.com/gawanyn",
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "WOLFRIEND",
+      "name": "Oleksandr Tkachenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41586082?v=4",
+      "profile": "https://github.com/WOLFRIEND",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "malechaneit",
+      "name": "Vita Chukhno",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5583733?v=4",
+      "profile": "https://github.com/malechaneit",
+      "contributions": [
+        "translation"
+      ]
     }
-  ],
-  "commitConvention": "angular",
-  "commitType": "docs"
+  ]
 }
