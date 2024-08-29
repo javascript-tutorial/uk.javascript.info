@@ -839,7 +839,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/73138862?v=4",
       "profile": "https://github.com/taleksina",
       "contributions": [
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -875,7 +876,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/82391244?v=4",
       "profile": "https://github.com/CodyMaster007",
       "contributions": [
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -919,6 +921,33 @@
       "name": "lylich ",
       "avatar_url": "https://avatars.githubusercontent.com/u/81174724?v=4",
       "profile": "https://lylich0.github.io/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "mr-corp",
+      "name": "mr-corp",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19779178?v=4",
+      "profile": "https://github.com/mr-corp",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "YevhenOstrovskiy",
+      "name": "Yevhen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/92674052?v=4",
+      "profile": "https://github.com/YevhenOstrovskiy",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "gawanyn",
+      "name": "gawanyn",
+      "avatar_url": "https://avatars.githubusercontent.com/u/47538446?v=4",
+      "profile": "https://github.com/gawanyn",
       "contributions": [
         "bug"
       ]
