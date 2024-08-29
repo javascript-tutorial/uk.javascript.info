@@ -1,6 +1,6 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-102-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-103-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторію зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -214,6 +214,7 @@ P.S. Весь перелік мов і прогрес перекладу мож�
       <td align="center" valign="top" width="14.28%"><a href="https://lylich0.github.io/"><img src="https://avatars.githubusercontent.com/u/81174724?v=4?s=70" width="70px;" alt="lylich "/><br /><sub><b>lylich </b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Alylich0" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mr-corp"><img src="https://avatars.githubusercontent.com/u/19779178?v=4?s=70" width="70px;" alt="mr-corp"/><br /><sub><b>mr-corp</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Amr-corp" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/YevhenOstrovskiy"><img src="https://avatars.githubusercontent.com/u/92674052?v=4?s=70" width="70px;" alt="Yevhen"/><br /><sub><b>Yevhen</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3AYevhenOstrovskiy" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/gawanyn"><img src="https://avatars.githubusercontent.com/u/47538446?v=4?s=70" width="70px;" alt="gawanyn"/><br /><sub><b>gawanyn</b></sub></a><br /><a href="https://github.com/javascript-tutorial/uk.javascript.info/issues?q=author%3Agawanyn" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
