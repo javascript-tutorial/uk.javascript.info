@@ -2,24 +2,24 @@ importance: 5
 
 ---
 
-# Improved tooltip behavior
+# Покращена поведінка спливаючої підказки
 
-Write JavaScript that shows a tooltip over an element with the attribute `data-tooltip`. The value of this attribute should become the tooltip text.
+Напишіть JavaScript, який покаже спливаючу підказку над елементом із атрибутом `data-tooltip`. Значення цього атрибута має стати текстом підказки.
 
-That's like the task <info:task/behavior-tooltip>, but here the annotated elements can be nested. The most deeply nested tooltip is shown.
+Це як задача <info:task/behavior-tooltip>, але тут елементи можуть бути вкладеними. Ви маєте показати найбільш глибоко вкладену підказку.
 
-Only one tooltip may show up at the same time.
+Одночасно може відображатися лише одна підказка.
 
-For instance:
+Наприклад:
 
 ```html
-<div data-tooltip="Here – is the house interior" id="house">
-  <div data-tooltip="Here – is the roof" id="roof"></div>
+<div data-tooltip="Ось – інтер’єр будинку" id="house">
+  <div data-tooltip="Ось – дах" id="roof"></div>
   ...
-  <a href="https://en.wikipedia.org/wiki/The_Three_Little_Pigs" data-tooltip="Read on…">Hover over me</a>
+  <a href="https://uk.wikipedia.org/wiki/Троє_поросят" data-tooltip="Читайте далі…">Наведіть на мене вказівник</a>
 </div>
 ```
 
-The result in iframe:
+Результат в iframe:
 
 [iframe src="solution" height=300 border=1]

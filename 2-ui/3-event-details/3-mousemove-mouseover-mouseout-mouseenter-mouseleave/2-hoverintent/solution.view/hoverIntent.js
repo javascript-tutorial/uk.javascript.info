@@ -3,8 +3,8 @@
 class HoverIntent {
 
   constructor({
-    sensitivity = 0.1, // speed less than 0.1px/ms means "hovering over an element"
-    interval = 100,    // measure mouse speed once per 100ms
+    sensitivity = 0.1, // швидкість менше 0,1 пікселів/мс означає "наведення вказівника на елемент"
+    interval = 100,    // вимірювати швидкість миші раз на 100ms: обчислити відстань між попередньою та наступною точками
     elem,
     over,
     out
@@ -15,12 +15,12 @@ class HoverIntent {
     this.over = over;
     this.out = out;
 
-    // make sure "this" is the object in event handlers.
+    // переконайтеся, що "this" є нашми об’єктом в обробниках подій.
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseOver = this.onMouseOver.bind(this);
     this.onMouseOut = this.onMouseOut.bind(this);
 
-    // and in time-measuring function (called from setInterval)
+    // і у функції вимірювання часу (викликається з setInterval)
     this.trackSpeed = this.trackSpeed.bind(this);
 
     elem.addEventListener("mouseover", this.onMouseOver);
@@ -32,16 +32,16 @@ class HoverIntent {
   onMouseOver(event) {
 
     if (this.isOverElement) {
-      // if we're over the element, then ignore the event
-      // we are already measuring the speed
+      // якщо ми знову пройшли над елементом, ігноруємо подію,
+      // бо ми вже вимірюємо швидкість
       return;
     }
 
     this.isOverElement = true;
 
-    // after every mousemove we'll be check the distance
-    // between the previous and the current mouse coordinates
-    // if it's less than sensivity, then the speed is slow
+    // після кожного руху миші ми будемо перевіряти відстань
+    // між попередньою та поточною координатами миші
+    // якщо ця відстань менше ніж значення sensitivity, швидкість повільна
 
     this.prevX = event.pageX;
     this.prevY = event.pageY;
@@ -52,13 +52,13 @@ class HoverIntent {
   }
 
   onMouseOut(event) {
-    // if left the element
+    // якщо залишили елемент
     if (!event.relatedTarget || !elem.contains(event.relatedTarget)) {
       this.isOverElement = false;
       this.elem.removeEventListener('mousemove', this.onMouseMove);
       clearInterval(this.checkSpeedInterval);
       if (this.isHover) {
-        // if there was a stop over the element
+        // якщо була зупинка над елементом
         this.out.call(this.elem, event);
         this.isHover = false;
       }
@@ -76,7 +76,7 @@ class HoverIntent {
     let speed;
 
     if (!this.lastTime || this.lastTime == this.prevTime) {
-      // cursor didn't move
+      // вказівник не рухався
       speed = 0;
     } else {
       speed = Math.sqrt(
@@ -90,7 +90,7 @@ class HoverIntent {
       this.isHover = true;
       this.over.call(this.elem);
     } else {
-      // speed fast, remember new coordinates as the previous ones
+      // якщо рухається швидко, записуємо нові координати як попередні
       this.prevX = this.lastX;
       this.prevY = this.lastY;
       this.prevTime = this.lastTime;

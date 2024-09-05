@@ -1,18 +1,18 @@
 
-The algorithm looks simple:
-1. Put `onmouseover/out` handlers on the element. Also can use `onmouseenter/leave` here, but they are less universal, won't work if we introduce delegation.
-2. When a mouse cursor entered the element, start measuring the speed on `mousemove`.
-3. If the speed is slow, then run `over`.
-4. When we're going out of the element, and `over` was executed, run `out`.
+Алгоритм виглядає просто:
+1. Додайте обробники `onmouseover/out` на елемент. Тут також можна використовувати `onmouseenter/leave`, але вони менш універсальні, і не працюватимуть, якщо ми використаємо делегування подій.
+2. Коли вказівник миші увійшов на елемент, почніть вимірювати швидкість на `mousemove`.
+3. Якщо швидкість низька, то запускаємо `over`.
+4. Коли вказівник виходить за межі елемента, і `over` закінчила свою роботу, запускаємо `out`.
 
-But how to measure the speed?
+Але як виміряти швидкість?
 
-The first idea can be: run a function every `100ms` and measure the distance between previous and new coordinates. If it's small, then the speed is small.
+Перша ідея може бути такою: запускати функцію кожні `100ms` і вимірювати відстань між попередньою та новою координатами. Якщо відстань маленька, то швидкість невелика.
 
-Unfortunately, there's no way to get "current mouse coordinates" in JavaScript. There's no function like `getCurrentMouseCoordinates()`.
+На жаль, у JavaScript немає способу отримати поточні координати вказівника миші. Немає таких функцій, як `getCurrentMouseCoordinates()`.
 
-The only way to get coordinates is to listen for mouse events, like `mousemove`, and take coordinates from the event object.
+Єдиний спосіб отримати координати -- в обробнику подій миші, наприклад `mousemove`, і брати координати з об’єкта події.
 
-So let's set a handler on `mousemove` to track coordinates and remember them. And then compare them, once per `100ms`.
+Отже, давайте додамо обробник на `mousemove`, де відстежемо і запам'ятаємо поточні координати. А далі будемо порівнювати їх раз на `100ms`.
 
-P.S. Please note: the solution tests use `dispatchEvent` to see if the tooltip works right.
+P.S. Зверніть увагу: тести рішення використовують `dispatchEvent`, щоб перевірити, чи підказка працює правильно.

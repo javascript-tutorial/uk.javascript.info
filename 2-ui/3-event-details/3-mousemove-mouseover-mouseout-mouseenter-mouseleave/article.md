@@ -1,78 +1,78 @@
-# Moving the mouse: mouseover/out, mouseenter/leave
+# Переміщення миші: mouseover/out, mouseenter/leave
 
-Let's dive into more details about events that happen when the mouse moves between elements.
+Давайте детальніше розглянемо події, які відбуваються, коли вказівник миші переміщається між елементами.
 
-## Events mouseover/mouseout, relatedTarget
+## Події mouseover/mouseout, relatedTarget
 
-The `mouseover` event occurs when a mouse pointer comes over an element, and `mouseout` -- when it leaves.
+Подія `mouseover` виникає, коли вказівник миші наводиться на елемент, а `mouseout` -- коли залишає його.
 
 ![](mouseover-mouseout.svg)
 
-These events are special, because they have property `relatedTarget`. This property complements `target`. When a mouse leaves one element for another, one of them becomes `target`, and the other one - `relatedTarget`.
+Ці події особливі, оскільки мають властивість `relatedTarget`. Ця властивість доповнює `target`. Коли миша йде від одного елемента до іншого, один з них стає `target`, а інший -- `relatedTarget`.
 
-For `mouseover`:
+Для `mouseover`:
 
-- `event.target` -- is the element where the mouse came over.
-- `event.relatedTarget` -- is the element from which the mouse came (`relatedTarget` -> `target`).
+- `event.target` -- це елемент, на який наведено вказівник миші.
+- `event.relatedTarget` -- це елемент, з якого прийшов вказіник (`relatedTarget` -> `target`).
 
-For `mouseout` the reverse:
+Для `mouseout` навпаки:
 
-- `event.target` -- is the element that the mouse left.
-- `event.relatedTarget` -- is the new under-the-pointer element, that mouse left for (`target` -> `relatedTarget`).
+- `event.target` -- це елемент, який залишила миша.
+- `event.relatedTarget` -- це новий елемент під вказівником, на який перейшла миша (`target` -> `relatedTarget`).
 
 ```online
-In the example below each face and its features are separate elements. When you move the mouse, you can see mouse events in the text area.
+У наведеному нижче прикладі кожне обличчя та його риси є окремими елементами. Коли ви рухаєте мишею, події миші відображаються в текстовій області.
 
-Each event has the information about both `target` and `relatedTarget`:
+Кожна подія містить інформацію як про `target`, так і про `relatedTarget`:
 
 [codetabs src="mouseoverout" height=280]
 ```
 
-```warn header="`relatedTarget` can be `null`"
-The `relatedTarget` property can be `null`.
+```warn header="`relatedTarget` може бути `null`"
+Властивість `relatedTarget` може мати значення `null`.
 
-That's normal and just means that the mouse came not from another element, but from out of the window. Or that it left the window.
+Це нормально і просто означає, що вказівник миші прийшов не з іншого елемента, а десь з поза меж вікна. Або навпаки, що вказівник вийшов за межі вікна браузера.
 
-We should keep that possibility in mind when using `event.relatedTarget` in our code. If we access `event.relatedTarget.tagName`, then there will be an error.
+Нам варто пам'ятати про цю можливість, використовуючи `event.relatedTarget` в коді. Бо якщо спробувати отримати доступ до `event.relatedTarget.tagName`, то виникне помилка.
 ```
 
-## Skipping elements
+## Пропуск елементів
 
-The `mousemove` event triggers when the mouse moves. But that doesn't mean that every pixel leads to an event.
+Подія `mousemove` запускається, коли миша рухається. Але це не означає, що кожен навіть найменший рух веде до окремої події.
 
-The browser checks the mouse position from time to time. And if it notices changes then triggers the events.
+Час від часу браузер перевіряє положення миші. І якщо він помічає зміни, то ініціює події.
 
-That means that if the visitor is moving the mouse very fast then some DOM-elements may be skipped:
+Ба більше, якщо користувач рухає мишею дуже швидко, деякі DOM-елементи можуть бути пропущені:
 
 ![](mouseover-mouseout-over-elems.svg)
 
-If the mouse moves very fast from `#FROM` to `#TO` elements as painted above, then intermediate `<div>` elements (or some of them) may be skipped. The `mouseout` event may trigger on `#FROM` and then immediately `mouseover` on `#TO`.
+Якщо миша дуже швидко рухається від елементів `#FROM` до `#TO`, як зазначено вище, то проміжні елементи `<div>` (або деякі з них) можуть бути пропущені. Подія `mouseout` може бути ініційована на `#FROM`, а потім одразу `mouseover`на `#TO`.
 
-That's good for performance, because there may be many intermediate elements. We don't really want to process in and out of each one.
+Це добре для продуктивності, бо може бути багато проміжних елементів. Ми насправді не хочемо обробляти кожен із них.
 
-On the other hand, we should keep in mind that the mouse pointer doesn't "visit" all elements along the way. It can "jump".
+З іншого боку, ми повинні мати на увазі, що вказівник миші не "відвідує" всі елементи на шляху і може "стрибати".
 
-In particular, it's possible that the pointer jumps right inside the middle of the page from out of the window. In that case `relatedTarget` is `null`, because it came from "nowhere":
+Зокрема, можливо, що вказівник стрибне прямо всередину сторінки з поза меж вікна. У цьому випадку `relatedTarget` має значення `null`, тому що він прийшов "нізвідки":
 
 ![](mouseover-mouseout-from-outside.svg)
 
 ```online
-You can check it out "live" on a teststand below.
+Ви можете перевірити це на тестовому стенді нижче.
 
-Its HTML has two nested elements: the `<div id="child">` is inside the `<div id="parent">`. If you move the mouse fast over them, then maybe only the child div triggers events, or maybe the parent one, or maybe there will be no events at all.
+Його HTML має два вкладені елементи: `<div id="child">` знаходиться всередині `<div id="parent">`. Якщо ви швидко наведете на них мишу, то, можливо, лише дочірній div ініціює події, або батьківський, або навіть подій не буде взагалі.
 
-Also move the pointer into the child `div`, and then move it out quickly down through the parent one. If the movement is fast enough, then the parent element is ignored. The mouse will cross the parent element without noticing it.
+Також перемістіть вказівник у дочірній `div`, а потім швидко перемістіть його вниз через батьківський. Якщо рух досить швидкий, то батьківський елемент ігнорується. Миша перетне батьківський елемент, не помітивши цього.
 
 [codetabs height=360 src="mouseoverout-fast"]
 ```
 
-```smart header="If `mouseover` triggered, there must be `mouseout`"
-In case of fast mouse movements, intermediate elements may be ignored, but one thing we know for sure: if the pointer "officially" entered an element (`mouseover` event generated), then upon leaving it we always get `mouseout`.
+```smart header="Якщо спрацьовує `mouseover`, обов'язково буде `mouseout`"
+У разі швидких рухів миші проміжні елементи можуть ігноруватися, але одне ми знаємо напевно: якщо вказівник "офіційно" увійшов на елемент (генерується подія `mouseover`), то при виході з нього ми завжди отримуємо `mouseout`.
 ```
 
-## Mouseout when leaving for a child
+## Mouseout при переході на дочірній елемент
 
-An important feature of `mouseout` -- it triggers, when the pointer moves from an element to its descendant, e.g. from `#parent` to `#child` in this HTML:
+Важлива функція події `mouseout` -- вона запускається, коли вказівник переміщується від елемента до його нащадка, наприклад, від `#parent` до `#child` у HTML нижче:
 
 ```html
 <div id="parent">
@@ -80,92 +80,92 @@ An important feature of `mouseout` -- it triggers, when the pointer moves from a
 </div>
 ```
 
-If we're on `#parent` and then move the pointer deeper into `#child`, we get `mouseout` on `#parent`!
+Якщо ми знаходимося на `#parent`, а потім переміщуємо вказівник глибше в `#child`, ми отримуємо `mouseout` на `#parent`!
 
 ![](mouseover-to-child.svg)
 
-That may seem strange, but can be easily explained.
+Це може здатися дивним, але це легко пояснити.
 
-**According to the browser logic, the mouse cursor may be only over a *single* element at any time -- the most nested one and top by z-index.**
+**Відповідно до логіки браузера, вказівник миші може бути лише над *одним* елементом у будь-який момент часу -- найбільш вкладеним і верхнім за z-індексом.**
 
-So if it goes to another element (even a descendant), then it leaves the previous one.
+Отже, якщо він переходить до іншого елемента (навіть до нащадка), то він залишає попередній.
 
-Please note another important detail of event processing.
+Зверніть увагу на ще одну важливу деталь обробки подій.
 
-The `mouseover` event on a descendant bubbles up. So, if `#parent` has `mouseover` handler, it triggers:
+Подія `mouseover` на нащадку буде спливати. Отже, якщо `#parent` має обробник `mouseover`, він спрацює:
 
 ![](mouseover-bubble-nested.svg)
 
 ```online
-You can see that very well in the example below: `<div id="child">` is inside the `<div id="parent">`. There are `mouseover/out` handlers on `#parent` element that output event details.
+Ви можете це добре побачити в прикладі нижче: `<div id="child">` знаходиться всередині `<div id="parent">`. І обробники `mouseover/out` для елементу `#parent` виведуть деталі події.
 
-If you move the mouse from `#parent` to `#child`, you see two events on `#parent`:
-1. `mouseout [target: parent]` (left the parent), then
-2. `mouseover [target: child]` (came to the child, bubbled).
+Якщо ви перемістите вказівник миші від `#parent` до `#child`, це викличе дві події на `#parent`:
+1. `mouseout [target: parent]` (вказівник залишив parent), далі
+2. `mouseover [target: child]` (дійшов до child, спливання події).
 
 [codetabs height=360 src="mouseoverout-child"]
 ```
 
-As shown, when the pointer moves from `#parent` element to `#child`, two handlers trigger on the parent element: `mouseout` and `mouseover`:
+Як показано, коли вказівник переміщується від елемента `#parent` до `#child`, на батьківському елементі запускаються два обробники: `mouseout` і `mouseover`:
 
 ```js
 parent.onmouseout = function(event) {
-  /* event.target: parent element */
+  /* event.target: parent елемент */
 };
 parent.onmouseover = function(event) {
-  /* event.target: child element (bubbled) */
+  /* event.target: child елемент (спливання) */
 };
 ```
 
-**If we don't examine `event.target` inside the handlers, then it may seem that the mouse pointer left `#parent` element, and then immediately came back over it.**
+**Якщо ми не перевіримо `event.target` всередині обробників, то може здатися, що вказівник миші залишив елемент `#parent`, а потім одразу повернувся на нього.**
 
-But that's not the case! The pointer is still over the parent, it just moved deeper into the child element.
+Але це не так! Вказівник все ще знаходиться над батьківським елементом, він просто перемістився глибше на дочірній елемент.
 
-If there are some actions upon leaving the parent element, e.g. an animation runs in `parent.onmouseout`, we usually don't want it when the pointer just goes deeper into `#parent`.
+Якщо є якісь дії після виходу з батьківського елемента, напр. анімація запускається в `parent.onmouseout`, ми зазвичай не хочемо цього, коли вказівник просто йде глибше в `#parent`.
 
-To avoid it, we can check `relatedTarget` in the handler and, if the mouse is still inside the element, then ignore such event.
+Щоб уникнути цього, ми можемо перевірити `relatedTarget` в обробнику і, якщо вказівник все ще всередині елемента, ігнорувати цю подію.
 
-Alternatively we can use other events: `mouseenter` and `mouseleave`, that we'll be covering now, as they don't have such problems.
+Як альтернативу ми можемо використовувати інші події: `mouseenter` і `mouseleave`, які ми зараз розглянемо, оскільки вони не мають таких проблем.
 
-## Events mouseenter and mouseleave
+## Події mouseenter і mouseleave
 
-Events `mouseenter/mouseleave` are like `mouseover/mouseout`. They trigger when the mouse pointer enters/leaves the element.
+Події `mouseenter/mouseleave` схожі на `mouseover/mouseout`. Вони спрацьовують, коли вказівник миші входить або залишає елемент.
 
-But there are two important differences:
+Але є дві важливі відмінності:
 
-1. Transitions inside the element, to/from descendants, are not counted.
-2. Events `mouseenter/mouseleave` do not bubble.
+1. Переходи всередині елемента до/від нащадків не враховуються.
+2. Події `mouseenter/mouseleave` не спливають.
 
-These events are extremely simple.
+Ці події надзвичайно прості.
 
-When the pointer enters an element -- `mouseenter` triggers. The exact location of the pointer inside the element or its descendants doesn't matter.
+Коли вказівник входить на елемент, спрацьовує `mouseenter`. Точне розташування вказівника всередині елемента або його нащадків не має значення.
 
-When the pointer leaves an element -- `mouseleave` triggers.
+Коли вказівник залишає елемент, спрацьовує `mouseleave`.
 
 ```online
-This example is similar to the one above, but now the top element has `mouseenter/mouseleave` instead of `mouseover/mouseout`.
+Цей приклад подібний до наведеного вище, але тепер у верхньому елементі є `mouseenter/mouseleave` замість `mouseover/mouseout`.
 
-As you can see, the only generated events are the ones related to moving the pointer in and out of the top element. Nothing happens when the pointer goes to the child and back. Transitions between descendants are ignored
+Як бачите, єдині генеровані події пов’язані з переміщенням вказівника в верхній елемент і з нього. Нічого не відбувається, коли вказівник йде до дочірнього елемента і назад. Переходи між нащадками ігноруються
 
 [codetabs height=340 src="mouseleave"]
 ```
 
-## Event delegation
+## Делегування подій (Event delegation)
 
-Events `mouseenter/leave` are very simple and easy to use. But they do not bubble. So we can't use event delegation with them.
+Події `mouseenter/leave` дуже прості та легкі у використанні. Але вони не спливають. Тому ми не можемо використовувати з ними делегування подій (event delegation).
 
-Imagine we want to handle mouse enter/leave for table cells. And there are hundreds of cells.
+Уявіть, що ми хочемо керувати входом/виходом вказівника миші для клітинок таблиці, в якій сотні клітин.
 
-The natural solution would be -- to set the handler on `<table>` and process events there. But `mouseenter/leave` don't bubble. So if such event happens on `<td>`, then only a handler on that `<td>` is able to catch it.
+Ефективним рішенням було б встановити обробник на `<table>` і обробляти події там. Але `mouseenter/leave` не спливають. Отже, якщо така подія відбувається на `<td>`, то лише обробник на цьому `<td>` може її перехопити.
 
-Handlers for `mouseenter/leave` on `<table>` only trigger when the pointer enters/leaves the table as a whole. It's impossible to get any information about transitions inside it.
+Обробники для `mouseenter/leave` на `<table>` запускаються лише тоді, коли вказівник входить/виходить із таблиці в цілому. Інформацію про переходи всередині нього отримати неможливо.
 
-So, let's use `mouseover/mouseout`.
+Отже, давайте використаємо `mouseover/mouseout`.
 
-Let's start with simple handlers that highlight the element under mouse:
+Почнемо з простих обробників, які підсвічують елемент під вказівником миші:
 
 ```js
-// let's highlight an element under the pointer
+// виділимо елемент під вказівником
 table.onmouseover = function(event) {
   let target = event.target;
   target.style.background = 'pink';
@@ -178,44 +178,44 @@ table.onmouseout = function(event) {
 ```
 
 ```online
-Here they are in action. As the mouse travels across the elements of this table, the current one is highlighted:
+Ось вони в дії. Коли миша переміщається по елементах цієї таблиці, поточний виділяється:
 
 [codetabs height=480 src="mouseenter-mouseleave-delegation"]
 ```
 
-In our case we'd like to handle transitions between table cells `<td>`: entering a cell and leaving it. Other transitions, such as inside the cell or outside of any cells, don't interest us. Let's filter them out.
+У нашому випадку ми хочемо обробляти переходи між клітинами таблиці `<td>`: вхід у клітину та вихід з неї. Інші переходи, як всередині клітини або за її межами, нас не цікавлять. Відфільтруємо їх.
 
-Here's what we can do:
+Ось що ми можемо зробити:
 
-- Remember the currently highlighted `<td>` in a variable, let's call it `currentElem`.
-- On `mouseover` -- ignore the event if we're still inside the current `<td>`.
-- On `mouseout` -- ignore if we didn't leave the current `<td>`.
+- Запам’ятайте поточний виділений `<td>` у змінній, назвемо її `currentElem`.
+- При `mouseover` -- ігноруємо, якщо ми все ще перебуваємо всередині поточного `<td>`.
+- При `mouseout` -- ігноруємо, якщо ми не залишили поточний `<td>`.
 
-Here's an example of code that accounts for all possible situations:
+Ось приклад коду, який враховує всі можливі ситуації:
 
 [js src="mouseenter-mouseleave-delegation-2/script.js"]
 
-Once again, the important features are:
-1. It uses event delegation to handle entering/leaving of any `<td>` inside the table. So it relies on `mouseover/out` instead of `mouseenter/leave` that don't bubble and hence allow no delegation.
-2. Extra events, such as moving between descendants of `<td>` are filtered out, so that `onEnter/Leave` runs only if the pointer leaves or enters `<td>` as a whole.
+І ще раз про важливі особливості такого підходу:
+1. Ми використовуємо делегування подій для обробки входу/виходу вказівника на будь-який `<td>` всередині таблиці. Таким чином, ми покладаємося на `mouseover/out` замість `mouseenter/leave`, які не спливають і, отже, не дозволяють делегування.
+2. Додаткові події, такі як переміщення між нащадками `<td>`, відфільтровуються, тому `onEnter/Leave` запускається, лише якщо вказівник залишає або входить на `<td>`.
 
 ```online
-Here's the full example with all details:
+Ось повний приклад з усіма деталями:
 
 [codetabs height=460 src="mouseenter-mouseleave-delegation-2"]
 
-Try to move the cursor in and out of table cells and inside them. Fast or slow -- doesn't matter. Only `<td>` as a whole is highlighted, unlike the example before.
+Спробуйте перемістити курсор у клітини таблиці та всередину них. Швидко чи повільно -- не має значення. На відміну від попереднього прикладу, виділено лише `<td>`.
 ```
 
-## Summary
+## Підсумки
 
-We covered events `mouseover`, `mouseout`, `mousemove`, `mouseenter` and `mouseleave`.
+Ми розглянули події `mouseover`, `mouseout`, `mousemove`, `mouseenter` і `mouseleave`.
 
-These things are good to note:
+Варто звернути увагу на такі речі:
 
-- A fast mouse move may skip intermediate elements.
-- Events `mouseover/out` and `mouseenter/leave` have an additional property: `relatedTarget`. That's the element that we are coming from/to, complementary to `target`.
+- Швидкий рух миші може призвести до пропуску проміжних елементів.
+- Події `mouseover/out` і `mouseenter/leave` мають додаткову властивість: `relatedTarget`. Це елемент, до/від якого ми йдемо, ця властивість доповнює `target`.
 
-Events `mouseover/out` trigger even when we go from the parent element to a child element. The browser assumes that the mouse can be only over one element at one time -- the deepest one.
+Події `mouseover/out` запускаються, навіть коли ми переходимо від батьківського елемента до дочірнього. Браузер припускає, що вказівник миші може одночасно перебувати лише над одним елементом -- найвкладенішим.
 
-Events `mouseenter/leave` are different in that aspect: they only trigger when the mouse comes in and out the element as a whole. Also they do not bubble.
+Події `mouseenter/leave` відрізняються в цьому аспекті: вони запускаються лише тоді, коли вказівник миші входить і виходить з елемента в цілому. І ще вони не спливають.
