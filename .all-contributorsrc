@@ -962,6 +962,18 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Serge044",
+      "name": "Serge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/64706187?v=4",
+      "profile": "https://github.com/Serge044",
+      "contributions": [
+        "bug"
+      ]
     }
-  ]
+  ],
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributorsPerLine": 7
 }
