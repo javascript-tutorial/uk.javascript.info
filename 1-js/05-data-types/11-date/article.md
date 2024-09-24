@@ -146,7 +146,7 @@ alert( date.getUTCHours() );
 - [`setMilliseconds(ms)`](mdn:js/Date/setMilliseconds)
 - [`setTime(milliseconds)`](mdn:js/Date/setTime) (встановлює всю дату в мілісекундах з 01.01.1970 UTC)
 
-Кожен з них, крім `secTime()` має UTC-аналог, наприклад: `setUTCHours()`.
+Кожен з них, крім `setTime()` має UTC-аналог, наприклад: `setUTCHours()`.
 
 Як ми бачимо, деякі методи можуть встановити кілька компонентів відразу, наприклад `setHours`. Компоненти дати/часу, які не згадуються, -- не модифікуються.
 
