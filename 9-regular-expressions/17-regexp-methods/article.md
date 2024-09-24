@@ -20,7 +20,7 @@
     alert( result.length ); // 2
 
     // Додаткова інформація:
-    alert( result.index );  // 7 (позиція збігу)
+    alert( result.index );  // 8 (позиція збігу)
     alert( result.input );  // Я люблю JavaScript (вихідний рядок)
     ```
 
