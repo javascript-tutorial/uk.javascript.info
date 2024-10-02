@@ -35,7 +35,7 @@ let promise = fetch(url, [options])
 
 **По-перше, `promise` завершиться із об'єктом вбудованого класу [Response](https://fetch.spec.whatwg.org/#response-class) у якості результату, одразу коли сервер надішле заголовки відповіді.**
 
-На цьому етапі можна перевірити статус HTTP-запиту, та визначити, чи виконався він успішно, а також переглянути заголовки, але покищо без тіла запиту.
+На цьому етапі можна перевірити статус HTTP-запиту, та визначити, чи виконався він успішно, а також переглянути заголовки, але поки що без тіла запиту.
 
 Проміс закінчується помилкою, якщо `fetch` не зміг виконати HTTP-запит, наприклад, через помилку мережі або, якщо такого сайту не існує. Ненормальні HTTP-статуси, як 404 та 500, не викликатимуть помилку.
 
@@ -75,7 +75,7 @@ let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/c
 let response = await fetch(url);
 
 *!*
-let commits = await response.json(); // read response body and parse as JSON
+let commits = await response.json(); // прочитати тіло відповіді і розпарсити як JSON
 */!*
 
 alert(commits[0].author.login);
@@ -94,7 +94,7 @@ fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commi
 ```js run async
 let response = await fetch('https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits');
 
-let text = await response.text(); // read response body as text
+let text = await response.text(); // прочитати тіло відповіді як текст
 
 alert(text.slice(0, 80) + '...');
 ```
@@ -197,9 +197,9 @@ let response = fetch(protectedUrl, {
   - рядок (наприклад, у форматі JSON),
   - об'єкт `FormData`, для відправки даних як `multipart/form-data`,
   - `Blob`/`BufferSource` для відправлення бінарних даних,
-  - [URLSearchParams](info:url), для відправлення даних у кодуванні `x-www-form-urlencoded`, використовуєся рідко.
+  - [URLSearchParams](info:url), для відправлення даних у кодуванні `x-www-form-urlencoded`, використовується рідко.
 
-Частіше використовуєся JSON формат.
+Частіше використовується JSON формат.
 
 Наприклад, цей код відправляє об'єкт `user` як JSON:
 
@@ -231,7 +231,7 @@ alert(result.message);
 
 Можна відправити бінарні дані за допомогою `fetch`, використовуючи об'єкт `Blob` або `BufferSource`.
 
-У прикладі нище, є елемент `<canvas>`, на котрому можна малювати рух мишки. При натисканні на кнопку "відправити", то зображен буде відправлено на сервер:
+У прикладі нижче, є елемент `<canvas>`, на котрому можна малювати рух мишки. При натисканні на кнопку "відправити", то зображен буде відправлено на сервер:
 
 ```html run autorun height="90"
 <body style="margin:0">
@@ -281,7 +281,7 @@ function submit() {
 
 ## Підсумки
 
-Типовий запит за допомогою `fetch` складаєся із двох операторів `await`:
+Типовий запит за допомогою `fetch` складається із двох операторів `await`:
 
 ```js
 let response = await fetch(url, options); // завершення із заголовками відповіді
