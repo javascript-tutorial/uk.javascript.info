@@ -1,7 +1,7 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 ## The Modern JavaScript Tutorial in Ukrainian 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-106-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-107-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторії зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -199,6 +199,7 @@ P.S. Весь перелік мов і прогрес перекладу пос�
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Serge044"><img src="https://avatars.githubusercontent.com/u/64706187?v=4?s=100" width="100px;" alt="Serge"/><br /><sub><b>Serge</b></sub></a><br /><a href="#bug-Serge044" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/GeorgeShvab"><img src="https://avatars.githubusercontent.com/u/62070431?v=4?s=100" width="100px;" alt="Heorhii Shvab"/><br /><sub><b>Heorhii Shvab</b></sub></a><br /><a href="#bug-GeorgeShvab" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
