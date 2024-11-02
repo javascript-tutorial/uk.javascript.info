@@ -75,7 +75,7 @@ let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/c
 let response = await fetch(url);
 
 *!*
-let commits = await response.json(); // прочитати тіло відповіді і розпарсити як JSON
+let commits = await response.json(); // прочитати тіло відповіді як JSON
 */!*
 
 alert(commits[0].author.login);
@@ -231,7 +231,7 @@ alert(result.message);
 
 Можна відправити бінарні дані за допомогою `fetch`, використовуючи об'єкт `Blob` або `BufferSource`.
 
-У прикладі нижче, є елемент `<canvas>`, на котрому можна малювати рух мишки. При натисканні на кнопку "відправити", то зображен буде відправлено на сервер:
+У прикладі нижче, є елемент `<canvas>`, на котрому можна малювати рух мишки. При натисканні на кнопку "відправити", то зображення буде відправлено на сервер:
 
 ```html run autorun height="90"
 <body style="margin:0">
@@ -281,7 +281,7 @@ function submit() {
 
 ## Підсумки
 
-Типовий запит за допомогою `fetch` складається із двох операторів `await`:
+Типовий запит за допомогою `fetch` складається з двох операторів `await`:
 
 ```js
 let response = await fetch(url, options); // завершення із заголовками відповіді
