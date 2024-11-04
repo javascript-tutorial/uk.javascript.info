@@ -197,7 +197,7 @@ alert("Хо-хо-хо".replace(/хо/gi, (match, offset) => offset)); // 0-3-6
 ```js run
 let str = "Іван Сірко";
 
-let result = str.replace(/(\w+) (\w+)/, (match, name, surname) => `${surname}, ${name}`);
+let result = str.replace(/(\p{L}+) (\p{L}+)/u, (match, name, surname) => `${surname}, ${name}`);
 
 alert(result); // Сірко, Іван
 ```
@@ -207,7 +207,7 @@ alert(result); // Сірко, Іван
 ```js run
 let str = "Іван Сірко";
 
-let result = str.replace(/(\w+) (\w+)/, (...match) => `${match[2]}, ${match[1]}`);
+let result = str.replace(/(\p{L}+) (\p{L}+)/u, (...match) => `${match[2]}, ${match[1]}`);
 
 alert(result); // Сірко, Іван
 ```
@@ -217,7 +217,7 @@ alert(result); // Сірко, Іван
 ```js run
 let str = "Іван Сірко";
 
-let result = str.replace(/(?<name>\w+) (?<surname>\w+)/, (...match) => {
+let result = str.replace(/(?<name>\p{L}+) (?<surname>\p{L}+)/u, (...match) => {
   let groups = match.pop();
 
   return `${groups.surname}, ${groups.name}`;
