@@ -264,7 +264,7 @@ alert('12-34-56'.replaceAll("-", ":")) // 12:34:56
 В минулому, коли метод `str.matchAll` ще не був доданий в JavaScript, виклики `regexp.exec` використовувались в циклі для отримання всіх збігів, разом з групами:
 
 ```js run
-let str = ''Детальніше про JavaScript тут https://javascript.info';
+let str = 'Детальніше про JavaScript тут https://javascript.info';
 let regexp = /javascript/ig;
 
 let result;
