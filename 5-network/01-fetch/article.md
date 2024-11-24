@@ -231,13 +231,13 @@ alert(result.message);
 
 Можна відправити бінарні дані за допомогою `fetch`, використовуючи об'єкт `Blob` або `BufferSource`.
 
-У прикладі нижче, є елемент `<canvas>`, на котрому можна малювати рух мишки. При натисканні на кнопку "відправити", то зображення буде відправлено на сервер:
+У прикладі нижче, є елемент `<canvas>`, на котрому можна малювати рух мишки. При натисканні на кнопку "Відправити" зображення буде відправлено на сервер:
 
 ```html run autorun height="90"
 <body style="margin:0">
   <canvas id="canvasElem" width="100" height="80" style="border:1px solid"></canvas>
 
-  <input type="button" value="Submit" onclick="submit()">
+  <input type="button" value="Відправити" onclick="submit()">
 
   <script>
     canvasElem.onmousemove = function(e) {
