@@ -980,6 +980,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "volodymyrShcherbatyy",
+      "name": "volodymyrShcherbatyy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58917704?v=4",
+      "profile": "https://github.com/volodymyrShcherbatyy",
+      "contributions": [
+        "translation",
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
