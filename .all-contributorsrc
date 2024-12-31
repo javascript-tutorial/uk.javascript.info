@@ -990,6 +990,15 @@
         "translation",
         "bug"
       ]
+    },
+    {
+      "login": "serhiisaveljev",
+      "name": "Serhii Saveliev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98955796?v=4",
+      "profile": "https://github.com/serhiisaveljev",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
