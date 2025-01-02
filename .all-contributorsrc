@@ -999,6 +999,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "zioneexe",
+      "name": "Taras Shportko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/117949090?v=4",
+      "profile": "https://github.com/zioneexe",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
