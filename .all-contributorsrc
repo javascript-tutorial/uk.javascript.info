@@ -1009,6 +1009,15 @@
         "bug",
         "translation"
       ]
+    },
+    {
+      "login": "Osiiyskyi-Valentyn-Uzhnu",
+      "name": "Osiiyskyi-Valentyn-Uzhnu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/180653345?v=4",
+      "profile": "https://github.com/Osiiyskyi-Valentyn-Uzhnu",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
