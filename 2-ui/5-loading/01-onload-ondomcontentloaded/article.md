@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", ready);
 
 ```warn header="Скрипти, які не блокують DOMContentLoaded"
 З цього правила є два винятки:
-1. Скрипти з атрибутом `async`, який ми розглянемо [трохи пізніше] (info:script-async-defer), не блокують `DOMContentLoaded`.
+1. Скрипти з атрибутом `async`, який ми розглянемо [трохи пізніше](info:script-async-defer), не блокують `DOMContentLoaded`.
 2. Скрипти, які створюються динамічно за допомогою `document.createElement('script')` і потім додаються на веб-сторінку, також не блокують цю подію.
 ```
 

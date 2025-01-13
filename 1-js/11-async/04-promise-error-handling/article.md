@@ -179,7 +179,7 @@ JavaScript-рушій відстежує такі ситуації і генер
 window.addEventListener('unhandledrejection', function(event) {
   // об’єкт події має дві спеціальні властивості:
   alert(event.promise); // [object Promise] - проміс, який згенерував помилку
-  alert(event.reason); // Error: Whoops! - об’єкт помилки, яка не була оброблена
+  alert(event.reason); // Error: Помилка! - об’єкт помилки, яка не була оброблена
 });
 */!*
 

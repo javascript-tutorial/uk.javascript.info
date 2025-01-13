@@ -25,7 +25,7 @@ console.log( str.match(/^\d/gm) ); // 1, 2, 3
 ```js run
 let str = `1 місце: Вінні
 2 місце: Паць
-3 місце: Слонопотам;
+3 місце: Слонопотам`;
 
 *!*
 console.log( str.match(/^\d/g) ); // 1

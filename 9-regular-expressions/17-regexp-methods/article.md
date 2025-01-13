@@ -197,17 +197,20 @@ alert("Хо-хо-хо".replace(/хо/gi, (match, offset) => offset)); // 0-3-6
 ```js run
 let str = "John Smith";
 
-let result = str.replace(/(\w+) (\w+)/, (match, name, surname) => `${surname}, ${name}`);
+let result = str.replace(/(\p{L}+) (\p{L}+)/u, (match, name, surname) => `${surname}, ${name}`);
 
 alert(result); // Smith, John
 ```
+
+Для пошуку літери, які написані кирилицею, слід увімкнути режим Unicode (`/u` в кінці виразу) та використовувати спеціальні властивості Юнікоду (`\p{L}`) для пошуку літер. Ці властивості ми розглядали в розділі <info:regexp-unicode>.
+Якщо ж нам необхідно виконувати пошук слів, які написані латиницею, ми можемо використати `\w+` без увімкнення режиму Юнікод. Тоді регулярний вираз буде таким: `/(\w+) (\w+)/`.
 
 Якщо груп багато, зручно використовувати залишкові параметри для доступу до них:
 
 ```js run
 let str = "John Smith";
 
-let result = str.replace(/(\w+) (\w+)/, (...match) => `${match[2]}, ${match[1]}`);
+let result = str.replace(/(\p{L}+) (\p{L}+)/u, (...match) => `${match[2]}, ${match[1]}`);
 
 alert(result); // Smith, John
 ```
@@ -217,7 +220,7 @@ alert(result); // Smith, John
 ```js run
 let str = "John Smith";
 
-let result = str.replace(/(?<name>\w+) (?<surname>\w+)/, (...match) => {
+let result = str.replace(/(?<name>\p{L}+) (?<surname>\p{L}+)/u, (...match) => {
   let groups = match.pop();
 
   return `${groups.surname}, ${groups.name}`;
@@ -276,7 +279,7 @@ while (result = regexp.exec(str)) {
 }
 ```
 
-Нині це теж працює, проте для новіших браузерів `str.matchAll`, зазвичай, зручніший.
+Нині це також працює, хоча для новіших браузерів `str.matchAll`, зазвичай, зручніший.
 
 **Можна використовувати `regexp.exec` для пошуку із зазначеної позиції, вручну змінивши `lastIndex`.**
 

@@ -19,30 +19,6 @@ variable-change.svg:
     text: "Повідомлення"
     position: "center"
 
-ifelse_task2.svg:
-  Begin: ''
-  You don't know?: ''
-  “ECMAScript”!: ''
-  Right!: ''
-  What's the: ''
-  “official” name of: ''
-  JavaScript?: ''
-  Other: ''
-  ECMAScript: ''
-
-ifelse_task.svg:
-  Begin: ''
-  Canceled: ''
-  Welcome!: ''
-  I don't know you: ''
-  Wrong password: ''
-  Who's there?: ''
-  Password?: ''
-  Cancel: ''
-  Admin: ''
-  TheMaster: ''
-  Other: ''
-
 # 1-js/03-code-quality/01-debugging-chrome/chrome-open-sources.svg
 chrome-open-sources.svg:
   "open sources":
@@ -73,41 +49,28 @@ chrome-sources-debugger-trace-1.svg:
   "nested calls":
     text: "вкладені виклики"
 
-toolbarButtonGlyphs.svg: {}
+# 1-js/05-data-types/04-array/array-pop.svg
+array-pop.svg:
+  '"Apple"': '"Яблуко"'
+  '"Orange"': '"Апельсин"'
+  '"Pear"': '"Груша"'
+  '"Lemon"': '"Лимон"'
+  clear:
+    text: 'видалення'
+    position: 'center'
 
-code-style.svg:
-  '2': ''
-  No space: ''
-  between the function name and parentheses: ''
-  between the parentheses and the parameter: ''
-  Indentation: ''
-  2 spaces: ''
-  'A space ': ''
-  after for/if/while…: ''
-  '} else { without a line break': ''
-  Spaces around a nested call: ''
-  An empty line: ''
-  between logical blocks: ''
-  Lines are not very long: ''
-  A semicolon ;: ''
-  is mandatory: ''
-  Spaces: ''
-  around operators: ''
-  'Curly brace {': ''
-  'on the same line, after a space': ''
-  A space: ''
-  between: ''
-  parameters: ''
-  A space between parameters: ''
-
-recursion-pow.svg:
-  'pow(x,n)': ''
-  x: ''
-  'x * pow(x, n-1)': ''
-  n == 1 ?: ''
-  'Yes': ''
-  'No': ''
-  recursive call until n==1: ''
+# 1-js/05-data-types/04-array/array-shift.svg
+array-shift.svg:
+  '"Apple"': '"Яблуко"'
+  '"Orange"': '"Апельсин"'
+  '"Pear"': '"Груша"'
+  '"Lemon"': '"Лимон"'
+  clear:
+    text: 'видалення'
+    position: 'center'
+  move: 'переміщення'
+  elements: 'елементів'
+  to the left: 'вліво'
 
 try-catch-flow.svg:
   Begin: "Початок"
@@ -133,19 +96,5 @@ promise-handler-variants.svg:
   throw error: 'помилкою'
   'that promise settles with:': 'цей проміс завершується з:'
 
-statusbarButtonGlyphs.svg:
-  '!': ''
-
-field.svg: {}
-
-placeholder.svg: {}
-
-logo-fetch.svg: {}
-
-demo.svg:
-  '1': ''
-
 before-prepend-append-after.svg: 
   (…nodes-or-strings): "(...вузли або рядки)"
-
-
