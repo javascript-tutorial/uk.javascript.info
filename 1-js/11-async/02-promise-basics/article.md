@@ -46,7 +46,7 @@ let promise = new Promise(function(resolve, reject) {
 
 Нижче приклад конструктора проміса і простої функції-виконавця з кодом-"виробником", що видає результат з затримкою (через `setTimeout`):
 
-```js run
+```js
 let promise = new Promise(function(resolve, reject) {
   // функція-виробник викликається автоматично, при виклику new Promise
 
