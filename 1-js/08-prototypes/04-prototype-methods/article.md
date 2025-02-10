@@ -14,7 +14,11 @@
 
 Хоча і для цього є спеціальний метод:
 
+<<<<<<< HEAD
 - [Object.create(proto[, descriptors])](mdn:js/Object/create) -- створює порожній об’єкт із заданим `proto` як `[[Prototype]]` і необов’язковими дескрипторами властивостей.
+=======
+- [Object.create(proto[, descriptors])](mdn:js/Object/create) -- creates an empty object with given `proto` as `[[Prototype]]` and optional property descriptors.
+>>>>>>> 6236eb8c3cdde729dab761a1d0967a88a1a6197e
 
 Наприклад:
 
@@ -203,7 +207,14 @@ alert(Object.keys(chineseDictionary)); // hello,bye
     - літеральний синтаксис: `{ __proto__: ... }`, дозволяє вказати кілька властивостей
     - або [Object.create(proto[, descriptors])](mdn:js/Object/create), дозволяє вказати дескриптори властивостей.
 
+<<<<<<< HEAD
     `Object.create` забезпечує простий спосіб поверхневого копіювання об’єкта з усіма дескрипторами:
+=======
+    - literal syntax: `{ __proto__: ... }`, allows to specify multiple properties
+    - or [Object.create(proto[, descriptors])](mdn:js/Object/create), allows to specify property descriptors.
+
+    The `Object.create` provides an easy way to shallow-copy an object with all descriptors:
+>>>>>>> 6236eb8c3cdde729dab761a1d0967a88a1a6197e
 
     ```js
     let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));

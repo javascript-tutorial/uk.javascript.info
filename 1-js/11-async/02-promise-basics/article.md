@@ -46,7 +46,7 @@ let promise = new Promise(function(resolve, reject) {
 
 Нижче приклад конструктора проміса і простої функції-виконавця з кодом-"виробником", що видає результат з затримкою (через `setTimeout`):
 
-```js run
+```js
 let promise = new Promise(function(resolve, reject) {
   // функція-виробник викликається автоматично, при виклику new Promise
 
@@ -222,7 +222,11 @@ promise.catch(alert); // виведе "Error: Ооооой!" через 1 сек
 
 Наприклад зупинка завантаження індикаторів, закриття непотрібних підключень тощо.
 
+<<<<<<< HEAD
 Подумайте про це як про завершення вечірки. Незалежно від того, була вечірка хорошою чи поганою, скільки друзів на ній було, ми все одно повинні (або принаймні повинні) прибрати після неї.
+=======
+Think of it as a party finisher. Irresepective of whether a party was good or bad, how many friends were in it, we still need (or at least should) do a cleanup after it.
+>>>>>>> 6236eb8c3cdde729dab761a1d0967a88a1a6197e
 
 Код може виглядати так:
 
