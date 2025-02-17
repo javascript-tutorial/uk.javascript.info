@@ -95,7 +95,11 @@
 
 Тому більшість браузерів надають безперешкодний доступ для читання/запису до буфера обміну лише в рамках певних дій користувача, таких як копіювання/вставлення тощо.
 
+<<<<<<< HEAD
 Заборонено генерувати "користувацькі" події буфера обміну з `dispatchEvent` у всіх браузерах, крім Firefox. І навіть якщо нам вдасться відправити таку подію, у специфікації чітко зазначено, що такі "синтетичні" події не повинні надавати доступ до буфера обміну.
+=======
+It's forbidden to generate "custom" clipboard events with `dispatchEvent` in all browsers except Firefox. And even if we manage to dispatch such event, the specification clearly states that such "synthetic" events must not provide access to the clipboard.
+>>>>>>> 1dce5b72b16288dad31b7b3febed4f38b7a5cd8a
 
 Навіть якщо хтось вирішить зберегти `event.clipboardData` в обробник подій, а потім отримати до нього доступ пізніше -- це не спрацює.
 
