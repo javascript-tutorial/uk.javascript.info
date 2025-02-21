@@ -8,7 +8,7 @@ importance: 5
 
 Кожен виклик зберігається як масив аргументів.
 
-For instance:
+До прикладу:
 
 ```js
 function work(a, b) {
