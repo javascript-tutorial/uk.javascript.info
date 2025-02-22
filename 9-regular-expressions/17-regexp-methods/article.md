@@ -15,13 +15,13 @@
 
     let result = str.match(/Java(Script)/);
 
-    alert( result[0] );     // JavaScript (повний збіг)
-    alert( result[1] );     // Script (перша група захоплення)
+    alert( result[0] );     // "JavaScript" (повний збіг)
+    alert( result[1] );     // "Script" (перша група захоплення)
     alert( result.length ); // 2
 
     // Додаткова інформація:
     alert( result.index );  // 8 (позиція збігу)
-    alert( result.input );  // Я люблю JavaScript (вихідний рядок)
+    alert( result.input );  // "Я люблю JavaScript" (вихідний рядок)
     ```
 
 2. Якщо `regexp` має прапор `pattern:g`, тоді він повертає масив всіх збігів у вигляді рядків, без груп захоплення та інших деталей.
@@ -30,7 +30,7 @@
 
     let result = str.match(/Java(Script)/g);
 
-    alert( result[0] ); // JavaScript
+    alert( result[0] ); // "JavaScript"
     alert( result.length ); // 1
     ```
 
