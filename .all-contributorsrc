@@ -1018,6 +1018,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Andrii256",
+      "name": "Andrii Hrushetskyi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41700032?v=4",
+      "profile": "https://github.com/Andrii256",
+      "contributions": [
+        "bug",
+        "translation"
+      ]
     }
   ],
   "commitType": "docs",
