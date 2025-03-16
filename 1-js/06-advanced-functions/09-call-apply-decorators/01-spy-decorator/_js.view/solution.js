@@ -1,7 +1,7 @@
 function spy(func) {
-
+  
   function wrapper(...args) {
-    // using ...args instead of arguments to store "real" array in wrapper.calls
+    // використовуємо ...args замість arguments щоб можна було зберігати "справжній" масив в wrapper.calls
     wrapper.calls.push(args);
     return func.apply(this, args);
   }
