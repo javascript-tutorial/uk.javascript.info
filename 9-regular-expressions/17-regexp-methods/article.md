@@ -111,7 +111,7 @@ alert('12, 34, 56'.split(/,\s*/)) // масив ['12', '34', '56']
 ```js run
 let str = "A drop of ink may make a million think";
 
-alert( str.search( /ink/i ) ); // 8 (позиція першого збігу)
+alert( str.search( /ink/i ) ); // -1 ('ink' не знайдено)
 ```
 
 **Важливе обмеження: `search` знаходить лише перший збіг.**
