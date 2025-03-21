@@ -1028,6 +1028,15 @@
         "bug",
         "translation"
       ]
+    },
+    {
+      "login": "Arkanit7",
+      "name": "Boris Bedrenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61657673?v=4",
+      "profile": "https://arkanit7.github.io/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
