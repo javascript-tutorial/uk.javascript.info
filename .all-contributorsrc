@@ -1037,6 +1037,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "dev99problems",
+      "name": "Gene Chulkov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6503508?v=4",
+      "profile": "https://github.com/dev99problems",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
