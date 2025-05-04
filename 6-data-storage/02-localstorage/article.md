@@ -206,7 +206,7 @@ window.onstorage = event => { // також можна використовув�
   alert(event.key + ':' + event.newValue + " в " + event.url);
 };
 
-localStorage.setItem('now', ​​Date.now());
+localStorage.setItem('now', Date.now());
 ```
 
 Зверніть увагу, що подія також містить: `event.url` -- URL-адресу документа, в якому оновлено дані.
