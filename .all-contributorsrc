@@ -1018,6 +1018,34 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Andrii256",
+      "name": "Andrii Hrushetskyi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/41700032?v=4",
+      "profile": "https://github.com/Andrii256",
+      "contributions": [
+        "bug",
+        "translation"
+      ]
+    },
+    {
+      "login": "Arkanit7",
+      "name": "Boris Bedrenko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61657673?v=4",
+      "profile": "https://arkanit7.github.io/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "dev99problems",
+      "name": "Gene Chulkov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6503508?v=4",
+      "profile": "https://github.com/dev99problems",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
