@@ -1,7 +1,7 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 ## The Modern JavaScript Tutorial in Ukrainian 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-114-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-115-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторії зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -209,6 +209,7 @@ P.S. Весь перелік мов і прогрес перекладу пос�
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://arkanit7.github.io/"><img src="https://avatars.githubusercontent.com/u/61657673?v=4?s=100" width="100px;" alt="Boris Bedrenko"/><br /><sub><b>Boris Bedrenko</b></sub></a><br /><a href="#bug-Arkanit7" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dev99problems"><img src="https://avatars.githubusercontent.com/u/6503508?v=4?s=100" width="100px;" alt="Gene Chulkov"/><br /><sub><b>Gene Chulkov</b></sub></a><br /><a href="#bug-dev99problems" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Svitwave"><img src="https://avatars.githubusercontent.com/u/198438383?v=4?s=100" width="100px;" alt="Svitwave"/><br /><sub><b>Svitwave</b></sub></a><br /><a href="#bug-Svitwave" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
