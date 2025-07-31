@@ -87,7 +87,7 @@ alert( 'Забагато' );
 alert( 'Я не знаю таких значень' );
 ```
 
-````smart header="Any expression can be a `switch/case` argument"
+````smart header="Будь-який вираз може бути аргументом `switch/case`"
 Обидва `switch` та `case` допускають будь-який вираз в якості аргументу.
 
 Наприклад:
