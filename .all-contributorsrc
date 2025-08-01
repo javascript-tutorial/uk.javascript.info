@@ -1055,6 +1055,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "konstantinbylbas",
+      "name": "Konstantin Bylbas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58787367?v=4",
+      "profile": "https://github.com/konstantinbylbas",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "commitType": "docs",
