@@ -126,7 +126,11 @@
 Таким чином, проблема полягає в тому, що браузер "викрадає" взаємодію: `pointercancel` запускається на початку процесу "перетягування" і події  `pointermove` більше не генеруються.
 
 ```online
+<<<<<<< HEAD
 Ось drag'n'drop демо з реєстрацією подій вказівника (лише `up/down`, `move` та `cancel`) у `textarea`:
+=======
+Here's the drag'n'drop demo with logging of pointer events (only `up/down`, `move` and `cancel`) in the `textarea`:
+>>>>>>> 51bc6d3cdc16b6eb79cb88820a58c4f037f3bf19
 
 [iframe src="ball" height=240 edit]
 ```
