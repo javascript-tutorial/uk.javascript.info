@@ -55,8 +55,13 @@ alert( arr instanceof Object ); // true
     Наприклад:
 
     ```js run
+<<<<<<< HEAD
     // задамо перевірку instanceof таким чином,
     // що будь-що із властивістю canEat - це тварина
+=======
+    // set up instanceof check that assumes that
+    // anything with canEat property is an animal
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
     class Animal {
       static [Symbol.hasInstance](obj) {
         if (obj.canEat) return true;
@@ -68,7 +73,11 @@ alert( arr instanceof Object ); // true
     alert(obj instanceof Animal); // true: Animal[Symbol.hasInstance](obj) було викликано
     ```
 
+<<<<<<< HEAD
 2. Більшість класів не мають `Symbol.hasInstance`. У цьому випадку використовується стандартна логіка: `obj instanceOf Class` перевіряє чи `Class.prototype` дорівнює одному з прототипів у ланцюжку прототипів `obj`.
+=======
+2. Most classes do not have `Symbol.hasInstance`. In that case, the standard logic is used: `obj instanceof Class` checks whether `Class.prototype` is equal to one of the prototypes in the `obj` prototype chain.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
     Іншими словами, прототипи порівнюються один за одним:
     ```js

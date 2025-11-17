@@ -209,8 +209,16 @@ alert( undefined == 0 ); // false (3)
 
 ## Підсумки
 
+<<<<<<< HEAD
 - Оператори порівняння повертають значення логічного типу.
 - Рядки порівнюються посимвольно в лексикографічному порядку.
 - Значення різних типів під час порівняння конвертуються в числа. Винятками є порівняння за допомогою операторів строгої рівності/нерівності.
 - Значення `null` і `undefined` рівні `==` один одному і не рівні будь-якому іншому значенню.
 - Будьте обережні, використовуючи оператори порівняння на зразок `>` чи `<` зі змінними, які можуть приймати значення `null/undefined`. Хорошою ідеєю буде зробити окрему перевірку на `null/undefined` для таких значень.
+=======
+- Comparison operators return a boolean value.
+- Strings are compared letter-by-letter in the "dictionary" order.
+- When values of different types are compared, they get converted to numbers (with the exclusion of a strict equality check).
+- The values `null` and `undefined` are equal `==` to themselves and each other, but do not equal any other value.
+- Be careful when using comparisons like `>` or `<` with variables that can occasionally be `null/undefined`. Checking for `null/undefined` separately is a good idea.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533

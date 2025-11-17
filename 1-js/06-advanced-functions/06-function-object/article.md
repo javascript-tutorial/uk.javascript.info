@@ -326,7 +326,11 @@ welcome(); // Привіт, Гість (вкладений виклик вико
 
 Тепер це працює, тому що назва `"func"` -- локальне і знаходиться в середині функції. Воно не береться ззовні (і не доступно звідти). Специфікація гарантує, що воно завжди посилається на поточну функцію.
 
+<<<<<<< HEAD
 Зовнішній код все ще має свою змінну `sayHi` або `welcome`. А `func` -- це "внутрішнє ім’я функції", яким функція може надійно викликати себе зсередини.
+=======
+The outer code still has its variable `sayHi` or `welcome`. And `func` is an "internal function name", the way for the function to call itself reliably.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 ```smart header="Це не працює з Function Declaration"
 Функціональність з "внутрішньою назвою", що описана вище, доступна лише для Function Expression, а не для Function Declaration. Для Function Declaration немає синтаксису для додавання "внутрішньої" назви.

@@ -17,7 +17,11 @@
     - виконати їх, починаючи з найстарішого.
 2. Очікувати поки завдання не з’явиться, потім перейти до пункту 1.
 
+<<<<<<< HEAD
 Це формалізація того, що ми бачимо, гортаючи вебсторінку. Рушій JavaScript більшість часу не робить нічого, він працює лише коли спрацьовує скрипт, обробник подій чи подія.
+=======
+That's a formalization of what we see when browsing a page. The JavaScript engine does nothing most of the time, it only runs if a script/handler/event activates.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Приклади завдань:
 
@@ -30,6 +34,7 @@
 
 Може трапитись так, що завдання приходить тоді, коли рушій вже зайнятий, тоді це завдання стає в чергу.
 
+<<<<<<< HEAD
 Чергу з таких завдань називають "чергою макрозавдань" ("macrotask queue", термін v8):
 
 ![](eventLoop.svg)
@@ -37,12 +42,27 @@
 Наприклад, поки рушій виконує `script`, користувач може порухати мишкою, що спричинить появу події `mousemove`, та може вийти час, запрограмований в `setTimeout` і так далі. Ці завдання сформують чергу, як показано на схемі вище.
 
 Задачі з черги виконуються за правилом "перший прийшов – перший пішов". Коли рушій браузера закінчить виконання `script`, він обробить подію `mousemove`, потім виконає обробник `setTimeout` тощо.
+=======
+The tasks form a queue, the so-called "macrotask queue" ([v8](https://v8.dev/) term):
+
+![](eventLoop.svg)
+
+For instance, while the engine is busy executing a `script`, a user may move their mouse causing `mousemove`, and `setTimeout` may be due and so on, these tasks form a queue, as illustrated in the picture above.
+
+Tasks from the queue are processed on a "first come – first served" basis. When the engine browser is done with the `script`, it handles `mousemove` event, then `setTimeout` handler, and so on.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Доволі просто наразі, чи не так?
 
+<<<<<<< HEAD
 Ще декілька деталей:
 1. Рендеринг ніколи не відбувається поки рушій виконує завдання. Не має значення наскільки довго виконується завдання. Зміни в DOM будуть відмальовані лише після завершення завдання.
 2. Якщо виконання завдання займає надто багато часу, браузер не зможе виконувати інші завдання, наприклад, обробляти користувацькі події. Тож після недовгого часу "зависання" з’явиться оповіщення "Сторінка не відповідає" і пропозиція вбити процес виконання завдання разом з цілою сторінкою. Таке трапляється коли код містить багато складних обрахунків або виникає програмна помилка, що створює нескінченний цикл.
+=======
+Two more details:
+1. Rendering never happens while the engine executes a task. It doesn't matter if the task takes a long time. Changes to the DOM are painted only after the task is complete.
+2. If a task takes too long, the browser can't do other tasks, such as processing user events. So after some time, it raises an alert like "Page Unresponsive", suggesting killing the task with the whole page. That happens when there are a lot of complex calculations or a programming error leading to an infinite loop.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Що ж, це була теорія. Тепер побачимо як можна використати ці знання на практиці.
 
@@ -54,7 +74,11 @@
 
 Поки рушій зайнятий підсвічуванням синтаксису він не може виконувати інші речі, пов’язані з DOM, обробляти користувацькі події тощо. Це може спричинити "зависання" браузера, що є неприйнятним.
 
+<<<<<<< HEAD
 Ми можемо уникнути проблем шляхом розбивання великого завдання на шматочки. Підсвітити перші 100 рядків, потім поставити `setTimeout` (з нульовою затримкою) для наступних 100 рядків і так далі.
+=======
+We can avoid problems by splitting the big task into pieces. Highlight the first 100 lines, then schedule `setTimeout` (with zero-delay) for the next 100 lines, and so on.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Щоб продемонструвати такий підхід, замість підсвічування для спрощення візьмемо функцію, яка рахує від `1` до `1000000000`.
 

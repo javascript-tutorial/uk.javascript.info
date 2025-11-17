@@ -88,16 +88,26 @@ let user = 'Іван'
 *!*var*/!* message = 'Привіт';
 ```
 
+<<<<<<< HEAD
 Ключове слово `var` *майже* таке, як `let`. Воно теж оголошує змінну, але дещо іншим, "застарілим" способом.
 
 Є деякі відмінності між `let` і `var`, але вони поки що не мають для нас значення. Ми дізнаємося більше про ці відмінності в розділі <info:var>.
+=======
+The `var` keyword is *almost* the same as `let`. It also declares a variable but in a slightly different, "old-school" way.
+
+There are subtle differences between `let` and `var`, but they do not matter to us yet. We'll cover them in detail in the chapter <info:var>.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 ````
 
 ## Аналогія з життя
 
 Ми легко зрозуміємо концепцію "змінної", якщо уявимо її у вигляді "коробки" для даних з унікальною назвою на наклейці.
 
+<<<<<<< HEAD
 Наприклад, змінну `message` можна уявити як коробку з написом `"Повідомлення"` зі значенням `"Привіт!"` всередині:
+=======
+For instance, the variable `message` can be imagined as a box labelled `"message"` with the value `"Hello!"` in it:
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 ![](variable.svg)
 
@@ -197,15 +207,24 @@ let my-name; // дефіс '-' недопустимий в імені
 Змінні з іменами `apple` і `APPLE` -- це дві різні змінні.
 ```
 
+<<<<<<< HEAD
 ````smart header="Нелатинські букви дозволені, але не рекомендуються"
 Можна використовувати будь-яку мову, включно з кирилицею або навіть ієрогліфами, наприклад:
+=======
+````smart header="Non-Latin letters are allowed, but not recommended"
+It is possible to use any language, including Cyrillic letters, Chinese logograms and so on, like this:
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 ```js
 let назва = '...';
 let 我 = '...';
 ```
 
+<<<<<<< HEAD
 Технічно тут немає помилки. Такі імена дозволені, проте є міжнародна традиція використовувати англійську мову в іменах змінних (наприклад, `yaLyublyuUkrainu` => `iLoveUkraine`). Навіть якщо ми пишемо маленький скрипт, у нього може бути тривале життя попереду. Можливо, людям з інших країн колись доведеться прочитати його.
+=======
+Technically, there is no error here. Such names are allowed, but there is an international convention to use English in variable names. Even if we're writing a small script, it may have a long life ahead. People from other countries may need to read it sometime.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 ````
 
 ````warn header="Зарезервовані слова"
@@ -260,11 +279,19 @@ const myBirthday = '18.04.1982';
 myBirthday = '01.01.2001'; // помилка, не можна перевизначати константу!
 ```
 
+<<<<<<< HEAD
 Коли програміст впевнений, що змінна ніколи не буде змінюватися, він може оголосити її через `const`, що гарантує постійність і буде зрозумілим для кожного.
+=======
+When a programmer is sure that a variable will never change, they can declare it with `const` to guarantee and communicate that fact to everyone.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 ### Константи в верхньому регістрі
 
+<<<<<<< HEAD
 Широко поширена практика використання констант як псевдонімів для значень, які важко запам’ятати і які відомі до початку виконання скрипту.
+=======
+There is a widespread practice to use constants as aliases for difficult-to-remember values that are known before execution.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Такі константи пишуться в верхньому регістрі з використанням підкреслень.
 
@@ -289,7 +316,11 @@ alert(color); // #FF7F00
 
 Коли ми маємо використовувати для констант великі букви, а коли звичайні? Давайте це з’ясуємо.
 
+<<<<<<< HEAD
 Назва "константа" лише означає, що змінна ніколи не зміниться. Але є константи, які відомі нам до виконання скрипту (наприклад, шістнадцяткове значення для червоного кольору), а є константи, які *вираховуються* в процесі виконання скрипту, але не змінюються після їхнього початкового присвоєння.
+=======
+Being a "constant" just means that a variable's value never changes. But some constants are known before execution (like a hexadecimal value for red) and some constants are *calculated* in run-time, during the execution, but do not change after their initial assignment.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Наприклад:
 
@@ -297,7 +328,11 @@ alert(color); // #FF7F00
 const pageLoadTime = /* час, потрачений на завантаження вебсторінки */;
 ```
 
+<<<<<<< HEAD
 Значення `pageLoadTime` невідоме до завантаження сторінки, тому її ім’я записано звичайними, а не великими буквами. Але це все ще константа, тому що вона не змінює значення після присвоєння.
+=======
+The value of `pageLoadTime` is not known before the page load, so it's named normally. But it's still a constant because it doesn't change after the assignment.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Інакше кажучи, константи з великими буквами використовуються як псевдоніми для "жорстко закодованих" значень.
 
@@ -307,18 +342,31 @@ const pageLoadTime = /* час, потрачений на завантаженн
 
 Такі імена повинні мати чіткий і зрозумілий сенс, який описує дані, що в них зберігаються.
 
+<<<<<<< HEAD
 Іменування змінних -- одна з найважливіших і найскладніших навичок у програмуванні. Швидкий погляд на імена змінних може показати, який код був написаний початківцем, а який досвідченим розробником.
 
 У реальному проєкті більшість часу тратиться на змінення і розширення наявної кодової бази, а не на написання чогось цілком нового. Коли ми повертаємося до якогось коду після виконання чогось іншого впродовж тривалого часу, набагато легше знайти інформацію, яку добре позначено. Або, інакше кажучи, коли змінні мають хороші імена.
+=======
+Variable naming is one of the most important and complex skills in programming. A glance at variable names can reveal which code was written by a beginner versus an experienced developer.
+
+In a real project, most of the time is spent modifying and extending an existing code base rather than writing something completely separate from scratch. When we return to some code after doing something else for a while, it's much easier to find information that is well-labelled. Or, in other words, when the variables have good names.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Будь ласка, приділяйте час на обдумування правильного імені для змінної перед її оголошенням. Робіть так, і будете винагороджені.
 
 Декілька хороших правил:
 
+<<<<<<< HEAD
 - Використовуйте імена, які легко прочитати, як-от `userName` або `shoppingCart`.
 - Уникайте використання абревіатур або коротких імен, таких як `a`, `b` та `c`, окрім тих випадків, коли ви точно знаєте, що так потрібно.
 - Робіть імена максимально описовими і лаконічними. Наприклад, такі імена погані: `data` і `value`. Такі імена нічого не говорять. Їх можна використовувати лише тоді, коли з контексту очевидно, на які дані або значення посилається змінна.
 - Погоджуйте з вашою командою (та з самим собою), які терміни будуть використовуватися у проєкті. Якщо відвідувач сайту називається "user", тоді ми маємо давати відповідні імена іншим пов’язаним змінним: `currentUser` або `newUser`, замість `currentVisitor` або `newManInTown`.
+=======
+- Use human-readable names like `userName` or `shoppingCart`.
+- Stay away from abbreviations or short names like `a`, `b`, and `c`, unless you know what you're doing.
+- Make names maximally descriptive and concise. Examples of bad names are `data` and `value`. Such names say nothing. It's only okay to use them if the context of the code makes it exceptionally obvious which data or value the variable is referencing.
+- Agree on terms within your team and in your mind. If a site visitor is called a "user" then we should name related variables `currentUser` or `newUser` instead of `currentVisitor` or `newManInTown`.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Звучить легко? Це дійсно так, проте на практиці створення зрозумілих і коротких імен -- рідкість. Дійте.
 

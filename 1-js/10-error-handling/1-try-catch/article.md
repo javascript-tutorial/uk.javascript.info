@@ -637,7 +637,11 @@ window.onerror = function(message, url, line, col, error) {
 
 Глобальний обробник `window.onerror` не передбачений для відновлювання роботи скрипту, а тільки відправлення повідомлення про помилку розробникам.
 
+<<<<<<< HEAD
 Для логування помилок у таких випадках існують спеціальні вебсервіси: <https://errorception.com> чи <https://www.muscula.com>.
+=======
+There are also web-services that provide error-logging for such cases, like <https://muscula.com> or <https://www.sentry.io>.
+>>>>>>> 5e893cffce8e2346d4e50926d5148c70af172533
 
 Вони працюють наступним чином:
 
