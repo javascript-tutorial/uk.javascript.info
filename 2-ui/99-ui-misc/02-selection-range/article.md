@@ -354,7 +354,11 @@ From <input id="start" type="number" value=1> – To <input id="end" type="numbe
 
 ```smart header="Selection кінець/початок у порівнянні з Range"
 
+<<<<<<< HEAD
 Існують важливі відмінності `Selection` anchor/focus порівняно з `Range` start/end.
+=======
+There's an important difference between a selection anchor/focus compared with a `Range` start/end.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 Як ми знаємо, об’єкти `Range` завжди мають початок(start) перед кінцем(end).
 

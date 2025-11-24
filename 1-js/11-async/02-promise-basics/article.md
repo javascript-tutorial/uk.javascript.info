@@ -56,7 +56,7 @@ settled - усталений, завершений, втихомирений;
 
 Нижче приклад конструктора проміса і простої функції-виконавця з кодом-"виробником", що видає результат з затримкою (через `setTimeout`):
 
-```js run
+```js
 let promise = new Promise(function(resolve, reject) {
   // функція-виробник викликається автоматично, при виклику new Promise
 
@@ -232,7 +232,11 @@ promise.catch(alert); // виведе "Error: Ооооой!" через 1 сек
 
 Наприклад зупинка завантаження індикаторів, закриття непотрібних підключень тощо.
 
+<<<<<<< HEAD
 Подумайте про це як про завершення вечірки. Незалежно від того, була вечірка хорошою чи поганою, скільки друзів на ній було, ми все одно повинні прибрати по її завершенні.
+=======
+Think of it as a party finisher. Irresepective of whether a party was good or bad, how many friends were in it, we still need (or at least should) do a cleanup after it.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 Код може виглядати так:
 

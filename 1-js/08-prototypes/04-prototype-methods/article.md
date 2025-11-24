@@ -14,7 +14,11 @@
 
 Хоча і для цього є спеціальний метод:
 
+<<<<<<< HEAD
 - [Object.create(proto[, descriptors])](mdn:js/Object/create) -- створює порожній об’єкт із заданим `proto` як `[[Prototype]]` і необов’язковими дескрипторами властивостей.
+=======
+- [Object.create(proto[, descriptors])](mdn:js/Object/create) -- creates an empty object with given `proto` as `[[Prototype]]` and optional property descriptors.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 Наприклад:
 
@@ -116,7 +120,11 @@ alert(obj[key]); // [object Object], не "певне значення"!
 
 Тут, якщо користувач вводить `__proto__`, призначення в рядку 4 ігнорується!
 
+<<<<<<< HEAD
 Це, безумовно, може бути дивним для нерозробника, але досить зрозумілим для нас. Властивість `__proto__` є особливою: вона має бути або об’єктом, або `null`. Рядок не може стати прототипом. Ось чому призначення рядка `__proto__` ігнорується.
+=======
+That could surely be surprising for a non-developer, but pretty understandable for us. The `__proto__` property is special: it must be either an object or `null`. A string can not become a prototype. That's why assigning a string to `__proto__` is ignored.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 Проте ми не намагалися реалізувати таку поведінку. Ми хотіли зберегти пари ключ/значення і при цьому ключ з назвою `"__proto__"` не зберігся. Тому це помилка!
 
@@ -203,7 +211,14 @@ alert(Object.keys(chineseDictionary)); // hello,bye
     - літеральний синтаксис: `{ __proto__: ... }`, дозволяє вказати кілька властивостей
     - або [Object.create(proto[, descriptors])](mdn:js/Object/create), дозволяє вказати дескриптори властивостей.
 
+<<<<<<< HEAD
     `Object.create` забезпечує простий спосіб поверхневого копіювання об’єкта з усіма дескрипторами:
+=======
+    - literal syntax: `{ __proto__: ... }`, allows to specify multiple properties
+    - or [Object.create(proto[, descriptors])](mdn:js/Object/create), allows to specify property descriptors.
+
+    The `Object.create` provides an easy way to shallow-copy an object with all descriptors:
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
     ```js
     let clone = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj));
