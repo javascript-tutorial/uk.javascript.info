@@ -213,7 +213,7 @@ P.S. Весь перелік мов і прогрес перекладу пос�
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/konstantinbylbas"><img src="https://avatars.githubusercontent.com/u/58787367?v=4?s=100" width="100px;" alt="Konstantin Bylbas"/><br /><sub><b>Konstantin Bylbas</b></sub></a><br /><a href="#translation-konstantinbylbas" title="Translation">🌍</a> <a href="#bug-konstantinbylbas" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/AgentKyt"><img src="https://avatars.githubusercontent.com/u/91716903?v=4?s=100" width="100px;" alt="AgentKyt"/><br /><sub><b>AgentKyt</b></sub></a><br /><a href="#bug-AgentKyt" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ovysotskyi"><img src="https://avatars.githubusercontent.com/u/48288545?v=4?s=100" width="100px;" alt="Oleksii Vysotskyi"/><br /><sub><b>Oleksii Vysotskyi</b></sub></a><br /><a href="#bug-ovysotskyi" title="Bug reports">🐛</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/YuraGB"><img src="https://avatars.githubusercontent.com/u/26120957?v=4?s=100" width="100px;" alt="Yurii"/><br /><sub><b>Yurii</b></sub></a><br /><a href="#translation-YuraGB" title="Translation">🌍</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/YuraGB"><img src="https://avatars.githubusercontent.com/u/26120957?v=4?s=100" width="100px;" alt="Yurii"/><br /><sub><b>Yurii</b></sub></a><br /><a href="#translation-YuraGB" title="Translation">🌍</a> <a href="#bug-YuraGB" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
