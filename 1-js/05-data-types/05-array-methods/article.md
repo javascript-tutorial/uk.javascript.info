@@ -274,7 +274,7 @@ const arr = [NaN];
 alert( arr.indexOf(NaN) ); // -1 (повинен бути 0, але === перевірка на рівність не працює з NaN)
 alert( arr.includes(NaN) );// true (вірно)
 ```
-That's because `includes` was added to JavaScript much later and uses the more up to date comparison algorithm internally.
+Це пов’язано з тим, що метод `includes` був доданий до JavaScript значно пізніше і використовує більш сучасний алгоритм порівняння.
 ````
 
 ### find і findIndex/findLastIndex
