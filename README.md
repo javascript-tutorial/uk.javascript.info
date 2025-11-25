@@ -1,7 +1,7 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 ## The Modern JavaScript Tutorial in Ukrainian 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-118-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-119-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторії зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -213,6 +213,7 @@ P.S. Весь перелік мов і прогрес перекладу пос�
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/konstantinbylbas"><img src="https://avatars.githubusercontent.com/u/58787367?v=4?s=100" width="100px;" alt="Konstantin Bylbas"/><br /><sub><b>Konstantin Bylbas</b></sub></a><br /><a href="#translation-konstantinbylbas" title="Translation">🌍</a> <a href="#bug-konstantinbylbas" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/AgentKyt"><img src="https://avatars.githubusercontent.com/u/91716903?v=4?s=100" width="100px;" alt="AgentKyt"/><br /><sub><b>AgentKyt</b></sub></a><br /><a href="#bug-AgentKyt" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/ovysotskyi"><img src="https://avatars.githubusercontent.com/u/48288545?v=4?s=100" width="100px;" alt="Oleksii Vysotskyi"/><br /><sub><b>Oleksii Vysotskyi</b></sub></a><br /><a href="#bug-ovysotskyi" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/YuraGB"><img src="https://avatars.githubusercontent.com/u/26120957?v=4?s=100" width="100px;" alt="Yurii"/><br /><sub><b>Yurii</b></sub></a><br /><a href="#translation-YuraGB" title="Translation">🌍</a></td>
     </tr>
   </tbody>
 </table>
