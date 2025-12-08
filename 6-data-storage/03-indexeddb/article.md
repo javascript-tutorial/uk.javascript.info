@@ -16,7 +16,11 @@ IndexedDB — це база даних, вбудована в браузер, н
 
 Нативний інтерфейс для IndexedDB, описаний у специфікації <https://www.w3.org/TR/IndexedDB>, базується на подіях.
 
+<<<<<<< HEAD
 Ми також можемо використовувати `async/await` за допомогою обгортки на основі промісів, наприклад <https://github.com/jakearchibald/idb>. Це досить зручно, але обгортка не ідеальна, вона не може замінити події для всіх випадків. Отже, ми почнемо з подій, а потім, коли зрозуміємо IndexedDB, скористаємося обгорткою.
+=======
+We can also use `async/await` with the help of a promise-based wrapper, like <https://github.com/jakearchibald/idb>. That's pretty convenient, but the wrapper is not perfect, it can't replace events for all cases. So we'll start with events, and then, after we gain an understanding of IndexedDB, we'll use the wrapper.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 ```smart header="Де зберігаються дані?"
 Технічно дані зазвичай зберігаються в домашньому каталозі відвідувача разом з налаштуваннями браузера, розширеннями тощо.
