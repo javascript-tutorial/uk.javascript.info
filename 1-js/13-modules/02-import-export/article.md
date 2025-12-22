@@ -96,10 +96,17 @@ say.sayBye('Іван');
 1. Явний список того, що потрібно імпортувати дає коротші імена: `sayHi()` замість `say.sayHi()`.
 2. Явний список того, що потрібно імпортувати дає краще розуміння структури коду: що використано та в якому місці. Також дозволяє підтримувати та рефакторити код легше.
 
+<<<<<<< HEAD
 ```smart header="Не бійтеся імпортувати занадто багато"
 Сучасні інструменти збірки, такі як [webpack](https://webpack.js.org/) та інші, об’єднують модулі разом і оптимізують їх для прискорення завантаження. Вони також видаляють імпорти, що не використовуються.
 
 Наприклад, якщо ви зробите `import * as library` з величезної бібліотеки коду, а потім використаєте лише кілька методів, тоді невикористані методи [не будуть включені](https://github.com/webpack/webpack/tree/main/examples/harmony-unused#examplejs) у оптимізований бандл.
+=======
+```smart header="Don't be afraid to import too much"
+Modern build tools, such as [webpack](https://webpack.js.org/) and others, bundle modules together and optimize them to speedup loading. They also remove unused imports.
+
+For instance, if you `import * as library` from a huge code library, and then use only few methods, then unused ones [will not be included](https://github.com/webpack/webpack/tree/main/examples/harmony-unused#examplejs) into the optimized bundle.
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 ```
 
 ## Імпорт "as"
