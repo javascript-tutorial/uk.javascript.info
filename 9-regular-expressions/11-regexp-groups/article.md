@@ -209,9 +209,15 @@ alert(results[0]); // <h1>,h1 (перший тег)
 alert(results[1]); // <h2>,h2 (другий тег)
 ```
 
+<<<<<<< HEAD
 Як можемо бачити, перша відмінність дуже важлива, як демонструється в рядку `(*)`. Ми не можемо отримати збіг у вигляді `results[0]`, бо цей об’єкт не є псевдомасивом. Ми можемо перетворити його на реальний `Array`, використовуючи `Array.from`. Детальніше про псевдомасиви та ітеровані об’єкти в статті <info:iterable>.
 
 Нема потреби в `Array.from`, якщо ми циклічно проходимось по результатам:
+=======
+As we can see, the first difference is very important, as demonstrated in the line `(*)`. We can't get the match as `results[0]`, because that object is a pseudoarray. We can turn it into a real `Array` using `Array.from`. There are more details about pseudoarrays and iterables in the article <info:iterable>.
+
+There's no need for `Array.from` if we're looping over results:
+>>>>>>> d78b01e9833009fab534462e05c03cffc51bf0e3
 
 ```js run
 let results = '<h1> <h2>'.matchAll(/<(.*?)>/gi);
