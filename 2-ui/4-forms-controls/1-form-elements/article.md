@@ -244,7 +244,11 @@ option = new Option(text, value, defaultSelected, selected);
 - `defaultSelected` -- якщо `true`, то до опції буде додано HTML-атрибут `selected`,
 - `selected` -- якщо `true`, то опція буде обраною.
 
+<<<<<<< HEAD
 Різниця між `defaultSelected` та `selected` полягає в тому, що `defaultSelected` встановлює HTML-атрибут (який ми можемо отримати за допомогою `option.getAttribute('selected')`, тоді як `selected` визначає, обрана опція чи ні.
+=======
+The difference between `defaultSelected` and `selected` is that `defaultSelected` sets the HTML-attribute (that we can get using `option.getAttribute('selected')`), while `selected` sets whether the option is selected or not.
+>>>>>>> ff804bc19351b72bc5df7766f4b9eb8249a3cb11
 
 На практиці зазвичай слід встановлювати значення _обох_ параметрів на `true` або `false`. (Або просто не додавайте їх -- за замовчуванням вони мають значення `false`.)
 
