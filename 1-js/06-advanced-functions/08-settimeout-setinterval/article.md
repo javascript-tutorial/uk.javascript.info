@@ -218,7 +218,11 @@ setTimeout(function run() {
 
 ![](settimeout-interval.svg)
 
+<<<<<<< HEAD
 **Вкладений `setTimeout` гарантує фіксовану затримку (тут 100 мс).**
+=======
+**The nested `setTimeout` ensures a minimum delay (100ms here) between the end of one call and the beginning of the subsequent one.**
+>>>>>>> 52c1e61915bc8970a950a3f59bd845827e49b4bf
 
 Це тому, що новий виклик планується наприкінці попереднього.
 
