@@ -72,8 +72,13 @@
 
     Це називається "[Політикою того ж походження (Same Origin Policy)](https://uk.wikipedia.org/wiki/Політика_того_ж_походження)". Щоб обійти це обмеження, *обидві сторінки* мають погодитися на обмін даними та містити спеціальний JavaScript-код, який здійснюватиме це. Ми розглянемо цю тему в посібнику.
 
+<<<<<<< HEAD
     Знову-таки, це обмеження існує задля безпеки користувача. Сторінка за адресою `http://anysite.com`, яку відкрив користувач, не повинна мати доступ до іншої вкладки браузера з URL-адресою `http://gmail.com` і викрадати звідти інформацію.
 - JavaScript може легко спілкуватися мережею з сервером, від якого отримана поточна сторінка. Але здатність скрипту отримувати дані з інших сайтів/доменів обмежена. Такі запити можливі, але потребують спеціальної згоди (вираженої в HTTP-заголовках) від віддаленого сервера. Це також зроблено задля безпеки.
+=======
+    This limitation is, again, for the user's safety. A page from `http://anysite.com` which a user has opened must not be able to access another browser tab with the URL `http://gmail.com`, for example, and steal information from there.
+- JavaScript can easily communicate over the net to the server where the current page came from. But its ability to receive data from other sites/domains is severely limited. Though possible, it requires explicit agreement (expressed in HTTP headers) from the remote side. Once again, that's a safety limitation.
+>>>>>>> 52c1e61915bc8970a950a3f59bd845827e49b4bf
 
 ![](limitations.svg)
 

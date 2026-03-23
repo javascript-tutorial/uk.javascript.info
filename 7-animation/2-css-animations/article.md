@@ -463,7 +463,11 @@ boat.onclick = function() {
 
 Поєднання `transform` з `opacity` зазвичай може вирішувати більшість наших потреб, забезпечуючи плавну, яскраву анімацію.
 
+<<<<<<< HEAD
 Наприклад, тут клік на елемент `#boat` додає клас із `transform: translateX(300)` та `opacity: 0`, таким чином змушуючи його рухатись на `300px` праворуч і зникати:
+=======
+For example, here clicking on the `#boat` element adds the class with `transform: translateX(300px)` and `opacity: 0`, thus making it move `300px` to the right and disappear:
+>>>>>>> 52c1e61915bc8970a950a3f59bd845827e49b4bf
 
 ```html run height=260 autorun no-beautify
 <img src="https://js.cx/clipart/boat.png" id="boat">
