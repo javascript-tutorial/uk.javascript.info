@@ -1102,6 +1102,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "OlyaFreedom",
+      "name": "OlyaFreedom",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15339237?v=4",
+      "profile": "https://github.com/OlyaFreedom",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "commitType": "docs",
