@@ -125,7 +125,11 @@ funcUser(); // Іван
 */!*
 ```
 
+<<<<<<< HEAD
 Тут `func.bind(user)` як "прив’язаний варіант" функції `func`, з прив'язаним `this=user`.
+=======
+Here `func.bind(user)` is a "bound variant" of `func`, with fixed `this=user`.
+>>>>>>> 52c1e61915bc8970a950a3f59bd845827e49b4bf
 
 Всі аргументи передаються початковій функції `func` "як є", наприклад:
 
