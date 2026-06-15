@@ -9,10 +9,15 @@ startMessagesBtn.addEventListener('click', () => { // (4)
 
 closeWindowBtn.addEventListener('click', () =>  document.querySelector(".window__body").remove()); // (5)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 52c1e61915bc8970a950a3f59bd845827e49b4bf
 const startMessages = (element) => {
     const timerId = setInterval(() => { // (6)
         if (element.deref()) { // (7)
             const payload = document.createElement("p");
+<<<<<<< HEAD
             payload.textContent = `Повідомлення: Статус системи OK: ${new Date().toLocaleTimeString()}`;
             element.deref().append(payload);
         } else { // (8)
@@ -21,3 +26,13 @@ const startMessages = (element) => {
         }
     }, 1000);
 };
+=======
+            payload.textContent = `Message: System status OK: ${new Date().toLocaleTimeString()}`;
+            element.deref().append(payload);
+        } else { // (8)
+            alert("The element has been deleted."); // (9)
+            clearInterval(timerId);
+        }
+    }, 1000);
+};
+>>>>>>> 52c1e61915bc8970a950a3f59bd845827e49b4bf
