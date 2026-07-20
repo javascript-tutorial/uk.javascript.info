@@ -11,7 +11,13 @@ importance: 5
 Наприклад:
 
 ```js
+<<<<<<< HEAD
 truncate("Що я хотів би розповісти на цю тему:", 20) == "Що я хотів би розпо…"
 
 truncate("Всім привіт!", 20) == "Всім привіт!"
+=======
+truncate("What I'd like to tell on this topic is:", 20) == "What I'd like to te…"
+
+truncate("Hi everyone!", 20) == "Hi everyone!"
+>>>>>>> 725653fd99b19d42195e837ac3bb23c1784f8f6e
 ```
