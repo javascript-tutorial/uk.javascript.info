@@ -253,7 +253,11 @@ let obj = {
   }
 };
 
+<<<<<<< HEAD
 alert(obj + 2); // 22 ("2" + 2), перетворення до примітиву повернуло рядок => Конкатенація
+=======
+alert(obj + 2); // "22" ("2" + 2), conversion to primitive returned a string => concatenation
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 ```
 
 ## Підсумки
