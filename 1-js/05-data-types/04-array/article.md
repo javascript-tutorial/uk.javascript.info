@@ -105,7 +105,11 @@ let fruits = [
 
 Деякі мови програмування дозволяють використовувати від'ємні індекси з цією ж метою, наприклад, `fruits[-1]`.
 
+<<<<<<< HEAD
 Проте в JavaScript це не працюватиме. Результат буде `undefined`, оскільки індекс у квадратних дужках трактується буквально.
+=======
+However, in JavaScript it won't work. The result will be `undefined`, because the index in square brackets is treated literally.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 Ми можемо явно обчислити індекс останнього елемента, а потім отримати до нього доступ: `fruits[fruits.length - 1]`.
 
@@ -431,7 +435,11 @@ let matrix = [
   [7, 8, 9]
 ];
 
+<<<<<<< HEAD
 alert( matrix[1][1] ); // 5, центральний елемент
+=======
+alert( matrix[0][1] ); // 2, the second value of the first inner array
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 ```
 
 ## toString
