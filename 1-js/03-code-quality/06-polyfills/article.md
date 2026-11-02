@@ -7,7 +7,11 @@
 
 Тому це цілком звичайна ситуація, коли лише частина стандарту реалізована у самому рушії.
 
+<<<<<<< HEAD
 Хороша сторінка, щоб побачити поточний стан підтримки функцій мови, є тут <https://compat-table.github.io/compat-table/es6/> (вона велика, нам доведеться ще багато вивчати).
+=======
+A good page to see the current state of support for language features is <https://compat-table.github.io/compat-table/es6/> (it's big, we have a lot to study yet).
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 Як програмісти, ми б хотіли використовувати найновіші можливості. Чим більше хороших речей — тим краще!
 
@@ -71,9 +75,13 @@ if (!Math.trunc) { // якщо немає такої функції
 
 JavaScript дуже динамічна мова -- скрипти можуть додавати чи оновлювати функції, навіть якщо вони вбудовані.
 
+<<<<<<< HEAD
 Є два цікавих поліфіла:
 - [core js](https://github.com/zloirock/core-js), що підтримує багато функціонала, дозволяє включати лише необхідні функції.
 
+=======
+One interesting polyfill library is [core-js](https://github.com/zloirock/core-js), which supports a wide range of features and allows you to include only the ones you need.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 ## Підсумки
 
@@ -83,8 +91,16 @@ JavaScript дуже динамічна мова -- скрипти можуть �
 
 Наприклад, пізніше (коли достатньо вивчите JavaScript), ви зможете налаштувати систему збору проєкту на основі [webpack](https://webpack.js.org/) із плагіном [babel-loader](https://github.com/babel/babel-loader).
 
+<<<<<<< HEAD
 Ось хороші ресурси, де можна дізнатися поточний стан підтримки різного функціоналу:
 - <https://compat-table.github.io/compat-table/es6/> - для чистого JavaScript.
 - <https://caniuse.com/> - для браузерних функцій.
+=======
+Good resources that show the current state of support for various features:
+- <https://compat-table.github.io/compat-table/es6/> - for pure JavaScript.
+- <https://caniuse.com/> - for browser-related functions.
+
+P.S. Google Chrome is usually the most up-to-date with language features, try it if a tutorial demo fails. Most tutorial demos work with any modern browser though.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 P.S. Зазвичай браузер Google Chrome підтримує більшість найновіших функцій мови, спробуйте його, якщо демонстрація не працює. Більшість демонстрацій працюють із сучасними браузерами.
