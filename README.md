@@ -1,7 +1,7 @@
 # Сучасний посібник по JavaScript українською мовою 🇺🇦
 ## The Modern JavaScript Tutorial in Ukrainian 🇺🇦
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![Перекладачі](https://img.shields.io/badge/all_contributors-121-orange.svg?style=flat-square)](#подяка-)
+[![Перекладачі](https://img.shields.io/badge/all_contributors-122-orange.svg?style=flat-square)](#подяка-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 В цьому репозиторії зберігається переклад посібника [https://uk.javascript.info](https://uk.javascript.info) з англійської на українську мову.
@@ -218,6 +218,7 @@ P.S. Весь перелік мов і прогрес перекладу пос�
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/LudmilaShilo"><img src="https://avatars.githubusercontent.com/u/44061668?v=4?s=100" width="100px;" alt="Ludmila Shilo"/><br /><sub><b>Ludmila Shilo</b></sub></a><br /><a href="#bug-LudmilaShilo" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/OlyaFreedom"><img src="https://avatars.githubusercontent.com/u/15339237?v=4?s=100" width="100px;" alt="OlyaFreedom"/><br /><sub><b>OlyaFreedom</b></sub></a><br /><a href="#bug-OlyaFreedom" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Yark0"><img src="https://avatars.githubusercontent.com/u/35150268?v=4?s=100" width="100px;" alt="Yaroslav Polets"/><br /><sub><b>Yaroslav Polets</b></sub></a><br /><a href="#bug-Yark0" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
