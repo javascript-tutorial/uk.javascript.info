@@ -62,7 +62,7 @@ height = (height !== undefined && height !== null) ? height : 100;
 if (!Math.trunc) { // якщо немає такої функції
   // реалізувати її:
   Math.trunc = function(number) {
-    // функції Math.ceil та Math.floor існують навіть в древніх рушіях JavaScript
+    // функції Math.ceil та Math.floor існують навіть в стародавніх рушіях JavaScript
     // ми розглянемо їх пізніше
     return number < 0 ? Math.ceil(number) : Math.floor(number);
   };
@@ -71,8 +71,7 @@ if (!Math.trunc) { // якщо немає такої функції
 
 JavaScript дуже динамічна мова -- скрипти можуть додавати чи оновлювати функції, навіть якщо вони вбудовані.
 
-Є два цікавих поліфіла:
-- [core js](https://github.com/zloirock/core-js), що підтримує багато функціонала, дозволяє включати лише необхідні функції.
+Однією з цікавих бібліотек поліфілів є [core js](https://github.com/zloirock/core-js), яка підтримує багато функціоналу і дозволяє включати лише необхідні функції.
 
 
 ## Підсумки
