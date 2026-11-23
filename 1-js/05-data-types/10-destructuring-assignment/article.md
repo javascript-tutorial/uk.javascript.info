@@ -5,19 +5,32 @@
 - Об’єкти дозволяють нам створити єдину сутність, яка зберігатиме дані за ключем. 
 - Масиви дозволяють нам зібрати елементи даних у впорядкований список.
 
+<<<<<<< HEAD
 Однак, коли ми передаємо їх у функцію, нам може знадобитися не все. Функції можуть знадобитися лише певні елементи або властивості.
+=======
+However, when we pass these to a function, we may not need all of it. The function might only require certain elements or properties.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 *Деструктуроване присвоєння* -- це спеціальний синтаксис, що дозволяє нам "розпаковувати" масиви чи об’єкти в купу змінних, оскільки іноді це зручніше.
 
+<<<<<<< HEAD
 Деструктурування також чудово працює зі складними функціями, які мають багато параметрів, типових значень тощо. Незабаром ми це побачимо.
+=======
+Destructuring also works well with complex functions that have a lot of parameters, default values, and so on. Soon we'll see that.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 ## Деструктурування масиву
 
 Ось приклад того, як масив деструктурується на змінні:
 
 ```js
+<<<<<<< HEAD
 // у нас є масив з іменем та прізвищем
 let arr = ["Іван", "Петренко"]
+=======
+// we have an array with a name and surname
+let arr = ["John", "Smith"]
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 *!*
 // деструктуроване присвоєння
@@ -40,10 +53,17 @@ alert(firstName); // Іван
 alert(surname);  // Петренко
 ```
 
+<<<<<<< HEAD
 Як бачите, синтаксис простий. Хоча є кілька особливих деталей. Давайте розглянемо більше прикладів, щоб краще це зрозуміти.
 
 ````smart header="\"Деструктурування\" не означає \"руйнування\"."
 Це називається "деструктуроване присвоєння", оскільки воно "деструктурує" шляхом копіювання елементів у змінні. Однак, сам масив не змінюється.
+=======
+As you can see, the syntax is simple. There are several peculiar details though. Let's see more examples to understand it better.
+
+````smart header="\"Destructuring\" does not mean \"destructive\"."
+It's called "destructuring assignment," because it "destructurizes" by copying items into variables. However, the array itself is not modified.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 Це просто коротший спосіб написати:
 ```js
@@ -65,7 +85,11 @@ let [firstName, , title] = ["Юлій", "Цезар", "Консул", "Римс�
 alert( title ); // Консул
 ```
 
+<<<<<<< HEAD
 У наведеному вище коді другий елемент масиву пропускається, третій присвоюється `title`, а решта елементів масиву також пропускаються (оскільки для них немає змінних).
+=======
+In the code above, the second element of the array is skipped, the third one is assigned to `title`, and the rest of the array items are also skipped (as there are no variables for them).
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 ````
 
 ````smart header="Працює з будь-якими типами даних, що перебираються у правій стороні"
@@ -80,8 +104,13 @@ let [one, two, three] = new Set([1, 2, 3]);
 ````
 
 
+<<<<<<< HEAD
 ````smart header="Призначте будь-що з лівого боку"
 Ми можемо використовувати будь-які "призначення" з лівого боку.
+=======
+````smart header="Assign to anything on the left-side"
+We can use any "assignables" on the left side.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 Наприклад, властивість об’єкта:
 ```js run
@@ -94,10 +123,17 @@ alert(user.surname); // Петренко
 
 ````
 
+<<<<<<< HEAD
 ````smart header="Цикл з .entries()"
 У попередньому розділі, ми бачили метод [Object.entries(obj)](mdn:js/Object/entries).
 
 Ми можемо використовувати його з деструктуруванням для циклічного перебору ключів-та-значень об’єкта:
+=======
+````smart header="Looping with .entries()"
+In the previous chapter, we saw the [Object.entries(obj)](mdn:js/Object/entries) method.
+
+We can use it with destructuring to loop over the keys-and-values of an object:
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 ```js run
 let user = {
@@ -105,7 +141,11 @@ let user = {
   age: 30
 };
 
+<<<<<<< HEAD
 // перебрати циклом ключі-та-значення
+=======
+// loop over the keys-and-values
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 *!*
 for (let [key, value] of Object.entries(user)) {
 */!*
@@ -169,9 +209,15 @@ alert(name2); // Цезар
 let [name1, name2, *!*...rest*/!*] = ["Юлій", "Цезар", *!*"Консул", "Римської Республіки"*/!*];
 
 *!*
+<<<<<<< HEAD
 // rest -- це масив елементів, починаючи з 3-го
 alert(rest[0]); // Консул
 alert(rest[1]); // Римської Республіки
+=======
+// rest is an array of items, starting from the 3rd one
+alert(rest[0]); // Consul
+alert(rest[1]); // of the Roman Republic
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 alert(rest.length); // 2
 */!*
 ```
@@ -187,7 +233,11 @@ let [name1, name2, *!*...titles*/!*] = ["Юлій", "Цезар", "Консул"
 
 ### Типові значення
 
+<<<<<<< HEAD
 Якщо масив коротший за список змінних зліва, помилок не буде. Відсутні значення вважаються невизначеними:
+=======
+If the array is shorter than the list of variables on the left, there will be no errors. Absent values are considered undefined:
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 ```js run
 *!*
@@ -418,7 +468,11 @@ alert( title ); // Меню
 
 ## Вкладене деструктурування
 
+<<<<<<< HEAD
 Якщо об’єкт або масив містять інші вкладені об’єкти та масиви, ми можемо використовувати складніші шаблони з лівого боку для вилучення глибших частин.
+=======
+If an object or an array contains other nested objects and arrays, we can use more complex left-side patterns to extract deeper portions.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 У наведеному нижче коді `options` містить інший об’єкт у властивості `size` та масив у властивості `items`. Шаблон у лівій частині присвоєння має ту саму структуру для вилучення з них значень:
 
@@ -449,7 +503,11 @@ alert(item1);  // Торт
 alert(item2);  // Пончик
 ```
 
+<<<<<<< HEAD
 Усі властивості об’єкта `options`, окрім `extra`, яке відсутнє у лівій частині, призначаються відповідним змінним:
+=======
+All properties of `options` object except `extra` which is absent in the left part, are assigned to corresponding variables:
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 ![](destructuring-complex.svg)
 
@@ -459,9 +517,15 @@ alert(item2);  // Пончик
 
 ## Розумні параметри функції
 
+<<<<<<< HEAD
 Бувають випадки, коли функція має багато параметрів, більшість з яких є необов’язковими. Особливо це стосується користувацьких інтерфейсів. Уявіть собі функцію, яка створює меню. Вона може мати ширину, висоту, назву, список елементів тощо.
 
 Нижче наведено поганий спосіб написати таку функцію:
+=======
+There are times when a function has many parameters, most of which are optional. That's especially true for user interfaces. Imagine a function that creates a menu. It may have a width, a height, a title, an item list and so on.
+
+Here's a bad way to write such a function:
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 ```js
 function showMenu(title = "Untitled", width = 200, height = 100, items = []) {
@@ -469,7 +533,11 @@ function showMenu(title = "Untitled", width = 200, height = 100, items = []) {
 }
 ```
 
+<<<<<<< HEAD
 У реальному житті проблема полягає в тому, як запам’ятати порядок аргументів. Зазвичай IDE намагаються нам допомогти, особливо якщо код добре задокументований, але все ж... Інша проблема полягає в тому, як викликати функцію, коли більшість параметрів типово в порядку.
+=======
+In real-life, the problem is how to remember the order of arguments. Usually, IDEs try to help us, especially if the code is well-documented, but still... Another problem is how to call a function when most parameters are ok by default.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 Можливо так?
 
@@ -534,7 +602,11 @@ function({
 })
 ```
 
+<<<<<<< HEAD
 Тоді для об’єкта параметрів буде змінна `varName` для властивості `incomingProperty` з типовим значенням `defaultValue`.
+=======
+Then, for an object of parameters, there will be a variable `varName` for the property `incomingProperty`, with `defaultValue` by default.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 Зверніть увагу, що таке деструктурування передбачає, що `showMenu()` має аргумент. Якщо ми хочемо, щоб усі значення були типовими, ми повинні вказати порожній об’єкт:
 
@@ -561,7 +633,7 @@ showMenu(); // Menu 100 200
 - Деструктуроване присвоєння дозволяє миттєво зіставити об’єкт або масив з багатьма змінними.
 - Повний синтаксис для об’єкта:
     ```js
-    let {prop : varName = default, ...rest} = object
+    let {prop : varName = defaultValue, ...rest} = object
     ```
 
     Це означає, що властивість `prop` має входити до змінної `varName` і, якщо такої властивості не існує, слід використовувати `типове` значення.
@@ -571,9 +643,13 @@ showMenu(); // Menu 100 200
 - Повний синтаксис для масиву:
 
     ```js
-    let [item1 = default, item2, ...rest] = array
+    let [item1 = defaultValue, item2, ...rest] = array
     ```
 
+<<<<<<< HEAD
     Перший елемент переходить до `item1`; другий переходить до `item2`, усі інші утворюють масив `rest`.
+=======
+    The first item goes to `item1`; the second goes into `item2`, and all the rest makes the array `rest`.
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 - Можна витягувати дані з вкладених масивів/об’єктів, для цього ліва сторона повинна мати ту ж структуру, що й права.
