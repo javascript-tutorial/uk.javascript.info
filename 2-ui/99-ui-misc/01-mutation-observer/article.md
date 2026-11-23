@@ -128,6 +128,7 @@ mutationRecords = [{
 ...
 ```
 
+<<<<<<< HEAD
 Для кращої прочитності і, в той же час для естетичності, ми будемо використовувати JavaScript-бібліотеку для підсвітки синтаксису на нашому вебсайті, на кшталт [Prism.js](https://prismjs.com/). Для отримання синтаксичної підсвітки за допомогою Prism для наведеного вище фрагмента, викликається `Prism.highlightElem(pre)`, який перевіряє вміст таких елементів `pre`, та додає в них особливі теги і стилі для кольорової підсвітки синтаксису, подібно до того, що ви можете побачити в прикладах тут, на цій сторінці.
 
 Коли саме нам слід запускати такий метод для додавання підсвітки? Що ж, ми можемо це робити на подію `DOMContentLoaded`, або поставити скрипт внизу сторінки. Як тільки наша DOM готова, ми можемо виконати пошук елементів `pre[class*="language"]` та викликати на них `Prism.highlightElem`:
@@ -135,6 +136,15 @@ mutationRecords = [{
 ```js
 // підсвітити всі фрагменти коду на сторінці
 document.querySelectorAll('pre[class*="language"]').forEach(Prism.highlightElem);
+=======
+For better readability and at the same time, to beautify it, we'll be using a JavaScript syntax highlighting library on our site, like [Prism.js](https://prismjs.com/). To get syntax highlighting for above snippet in Prism, `Prism.highlightElement(pre)` is called, which examines the contents of such `pre` elements and adds special tags and styles for colored syntax highlighting into those elements, similar to what you see in examples here, on this page.
+
+When exactly should we run that highlighting method? Well, we can do it on `DOMContentLoaded` event, or put the script at the bottom of the page. The moment our DOM is ready, we can search for elements `pre[class*="language"]` and call `Prism.highlightElement` on them:
+
+```js
+// highlight all code snippets on the page
+document.querySelectorAll('pre[class*="language"]').forEach(elem => Prism.highlightElement(elem));
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 ```
 
 Досі все просто, правда? Ми шукаємо фрагменти коду всередині HTML і розфарбовуємо їх.
@@ -146,9 +156,15 @@ let article = /* отримаємо новий вміст із сервера */
 articleElem.innerHTML = article;
 ```
 
+<<<<<<< HEAD
 HTML-вміст нової статті `article` може містити фрагменти коду. Нам потрібно викликати на них `Prism.highlightElem`, інакше підсвітки на них не буде.
 
 **Коли і де нам слід викликати `Prism.highlightElem` для динамічно завантаженої статті ?**
+=======
+The new `article` HTML may contain code snippets. We need to call `Prism.highlightElement` on them, otherwise they won't get highlighted.
+
+**Where and when to call `Prism.highlightElement` for a dynamically loaded article?**
+>>>>>>> 20208769e528337949e946f526534d61d38bac47
 
 Ми могли б прикріпити цей виклик до коду, який завантажує статтю, ось так:
 
@@ -158,7 +174,7 @@ articleElem.innerHTML = article;
 
 *!*
 let snippets = articleElem.querySelectorAll('pre[class*="language-"]');
-snippets.forEach(Prism.highlightElem);
+snippets.forEach(elem => Prism.highlightElement(elem));
 */!*
 ```
 
